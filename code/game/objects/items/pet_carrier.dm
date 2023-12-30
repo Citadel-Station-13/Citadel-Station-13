@@ -289,10 +289,11 @@
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
 		var/turf/TT = get_turf(hit_atom)
 		var/throwerstring
-		if(thrownby)
-			log_combat(thrownby, M, "splashed", R)
-			var/turf/AT = get_turf(thrownby)
-			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
+		var/mob/thrown_by = thrownby?.resolve()
+		if(thrown_by)
+			log_combat(thrown_by, M, "splashed", R)
+			var/turf/AT = get_turf(thrown_by)
+			throwerstring = " THROWN BY [key_name(thrown_by)] at [AT] (AREACOORD(AT)]"
 		log_reagent("SPLASH: [src] mob throw_impact() onto [key_name(hit_atom)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(hit_atom, TOUCH)
 		reagents.clear_reagents()

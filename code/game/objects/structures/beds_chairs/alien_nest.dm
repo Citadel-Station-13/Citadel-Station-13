@@ -48,7 +48,7 @@
 			unbuckle_mob(M)
 			add_fingerprint(user)
 
-/obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/living/carbon/user)
+/obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/living/carbon/user, check_loc)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || !user.cuff_resist_check() || M.buckled )
 		return
 

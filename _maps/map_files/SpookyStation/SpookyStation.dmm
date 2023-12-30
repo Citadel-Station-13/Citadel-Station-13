@@ -17125,7 +17125,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "liZ" = (
-/obj/item/aiModule/reset/purge,
+/obj/item/ai_module/reset/purge,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
 "lxA" = (
@@ -17391,7 +17391,7 @@
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
 "qUm" = (
-/obj/item/aiModule/supplied/freeform,
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/plasteel,
 /area/eventmap/mountaininside)
 "qWJ" = (

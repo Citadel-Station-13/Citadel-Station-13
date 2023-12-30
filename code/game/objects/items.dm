@@ -112,7 +112,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
-	var/mob/thrownby = null
+	///A weakref to the mob who threw the item
+	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
@@ -177,6 +178,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 
+	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
+	var/throw_verb
 
 /obj/item/Initialize(mapload)
 
@@ -737,7 +740,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, messy_throw = TRUE)
-	thrownby = thrower
+	thrownby = WEAKREF(thrower)
 	callback = CALLBACK(src, .proc/after_throw, callback, (spin && messy_throw)) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force)
 
@@ -830,9 +833,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		. = "<span class='notice'>[user] lights [A] with [src].</span>"
 	else
 		. = ""
-
-/obj/item/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	return
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
 	return 0
@@ -1115,6 +1115,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(item_flags & DROPDEL)
 		QDEL_NULL(src)
 		return TRUE
+
+///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.
+/obj/item/proc/on_thrown(mob/living/carbon/user, atom/target)
+	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
+		return
+	user.dropItemToGround(src, silent = TRUE)
+	if(throwforce && HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_notice("You set [src] down gently on the ground."))
+		return
+	return src
 
 /**
 

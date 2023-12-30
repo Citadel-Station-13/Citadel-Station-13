@@ -105,7 +105,7 @@
 
 /obj/vehicle/sealed/mecha/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //wrapper
 	log_message("Hit by [AM].", LOG_MECHA, color="red")
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
 	if(!enclosed && LAZYLEN(occupants) && !(mecha_flags  & SILICON_PILOT) && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit the pilot of open-canopy mechs

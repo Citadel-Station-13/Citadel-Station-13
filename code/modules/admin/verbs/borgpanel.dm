@@ -259,11 +259,11 @@
 	if (!istype(chosensilicon, /mob/living/silicon))
 		to_chat(usr, "<span class='warning'>Silicon is required for law changes</span>", confidential=TRUE)
 		return
-	var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/aiModule)))
+	var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/ai_module)))
 	if (!chosen)
 		return
 	var/new_board = new chosen(src)
-	var/obj/item/aiModule/chosenboard = new_board
+	var/obj/item/ai_module/chosenboard = new_board
 	var/mob/living/silicon/beepboop = chosensilicon
 	chosenboard.install(beepboop.laws, usr)
 	message_admins("[key_name_admin(usr)] added [chosenboard] to [ADMIN_LOOKUPFLW(beepboop)].")

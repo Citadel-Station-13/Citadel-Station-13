@@ -198,7 +198,8 @@
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
-		mob_exit(ejectee, TRUE, TRUE)
+		mob_exit(ejectee, silent = TRUE)
+
 	if(LAZYLEN(equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in equipment)
 			equip.detach(loc)
@@ -215,6 +216,8 @@
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
+	QDEL_NULL(trackers)
+	QDEL_NULL(wires)
 
 	GLOB.poi_list -= src
 	GLOB.mechas_list -= src //global mech list
@@ -223,14 +226,39 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/obj_destruction()
+	spark_system?.start()
 	loc.assume_air(cabin_air)
 	air_update_turf(FALSE, FALSE)
+
+	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
-			occupant.gib() //No wreck, no AI to recover
+			var/mob/living/silicon/ai/ai = occupant
+			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+				unlucky_ai = occupant
+				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
+				ai.gib() //No wreck, no AI to recover
+			else
+				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
-		mob_exit(occupant, FALSE, TRUE)
-		occupant.SetSleeping(destruction_sleep_duration)
+		mob_exit(occupant, forced = TRUE)
+		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+			occupant.SetSleeping(destruction_sleep_duration)
+
+	if(wreckage)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ai)
+		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+			if(E.detachable && prob(30))
+				WR.crowbar_salvage += E
+				E.detach(WR) //detaches from src into WR
+			else
+				E.detach(loc)
+				qdel(E)
+		if(cell)
+			WR.crowbar_salvage += cell
+			cell.forceMove(WR)
+			cell.use(rand(0, cell.charge), TRUE)
+			cell = null
 	return ..()
 
 /obj/vehicle/sealed/mecha/update_icon()
@@ -480,7 +508,7 @@
 		var/mob/living/occupant = b
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>")
-			mob_try_exit(occupant, TRUE, TRUE)	//bye bye
+			mob_exit(occupant, randomstep = TRUE) //bye bye
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
@@ -796,19 +824,31 @@
 		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'><span class='boldnotice'>Take control of exosuit?</span></a><br>")
 
 /obj/vehicle/sealed/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	//Transfer from core or card to mech. Proc is called by mech.
 	switch(interaction)
 		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
 			if(!construction_state) //Mech must be in maint mode to allow carding.
-				to_chat(user, "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>")
+				to_chat(user, span_warning("[name] must have maintenance protocols active in order to allow a transfer."))
 				return
-			if(!locate(AI) in occupants) //Mech does not have an AI for a pilot
-				to_chat(user, "<span class='warning'>No AI detected in the [name] onboard computer.</span>")
+			var/list/ai_pilots = list()
+			for(var/mob/living/silicon/ai/aipilot in occupants)
+				ai_pilots += aipilot
+			if(!length(ai_pilots)) //Mech does not have an AI for a pilot
+				to_chat(user, span_warning("No AI detected in the [name] onboard computer."))
 				return
-			for(var/mob/living/silicon/ai in occupants)
+			if(length(ai_pilots) > 1) //Input box for multiple AIs, but if there's only one we'll default to them.
+				AI = tgui_input_list(user, "Which AI do you wish to card?", "AI Selection", sort_list(ai_pilots))
+			else
+				AI = ai_pilots[1]
+			if(isnull(AI))
+				return
+			if(!(AI in occupants) || !user.Adjacent(src))
+				return //User sat on the selection window and things changed.
+
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = TRUE
 			AI.radio_enabled = FALSE
@@ -819,36 +859,37 @@
 			card.AI = AI
 			AI.controlled_equipment = null
 			AI.remote_control = null
-			to_chat(AI, "<span class='notice'>You have been downloaded to a mobile storage device. Wireless connection offline.</span>")
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
+			to_chat(AI, span_notice("You have been downloaded to a mobile storage device. Wireless connection offline."))
+			to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
+			return
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
-			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
-			if(AI.can_dominate_mechs)
-				if(LAZYLEN(occupants)) //Oh, I am sorry, were you using that?
-					to_chat(AI, "<span class='warning'>Occupants detected! Forced ejection initiated!</span>")
-					to_chat(occupants, "<span class='danger'>You have been forcibly ejected!</span>")
-					ejectall() //IT IS MINE, NOW. SUCK IT, RD!
-			ai_enter_mech(AI, interaction)
+			AI.linked_core = new /obj/structure/ai_core/deactivated(AI.loc)
+			if(AI.can_dominate_mechs && LAZYLEN(occupants)) //Oh, I am sorry, were you using that?
+				to_chat(AI, span_warning("Occupants detected! Forced ejection initiated!"))
+				to_chat(occupants, span_danger("You have been forcibly ejected!"))
+				for(var/ejectee in occupants)
+					mob_exit(ejectee, silent = TRUE, randomstep = TRUE, forced = TRUE) //IT IS MINE, NOW. SUCK IT, RD!
+				AI.can_shunt = FALSE //ONE AI ENTERS. NO AI LEAVES.
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
 			AI = card.AI
 			if(!AI)
-				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
+				to_chat(user, span_warning("There is no AI currently installed on this device."))
 				return
 			if(AI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				AI.disconnect_shell()
 			if(AI.stat || !AI.client)
-				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
+				to_chat(user, span_warning("[AI.name] is currently unresponsive, and cannot be uploaded."))
 				return
 			if((LAZYLEN(occupants) >= max_occupants) || dna_lock) //Normal AIs cannot steal mechs!
-				to_chat(user, "<span class='warning'>Access denied. [name] is [LAZYLEN(occupants) >= max_occupants ? "currently fully occupied" : "secured with a DNA lock"].</span>")
+				to_chat(user, span_warning("Access denied. [name] is [LAZYLEN(occupants) >= max_occupants ? "currently fully occupied" : "secured with a DNA lock"]."))
 				return
 			AI.control_disabled = FALSE
 			AI.radio_enabled = TRUE
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+			to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			card.AI = null
-			ai_enter_mech(AI, interaction)
+	ai_enter_mech(AI)
 
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/vehicle/sealed/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
@@ -864,7 +905,6 @@
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
 		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
-
 
 ///Handles an actual AI (simple_animal mecha pilot) entering the mech
 /obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
@@ -1042,47 +1082,45 @@
 	if(isAI(user))
 		var/mob/living/silicon/ai/AI = user
 		if(!AI.can_shunt)
-			to_chat(AI, "<span class='notice'>You can't leave a mech after dominating it!.</span>")
+			to_chat(AI, span_notice("You can't leave a mech after dominating it!."))
 			return FALSE
-	to_chat(user, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.</span>")
+	to_chat(user, span_notice("You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting."))
 	is_currently_ejecting = TRUE
-	if(do_after(user, exit_delay , target = src))
-		to_chat(user, "<span class='notice'>You exit the mech.</span>")
-		mob_try_exit(user, silent = FALSE)
+	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))
+		to_chat(user, span_notice("You exit the mech."))
+		mob_exit(user, silent = TRUE)
 	else
-		to_chat(user, "<span class='notice'>You stop exiting the mech. Weapons are enabled again.</span>")
+		to_chat(user, span_notice("You stop exiting the mech. Weapons are enabled again."))
 	is_currently_ejecting = FALSE
 
-/obj/vehicle/sealed/mecha/proc/ejectall()
-	for(var/ejectee in occupants)
-		mob_try_exit(ejectee, TRUE, TRUE)
-
-/obj/vehicle/sealed/mecha/mob_try_exit(mob/M, silent, randomstep)
-	mob_exit(M, silent, randomstep)
-
-/obj/vehicle/sealed/mecha/mob_exit(mob/M, silent, forced)
-	var/newloc = get_turf(src)
+/obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	var/atom/movable/mob_container
+	var/turf/newloc = get_turf(src)
 	if(ishuman(M))
-		remove_occupant(M)
-		..()
-		return
+		mob_container = M
 	else if(isbrain(M))
 		var/mob/living/brain/brain = M
 		mob_container = brain.container
 	else if(isAI(M))
 		var/mob/living/silicon/ai/AI = M
+		//stop listening to this signal, as the static update is now handled by the eyeobj's setLoc
+		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
-			AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+			if(!AI.linked_core) //if the victim AI has no core
+				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
+				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
 		else
 			if(!AI.linked_core)
-				to_chat(AI, "<span class='userdanger'>Inactive core destroyed. Unable to return.</span>")
+				if(!silent)
+					to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
 				AI.linked_core = null
 				return
-			to_chat(AI, "<span class='notice'>Returning to core...</span>")
+			if(!silent)
+				to_chat(AI, span_notice("Returning to core..."))
 			AI.controlled_equipment = null
 			AI.remote_control = null
 			mob_container = AI
@@ -1090,21 +1128,20 @@
 			qdel(AI.linked_core)
 	else
 		return ..()
-	var/mob/living/L = M
+	var/mob/living/ejector = M
 	mecha_flags  &= ~SILICON_PILOT
-	if(mob_container.forceMove(newloc))
-		log_message("[mob_container] moved out.", LOG_MECHA)
-		L << browse(null, "window=exosuit")
+	mob_container.forceMove(newloc)//ejecting mob container
+	log_message("[mob_container] moved out.", LOG_MECHA)
+	SStgui.close_user_uis(M, src)
 	if(istype(mob_container, /obj/item/mmi))
 		var/obj/item/mmi/mmi = mob_container
 		if(mmi.brainmob)
-			L.forceMove(mmi)
-			L.reset_perspective()
-			remove_occupant(L)
+			ejector.forceMove(mmi)
+			ejector.reset_perspective()
+			remove_occupant(ejector)
 		mmi.mecha = null
-		mmi.update_icon()
-		L.mobility_flags = NONE
-	setDir(dir_in)
+		mmi.update_appearance()
+	setDir(SOUTH)
 	return ..()
 
 

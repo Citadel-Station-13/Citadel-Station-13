@@ -47,8 +47,20 @@
 		if(brain)
 			to_chat(user, "<span class='warning'>There's already a brain in the MMI!</span>")
 			return
-		if(!newbrain.brainmob)
-			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>")
+		if(newbrain.brainmob?.suiciding)
+			to_chat(user, span_warning("[newbrain] is completely useless."))
+			return
+		if(!newbrain.brainmob?.mind || !newbrain.brainmob)
+			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
+			if(install != "Yes")
+				return
+			if(!user.transferItemToLoc(newbrain, src))
+				return
+			user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
+			brain = newbrain
+			brain.organ_flags |= ORGAN_FROZEN
+			name = "[initial(name)]: [copytext(newbrain.name, 1, -8)]"
+			update_appearance()
 			return
 
 		if(!user.transferItemToLoc(O, src))
@@ -97,15 +109,15 @@
 		name = initial(name)
 
 /obj/item/mmi/proc/eject_brain(mob/user)
-	brainmob.container = null //Reset brainmob mmi var.
-	brainmob.forceMove(brain) //Throw mob into brain.
-	brainmob.stat = DEAD
-	brainmob.emp_damage = 0
-	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	brainmob.remove_from_alive_mob_list() //Get outta here
-	brainmob.add_to_dead_mob_list()
-	brain.brainmob = brainmob //Set the brain to use the brainmob
-	brainmob = null //Set mmi brainmob var to null
+	if(brain.brainmob)
+		brainmob.container = null //Reset brainmob mmi var.
+		brainmob.forceMove(brain) //Throw mob into brain.
+		brainmob.stat = DEAD
+		brainmob.emp_damage = 0
+		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
+		brain.brainmob = brainmob //Set the brain to use the brainmob
+		log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
+		brainmob = null //Set mmi brainmob var to null
 	if(user)
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
 	else
@@ -209,6 +221,38 @@
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
+
+/obj/item/mmi/proc/brain_check(mob/user)
+	var/mob/living/brain/B = brainmob
+	if(!B)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
+		return FALSE
+	if(brain?.decoy_override)
+		if(user)
+			to_chat(user, span_warning("This [name] does not seem to fit!"))
+		return FALSE
+	if(!B.key || !B.mind)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
+		return FALSE
+	if(!B.client)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
+		return FALSE
+	if(B.suiciding)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
+		return FALSE
+	if(B.stat == DEAD)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that the brain is dead!"))
+		return FALSE
+	if(brain?.organ_flags & ORGAN_FAILING)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that the brain is damaged!"))
+		return FALSE
+	return TRUE
 
 /obj/item/mmi/syndie
 	name = "Syndicate Man-Machine Interface"

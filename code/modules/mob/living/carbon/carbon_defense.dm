@@ -48,22 +48,30 @@
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
-/mob/living/carbon/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
-	. = ..()
-	if(!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) && !skip_throw_mode_check && !in_throw_mode)
+/mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
+	. = FALSE
+	if(!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) && !skip_throw_mode_check && !throw_mode)
 		return
-	if(incapacitated())
+	if(get_active_held_item())
 		return
-	if (get_active_held_item())
-		if (HAS_TRAIT_FROM(src, TRAIT_AUTO_CATCH_ITEM,RISING_BASS_TRAIT))
-			visible_message("<span class='warning'>[src] chops [I] out of the air!</span>")
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
+	return TRUE
+
+/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	if(!skipcatch && can_catch_item() && isitem(AM) && isturf(AM.loc))
+		var/obj/item/I = AM
+		I.attack_hand(src)
+		if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+			visible_message(span_warning("[src] catches [I]!"), \
+							span_userdanger("You catch [I] in mid-air!"))
+			throw_mode_off()
 			return TRUE
-		return
-	I.attack_hand(src)
-	if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-		visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
-		throw_mode_off()
+	if(isitem(AM) && HAS_TRAIT_FROM(src, TRAIT_AUTO_CATCH_ITEM, RISING_BASS_TRAIT))
+		visible_message(span_warning("[src] chops [AM] out of the air!"), \
+						span_userdanger("You chop [AM] out of the air!"))
 		return TRUE
+	return ..()
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier

@@ -50,7 +50,6 @@
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high ///If this is a path, this gets created as an object in Initialize.
 
 	var/opened = FALSE
-	var/emagged = FALSE
 	var/emag_cooldown = 0
 	var/wiresexposed = FALSE
 

@@ -85,10 +85,10 @@
 			new /obj/item/implanter/stealth(src)
 
 		if("hacker") // 30 tc
-			new /obj/item/aiModule/syndicate(src)
+			new /obj/item/ai_module/syndicate(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/encryptionkey/binary(src)
-			new /obj/item/aiModule/toyAI(src)
+			new /obj/item/ai_module/toyAI(src)
 			new /obj/item/multitool/ai_detect(src)
 			new /obj/item/flashlight/emp(src)
 			new /obj/item/emagrecharge(src)

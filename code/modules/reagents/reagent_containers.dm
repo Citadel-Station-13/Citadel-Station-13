@@ -106,9 +106,10 @@
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
 	var/turf/T = get_turf(src)
-	if(!T || !target.CanPass(src, T) || !thrownby || !thrownby.actions)
+	var/mob/thrown_by = thrownby?.resolve()
+	if(!T || !target.CanPass(src, T) || !thrown_by || !thrown_by.actions)
 		return
-	var/datum/action/innate/D = get_action_of_type(thrownby, /datum/action/innate/drink_fling)
+	var/datum/action/innate/D = get_action_of_type(thrown_by, /datum/action/innate/drink_fling)
 	if(D?.active)
 		return TRUE
 
@@ -118,6 +119,7 @@
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)
 		return
+	var/mob/thrown_by = thrownby?.resolve()
 
 	if(ismob(target) && target.reagents)
 		if(thrown)
@@ -128,10 +130,10 @@
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
 		var/turf/TT = get_turf(target)
 		var/throwerstring
-		if(thrownby && thrown)
-			log_combat(thrownby, M, "splashed", R)
-			var/turf/AT = get_turf(thrownby)
-			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
+		if(thrown_by && thrown)
+			log_combat(thrown_by, M, "splashed", R)
+			var/turf/AT = get_turf(thrown_by)
+			throwerstring = " THROWN BY [key_name(thrown_by)] at [AT] (AREACOORD(AT)]"
 		log_reagent("SPLASH: [src] mob SplashReagents() onto [key_name(target)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
@@ -142,15 +144,15 @@
 		addtimer(CALLBACK(src, .proc/ForceResetRotation), 1)
 
 	else
-		if(isturf(target) && reagents.reagent_list.len && thrownby)
-			log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
-			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
-			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
+		if(isturf(target) && reagents.reagent_list.len && thrown_by)
+			log_combat(thrown_by, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
+			log_game("[key_name(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
+			message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
 		var/turf/T = get_turf(target)
 		var/throwerstring
-		if(thrownby && thrown)
-			var/turf/AT = get_turf(thrownby)
-			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] ([AREACOORD(AT)])"
+		if(thrown_by && thrown)
+			var/turf/AT = get_turf(thrown_by)
+			throwerstring = " THROWN BY [key_name(thrown_by)] at [AT] ([AREACOORD(AT)])"
 		log_reagent("SPLASH - [src] object SplashReagents() onto [target] at [T] ([AREACOORD(T)])[throwerstring] - [reagents.log_list()]")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
