@@ -4,6 +4,13 @@
 /proc/cmp_numeric_asc(a,b)
 	return a - b
 
+// please don't ask
+/proc/cmp_numeric_text_desc(a, b)
+	return text2num(b) - text2num(a)
+
+/proc/cmp_numeric_text_asc(a, b)
+	return text2num(a) - text2num(b)
+
 /proc/cmp_text_asc(a,b)
 	return sorttext(b,a)
 
