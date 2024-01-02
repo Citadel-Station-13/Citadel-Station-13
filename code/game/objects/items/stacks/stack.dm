@@ -487,7 +487,7 @@
 	//get amount from user
 	var/max = get_amount()
 	var/list/quick_split
-	for(var/option in list(1, 2, 3, 4, 5, 6, 7, "One", "Five", "Ten", "Custom"))
+	for(var/option in list(2, 3, 4, 5, 6, 7, "One", "Five", "Ten", "Custom"))
 		var/mutable_appearance/option_display = new(src)
 		option_display.filters = null
 		option_display.cut_overlays()
