@@ -16,7 +16,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
-	slowdown = 2
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10, RAD = 0)
 	actions_types = list(
 		/datum/action/item_action/mod/deploy,
@@ -62,14 +61,16 @@
 	var/slowdown_inactive = 2
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 1
+	/// Extended description of the theme.
+	var/extended_desc
 	/// How long this MOD takes each part to seal.
 	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.
-	var/obj/item/clothing/head/helmet/space/mod/helmet
+	var/obj/item/clothing/head/mod/helmet
 	/// MOD chestplate.
-	var/obj/item/clothing/suit/space/mod/chestplate
+	var/obj/item/clothing/suit/mod/chestplate
 	/// MOD gauntlets.
 	var/obj/item/clothing/gloves/mod/gauntlets
 	/// MOD boots.
@@ -96,9 +97,9 @@
 	if(new_theme)
 		theme = new_theme
 	theme = GLOB.mod_themes[theme]
+	extended_desc = theme.extended_desc
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
-	slowdown = slowdown_inactive
 	complexity_max = theme.complexity_max
 	skin = new_skin || theme.default_skin
 	ui_theme = theme.ui_theme
@@ -107,10 +108,10 @@
 	wires = new /datum/wires/mod(src)
 	if(ispath(cell))
 		cell = new cell(src)
-	helmet = new /obj/item/clothing/head/helmet/space/mod(src)
+	helmet = new /obj/item/clothing/head/mod(src)
 	helmet.mod = src
 	mod_parts += helmet
-	chestplate = new /obj/item/clothing/suit/space/mod(src)
+	chestplate = new /obj/item/clothing/suit/mod(src)
 	chestplate.mod = src
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
@@ -134,6 +135,7 @@
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 		piece.item_state = "[skin]-[initial(piece.item_state)]"
 	update_flags()
+	update_speed()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
 		install(module)
@@ -175,6 +177,10 @@
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	return ..()
+
+/obj/item/mod/control/examine_more(mob/user)
+	. = ..()
+	. += extended_desc
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -542,6 +548,11 @@
 			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 3)
 		else
 			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell)
+
+/obj/item/mod/control/proc/update_speed()
+	for(var/obj/item/part as anything in mod_parts)
+		part.slowdown = (active ? slowdown_active : slowdown_inactive) / length(mod_parts)
+	wearer?.update_equipment_speed_mods()
 
 /obj/item/mod/control/proc/power_off()
 	balloon_alert(wearer, "no power!")

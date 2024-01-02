@@ -1,3 +1,15 @@
+//Magic Nullifier
+/obj/item/mod/module/anti_magic
+	name = "MOD magic nullifier module"
+	desc = "A series of obsidian rods installed into critical points around the suit, \
+		vibrated at a certain low frequency to enable them to resonate. \
+		This creates a low-range, yet strong, magic nullification field around the user, \
+		aided by a full replacement of the suit's normal coolant with holy water. \
+		Spells will spall right off this field, though it'll do nothing to help others believe you about all this."
+	icon_state = "magic_nullifier"
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/anti_magic)
+
 /obj/item/mod/module/anti_magic/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
@@ -94,3 +106,21 @@
 
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
+
+/obj/item/mod/module/noslip
+	name = "MOD anti slip module"
+	desc = "These are a modified variant of standard magnetic boots, utilizing piezoelectric crystals on the soles. \
+		The two plates on the bottom of the boots automatically extend and magnetize as the user steps; \
+		a pull that's too weak to offer them the ability to affix to a hull, but just strong enough to \
+		protect against the fact that you didn't read the wet floor sign. Honk Co. has come out numerous times \
+		in protest of these modules being legal."
+	icon_state = "noslip"
+	complexity = 1
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	incompatible_modules = list(/obj/item/mod/module/noslip)
+
+/obj/item/mod/module/noslip/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+
+/obj/item/mod/module/noslip/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
