@@ -532,7 +532,7 @@
 		if(stackmaterial == "Custom")
 			stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack?\nMax: [max]") as null|num)
 		stackmaterial = isnum(stackmaterial) ? stackmaterial : text2num(stackmaterial)
-	stackmaterial = min(max, stackmaterial)
+	stackmaterial = min(get_amount(), stackmaterial)
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, TRUE, FALSE)) //, !iscyborg(user)
 		return
 	split_stack(user, stackmaterial)
