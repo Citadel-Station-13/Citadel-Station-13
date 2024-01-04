@@ -37,7 +37,7 @@
 			to_chat(owner, "There's something stuck to your hand, stopping you from transforming!")
 			return
 	if(IsAvailable())
-		UpdateButtonIcon()
+		UpdateButtons()
 		var/mutcolor = owner.get_ability_property(INNATE_ABILITY_SLIME_BLOBFORM, PROPERTY_BLOBFORM_COLOR) || ("#" + H.dna.features["mcolor"])
 		if(!is_puddle)
 			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
@@ -78,7 +78,7 @@
 				owner.update_antag_overlays()
 
 				transforming = FALSE
-				UpdateButtonIcon()
+				UpdateButtons()
 		else
 			detransform()
 	else
@@ -109,4 +109,4 @@
 		squeak.RemoveComponent()
 	H.regenerate_icons()
 	transforming = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()

@@ -26,7 +26,7 @@
 	//owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer/hunter_edition)
 
 	// Give Hunter Power
-	var/datum/action/P = new /datum/action/bloodsucker/trackvamp
+	var/datum/action/P = new /datum/action/cooldown/bloodsucker/trackvamp
 	P.Grant(owner.current)
 
 	// Give Hunter Martial Arts
@@ -69,7 +69,7 @@
 
 	// Take Hunter Power
 	if (owner.current)
-		for (var/datum/action/bloodsucker/P in owner.current.actions)
+		for (var/datum/action/cooldown/bloodsucker/P in owner.current.actions)
 			P.Remove(owner.current)
 
 	// Take Hunter Martial Arts
@@ -166,7 +166,7 @@
 /*
 
 
-/datum/action/bloodsucker/trackvamp/
+/datum/action/cooldown/bloodsucker/trackvamp/
 	name = "Track Monster"//"Cellular Emporium"
 	desc = "Take a moment to look for clues of any nearby monsters.<br>These creatures are slippery, and often look like the crew."
 	button_icon = 'icons/mob/actions/bloodsucker.dmi'	//This is the file for the BACKGROUND icon
@@ -177,7 +177,7 @@
 	cooldown = 300 // 10 ticks, 1 second.
 	bloodcost = 0
 
-/datum/action/bloodsucker/trackvamp/ActivatePower()
+/datum/action/cooldown/bloodsucker/trackvamp/ActivatePower()
 
 	var/mob/living/user = owner
 	to_chat(user, "<span class='notice'>You look around, scanning your environment and discerning signs of any filthy, wretched affronts to the natural order.</span>")
@@ -192,7 +192,7 @@
 	// NOTE: DON'T DEACTIVATE!
 	//DeactivatePower()
 
-/datum/action/bloodsucker/trackvamp/proc/display_proximity()
+/datum/action/cooldown/bloodsucker/trackvamp/proc/display_proximity()
 	// Pick target
 	var/turf/my_loc = get_turf(owner)
 	//var/list/mob/living/carbon/vamps = list()

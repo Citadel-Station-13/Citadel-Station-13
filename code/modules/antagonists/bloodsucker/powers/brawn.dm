@@ -1,11 +1,11 @@
 
 
-/datum/action/bloodsucker/targeted/brawn
+/datum/action/cooldown/bloodsucker/targeted/brawn
 	name = "Brawn"
 	desc = "Snap restraints with ease, or deal terrible damage with your bare hands."
 	button_icon_state = "power_strength"
 	bloodcost = 10
-	cooldown = 90
+	cooldown_time = 90
 	target_range = 1
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
@@ -16,7 +16,7 @@
 	var/upgrade_canLocker = FALSE
 	var/upgrade_canDoor = FALSE
 
-/datum/action/bloodsucker/targeted/brawn/CheckCanUse(display_error)
+/datum/action/cooldown/bloodsucker/targeted/brawn/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
@@ -38,10 +38,10 @@
 
 	// NOTE: We use . = FALSE so that we can break cuffs AND throw off our attacker in one use!
 	//return TRUE
-/datum/action/bloodsucker/targeted/brawn/CheckValidTarget(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/brawn/CheckValidTarget(atom/A)
 	return isliving(A) || istype(A, /obj/machinery/door)
 
-/datum/action/bloodsucker/targeted/brawn/CheckCanTarget(atom/A, display_error)
+/datum/action/cooldown/bloodsucker/targeted/brawn/CheckCanTarget(atom/A, display_error)
 	// DEFAULT CHECKS (Distance)
 	if(!..()) // Disable range notice for Brawn.
 		return FALSE
@@ -59,7 +59,7 @@
 		return TRUE
 	return ..() // yes, FALSE! You failed if you got here! BAD TARGET
 
-/datum/action/bloodsucker/targeted/brawn/FireTargetedPower(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/brawn/FireTargetedPower(atom/A)
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
 	var/mob/living/carbon/target = A
 	var/mob/living/user = owner
@@ -97,7 +97,7 @@
 				D.open(2) // open(2) is like a crowbar or jaws of life.
 	// Target Type: Closet
 
-/datum/action/bloodsucker/targeted/brawn/proc/CheckBreakRestraints()
+/datum/action/cooldown/bloodsucker/targeted/brawn/proc/CheckBreakRestraints()
 	if(!iscarbon(owner)) // || !owner.restrained()
 		return FALSE
 	// (NOTE: Just like biodegrade.dm, we only remove one thing per use //
@@ -131,7 +131,7 @@
 			return TRUE
 	return FALSE
 
-/datum/action/bloodsucker/targeted/brawn/proc/CheckEscapePuller()
+/datum/action/cooldown/bloodsucker/targeted/brawn/proc/CheckEscapePuller()
 	if(!owner.pulledby)// || owner.pulledby.grab_state <= GRAB_PASSIVE)
 		return FALSE
 	var/mob/M = owner.pulledby
@@ -153,7 +153,7 @@
 	owner.pulledby = null // It's already done, but JUST IN CASE.
 	return TRUE
 /* Doesnt work
-/datum/action/bloodsucker/targeted/brawn/proc/CheckBreakLocker()
+/datum/action/cooldown/bloodsucker/targeted/brawn/proc/CheckBreakLocker()
 	if(!istype(owner.loc, /obj/structure/closet))
 		return FALSE
 		playsound(get_turf(owner), 'sound/machines/airlock_alien_prying.ogg', 40, 1, -1)

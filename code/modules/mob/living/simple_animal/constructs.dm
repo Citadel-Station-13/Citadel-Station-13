@@ -44,6 +44,9 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
+	var/datum/action/innate/cult/create_rune/our_rune
+	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
+	var/theme = "cult"
 	var/datum/mind/original_mind
 
 /mob/living/simple_animal/hostile/construct/Initialize(mapload)
@@ -51,24 +54,24 @@
 	update_health_hud()
 	var/spellnum = 1
 	for(var/spell in construct_spells)
-		var/the_spell = new spell(null)
-		AddSpell(the_spell)
-		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
 		var/pos = 2+spellnum*31
 		if(construct_spells.len >= 4)
 			pos -= 31*(construct_spells.len - 4)
-		S.action.button.screen_loc = "6:[pos],4:-2"
-		S.action.button.moved = "6:[pos],4:-2"
+		var/obj/effect/proc_holder/spell/the_spell = new spell(null)
+		the_spell?.action.default_button_position ="6:[pos],4:-2"
+		AddSpell(the_spell)
 		spellnum++
 	if(runetype)
-		var/datum/action/innate/cult/create_rune/CR = new runetype(src)
-		CR.Grant(src)
 		var/pos = 2+spellnum*31
-		CR.button.screen_loc = "6:[pos],4:-2"
-		CR.button.moved = "6:[pos],4:-2"
+		our_rune = new runetype(src)
+		our_rune.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
+		our_rune.Grant(src)
+	if(icon_state)
+		add_overlay("glow_[icon_state]_[theme]")
 
 /mob/living/simple_animal/hostile/construct/Destroy()
 	original_mind = null
+	QDEL_NULL(our_rune)
 	. = ..()
 
 /mob/living/simple_animal/hostile/construct/death()

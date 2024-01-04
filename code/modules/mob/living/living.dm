@@ -636,7 +636,7 @@
 		if(mind)
 			for(var/S in mind.spell_list)
 				var/obj/effect/proc_holder/spell/spell = S
-				spell.updateButtonIcon()
+				spell.UpdateButton()
 
 //proc used to remove all immobilisation effects + reset stamina
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)

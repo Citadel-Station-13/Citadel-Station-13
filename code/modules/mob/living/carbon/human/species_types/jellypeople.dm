@@ -82,7 +82,7 @@
 
 	var/datum/action/innate/ability/regrowth = H.ability_actions[INNATE_ABILITY_LIMB_REGROWTH]
 	if(regrowth)
-		regrowth.UpdateButtonIcon()
+		regrowth.UpdateButtons()
 
 	return FALSE // to let living/handle_blood know that the species is handling blood instead
 
@@ -472,9 +472,9 @@
 
 /datum/species/jelly/luminescent/proc/update_slime_actions()
 	integrate_extract.update_name()
-	integrate_extract.UpdateButtonIcon()
-	extract_minor.UpdateButtonIcon()
-	extract_major.UpdateButtonIcon()
+	integrate_extract.UpdateButtons()
+	extract_minor.UpdateButtons()
+	extract_major.UpdateButtons()
 
 /datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/C, intensity)
 	if(intensity)
@@ -514,7 +514,7 @@
 		name = "Eject Extract"
 		desc = "Eject your current slime extract."
 
-/datum/action/innate/integrate_extract/UpdateButtonIcon(status_only, force)
+/datum/action/innate/integrate_extract/UpdateButton(atom/movable/screen/movable/action_button/button, status_only, force)
 	if(!species || !species.current_extract)
 		button_icon_state = "slimeconsume"
 	else

@@ -719,6 +719,6 @@
 				user.vtec = initial(user.vtec) - maxReduction * 1
 
 	action.button_icon_state = "Chevron_State_[currentState]"
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 
 	return TRUE

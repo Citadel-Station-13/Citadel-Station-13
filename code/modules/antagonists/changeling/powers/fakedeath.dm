@@ -44,7 +44,7 @@
 	name = "Reviving Stasis"
 	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies. Costs 15 chemicals."
 	button_icon_state = "fake_death"
-	UpdateButtonIcon()
+	UpdateButtons()
 	chemical_cost = 15
 	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 
@@ -56,7 +56,7 @@
 			name = "Revive"
 			desc = "We arise once more."
 			button_icon_state = "revive"
-			UpdateButtonIcon()
+			UpdateButtons()
 			chemical_cost = 0
 			revive_ready = TRUE
 

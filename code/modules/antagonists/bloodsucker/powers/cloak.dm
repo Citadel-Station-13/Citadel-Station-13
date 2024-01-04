@@ -1,11 +1,11 @@
 
 
-/datum/action/bloodsucker/cloak
+/datum/action/cooldown/bloodsucker/cloak
 	name = "Cloak of Darkness"
 	desc = "Blend into the shadows and become invisible to the untrained eye. Movement is slowed in brightly lit areas, and you cannot dissapear while mortals watch you."
 	button_icon_state = "power_cloak"
 	bloodcost = 5
-	cooldown = 50
+	cooldown_time = 50
 	bloodsucker_can_buy = TRUE
 	amToggle = TRUE
 	warn_constant_cost = TRUE
@@ -14,7 +14,7 @@
 	var/walk_threshold = 0.4 // arbitrary number, to be changed. edit in last commit: this is fine after testing on box station for a bit
 	var/lum
 
-/datum/action/bloodsucker/cloak/CheckCanUse(display_error)
+/datum/action/cooldown/bloodsucker/cloak/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
@@ -24,7 +24,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/cloak/ActivatePower()
+/datum/action/cooldown/bloodsucker/cloak/ActivatePower()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	var/mob/living/user = owner
 
@@ -52,7 +52,7 @@
 
 		sleep(5) // Check every few ticks
 
-/datum/action/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
+/datum/action/cooldown/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
 	if (!..())
 		return FALSE
 	if(user.stat == !CONSCIOUS) // Must be CONSCIOUS
@@ -60,7 +60,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/cloak/DeactivatePower(mob/living/user = owner, mob/living/target)
+/datum/action/cooldown/bloodsucker/cloak/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..()
 	REMOVE_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
 	user.alpha = 255

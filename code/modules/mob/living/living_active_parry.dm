@@ -241,7 +241,7 @@
 	// before doing anything, check if the user moused over them properly
 	if(!client)
 		return BLOCK_NONE
-	var/found = attacker == client.mouseObject
+	var/found = attacker == WEAKREF(client.mouse_object_ref)
 	if(!found)
 		for(var/i in client.moused_over_objects)
 			if(i == object)

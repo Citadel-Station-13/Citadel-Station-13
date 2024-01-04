@@ -18,10 +18,11 @@
 
 	user.transferItemToLoc(tool, target, TRUE)
 
-	var/datum/action/item_action/hands_free/activate_pill/P = new(tool)
-	P.button.name = "Activate [tool.name]"
-	P.target = tool
-	P.Grant(target)	//The pill never actually goes in an inventory slot, so the owner doesn't inherit actions from it
+	var/datum/action/item_action/hands_free/activate_pill/pill_action = new(tool)
+	pill_action.name = "Activate [tool.name]"
+	pill_action.UpdateButtons()
+	pill_action.target = tool
+	pill_action.Grant(target)	//The pill never actually goes in an inventory slot, so the owner doesn't inherit actions from it
 
 	user.visible_message("[user] wedges \the [tool] into [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You wedge [tool] into [target]'s [parse_zone(target_zone)].</span>")
 	return 1

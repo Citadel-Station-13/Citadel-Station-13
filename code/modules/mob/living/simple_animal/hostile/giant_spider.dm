@@ -336,7 +336,7 @@
 					if(L.blood_volume && (L.stat != DEAD || !consumed_mobs[L.tag])) //if they're not dead, you can consume them anyway
 						consumed_mobs[L.tag] = TRUE
 						fed++
-						lay_eggs.UpdateButtonIcon(TRUE)
+						lay_eggs.UpdateButtons(TRUE)
 						visible_message("<span class='danger'>[src] sticks a proboscis into [L] and sucks a viscous substance out.</span>","<span class='notice'>You suck the nutriment out of [L], feeding you enough to lay a cluster of eggs.</span>")
 						L.death() //you just ate them, they're dead.
 					else
@@ -402,7 +402,7 @@
 
 /obj/effect/proc_holder/wrap/update_icon()
 	action.button_icon_state = "wrap_[active]"
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 
 /obj/effect/proc_holder/wrap/Trigger(mob/living/simple_animal/hostile/poison/giant_spider/nurse/user)
 	if(!istype(user))
@@ -482,7 +482,7 @@
 					C.poison_per_bite = S.poison_per_bite
 					C.faction = S.faction.Copy()
 					S.fed--
-					UpdateButtonIcon(TRUE)
+					UpdateButtons(TRUE)
 		S.busy = SPIDER_IDLE
 		S.stop_automated_movement = FALSE
 

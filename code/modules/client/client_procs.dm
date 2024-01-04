@@ -881,10 +881,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.
 			return
 		click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
-	var/list/L = params2list(params)
+	var/ab = FALSE
+	var/list/modifiers = params2list(params)
 
-	if(L["drag"])
+	var/dragged = LAZYACCESS(modifiers, DRAG)
+	if(dragged && !LAZYACCESS(modifiers, dragged)) //I don't know what's going on here, but I don't trust it
 		return
+
+	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && LAZYACCESS(modifiers, LEFT_CLICK))
+		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 
 	var/mcl = CONFIG_GET(number/minute_click_limit)
 	if (!holder && !ignore_spam && mcl)
@@ -901,6 +906,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				clicklimiter[ADMINSWARNED_AT] = minute
 
 				msg += " Administrators have been informed."
+				if (ab)
+					log_game("[key_name(src)] is using the middle click aimbot exploit")
+					message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
 				log_click(object, location, control, params, src, "lockout (spam - minute)", TRUE)
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
@@ -928,6 +936,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		// unfocus the text bar. This removes the red color from the text bar
 		// so that the visual focus indicator matches reality.
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+
+	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK, object, location, control, params, usr)
 
 	..()
 

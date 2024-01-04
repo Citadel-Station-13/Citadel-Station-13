@@ -3,12 +3,12 @@
 // Level 2: Dodge Bullets
 // Level 3: Stun People Passed
 
-/datum/action/bloodsucker/targeted/haste
+/datum/action/cooldown/bloodsucker/targeted/haste
 	name = "Immortal Haste"
 	desc = "Dash somewhere with supernatural speed. Those nearby may be knocked away, stunned, or left empty-handed."
 	button_icon_state = "power_speed"
 	bloodcost = 6
-	cooldown = 120
+	cooldown_time = 120
 	target_range = 15
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
@@ -18,7 +18,7 @@
 	/// If set, uses this speed in deciseconds instead of world.tick_lag
 	var/speed_override
 
-/datum/action/bloodsucker/targeted/haste/CheckCanUse(display_error)
+/datum/action/cooldown/bloodsucker/targeted/haste/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
@@ -33,10 +33,10 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/haste/CheckValidTarget(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/haste/CheckValidTarget(atom/A)
 	return isturf(A) || A.loc != owner.loc // Anything will do, if it's not me or my square
 
-/datum/action/bloodsucker/targeted/haste/CheckCanTarget(atom/A, display_error)
+/datum/action/cooldown/bloodsucker/targeted/haste/CheckCanTarget(atom/A, display_error)
 	// DEFAULT CHECKS (Distance)
 	if (!..())
 		return FALSE
@@ -45,7 +45,7 @@
 	//	return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/haste/FireTargetedPower(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/haste/FireTargetedPower(atom/A)
 	// This is a non-async proc to make sure the power is "locked" until this finishes.
 	hit = list()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
@@ -78,11 +78,11 @@
 	hit = null
 	user.update_mobility()
 
-/datum/action/bloodsucker/targeted/haste/DeactivatePower(mob/living/user = owner, mob/living/target)
+/datum/action/cooldown/bloodsucker/targeted/haste/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE
 	user.update_mobility()
 
-/datum/action/bloodsucker/targeted/haste/proc/on_move()
+/datum/action/cooldown/bloodsucker/targeted/haste/proc/on_move()
 	for(var/mob/living/L in dview(1, get_turf(owner)))
 		if(!hit[L] && (L != owner))
 			hit[L] = TRUE

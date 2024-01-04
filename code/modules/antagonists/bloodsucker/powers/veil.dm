@@ -1,10 +1,10 @@
 
-/datum/action/bloodsucker/veil
+/datum/action/cooldown/bloodsucker/veil
 	name = "Veil of Many Faces"
 	desc = "Disguise yourself in the illusion of another identity."
 	button_icon_state = "power_veil"
 	bloodcost = 15
-	cooldown = 100
+	cooldown_time = 100
 	amToggle = TRUE
 	bloodsucker_can_buy = TRUE
 	warn_constant_cost = TRUE
@@ -29,7 +29,7 @@
 	var/list/prev_features	// For lizards and such
 
 
-/datum/action/bloodsucker/veil/CheckCanUse(display_error)
+/datum/action/cooldown/bloodsucker/veil/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
@@ -37,7 +37,7 @@
 	return TRUE
 
 
-/datum/action/bloodsucker/veil/ActivatePower()
+/datum/action/cooldown/bloodsucker/veil/ActivatePower()
 
 	cast_effect() // POOF
 
@@ -47,14 +47,14 @@
 	Disguise_FaceName()
 
 
-/datum/action/bloodsucker/veil/proc/Disguise_Outfit()
+/datum/action/cooldown/bloodsucker/veil/proc/Disguise_Outfit()
 
 	// Step One: Back up original items
 
 
 
 
-/datum/action/bloodsucker/veil/proc/Disguise_FaceName()
+/datum/action/cooldown/bloodsucker/veil/proc/Disguise_FaceName()
 
 	// Change Name/Voice
 	var/mob/living/carbon/human/H = owner
@@ -112,7 +112,7 @@
 		sleep(50)
 
 
-/datum/action/bloodsucker/veil/DeactivatePower(mob/living/user = owner, mob/living/target)
+/datum/action/cooldown/bloodsucker/veil/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..()
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -149,7 +149,7 @@
 		cast_effect() // POOF
 
 	// CAST EFFECT //	// General effect (poof, splat, etc) when you cast. Doesn't happen automatically!
-/datum/action/bloodsucker/veil/proc/cast_effect()
+/datum/action/cooldown/bloodsucker/veil/proc/cast_effect()
 	// Effect
 	playsound(get_turf(owner), 'sound/magic/smoke.ogg', 20, 1)
 	var/datum/effect_system/steam_spread/puff = new /datum/effect_system/steam_spread/()

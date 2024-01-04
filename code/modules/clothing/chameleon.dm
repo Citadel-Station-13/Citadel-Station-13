@@ -162,8 +162,8 @@
 	..()
 
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
-	if(button)
-		button.name = "Change [chameleon_name] Appearance"
+	name = "Change [chameleon_name] Appearance"
+	UpdateButtons()
 
 	chameleon_blacklist |= typecacheof(target.type)
 	for(var/V in typesof(chameleon_type))
@@ -209,7 +209,7 @@
 		update_item(picked_item)
 		var/obj/item/thing = target
 		thing.update_slot_icon()
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
 	target.name = initial(picked_item.name)
@@ -435,9 +435,9 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/head/chameleon)
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.UpdateButtonIcon()
+	togglehatmask_action.UpdateButtons()
 	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.UpdateButtonIcon()
+	randomise_action.UpdateButtons()
 
 CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/mask/chameleon)
 	name = "gas mask"
@@ -489,9 +489,9 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/mask/chameleon)
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.UpdateButtonIcon()
+	togglehatmask_action.UpdateButtons()
 	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.UpdateButtonIcon()
+	randomise_action.UpdateButtons()
 
 /obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>[src] does not have a voice changer.</span>")

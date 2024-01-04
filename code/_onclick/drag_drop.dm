@@ -91,31 +91,31 @@
 /atom/movable/screen/click_catcher/IsAutoclickable()
 	. = 1
 
-//Please don't roast me too hard
-/client/MouseMove(object,location,control,params)
-	mouseParams = params
-	mouseLocation = location
-	mouseObject = object
-	mouseControlObject = control
-	if(mob)
-		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOUSEMOVE, object, location, control, params)
-		// god forgive me for i have sinned - used for autoparry. currently at 5 objects.
-		moused_over_objects[object] = world.time
-		if(moused_over_objects.len > 7)
-			moused_over_objects.Cut(1, 2)
-	..()
-
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	var/list/modifiers = params2list(params)
+	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
+		if (src_object && src_location != over_location)
+			middragtime = world.time
+			middle_drag_atom_ref = WEAKREF(src_object)
+		else
+			middragtime = 0
+			middle_drag_atom_ref = null
 	mouseParams = params
-	mouseLocation = over_location
-	mouseObject = over_object
-	mouseControlObject = over_control
-	if(selected_target[1] && over_object && over_object.IsAutoclickable())
+	mouse_location_ref = WEAKREF(over_location)
+	mouse_object_ref = WEAKREF(over_object)
+	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
+	return ..()
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return
+
+/client/MouseDrop(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
+	if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
+		middragtime = 0
+		middle_drag_atom_ref = null
+	..()

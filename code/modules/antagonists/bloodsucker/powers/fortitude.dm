@@ -2,12 +2,12 @@
 
 
 
-/datum/action/bloodsucker/fortitude
+/datum/action/cooldown/bloodsucker/fortitude
 	name = "Fortitude"
 	desc = "Withstand egregious physical wounds and walk away from attacks that would stun, pierce, and dismember lesser beings. You cannot run while active."
 	button_icon_state = "power_fortitude"
 	bloodcost = 30
-	cooldown = 80
+	cooldown_time = 80
 	bloodsucker_can_buy = TRUE
 	amToggle = TRUE
 	warn_constant_cost = TRUE
@@ -15,7 +15,7 @@
 
 	var/fortitude_resist // So we can raise and lower your brute resist based on what your level_current WAS.
 
-/datum/action/bloodsucker/fortitude/ActivatePower()
+/datum/action/cooldown/bloodsucker/fortitude/ActivatePower()
 	var/datum/antagonist/bloodsucker/B = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	var/mob/living/user = owner
 	to_chat(user, "<span class='notice'>Your flesh, skin, and muscles become as steel.</span>")
@@ -47,8 +47,8 @@
 			B.AddBloodVolume(-0.5)
 		sleep(20) // Check every few ticks that we haven't disabled this power
 	// Return to Running (if you were before)
-	
-/datum/action/bloodsucker/fortitude/DeactivatePower(mob/living/user = owner, mob/living/target)
+
+/datum/action/cooldown/bloodsucker/fortitude/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..()
 	// Restore Traits & Effects
 	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, "fortitude")
