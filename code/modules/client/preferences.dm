@@ -2631,8 +2631,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in GLOB.available_ui_styles
 					if(pickedui)
 						UI_style = pickedui
-						if (parent && parent.mob && parent.mob.hud_used)
-							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style))
+						if (pickedui && parent && parent.mob && parent.mob.hud_used)
+							QDEL_NULL(parent.mob.hud_used)
+							parent.mob.create_mob_hud()
+							parent.mob.hud_used.show_hud(1, parent.mob)
 				if("pda_style")
 					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
 					if(pickedPDAStyle)
@@ -3009,7 +3011,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					outline_enabled = !outline_enabled
 				if("outline_color")
 					var/pickedOutlineColor = input(user, "Choose your outline color.", "General Preference", outline_color) as color|null
-					if(pickedOutlineColor != pickedOutlineColor)
+					if(pickedOutlineColor != outline_color)
 						outline_color = pickedOutlineColor // nullable
 				if("screentip_pref")
 					var/choice = input(user, "Choose your screentip preference", "Screentipping?", screentip_pref) as null|anything in GLOB.screentip_pref_options
