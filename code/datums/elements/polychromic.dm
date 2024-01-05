@@ -63,7 +63,7 @@
 			if(suits_with_helmet_typecache[A.type])
 				RegisterSignal(A, COMSIG_SUIT_MADE_HELMET, .proc/register_helmet) //you better work now you slut
 	else if(_flags & POLYCHROMIC_ACTION && ismob(A)) //in the event mob update icon procs are ever standarized.
-		var/datum/action/polychromic/P = new(A)
+		var/datum/action/item_action/polychromic/P = new(A)
 		RegisterSignal(P, COMSIG_ACTION_TRIGGER, .proc/activate_action)
 		actions_by_atom[A] = P
 		P.Grant(A)
@@ -73,7 +73,7 @@
 /datum/element/polychromic/Detach(atom/A)
 	. = ..()
 	colors_by_atom -= A
-	var/datum/action/polychromic/P = actions_by_atom[A]
+	var/datum/action/item_action/polychromic/P = actions_by_atom[A]
 	if(P)
 		actions_by_atom -= A
 		qdel(P)
@@ -146,7 +146,7 @@
 /datum/element/polychromic/proc/grant_user_action(atom/source, mob/user, slot)
 	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED || slot == ITEM_SLOT_HANDCUFFED || slot == ITEM_SLOT_DEX_STORAGE)
 		return
-	var/datum/action/polychromic/P = actions_by_atom[source]
+	var/datum/action/item_action/polychromic/P = actions_by_atom[source]
 	if(!P)
 		P = new (source)
 		P.name = "Modify [source]'\s Colors"
@@ -156,7 +156,7 @@
 	P.Grant(user)
 
 /datum/element/polychromic/proc/remove_user_action(atom/source, mob/user)
-	var/datum/action/polychromic/P = actions_by_atom[source]
+	var/datum/action/item_action/polychromic/P = actions_by_atom[source]
 	P?.Remove(user)
 
 /datum/element/polychromic/proc/activate_action(datum/action/source, atom/target)
@@ -197,9 +197,14 @@
 	helmet_by_suit -= S
 	colors_by_atom -= source
 
-/datum/action/polychromic
+/datum/action/item_action/polychromic
 	name = "Modify Polychromic Colors"
 	background_icon_state = "bg_polychromic"
-	use_target_appearance = TRUE
 	button_icon_state = null
-	target_appearance_matrix = list(0.8,0,0,0,0.8,0)
+	check_flags = NONE
+
+/datum/action/item_action/polychromic/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+	var/matrix/save_matrix = target.transform
+	target.transform = matrix(0.8, 0, 0, 0, 0.8, 0)
+	. = ..()
+	target.transform = save_matrix

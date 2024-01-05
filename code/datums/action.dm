@@ -16,9 +16,6 @@
 	/// Where any buttons we create should be by default. Accepts screen_loc and location defines
 	var/default_button_position = SCRN_OBJ_IN_LIST
 
-	var/use_target_appearance = FALSE
-	var/list/target_appearance_matrix //if set, will be used to transform the target button appearance as an arglist.
-
 	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
 
@@ -134,7 +131,7 @@
 
 		ApplyIcon(button, force)
 
-	if(!IsAvailable())
+	if(!IsAvailable(TRUE))
 		button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 	else
 		button.color = rgb(255,255,255,255)
@@ -225,14 +222,11 @@
 /datum/action/item_action
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	button_icon_state = null
-	use_target_appearance = TRUE
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
 
 /datum/action/item_action/New(Target)
 	..()
-	if(button_icon_state)
-		use_target_appearance = FALSE
 	var/obj/item/I = target
 	LAZYINITLIST(I.actions)
 	I.actions += src
@@ -243,16 +237,42 @@
 	UNSETEMPTY(I.actions)
 	return ..()
 
-/datum/action/item_action/Trigger()
-	if(!..())
-		return 0
+/datum/action/item_action/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(target)
 		var/obj/item/I = target
 		I.ui_action_click(owner, src)
-	return 1
+	return TRUE
+
+/datum/action/item_action/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+	var/obj/item/item_target = target
+	if(button_icon && button_icon_state)
+		// If set, use the custom icon that we set instead
+		// of the item appearence
+		..()
+	else if((target && current_button.appearance_cache != item_target.appearance) || force) //replace with /ref comparison if this is not valid.
+		var/old_layer = item_target.layer
+		var/old_plane = item_target.plane
+		item_target.layer = FLOAT_LAYER //AAAH
+		item_target.plane = FLOAT_PLANE //^ what that guy said
+		current_button.filters = null
+		current_button.cut_overlays()
+		current_button.add_overlay(item_target)
+		item_target.layer = old_layer
+		item_target.plane = old_plane
+		current_button.appearance_cache = item_target.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
+
+/datum/action/item_action/toggle_light/Trigger(trigger_flags)
+	if(istype(target, /obj/item/pda))
+		var/obj/item/pda/P = target
+		P.toggle_light(owner)
+		return
+	..()
 
 /datum/action/item_action/toggle_hood
 	name = "Toggle Hood"
@@ -403,7 +423,6 @@
 /datum/action/item_action/clock/quickbind
 	name = "Quickbind"
 	desc = "If you're seeing this, file a bug report."
-	use_target_appearance = FALSE
 	var/scripture_index = 0 //the index of the scripture we're associated with
 
 /datum/action/item_action/toggle_helmet_flashlight
@@ -942,7 +961,7 @@
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
 
-/proc/get_action_of_type(mob/M, var/action_type)
+/proc/get_action_of_type(mob/M, action_type)
 	if(!M.actions || !ispath(action_type, /datum/action))
 		return
 	for(var/datum/action/A in M.actions)

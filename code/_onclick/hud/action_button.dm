@@ -125,6 +125,7 @@
 			position_info = SCRN_OBJ_IN_PALETTE
 
 	user.client.prefs.action_buttons_screen_locs["[name]_[id]"] = position_info
+	user.client.prefs.queue_save_pref(1 SECONDS, TRUE)
 
 /atom/movable/screen/movable/action_button/proc/load_position()
 	var/mob/user = our_hud.mymob
@@ -138,6 +139,7 @@
 	if(!user?.client)
 		return
 	user.client.prefs.action_buttons_screen_locs -= "[name]_[id]"
+	user.client.prefs.queue_save_pref(1 SECONDS, TRUE)
 
 /datum/hud/proc/get_action_buttons_icons()
 	. = list()

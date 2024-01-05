@@ -521,7 +521,8 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 #define VARSET_TO_LIST(L, V) if(L) L[#V] = V
 #define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
 
-#define PREF_SAVELOAD_COOLDOWN 5
+#define PREF_LOAD_COOLDOWN 5
+#define PREF_SAVE_COOLDOWN 2 SECONDS
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
