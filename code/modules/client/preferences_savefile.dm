@@ -602,7 +602,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				queue_save_pref(PREF_SAVE_COOLDOWN, silent)
 			return FALSE
 		COOLDOWN_START(src, saveprefcooldown, PREF_SAVE_COOLDOWN)
-	if(pref_queue != -1)
+	if(pref_queue)
 		deltimer(pref_queue)
 	var/savefile/S = new /savefile(path)
 	if(!S)
@@ -683,9 +683,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/queue_save_pref(save_in, silent)
 	if(parent && !silent)
 		to_chat(parent, span_notice("Saving preferences in [save_in * 0.1] second\s."))
-	if(pref_queue != -1)
+	if(pref_queue)
 		deltimer(pref_queue)
-	pref_queue = addtimer(CALLBACK(src, PROC_REF(save_preferences), TRUE, silent), save_in)
+	pref_queue = addtimer(CALLBACK(src, PROC_REF(save_preferences), TRUE, silent), save_in, TIMER_STOPPABLE)
 
 /datum/preferences/proc/load_character(slot, bypass_cooldown = FALSE)
 	if(!path)
@@ -1104,7 +1104,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				queue_save_char(PREF_SAVE_COOLDOWN, silent)
 			return FALSE
 		COOLDOWN_START(src, savecharcooldown, PREF_SAVE_COOLDOWN)
-	if(char_queue != -1)
+	if(char_queue)
 		deltimer(char_queue)
 	var/savefile/S = new /savefile(path)
 	if(!S)
@@ -1300,9 +1300,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/queue_save_char(save_in, silent)
 	if(parent && !silent)
 		to_chat(parent, span_notice("Saving character in [save_in * 0.1] second\s."))
-	if(char_queue != -1)
+	if(char_queue)
 		deltimer(char_queue)
-	char_queue = addtimer(CALLBACK(src, PROC_REF(save_character), TRUE, silent), save_in)
+	char_queue = addtimer(CALLBACK(src, PROC_REF(save_character), TRUE, silent), save_in, TIMER_STOPPABLE)
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN

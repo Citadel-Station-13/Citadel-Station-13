@@ -3215,7 +3215,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					load_character()
 
 				if("changeslot")
-					if(char_queue != -1)
+					if(char_queue)
 						deltimer(char_queue) // Do not dare.
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
