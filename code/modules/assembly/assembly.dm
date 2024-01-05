@@ -30,7 +30,7 @@
 	var/activate_cooldown = 3 SECONDS
 
 /obj/item/assembly/get_part_rating()
-	return 1
+	return TRUE
 
 /obj/item/assembly/proc/on_attach()
 

@@ -113,7 +113,7 @@
 				if(do_after(user, 6 SECONDS, src))
 					if(S.use(3))
 						repair(user, params)
-		return 1
+		return TRUE
 	return ..()
 
 // Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
@@ -420,8 +420,8 @@ BLIND     // can't see anything
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/item/clothing/obj_destruction(damage_flag)

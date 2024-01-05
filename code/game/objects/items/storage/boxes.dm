@@ -73,7 +73,7 @@
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
-		return 0
+		return FALSE
 	return ..()
 
 //Disk boxes

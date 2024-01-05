@@ -58,4 +58,4 @@ Bonus
 	if(unsafe)
 		limit = 0
 	M.adjust_bodytemperature(-get_cold * A.stage, limit)
-	return 1
+	return TRUE

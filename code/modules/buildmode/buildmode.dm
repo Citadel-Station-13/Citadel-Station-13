@@ -136,7 +136,7 @@
 	build_dir = newdir
 	close_dirswitch()
 	dirbutton.update_icon()
-	return 1
+	return TRUE
 
 /datum/buildmode/proc/InterceptClickOn(mob/user, params, atom/object)
 	mode.handle_click(user.client, params, object)

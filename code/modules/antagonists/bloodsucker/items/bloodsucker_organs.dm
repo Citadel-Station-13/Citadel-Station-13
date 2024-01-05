@@ -33,7 +33,7 @@
 
 /obj/item/organ/heart/vampheart/Restart()
 	beating = 0	// DONT run ..(). We don't want to start beating again.
-	return 0
+	return FALSE
 
 /obj/item/organ/heart/vampheart/Stop()
 	fakingit = 0

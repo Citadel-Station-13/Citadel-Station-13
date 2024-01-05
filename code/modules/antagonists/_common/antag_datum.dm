@@ -449,7 +449,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	antag_memory = new_memo
 
 /**
- * Gets how fast we can hijack the shuttle, return 0 for can not hijack.
+ * Gets how fast we can hijack the shuttle, return FALSE for can not hijack.
  * Defaults to hijack_speed var, override for custom stuff like buffing hijack speed for hijack objectives or something.
  */
 /datum/antagonist/proc/hijack_speed()

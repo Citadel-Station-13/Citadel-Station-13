@@ -17,7 +17,7 @@
 /mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (hit_percent <= 0))
-		return 0
+		return FALSE
 	var/damage_amount =  forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
@@ -32,7 +32,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			adjustStaminaLoss(damage_amount, forced = forced)
-	return 1
+	return TRUE
 
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
 	switch(damagetype)
@@ -67,7 +67,7 @@
 
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
 	if(blocked >= 100)
-		return 0
+		return FALSE
 	if(brute)
 		apply_damage(brute, BRUTE, def_zone, blocked)
 	if(burn)
@@ -82,12 +82,12 @@
 		apply_damage(stamina, STAMINA, def_zone, blocked)
 	if(brain)
 		apply_damage(brain, BRAIN, def_zone, blocked)
-	return 1
+	return TRUE
 
 /mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE, knockdown_stamoverride, knockdown_stammax)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
-		return 0
+		return FALSE
 	switch(effecttype)
 		if(EFFECT_STUN)
 			Stun(effect * hit_percent)
@@ -109,7 +109,7 @@
 		if(EFFECT_JITTER)
 			if((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
-	return 1
+	return TRUE
 
 
 /mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0, kd_stamoverride, kd_stammax)
@@ -163,7 +163,7 @@
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(status_flags & GODMODE)
-		return 0
+		return FALSE
 	oxyloss = amount
 	if(updating_health)
 		updatehealth()
@@ -179,7 +179,7 @@
 		affected_by = TOX_SYSCORRUPT
 
 	if(toxins_type != affected_by)
-		return 0
+		return FALSE
 	else
 		return toxloss
 

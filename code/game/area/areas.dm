@@ -560,9 +560,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	switch(chan)
 		if(EQUIP)
 			return power_equip
@@ -571,10 +571,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(ENVIRON)
 			return power_environ
 
-	return 0
+	return FALSE
 
 /area/space/powered(chan) //Nope.avi
-	return 0
+	return FALSE
 
 // called when power status changes
 

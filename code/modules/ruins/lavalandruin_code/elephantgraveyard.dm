@@ -85,7 +85,7 @@
 		to_chat(user, "You fill in the oil well with soil.")
 		O.play_tool_sound(src)
 		deconstruct()
-		return 1
+		return TRUE
 	if(istype(O, /obj/item/reagent_containers)) //Refilling bottles with oil
 		var/obj/item/reagent_containers/RG = O
 		if(RG.is_refillable())
@@ -97,7 +97,7 @@
 			return FALSE
 	if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='notice'>You won't have any luck getting \the [O] out if you drop it in the oil.</span>")
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -170,14 +170,14 @@
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
 						to_chat(user, "<span class='boldwarning'>Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!</span>")
 						first_open = FALSE
-					return 1
-				return 1
+					return TRUE
+				return TRUE
 			else
 				to_chat(user, "<span class='notice'>You can't dig up a grave with \the [S.name].</span>")
-				return 1
+				return TRUE
 		else
 			to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
-			return 1
+			return TRUE
 
 	else if((user.a_intent != INTENT_HELP) && opened) //checks to attempt to remove the grave entirely.
 		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
@@ -186,7 +186,7 @@
 				to_chat(user, "<span class='notice'>You remove \the [src]  completely.</span>")
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
 				deconstruct(TRUE)
-				return 1
+				return TRUE
 	return
 
 /obj/structure/closet/crate/grave/bust_open()

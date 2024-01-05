@@ -203,7 +203,7 @@
 
 /obj/item/gun/energy/kinetic_accelerator/getstamcost(mob/living/carbon/user)
 	if(user && !lavaland_equipment_pressure_check(get_turf(user)))
-		return 0
+		return FALSE
 	else
 		return ..()
 

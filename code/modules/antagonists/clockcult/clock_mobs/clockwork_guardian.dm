@@ -121,7 +121,7 @@
 		stat(null, "You do [melee_damage_upper] damage on melee attacks.")
 
 /mob/living/simple_animal/hostile/clockwork/guardian/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/clockwork/guardian/proc/bind_to_host(mob/living/new_host)
 	if(!new_host)

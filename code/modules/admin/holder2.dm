@@ -140,21 +140,21 @@ GLOBAL_PROTECT(href_token)
 
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank.rights))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /datum/admins/proc/check_if_greater_rights_than_holder(datum/admins/other)
 	if(!other)
-		return 1 //they have no rights
+		return TRUE //they have no rights
 	if(rank.rights == R_EVERYTHING)
-		return 1 //we have all the rights
+		return TRUE //we have all the rights
 	if(src == other)
-		return 1 //you always have more rights than yourself
+		return TRUE //you always have more rights than yourself
 	if(rank.rights != other.rank.rights)
 		if( (rank.rights & other.rank.rights) == other.rank.rights )
-			return 1 //we have all the rights they have and more
-	return 0
+			return TRUE //we have all the rights they have and more
+	return FALSE
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, fakekey))
@@ -164,7 +164,7 @@ GLOBAL_PROTECT(href_token)
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
 if rights_required == 0, then it simply checks if they are an admin.
-if it doesn't return 1 and show_msg=1 it will prints a message explaining why the check has failed
+if it doesn't return TRUE and show_msg=1 it will prints a message explaining why the check has failed
 generally it would be used like so:
 
 /proc/admin_proc()
@@ -178,26 +178,26 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 /proc/check_rights(rights_required, show_msg=1)
 	if(usr && usr.client)
 		if (check_rights_for(usr.client, rights_required))
-			return 1
+			return TRUE
 		else
 			if(show_msg)
 				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
-	return 0
+	return FALSE
 
 //probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
 	if(usr && usr.client)
 		if(usr.client.holder)
 			if(!other || !other.holder)
-				return 1
+				return TRUE
 			return usr.client.holder.check_if_greater_rights_than_holder(other.holder)
-	return 0
+	return FALSE
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
 	if(subject && subject.holder)
 		return subject.holder.check_for_rights(rights_required)
-	return 0
+	return FALSE
 
 /proc/GenerateToken()
 	. = ""

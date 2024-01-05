@@ -23,7 +23,7 @@
 	START_PROCESSING(SSprocessing, src)
 
 /datum/sabotage_objective/processing/proc/check_condition_processing()
-	return 1
+	return TRUE
 
 /datum/sabotage_objective/processing/process()
 	check_condition_processing()

@@ -188,7 +188,7 @@
 			ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return FALSE
 
 GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	/datum/strippable_item/parrot_headset,
@@ -627,12 +627,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 				parrot_state = PARROT_WANDER
 				parrot_stuck = 0
 				parrot_lastmove = null
-				return 1
+				return TRUE
 		else
 			parrot_lastmove = null
 	else
 		parrot_lastmove = src.loc
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/proc/attempt_item_theft()
 	//Search for item to steal
@@ -710,7 +710,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	if(held_item)
 		to_chat(src, "<span class='warning'>You are already holding [held_item]!</span>")
-		return 1
+		return TRUE
 
 	for(var/obj/item/I in view(1,src))
 		//Make sure we're not already holding it and it's small enough
@@ -726,7 +726,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
 	set name = "Steal from mob"
@@ -738,7 +738,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	if(held_item)
 		to_chat(src, "<span class='warning'>You are already holding [held_item]!</span>")
-		return 1
+		return TRUE
 
 	var/obj/item/stolen_item = null
 
@@ -755,7 +755,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
 	set name = "Drop held item"
@@ -780,7 +780,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!held_item)
 		if(src == usr) //So that other mobs wont make this message appear when they're bludgeoning you.
 			to_chat(src, "<span class='danger'>You have nothing to drop!</span>")
-		return 0
+		return FALSE
 
 
 //parrots will eat crackers instead of dropping them
@@ -790,7 +790,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
 		emote("me", EMOTE_VISIBLE, "[src] eagerly downs the cracker.")
-		return 1
+		return TRUE
 
 
 	if(!drop_gently)
@@ -800,13 +800,13 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			G.prime()
 			to_chat(src, "You let go of [held_item]!")
 			held_item = null
-			return 1
+			return TRUE
 
 	to_chat(src, "You drop [held_item].")
 
 	held_item.forceMove(drop_location())
 	held_item = null
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/parrot/proc/perch_player()
 	set name = "Sit"

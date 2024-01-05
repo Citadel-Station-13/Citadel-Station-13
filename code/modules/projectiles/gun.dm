@@ -807,7 +807,7 @@
 	return ..()
 
 /obj/item/gun/proc/getinaccuracy(mob/living/user, bonus_spread, stamloss)
-	return 0		// Replacement TBD: Exponential curved aim instability system.
+	return FALSE		// Replacement TBD: Exponential curved aim instability system.
 
 /*
 	if(inaccuracy_modifier == 0)

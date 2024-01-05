@@ -106,9 +106,9 @@ RLD
 		matter += value*amount_to_use
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into [src]. </span>")
-		return 1
+		return TRUE
 	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into [src]!</span>")
-	return 0
+	return FALSE
 
 /obj/item/construction/proc/activate()
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -575,12 +575,12 @@ RLD
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
-		return 0
+		return FALSE
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
 		to_chat(user, no_ammo_message)
@@ -588,12 +588,12 @@ RLD
 
 /obj/item/construction/rcd/borg/checkResource(amount, mob/user)
 	if(!iscyborg(user))
-		return 0
+		return FALSE
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	. = borgy.cell.charge >= (amount * energyfactor)
 	if(!. && user)
 		to_chat(user, no_ammo_message)
@@ -750,7 +750,7 @@ RLD
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
-							return 0
+							return FALSE
 						activate()
 						qdel(A)
 						return TRUE
@@ -811,9 +811,9 @@ RLD
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
-							return 0
+							return FALSE
 						if(!useResource(floorcost, user))
-							return 0
+							return FALSE
 						activate()
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)

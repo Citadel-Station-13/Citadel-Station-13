@@ -6,7 +6,7 @@
 	var/obj/item/stack/S = O
 	if(istype(S))
 		return S.amount
-	return 0
+	return FALSE
 
 // Hides
 

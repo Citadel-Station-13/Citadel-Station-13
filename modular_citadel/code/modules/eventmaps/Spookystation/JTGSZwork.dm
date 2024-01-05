@@ -702,7 +702,7 @@ GLOBAL_LIST_EMPTY(rain_sounds)
 			else
 				new /obj/item/stack/sheet/hay/(get_turf(src))
 			qdel(src)
-			return 1
+			return TRUE
 	else
 		. = ..()
 

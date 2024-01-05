@@ -70,7 +70,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/vehicle/sealed/mecha/M)
 	if(!M)
-		return 0
+		return FALSE
 	target = null //Target was our mecha, so null it out
 	M.aimob_enter_mech(src)
 	targets_from = M
@@ -95,7 +95,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/exit_mecha(obj/vehicle/sealed/mecha/M)
 	if(!M)
-		return 0
+		return FALSE
 
 	mecha.aimob_exit_mech(src)
 	allow_movement_on_non_turfs = FALSE
@@ -280,7 +280,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/EscapeConfinement()
 	if(mecha && loc == mecha)
-		return 0
+		return FALSE
 	..()
 
 

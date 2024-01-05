@@ -274,7 +274,7 @@
 
 /obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE && damage_amount < 12 && !(stat & BROKEN))
-		return 0
+		return FALSE
 	. = ..()
 
 /obj/machinery/camera/obj_break(damage_flag)
@@ -417,4 +417,4 @@
 	else
 		user.sight = 0
 		user.see_in_dark = 2
-	return 1
+	return TRUE

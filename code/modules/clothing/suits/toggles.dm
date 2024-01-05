@@ -32,7 +32,7 @@
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_OCLOTHING || slot == ITEM_SLOT_NECK)
-		return 1
+		return TRUE
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
 	if(slot != ITEM_SLOT_OCLOTHING && slot != ITEM_SLOT_NECK)
@@ -127,7 +127,7 @@
 	set src in usr
 
 	if(!can_use(usr))
-		return 0
+		return FALSE
 
 	on_toggle(usr)
 	if(src.suittoggled)

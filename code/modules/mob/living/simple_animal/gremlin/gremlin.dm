@@ -228,7 +228,7 @@ GLOBAL_LIST(bad_gremlin_items)
 	return ..()
 
 /mob/living/simple_animal/hostile/gremlin/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/gremlin/proc/divide()
 	//Health is halved and then reduced by 2. A new gremlin is spawned with the same health as the parent

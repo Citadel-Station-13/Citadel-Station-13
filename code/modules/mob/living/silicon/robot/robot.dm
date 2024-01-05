@@ -271,7 +271,7 @@
 	if(source.z != z)
 		return
 	if(stat == DEAD)
-		return 1
+		return TRUE
 	var/list/our_sort = alarms[class]
 	for(var/areaname in our_sort)
 		if (areaname == home.name)
@@ -279,7 +279,7 @@
 			var/list/sources = alarm[3]
 			if (!(source in sources))
 				sources += source
-			return 1
+			return TRUE
 
 	var/obj/machinery/camera/cam = null
 	var/list/our_cams = null
@@ -979,7 +979,7 @@
 	ionpulse = FALSE
 	revert_shell()
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/proc/has_module()
 	if(!module || module.type == /obj/item/robot_module)
@@ -1302,7 +1302,7 @@
 	switch(choice)
 		if("Resting")
 			update_icons()
-			return 0
+			return FALSE
 		if("Sitting")
 			sitting = 1
 		if("Belly up")

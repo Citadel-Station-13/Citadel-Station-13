@@ -421,7 +421,7 @@
 		I = AM
 		var/mob/thrown_by = I.thrownby?.resolve()
 		if(thrown_by == H) //No throwing stuff at yourself to trigger the teleport
-			return 0
+			return FALSE
 		else
 			reactive_teleport(H)
 
@@ -463,8 +463,8 @@
 /datum/action/innate/unstable_teleport/IsAvailable(silent = FALSE)
 	if(..())
 		if(world.time > last_teleport + cooldown)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -546,7 +546,7 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		if(I.thrownby == H) //No throwing stuff at yourself to make bananas
-			return 0
+			return FALSE
 		else
 			new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
 			last_banana = world.time

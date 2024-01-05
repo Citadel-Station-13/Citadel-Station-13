@@ -24,7 +24,7 @@
 /obj/vehicle/sealed/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
 	if(!damage_amount)
-		return 0
+		return FALSE
 	var/booster_deflection_modifier = 1
 	var/booster_damage_modifier = 1
 	if(damage_flag == BULLET || damage_flag == LASER || damage_flag == ENERGY)
@@ -47,7 +47,7 @@
 	if(prob(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_message("Armor saved.", LOG_MECHA)
-		return 0
+		return FALSE
 	if(.)
 		. *= booster_damage_modifier
 
@@ -72,7 +72,7 @@
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
-		return 0
+		return FALSE
 	else
 		var/play_soundeffect = 1
 		if(user.environment_smash)
@@ -84,7 +84,7 @@
 		animal_damage = min(animal_damage, 20*user.environment_smash)
 		log_combat(user, src, "attacked")
 		attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
-		return 1
+		return TRUE
 
 
 /obj/vehicle/sealed/mecha/hulk_damage()

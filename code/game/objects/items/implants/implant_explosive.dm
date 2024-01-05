@@ -48,7 +48,7 @@
 			imp_e.weak += weak
 			imp_e.delay += delay
 			qdel(src)
-			return 1
+			return TRUE
 
 	return ..()
 

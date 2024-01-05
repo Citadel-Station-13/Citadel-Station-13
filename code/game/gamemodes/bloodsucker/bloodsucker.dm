@@ -199,7 +199,7 @@
 				// Check Overdose: Am I even addicted to blood? Do I even have any in me?
 				//if (!target.reagents.addiction_list || !target.reagents.reagent_list)
 					//message_admins("DEBUG2: can_make_vassal() Abort: No reagents")
-				//	return 0
+				//	return FALSE
 				// Check Overdose: Did my current volume go over the Overdose threshold?
 				//var/am_addicted = 0
 				//for (var/datum/reagent/blood/vampblood/blood in target.reagents.addiction_list) // overdosed is tracked in reagent_list, not addiction_list.
@@ -210,7 +210,7 @@
 
 				//if (!am_addicted)
 					//message_admins("DEBUG4: can_make_vassal() Abort: No Blood")
-				//	return 0
+				//	return FALSE
 	// No Mind!
 	if(!target.mind || !target.mind.key)
 		if(display_warning)

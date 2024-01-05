@@ -43,19 +43,19 @@
 			to_chat(user, "<span class='brass'>You break [src] apart, refunding some of the power used.</span>")
 			adjust_clockwork_power(power_refund)
 			take_damage(max_integrity)
-			return 0
+			return FALSE
 		if(active)
-			return 0
+			return FALSE
 		var/turf/T = get_turf(src)
 		if(!T || !is_station_level(T.z))
 			to_chat(user, "<span class='warning'>[src] must be on the station to function!</span>")
-			return 0
+			return FALSE
 		if(SSshuttle.emergency.mode != SHUTTLE_CALL)
 			to_chat(user, "<span class='warning'>No emergency shuttles are attempting to arrive at the station!</span>")
-			return 0
+			return FALSE
 		if(!try_use_power(get_delay_cost()))
 			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
-			return 0
+			return FALSE
 		delay_cost += delay_cost_increase
 		delay_remaining += PRISM_DELAY_DURATION
 		toggle(0, user)

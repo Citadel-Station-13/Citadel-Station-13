@@ -59,8 +59,8 @@
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
 				SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
 	var/turf/T = get_turf(src)

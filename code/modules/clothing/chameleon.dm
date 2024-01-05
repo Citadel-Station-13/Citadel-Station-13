@@ -17,7 +17,7 @@
 		var/obj/item/clothing/mask/chameleon/drone/Z = target
 		Z.chameleon_action.random_look(owner)
 
-	return 1
+	return TRUE
 
 
 /datum/action/item_action/chameleon/drone/togglehatmask
@@ -65,7 +65,7 @@
 		qdel(old_headgear)
 		// where is `ITEM_SLOT_HEAD` defined? WHO KNOWS
 		D.equip_to_slot(new_headgear, ITEM_SLOT_HEAD)
-	return 1
+	return TRUE
 
 
 /datum/action/chameleon_outfit
@@ -245,7 +245,7 @@
 		return
 
 	select_look(owner)
-	return 1
+	return TRUE
 
 /datum/action/item_action/chameleon/change/proc/emp_randomise(var/amount = EMP_RANDOMISE_TIME)
 	START_PROCESSING(SSprocessing, src)

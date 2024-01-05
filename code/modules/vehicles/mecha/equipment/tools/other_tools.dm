@@ -410,7 +410,7 @@
 			return units
 		else
 			to_chat(user, "[icon2html(src, user)]<span class='notice'>Unit is full.</span>")
-			return 0
+			return FALSE
 	else
 		to_chat(user, "[icon2html(src, user)]<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
 		return

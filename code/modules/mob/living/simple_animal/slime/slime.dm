@@ -326,7 +326,7 @@
 			if(M.a_intent == INTENT_HELP || M.a_intent == INTENT_DISARM)
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(M,M.a_intent))
-						return 1
+						return TRUE
 		if(..()) //successful attack
 			attacked += 10
 
@@ -343,7 +343,7 @@
 		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user,user.a_intent))
-					return 1
+					return TRUE
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
@@ -478,10 +478,10 @@
 	docile = 1
 
 /mob/living/simple_animal/slime/can_unbuckle()
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/slime/can_buckle()
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())

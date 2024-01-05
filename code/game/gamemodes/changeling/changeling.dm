@@ -51,10 +51,10 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			changelings += changeling
 			changeling.special_role = ROLE_CHANGELING
 			changeling.restricted_roles = restricted_jobs
-		return 1
+		return TRUE
 	else
 		setup_error = "Not enough changeling candidates"
-		return 0
+		return FALSE
 
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)

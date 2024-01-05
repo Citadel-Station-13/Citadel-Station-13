@@ -34,7 +34,7 @@
 	return get_points() ? TRUE : FALSE
 
 /datum/objective/overthrow/proc/get_points()
-	return 0 // int, not bool
+	return FALSE // int, not bool
 
 /datum/objective/overthrow/proc/result_points(datum/mind/the_dude, base_points) // App
 	var/initial_points = base_points

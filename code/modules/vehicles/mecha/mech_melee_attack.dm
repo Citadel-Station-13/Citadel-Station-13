@@ -35,9 +35,9 @@
 				playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 			if(TOX)
 				playsound(src, 'sound/effects/spray2.ogg', 50, TRUE)
-				return 0
+				return FALSE
 			else
-				return 0
+				return FALSE
 	mecha_attacker.visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", "<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 	return take_damage(mecha_attacker.force * 3, mech_damtype, MELEE, play_soundeffect, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 

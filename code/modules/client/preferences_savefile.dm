@@ -595,18 +595,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/save_preferences(bypass_cooldown = FALSE, silent = FALSE)
 	if(!path)
-		return 0
+		return FALSE
 	if(!bypass_cooldown)
 		if(world.time < saveprefcooldown)
 			if(istype(parent))
 				queue_save_pref(PREF_SAVE_COOLDOWN, silent)
-			return 0
+			return FALSE
 		COOLDOWN_START(src, saveprefcooldown, PREF_SAVE_COOLDOWN)
 	if(pref_queue != -1)
 		deltimer(pref_queue)
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/"
 
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX)		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
@@ -1093,22 +1093,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	cit_character_pref_load(S)
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/save_character(bypass_cooldown = FALSE, silent = FALSE)
 	if(!path)
-		return 0
+		return FALSE
 	if(!bypass_cooldown)
 		if(world.time < savecharcooldown)
 			if(istype(parent))
 				queue_save_char(PREF_SAVE_COOLDOWN, silent)
-			return 0
+			return FALSE
 		COOLDOWN_START(src, savecharcooldown, PREF_SAVE_COOLDOWN)
 	if(char_queue != -1)
 		deltimer(char_queue)
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/character[default_slot]"
 
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
@@ -1295,7 +1295,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(parent && !silent)
 		to_chat(parent, span_notice("Saved character slot!"))
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/queue_save_char(save_in, silent)
 	if(parent && !silent)

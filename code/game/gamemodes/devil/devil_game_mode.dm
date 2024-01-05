@@ -47,15 +47,15 @@
 
 	if(devils.len < required_enemies)
 		setup_error = "Not enough devil candidates"
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
 		post_setup_finalize(devil)
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/devil/generate_report()
 	return "Infernal creatures have been seen nearby offering great boons in exchange for souls.  This is considered theft against Nanotrasen, as all employment contracts contain a lien on the \

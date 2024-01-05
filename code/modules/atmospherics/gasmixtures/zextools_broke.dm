@@ -41,7 +41,7 @@
 		TOTAL_MOLES(cached_gases, .)
 		. *= R_IDEAL_GAS_EQUATION * temperature / volume
 		return
-	return 0
+	return FALSE
 
 /datum/gas_mixture/return_temperature() //kelvins
 	return temperature
@@ -91,11 +91,11 @@
 /datum/gas_mixture/archive()
 	temperature_archived = temperature
 	gas_archive = gases.Copy()
-	return 1
+	return TRUE
 
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
-		return 0
+		return FALSE
 
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -111,7 +111,7 @@
 	for(var/giver_id in giver_gases)
 		cached_gases[giver_id] += giver_gases[giver_id]
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/remove(amount)
 	var/sum
@@ -172,7 +172,7 @@
 	//remove all gases not in the sample
 	cached_gases &= sample_gases
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
@@ -182,7 +182,7 @@
 	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
 		temperature = model.temperature
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 

@@ -38,7 +38,7 @@
 		var/turf/location = src.loc
 		if (isturf(location))
 			location.hotspot_expose(700,10,1)
-	return 1
+	return TRUE
 
 /obj/machinery/igniter/Initialize(mapload)
 	. = ..()
@@ -127,7 +127,7 @@
 	var/turf/location = src.loc
 	if (isturf(location))
 		location.hotspot_expose(1000,100,1)
-	return 1
+	return TRUE
 
 /obj/machinery/sparker/emp_act(severity)
 	. = ..()

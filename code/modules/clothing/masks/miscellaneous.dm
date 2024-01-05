@@ -111,7 +111,7 @@
 			var/datum/action/A = X
 			A.UpdateButtons()
 		to_chat(user, "<span class='notice'>Your Joy mask now has a [choice] Emotion!</span>")
-		return 1
+		return TRUE
 
 /obj/item/clothing/mask/kitsuneblk
 	name = "Black Kitsune Mask"
@@ -477,4 +477,4 @@
 			var/datum/action/A = X
 			A.UpdateButtons()
 		to_chat(user, "<span class='notice'>Your paper mask now has a [choice] symbol!</span>")
-		return 1
+		return TRUE

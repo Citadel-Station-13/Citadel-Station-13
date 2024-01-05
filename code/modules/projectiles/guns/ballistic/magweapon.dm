@@ -37,13 +37,13 @@
 
 /obj/item/gun/ballistic/automatic/magrifle/can_shoot()
 	if(QDELETED(cell))
-		return 0
+		return FALSE
 
 	var/obj/item/ammo_casing/caseless/magnetic/shot = chambered
 	if(!shot)
-		return 0
+		return FALSE
 	if(cell.charge < shot.energy_cost * burst_size)
-		return 0
+		return FALSE
 	. = ..()
 
 /obj/item/gun/ballistic/automatic/magrifle/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)

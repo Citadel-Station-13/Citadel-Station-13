@@ -202,7 +202,7 @@
 	log_game("[key_name(usr)] has renamed [prevname] to [str]")
 	A.update_areasize()
 	interact()
-	return 1
+	return TRUE
 
 
 /obj/item/areaeditor/proc/set_area_machinery_title(area/A,title,oldtitle)

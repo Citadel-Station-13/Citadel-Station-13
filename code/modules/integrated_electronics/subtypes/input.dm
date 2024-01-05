@@ -697,11 +697,11 @@
 	if(isnum(new_code))
 		code = new_code
 	if(!signal)
-		return 0
+		return FALSE
 	if(signal.data["code"] != code)
-		return 0
+		return FALSE
 	if(signal.source == src) // Don't trigger ourselves.
-		return 0
+		return FALSE
 
 	activate_pin(3)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)

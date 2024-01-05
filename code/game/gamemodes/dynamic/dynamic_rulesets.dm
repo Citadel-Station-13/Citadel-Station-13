@@ -115,7 +115,7 @@
 /// Returns how much threat to actually spend in the end.
 /datum/dynamic_ruleset/proc/scale_up(population, max_scale)
 	if (!scaling_cost)
-		return 0
+		return FALSE
 
 	var/antag_fraction = 0
 	for(var/_ruleset in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too

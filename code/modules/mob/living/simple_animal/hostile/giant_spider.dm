@@ -246,7 +246,7 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_automated_action()
 	if(!..()) //AIStatus is off
-		return 0
+		return FALSE
 	if(AIStatus == AI_IDLE)
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
@@ -255,7 +255,7 @@
 			spawn(50)
 				stop_automated_movement = 0
 				walk(src,0)
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(C)
 	spawn(100)
@@ -418,7 +418,7 @@
 	else
 		message = "<span class='notice'>You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B></span>"
 		add_ranged_ability(user, message, TRUE)
-		return 1
+		return TRUE
 
 /obj/effect/proc_holder/wrap/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
@@ -450,11 +450,11 @@
 /datum/action/innate/spider/lay_eggs/IsAvailable(silent = FALSE)
 	if(..())
 		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
-			return 0
+			return FALSE
 		var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
 		if(S.fed)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 /datum/action/innate/spider/lay_eggs/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))

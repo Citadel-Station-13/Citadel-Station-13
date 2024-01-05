@@ -351,7 +351,7 @@
 	if(module_active)
 		return held_items.Find(module_active)
 
-	return 0
+	return FALSE
 
 /**
  * Selects the module in the slot module_num.

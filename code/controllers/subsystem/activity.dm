@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(activity)
 
 /datum/controller/subsystem/activity/proc/get_average_threat()
 	if(!length(threat_history))
-		return 0
+		return FALSE
 	var/total_weight = 0
 	var/total_amt = 0
 	for(var/i in 1 to threat_history.len-1)

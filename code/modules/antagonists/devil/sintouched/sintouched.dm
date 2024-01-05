@@ -17,9 +17,9 @@
 /datum/antagonist/sintouched/threat()
 	switch(sin)
 		if(SIN_GLUTTONY,SIN_ENVY)
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 /datum/antagonist/sintouched/New()
 	. = ..()

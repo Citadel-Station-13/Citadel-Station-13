@@ -23,7 +23,7 @@
 			program_icon_state = "alert-green"
 			ui_header = "alarm_green.gif"
 			update_computer_icon()
-	return 1
+	return TRUE
 
 /datum/computer_file/program/alarm_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()

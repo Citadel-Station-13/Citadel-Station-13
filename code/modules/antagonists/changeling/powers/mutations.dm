@@ -40,7 +40,7 @@
 		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		user.update_inv_hands()
-		return 1
+		return TRUE
 
 /datum/action/changeling/weapon/sting_action(mob/living/user)
 	var/obj/item/held = user.get_active_held_item()
@@ -597,7 +597,7 @@
 /datum/action/changeling/gloves/proc/check_gloves(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!ishuman(user) || !changeling)
-		return 1
+		return TRUE
 	var/mob/living/carbon/human/H = user
 	if(istype(H.gloves, glove_type))
 		H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms [H.p_their()] [glove_name_simple] into hands!</span>", "<span class='warning'>We assimilate our [glove_name_simple].</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -609,7 +609,7 @@
 			playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
 
 		changeling.chem_recharge_slowdown -= recharge_slowdown
-		return 1
+		return TRUE
 
 /datum/action/changeling/gloves/Remove(mob/user)
 	if(!ishuman(user))

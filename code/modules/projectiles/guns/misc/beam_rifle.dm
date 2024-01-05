@@ -473,7 +473,7 @@
 		return 0.5
 	if(istype(target, /obj/structure/blob))
 		return 0.65			//CIT CHANGE.
-	return 1
+	return TRUE
 
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
 	if(isobj(target))

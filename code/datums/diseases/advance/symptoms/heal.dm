@@ -92,7 +92,7 @@
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len))
 			M.update_damage_overlays()
-	return 1
+	return TRUE
 
 /datum/symptom/heal/starlight/passive_message_condition(mob/living/M)
 	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
@@ -129,7 +129,7 @@
 			M.adjust_nutrition(0.3)
 		if(prob(2))
 			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
-	return 1
+	return TRUE
 
 
 
@@ -167,7 +167,7 @@
 	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
 		to_chat(C, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
-	return 1
+	return TRUE
 
 /datum/symptom/heal/darkness
 	name = "Nocturnal Regeneration"
@@ -210,7 +210,7 @@
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5)) //more effective on brute
 			M.update_damage_overlays()
-	return 1
+	return TRUE
 
 /datum/symptom/heal/darkness/passive_message_condition(mob/living/M)
 	if(M.getBruteLoss() || M.getFireLoss())
@@ -307,7 +307,7 @@
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
 		uncoma(M)
 
-	return 1
+	return TRUE
 
 /datum/symptom/heal/coma/passive_message_condition(mob/living/M)
 	if((M.getBruteLoss() + M.getFireLoss()) > 30)
@@ -365,7 +365,7 @@
 		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len))
 			M.update_damage_overlays()
 
-	return 1
+	return TRUE
 
 /datum/symptom/heal/water/passive_message_condition(mob/living/M)
 	if(M.getBruteLoss() || M.getFireLoss())
@@ -435,7 +435,7 @@
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len))
 			M.update_damage_overlays()
-	return 1
+	return TRUE
 
 
 /datum/symptom/heal/radiation
@@ -475,7 +475,7 @@
 		if(RAD_BURN_THRESHOLD to RAD_MOB_MUTATE)
 			return 0.75
 		if(RAD_MOB_MUTATE to RAD_MOB_KNOCKDOWN)
-			return 1
+			return TRUE
 		else
 			return 1.5
 
@@ -498,4 +498,4 @@
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len))
 			M.update_damage_overlays()
-	return 1
+	return TRUE

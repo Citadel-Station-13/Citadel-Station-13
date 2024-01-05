@@ -229,10 +229,10 @@
 		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5)
 		can_respec = 0
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
-		return 1
+		return TRUE
 	else
 		to_chat(owner.current, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
-		return 0
+		return FALSE
 
 //Called in life()
 /datum/antagonist/changeling/proc/regenerate()//grants the HuD in life.dm
@@ -285,7 +285,7 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	return 1
+	return TRUE
 
 
 /datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = 0)

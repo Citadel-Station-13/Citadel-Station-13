@@ -151,7 +151,7 @@
 
 /datum/action/ghost/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	var/mob/M = target
 	M.ghostize(can_reenter_corpse = TRUE, voluntary = TRUE)
 
@@ -389,7 +389,7 @@
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
-			return 0
+			return FALSE
 	return ..()
 
 /datum/action/item_action/clock
@@ -399,7 +399,7 @@
 
 /datum/action/item_action/clock/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/clock/toggle_visor
@@ -408,11 +408,11 @@
 
 /datum/action/item_action/clock/toggle_visor/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
-		return 0
+		return FALSE
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
 		var/obj/item/clothing/glasses/judicial_visor/V = target
 		if(V.recharging)
-			return 0
+			return FALSE
 	return ..()
 
 /datum/action/item_action/clock/hierophant
@@ -486,7 +486,7 @@
 /datum/action/item_action/jetpack_stabilization/IsAvailable(silent = FALSE)
 	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/hands_free
@@ -518,7 +518,7 @@
 		else
 			owner.research_scanner--
 		to_chat(owner, "<span class='notice'>[target] research scanner has been [active ? "activated" : "deactivated"].</span>")
-		return 1
+		return TRUE
 
 /datum/action/item_action/toggle_research_scanner/Remove(mob/M)
 	if(owner && active)
@@ -543,7 +543,7 @@
 /datum/action/item_action/organ_action/IsAvailable(silent = FALSE)
 	var/obj/item/organ/I = target
 	if(!I.owner)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/organ_action/toggle/New(Target)
@@ -743,12 +743,12 @@
 
 /datum/action/innate/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(!active)
 		Activate()
 	else
 		Deactivate()
-	return 1
+	return TRUE
 
 /datum/action/innate/proc/Activate()
 	return
