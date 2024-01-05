@@ -486,9 +486,53 @@
 		return
 	//get amount from user
 	var/max = get_amount()
-	var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as null|num)
-	max = get_amount()
-	stackmaterial = min(max, stackmaterial)
+	var/list/quick_split
+	for(var/option in list(2, 3, 4, 5, 6, 7, "One", "Five", "Ten", "Custom"))
+		var/mutable_appearance/option_display = new(src)
+		option_display.filters = null
+		option_display.cut_overlays()
+		option_display.pixel_x = 0
+		option_display.pixel_y = 0
+
+		switch(option)
+			if("Custom")
+				var/list/sort_numbers = quick_split
+				sort_numbers = sort_list(sort_numbers, /proc/cmp_numeric_text_desc)
+				option_display.maptext = MAPTEXT("?")
+				quick_split = list("Custom" = option_display)
+				quick_split += sort_numbers
+			if("One")
+				option = 1
+				option_display.maptext = MAPTEXT("1")
+			if("Five")
+				if(max > 5)
+					option = 5
+					option_display.maptext = MAPTEXT("5")
+				else
+					continue
+			if("Ten")
+				if(max > 10)
+					option = 10
+					option_display.maptext = MAPTEXT("10")
+				else
+					continue
+			else
+				if(max % option == 0)
+					option_display.maptext = MAPTEXT(max / option)
+					option = max / option
+				else
+					continue
+		if(option != "Custom")
+			LAZYSET(quick_split, "[option]", option_display)
+	var/stackmaterial
+	if(length(quick_split) <= 2)
+		stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack?\nMax: [max]") as null|num)
+	else
+		stackmaterial = show_radial_menu(user, get_atom_on_turf(src), quick_split, require_near = TRUE, tooltips = TRUE)
+		if(stackmaterial == "Custom")
+			stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack?\nMax: [max]") as null|num)
+		stackmaterial = isnum(stackmaterial) ? stackmaterial : text2num(stackmaterial)
+	stackmaterial = min(get_amount(), stackmaterial)
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, TRUE, FALSE)) //, !iscyborg(user)
 		return
 	split_stack(user, stackmaterial)
