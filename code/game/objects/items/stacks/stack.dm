@@ -42,7 +42,10 @@
 	var/matter_amount = 0
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
-	if(is_cyborg && istype(loc, /obj/item/robot_module))
+	if(is_cyborg)
+		if(!istype(loc, /obj/item/robot_module))
+			stack_trace("Cyborg stack created outside of a robot module, deleting.")
+			return INITIALIZE_HINT_QDEL
 		prepare_estorage(loc)
 
 	if(new_amount != null)
