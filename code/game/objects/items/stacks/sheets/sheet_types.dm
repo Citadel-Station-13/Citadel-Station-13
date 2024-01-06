@@ -164,7 +164,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/metal/cyborg
 	custom_materials = null
 	is_cyborg = TRUE
-	cost = 500
+	source = /datum/robot_energy_storage/metal
+	cost = MINERAL_MATERIAL_AMOUNT * 0.25
 
 /obj/item/stack/sheet/metal/get_main_recipes()
 	. = ..()

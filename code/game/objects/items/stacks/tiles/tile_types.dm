@@ -536,7 +536,8 @@
 /obj/item/stack/tile/plasteel/cyborg
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = TRUE
-	cost = 125
+	source = /datum/robot_energy_storage/metal
+	cost = MINERAL_MATERIAL_AMOUNT * 0.0625
 
 /obj/item/stack/tile/material
 	name = "floor tile"
