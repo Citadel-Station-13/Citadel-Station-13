@@ -91,6 +91,20 @@
 /atom/movable/screen/click_catcher/IsAutoclickable()
 	. = 1
 
+//Please don't roast me too hard
+/client/MouseMove(object, location, control, params)
+	mouseParams = params
+	mouse_location_ref = WEAKREF(location)
+	mouse_object_ref = WEAKREF(object)
+	middle_drag_atom_ref = WEAKREF(control)
+	if(mob)
+		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOUSEMOVE, object, location, control, params)
+		// god forgive me for i have sinned - used for autoparry. currently at 5 objects.
+		moused_over_objects[object] = world.time
+		if(moused_over_objects.len > 7)
+			moused_over_objects.Cut(1, 2)
+	..()
+
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/list/modifiers = params2list(params)
 	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
