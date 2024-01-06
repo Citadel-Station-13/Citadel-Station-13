@@ -551,3 +551,8 @@
 /obj/item/stack/proc/prepare_estorage(obj/item/robot_module/module)
 	if(source)
 		source = module.get_or_create_estorage(source)
+
+/obj/item/stack/Moved(old_loc, dir)
+	. = ..()
+	if(isturf(loc))
+		update_icon()
