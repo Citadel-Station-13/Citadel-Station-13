@@ -517,6 +517,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = TRUE
 	custom_materials = null
+	source = /datum/robot_energy_storage/wire
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)

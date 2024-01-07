@@ -52,7 +52,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 /obj/item/stack/sheet/glass/cyborg
 	custom_materials = null
 	is_cyborg = TRUE
-	cost = 500
+	source = /datum/robot_energy_storage/glass
+	cost = MINERAL_MATERIAL_AMOUNT * 0.25
 
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
@@ -179,9 +180,15 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 /obj/item/stack/sheet/rglass/cyborg
 	custom_materials = null
 	is_cyborg = TRUE
-	var/datum/robot_energy_storage/glasource
-	var/metcost = 250
-	var/glacost = 500
+	source = /datum/robot_energy_storage/metal
+	var/datum/robot_energy_storage/glasource = /datum/robot_energy_storage/glass
+	var/metcost = MINERAL_MATERIAL_AMOUNT * 0.125
+	var/glacost = MINERAL_MATERIAL_AMOUNT * 0.25
+
+/obj/item/stack/sheet/rglass/cyborg/prepare_estorage(obj/item/robot_module/module)
+	. = ..()
+	if(glasource)
+		glasource = module.get_or_create_estorage(glasource)
 
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
 	return min(round(source.energy / metcost), round(glasource.energy / glacost))
@@ -189,10 +196,12 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 /obj/item/stack/sheet/rglass/cyborg/use(used, transfer = FALSE) // Requires special checks, because it uses two storages
 	source.use_charge(used * metcost)
 	glasource.use_charge(used * glacost)
+	update_icon()
 
 /obj/item/stack/sheet/rglass/cyborg/add(amount)
 	source.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
+	update_icon()
 
 /obj/item/stack/sheet/rglass/get_main_recipes()
 	. = ..()

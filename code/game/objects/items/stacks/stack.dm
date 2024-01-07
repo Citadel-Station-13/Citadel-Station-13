@@ -42,6 +42,12 @@
 	var/matter_amount = 0
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
+	if(is_cyborg)
+		if(!istype(loc, /obj/item/robot_module))
+			stack_trace("Cyborg stack created outside of a robot module, deleting.")
+			return INITIALIZE_HINT_QDEL
+		prepare_estorage(loc)
+
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -383,7 +389,9 @@
 	if(check && zero_amount())
 		return FALSE
 	if (is_cyborg)
-		return source.use_charge(used * cost)
+		. = source.use_charge(used * cost)
+		update_icon()
+		return
 	if (amount < used)
 		return FALSE
 	amount -= used
@@ -583,3 +591,12 @@
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
+
+/obj/item/stack/proc/prepare_estorage(obj/item/robot_module/module)
+	if(source)
+		source = module.get_or_create_estorage(source)
+
+/obj/item/stack/Moved(old_loc, dir)
+	. = ..()
+	if(isturf(loc))
+		update_icon()
