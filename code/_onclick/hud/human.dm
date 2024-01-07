@@ -324,11 +324,11 @@
 	using.hud = src
 	hotkeybuttons += using
 
-	using = new /atom/movable/screen/rest()
-	using.icon = ui_style
-	using.screen_loc = ui_pull_resist
-	using.hud = src
-	static_inventory += using
+	rest_icon = new /atom/movable/screen/rest()
+	rest_icon.icon = ui_style
+	rest_icon.screen_loc = ui_pull_resist
+	rest_icon.hud = src
+	static_inventory += rest_icon
 	//END OF CIT CHANGES
 
 	using = new /atom/movable/screen/human/toggle()

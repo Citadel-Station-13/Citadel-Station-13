@@ -40,6 +40,12 @@
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 5)
 
+/obj/item/stack/packageWrap/cyborg
+	custom_materials = null
+	is_cyborg = TRUE
+	source = /datum/robot_energy_storage/wrapping_paper
+	cost = 1
+
 /obj/item/stack/packageWrap/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(use(3))

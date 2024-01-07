@@ -42,6 +42,12 @@
 	var/matter_amount = 0
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
+	if(is_cyborg)
+		if(!istype(loc, /obj/item/robot_module))
+			stack_trace("Cyborg stack created outside of a robot module, deleting.")
+			return INITIALIZE_HINT_QDEL
+		prepare_estorage(loc)
+
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -383,7 +389,9 @@
 	if(check && zero_amount())
 		return FALSE
 	if (is_cyborg)
-		return source.use_charge(used * cost)
+		. = source.use_charge(used * cost)
+		update_icon()
+		return
 	if (amount < used)
 		return FALSE
 	amount -= used
@@ -486,9 +494,53 @@
 		return
 	//get amount from user
 	var/max = get_amount()
-	var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as null|num)
-	max = get_amount()
-	stackmaterial = min(max, stackmaterial)
+	var/list/quick_split
+	for(var/option in list(2, 3, 4, 5, 6, 7, "One", "Five", "Ten", "Custom"))
+		var/mutable_appearance/option_display = new(src)
+		option_display.filters = null
+		option_display.cut_overlays()
+		option_display.pixel_x = 0
+		option_display.pixel_y = 0
+
+		switch(option)
+			if("Custom")
+				var/list/sort_numbers = quick_split
+				sort_numbers = sort_list(sort_numbers, /proc/cmp_numeric_text_desc)
+				option_display.maptext = MAPTEXT("?")
+				quick_split = list("Custom" = option_display)
+				quick_split += sort_numbers
+			if("One")
+				option = 1
+				option_display.maptext = MAPTEXT("1")
+			if("Five")
+				if(max > 5)
+					option = 5
+					option_display.maptext = MAPTEXT("5")
+				else
+					continue
+			if("Ten")
+				if(max > 10)
+					option = 10
+					option_display.maptext = MAPTEXT("10")
+				else
+					continue
+			else
+				if(max % option == 0)
+					option_display.maptext = MAPTEXT(max / option)
+					option = max / option
+				else
+					continue
+		if(option != "Custom")
+			LAZYSET(quick_split, "[option]", option_display)
+	var/stackmaterial
+	if(length(quick_split) <= 2)
+		stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack?\nMax: [max]") as null|num)
+	else
+		stackmaterial = show_radial_menu(user, get_atom_on_turf(src), quick_split, require_near = TRUE, tooltips = TRUE)
+		if(stackmaterial == "Custom")
+			stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack?\nMax: [max]") as null|num)
+		stackmaterial = isnum(stackmaterial) ? stackmaterial : text2num(stackmaterial)
+	stackmaterial = min(get_amount(), stackmaterial)
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, TRUE, FALSE)) //, !iscyborg(user)
 		return
 	split_stack(user, stackmaterial)
@@ -539,3 +591,12 @@
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
+
+/obj/item/stack/proc/prepare_estorage(obj/item/robot_module/module)
+	if(source)
+		source = module.get_or_create_estorage(source)
+
+/obj/item/stack/Moved(old_loc, dir)
+	. = ..()
+	if(isturf(loc))
+		update_icon()
