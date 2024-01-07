@@ -369,27 +369,6 @@
 			var/msg = "<span class='smallnotice'>[src] makes eye contact with you.</span>"
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, examined_mob, msg), 3)
 
-//same as above
-//note: ghosts can point, this is intended
-//visible_message will handle invisibility properly
-//overridden here and in /mob/dead/observer for different point span classes and sanity checks
-/mob/verb/pointed(atom/A as mob|obj|turf in fov_view())
-	set name = "Point To"
-	set category = "Object"
-
-	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
-		return FALSE
-	if(istype(A, /obj/effect/temp_visual/point))
-		return FALSE
-
-	var/tile = get_turf(A)
-	if (!tile)
-		return FALSE
-
-	new /obj/effect/temp_visual/point(A,invisibility)
-	SEND_SIGNAL(src, COMSIG_MOB_POINTED, A)
-	return TRUE
-
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
 
