@@ -689,5 +689,11 @@
 			return 'modular_citadel/icons/ui/screen_operative.dmi'
 		if('icons/mob/screen_clockwork.dmi')
 			return 'modular_citadel/icons/ui/screen_clockwork.dmi'
+		if('icons/mob/screen_glass.dmi')
+			return 'modular_citadel/icons/ui/screen_glass.dmi'
+		if('icons/mob/screen_trasenknox.dmi')
+			return 'modular_citadel/icons/ui/screen_trasenknox.dmi'
+		if('icons/mob/screen_detective.dmi')
+			return 'modular_citadel/icons/ui/screen_detective.dmi'
 		else
 			return 'modular_citadel/icons/ui/screen_midnight.dmi'
