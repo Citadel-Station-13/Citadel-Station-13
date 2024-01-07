@@ -3175,6 +3175,7 @@
 #include "code\modules\plumbing\plumbers\reaction_chamber.dm"
 #include "code\modules\plumbing\plumbers\splitters.dm"
 #include "code\modules\plumbing\plumbers\synthesizer.dm"
+#include "code\modules\point\point.dm"
 #include "code\modules\pool\pool_controller.dm"
 #include "code\modules\pool\pool_drain.dm"
 #include "code\modules\pool\pool_effects.dm"
