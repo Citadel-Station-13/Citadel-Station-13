@@ -157,7 +157,7 @@
 
 /datum/action/proc/OnUpdatedIcon()
 	SIGNAL_HANDLER
-	UpdateButtons()
+	UpdateButtons(force = TRUE)
 
 //Give our action button to the player
 /datum/action/proc/GiveAction(mob/viewer)
@@ -267,12 +267,10 @@
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
 
-/datum/action/item_action/toggle_light/Trigger(trigger_flags)
+/datum/action/item_action/toggle_light/pda/Trigger(trigger_flags)
 	if(istype(target, /obj/item/pda))
 		var/obj/item/pda/P = target
-		P.toggle_light(owner)
-		return
-	..()
+		return P.toggle_light(owner)
 
 /datum/action/item_action/toggle_hood
 	name = "Toggle Hood"

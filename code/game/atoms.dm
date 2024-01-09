@@ -613,7 +613,10 @@
 			cut_overlay(managed_overlays)
 			managed_overlays = null
 		if(length(new_overlays))
-			managed_overlays = new_overlays
+			if (length(new_overlays) == 1)
+				managed_overlays = new_overlays[1]
+			else
+				managed_overlays = new_overlays
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 

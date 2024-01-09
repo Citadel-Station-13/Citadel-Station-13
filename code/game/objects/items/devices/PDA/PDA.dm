@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
-	actions_types = list(/datum/action/item_action/toggle_light)
+	actions_types = list(/datum/action/item_action/toggle_light/pda)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -963,7 +963,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/toggle_light()
 	if(hasSiliconAccessInArea(usr) || !usr.canUseTopic(src, BE_CLOSE))
-		return
+		return FALSE
 	if(fon)
 		fon = FALSE
 		set_light(0)
@@ -971,6 +971,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		fon = TRUE
 		set_light(f_lum, f_pow, f_col)
 	update_icon()
+	return TRUE
 
 /obj/item/pda/proc/remove_pen()
 
