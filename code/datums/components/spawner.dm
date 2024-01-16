@@ -43,9 +43,9 @@
 /datum/component/spawner/proc/try_spawn_mob()
 	var/atom/P = parent
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return FALSE
 	if(spawn_delay > world.time)
-		return 0
+		return FALSE
 	spawn_delay = world.time + spawn_time
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(P.loc)

@@ -189,7 +189,7 @@
 	if(reagents && reagents.total_volume)
 		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
 	else
-		return 0
+		return FALSE
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"

@@ -29,7 +29,7 @@
 	for (var/datum/blobstrain/bt in blobstrains)
 		. += bt.tesla_reaction(B, power, coefficient*typeshare)
 	if (prob(. / length(blobstrains) * 100))
-		return 1
+		return TRUE
 
 /datum/blobstrain/multiplex/extinguish_reaction(obj/structure/blob/B, coefficient = 1) //when the blob is hit with water, do this
 	for (var/datum/blobstrain/bt in blobstrains)

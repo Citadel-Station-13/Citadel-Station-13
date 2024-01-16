@@ -156,7 +156,7 @@
 
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
-		return 0
+		return FALSE
 
 	var/safe_oxy_min = 16
 	var/safe_oxy_max = 50
@@ -312,7 +312,7 @@
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
-	return 1
+	return TRUE
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
@@ -660,7 +660,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	if(HAS_TRAIT(src, TRAIT_COLDBLOODED) || HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
-		return 0 //Return 0 as your natural temperature. Species proc handle_environment() will adjust your temperature based on this.
+		return FALSE //return FALSE as your natural temperature. Species proc handle_environment() will adjust your temperature based on this.
 
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
 	switch(bodytemperature)
@@ -675,7 +675,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 /mob/living/carbon/proc/get_cooling_efficiency()
 	if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
-		return 1
+		return TRUE
 
 	var/integration_bonus = min(blood_volume * SYNTH_INTEGRATION_COOLANT_CAP, integrating_blood * SYNTH_INTEGRATION_COOLANT_PENALTY)	//Integration blood somewhat helps, though only at 40% impact and to a cap of 25% of current blood level.
 	var/blood_effective_volume = blood_volume + integration_bonus
@@ -691,7 +691,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return suitlink //If you are wearing full EVA or lavaland hazard gear (on lavaland), assume it has been made to accomodate your cooling needs.
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(!environment)
-		return 0
+		return FALSE
 
 	var/pressure = environment.return_pressure()
 	var/heat = environment.return_temperature()
@@ -711,18 +711,18 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	var/turf/T = get_turf(src)
 
 	if(istype(head_item, /obj/item/clothing/head/helmet/space) && istype(suit_item, /obj/item/clothing/suit/space))
-		return 1
+		return TRUE
 
 	if(istype(head_item, /obj/item/clothing/head/mod) && istype(suit_item, /obj/item/clothing/suit/mod))
 		var/obj/item/clothing/suit/mod/modsuit = suit_item
 		var/obj/item/mod/control/mod_control = modsuit.mod
 		if(mod_control && mod_control.active)
-			return 1
+			return TRUE
 
 	if(T && is_mining_level(T.z) && istype(head_item, /obj/item/clothing/head/hooded/explorer) && istype(suit_item, /obj/item/clothing/suit/hooded/explorer))
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /////////
 //LIVER//

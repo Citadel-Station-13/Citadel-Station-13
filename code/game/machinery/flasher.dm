@@ -94,7 +94,7 @@
 
 /obj/machinery/flasher/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE && damage_amount < 10) //any melee attack below 10 dmg does nothing
-		return 0
+		return FALSE
 	. = ..()
 
 /obj/machinery/flasher/proc/flash()
@@ -126,7 +126,7 @@
 	if(flashed)
 		bulb.times_used++
 
-	return 1
+	return TRUE
 
 
 /obj/machinery/flasher/emp_act(severity)

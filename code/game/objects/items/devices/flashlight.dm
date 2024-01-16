@@ -40,7 +40,7 @@
 	playsound(src, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.UpdateButtons()
 	return TRUE
 
 /obj/item/flashlight/DoRevenantThrowEffects(atom/target)

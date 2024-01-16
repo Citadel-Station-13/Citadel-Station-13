@@ -140,7 +140,7 @@
 
 /obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE && damage_amount < 10)
-		return 0
+		return FALSE
 	return ..()
 
 

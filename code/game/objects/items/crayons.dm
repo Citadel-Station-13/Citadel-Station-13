@@ -127,7 +127,7 @@
 		refill()
 	else
 		if(check_empty(user, amount, requires_full))
-			return 0
+			return FALSE
 		else
 			. = min(charges_left, amount)
 			charges_left -= .

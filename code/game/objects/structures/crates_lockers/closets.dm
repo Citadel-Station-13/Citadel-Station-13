@@ -269,7 +269,7 @@
 	if(user in src)
 		return
 	if(src.tool_interact(W,user))
-		return 1 // No afterattack
+		return TRUE // No afterattack
 	else
 		return ..()
 
@@ -396,7 +396,7 @@
 				close()
 	else
 		O.forceMove(T)
-	return 1
+	return TRUE
 
 /obj/structure/closet/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))

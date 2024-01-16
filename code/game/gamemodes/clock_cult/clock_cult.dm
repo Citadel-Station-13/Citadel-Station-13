@@ -188,16 +188,16 @@ Credit where due:
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
-		return 0
+		return FALSE
 	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the Clockwork Justiciar!</span>")
 	to_chat(M, "<span class='brass'>Unlock <b>Script</b> scripture by converting a new servant or when 35kw of power is reached.</span>")
 	to_chat(M, "<span class='brass'><b>Application</b> scripture will be unlocked when 50kw of power is reached.</span>")
 	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/equip_servant(mob/living/M) //Grants a clockwork slab to the mob
 	if(!M || !ishuman(M))

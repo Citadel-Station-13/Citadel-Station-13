@@ -19,8 +19,8 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/vehicle/sealed/mecha/working/ripley/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/M)
 	..()
@@ -239,7 +239,7 @@
 						if(W.loc == my_target)
 							break
 						sleep(2)
-		return 1
+		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
@@ -247,8 +247,8 @@
 /obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/vehicle/sealed/mecha/working/M as obj)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 

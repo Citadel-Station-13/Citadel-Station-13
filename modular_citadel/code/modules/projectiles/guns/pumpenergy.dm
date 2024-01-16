@@ -68,7 +68,7 @@
 		playsound(M, 'sound/weapons/laserPump.ogg', 100, 1)		//Ends with high pitched charging noise
 	recharge_newshot() //try to charge a new shot
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/gun/energy/pumpaction/AltClick(mob/living/user)	//for changing firing modes since attackself is already used for pumping
 	. = ..()

@@ -24,7 +24,7 @@
 /obj/item/gun/magic/bloodchill/process()
 	charge_tick++
 	if(charge_tick < recharge_rate || charges >= max_charges)
-		return 0
+		return FALSE
 	charge_tick = 0
 	var/mob/living/M = loc
 	if(istype(M) && M.blood_volume >= 5)
@@ -32,7 +32,7 @@
 		M.blood_volume -= 5
 	if(charges == 1)
 		recharge_newshot()
-	return 1
+	return TRUE
 
 /obj/item/ammo_casing/magic/bloodchill
 	projectile_type = /obj/item/projectile/magic/bloodchill

@@ -98,5 +98,5 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre/can_attach(obj/vehicle/sealed/mecha/combat/neovgre/M)
 	if(istype(M))
-		return 1
-	return 0
+		return TRUE
+	return FALSE

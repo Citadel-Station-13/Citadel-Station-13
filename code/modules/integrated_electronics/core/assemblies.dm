@@ -202,7 +202,7 @@
 
 /obj/item/electronic_assembly/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 
 	if(href_list["ghostscan"])
 		if((isobserver(usr) && ckeys_allowed_to_scan[usr.ckey]) || IsAdminGhost(usr))

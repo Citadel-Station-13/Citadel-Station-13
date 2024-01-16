@@ -25,7 +25,7 @@
 /obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 	var/bash_mult = 0
 	if(!dam_absorbed)
-		return 1
+		return TRUE
 	else
 		bash_mult += round(clamp(1 + (dam_absorbed / bash_mult_steps), 1, max_bash_mult), 0.1) //Multiplies the effect of bashes by up to [max_bash_mult], though never less than one
 		return bash_mult

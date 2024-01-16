@@ -11,12 +11,12 @@
 
 /datum/export/material/get_amount(obj/O)
 	if(!material_id)
-		return 0
+		return FALSE
 	if(!isitem(O))
-		return 0
+		return FALSE
 	var/obj/item/I = O
 	if(!(SSmaterials.GetMaterialRef(material_id) in I.custom_materials))
-		return 0
+		return FALSE
 
 	var/amount = I.custom_materials[SSmaterials.GetMaterialRef(material_id)]
 

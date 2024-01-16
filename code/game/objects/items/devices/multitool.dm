@@ -236,11 +236,11 @@
 
 /datum/action/item_action/toggle_multitool/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(target)
 		var/obj/item/multitool/ai_detect/M = target
 		M.toggle_hud(owner)
-	return 1
+	return TRUE
 
 /obj/item/multitool/cyborg
 	name = "multitool"

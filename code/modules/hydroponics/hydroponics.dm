@@ -475,7 +475,7 @@
 
 		if(!reagent_source.reagents.total_volume)
 			to_chat(user, "<span class='notice'>[reagent_source] is empty.</span>")
-			return 1
+			return TRUE
 
 		if(reagents.total_volume >= reagents.maximum_volume && !reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
 			to_chat(user, "<span class='notice'>[src] is full.</span>")
@@ -520,11 +520,11 @@
 				qdel(reagent_source)
 				lastuser = user
 				H.update_icon()
-				return 1
+				return TRUE
 			H.update_icon()
 		if(reagent_source) // If the source wasn't composted and destroyed
 			reagent_source.update_icon()
-		return 1
+		return TRUE
 
 	else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
 		if(!myseed)

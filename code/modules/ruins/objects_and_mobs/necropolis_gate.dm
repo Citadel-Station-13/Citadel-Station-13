@@ -57,7 +57,7 @@
 		return QDEL_HINT_LETMELIVE
 
 /obj/structure/necropolis_gate/singularity_pull()
-	return 0
+	return FALSE
 
 /obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -67,7 +67,7 @@
 /obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
 	if(get_dir(O.loc, target) == dir)
 		return !density
-	return 1
+	return TRUE
 
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/96x96.dmi'
@@ -81,7 +81,7 @@
 	anchored = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
-	return 0
+	return FALSE
 
 /obj/structure/opacity_blocker/Destroy(force)
 	if(force)
@@ -236,7 +236,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	add_overlay(top_overlay)
 
 /obj/structure/necropolis_arch/singularity_pull()
-	return 0
+	return FALSE
 
 /obj/structure/necropolis_arch/Destroy(force)
 	if(force)

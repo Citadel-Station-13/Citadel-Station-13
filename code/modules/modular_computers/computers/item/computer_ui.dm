@@ -170,7 +170,7 @@
 				active_program = P
 				P.alert_pending = FALSE
 				update_appearance()
-			return 1
+			return TRUE
 
 		if("PC_toggle_light")
 			return toggle_flashlight()

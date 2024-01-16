@@ -233,7 +233,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/g_val
 	var/color_format = length(input_color)
 	if(color_format != length_char(input_color))
-		return 0
+		return FALSE
 	if(color_format == 3)
 		r_val = hex2num(copytext(input_color, 1, 2)) * 16
 		g_val = hex2num(copytext(input_color, 2, 3)) * 16
@@ -243,7 +243,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		g_val = hex2num(copytext(input_color, 3, 5))
 		b_val = hex2num(copytext(input_color, 5, 7))
 	else
-		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
+		return FALSE //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
 
 	r_val += (255 - r_val) * 0.4
 	if(r_val > 255)
@@ -693,32 +693,32 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in possessible
 
 	if(!target)
-		return 0
+		return FALSE
 
 	if(ismegafauna(target))
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
-		return 0
+		return FALSE
 
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
-			return 0
+			return FALSE
 	if(target.key)
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
-		return 0
+		return FALSE
 
 	transfer_ckey(target, FALSE)
 	target.AddElement(/datum/element/ghost_role_eligibility, penalize_on_ghost = FALSE, free_ghosting = TRUE)
 	target.faction = list("neutral")
-	return 1
+	return TRUE
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
 //overridden here and in /mob/living for different point span classes and sanity checks
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in fov_view())
 	if(!..())
-		return 0
+		return FALSE
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
-	return 1
+	return TRUE
 
 /mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"
@@ -839,7 +839,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()
-	return 1
+	return TRUE
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -947,7 +947,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // Ghosts have no momentum, being massless ectoplasm
 /mob/dead/observer/Process_Spacemove(movement_dir)
-	return 1
+	return TRUE
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()

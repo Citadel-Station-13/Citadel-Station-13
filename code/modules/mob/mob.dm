@@ -62,7 +62,7 @@
 	set hidden = 1
 
 	if(!loc)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -656,7 +656,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	return
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
-	return 0
+	return FALSE
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
@@ -729,7 +729,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	if(isliving(seat))
 		var/mob/living/L = seat
 		if(L.mob_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
-			return 0
+			return FALSE
 	return 9
 
 //can the mob be buckled to something by default?
@@ -783,7 +783,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/proc/fully_replace_character_name(oldname,newname)
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
-		return 0
+		return FALSE
 	real_name = newname
 	name = newname
 	if(mind)
@@ -801,7 +801,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
-	return 1
+	return TRUE
 
 //Updates GLOB.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
@@ -860,7 +860,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		client.mouse_pointer_icon = client.mouse_override_icon
 
 /mob/proc/is_literate()
-	return 0
+	return FALSE
 
 /mob/proc/can_hold_items()
 	return FALSE

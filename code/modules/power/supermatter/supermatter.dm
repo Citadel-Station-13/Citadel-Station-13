@@ -720,7 +720,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(damage > explosion_point)
 			countdown()
 
-	return 1
+	return TRUE
 
 /obj/machinery/power/supermatter_crystal/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc

@@ -217,7 +217,7 @@ effective or pretty fucking useless.
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_BELT)
-		return 1
+		return TRUE
 
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)

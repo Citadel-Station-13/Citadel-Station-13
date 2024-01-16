@@ -242,9 +242,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -576,7 +576,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return FALSE
 	return TRUE
 
-//the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+//the mob M is attempting to equip this item into the slot passed through as 'slot'. return TRUE if it can do this and 0 if it can't.
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to TRUE if you wish it to not give you outputs.
@@ -838,12 +838,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return SEND_SIGNAL(src, COMSIG_ATOM_HITBY, AM, skipcatch, hitpush, blocked, throwingdatum)
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
-	return 0
+	return FALSE
 
 /obj/item/attack_animal(mob/living/simple_animal/M)
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
-	return 0
+	return FALSE
 
 /obj/item/burn()
 	if(!QDELETED(src))
@@ -1043,7 +1043,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 // Returns a numeric value for sorting items used as parts in machines, so they can be replaced by the rped
 /obj/item/proc/get_part_rating()
-	return 0
+	return FALSE
 
 //Can this item be given to people?
 /obj/item/proc/can_give()
@@ -1287,7 +1287,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  */
 /obj/item/proc/update_action_buttons(status_only = FALSE, force = FALSE)
 	for(var/datum/action/current_action as anything in actions)
-		current_action.UpdateButtonIcon(status_only, force)
+		current_action.UpdateButtons(status_only, force)
 
 /// Special stuff you want to do when an outfit equips this item.
 /obj/item/proc/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)

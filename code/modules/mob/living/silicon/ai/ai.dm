@@ -618,7 +618,7 @@
 		queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, home.name), class)
 	if (viewalerts)
 		ai_alerts()
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/freeCamera(area/home, obj/machinery/camera/cam)
 	for(var/class in alarms)
@@ -906,7 +906,7 @@
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 /mob/living/silicon/ai/can_buckle()
-	return 0
+	return FALSE
 
 /mob/living/silicon/ai/incapacitated(ignore_restraints, ignore_grab)
 	if(aiRestorePowerRoutine)

@@ -392,7 +392,7 @@
 	if(network_card)
 		return network_card.get_signal(specific_action)
 	else
-		return 0
+		return FALSE
 
 /obj/item/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())

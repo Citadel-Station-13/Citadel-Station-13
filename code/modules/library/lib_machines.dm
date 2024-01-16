@@ -574,7 +574,7 @@
 	if(istype(O, /obj/item/paper))
 		bind_book(user, O)
 	else if(default_unfasten_wrench(user, O))
-		return 1
+		return TRUE
 	else
 		return ..()
 

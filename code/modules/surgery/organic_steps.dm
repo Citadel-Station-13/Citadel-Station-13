@@ -120,7 +120,7 @@
 	display_results(user, target, "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>",
 		"[user] saws [target]'s [parse_zone(target_zone)] open!",
 		"[user] saws [target]'s [parse_zone(target_zone)] open!")
-	return 1
+	return TRUE
 
 //drill bone
 /datum/surgery_step/drill
@@ -137,4 +137,4 @@
 	display_results(user, target, "<span class='notice'>You drill into [target]'s [parse_zone(target_zone)].</span>",
 		"[user] drills into [target]'s [parse_zone(target_zone)]!",
 		"[user] drills into [target]'s [parse_zone(target_zone)]!")
-	return 1
+	return TRUE

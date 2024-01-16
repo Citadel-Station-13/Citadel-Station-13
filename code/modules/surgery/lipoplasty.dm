@@ -6,8 +6,8 @@
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	if(HAS_TRAIT(target, TRAIT_FAT))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //cut fat
 /datum/surgery_step/cut_fat
@@ -24,7 +24,7 @@
 	display_results(user, target, "<span class='notice'>You cut [target]'s excess fat loose.</span>",
 			"[user] cuts [target]'s excess fat loose!",
 			"[user] finishes the cut on [target]'s [target_zone].")
-	return 1
+	return TRUE
 
 //remove fat
 /datum/surgery_step/remove_fat
@@ -56,4 +56,4 @@
 	newmeat.subjectjob = H.job
 	newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, (removednutriment / 15)) //To balance with nutriment_factor of nutriment
 	newmeat.forceMove(target.loc)
-	return 1
+	return TRUE

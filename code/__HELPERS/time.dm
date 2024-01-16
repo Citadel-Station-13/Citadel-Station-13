@@ -14,7 +14,7 @@
 		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
 		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day
 		if(month == MM && day == DD)
-			return 1
+			return TRUE
 
 //returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format
 /proc/SQLtime(timevar)
@@ -41,7 +41,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 		if(28 to INFINITY)
 			return 5
 		else
-			return 1
+			return TRUE
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.

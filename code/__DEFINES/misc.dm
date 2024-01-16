@@ -304,10 +304,6 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 
 */
 
-// Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
-#define APPEARANCE_UI						(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
-
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
@@ -525,7 +521,8 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 #define VARSET_TO_LIST(L, V) if(L) L[#V] = V
 #define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
 
-#define PREF_SAVELOAD_COOLDOWN 5
+#define PREF_LOAD_COOLDOWN 5
+#define PREF_SAVE_COOLDOWN 2 SECONDS
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2

@@ -21,7 +21,7 @@
 	air_contents = new(volume)
 	air_contents.set_temperature(T20C)
 
-	return 1
+	return TRUE
 
 /obj/machinery/portable_atmospherics/Destroy()
 	SSair.atmos_machinery -= src

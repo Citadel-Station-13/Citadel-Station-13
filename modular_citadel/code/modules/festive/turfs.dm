@@ -1503,9 +1503,9 @@
 
 /obj/structure/festive/trainplatform/edge_north/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(dir == FULLTILE_WINDOW_DIR)
-		return 0
+		return FALSE
 	if(get_dir(loc, target) == dir)
 		return !density
 	if(istype(mover, /obj/structure/festive/trainplatform/edge_north))
@@ -1518,14 +1518,14 @@
 			return FALSE
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
-	return 1
+	return TRUE
 
 /obj/structure/festive/trainplatform/edge_north/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/festive/trainplatform/edge_north
 	dir = SOUTH
@@ -1561,9 +1561,9 @@
 
 /obj/structure/festive/trainplatform/edge_south/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(dir == FULLTILE_WINDOW_DIR)
-		return 0
+		return FALSE
 	if(get_dir(loc, target) == dir)
 		return !density
 	if(istype(mover, /obj/structure/festive/trainplatform/edge_south))
@@ -1576,14 +1576,14 @@
 			return FALSE
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
-	return 1
+	return TRUE
 
 /obj/structure/festive/trainplatform/edge_north/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/festive/trainplatform/edge_south
 	dir = NORTH
@@ -1619,9 +1619,9 @@
 
 /obj/structure/festive/trainplatform/edge_east/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(dir == FULLTILE_WINDOW_DIR)
-		return 0
+		return FALSE
 	if(get_dir(loc, target) == dir)
 		return !density
 	if(istype(mover, /obj/structure/festive/trainplatform/edge_east))
@@ -1634,14 +1634,14 @@
 			return FALSE
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
-	return 1
+	return TRUE
 
 /obj/structure/festive/trainplatform/edge_east/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/festive/trainplatform/edge_east
 	dir = WEST
@@ -1677,9 +1677,9 @@
 
 /obj/structure/festive/trainplatform/edge_west/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(dir == FULLTILE_WINDOW_DIR)
-		return 0
+		return FALSE
 	if(get_dir(loc, target) == dir)
 		return !density
 	if(istype(mover, /obj/structure/festive/trainplatform/edge_west))
@@ -1692,14 +1692,14 @@
 			return FALSE
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
-	return 1
+	return TRUE
 
 /obj/structure/festive/trainplatform/edge_west/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/festive/trainplatform/edge_west
 	dir = EAST

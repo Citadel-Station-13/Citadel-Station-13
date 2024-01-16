@@ -230,7 +230,7 @@
 
 /datum/action/innate/pai/Trigger()
 	if(!ispAI(owner))
-		return 0
+		return FALSE
 	P = owner
 
 /datum/action/innate/pai/software

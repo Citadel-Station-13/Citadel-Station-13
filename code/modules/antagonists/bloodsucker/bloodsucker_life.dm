@@ -216,7 +216,7 @@
 		return
 				// Disable Powers: Masquerade	* NOTE * This should happen as a FLAW!
 				//if (stat >= UNCONSCIOUS)
-				//	for (var/datum/action/bloodsucker/masquerade/P in powers)
+				//	for (var/datum/action/cooldown/bloodsucker/masquerade/P in powers)
 				//		P.Deactivate()
 		//	TEMP DEATH
 	var/total_brute = owner.current.getBruteLoss_nonProsthetic()
@@ -252,7 +252,7 @@
 	owner.current.update_sight()
 	owner.current.reload_fullscreen()
 	// Disable ALL Powers
-	for(var/datum/action/bloodsucker/power in powers)
+	for(var/datum/action/cooldown/bloodsucker/power in powers)
 		if(power.active && !power.can_use_in_torpor)
 			power.DeactivatePower()
 	if(owner.current.suiciding)

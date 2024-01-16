@@ -38,7 +38,7 @@
 	fully_heal(TRUE)
 
 /mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
+	return FALSE //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
 	var/t_He = p_they(TRUE)

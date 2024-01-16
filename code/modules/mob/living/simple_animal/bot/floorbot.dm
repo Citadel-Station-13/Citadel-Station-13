@@ -284,9 +284,9 @@
 /mob/living/simple_animal/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)
 	if(t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 //Floorbots, having several functions, need sort out special conditions here.
 /mob/living/simple_animal/bot/floorbot/process_scan(scan_target)

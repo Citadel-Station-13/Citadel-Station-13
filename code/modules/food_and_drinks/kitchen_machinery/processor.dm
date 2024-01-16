@@ -82,11 +82,11 @@
 		user.visible_message("[user] put [O] into [src].", \
 			"You put [O] into [src].")
 		user.transferItemToLoc(O, src, TRUE)
-		return 1
+		return TRUE
 	else
 		if(user.a_intent != INTENT_HARM)
 			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
-			return 1
+			return TRUE
 		else
 			return ..()
 

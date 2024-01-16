@@ -486,7 +486,7 @@
 					var/atom/A = parent
 					A.do_squish()
 
-//This proc return 1 if the item can be picked up and 0 if it can't.
+//This proc return TRUE if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
 	if(!istype(I) || (I.item_flags & ABSTRACT))

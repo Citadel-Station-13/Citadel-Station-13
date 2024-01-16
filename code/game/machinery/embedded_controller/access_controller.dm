@@ -164,7 +164,7 @@
 	set waitfor = FALSE
 	if(A.density)
 		goIdle()
-		return 0
+		return FALSE
 	update_icon()
 	A.unbolt()
 	. = 1

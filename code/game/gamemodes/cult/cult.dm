@@ -154,9 +154,9 @@
 			if(cult_mind.current.onCentCom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 
 /datum/game_mode/cult/generate_report()

@@ -94,7 +94,7 @@
 
 /datum/surgery/proc/next_step(mob/user, intent)
 	if(step_in_progress)
-		return 1
+		return TRUE
 
 	var/try_to_fail = FALSE
 	if(intent == INTENT_DISARM)

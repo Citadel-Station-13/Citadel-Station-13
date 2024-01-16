@@ -18,7 +18,7 @@
 
 	. = attackchain_flags
 	// Special glove functions:
-	// If the gloves do anything, have them return 1 to stop
+	// If the gloves do anything, have them return TRUE to stop
 	// normal attack_hand() here.
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 	if(proximity && istype(G))
@@ -99,7 +99,7 @@
 */
 
 /mob/living/carbon/RestrainedClickOn(atom/A)
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
 	. = ..()

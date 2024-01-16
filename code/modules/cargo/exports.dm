@@ -117,7 +117,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
 /datum/export/proc/get_amount(obj/O)
-	return 1
+	return TRUE
 
 // Checks if the item is fit for export datum.
 /datum/export/proc/applies_to(obj/O, allowed_categories = NONE, apply_elastic = TRUE)

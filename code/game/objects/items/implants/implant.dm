@@ -38,8 +38,8 @@
 
 
 //What does the implant do upon injection?
-//return 1 if the implant injects
-//return 0 if there is no room for implant / it fails
+//return TRUE if the implant injects
+//return FALSE if there is no room for implant / it fails
 /obj/item/implant/proc/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTING, args) & COMPONENT_STOP_IMPLANTING)
 		return
@@ -99,7 +99,7 @@
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()
 
-	return 1
+	return TRUE
 
 /obj/item/implant/Destroy()
 	if(imp_in)

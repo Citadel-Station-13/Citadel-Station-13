@@ -41,10 +41,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/last_custom_holoform = 0
 
 	//Cooldowns for saving/loading. These are four are all separate due to loading code calling these one after another
-	var/saveprefcooldown
-	var/loadprefcooldown
-	var/savecharcooldown
-	var/loadcharcooldown
+	COOLDOWN_DECLARE(saveprefcooldown)
+	COOLDOWN_DECLARE(loadprefcooldown)
+	COOLDOWN_DECLARE(savecharcooldown)
+	COOLDOWN_DECLARE(loadcharcooldown)
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
@@ -65,7 +65,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/screentip_pref = SCREENTIP_PREFERENCE_ENABLED
 	var/screentip_color = "#ffd391"
 	var/screentip_images = TRUE
-	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
 
 	///Runechat preference. If true, certain messages will be displayed on the map, not ust on the chat area. Boolean.
@@ -267,6 +266,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/tcg_decks = list()
 
 	var/loadout_errors = 0
+
+	var/pref_queue
+	var/char_queue
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -1070,8 +1072,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>Runechat message char limit:</b> <a href='?_src_=prefs;preference=max_chat_length;task=input'>[max_chat_length]</a><br>"
 					dat += "<b>See Runechat for non-mobs:</b> <a href='?_src_=prefs;preference=see_chat_non_mob'>[see_chat_non_mob ? "Enabled" : "Disabled"]</a><br>"
 					dat += "<br>"
-					dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
-					dat += "<br>"
 					dat += "<b>PDA Color:</b> <span style='border:1px solid #161616; background-color: [pda_color];'><font color='[color_hex2num(pda_color) < 200 ? "FFFFFF" : "000000"]'>[pda_color]</font></span> <a href='?_src_=prefs;preference=pda_color;task=input'>Change</a><BR>"
 					dat += "<b>PDA Style:</b> <a href='?_src_=prefs;task=input;preference=pda_style'>[pda_style]</a><br>"
 					dat += "<b>PDA Reskin:</b> <a href='?_src_=prefs;task=input;preference=pda_skin'>[pda_skin]</a><br>"
@@ -1578,7 +1578,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	SetJobPreferenceLevel(job, jpval)
 	SetChoices(user)
 
-	return 1
+	return TRUE
 
 
 /datum/preferences/proc/ResetJobs()
@@ -1724,7 +1724,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 			else
 				SetChoices(user)
-		return 1
+		return TRUE
 
 	else if(href_list["preference"] == "trait")
 		switch(href_list["task"])
@@ -3003,8 +3003,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					chat_on_map = !chat_on_map
 				if("see_chat_non_mob")
 					see_chat_non_mob = !see_chat_non_mob
-				if("action_buttons")
-					buttons_locked = !buttons_locked
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
 				if("outline_enabled")
@@ -3219,6 +3217,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					load_character()
 
 				if("changeslot")
+					if(char_queue)
+						deltimer(char_queue) // Do not dare.
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
@@ -3335,7 +3335,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					user_gear[LOADOUT_CUSTOM_DESCRIPTION] = new_description
 
 	ShowChoices(user)
-	return 1
+	return TRUE
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, initial_spawn = FALSE)
 	if(be_random_name)

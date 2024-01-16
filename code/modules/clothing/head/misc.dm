@@ -203,7 +203,7 @@
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls.</span>")
 	user.say("M'lady.", forced = "fedora suicide")

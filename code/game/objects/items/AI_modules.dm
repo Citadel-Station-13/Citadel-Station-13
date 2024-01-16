@@ -115,7 +115,7 @@ AI MODULES
 			to_chat(law_datum.owner, "It would be in your best interest to play along with [sender.real_name] that:")
 			for(var/failedlaw in laws)
 				to_chat(law_datum.owner, "[failedlaw]")
-			return 1
+			return TRUE
 
 	for(var/templaw in laws)
 		if(law_datum.owner)
@@ -162,7 +162,7 @@ AI MODULES
 /obj/item/ai_module/supplied/safeguard/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
 		to_chat(user, "No name detected on module, please enter one.")
-		return 0
+		return FALSE
 	..()
 
 /obj/item/ai_module/supplied/safeguard/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
@@ -188,7 +188,7 @@ AI MODULES
 /obj/item/ai_module/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
 		to_chat(user, "No name detected on module, please enter one.")
-		return 0
+		return FALSE
 	..()
 
 /obj/item/ai_module/zeroth/oneHuman/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
@@ -251,7 +251,7 @@ AI MODULES
 /obj/item/ai_module/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
 	if(laws[1] == "")
 		to_chat(user, "No law detected on module, please create one.")
-		return 0
+		return FALSE
 	..()
 
 

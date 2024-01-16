@@ -440,7 +440,7 @@
 			num = round(num)
 		return num
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/chem_master/adjust_item_drop_location(atom/movable/AM) // Special version for chemmasters and condimasters

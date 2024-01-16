@@ -29,7 +29,7 @@
 		if ("Instant Runoff Voting")
 			polltype = POLLTYPE_IRV
 		else
-			return 0
+			return FALSE
 	var/starttime = SQLtime()
 	var/endtime = input("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime()) as text
 	if(!endtime)
@@ -117,7 +117,7 @@
 				if("Finish")
 					add_option = 0
 				else
-					return 0
+					return FALSE
 	var/m1 = "[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]"
 	var/m2 = "[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]"
 	var/datum/db_query/query_polladd_question = SSdbcore.NewQuery({"

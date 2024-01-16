@@ -7,10 +7,10 @@
 	requires_bodypart_type = 0
 /datum/surgery/prosthetic_replacement/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	if(!iscarbon(target))
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = target
 	if(!C.get_bodypart(user.zone_selected)) //can only start if limb is missing
-		return 1
+		return TRUE
 /datum/surgery_step/add_prosthetic
 	name = "add prosthetic"
 	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
@@ -70,7 +70,7 @@
 		display_results(user, target, "<span class='notice'>You succeed in replacing [target]'s [parse_zone(target_zone)].</span>",
 			"[user] successfully replaces [target]'s [parse_zone(target_zone)] with [tool]!",
 			"[user] successfully replaces [target]'s [parse_zone(target_zone)]!")
-		return 1
+		return TRUE
 	else
 		var/obj/item/bodypart/L = target.newBodyPart(target_zone, FALSE, FALSE)
 		L.is_pseudopart = TRUE
@@ -82,8 +82,8 @@
 		if(istype(tool, /obj/item/chainsaw))
 			var/obj/item/mounted_chainsaw/new_arm = new(target)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
-			return 1
+			return TRUE
 		else if(istype(tool, /obj/item/melee/synthetic_arm_blade))
 			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
-			return 1
+			return TRUE

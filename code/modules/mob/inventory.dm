@@ -379,7 +379,7 @@
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W, clothing_check = FALSE)
 	if(!istype(W))
-		return 0
+		return FALSE
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -396,9 +396,9 @@
 
 	for(var/slot in slot_priority)
 		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, clothing_check)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /**
  * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)

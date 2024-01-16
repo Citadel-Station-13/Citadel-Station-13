@@ -33,11 +33,11 @@
 
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 	var/mob/living/L = usr
 	if(!anchored || !istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
 		usr << browse(null, "window=pipedispenser")
-		return 1
+		return TRUE
 	usr.set_machine(src)
 	add_fingerprint(usr)
 	if(href_list["makepipe"])
@@ -130,7 +130,7 @@
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 	usr.set_machine(src)
 	add_fingerprint(usr)
 	if(href_list["dmake"])
@@ -181,7 +181,7 @@
 
 /obj/machinery/pipedispenser/disposal/transit_tube/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 	usr.set_machine(src)
 	add_fingerprint(usr)
 	if(wait < world.time)

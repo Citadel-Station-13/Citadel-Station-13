@@ -227,7 +227,7 @@
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
 
 /mob/living/carbon/proc/canBeHandcuffed()
-	return 0
+	return FALSE
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -450,7 +450,7 @@
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
@@ -891,7 +891,7 @@
 /mob/living/carbon/can_be_revived()
 	. = ..()
 	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
-		return 0
+		return FALSE
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))

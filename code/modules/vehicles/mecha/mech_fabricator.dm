@@ -632,10 +632,10 @@
 	var/datum/component/material_container/mat_container = rmat.mat_container
 	if (!mat_container)
 		say("No access to material storage, please contact the quartermaster.")
-		return 0
+		return FALSE
 	if (rmat.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
+		return FALSE
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 	var/list/matlist = list()
 	matlist[eject_sheet] = text2num(eject_amt)

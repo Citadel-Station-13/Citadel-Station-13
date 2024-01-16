@@ -119,8 +119,8 @@
 			owner.RemoveSpell(power)
 			qdel(power)
 		SEND_SIGNAL(owner, COMSIG_HUMAN_MUTATION_LOSS, src)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/mutation/human/proc/say_mod(message)
 	if(message)

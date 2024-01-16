@@ -62,12 +62,12 @@
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 
 	if(ismob(usr))
 		var/mob/M = usr
 		M.swap_hand()
-	return 1
+	return TRUE
 
 // /atom/movable/screen/skills
 // 	name = "skills"
@@ -452,7 +452,7 @@
 	var/icon_y = text2num(LAZYACCESS(modifiers, "icon-y"))
 	var/choice = get_zone_at(icon_x, icon_y)
 	if (!choice)
-		return 1
+		return TRUE
 
 	return set_selected_zone(choice, usr)
 

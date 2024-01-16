@@ -385,7 +385,7 @@
 					return FALSE
 	return TRUE
 
-/obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
+/obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return FALSE = borked; return TRUE = had enough
 	if(check && zero_amount())
 		return FALSE
 	if (is_cyborg)

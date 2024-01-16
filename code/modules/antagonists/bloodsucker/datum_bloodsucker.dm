@@ -168,7 +168,7 @@
 	return fullname
 
 
-/datum/antagonist/bloodsucker/proc/BuyPower(datum/action/bloodsucker/power)//(obj/effect/proc_holder/spell/power)
+/datum/antagonist/bloodsucker/proc/BuyPower(datum/action/cooldown/bloodsucker/power)//(obj/effect/proc_holder/spell/power)
 	powers += power
 	power.Grant(owner.current)// owner.AddSpell(power)
 
@@ -177,9 +177,9 @@
 	add_hud()
 	update_hud(TRUE) 	// Set blood value, current rank
 	// Powers
-	BuyPower(new /datum/action/bloodsucker/feed)
-	BuyPower(new /datum/action/bloodsucker/masquerade)
-	BuyPower(new /datum/action/bloodsucker/veil)
+	BuyPower(new /datum/action/cooldown/bloodsucker/feed)
+	BuyPower(new /datum/action/cooldown/bloodsucker/masquerade)
+	BuyPower(new /datum/action/cooldown/bloodsucker/veil)
 	// Traits
 	for(var/T in defaultTraits)
 		ADD_TRAIT(owner.current, T, BLOODSUCKER_TRAIT)
@@ -221,7 +221,7 @@
 	remove_hud()
 	// Powers
 	while(powers.len)
-		var/datum/action/bloodsucker/power = pick(powers)
+		var/datum/action/cooldown/bloodsucker/power = pick(powers)
 		powers -= power
 		power.Remove(owner.current)
 		// owner.RemoveSpell(power)
@@ -267,7 +267,7 @@
 			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, you can build one from wooden planks.</span><br>")
 
 /datum/antagonist/bloodsucker/proc/LevelUpPowers()
-	for(var/datum/action/bloodsucker/power in powers)
+	for(var/datum/action/cooldown/bloodsucker/power in powers)
 		power.level_current ++
 
 /datum/antagonist/bloodsucker/proc/SpendRank()
@@ -281,8 +281,8 @@
 	//TODO: Make this into a radial, or perhaps a tgui next UI
 		// Purchase Power Prompt
 	var/list/options = list()
-	for(var/pickedpower in typesof(/datum/action/bloodsucker))
-		var/datum/action/bloodsucker/power = pickedpower
+	for(var/pickedpower in typesof(/datum/action/cooldown/bloodsucker))
+		var/datum/action/cooldown/bloodsucker/power = pickedpower
 		// If I don't own it, and I'm allowed to buy it.
 		if(!(locate(power) in powers) && initial(power.bloodsucker_can_buy))
 			options[initial(power.name)] = power // TESTING: After working with TGUI, it seems you can use initial() to view the variables inside a path?
@@ -303,7 +303,7 @@
 			to_chat(owner.current, "<span class='warning'>You dont have enough blood to thicken your blood, you need [level_bloodcost - L.blood_volume] units more!</span>")
 			return
 		// Buy New Powers
-		var/datum/action/bloodsucker/P = options[choice]
+		var/datum/action/cooldown/bloodsucker/P = options[choice]
 		AddBloodVolume(-level_bloodcost)
 		BuyPower(new P)
 		to_chat(owner.current, "<span class='notice'>You have used [level_bloodcost] units of blood and learned [initial(P.name)]!</span>")

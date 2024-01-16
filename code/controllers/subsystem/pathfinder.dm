@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(pathfinder)
 		flow[t] = M
 		return free
 	else
-		return 0
+		return FALSE
 
 /datum/flowcache/proc/toolong(l)
 	log_game("Pathfinder route took longer than 150 ticks, src bot [flow[flow[l]]]")

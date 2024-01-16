@@ -1,6 +1,6 @@
 /mob/living/carbon/human/getarmor(def_zone, type)
 	if(HAS_TRAIT(src, TRAIT_ARMOR_BROKEN)) //trait that makes it act as if you have no armor at all, you take natural damage from all sources
-		return 0
+		return FALSE
 	var/armorval = 0
 	var/organnum = 0
 
@@ -22,7 +22,7 @@
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
 	if(!d_type || !def_zone)
-		return 0
+		return FALSE
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
@@ -93,7 +93,7 @@
 
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(!I || !user)
-		return 0
+		return FALSE
 
 	var/obj/item/bodypart/affecting
 	if(user == src)
@@ -125,7 +125,7 @@
 						"<span class='userdanger'>[user] [hulk_verb_continous] you!</span>", null, COMBAT_MESSAGE_RANGE, null, user,
 						"<span class='danger'>You [hulk_verb_simple] [src]!</span>")
 		apply_damage(15, BRUTE, wound_bonus=10)
-		return 1
+		return TRUE
 
 /mob/living/carbon/human/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
@@ -168,7 +168,7 @@
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
 			apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
-		return 1
+		return TRUE
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
 	. = ..()
@@ -183,7 +183,7 @@
 			visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
 				"<span class='userdanger'>[M] has lunged at you!</span>", target = M, \
 				target_message = "<span class='danger'>You have lunged at [src]!</span>")
-			return 0
+			return FALSE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
@@ -195,7 +195,7 @@
 			target_message = "<span class='danger'>You have slashed at [src]!</span>")
 		log_combat(M, src, "attacked")
 		if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
-			return 1
+			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
@@ -252,7 +252,7 @@
 
 	var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 	if(!dam_zone) //Dismemberment successful
-		return 1
+		return TRUE
 
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
@@ -529,7 +529,7 @@
 
 	for(var/obj/item/I in inventory_items_to_kill)
 		I.acid_act(acidpwr, acid_volume)
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20
