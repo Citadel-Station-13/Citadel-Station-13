@@ -881,17 +881,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.
 			return
 		click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
-	var/ab = FALSE
 	var/list/modifiers = params2list(params)
 
-	var/button_clicked = LAZYACCESS(modifiers, "button")
-
-	var/dragged = LAZYACCESS(modifiers, DRAG)
-	if(dragged && button_clicked != dragged)
+	if(modifiers[DRAG])
 		return
-
-	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && button_clicked == LEFT_CLICK)
-		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 
 	var/mcl = CONFIG_GET(number/minute_click_limit)
 	if (!holder && !ignore_spam && mcl)
@@ -908,9 +901,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				clicklimiter[ADMINSWARNED_AT] = minute
 
 				msg += " Administrators have been informed."
-				if (ab)
-					log_game("[key_name(src)] is using the middle click aimbot exploit")
-					message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
 				log_click(object, location, control, params, src, "lockout (spam - minute)", TRUE)
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")

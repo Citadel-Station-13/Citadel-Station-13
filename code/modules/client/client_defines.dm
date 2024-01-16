@@ -138,10 +138,7 @@
 	var/datum/weakref/mouse_location_ref = null
 	///Used in MouseDrag to preserve the last mouse-entered object. Weakref
 	var/datum/weakref/mouse_object_ref
-	//Middle-mouse-button click dragtime control for aimbot exploit detection.
-	var/middragtime = 0
-	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
-	var/datum/weakref/middle_drag_atom_ref
+	var/mouse_control_object
 
 	/// Messages currently seen by this client
 	var/list/seen_messages

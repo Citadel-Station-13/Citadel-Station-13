@@ -96,7 +96,7 @@
 	mouseParams = params
 	mouse_location_ref = WEAKREF(location)
 	mouse_object_ref = WEAKREF(object)
-	middle_drag_atom_ref = WEAKREF(control)
+	mouse_control_object = control
 	if(mob)
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOUSEMOVE, object, location, control, params)
 		// god forgive me for i have sinned - used for autoparry. currently at 5 objects.
@@ -106,17 +106,10 @@
 	..()
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	var/list/modifiers = params2list(params)
-	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
-		if (src_object && src_location != over_location)
-			middragtime = world.time
-			middle_drag_atom_ref = WEAKREF(src_object)
-		else
-			middragtime = 0
-			middle_drag_atom_ref = null
 	mouseParams = params
 	mouse_location_ref = WEAKREF(over_location)
 	mouse_object_ref = WEAKREF(over_object)
+	mouse_control_object = over_control
 	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
@@ -127,9 +120,3 @@
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return
-
-/client/MouseDrop(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
-	if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
-		middragtime = 0
-		middle_drag_atom_ref = null
-	..()
