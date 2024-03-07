@@ -192,32 +192,32 @@
 	else
 		var/healthpercent = (health/maxHealth) * 100
 		switch(healthpercent)
-			if(100 to 70) //Bonuses to speed and damage at high health
+			if(70 to 100) //Bonuses to speed and damage at high health
 				speed = 0
 				melee_damage_lower = 16
 				melee_damage_upper = 16
 				attack_verb_continuous = "viciously slashes"
-			if(70 to 40)
+			if(40 to 70)
 				speed = initial(speed)
 				melee_damage_lower = initial(melee_damage_lower)
 				melee_damage_upper = initial(melee_damage_upper)
 				attack_verb_continuous = initial(attack_verb_continuous)
-			if(40 to 30) //Damage decrease, but not speed
+			if(30 to 40) //Damage decrease, but not speed
 				speed = initial(speed)
 				melee_damage_lower = 10
 				melee_damage_upper = 10
 				attack_verb_continuous = "lightly slashes"
-			if(30 to 20) //Speed decrease
+			if(20 to 30) //Speed decrease
 				speed = 2
 				melee_damage_lower = 8
 				melee_damage_upper = 8
 				attack_verb_continuous = "lightly slashes"
-			if(20 to 10) //Massive speed decrease and weak melee attacks
+			if(10 to 20) //Massive speed decrease and weak melee attacks
 				speed = 3
 				melee_damage_lower = 6
 				melee_damage_upper = 6
 				attack_verb_continuous = "weakly slashes"
-			if(10 to 0) //We are super weak and going to die
+			if(0 to 10) //We are super weak and going to die
 				speed = 4
 				melee_damage_lower = 4
 				melee_damage_upper = 4
