@@ -194,6 +194,6 @@
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
 		zap_buckle_check(power)
-		return 0
+		return FALSE
 	else
 		. = ..()

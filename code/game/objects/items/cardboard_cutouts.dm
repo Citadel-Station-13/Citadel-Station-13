@@ -19,7 +19,7 @@
 	. = ..()
 	if(possible_appearances)
 		return
-	possible_appearances = sortList(list(
+	possible_appearances = sort_list(list(
 		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
 		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
 		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),

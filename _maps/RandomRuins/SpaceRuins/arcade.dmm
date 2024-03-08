@@ -147,7 +147,7 @@
 /turf/open/floor/engine,
 /area/ruin/powered)
 "I" = (
-/obj/item/aiModule/toyAI,
+/obj/item/ai_module/toyAI,
 /turf/open/floor/engine,
 /area/ruin/powered)
 "J" = (

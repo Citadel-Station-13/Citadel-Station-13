@@ -554,7 +554,7 @@
 
 		if(sheets.len > 0)
 			var/obj/item/stack/sheet/S = pick(sheets)
-			S.amount++
+			S.add(1) // Dare var edit directly again and i'll strangle you.
 			to_chat(owner, "<span class='notice'>[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!</span>")
 	return ..()
 

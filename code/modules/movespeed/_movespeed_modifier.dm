@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /mob/proc/get_config_multiplicative_speed(floating = FALSE)
 	var/list/read = floating? GLOB.mob_config_movespeed_type_lookup_floating : GLOB.mob_config_movespeed_type_lookup
 	if(!islist(read) || !read[type])
-		return 0
+		return FALSE
 	else
 		return read[type]
 

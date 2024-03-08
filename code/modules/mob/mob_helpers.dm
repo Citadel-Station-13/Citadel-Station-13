@@ -38,9 +38,9 @@
 /proc/above_neck(zone)
 	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
 	if(zones.Find(zone))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /**
   * Convert random parts of a passed in message to stars
@@ -269,7 +269,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/mob/M = i
 		if(M.real_name == msg)
 			return M
-	return 0
+	return FALSE
 
 /mob/proc/first_name()
 	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
@@ -364,7 +364,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return FALSE
 
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
-	return 1
+	return TRUE
 
 /proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, ignore_dnr_observers = FALSE, header) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
@@ -407,7 +407,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
 			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
-			return 1 //successful heal
+			return TRUE //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
@@ -478,9 +478,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/is_flying(mob/M = src)
 	if(M.movement_type & FLYING)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /mob/proc/click_random_mob()
 	var/list/nearby_mobs = list()

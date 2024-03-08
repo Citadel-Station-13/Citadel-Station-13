@@ -61,7 +61,7 @@
 
 /obj/item/assembly/health/proc/toggle_scan()
 	if(!secured)
-		return 0
+		return FALSE
 	scanning = !scanning
 	if(scanning)
 		START_PROCESSING(SSobj, src)

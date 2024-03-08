@@ -210,15 +210,15 @@
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
-		return 0
+		return FALSE
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
-		return 0
+		return FALSE
 	if(!SSdbcore.Connect())
-		return 0 //Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
+		return FALSE //Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
 	if(C.prefs.db_flags & DB_FLAG_EXEMPT)
-		return 0
+		return FALSE
 	if(!isnum(minimal_player_age))
-		return 0
+		return FALSE
 
 	return max(0, minimal_player_age - C.player_age)
 

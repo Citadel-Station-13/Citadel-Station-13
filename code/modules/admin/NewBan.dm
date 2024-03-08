@@ -7,7 +7,7 @@ GLOBAL_PROTECT(Banlist)
 	if(!GLOB.Banlist)		// if Banlist cannot be located for some reason
 		LoadBans()		// try to load the bans
 		if(!GLOB.Banlist)	// uh oh, can't find bans!
-			return 0	// ABORT ABORT ABORT
+			return FALSE	// ABORT ABORT ABORT
 
 	. = list()
 	var/appeal
@@ -20,7 +20,7 @@ GLOBAL_PROTECT(Banlist)
 		if (GLOB.Banlist["temp"])
 			if (!GetExp(GLOB.Banlist["minutes"]))
 				ClearTempbans()
-				return 0
+				return FALSE
 			else
 				.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]] during round ID [GLOB.Banlist["roundid"]][appeal]"
 		else
@@ -47,18 +47,18 @@ GLOBAL_PROTECT(Banlist)
 				if(GLOB.Banlist["temp"])
 					if (!GetExp(GLOB.Banlist["minutes"]))
 						ClearTempbans()
-						return 0
+						return FALSE
 					else
 						.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]] during round ID [GLOB.Banlist["roundid"]][appeal]"
 				else
 					.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [GLOB.Banlist["bannedby"]] during round ID [GLOB.Banlist["roundid"]][appeal]"
 				.["reason"] = matches
 				return .
-	return 0
+	return FALSE
 
 /proc/UpdateTime() //No idea why i made this a proc.
 	GLOB.CMinutes = (world.realtime / 10) / 60
-	return 1
+	return TRUE
 
 /proc/LoadBans()
 	if(!CONFIG_GET(flag/ban_legacy_system))
@@ -78,7 +78,7 @@ GLOBAL_PROTECT(Banlist)
 		GLOB.Banlist.cd = "/base"
 
 	ClearTempbans()
-	return 1
+	return TRUE
 
 /proc/ClearTempbans()
 	UpdateTime()
@@ -97,7 +97,7 @@ GLOBAL_PROTECT(Banlist)
 		if (GLOB.CMinutes >= GLOB.Banlist["minutes"])
 			RemoveBan(A)
 
-	return 1
+	return TRUE
 
 
 /proc/AddBan(key, computerid, reason, bannedby, temp, minutes, address)
@@ -111,7 +111,7 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist.cd = "/base"
 	if ( GLOB.Banlist.dir.Find("[ban_ckey][computerid]") )
 		to_chat(usr, text("<span class='danger'>Ban already exists.</span>"))
-		return 0
+		return FALSE
 	else
 		GLOB.Banlist.dir.Add("[ban_ckey][computerid]")
 		GLOB.Banlist.cd = "/base/[ban_ckey][computerid]"
@@ -128,7 +128,7 @@ GLOBAL_PROTECT(Banlist)
 			create_message("note", key, bannedby, "Permanently banned - [reason]", null, null, 0, 0, null, 0, 0)
 		else
 			create_message("note", key, bannedby, "Banned for [minutes] minutes - [reason]", null, null, 0, 0, null, 0, 0)
-	return 1
+	return TRUE
 
 /proc/RemoveBan(foldername)
 	var/key
@@ -140,7 +140,7 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist.cd = "/base"
 
 	if (!GLOB.Banlist.dir.Remove(foldername))
-		return 0
+		return FALSE
 
 	if(!usr)
 		log_admin_private("Ban Expired: [key]")
@@ -157,13 +157,13 @@ GLOBAL_PROTECT(Banlist)
 			GLOB.Banlist.dir.Remove(A)
 			continue
 
-	return 1
+	return TRUE
 
 /proc/GetExp(minutes as num)
 	UpdateTime()
 	var/exp = minutes - GLOB.CMinutes
 	if (exp <= 0)
-		return 0
+		return FALSE
 	else
 		var/timeleftstring
 		if (exp >= 1440) //1440 = 1 day in minutes

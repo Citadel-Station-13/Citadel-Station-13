@@ -70,7 +70,7 @@
 		qdel(src)
 		return credits
 	else
-		return 0
+		return FALSE
 
 /obj/item/holochip/attackby(obj/item/I, mob/user, params)
 	..()

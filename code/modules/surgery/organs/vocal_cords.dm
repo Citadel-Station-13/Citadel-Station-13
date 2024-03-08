@@ -134,7 +134,7 @@
 	var/cooldown = 0
 
 	if(!user || !user.can_speak() || user.stat)
-		return 0 //no cooldown
+		return FALSE //no cooldown
 
 	var/log_message = uppertext(message)
 	if(iscultist(user))
@@ -597,7 +597,7 @@
 
 	var/special_check = get_vog_special(user)
 	if(!special_check)
-		return 0
+		return FALSE
 
 	. = min(base_multiplier * special_check, VOG_MAX_STANDARD_POWER)		// anything above should require conscious admin fuckery, as things are balanced around 3 multiplier tops (see: damage being 15*3)
 	if(!specific_listeners.len)
@@ -617,7 +617,7 @@
 			return 0.5
 		if(user.mind.assigned_role in GLOB.command_positions)
 			return 1.4		// heads are great at speaking with authority
-	return 1
+	return TRUE
 
 //////////////////////////////////////
 ///////ENTHRAL VELVET CHORDS//////////
@@ -665,7 +665,7 @@
 /proc/velvetspeech(message, mob/living/user, base_multiplier = 1, message_admins = FALSE, debug = FALSE)
 
 	if(!user || !user.can_speak() || user.stat)
-		return 0 //no cooldown
+		return FALSE //no cooldown
 
 	var/log_message = message
 
@@ -688,7 +688,7 @@
 				listeners += L
 
 	if(!listeners.len)
-		return 0
+		return FALSE
 
 	//POWER CALCULATIONS
 

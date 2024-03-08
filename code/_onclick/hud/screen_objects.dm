@@ -62,12 +62,12 @@
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 
 	if(ismob(usr))
 		var/mob/M = usr
 		M.swap_hand()
-	return 1
+	return TRUE
 
 // /atom/movable/screen/skills
 // 	name = "skills"
@@ -154,9 +154,8 @@
 	if(!icon_empty)
 		icon_empty = icon_state
 
-	if(!hud?.mymob || !slot_id || !icon_full)
-		return ..()
-	icon_state = hud.mymob.get_item_by_slot(slot_id) ? icon_full : icon_empty
+	if(hud?.mymob && slot_id && icon_full)
+		icon_state = hud.mymob.get_item_by_slot(slot_id) ? icon_full : icon_empty
 	return ..()
 
 /atom/movable/screen/inventory/proc/add_overlays()
@@ -207,7 +206,7 @@
 				. += blocked_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
-		. += "hand_active"
+		. += (held_index % 2) ? "lhandactive" : "rhandactive"
 
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
@@ -411,6 +410,7 @@
 	name = "rest"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_rest"
+	base_icon_state = "act_rest"
 	plane = HUD_PLANE
 
 /atom/movable/screen/rest/Click()
@@ -422,10 +422,7 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return ..()
-	if(!user.resting)
-		icon_state = "act_rest"
-	else
-		icon_state = "act_rest0"
+	icon_state = "[base_icon_state][user.resting ? 0 : null]"
 	return ..()
 
 /atom/movable/screen/throw_catch
@@ -455,7 +452,7 @@
 	var/icon_y = text2num(LAZYACCESS(modifiers, "icon-y"))
 	var/choice = get_zone_at(icon_x, icon_y)
 	if (!choice)
-		return 1
+		return TRUE
 
 	return set_selected_zone(choice, usr)
 

@@ -160,10 +160,10 @@
 	if(istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
 			to_chat(user, "<span class='warning'>It's already fully loaded!</span>")
-			return 1
+			return TRUE
 		if (A.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There are no more caps!</span>")
-			return 1
+			return TRUE
 		if (A.amount_left < (7 - src.bullets))
 			src.bullets += A.amount_left
 			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", A.amount_left))
@@ -173,7 +173,7 @@
 			A.amount_left -= 7 - src.bullets
 			src.bullets = 7
 		A.update_icon()
-		return 1
+		return TRUE
 	else
 		return ..()
 

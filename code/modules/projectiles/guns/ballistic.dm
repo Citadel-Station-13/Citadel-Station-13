@@ -48,8 +48,8 @@
 
 /obj/item/gun/ballistic/can_shoot()
 	if(!magazine || !magazine.ammo_count(0))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
@@ -68,7 +68,7 @@
 					playsound(src, "gun_insert_empty_magazine", 70, 1)
 				A.update_icon()
 				update_icon()
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 				return
@@ -89,7 +89,7 @@
 			to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
 			install_suppressor(A)
 			return
-	return 0
+	return FALSE
 
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	// this proc assumes that the suppressor is already inside src
@@ -205,7 +205,7 @@
 		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_off = TRUE
 		update_icon()
-		return 1
+		return TRUE
 
 /// is something supposed to happen here?
 /obj/item/gun/ballistic/proc/on_sawoff(mob/user)

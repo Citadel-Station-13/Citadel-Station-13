@@ -33,5 +33,5 @@
 		if(!hook_vr("human_new",args))
 			result = 0
 
-	//Return 1 to superhook
+	//return TRUE to superhook
 	return result

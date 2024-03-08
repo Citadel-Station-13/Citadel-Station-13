@@ -16,22 +16,22 @@ drain_amount: How much is drained by default; Influenced by a multiplier on most
 	var/obj/item/stock_parts/cell/cell = get_cell()
 	if(cell)
 		return cell.power_drain(clockcult_user, drain_weapons, recursive, drain_amount)
-	return 0 //Returns 0 instead of FALSE to symbolise it returning the power amount in other cases, not TRUE aka 1
+	return FALSE //Returns 0 instead of FALSE to symbolise it returning the power amount in other cases, not TRUE aka 1
 
 /obj/item/melee/baton/power_drain(clockcult_user, drain_weapons = FALSE, recursive = FALSE, drain_amount = MIN_CLOCKCULT_POWER)	//balance memes
 	if(!drain_weapons)
-		return 0
+		return FALSE
 	var/obj/item/stock_parts/cell/cell = get_cell()
 	if(cell)
 		return cell.power_drain(clockcult_user, drain_weapons, recursive, drain_amount)
-	return 0 //No need to recurse further in batons
+	return FALSE //No need to recurse further in batons
 
 /obj/item/gun/power_drain(clockcult_user, drain_weapons = FALSE, recursive = FALSE, drain_amount = MIN_CLOCKCULT_POWER)	//balance memes
 	if(!drain_weapons)
-		return 0
+		return FALSE
 	var/obj/item/stock_parts/cell/cell = get_cell()
 	if(!cell)
-		return 0
+		return FALSE
 	if(cell.charge)
 		. = min(cell.charge, drain_amount*4) //Done snowflakey because guns have far smaller cells than batons / other equipment, also no need to recurse further in guns
 		cell.use(.)

@@ -245,7 +245,7 @@ SUBSYSTEM_DEF(ticker)
 		mode = null
 		SSjob.ResetOccupations()
 		emergency_swap++
-		return 0
+		return FALSE
 
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
@@ -264,7 +264,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			emergency_swap++
-			return 0
+			return FALSE
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
@@ -273,7 +273,7 @@ SUBSYSTEM_DEF(ticker)
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
-		modes = sortList(modes)
+		modes = sort_list(modes)
 		to_chat(world, "<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
 	else
 		mode.announce()*/

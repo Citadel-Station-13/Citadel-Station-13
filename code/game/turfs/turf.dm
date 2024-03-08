@@ -476,11 +476,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/atom/A
 	for(var/i in contents)
 		if(. <= 0)
-			return 0
+			return FALSE
 		A = i
 		if(!QDELETED(A) && A.level >= affecting_level)
 			.  = A.wave_explode(., explosion, dir)
-	maptext = "[.]"
+	maptext = MAPTEXT("[.]")
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)

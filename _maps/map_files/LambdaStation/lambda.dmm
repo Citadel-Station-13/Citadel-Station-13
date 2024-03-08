@@ -23822,9 +23822,9 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/obj/item/aiModule/core/full/asimov,
-/obj/item/aiModule/core/full/custom,
-/obj/item/aiModule/core/freeformcore,
+/obj/item/ai_module/core/full/asimov,
+/obj/item/ai_module/core/full/custom,
+/obj/item/ai_module/core/freeformcore,
 /obj/structure/window/reinforced,
 /obj/machinery/door/window{
 	dir = 4;
@@ -23873,10 +23873,10 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/obj/item/aiModule/reset/purge,
-/obj/item/aiModule/zeroth/oneHuman,
-/obj/item/aiModule/supplied/protectStation,
-/obj/item/aiModule/supplied/oxygen,
+/obj/item/ai_module/reset/purge,
+/obj/item/ai_module/zeroth/oneHuman,
+/obj/item/ai_module/supplied/protectStation,
+/obj/item/ai_module/supplied/oxygen,
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/westright{
 	name = "Reserve Modules";
@@ -24118,7 +24118,7 @@
 	},
 /obj/structure/table,
 /obj/structure/window/reinforced,
-/obj/item/aiModule/supplied/freeform,
+/obj/item/ai_module/supplied/freeform,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
@@ -24851,8 +24851,8 @@
 	},
 /obj/structure/table,
 /obj/structure/window/reinforced,
-/obj/item/aiModule/supplied/quarantine,
-/obj/item/aiModule/reset,
+/obj/item/ai_module/supplied/quarantine,
+/obj/item/ai_module/reset,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
@@ -66357,7 +66357,7 @@
 	},
 /obj/structure/table,
 /obj/item/aicard,
-/obj/item/aiModule/reset,
+/obj/item/ai_module/reset,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "iSm" = (

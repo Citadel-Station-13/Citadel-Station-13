@@ -59,7 +59,7 @@
 	return ..()
 
 /obj/item/dogborg/sleeper/Exit(atom/movable/O)
-	return 0
+	return FALSE
 
 /obj/item/dogborg/sleeper/proc/get_host()
 	if(!loc)

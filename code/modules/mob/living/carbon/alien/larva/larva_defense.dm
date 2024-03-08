@@ -30,7 +30,7 @@
 		"<span class='userdanger'>[user] has pummeled [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		adjustBruteLoss(5 + rand(1,9))
 		new /datum/forced_movement(src, get_step_away(user,src, 30), 1)
-		return 1
+		return TRUE
 
 /mob/living/carbon/alien/larva/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && !visual_effect_icon)

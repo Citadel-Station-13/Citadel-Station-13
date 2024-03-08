@@ -133,10 +133,10 @@
 	check_boost()
 	if(driver.m_intent == MOVE_INTENT_WALK)
 		var/deceleration = max_deceleration
-		if(driver.in_throw_mode)
+		if(driver.throw_mode)
 			deceleration *= 1.5
 		friction(deceleration, TRUE)
-	else if(driver.in_throw_mode)
+	else if(driver.throw_mode)
 		friction(max_deceleration*1.2, TRUE)
 	friction(max_deceleration/4)
 

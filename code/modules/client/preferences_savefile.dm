@@ -401,7 +401,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(istype(parent))
 				to_chat(parent, "<span class='warning'>You're attempting to load your preferences a little too fast. Wait half a second, then try again.</span>")
 			return FALSE
-		loadprefcooldown = world.time + PREF_SAVELOAD_COOLDOWN
+		COOLDOWN_START(src, loadprefcooldown, PREF_LOAD_COOLDOWN)
 	if(!fexists(path))
 		return FALSE
 
@@ -435,7 +435,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["see_chat_non_mob"] 	>> see_chat_non_mob
 	S["tgui_fancy"] >> tgui_fancy
 	S["tgui_lock"] >> tgui_lock
-	S["buttons_locked"] >> buttons_locked
 	S["windowflash"] >> windowflashing
 	S["be_special"] 		>> be_special
 
@@ -513,7 +512,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	see_chat_non_mob = sanitize_integer(see_chat_non_mob, 0, 1, initial(see_chat_non_mob))
 	tgui_fancy = sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock = sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
-	buttons_locked = sanitize_integer(buttons_locked, 0, 1, initial(buttons_locked))
 	windowflashing = sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
 	default_slot = sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles = sanitize_integer(toggles, 0, 16777215, initial(toggles))
@@ -595,18 +593,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!GLOB.keybindings_by_name[bindname])
 			modless_key_bindings -= key
 
-/datum/preferences/proc/save_preferences(bypass_cooldown = FALSE)
+/datum/preferences/proc/save_preferences(bypass_cooldown = FALSE, silent = FALSE)
 	if(!path)
-		return 0
+		return FALSE
 	if(!bypass_cooldown)
 		if(world.time < saveprefcooldown)
 			if(istype(parent))
-				to_chat(parent, "<span class='warning'>You're attempting to save your preferences a little too fast. Wait half a second, then try again.</span>")
-			return 0
-		saveprefcooldown = world.time + PREF_SAVELOAD_COOLDOWN
+				queue_save_pref(PREF_SAVE_COOLDOWN, silent)
+			return FALSE
+		COOLDOWN_START(src, saveprefcooldown, PREF_SAVE_COOLDOWN)
+	if(pref_queue)
+		deltimer(pref_queue)
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/"
 
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX)		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
@@ -626,7 +626,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["see_chat_non_mob"], see_chat_non_mob)
 	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
-	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
 	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["default_slot"], default_slot)
@@ -676,7 +675,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		WRITE_FILE(S["unlockable_loadout"], safe_json_encode(list()))
 
-	return 1
+	if(parent && !silent)
+		to_chat(parent, span_notice("Saved preferences!"))
+
+	return TRUE
+
+/datum/preferences/proc/queue_save_pref(save_in, silent)
+	if(parent && !silent)
+		to_chat(parent, span_notice("Saving preferences in [save_in * 0.1] second\s."))
+	if(pref_queue)
+		deltimer(pref_queue)
+	pref_queue = addtimer(CALLBACK(src, PROC_REF(save_preferences), TRUE, silent), save_in, TIMER_STOPPABLE)
 
 /datum/preferences/proc/load_character(slot, bypass_cooldown = FALSE)
 	if(!path)
@@ -686,7 +695,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(istype(parent))
 				to_chat(parent, "<span class='warning'>You're attempting to load your character a little too fast. Wait half a second, then try again.</span>")
 			return "SLOW THE FUCK DOWN" //the reason this isn't null is to make sure that people don't have their character slots overridden by random chars if they accidentally double-click a slot
-		loadcharcooldown = world.time + PREF_SAVELOAD_COOLDOWN
+		COOLDOWN_START(src, loadcharcooldown, PREF_LOAD_COOLDOWN)
 	if(!fexists(path))
 		return FALSE
 	var/savefile/S = new /savefile(path)
@@ -1084,20 +1093,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	cit_character_pref_load(S)
 
-	return 1
+	return TRUE
 
-/datum/preferences/proc/save_character(bypass_cooldown = FALSE)
+/datum/preferences/proc/save_character(bypass_cooldown = FALSE, silent = FALSE)
 	if(!path)
-		return 0
+		return FALSE
 	if(!bypass_cooldown)
 		if(world.time < savecharcooldown)
 			if(istype(parent))
-				to_chat(parent, "<span class='warning'>You're attempting to save your character a little too fast. Wait half a second, then try again.</span>")
-			return 0
-		savecharcooldown = world.time + PREF_SAVELOAD_COOLDOWN
+				queue_save_char(PREF_SAVE_COOLDOWN, silent)
+			return FALSE
+		COOLDOWN_START(src, savecharcooldown, PREF_SAVE_COOLDOWN)
+	if(char_queue)
+		deltimer(char_queue)
 	var/savefile/S = new /savefile(path)
 	if(!S)
-		return 0
+		return FALSE
 	S.cd = "/character[default_slot]"
 
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
@@ -1281,8 +1292,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	cit_character_pref_save(S)
 
-	return 1
+	if(parent && !silent)
+		to_chat(parent, span_notice("Saved character slot!"))
 
+	return TRUE
+
+/datum/preferences/proc/queue_save_char(save_in, silent)
+	if(parent && !silent)
+		to_chat(parent, span_notice("Saving character in [save_in * 0.1] second\s."))
+	if(char_queue)
+		deltimer(char_queue)
+	char_queue = addtimer(CALLBACK(src, PROC_REF(save_character), TRUE, silent), save_in, TIMER_STOPPABLE)
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN

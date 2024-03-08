@@ -753,7 +753,7 @@
 
 /datum/action/toggle_dead_chat_mob/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	var/mob/M = target
 	if(HAS_TRAIT_FROM(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT))
 		REMOVE_TRAIT(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT)

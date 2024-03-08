@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 	if(radio_return & NOPASS)
-		return 1
+		return TRUE
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		succumb()
 		to_chat(src, compose_message(src, language, message, null, spans, message_mode))
 
-	return 1
+	return TRUE
 
 /mob/living/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE, atom/movable/source)
 	. = ..()
@@ -358,23 +358,23 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/can_speak(message) //For use outside of Say()
 	if(can_speak_basic(message) && can_speak_vocal(message))
-		return 1
+		return TRUE
 
 /mob/living/proc/can_speak_basic(message, ignore_spam = FALSE) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
-			return 0
+			return FALSE
 		if(!ignore_spam && client.handle_spam_prevention(message,MUTE_IC))
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
 	var/obj/item/bodypart/leftarm = get_bodypart(BODY_ZONE_L_ARM)
 	var/obj/item/bodypart/rightarm = get_bodypart(BODY_ZONE_R_ARM)
 	if(HAS_TRAIT(src, TRAIT_MUTE) && get_selected_language() != /datum/language/signlanguage)
-		return 0
+		return FALSE
 
 	if (get_selected_language() == /datum/language/signlanguage)
 		var/left_disabled = FALSE
@@ -390,15 +390,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		else
 			right_disabled = TRUE
 		if (left_disabled && right_disabled) // We want this to only return false if both arms are either missing or disabled since you could technically sign one-handed.
-			return 0
+			return FALSE
 
 	if(is_muzzled())
-		return 0
+		return FALSE
 
 	if(!IsVocal())
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/proc/get_key(message)
 	var/key = message[1]
@@ -468,9 +468,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_BINARY)
-			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
+			return ITALICS | REDUCE_RANGE //Does not return FALSE since this is only reached by humans, not borgs or AIs.
 
-	return 0
+	return FALSE
 
 /mob/living/say_mod(input, message_mode)
 	. = ..()

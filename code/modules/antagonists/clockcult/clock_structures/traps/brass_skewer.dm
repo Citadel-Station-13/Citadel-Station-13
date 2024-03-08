@@ -81,7 +81,7 @@
 	density = TRUE //Skewers are one-use only
 	desc = "A vicious brass spike protruding from the ground like a stala[pick("gm", "ct")]ite. It makes you sick to look at." //is stalagmite the ground one? or the ceiling one? who can ever remember?
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/user_buckle_mob()
+/obj/structure/destructible/clockwork/trap/brass_skewer/user_buckle_mob(check_loc)
 	return
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/post_buckle_mob(mob/living/L)

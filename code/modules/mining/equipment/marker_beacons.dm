@@ -31,6 +31,12 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 /obj/item/stack/marker_beacon/thirty //and they're bought in stacks of 1, 10, or 30
 	amount = 30
 
+/obj/item/stack/marker_beacon/cyborg
+	is_cyborg = TRUE
+	custom_materials = null
+	source = /datum/robot_energy_storage/beacon
+	cost = 1
+
 /obj/item/stack/marker_beacon/Initialize(mapload)
 	. = ..()
 	update_icon()

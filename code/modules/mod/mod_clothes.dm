@@ -1,4 +1,4 @@
-/obj/item/clothing/head/helmet/space/mod
+/obj/item/clothing/head/mod
 	name = "MOD helmet"
 	desc = "A helmet for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
@@ -12,27 +12,27 @@
 	cold_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL|ALLOWINTERNALS
 	resistance_flags = NONE
 	flash_protect = 0
-	clothing_flags = NONE
 	flags_inv = HIDEFACIALHAIR
 	flags_cover = NONE
 	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES
+	item_flags = IMMUTABLE_SLOW
 	var/alternate_layer = NECK_LAYER
 	var/obj/item/mod/control/mod
 	mutantrace_variation = STYLE_MUZZLE
 
-/obj/item/clothing/head/helmet/space/mod/Destroy()
+/obj/item/clothing/head/mod/Destroy()
 	if(!QDELETED(mod))
 		mod.helmet = null
 		mod.mod_parts -= src
 		QDEL_NULL(mod)
 	return ..()
 
-/obj/item/clothing/suit/space/mod
+/obj/item/clothing/suit/mod
 	name = "MOD chestplate"
 	desc = "A chestplate for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
@@ -51,12 +51,13 @@
 	flags_inv = HIDETAUR
 	visor_flags = STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEJUMPSUIT
+	item_flags = IMMUTABLE_SLOW
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
 	mutantrace_variation = STYLE_DIGITIGRADE
 
-/obj/item/clothing/suit/space/mod/Destroy()
+/obj/item/clothing/suit/mod/Destroy()
 	if(!QDELETED(mod))
 		mod.chestplate = null
 		mod.mod_parts -= src
@@ -78,6 +79,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
+	item_flags = IMMUTABLE_SLOW
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
 	mutantrace_variation = STYLE_NO_ANTHRO_ICON
@@ -114,7 +116,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
-	item_flags = NONE
+	item_flags = IMMUTABLE_SLOW
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
 	mutantrace_variation = STYLE_DIGITIGRADE

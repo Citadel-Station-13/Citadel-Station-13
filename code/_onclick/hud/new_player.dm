@@ -5,6 +5,12 @@
 	///Whether the menu is currently on the client's screen or not
 	var/menu_hud_status = TRUE
 
+/datum/hud/new_player/New(mob/dead/new_player/owner)
+	. = ..()
+	if(!owner.age_verify())
+		return
+	populate_buttons(owner)
+
 /datum/hud/new_player/proc/populate_buttons(mob/dead/new_player/owner)
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/button_type in buttons)

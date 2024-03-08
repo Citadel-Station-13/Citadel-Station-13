@@ -1,6 +1,6 @@
 
 
-/datum/action/bloodsucker/gohome
+/datum/action/cooldown/bloodsucker/gohome
 	name = "Vanishing Act"
 	desc = "As dawn aproaches, disperse into mist and return directly to your Lair.<br><b>WARNING:</b> You will drop <b>ALL</b> of your possessions if observed by mortals."
 	button_icon_state = "power_gohome"
@@ -8,7 +8,7 @@
 	background_icon_state_off = "vamp_power_off_oneshot"
 
 	bloodcost = 100
-	cooldown = 99999 			// It'll never come back.
+	cooldown_time = 99999 			// It'll never come back.
 	amToggle = FALSE
 	amSingleUse = TRUE
 
@@ -18,7 +18,7 @@
 	can_be_immobilized = TRUE
 	must_be_concious = FALSE
 
-/datum/action/bloodsucker/gohome/CheckCanUse(display_error)
+/datum/action/cooldown/bloodsucker/gohome/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
@@ -30,12 +30,12 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/gohome/proc/flicker_lights(var/flicker_range, var/beat_volume)
+/datum/action/cooldown/bloodsucker/gohome/proc/flicker_lights(var/flicker_range, var/beat_volume)
 	for(var/obj/machinery/light/L in view(flicker_range, get_turf(owner)))
 	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', beat_volume, 1)
 
 
-/datum/action/bloodsucker/gohome/ActivatePower()
+/datum/action/cooldown/bloodsucker/gohome/ActivatePower()
 	var/mob/living/carbon/user = owner
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 			// IMPORTANT: Check for lair at every step! It might get destroyed.

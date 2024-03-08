@@ -29,7 +29,7 @@
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	if(S)
 		return S.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -86,7 +86,7 @@
 	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 	if(K)
 		return K.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -142,7 +142,7 @@
 	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
 	if(I)
 		return I.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Immobilize(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -198,7 +198,7 @@
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
 	if(P)
 		return P.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Paralyze(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -254,7 +254,7 @@
 	var/datum/status_effect/incapacitating/dazed/I = IsDazed()
 	if(I)
 		return I.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Daze(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -310,7 +310,7 @@
 	var/datum/status_effect/staggered/I = IsStaggered()
 	if(I)
 		return I.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Stagger(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -417,7 +417,7 @@
 	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 	if(U)
 		return U.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -464,7 +464,7 @@
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
 		return S.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Sleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)

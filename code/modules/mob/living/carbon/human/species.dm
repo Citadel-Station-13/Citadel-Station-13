@@ -321,8 +321,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(rank, list/features) //SPECIES JOB RESTRICTIONS
 	//if(rank in GLOB.command_positions) Left as an example: The format qualifies for rank takes.
-	//	return 0 //It returns false when it runs the proc so they don't get jobs from the global list.
-	return 1 //It returns 1 to say they are a-okay to continue.
+	//	return FALSE //It returns false when it runs the proc so they don't get jobs from the global list.
+	return TRUE //It returns 1 to say they are a-okay to continue.
 
 /**
  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does.
@@ -1589,7 +1589,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.throw_alert("nutrition", /atom/movable/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
-	return 0
+	return FALSE
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
 	. = FALSE
@@ -1645,7 +1645,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaked")
-		return 1
+		return TRUE
 	else
 		var/we_breathe = !HAS_TRAIT(user, TRAIT_NOBREATH)
 		var/we_lung = user.getorganslot(ORGAN_SLOT_LUNGS)
@@ -1661,12 +1661,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(target.check_martial_melee_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>", target = user, \
 			target_message = "<span class='warning'>[target] blocks your grab attempt!</span>")
-		return 0
+		return FALSE
 	if(attacker_style && attacker_style.grab_act(user,target))
-		return 1
+		return TRUE
 	else
 		target.grabbedby(user)
-		return 1
+		return TRUE
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style, attackchain_flags = NONE)
 	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -1929,11 +1929,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(user != H)
 		var/list/block_return = list()
 		if(H.mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone, block_return) & BLOCK_SUCCESS)
-			return 0
+			return FALSE
 		totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	if(H.check_martial_melee_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
-		return 0
+		return FALSE
 
 	var/hit_area
 
@@ -1958,7 +1958,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	I.do_stagger_action(H, user, totitemdamage)
 
 	if(!totitemdamage)
-		return 0 //item force is zero
+		return FALSE //item force is zero
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
@@ -2167,7 +2167,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!forced && hit_percent <= 0)
-		return 0
+		return FALSE
 
 	var/obj/item/bodypart/BP = null
 	if(!spread_damage)
@@ -2224,7 +2224,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(BRAIN)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
-	return 1
+	return TRUE
 
 /datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called when hit by a projectile

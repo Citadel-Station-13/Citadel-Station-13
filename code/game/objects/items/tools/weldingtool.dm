@@ -212,8 +212,8 @@
 	if(get_fuel() <= 0 && welding)
 		switched_on(user)
 		update_icon()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 //Switches the welder on
 /obj/item/weldingtool/proc/switched_on(mob/user)

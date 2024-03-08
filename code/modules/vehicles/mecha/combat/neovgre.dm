@@ -25,7 +25,7 @@
 	else
 		add_control_flags(M, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 
-/obj/vehicle/sealed/mecha/combat/neovgre/mob_exit(mob/M, silent, forced)
+/obj/vehicle/sealed/mecha/combat/neovgre/mob_exit(mob/M, silent, randomstep, forced)
 	if(forced)
 		..()
 
@@ -98,5 +98,5 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre/can_attach(obj/vehicle/sealed/mecha/combat/neovgre/M)
 	if(istype(M))
-		return 1
-	return 0
+		return TRUE
+	return FALSE

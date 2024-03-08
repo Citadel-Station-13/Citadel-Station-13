@@ -461,7 +461,7 @@
 		return
 	pollid = text2num(pollid)
 	if (!pollid || pollid < 0)
-		return 0
+		return FALSE
 	//validate the poll is actually the right type of poll and its still active
 	var/datum/db_query/query_validate_poll = SSdbcore.NewQuery({"
 		SELECT id
@@ -473,12 +473,12 @@
 		))
 	if(!query_validate_poll.warn_execute())
 		qdel(query_validate_poll)
-		return 0
+		return FALSE
 	if (!query_validate_poll.NextRow())
 		qdel(query_validate_poll)
-		return 0
+		return FALSE
 	qdel(query_validate_poll)
-	return 1
+	return TRUE
 
 /**
  * Processes vote form data and saves results to the database for an IRV type poll.
@@ -501,7 +501,7 @@
 	if(!QDELETED(client) && client.holder)
 		admin_rank = client.holder.rank.name
 	if (!vote_valid_check(pollid, client?.holder, POLLTYPE_IRV))
-		return 0
+		return FALSE
 
 	var/list/special_columns = list(
 		"datetime" = "NOW()",
@@ -544,7 +544,7 @@
 		return
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_OPTION))
-		return 0
+		return FALSE
 	var/voted = poll_check_voted(pollid)
 	if(isnull(voted) || voted) //Failed or already voted.
 		return
@@ -567,7 +567,7 @@
 	qdel(query_option_vote)
 	if(!QDELETED(usr))
 		usr << browse(null,"window=playerpoll")
-	return 1
+	return TRUE
 
 /mob/dead/new_player/proc/log_text_poll_reply(pollid, replytext)
 	if(!SSdbcore.Connect())
@@ -581,7 +581,7 @@
 		return
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_TEXT))
-		return 0
+		return FALSE
 	if(!replytext)
 		to_chat(usr, "The text you entered was blank. Please correct the text and submit again.")
 		return
@@ -611,7 +611,7 @@
 	qdel(query_text_vote)
 	if(!QDELETED(usr))
 		usr << browse(null,"window=playerpoll")
-	return 1
+	return TRUE
 
 /mob/dead/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
 	if(!SSdbcore.Connect())
@@ -625,7 +625,7 @@
 		return
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_RATING))
-		return 0
+		return FALSE
 	var/datum/db_query/query_numval_hasvoted = SSdbcore.NewQuery({"
 		SELECT id
 		FROM [format_table_name("poll_vote")]
@@ -655,7 +655,7 @@
 	qdel(query_numval_vote)
 	if(!QDELETED(usr))
 		usr << browse(null,"window=playerpoll")
-	return 1
+	return TRUE
 
 /**
  * Processes vote form data and saves results to the database for a multiple choice type poll.

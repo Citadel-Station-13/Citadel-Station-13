@@ -431,7 +431,7 @@
 		src.rotation = rotation
 		// end animations
 		animate(atom, time = 0, flags = ANIMATION_END_NOW)
-		return 0
+		return FALSE
 
 	// grab source
 	var/rel_x = (destination.x - relative_to.x) * world.icon_size + src.dist * sin(src.angle)
@@ -458,7 +458,7 @@
 /datum/summon_weapon/proc/Rotate(degrees, time, rotation)
 	. = time
 	if(!dist)
-		return 0
+		return FALSE
 	var/matrix/M = ConstructMatrix(angle + degrees, dist, rotation || src.rotation)
 	if(rotation)
 		src.rotation = rotation

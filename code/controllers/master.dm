@@ -129,7 +129,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /proc/Recreate_MC()
 	. = -1 //so if we runtime, things know we failed
 	if (world.time < Master.restart_timeout)
-		return 0
+		return FALSE
 	if (world.time < Master.restart_clear)
 		Master.restart_count *= 0.5
 
@@ -142,7 +142,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		new/datum/controller/master()
 	catch
 		return -1
-	return 1
+	return TRUE
 
 
 /datum/controller/master/Recover()

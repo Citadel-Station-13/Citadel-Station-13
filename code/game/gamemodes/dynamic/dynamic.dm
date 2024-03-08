@@ -546,7 +546,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return ruleset.cost + added_threat
 	else
 		stack_trace("The starting rule \"[ruleset.name]\" failed to pre_execute.")
-	return 0
+	return FALSE
 
 /// Mainly here to facilitate delayed rulesets. All roundstart rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)

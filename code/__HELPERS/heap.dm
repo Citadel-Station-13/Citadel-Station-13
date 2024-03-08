@@ -29,7 +29,7 @@
 //(i.e the max or the min dependant on the comparison function)
 /datum/heap/proc/pop()
 	if(!length(L))
-		return 0
+		return FALSE
 	. = L[1]
 
 	L[1] = L[length(L)]
@@ -60,7 +60,7 @@
 //or 0 if there's no child
 /datum/heap/proc/get_greater_child(index)
 	if(index * 2 > length(L))
-		return 0
+		return FALSE
 
 	if(index * 2 + 1 > length(L))
 		return index * 2

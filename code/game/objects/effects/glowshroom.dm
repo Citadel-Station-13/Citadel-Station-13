@@ -183,7 +183,7 @@
 		return newDir
 
 	floor = 1
-	return 1
+	return TRUE
 
 /**
   * Causes the glowshroom to decay by decreasing its endurance.

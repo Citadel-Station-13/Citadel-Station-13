@@ -69,7 +69,7 @@
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/structure/windoor_assembly/CheckExit(atom/movable/mover, turf/target)
 	if(mover.pass_flags & pass_flags_self)

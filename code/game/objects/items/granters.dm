@@ -129,12 +129,12 @@
 /datum/action/innate/drink_fling/Activate()
 	button_icon_state = "drinkfling_on"
 	active = TRUE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/drink_fling/Deactivate()
 	button_icon_state = "drinkfling_off"
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /obj/item/book/granter/action/origami
 	granted_action = /datum/action/innate/origami
@@ -155,13 +155,13 @@
 	to_chat(owner, "<span class='notice'>You will now fold origami planes.</span>")
 	button_icon_state = "origami_on"
 	active = TRUE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/origami/Deactivate()
 	to_chat(owner, "<span class='notice'>You will no longer fold origami planes.</span>")
 	button_icon_state = "origami_off"
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 ///SPELLS///
 

@@ -82,8 +82,7 @@
 	Field repairs can be done with a welder."
 	if(stored_gun && stored_gun.max_mod_capacity)
 		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
-		for(var/A in stored_gun.get_modkits())
-			var/obj/item/borg/upgrade/modkit/M = A
+		for(var/obj/item/borg/upgrade/modkit/M in stored_gun.modkits)
 			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/I)
@@ -136,8 +135,7 @@
 	if(istype(O, /obj/item/projectile/kinetic))
 		var/obj/item/projectile/kinetic/K = O
 		if(K.kinetic_gun)
-			for(var/A in K.kinetic_gun.get_modkits())
-				var/obj/item/borg/upgrade/modkit/M = A
+			for(var/obj/item/borg/upgrade/modkit/M in K.kinetic_gun.modkits)
 				if(istype(M, /obj/item/borg/upgrade/modkit/minebot_passthrough))
 					return TRUE
 	if(istype(O, /obj/item/projectile/destabilizer))

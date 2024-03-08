@@ -33,10 +33,10 @@
 
 /obj/vehicle/ridden/scooter/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
 		to_chat(M, "<span class='warning'>Your limbless body can't ride \the [src].</span>")
-		return 0
+		return FALSE
 	. = ..()
 
 /obj/vehicle/ridden/scooter/skateboard

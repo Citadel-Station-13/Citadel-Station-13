@@ -141,8 +141,8 @@
 /obj/structure/particle_accelerator/proc/connect_master(obj/O)
 	if(O.dir == dir)
 		master = O
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 ///////////
 // PARTS //

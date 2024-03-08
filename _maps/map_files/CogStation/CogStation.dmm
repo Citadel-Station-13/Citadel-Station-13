@@ -23661,14 +23661,14 @@
 	dir = 4;
 	light_color = "#e8eaff"
 	},
-/obj/item/aiModule/reset/purge{
+/obj/item/ai_module/reset/purge{
 	pixel_y = 6
 	},
-/obj/item/aiModule/reset{
+/obj/item/ai_module/reset{
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/aiModule/core/full/custom{
+/obj/item/ai_module/core/full/custom{
 	pixel_x = -4
 	},
 /obj/machinery/status_display{
@@ -24172,7 +24172,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/aiModule/core/full/asimov{
+/obj/item/ai_module/core/full/asimov{
 	pixel_x = 2;
 	pixel_y = 10
 	},
@@ -24183,11 +24183,11 @@
 /obj/effect/spawner/lootdrop/aimodule_harmless{
 	pixel_y = 6
 	},
-/obj/item/aiModule/core/freeformcore{
+/obj/item/ai_module/core/freeformcore{
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/aiModule/supplied/freeform{
+/obj/item/ai_module/supplied/freeform{
 	pixel_x = -2
 	},
 /obj/structure/cable{
@@ -38060,22 +38060,22 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/aiModule/supplied/oxygen{
+/obj/item/ai_module/supplied/oxygen{
 	pixel_x = 2;
 	pixel_y = 10
 	},
-/obj/item/aiModule/supplied/quarantine{
+/obj/item/ai_module/supplied/quarantine{
 	pixel_x = 1;
 	pixel_y = 8
 	},
-/obj/item/aiModule/zeroth/oneHuman{
+/obj/item/ai_module/zeroth/oneHuman{
 	pixel_y = 4
 	},
 /obj/effect/spawner/lootdrop/aimodule_harmful{
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/aiModule/supplied/protectStation{
+/obj/item/ai_module/supplied/protectStation{
 	pixel_x = -2
 	},
 /turf/open/floor/plasteel,

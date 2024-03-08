@@ -47,10 +47,10 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 
 /datum/action/changeling/proc/sting_action(mob/user, mob/target)
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))
-	return 0
+	return FALSE
 
 /datum/action/changeling/proc/sting_feedback(mob/user, mob/target)
-	return 0
+	return FALSE
 
 //Fairly important to remember to return TRUE on success >.<
 

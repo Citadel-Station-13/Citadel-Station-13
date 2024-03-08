@@ -4,6 +4,25 @@
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 
+#define LGBT_ALPHA 60
+
+/obj/effect/turf_decal/tile/Initialize()
+	if(SSevents.holidays)
+		if (SSevents.holidays[APRIL_FOOLS])
+			color = "#[random_short_color()]"
+		else
+			for(var/H in SSevents.holidays)
+				if(istype(H,/datum/holiday/lgbt))
+					var/datum/holiday/lgbt/L = H
+					color = L.get_floor_tile_color(src)
+
+					// It looks garish at different alphas, and it's not possible to get a
+					// consistent color palette without this.
+					alpha = LGBT_ALPHA
+	return ..()
+
+#undef LGBT_ALPHA
+
 /obj/effect/turf_decal/tile/blue
 	name = "blue corner"
 	color = "#52B4E9"

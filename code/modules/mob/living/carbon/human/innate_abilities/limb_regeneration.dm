@@ -12,7 +12,7 @@
 		var/mob/living/carbon/human/H = owner
 		var/list/limbs_to_heal = H.get_missing_limbs()
 		if(limbs_to_heal.len < 1)
-			return 0
+			return FALSE
 		var/mode = H.get_ability_property(INNATE_ABILITY_LIMB_REGROWTH, PROPERTY_LIMB_REGROWTH_USAGE_TYPE)
 		switch(mode)
 			if(REGROWTH_USES_BLOOD)
@@ -20,7 +20,7 @@
 					return TRUE
 				else
 					return FALSE
-		return 0
+		return FALSE
 
 /datum/action/innate/ability/limb_regrowth/Activate()
 	var/mob/living/carbon/human/H = owner

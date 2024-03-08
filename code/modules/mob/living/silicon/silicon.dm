@@ -44,6 +44,8 @@
 	var/obj/machinery/camera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
 
+	///Whether we have been emagged
+	var/emagged = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
 	var/interaction_range = 7			//wireless control range
 
@@ -362,12 +364,12 @@
 	to_chat(src, "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>")
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
-	return 0
+	return FALSE
 
 // The src mob is trying to place an item on someone
 // But the src mob is a silicon!!  Disable.
 /mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
-	return 0
+	return FALSE
 
 
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
@@ -432,7 +434,7 @@
 	return ..()
 
 /mob/living/silicon/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE

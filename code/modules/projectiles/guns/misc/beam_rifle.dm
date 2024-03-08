@@ -200,7 +200,9 @@
 	else
 		P.color = rgb(0, 255, 0)
 	var/turf/curloc = get_turf(src)
-	var/turf/targloc = get_turf(current_user.client.mouseObject)
+
+	var/atom/target_atom = current_user.client.mouse_object_ref?.resolve()
+	var/turf/targloc = get_turf(target_atom)
 	if(!istype(targloc))
 		if(!istype(curloc))
 			return
@@ -293,7 +295,9 @@
 	process_aim()
 	if(fire_check() && can_trigger_gun(M))
 		sync_ammo()
-		do_fire(M.client.mouseObject, M, FALSE, M.client.mouseParams, M.zone_selected)
+		var/atom/target = M.client.mouse_object_ref?.resolve()
+		if(target)
+			afterattack(target, M, FALSE, M.client.mouseParams)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
 	return ..()
@@ -469,7 +473,7 @@
 		return 0.5
 	if(istype(target, /obj/structure/blob))
 		return 0.65			//CIT CHANGE.
-	return 1
+	return TRUE
 
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
 	if(isobj(target))

@@ -144,10 +144,10 @@
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
-		return 0
+		return FALSE
 	target = null
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
-	return 1
+	return TRUE
 
 /obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod()
 	if(GLOB.ratvar_awakens)

@@ -166,7 +166,7 @@
 		if(crit_fail || (organ_flags & ORGAN_FAILING))
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
-			return 0
+			return FALSE
 		on = TRUE
 		if(allow_thrust(0.01))
 			ion_trail.start()
@@ -195,28 +195,28 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
 	if(!on || !owner)
-		return 0
+		return FALSE
 
 	var/turf/T = get_turf(owner)
 	if(!T) // No more runtimes from being stuck in nullspace.
-		return 0
+		return FALSE
 
 	// Priority 1: use air from environment.
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && environment.return_pressure() > 30)
-		return 1
+		return TRUE
 
 	// Priority 2: use plasma from internal plasma storage.
 	// (just in case someone would ever use this implant system to make cyber-alien ops with jetpacks and taser arms)
 	if(owner.getPlasma() >= num*100)
 		owner.adjustPlasma(-num*100)
-		return 1
+		return TRUE
 
 	// Priority 3: use internals tank.
 	var/obj/item/tank/I = owner.internal
 	if(I && I.air_contents && I.air_contents.total_moles() >= num)
 		T.assume_air_moles(I.air_contents, num)
-		return 1
+		return TRUE
 
 	toggle(silent = TRUE)
-	return 0
+	return FALSE

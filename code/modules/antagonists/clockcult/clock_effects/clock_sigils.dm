@@ -21,7 +21,7 @@
 			return ..()
 		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
 		qdel(src)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/effect/clockwork/sigil/attack_tk(mob/user)

@@ -47,7 +47,7 @@
 //Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	to_chat(user, "<span class='notice'>Nothing happened... This slime extract cannot be activated this way.</span>")
-	return 0
+	return FALSE
 
 //Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
 /obj/item/slime_extract/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -97,7 +97,7 @@
 				to_chat(user, "<span class='notice'>You spit out [S].</span>")
 				return 350
 			else
-				return 0
+				return FALSE
 
 /obj/item/slime_extract/gold
 	name = "gold slime extract"

@@ -339,7 +339,7 @@
 /obj/item/integrated_circuit/weaponized/proc/attempt_stun(var/mob/living/L,var/stunforce = 70) //Copied from stunbaton code.
 
 	if(!L || !isliving(L))
-		return 0
+		return FALSE
 
 	L.DefaultCombatKnockdown(stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
@@ -352,4 +352,4 @@
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
-	return 1
+	return TRUE

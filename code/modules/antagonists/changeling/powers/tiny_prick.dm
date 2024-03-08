@@ -53,7 +53,7 @@
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		sting_feedback(user, target)
 		changeling.chem_charges -= chemical_cost
-	return 1
+	return TRUE
 
 /datum/action/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
@@ -61,7 +61,7 @@
 	to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
-	return 1
+	return TRUE
 
 
 /datum/action/changeling/sting/transformation
@@ -94,8 +94,8 @@
 		return
 	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/action/changeling/sting/transformation/sting_action(mob/user, mob/target)
 	if(ismonkey(target))
@@ -133,8 +133,8 @@
 		var/mob/living/L = target
 		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
 			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", object="false armblade sting")

@@ -178,7 +178,7 @@
   */
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
-		return 1
+		return TRUE
 	stage = END_STAGE
 	STOP_PROCESSING(SSweather, src)
 	update_areas()

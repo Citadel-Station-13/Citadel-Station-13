@@ -50,15 +50,12 @@
 		"lockdown" = borg.locked_down,
 		"scrambledcodes" = borg.scrambledcodes
 	)
-	.["upgrades"] = list()
-	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-/obj/item/borg/upgrade/hypospray) //hypospray is a dummy parent for hypospray upgrades
-		var/obj/item/borg/upgrade/upgrade = upgradetype
-		if (initial(upgrade.module_type) && !is_type_in_list(borg.module, initial(upgrade.module_type))) // Upgrade requires a different module
-			continue
-		var/installed = FALSE
-		if (locate(upgradetype) in borg)
-			installed = TRUE
-		.["upgrades"] += list(list("name" = initial(upgrade.name), "installed" = installed, "type" = upgradetype))
+	var/obj/item/gun/energy/kinetic_accelerator/kinetic_accelerator = locate(/obj/item/gun/energy/kinetic_accelerator) in borg.module
+	if(kinetic_accelerator)
+		.["ka_remaining_capacity"] = kinetic_accelerator.get_remaining_mod_capacity()
+	.["active_upgrades"] = list()
+	for (var/obj/item/borg/upgrade/upgrade as anything in borg.upgrades) // put a non-upgrade here, i dare you.
+		.["active_upgrades"] += list(list("type" = upgrade.type))
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE) : list()
 	.["channels"] = list()
 	for (var/k in GLOB.radiochannels)
@@ -77,6 +74,28 @@
 	for(var/mob/living/silicon/ai/ai in GLOB.ai_list)
 		.["ais"] += list(list("name" = ai.name, "ref" = REF(ai), "connected" = (borg.connected_ai == ai)))
 
+/datum/borgpanel/ui_static_data(mob/user)
+	. = ..()
+	.["upgrades"] = list()
+	for(var/obj/item/borg/upgrade/upgrade as anything in GLOB.borg_upgrades)
+		if(upgrade.type == upgrade.abstract_type)
+			continue
+		var/obj/item/borg/upgrade/modkit/modkit
+		if(istype(upgrade, /obj/item/borg/upgrade/modkit))
+			modkit = upgrade
+			if(modkit.minebot_exclusive)
+				continue
+			modkit = upgrade
+		.["upgrades"] += list(
+			list(
+				"name" = upgrade.name,
+				"type" = upgrade.type,
+				"module_type" = upgrade.module_type,
+				"maximum_of_type" = modkit ? modkit.maximum_of_type : null,
+				"denied_type" = modkit ? modkit.denied_type : null,
+				"cost" = modkit ? modkit.cost : null
+				)
+			)
 
 /datum/borgpanel/ui_act(action, params)
 	if(..())
@@ -148,17 +167,31 @@
 			var/upgradepath = text2path(params["upgrade"])
 			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
 			if (installedupgrade)
-				installedupgrade.deactivate(borg, user)
-				borg.upgrades -= installedupgrade
+				qdel(installedupgrade)
 				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] removed the [installedupgrade] upgrade from [key_name(borg)].")
-				qdel(installedupgrade)
 			else
-				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
-				upgrade.action(borg, user)
-				borg.upgrades += upgrade
+				var/obj/item/borg/upgrade/upgrade = new upgradepath()
+				if(!borg.apply_upgrade(upgrade, user, TRUE))
+					to_chat(user, span_danger("Upgrade error."))
+					return
 				message_admins("[key_name_admin(user)] added the [upgrade] borg upgrade to [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] added the [upgrade] borg upgrade to [key_name(borg)].")
+		if ("add_upgrade")
+			var/upgradepath = text2path(params["upgrade"])
+			var/obj/item/borg/upgrade/upgrade = new upgradepath()
+			if(!borg.apply_upgrade(upgrade, user, TRUE))
+				to_chat(user, span_danger("Upgrade error."))
+				return
+			message_admins("[key_name_admin(user)] added the [upgrade] borg upgrade to [ADMIN_LOOKUPFLW(borg)].")
+			log_admin("[key_name(user)] added the [upgrade] borg upgrade to [key_name(borg)].")
+		if ("remove_upgrade")
+			var/upgradepath = text2path(params["upgrade"])
+			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
+			if (installedupgrade)
+				qdel(installedupgrade)
+				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
+				log_admin("[key_name(user)] removed the [installedupgrade] upgrade from [key_name(borg)].")
 		if ("toggle_radio")
 			var/channel = params["channel"]
 			if (channel in borg.radio.channels) // We're removing a channel
@@ -226,13 +259,20 @@
 	if (!istype(chosensilicon, /mob/living/silicon))
 		to_chat(usr, "<span class='warning'>Silicon is required for law changes</span>", confidential=TRUE)
 		return
-	var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/aiModule)))
+	var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/ai_module)))
 	if (!chosen)
 		return
 	var/new_board = new chosen(src)
-	var/obj/item/aiModule/chosenboard = new_board
+	var/obj/item/ai_module/chosenboard = new_board
 	var/mob/living/silicon/beepboop = chosensilicon
 	chosenboard.install(beepboop.laws, usr)
 	message_admins("[key_name_admin(usr)] added [chosenboard] to [ADMIN_LOOKUPFLW(beepboop)].")
 	log_admin("[key_name(usr)] added [chosenboard] to [key_name(beepboop)].")
 	qdel(new_board)
+
+GLOBAL_LIST_INIT(borg_upgrades, populate_borg_upgrades())
+
+/proc/populate_borg_upgrades()
+	. = list()
+	for(var/type in typesof(/obj/item/borg/upgrade))
+		. += new type

@@ -14,7 +14,7 @@
 	dat += "<HR>"
 
 	// Step One: Decide powers you CAN buy.
-	for(var/pickedpower in typesof(/datum/action/bloodsucker))
+	for(var/pickedpower in typesof(/datum/action/cooldown/bloodsucker))
 		var/obj/effect/proc_holder/spell/bloodsucker/power = pickedpower
 		// NAME
 		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[power.name]</A>"

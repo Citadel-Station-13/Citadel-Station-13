@@ -513,7 +513,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		var/atom/movable/M = pick(targets)
 		targets -= M
 		if(target(M))
-			return 1
+			return TRUE
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
 	set waitfor = FALSE
@@ -566,8 +566,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS)	//check for weapon authorization
 		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/syndicate))
 
-			if(allowed(perp)) //if the perp has security access, return 0
-				return 0
+			if(allowed(perp)) //if the perp has security access, return FALSE
+				return FALSE
 			if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
 				threatcount += 4
 
@@ -585,7 +585,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	// If we aren't shooting heads then return a threatcount of 0
 	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS) && (perp.get_assignment() in GLOB.command_positions))
-		return 0
+		return FALSE
 
 	return threatcount
 
@@ -600,7 +600,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		INVOKE_ASYNC(src, .proc/shootAt, target)
-		return 1
+		return TRUE
 	return
 
 /obj/machinery/porta_turret/proc/shootAt(atom/movable/target, stagger_enabled = FALSE)
@@ -840,7 +840,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	faction = list("neutral","silicon","turret") //Minebots, medibots, etc that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
-	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
+	return FALSE //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
 
 /obj/machinery/porta_turret/aux_base/setup()
 	return
@@ -874,7 +874,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
-	return 0
+	return FALSE
 
 /obj/machinery/porta_turret/centcom_shuttle/setup()
 	return
