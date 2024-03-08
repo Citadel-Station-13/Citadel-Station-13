@@ -74,7 +74,7 @@
 	if(I.force >= best_force)
 		best_force = I.force
 	else
-		addtimer(CALLBACK(src, .proc/pickup_and_wear, I), 5)
+		addtimer(CALLBACK(src, PROC_REF(pickup_and_wear), I), 5)
 
 	return TRUE
 
@@ -269,7 +269,7 @@
 
 				if(Adjacent(bodyDisposal))
 					disposing_body = TRUE
-					addtimer(CALLBACK(src, .proc/stuff_mob_in), 5)
+					addtimer(CALLBACK(src, PROC_REF(stuff_mob_in)), 5)
 
 				else
 					var/turf/olddist = get_dist(src, bodyDisposal)

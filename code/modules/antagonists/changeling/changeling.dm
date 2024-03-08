@@ -362,7 +362,7 @@
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 	update_changeling_icons_added()
-	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/regenerate)
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE, PROC_REF(regenerate))
 	return
 
 /datum/antagonist/changeling/remove_innate_effects()

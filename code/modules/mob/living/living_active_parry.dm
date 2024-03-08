@@ -52,7 +52,7 @@
 	parry_start_time = world.time
 	successful_parries = list()
 	successful_parry_counterattacks = list()
-	addtimer(CALLBACK(src, .proc/end_parry_sequence), full_parry_duration)
+	addtimer(CALLBACK(src, PROC_REF(end_parry_sequence)), full_parry_duration)
 	if(data.parry_flags & PARRY_LOCK_ATTACKING)
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_PARRY_TRAIT)
 	if(data.parry_flags & PARRY_LOCK_SPRINTING)

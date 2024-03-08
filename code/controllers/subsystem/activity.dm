@@ -9,8 +9,8 @@ SUBSYSTEM_DEF(activity)
 	var/list/threats = list()
 
 /datum/controller/subsystem/activity/Initialize(timeofday)
-	RegisterSignal(SSdcs,COMSIG_GLOB_EXPLOSION,.proc/on_explosion)
-	RegisterSignal(SSdcs,COMSIG_GLOB_MOB_DEATH,.proc/on_death)
+	RegisterSignal(SSdcs,COMSIG_GLOB_EXPLOSION, PROC_REF(on_explosion))
+	RegisterSignal(SSdcs,COMSIG_GLOB_MOB_DEATH, PROC_REF(on_death))
 	return ..()
 
 /datum/controller/subsystem/activity/fire(resumed = 0)

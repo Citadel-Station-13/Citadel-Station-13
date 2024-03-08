@@ -48,7 +48,7 @@
 /datum/action/cooldown/bloodsucker/targeted/haste/FireTargetedPower(atom/A)
 	// This is a non-async proc to make sure the power is "locked" until this finishes.
 	hit = list()
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	var/mob/living/user = owner
 	var/turf/T = isturf(A) ? A : get_turf(A)
 	// Pulled? Not anymore.

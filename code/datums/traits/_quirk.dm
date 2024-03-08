@@ -34,8 +34,8 @@
 		if(on_spawn_immediate)
 			on_spawn()
 		else
-			addtimer(CALLBACK(src, .proc/on_spawn), 0)
-		addtimer(CALLBACK(src, .proc/post_add), 30)
+			addtimer(CALLBACK(src, PROC_REF(on_spawn)), 0)
+		addtimer(CALLBACK(src, PROC_REF(post_add)), 30)
 
 /datum/quirk/Destroy()
 	if(processing_quirk)

@@ -188,7 +188,7 @@
 			stored = holding
 			balloon_alert(mod.wearer, "mining satchel stored")
 			playsound(src, 'sound/weapons/revolverempty.ogg', 100, TRUE)
-			RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
+			RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(Pickup_ores))
 	else if(mod.wearer.put_in_active_hand(stored, forced = FALSE, ignore_animation = TRUE))
 		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 		balloon_alert(mod.wearer, "mining satchel retrieved")
@@ -203,7 +203,7 @@
 
 /obj/item/mod/module/orebag/on_equip()
 	if(stored)
-		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(Pickup_ores))
 
 /obj/item/mod/module/orebag/on_unequip()
 	if(stored)

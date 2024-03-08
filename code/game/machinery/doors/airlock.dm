@@ -346,7 +346,7 @@
 			if(cyclelinkedairlock.operating)
 				cyclelinkedairlock.delayed_close_requested = TRUE
 			else
-				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
+				addtimer(CALLBACK(cyclelinkedairlock, PROC_REF(close)), 2)
 	..()
 
 /obj/machinery/door/airlock/proc/isElectrified()
@@ -1042,7 +1042,7 @@
 			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
+			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, PROC_REF(weld_checks), W, user)))
 				welded = !welded
 				user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 									"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
@@ -1054,7 +1054,7 @@
 				user.visible_message("[user] is welding the airlock.", \
 								"<span class='notice'>You begin repairing the airlock...</span>", \
 								"<span class='italics'>You hear welding.</span>")
-				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
+				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, PROC_REF(weld_checks), W, user)))
 					obj_integrity = max_integrity
 					stat &= ~BROKEN
 					user.visible_message("[user.name] has repaired [src].", \
@@ -1208,7 +1208,7 @@
 	operating = FALSE
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
-		addtimer(CALLBACK(src, .proc/close), 1)
+		addtimer(CALLBACK(src, PROC_REF(close)), 1)
 	return TRUE
 
 
@@ -1305,7 +1305,7 @@
 		return
 	operating = TRUE
 	update_icon(AIRLOCK_EMAG, 1)
-	addtimer(CALLBACK(src, .proc/open_sesame), 6)
+	addtimer(CALLBACK(src, PROC_REF(open_sesame)), 6)
 	return TRUE
 
 /obj/machinery/door/airlock/proc/open_sesame()
@@ -1381,7 +1381,7 @@
 		deltimer(unelectrify_timerid)
 		unelectrify_timerid = null
 	if(secondsElectrified != ELECTRIFIED_PERMANENT)
-		unelectrify_timerid = addtimer(CALLBACK(src, .proc/remove_electrify), secondsElectrified SECONDS, TIMER_STOPPABLE)
+		unelectrify_timerid = addtimer(CALLBACK(src, PROC_REF(remove_electrify)), secondsElectrified SECONDS, TIMER_STOPPABLE)
 	diag_hud_set_electrified()
 
 	if(user)

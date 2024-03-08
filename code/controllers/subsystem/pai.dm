@@ -161,7 +161,7 @@ SUBSYSTEM_DEF(pai)
 			if(!G.can_reenter_round()) // this should use notify_ghosts() instead one day.
 				return FALSE
 			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
-		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
+		addtimer(CALLBACK(src, PROC_REF(spam_again)), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
 		available.Add(check_ready(c))

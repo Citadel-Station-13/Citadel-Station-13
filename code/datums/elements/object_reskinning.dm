@@ -26,9 +26,9 @@
 		message_admins("[src] was given to an object without any unique reskins, if you really need to, give it a couple skins first.")
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, target.reskin_binding, .proc/reskin)
-	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, target.reskin_binding, PROC_REF(reskin))
+	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/element/object_reskinning/Detach(obj/source, force)
 	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, source.reskin_binding, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
@@ -68,7 +68,7 @@
 	items = sort_list(items)
 
 	// Display to the user
-	var/pick = show_radial_menu(user, to_reskin, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, user, to_reskin), radius = 38, require_near = TRUE)
+	var/pick = show_radial_menu(user, to_reskin, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), user, to_reskin), radius = 38, require_near = TRUE)
 	if(!pick)
 		return FALSE
 

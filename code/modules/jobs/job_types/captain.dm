@@ -32,7 +32,7 @@
 
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 	threat = 5
-	
+
 	family_heirlooms = list(
 		/obj/item/reagent_containers/food/drinks/flask/gold,
 		/obj/item/toy/figure/captain
@@ -43,7 +43,7 @@
 
 /datum/job/captain/announce(mob/living/carbon/human/H)
 	..()
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.nameless ? "" : "[H.real_name] "]on deck!"))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), "Captain [H.nameless ? "" : "[H.real_name] "]on deck!"))
 
 /datum/outfit/job/captain
 	name = "Captain"

@@ -11,10 +11,6 @@
 	amToggle = TRUE
 	var/leap_skill_mod = 5
 
-/datum/action/cooldown/bloodsucker/lunge/New()
-	. = ..()
-
-
 /datum/action/cooldown/bloodsucker/lunge/Destroy()
 	. = ..()
 	UnregisterSignal(owner, COMSIG_CARBON_TACKLED)
@@ -31,14 +27,14 @@
 	T.min_distance = 2
 	active = TRUE
 	user.toggle_throw_mode()
-	RegisterSignal(user, COMSIG_CARBON_TACKLED, .proc/DelayedDeactivatePower)
+	RegisterSignal(user, COMSIG_CARBON_TACKLED, PROC_REF(DelayedDeactivatePower))
 	while(B && ContinueActive(user))
 		B.AddBloodVolume(-0.1)
 		sleep(5)
 
 //Without this, the leap component would get removed too early, causing the normal crash into effects.
 /datum/action/cooldown/bloodsucker/lunge/proc/DelayedDeactivatePower()
-	addtimer(CALLBACK(src, .proc/DeactivatePower), 1 SECONDS, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(DeactivatePower)), 1 SECONDS, TIMER_UNIQUE)
 
 /datum/action/cooldown/bloodsucker/lunge/DeactivatePower(mob/living/user = owner)
 	. = ..()

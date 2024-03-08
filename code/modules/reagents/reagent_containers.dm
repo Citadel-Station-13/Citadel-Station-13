@@ -141,7 +141,7 @@
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands without spilling a single drop.</span>")
 		transform = initial(transform)
-		addtimer(CALLBACK(src, .proc/ForceResetRotation), 1)
+		addtimer(CALLBACK(src, PROC_REF(ForceResetRotation)), 1)
 
 	else
 		if(isturf(target) && reagents.reagent_list.len && thrown_by)

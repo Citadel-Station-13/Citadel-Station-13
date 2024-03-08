@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 			continue
 		S = new path
 		.[S.type] = S
-	. = sortTim(., /proc/cmp_skill_categories, TRUE)
+	. = sortTim(., GLOBAL_PROC_REF(cmp_skill_categories), TRUE)
 
 /**
   * Skill datums

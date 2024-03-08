@@ -552,7 +552,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				update_label()
 				if (!silent)
 					playsound(src, 'sound/machines/terminal_processing.ogg', 15, 1)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/machines/terminal_success.ogg', 15, 1), 13)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/machines/terminal_success.ogg', 15, 1), 13)
 
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))

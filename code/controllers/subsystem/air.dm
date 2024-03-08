@@ -111,7 +111,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/add_reaction(datum/gas_reaction/r)
 	gas_reactions += r
-	sortTim(gas_reactions, /proc/cmp_gas_reaction)
+	sortTim(gas_reactions, GLOBAL_PROC_REF(cmp_gas_reaction))
 	auxtools_update_reactions()
 
 /proc/reset_all_air()

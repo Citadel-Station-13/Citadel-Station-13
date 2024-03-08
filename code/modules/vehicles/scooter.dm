@@ -134,7 +134,7 @@
 			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
 			if(prob (25))
 				sparks.start() //the most radical way to start plasma fires
-			addtimer(CALLBACK(src, .proc/grind), 2)
+			addtimer(CALLBACK(src, PROC_REF(grind)), 2)
 			return
 	else
 		grinding = FALSE

@@ -37,7 +37,7 @@
 		popup = FALSE
 		if(response == "No")
 			return FALSE
-	addtimer(CALLBACK(src, .proc/timed_explosion, cause), 1)
+	addtimer(CALLBACK(src, PROC_REF(timed_explosion), cause), 1)
 
 /obj/item/implant/explosive/implant(mob/living/target)
 	for(var/X in target.implants)
@@ -65,10 +65,10 @@
 	if(delay > 7)
 		imp_in?.visible_message("<span class='warning'>[imp_in] starts beeping ominously!</span>")
 		playsound(get_turf(imp_in ? imp_in : src), 'sound/items/timer.ogg', 30, 0)
-		addtimer(CALLBACK(src, .proc/double_pain, TRUE), delay * 0.25)
-		addtimer(CALLBACK(src, .proc/double_pain), delay * 0.5)
-		addtimer(CALLBACK(src, .proc/double_pain), delay * 0.75)
-		addtimer(CALLBACK(src, .proc/boom_goes_the_weasel), delay)
+		addtimer(CALLBACK(src, PROC_REF(double_pain), TRUE), delay * 0.25)
+		addtimer(CALLBACK(src, PROC_REF(double_pain)), delay * 0.5)
+		addtimer(CALLBACK(src, PROC_REF(double_pain)), delay * 0.75)
+		addtimer(CALLBACK(src, PROC_REF(boom_goes_the_weasel)), delay)
 	else //If the delay is short, just blow up already jeez
 		boom_goes_the_weasel()
 

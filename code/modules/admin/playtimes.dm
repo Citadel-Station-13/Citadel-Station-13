@@ -32,7 +32,7 @@
 
 		clients += list(client)
 
-	clients = sort_list(clients, /proc/cmp_playtime)
+	clients = sort_list(clients, GLOBAL_PROC_REF(cmp_playtime))
 	data["clients"] = clients
 	return data
 

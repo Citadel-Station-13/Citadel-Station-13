@@ -401,7 +401,7 @@
 	update_gut(hound)
 
 	if(cleaning)
-		addtimer(CALLBACK(src, .proc/clean_cycle, hound), 50)
+		addtimer(CALLBACK(src, PROC_REF(clean_cycle), hound), 50)
 
 /obj/item/dogborg/sleeper/proc/CheckAccepted(obj/item/I)
 	return is_type_in_typecache(I, important_items)

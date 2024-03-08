@@ -86,7 +86,7 @@ GLOBAL_LIST(topic_status_cache)
 #else
 	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
 #endif
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/_addtimer, cb, 10 SECONDS))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -323,7 +323,7 @@ GLOBAL_LIST(topic_status_cache)
 		. += "[SSmapping.config.map_name], "
 	if(NUM2SECLEVEL(GLOB.security_level))
 		. += "[NUM2SECLEVEL(GLOB.security_level)] alert, "
-	
+
 	. += "[get_active_player_count(afk_check = TRUE)] playing"
 
 	status = .

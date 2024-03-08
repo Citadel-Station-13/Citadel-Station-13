@@ -532,7 +532,7 @@
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && can_special_react)
 					possible_reactions  += C
 
-		sortTim(possible_reactions, /proc/cmp_chemical_reactions_default, FALSE)
+		sortTim(possible_reactions, GLOBAL_PROC_REF(cmp_chemical_reactions_default), FALSE)
 
 		if(possible_reactions.len)
 			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]

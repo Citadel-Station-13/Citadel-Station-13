@@ -90,7 +90,7 @@ Notes:
 	queueHide = showing ? TRUE : FALSE
 
 	if (queueHide)
-		addtimer(CALLBACK(src, .proc/do_hide), 1)
+		addtimer(CALLBACK(src, PROC_REF(do_hide)), 1)
 	else
 		do_hide()
 
@@ -141,7 +141,7 @@ Notes:
 			if(length(tooltip_data))
 				var/examine_data = tooltip_data.Join("<br />")
 				var/timedelay = max(usr.client.prefs.tip_delay * 0.01, 0.01) // I heard multiplying is faster, also runtimes from very low/negative numbers
-				usr.client.tip_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/openToolTip, usr, src, params, name, examine_data), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. multiplying by 0.01 converts it.
+				usr.client.tip_timer = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(openToolTip), usr, src, params, name, examine_data), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. multiplying by 0.01 converts it.
 
 /atom/movable/MouseExited(location, control, params)
 	. = ..()
