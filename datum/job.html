@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;job - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/job.html#var">Var Details</a> - <a href="datum/job.html#proc">Proc Details</a></header>
+<main>
+<h1>job <aside>/<a href="datum.html">datum</a>/<a href="datum/job.html">job</a></aside>
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/job.html#var/allow_bureaucratic_error">allow_bureaucratic_error</a></th><td>Should this job be allowed to be picked for the bureaucratic error event?</td></tr>
+            <tr><th><a href="datum/job.html#var/always_can_respawn_as">always_can_respawn_as</a></th><td>Can you always join as this job even while respawning (should probably only be on for assistant)</td></tr>
+            <tr><th><a href="datum/job.html#var/considered_combat_role">considered_combat_role</a></th><td>Is this job considered a combat role for respawning? (usually sec/command)</td></tr>
+            <tr><th><a href="datum/job.html#var/family_heirlooms">family_heirlooms</a></th><td>List of family heirlooms this job can get with the family heirloom quirk. List of types.</td></tr>
+            <tr><th><a href="datum/job.html#var/random_spawns_possible">random_spawns_possible</a></th><td>Is this job affected by weird spawns like the ones from station traits</td></tr>
+            <tr><th><a href="datum/job.html#var/starting_modifiers">starting_modifiers</a></th><td>Starting skill modifiers.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/job.html#proc/after_latejoin_spawn">after_latejoin_spawn</a></th><td>Called after a successful latejoin spawn.
+Client is in the mob.
+This happens after after_spawn()</td></tr>
+            <tr><th><a href="datum/job.html#proc/after_roundstart_spawn">after_roundstart_spawn</a></th><td>Called after a successful roundstart spawn.
+Client is not yet in the mob.
+This happens after after_spawn()</td></tr>
+            <tr><th><a href="datum/job.html#proc/get_default_roundstart_spawn_point">get_default_roundstart_spawn_point</a></th><td>Handles finding and picking a valid roundstart effect landmark spawn point, in case no uncommon different spawning events occur.</td></tr>
+            <tr><th><a href="datum/job.html#proc/get_latejoin_spawn_point">get_latejoin_spawn_point</a></th><td>Finds a valid latejoin spawn point, checking for events and special conditions.</td></tr>
+            <tr><th><a href="datum/job.html#proc/get_roundstart_spawn_point">get_roundstart_spawn_point</a></th><td>Returns an atom where the mob should spawn in.</td></tr>
+            <tr><th><a href="datum/job.html#proc/map_check">map_check</a></th><td>Checks if we should be created on a certain map</td></tr>
+            <tr><th><a href="datum/job.html#proc/process_map_overrides">process_map_overrides</a></th><td>Processes map specific overrides</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/allow_bureaucratic_error"><aside class="declaration">var </aside>allow_bureaucratic_error
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 67"/></a></h3>
+        <p>Should this job be allowed to be picked for the bureaucratic error event?</p><h3 id="var/always_can_respawn_as"><aside class="declaration">var </aside>always_can_respawn_as
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 89"/></a></h3>
+        <p>Can you always join as this job even while respawning (should probably only be on for assistant)</p><h3 id="var/considered_combat_role"><aside class="declaration">var </aside>considered_combat_role
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 91"/></a></h3>
+        <p>Is this job considered a combat role for respawning? (usually sec/command)</p><h3 id="var/family_heirlooms"><aside class="declaration">var </aside>family_heirlooms
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 73"/></a></h3>
+        <p>List of family heirlooms this job can get with the family heirloom quirk. List of types.</p><h3 id="var/random_spawns_possible"><aside class="declaration">var </aside>random_spawns_possible
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 70"/></a></h3>
+        <p>Is this job affected by weird spawns like the ones from station traits</p><h3 id="var/starting_modifiers"><aside class="declaration">var </aside>starting_modifiers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 85"/></a></h3>
+        <p>Starting skill modifiers.</p><h2 id="proc">Proc Details</h2><h3 id="proc/after_latejoin_spawn"><aside class="declaration">proc </aside>after_latejoin_spawn<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/spawning) 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L396">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 396"/></a></aside>
+        </h3>
+        <p>Called after a successful latejoin spawn.
+Client is in the mob.
+This happens after after_spawn()</p><h3 id="proc/after_roundstart_spawn"><aside class="declaration">proc </aside>after_roundstart_spawn<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/spawning, /<a href="client.html">client</a>/player_client) 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L387">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 387"/></a></aside>
+        </h3>
+        <p>Called after a successful roundstart spawn.
+Client is not yet in the mob.
+This happens after after_spawn()</p><h3 id="proc/get_default_roundstart_spawn_point"><aside class="declaration">proc </aside>get_default_roundstart_spawn_point<aside>() 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L338">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 338"/></a></aside>
+        </h3>
+        <p>Handles finding and picking a valid roundstart effect landmark spawn point, in case no uncommon different spawning events occur.</p><h3 id="proc/get_latejoin_spawn_point"><aside class="declaration">proc </aside>get_latejoin_spawn_point<aside>() 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L351">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 351"/></a></aside>
+        </h3>
+        <p>Finds a valid latejoin spawn point, checking for events and special conditions.</p><h3 id="proc/get_roundstart_spawn_point"><aside class="declaration">proc </aside>get_roundstart_spawn_point<aside>(/<a href="mob.html">mob</a>/M) 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L359">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 359"/></a></aside>
+        </h3>
+        <p>Returns an atom where the mob should spawn in.</p><h3 id="proc/map_check"><aside class="declaration">proc </aside>map_check<aside>(/<a href="datum.html">datum</a>/<a href="datum/map_config.html">map_config</a>/C) 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 96"/></a></aside>
+        </h3>
+        <p>Checks if we should be created on a certain map</p><h3 id="proc/process_map_overrides"><aside class="declaration">proc </aside>process_map_overrides<aside>(/<a href="datum.html">datum</a>/<a href="datum/map_config.html">map_config</a>/C) 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/94000d357f9dfa96dd1498861f74cc8ba53ba44c/code/modules/jobs/job_types/_job.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 102"/></a></aside>
+        </h3>
+        <p>Processes map specific overrides</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/tree/94000d357f9dfa96dd1498861f74cc8ba53ba44c">94000d3</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.4.0</a></footer>
+</body>
+</html>
