@@ -222,7 +222,7 @@
 			usr.visible_message("<span class='notice'>[usr] switches [on ? "on" : "off"] \the [src].</span>", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
 			if (on)
-				SSair.atmos_machinery += src
+				SSair.start_processing_machine(src)
 			. = TRUE
 		if("mode")
 			setMode = params["mode"]
