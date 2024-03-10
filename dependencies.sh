@@ -4,8 +4,8 @@
 #Final authority on what's required to fully build the project
 
 # byond version
-export BYOND_MAJOR=514
-export BYOND_MINOR=1556
+export BYOND_MAJOR=515
+export BYOND_MINOR=1633
 
 #rust_g git tag
 export RUST_G_VERSION=0.4.10
@@ -21,7 +21,7 @@ export SPACEMAN_DMM_VERSION=suite-1.8
 export PYTHON_VERSION=3.7.9
 
 # Auxmos git tag
-export AUXMOS_VERSION=v2.4.1
+export AUXMOS_VERSION=v2.5.1
 
 # Extools git tag
 export EXTOOLS_VERSION=v0.0.7
