@@ -11,7 +11,7 @@ GLOBAL_LIST(topic_status_cache)
 /world/New()
 	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (dll)
-		call_ext(dll, "auxtools_init")()
+		LIBCALL(dll, "auxtools_init")()
 		enable_debugging()
 
 	world.Profile(PROFILE_START)
@@ -269,21 +269,21 @@ GLOBAL_LIST(topic_status_cache)
 			shutdown_logging() // See comment below.
 			var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 			if (debug_server)
-				call_ext(debug_server, "auxtools_shutdown")()
+				LIBCALL(debug_server, "auxtools_shutdown")()
 			TgsEndProcess()
 
 	log_world("World rebooted at [TIME_STAMP("hh:mm:ss", FALSE)]")
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		call_ext(debug_server, "auxtools_shutdown")()
+		LIBCALL(debug_server, "auxtools_shutdown")()
 	..()
 
 /world/Del()
 	shutdown_logging() // makes sure the thread is closed before end, else we terminate
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		call_ext(debug_server, "auxtools_shutdown")()
+		LIBCALL(debug_server, "auxtools_shutdown")()
 	..()
 
 /world/proc/update_status()
