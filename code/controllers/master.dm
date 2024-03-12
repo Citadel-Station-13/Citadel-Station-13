@@ -307,7 +307,12 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	queue_tail = null
 	//these sort by lower priorities first to reduce the number of loops needed to add subsequent SS's to the queue
 	//(higher subsystems will be sooner in the queue, adding them later in the loop means we don't have to loop thru them next queue add)
-	WARNING("[tickersubsystems]")
+	for(var/item in tickersubsystems)
+		WARNING("[tickersubsystems], item: [item]")
+		if(islist(item))
+			for(var/list_item in item)
+				WARNING("[item], item: [list_item]")
+
 	sortTim(tickersubsystems, GLOBAL_PROC_REF(cmp_subsystem_priority))
 	for(var/I in runlevel_sorted_subsystems)
 		sortTim(runlevel_sorted_subsystems, GLOBAL_PROC_REF(cmp_subsystem_priority))
