@@ -114,11 +114,11 @@
 		superheat_wall(A)
 		return
 	if(modifiers["middle"] || modifiers["ctrl"])
-		INVOKE_ASYNC(src, .proc/issue_command, A)
+		INVOKE_ASYNC(src, PROC_REF(issue_command), A)
 		return
 	if(GLOB.ark_of_the_clockwork_justiciar == A)
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-		INVOKE_ASYNC(src, .proc/attempt_recall, G)
+		INVOKE_ASYNC(src, PROC_REF(attempt_recall), G)
 	else if(istype(A, /obj/structure/destructible/clockwork/trap/trigger))
 		var/obj/structure/destructible/clockwork/trap/trigger/T = A
 		T.visible_message("<span class='danger'>[T] clunks as it's activated remotely.</span>")

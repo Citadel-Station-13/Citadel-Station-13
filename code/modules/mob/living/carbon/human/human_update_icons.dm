@@ -50,7 +50,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
-	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_HUMAN_NO_RENDER), /mob.proc/regenerate_icons)
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_HUMAN_NO_RENDER), TYPE_PROC_REF(/mob, regenerate_icons))
 
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair()

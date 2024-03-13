@@ -41,7 +41,7 @@
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
-	AddComponent(/datum/component/simple_rotation, ROTATION_WRENCH | ROTATION_CLOCKWISE, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_WRENCH | ROTATION_CLOCKWISE, null, CALLBACK(src, PROC_REF(can_be_rotated)))
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

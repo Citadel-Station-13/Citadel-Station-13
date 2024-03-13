@@ -1144,8 +1144,8 @@
 				return
 			for (var/obj/machinery/door/D in GLOB.airlocks)
 				if (get_area(D) == area)
-					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
-					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
+					INVOKE_ASYNC(D,TYPE_PROC_REF(/obj/machinery/door, hostile_lockdown),usr, FALSE)
+					addtimer(CALLBACK(D,TYPE_PROC_REF(/obj/machinery/door, disable_lockdown), FALSE), 30 SECONDS)
 			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
 			H.stealthcooldown = world.time + 3 MINUTES
 		if("occupy")
@@ -1163,7 +1163,7 @@
 			for(var/obj/machinery/light/L in area)
 				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
 					L.no_emergency = emergency_lights
-					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+					INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
 				CHECK_TICK
 	return TRUE
 
@@ -1608,7 +1608,7 @@
 		return
 	if( cell && cell.charge>=20)
 		cell.use(20)
-		INVOKE_ASYNC(src, .proc/break_lights)
+		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
 	for(var/obj/machinery/light/L in area)

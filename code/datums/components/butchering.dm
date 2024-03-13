@@ -27,7 +27,7 @@
 		return
 	if(M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
 		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
-			INVOKE_ASYNC(src, .proc/startButcher, source, M, user)
+			INVOKE_ASYNC(src, PROC_REF(startButcher), source, M, user)
 			return COMPONENT_ITEM_NO_ATTACK
 
 	if(ishuman(M) && source.force && source.get_sharpness())
@@ -37,7 +37,7 @@
 				user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", 1, \
 								"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
 				return COMPONENT_ITEM_NO_ATTACK
-			INVOKE_ASYNC(src, .proc/startNeckSlice, source, H, user)
+			INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 			return COMPONENT_ITEM_NO_ATTACK
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)

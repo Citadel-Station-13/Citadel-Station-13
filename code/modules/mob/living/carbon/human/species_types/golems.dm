@@ -482,7 +482,7 @@
 	last_teleport = world.time
 	UpdateButtons() //action icon looks unavailable
 	//action icon looks available again
-	addtimer(CALLBACK(src, .proc/UpdateButtons), cooldown + 5)
+	addtimer(CALLBACK(src, PROC_REF(UpdateButtons)), cooldown + 5)
 
 
 //honk

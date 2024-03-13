@@ -27,7 +27,7 @@
 	if(body.mind){\
 		body.mind.add_skill_modifier(prototype.identifier)\
 	} else {\
-		prototype.RegisterSignal(body, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)\
+		prototype.RegisterSignal(body, COMSIG_MOB_ON_NEW_MIND, TYPE_PROC_REF(/datum/skill_modifier, on_mob_new_mind), TRUE)\
 	}
 
 /// Same as above but to remove the skill modifier.

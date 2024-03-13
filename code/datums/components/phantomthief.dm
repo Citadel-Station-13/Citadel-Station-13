@@ -3,7 +3,7 @@
 /datum/component/wearertargeting/phantomthief
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	signals = list(COMSIG_LIVING_COMBAT_ENABLED, COMSIG_LIVING_COMBAT_DISABLED)
-	proctype = .proc/handlefilterstuff
+	proctype = PROC_REF(handlefilterstuff)
 	var/filter_x
 	var/filter_y
 	var/filter_size

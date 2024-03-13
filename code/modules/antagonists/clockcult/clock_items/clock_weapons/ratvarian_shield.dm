@@ -49,7 +49,7 @@
 			C.apply_damage((iscultist(C) ? damage * 2 : damage), BURN, (istype(part, /obj/item/bodypart/l_arm) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)) //Deals the damage to the holder instead of absorbing it instead + forcedrops. Doubled if a cultist of Nar'Sie.
 		else
 			owner.adjustFireLoss(iscultist(owner) ? damage * 2 : damage)
-		addtimer(CALLBACK(owner, /mob/living.proc/dropItemToGround, src, TRUE), 1)
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, dropItemToGround), src, TRUE), 1)
 	else if(!is_servant_of_ratvar(attacker)) //No exploiting my snowflake mechanics
 		dam_absorbed += damage
 		playsound(owner,  'sound/machines/clockcult/steam_whoosh.ogg', 30)

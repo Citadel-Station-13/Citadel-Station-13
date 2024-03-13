@@ -68,7 +68,7 @@
 	if(merge)
 		for(var/obj/item/stack/S in loc)
 			if(can_merge(S))
-				INVOKE_ASYNC(src, .proc/merge, S)
+				INVOKE_ASYNC(src, PROC_REF(merge), S)
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)

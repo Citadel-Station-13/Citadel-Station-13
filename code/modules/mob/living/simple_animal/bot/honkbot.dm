@@ -263,13 +263,13 @@
 	target = null
 	last_found = world.time
 	frustration = 0
-	INVOKE_ASYNC(src, .proc/handle_automated_action) //responds quickly
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action)) //responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_hunt()
 	anchored = FALSE
 	frustration = 0
 	mode = BOT_HUNT
-	INVOKE_ASYNC(src, .proc/handle_automated_action) // responds quickly
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action)) // responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/look_for_perp()
 	anchored = FALSE
@@ -299,7 +299,7 @@
 				speak("Honk!")
 				visible_message("<b>[src]</b> starts chasing [C.name]!")
 				mode = BOT_HUNT
-				INVOKE_ASYNC(src, .proc/handle_automated_action)
+				INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 				break
 			else
 				continue

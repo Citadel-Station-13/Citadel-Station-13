@@ -94,7 +94,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 		Acquire_Victim()
 
 	if(stage && !manifested)
-		INVOKE_ASYNC(src, .proc/On_Stage)
+		INVOKE_ASYNC(src, PROC_REF(On_Stage))
 
 	if(stage == STAGE_ATTACK)
 		playsound(src, 'sound/misc/cluwne_breathing.ogg', 75, 1)
@@ -335,7 +335,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 							forceMove(H.loc)
 				to_chat(H, "<span class='userdanger'>You feel the floor closing in on your feet!</span>")
 				H.Paralyze(300)
-				INVOKE_ASYNC(H, /mob.proc/emote, "scream")
+				INVOKE_ASYNC(H, TYPE_PROC_REF(/mob, emote), "scream")
 				H.adjustBruteLoss(10)
 				manifested = TRUE
 				Manifest()

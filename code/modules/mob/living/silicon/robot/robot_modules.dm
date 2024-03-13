@@ -198,7 +198,7 @@
 	R.module = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
-	INVOKE_ASYNC(RM, .proc/do_transform_animation)
+	INVOKE_ASYNC(RM, PROC_REF(do_transform_animation))
 	if(RM.dogborg || R.dogborg)
 		RM.dogborg_equip()
 		R.typing_indicator_state = /obj/effect/overlay/typing_indicator/machine/dogborg

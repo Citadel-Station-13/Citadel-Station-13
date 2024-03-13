@@ -29,7 +29,7 @@ handles linking back and forth.
 
 	var/turf/T = get_turf(parent)
 	if (force_connect || (mapload && is_station_level(T.z)))
-		addtimer(CALLBACK(src, .proc/LateInitialize))
+		addtimer(CALLBACK(src, PROC_REF(LateInitialize)))
 	else if (allow_standalone)
 		_MakeLocal()
 

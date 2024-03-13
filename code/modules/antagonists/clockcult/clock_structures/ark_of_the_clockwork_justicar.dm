@@ -35,7 +35,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/spawn_animation)
+	INVOKE_ASYNC(src, PROC_REF(spawn_animation))
 	glow = new(get_turf(src))
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src

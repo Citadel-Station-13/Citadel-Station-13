@@ -12,7 +12,7 @@
 /atom/proc/balloon_alert(mob/viewer, text)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	INVOKE_ASYNC(src, .proc/balloon_alert_perform, viewer, text)
+	INVOKE_ASYNC(src, PROC_REF(balloon_alert_perform), viewer, text)
 
 /// Create balloon alerts (text that floats up) to everything within range.
 /// Will only display to people who can see.

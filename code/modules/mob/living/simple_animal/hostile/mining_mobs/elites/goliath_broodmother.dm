@@ -220,7 +220,7 @@
 
 /obj/effect/temp_visual/goliath_tentacle/broodmother/patch/Initialize(mapload, new_spawner)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/createpatch)
+	INVOKE_ASYNC(src, PROC_REF(createpatch))
 
 /obj/effect/temp_visual/goliath_tentacle/broodmother/patch/proc/createpatch()
 	var/tentacle_locs = spiral_range_turfs(1, get_turf(src))
