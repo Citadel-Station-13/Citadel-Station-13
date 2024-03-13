@@ -38,7 +38,7 @@
  *
  *
  * ### proc defined on some type
- * TYPE_PROC_REF(/some/type/, some_proc_here)
+ * TYPE_PROC_REF(/some/type, some_proc_here)
  */
 /datum/callback
 
