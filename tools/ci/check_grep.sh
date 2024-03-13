@@ -4,6 +4,12 @@ set -euo pipefail
 #nb: must be bash to support shopt globstar
 shopt -s globstar
 
+#ANSI Escape Codes for colors to increase contrast of errors
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+BLUE="\033[0;34m"
+NC="\033[0m" # No Color
+
 st=0
 
 if git grep -P "\r\n"; then
