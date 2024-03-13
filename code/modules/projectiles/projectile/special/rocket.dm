@@ -54,7 +54,7 @@
 	var/sturdy = list(
 	/turf/closed,
 	/obj/vehicle/sealed/mecha,
-	/obj/machinery/door/,
+	/obj/machinery/door,
 	/obj/machinery/door/poddoor/shutters
 	)
 

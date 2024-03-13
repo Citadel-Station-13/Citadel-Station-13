@@ -115,8 +115,8 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	skill_holder.need_static_data_update = TRUE
 
 	if(M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
-		M.RegisterSignal(src, COMSIG_MIND_TRANSFER, /datum/skill_modifier.proc/on_mind_transfer)
-		M.RegisterSignal(current, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
+		M.RegisterSignal(src, COMSIG_MIND_TRANSFER, TYPE_PROC_REF(/datum/skill_modifier, on_mind_transfer))
+		M.RegisterSignal(current, COMSIG_MOB_ON_NEW_MIND, TYPE_PROC_REF(/datum/skill_modifier, on_mob_new_mind), TRUE)
 	RegisterSignal(M, COMSIG_PARENT_PREQDELETED, PROC_REF(on_skill_modifier_deletion))
 
 #undef ADD_MOD_STEP
@@ -201,4 +201,4 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 
 /datum/skill_modifier/proc/on_mob_new_mind(mob/source)
 	source.mind.add_skill_modifier(identifier)
-	RegisterSignal(source.mind, COMSIG_MIND_TRANSFER, /datum/skill_modifier.proc/on_mind_transfer)
+	RegisterSignal(source.mind, COMSIG_MIND_TRANSFER, TYPE_PROC_REF(/datum/skill_modifier, on_mind_transfer))

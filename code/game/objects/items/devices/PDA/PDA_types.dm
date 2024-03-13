@@ -10,7 +10,7 @@
 
 /obj/item/pda/clown/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING|SLIP_WHEN_JOGGING, CALLBACK(src, .proc/AfterSlip))
+	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING|SLIP_WHEN_JOGGING, CALLBACK(src, PROC_REF(AfterSlip)))
 
 /obj/item/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != owner))

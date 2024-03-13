@@ -104,7 +104,7 @@ Difficulty: Extremely Hard
 			if(easy_attack)
 				snowball_machine_gun()
 			else
-				INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
+				INVOKE_ASYNC(src, PROC_REF(ice_shotgun), 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
 				snowball_machine_gun(5 * 8, 5)
 		if(3)
 			if(easy_attack)

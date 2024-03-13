@@ -185,4 +185,4 @@ GLOBAL_LIST_INIT(strippable_monkey_items, create_strippable_list(list(
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
 		equip_to_slot_or_del(helmet,ITEM_SLOT_HEAD)
-		INVOKE_ASYNC(helmet, /obj/item.proc/attack_self, src) // todo encapsulate toggle
+		INVOKE_ASYNC(helmet, TYPE_PROC_REF(/obj/item, attack_self), src) // todo encapsulate toggle

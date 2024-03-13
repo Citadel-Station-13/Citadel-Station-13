@@ -22,7 +22,7 @@
 
 /obj/structure/destructible/clockwork/reflector/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, PROC_REF(can_be_rotated)),CALLBACK(src,PROC_REF(after_rotation)))
 
 /obj/structure/destructible/clockwork/reflector/bullet_act(obj/item/projectile/P)
 	if(!anchored || !allowed_projectile_typecache[P.type] || !(P.dir in GLOB.cardinals))

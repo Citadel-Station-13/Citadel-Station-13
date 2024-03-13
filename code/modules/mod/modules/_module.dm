@@ -163,7 +163,7 @@
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
+	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/mob, update_inv_back)), cooldown_time)
 	mod.wearer.update_inv_back()
 	return TRUE
 
@@ -268,7 +268,7 @@
 /// Updates the signal used by active modules to be activated
 /obj/item/mod/module/proc/update_signal()
 	mod.selected_module.used_signal = COMSIG_MOB_ALTCLICKON
-	RegisterSignal(mod.wearer, mod.selected_module.used_signal, /obj/item/mod/module.proc/on_special_click)
+	RegisterSignal(mod.wearer, mod.selected_module.used_signal, TYPE_PROC_REF(/obj/item/mod/module, on_special_click))
 
 /obj/item/mod/module/anomaly_locked
 	name = "MOD anomaly locked module"

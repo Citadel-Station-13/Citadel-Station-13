@@ -128,7 +128,7 @@
 /obj/machinery/door/firedoor/power_change()
 	if(powered(power_channel))
 		stat &= ~NOPOWER
-		INVOKE_ASYNC(src, .proc/latetoggle)
+		INVOKE_ASYNC(src, PROC_REF(latetoggle))
 	else
 		stat |= NOPOWER
 

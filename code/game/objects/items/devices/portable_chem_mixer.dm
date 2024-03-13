@@ -113,7 +113,7 @@
 	if (loc != user)
 		return ..()
 	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
-		INVOKE_ASYNC(src, /datum.proc/ui_interact, user)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /obj/item/storage/portable_chem_mixer/attack_self(mob/user)
 	if(loc == user)

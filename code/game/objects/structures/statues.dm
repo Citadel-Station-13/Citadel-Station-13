@@ -22,7 +22,7 @@
 /obj/structure/statue/ComponentInitialize()
 	. = ..()
 	var/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS
-	AddComponent(/datum/component/simple_rotation, rotation_flags, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, rotation_flags, null, CALLBACK(src, PROC_REF(can_be_rotated)))
 
 /obj/structure/statue/proc/can_be_rotated(mob/user, rotation_type)
 	if(anchored)

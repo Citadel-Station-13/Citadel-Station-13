@@ -436,7 +436,7 @@
 	if(over_object == M)
 		user_show_to_mob(M, trigger_on_found = TRUE)
 	if(isrevenant(M))
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/RevenantThrow, over_object, M, source)
+		INVOKE_ASYNC(GLOBAL_PROC, PROC_REF(RevenantThrow), over_object, M, source)
 		return
 	if(check_locked(null, M) || !M.CanReach(A))
 		return
@@ -444,7 +444,7 @@
 	A.do_jiggle()
 	A.add_fingerprint(M)
 	if(!istype(over_object, /atom/movable/screen))
-		INVOKE_ASYNC(src, .proc/dump_content_at, over_object, M)
+		INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, M)
 		return
 	if(A.loc != M)
 		return

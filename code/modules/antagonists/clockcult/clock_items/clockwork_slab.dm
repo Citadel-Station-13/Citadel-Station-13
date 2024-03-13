@@ -358,7 +358,7 @@
 			recollecting = !recollecting
 			. = TRUE
 		if("recite")
-			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["script"]), usr, FALSE)
+			INVOKE_ASYNC(src, PROC_REF(recite_scripture), text2path(params["script"]), usr, FALSE)
 			. = TRUE
 		if("bind")
 			var/datum/clockwork_scripture/path = text2path(params["script"]) //we need a path and not a string

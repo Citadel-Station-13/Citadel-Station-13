@@ -29,7 +29,7 @@
 	return DEFAULT_VOLUME_TINY/2 + reagents.total_volume / reagents.maximum_volume * DEFAULT_VOLUME_TINY
 
 /obj/item/reagent_containers/pill/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
-	INVOKE_ASYNC(src, .proc/attempt_feed, M, user)
+	INVOKE_ASYNC(src, PROC_REF(attempt_feed), M, user)
 
 /obj/item/reagent_containers/pill/proc/attempt_feed(mob/living/M, mob/living/user)
 	if(!canconsume(M, user))

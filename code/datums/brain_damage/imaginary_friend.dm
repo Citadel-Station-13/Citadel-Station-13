@@ -92,7 +92,7 @@
 	trauma = _trauma
 	owner = trauma.owner
 
-	INVOKE_ASYNC(src, .proc/setup_friend)
+	INVOKE_ASYNC(src, PROC_REF(setup_friend))
 
 	join = new
 	join.Grant(src)

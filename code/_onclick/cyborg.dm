@@ -40,7 +40,7 @@
 	*/
 	if(aicamera.in_camera_mode) //Cyborg picture taking
 		aicamera.camera_mode_off()
-		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, A, usr)
+		INVOKE_ASYNC(aicamera, TYPE_PROC_REF(/obj/item/camera, captureimage), A, usr)
 		return
 
 	var/obj/item/W = get_active_held_item(TRUE)
@@ -48,7 +48,7 @@
 	if(!W && A.Adjacent(src) && (isobj(A) || ismob(A)))
 		var/atom/movable/C = A
 		if(C.can_buckle && C.has_buckled_mobs())
-			INVOKE_ASYNC(C, /atom/movable.proc/precise_user_unbuckle_mob, src)
+			INVOKE_ASYNC(C, TYPE_PROC_REF(/atom/movable, precise_user_unbuckle_mob), src)
 			return
 
 	if(!W && (get_dist(src,A) <= interaction_range))

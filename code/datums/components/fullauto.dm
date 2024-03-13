@@ -73,8 +73,8 @@
 	RegisterSignal(shooter, COMSIG_MOB_CLIENT_LOGOUT, PROC_REF(autofire_off))
 	if(!QDELETED(shooter))
 		UnregisterSignal(shooter, COMSIG_MOB_CLIENT_LOGIN)
-	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
-	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
+	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, TYPE_PROC_REF(/obj/item/gun, autofire_bypass_check))
+	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, TYPE_PROC_REF(/obj/item/gun, do_autofire))
 
 
 /datum/component/automatic_fire/proc/autofire_off(datum/source)
@@ -270,7 +270,7 @@
 	if(istype(akimbo_gun) && weapon_weight < WEAPON_MEDIUM)
 		if(akimbo_gun.weapon_weight < WEAPON_MEDIUM && akimbo_gun.can_trigger_gun(shooter))
 			bonus_spread = dual_wield_spread
-			addtimer(CALLBACK(akimbo_gun, /obj/item/gun.proc/process_fire, target, shooter, TRUE, params, null, bonus_spread), 1)
+			addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, shooter, TRUE, params, null, bonus_spread), 1)
 	process_fire(target, shooter, TRUE, params, null, bonus_spread)
 	return COMPONENT_AUTOFIRE_SHOT_SUCCESS //All is well, we can continue shooting.
 

@@ -848,7 +848,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	if(!H)
 		return //Type safety.
 	H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-	addtimer(CALLBACK(H, /mob/living/carbon/human.proc/dropItemToGround, src, TRUE), 1)
+	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, dropItemToGround), src, TRUE), 1)
 
 /obj/item/toy/plush/plushling/New()
 	var/initial_state = pick("plushie_lizard", "plushie_snake", "plushie_slime", "fox")

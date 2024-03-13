@@ -141,7 +141,7 @@
 	RegisterSignal(M, COMSIG_ROBOT_UPDATE_ICONS, PROC_REF(manual_centered_render_source))
 	var/atom/A = M
 	if(M.loc && !isturf(M.loc))
-		REGISTER_NESTED_LOCS(M, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+		REGISTER_NESTED_LOCS(M, nested_locs, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_moved))
 		A = nested_locs[nested_locs.len]
 	CENTERED_RENDER_SOURCE(owner_mask, A, src)
 	M.client.images += shadow_mask
@@ -213,7 +213,7 @@
 	var/turf/T
 	if(!isturf(source.loc)) //Recalculate all nested locations.
 		UNREGISTER_NESTED_LOCS( nested_locs, COMSIG_MOVABLE_MOVED, 1)
-		REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+		REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_moved))
 		var/atom/movable/topmost = nested_locs[nested_locs.len]
 		T = topmost.loc
 		CENTERED_RENDER_SOURCE(owner_mask, topmost, src)
@@ -233,7 +233,7 @@
 	var/atom/movable/prev_topmost = nested_locs[nested_locs.len]
 	if(prev_topmost != source)
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, nested_locs.Find(source) + 1)
-	REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+	REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_moved))
 	var/atom/movable/topmost = nested_locs[nested_locs.len]
 	if(topmost != prev_topmost)
 		CENTERED_RENDER_SOURCE(owner_mask, topmost, src)

@@ -182,9 +182,9 @@
 		RegisterSignal(VR, COMSIG_COMPONENT_UNREGISTER_PARENT, PROC_REF(unset_vr_mob))
 		RegisterSignal(VR, COMSIG_COMPONENT_REGISTER_PARENT, PROC_REF(set_vr_mob))
 		if(!only_current_user_can_interact)
-			VR.RegisterSignal(src, COMSIG_ATOM_EMAG_ACT, /datum/component/virtual_reality.proc/you_only_live_once)
-		VR.RegisterSignal(src, COMSIG_MACHINE_EJECT_OCCUPANT, /datum/component/virtual_reality.proc/revert_to_reality)
-		VR.RegisterSignal(src, COMSIG_PARENT_QDELETING, /datum/component/virtual_reality.proc/machine_destroyed)
+			VR.RegisterSignal(src, COMSIG_ATOM_EMAG_ACT, TYPE_PROC_REF(/datum/component/virtual_reality, you_only_live_once))
+		VR.RegisterSignal(src, COMSIG_MACHINE_EJECT_OCCUPANT, TYPE_PROC_REF(/datum/component/virtual_reality, revert_to_reality))
+		VR.RegisterSignal(src, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/component/virtual_reality, machine_destroyed))
 		to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
 	else
 		to_chat(M, "<span class='notice'>Transfer failed! virtual reality data likely corrupted!</span>")

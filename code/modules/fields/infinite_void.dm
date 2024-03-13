@@ -31,7 +31,7 @@
 		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/domain_expansion) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
 			immune[G] = TRUE
 	if(start)
-		INVOKE_ASYNC(src, .proc/domain_expansion)
+		INVOKE_ASYNC(src, PROC_REF(domain_expansion))
 
 /obj/effect/domain_expansion/Destroy()
 	qdel(chronofield)

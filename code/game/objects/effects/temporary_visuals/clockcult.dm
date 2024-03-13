@@ -113,7 +113,7 @@
 		var/matrix/M = new
 		M.Turn(Get_Angle(src, user))
 		transform = M
-	INVOKE_ASYNC(src, .proc/volthit)
+	INVOKE_ASYNC(src, PROC_REF(volthit))
 
 /obj/effect/temp_visual/ratvar/volt_hit/proc/volthit()
 	if(user)

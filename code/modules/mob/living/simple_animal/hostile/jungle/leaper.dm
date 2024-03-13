@@ -80,7 +80,7 @@
 
 /obj/structure/leaper_bubble/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, float), TRUE)
 	QDEL_IN(src, 100)
 
 /obj/structure/leaper_bubble/Destroy()
@@ -205,7 +205,7 @@
 	if(AIStatus == AI_ON && ranged_cooldown <= world.time)
 		projectile_ready = TRUE
 		update_icons()
-	throw_at(new_turf, max(3,get_dist(src,new_turf)), 1, src, FALSE, callback = CALLBACK(src, .proc/FinishHop))
+	throw_at(new_turf, max(3,get_dist(src,new_turf)), 1, src, FALSE, callback = CALLBACK(src, PROC_REF(FinishHop)))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
 	density = TRUE
@@ -226,7 +226,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlopHop(turf/T)
 	density = FALSE
-	throw_at(T, get_dist(src,T),1,src, FALSE, callback = CALLBACK(src, .proc/Crush))
+	throw_at(T, get_dist(src,T),1,src, FALSE, callback = CALLBACK(src, PROC_REF(Crush)))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE

@@ -152,7 +152,7 @@
 
 /mob/living/simple_animal/bot/ed209/proc/retaliate(mob/living/carbon/human/H)
 	var/judgement_criteria = judgement_criteria()
-	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 	threatlevel += 6
 	if(threatlevel >= 4)
 		target = H
@@ -204,7 +204,7 @@
 		var/threatlevel = 0
 		if((C.stat) || (C.lying))
 			continue
-		threatlevel = C.assess_threat(judgement_criteria, lasercolor, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		threatlevel = C.assess_threat(judgement_criteria, lasercolor, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 		//speak(C.real_name + text(": threat: []", threatlevel))
 		if(threatlevel < 4 )
 			continue
@@ -217,7 +217,7 @@
 	if(targets.len>0)
 		var/mob/living/carbon/t = pick(targets)
 		if((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
-			INVOKE_ASYNC(src, .proc/shootAt, t)
+			INVOKE_ASYNC(src, PROC_REF(shootAt), t)
 	switch(mode)
 
 		if(BOT_IDLE)		// idle
@@ -235,7 +235,7 @@
 
 			if(target)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
-					INVOKE_ASYNC(src, .proc/stun_attack, target)
+					INVOKE_ASYNC(src, PROC_REF(stun_attack), target)
 
 					mode = BOT_PREP_ARREST
 					anchored = TRUE
@@ -306,13 +306,13 @@
 	target = null
 	last_found = world.time
 	frustration = 0
-	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action)) //ensure bot quickly responds
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_hunt()
 	anchored = FALSE
 	frustration = 0
 	mode = BOT_HUNT
-	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action)) //ensure bot quickly responds
 
 // look for a criminal in view of the bot
 
@@ -329,7 +329,7 @@
 		if((C.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = C.assess_threat(judgement_criteria, lasercolor, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		threatlevel = C.assess_threat(judgement_criteria, lasercolor, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 
 		if(!threatlevel)
 			continue
@@ -527,7 +527,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		var/judgement_criteria = judgement_criteria()
-		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)

@@ -30,7 +30,7 @@
 	stored_research = new
 	host_research = SSresearch.science_tech
 	update_research()
-	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
+	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, _after_insert=CALLBACK(src, PROC_REF(AfterMaterialInsert)))
 	RefreshParts()
 
 /obj/machinery/rnd/production/Destroy()

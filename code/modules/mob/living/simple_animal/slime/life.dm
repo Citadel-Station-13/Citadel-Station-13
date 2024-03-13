@@ -391,7 +391,7 @@
 				else if(CHECK_MOBILITY(src, MOBILITY_MOVE) && isturf(loc) && prob(33))
 					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
-			INVOKE_ASYNC(src, .proc/AIprocess)
+			INVOKE_ASYNC(src, PROC_REF(AIprocess))
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()

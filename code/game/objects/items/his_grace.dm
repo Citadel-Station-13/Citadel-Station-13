@@ -40,7 +40,7 @@
 
 /obj/item/his_grace/attack_self(mob/living/user)
 	if(!awakened)
-		INVOKE_ASYNC(src, .proc/awaken, user)
+		INVOKE_ASYNC(src, PROC_REF(awaken), user)
 
 /obj/item/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)

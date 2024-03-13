@@ -379,7 +379,7 @@
 		event.announce_to_ghosts(SV)
 	START_PROCESSING(SSobj, src)
 	vine_mutations_list = list()
-	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
+	init_subtypes(/datum/spacevine_mutation, vine_mutations_list)
 	if(potency != null)
 		mutativeness = potency / 10
 	if(production != null)

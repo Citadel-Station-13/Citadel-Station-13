@@ -171,7 +171,7 @@
 	if(combatant_state == SEEDLING_STATE_WARMUP && target)
 		combatant_state = SEEDLING_STATE_ACTIVE
 		update_icons()
-		var/datum/callback/cb = CALLBACK(src, .proc/InaccurateShot)
+		var/datum/callback/cb = CALLBACK(src, PROC_REF(InaccurateShot))
 		for(var/i in 1 to 13)
 			addtimer(cb, i)
 		addtimer(CALLBACK(src, PROC_REF(AttackRecovery)), 14)

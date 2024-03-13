@@ -119,7 +119,7 @@
 	if(stasis)
 		return
 	if(revealed && essence <= 0)
-		INVOKE_ASYNC(src, .proc/death)
+		INVOKE_ASYNC(src, PROC_REF(death))
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = FALSE
@@ -478,7 +478,7 @@
 		log_combat(throwable, over, "spooky telekinesised at", throwable)
 		var/obj/effect/temp_visual/telekinesis/T = new(get_turf(throwable))
 		T.color = "#8715b4"
-		addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 50)
+		addtimer(CALLBACK(spooker, TYPE_PROC_REF(/mob/living/simple_animal/revenant, telekinesis_cooldown_end)), 50)
 		sleep(5)
 		throwable.float(FALSE, TRUE)
 

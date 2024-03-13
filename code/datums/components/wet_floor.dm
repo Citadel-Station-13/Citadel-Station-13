@@ -96,7 +96,7 @@
 			qdel(parent.GetComponent(/datum/component/slippery))
 			return
 
-	var/datum/component/slippery/S = parent.LoadComponent(/datum/component/slippery, NONE, CALLBACK(src, .proc/AfterSlip))
+	var/datum/component/slippery/S = parent.LoadComponent(/datum/component/slippery, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
 	S.intensity = intensity
 	S.lube_flags = lube_flags
 

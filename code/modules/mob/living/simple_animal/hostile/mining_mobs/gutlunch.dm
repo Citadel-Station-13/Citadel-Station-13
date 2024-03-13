@@ -42,7 +42,7 @@
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
 
-	wanted_objects = list(/obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/, /obj/item/bodypart, /obj/item/organ/appendix, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/heart, /obj/item/organ/liver, \
+	wanted_objects = list(/obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs, /obj/item/bodypart, /obj/item/organ/appendix, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/heart, /obj/item/organ/liver, \
 						/obj/item/organ/lungs, /obj/item/organ/stomach, /obj/item/organ/tongue) // So we dont eat implants or brains. Still can eat robotic stuff thats subtyped of base line but thats a issue for another day.
 	var/obj/item/udder/gutlunch/udder = null
 

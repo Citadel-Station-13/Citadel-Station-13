@@ -19,7 +19,7 @@
 /obj/effect/countdown/Initialize(mapload)
 	. = ..()
 	attach(loc)
-	RegisterSignal(loc, COMSIG_PARENT_QDELETING, .proc/on_parent_deleting)
+	RegisterSignal(loc, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_deleting))
 
 /obj/effect/countdown/proc/on_parent_deleting(atom/being_deleted, force)
 	qdel(src)

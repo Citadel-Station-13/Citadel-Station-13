@@ -24,7 +24,7 @@
 	if(!IS_HERETIC(user))
 		return
 	if(!is_in_use)
-		INVOKE_ASYNC(src, .proc/activate , user)
+		INVOKE_ASYNC(src, PROC_REF(activate) , user)
 
 /obj/effect/eldritch/attackby(obj/item/I, mob/living/user)
 	. = ..()
@@ -218,8 +218,8 @@
 
 /obj/effect/broken_illusion/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
-	addtimer(CALLBACK(src,.proc/remove_presence),195 SECONDS)
+	addtimer(CALLBACK(src,PROC_REF(show_presence)),15 SECONDS)
+	addtimer(CALLBACK(src,PROC_REF(remove_presence)),195 SECONDS)
 
 	var/image/I = image('icons/effects/eldritch.dmi',src,null,OBJ_LAYER)
 	I.override = TRUE

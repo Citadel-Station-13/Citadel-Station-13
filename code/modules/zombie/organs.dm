@@ -45,7 +45,7 @@
 	if(!owner)
 		return
 	if(!(src in owner.internal_organs))
-		INVOKE_ASYNC(src,.proc/Remove,owner)
+		INVOKE_ASYNC(src,PROC_REF(Remove),owner)
 	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
 		return
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)

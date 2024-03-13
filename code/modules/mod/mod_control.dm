@@ -575,7 +575,7 @@
 	if(mod_parts.Find(part))
 		conceal(wearer, part)
 		if(active)
-			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
+			INVOKE_ASYNC(src, PROC_REF(toggle_activate), wearer, TRUE)
 		return
 
 /obj/item/mod/control/proc/on_borg_charge(datum/source, amount)
