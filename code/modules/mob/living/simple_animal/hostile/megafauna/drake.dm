@@ -131,7 +131,7 @@ Difficulty: Medium
 			fire_cone()
 	else
 		if(prob(50) && !client)
-			INVOKE_ASYNC(src, .proc/lava_pools, 10, 2)
+			INVOKE_ASYNC(src, PROC_REF(lava_pools), 10, 2)
 		fire_cone()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools(var/amount, var/delay = 0.8)
@@ -147,7 +147,7 @@ Difficulty: Medium
 		sleep(delay)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
-	INVOKE_ASYNC(src, .proc/lava_pools, amount)
+	INVOKE_ASYNC(src, PROC_REF(lava_pools), amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
 	fire_cone()
 	if(health < maxHealth*0.5)
@@ -164,7 +164,7 @@ Difficulty: Medium
 		var/increment = 360 / spiral_count
 		for(var/j = 1 to spiral_count)
 			var/list/turfs = line_target(j * increment + i * increment / 2, range, src)
-			INVOKE_ASYNC(src, .proc/fire_line, turfs)
+			INVOKE_ASYNC(src, PROC_REF(fire_line), turfs)
 		sleep(25)
 	SetRecoveryTime(30)
 
@@ -233,11 +233,11 @@ Difficulty: Medium
 	var/range = 15
 	var/list/turfs = list()
 	turfs = line_target(-40, range, at)
-	INVOKE_ASYNC(src, .proc/fire_line, turfs)
+	INVOKE_ASYNC(src, PROC_REF(fire_line), turfs)
 	turfs = line_target(0, range, at)
-	INVOKE_ASYNC(src, .proc/fire_line, turfs)
+	INVOKE_ASYNC(src, PROC_REF(fire_line), turfs)
 	turfs = line_target(40, range, at)
-	INVOKE_ASYNC(src, .proc/fire_line, turfs)
+	INVOKE_ASYNC(src, PROC_REF(fire_line), turfs)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(var/offset, var/range, var/atom/at = target)
 	if(!at)
@@ -394,7 +394,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/lava_warning/Initialize(mapload, var/reset_time = 10)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/fall, reset_time)
+	INVOKE_ASYNC(src, PROC_REF(fall), reset_time)
 	src.alpha = 63.75
 	animate(src, alpha = 255, time = duration)
 
@@ -462,7 +462,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/dragon_flight/Initialize(mapload, negative)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/flight, negative)
+	INVOKE_ASYNC(src, PROC_REF(flight), negative)
 
 /obj/effect/temp_visual/dragon_flight/proc/flight(negative)
 	if(negative)

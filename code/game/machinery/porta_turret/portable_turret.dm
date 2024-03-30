@@ -127,7 +127,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		base.layer = NOT_HIGH_OBJ_LAYER
 		underlays += base
 	if(!has_cover)
-		INVOKE_ASYNC(src, .proc/popUp)
+		INVOKE_ASYNC(src, PROC_REF(popUp))
 
 /obj/machinery/porta_turret/proc/toggle_on(var/set_to)
 	var/current = on
@@ -599,7 +599,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(target)
 		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		INVOKE_ASYNC(src, .proc/shootAt, target)
+		INVOKE_ASYNC(src, PROC_REF(shootAt), target)
 		return TRUE
 	return
 

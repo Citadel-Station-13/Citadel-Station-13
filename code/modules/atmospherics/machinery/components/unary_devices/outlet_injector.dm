@@ -126,7 +126,7 @@
 		on = !on
 
 	if("inject" in signal.data)
-		INVOKE_ASYNC(src, .proc/inject)
+		INVOKE_ASYNC(src, PROC_REF(inject))
 		return
 
 	if("set_volume_rate" in signal.data)

@@ -455,7 +455,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
-			INVOKE_ASYNC(src, .proc/attempt_item_theft)
+			INVOKE_ASYNC(src, PROC_REF(attempt_item_theft))
 			return
 
 //-----WANDERING - This is basically a 'I dont know what to do yet' state

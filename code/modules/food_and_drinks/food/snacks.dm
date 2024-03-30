@@ -100,7 +100,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	INVOKE_ASYNC(src, .proc/attempt_forcefeed, M, user)
+	INVOKE_ASYNC(src, PROC_REF(attempt_forcefeed), M, user)
 
 /obj/item/reagent_containers/food/snacks/proc/attempt_forcefeed(mob/living/M, mob/living/user)
 	if(!eatverb)

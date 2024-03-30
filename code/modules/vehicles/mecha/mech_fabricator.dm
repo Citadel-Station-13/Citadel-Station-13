@@ -67,7 +67,7 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = new
-	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
+	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, _after_insert=CALLBACK(src, PROC_REF(AfterMaterialInsert)))
 
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()

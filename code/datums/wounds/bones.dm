@@ -235,7 +235,7 @@
 /datum/wound/blunt/moderate/proc/chiropractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
 
-	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(prob(65))
@@ -254,7 +254,7 @@
 /datum/wound/blunt/moderate/proc/malpractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
 
-	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(prob(65))
@@ -275,7 +275,7 @@
 	else
 		user.visible_message("<span class='danger'>[user] begins resetting [victim]'s [limb.name] with [I].</span>", "<span class='notice'>You begin resetting [victim]'s [limb.name] with [I]...</span>")
 
-	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(victim == user)
@@ -350,7 +350,7 @@
 
 	user.visible_message("<span class='danger'>[user] begins hastily applying [I] to [victim]'s' [limb.name]...</span>", "<span class='warning'>You begin hastily applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.name], disregarding the warning label...</span>")
 
-	if(!do_after(user, base_treat_time * 1.5 * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, base_treat_time * 1.5 * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	I.use(1)
@@ -388,7 +388,7 @@
 
 	user.visible_message("<span class='danger'>[user] begins applying [I] to [victim]'s' [limb.name]...</span>", "<span class='warning'>You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
 
-	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	regen_points_current = 0

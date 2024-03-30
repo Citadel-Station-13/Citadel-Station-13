@@ -113,7 +113,7 @@
 		set_frequency(frequency)
 
 	if(closeOtherId != null)
-		addtimer(CALLBACK(.proc/update_other_id), 5)
+		addtimer(CALLBACK(PROC_REF(update_other_id)), 5)
 	if(glass)
 		airlock_material = "glass"
 	if(security_level > AIRLOCK_SECURITY_METAL)
@@ -224,9 +224,9 @@
 				return
 
 			if(density)
-				INVOKE_ASYNC(src, .proc/open)
+				INVOKE_ASYNC(src, PROC_REF(open))
 			else
-				INVOKE_ASYNC(src, .proc/close)
+				INVOKE_ASYNC(src, PROC_REF(close))
 
 		if("bolt")
 			if(command_value == "on" && locked)
@@ -403,7 +403,7 @@
 			secondsBackupPowerLost = 10
 	if(!spawnPowerRestoreRunning)
 		spawnPowerRestoreRunning = TRUE
-	INVOKE_ASYNC(src, .proc/handlePowerRestore)
+	INVOKE_ASYNC(src, PROC_REF(handlePowerRestore))
 	update_icon()
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
@@ -411,7 +411,7 @@
 		src.secondsBackupPowerLost = 60
 	if(!spawnPowerRestoreRunning)
 		spawnPowerRestoreRunning = TRUE
-	INVOKE_ASYNC(src, .proc/handlePowerRestore)
+	INVOKE_ASYNC(src, PROC_REF(handlePowerRestore))
 	update_icon()
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
@@ -1127,9 +1127,9 @@
 			if(!axe.wielded)
 				to_chat(user, "<span class='warning'>You need to be wielding \the [axe] to do that!</span>")
 				return
-			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
+			INVOKE_ASYNC(src, (density ? PROC_REF(open) : PROC_REF(close)), 2)
 		else
-			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
+			INVOKE_ASYNC(src, (density ? PROC_REF(open) : PROC_REF(close)), 2)
 
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		if(!I.can_force_powered)

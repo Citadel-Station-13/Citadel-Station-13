@@ -9,14 +9,11 @@ GLOBAL_LIST(topic_status_cache)
 //So subsystems globals exist, but are not initialised
 
 /world/New()
-	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if (debug_server)
-		call(debug_server, "auxtools_init")()
+	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (dll)
+		LIBCALL(dll, "auxtools_init")()
 		enable_debugging()
-	AUXTOOLS_CHECK(AUXMOS)
-#ifdef EXTOOLS_REFERENCE_TRACKING
-	enable_reference_tracking()
-#endif
+
 	world.Profile(PROFILE_START)
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
@@ -270,19 +267,23 @@ GLOBAL_LIST(topic_status_cache)
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [TIME_STAMP("hh:mm:ss", FALSE)]")
 			shutdown_logging() // See comment below.
+			var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+			if (debug_server)
+				LIBCALL(debug_server, "auxtools_shutdown")()
 			TgsEndProcess()
 
 	log_world("World rebooted at [TIME_STAMP("hh:mm:ss", FALSE)]")
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
-	AUXTOOLS_SHUTDOWN(AUXMOS)
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		LIBCALL(debug_server, "auxtools_shutdown")()
 	..()
 
 /world/Del()
 	shutdown_logging() // makes sure the thread is closed before end, else we terminate
-	AUXTOOLS_SHUTDOWN(AUXMOS)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		call(debug_server, "auxtools_shutdown")()
+		LIBCALL(debug_server, "auxtools_shutdown")()
 	..()
 
 /world/proc/update_status()

@@ -486,7 +486,7 @@
 	if(owner)
 		attach_to(owner)
 	if(autorun)
-		INVOKE_ASYNC(src, .proc/run_animation, windup, active, spindown)
+		INVOKE_ASYNC(src, PROC_REF(run_animation), windup, active, spindown)
 
 /obj/effect/abstract/parry/main/Destroy()
 	detach_from(owner)

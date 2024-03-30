@@ -189,7 +189,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 					mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
 					to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
 				addtimer(CALLBACK(src, PROC_REF(return_elite)), 30)
-				INVOKE_ASYNC(src, .proc/arena_checks)
+				INVOKE_ASYNC(src, PROC_REF(arena_checks))
 			if(TUMOR_INACTIVE)
 				activity = TUMOR_ACTIVE
 				var/mob/elitemind = null
@@ -227,7 +227,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		mychild.key = elitemind.key
 		mychild.sentience_act()
 	icon_state = "tumor_popped"
-	INVOKE_ASYNC(src, .proc/arena_checks)
+	INVOKE_ASYNC(src, PROC_REF(arena_checks))
 
 /obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
@@ -274,9 +274,9 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/arena_checks()
 	if(activity != TUMOR_ACTIVE || QDELETED(src))
 		return
-	INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
-	INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
-	INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
+	INVOKE_ASYNC(src, PROC_REF(fighters_check))  //Checks to see if our fighters died.
+	INVOKE_ASYNC(src, PROC_REF(arena_trap))  //Gets another arena trap queued up for when this one runs out.
+	INVOKE_ASYNC(src, PROC_REF(border_check))  //Checks to see if our fighters got out of the arena somehow.
 	if(!QDELETED(src))
 		addtimer(CALLBACK(src, PROC_REF(arena_checks)), 50)
 

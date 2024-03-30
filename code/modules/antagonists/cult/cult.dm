@@ -180,8 +180,8 @@
 
 /datum/antagonist/cult/get_admin_commands()
 	. = ..()
-	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
-	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
+	.["Dagger"] = CALLBACK(src,PROC_REF(admin_give_dagger))
+	.["Dagger and Metal"] = CALLBACK(src,PROC_REF(admin_give_metal))
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
 	if(!equip_cultist(FALSE))

@@ -69,7 +69,7 @@
 		if(say_mod && owner.dna?.species)
 			owner.dna.species.say_mod = initial(owner.dna.species.say_mod)
 		UnregisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-		owner.RegisterSignal(owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+		owner.RegisterSignal(owner, COMSIG_MOB_SAY, TYPE_PROC_REF(/mob/living/carbon/, handle_tongueless_speech))
 	return ..()
 
 /obj/item/organ/tongue/could_speak_language(language)

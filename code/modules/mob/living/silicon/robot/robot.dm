@@ -82,7 +82,7 @@
 			mmi.brainmob.container = mmi
 			mmi.update_appearance()
 
-	INVOKE_ASYNC(src, .proc/updatename)
+	INVOKE_ASYNC(src, PROC_REF(updatename))
 
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
 	toner = tonermax
@@ -1006,7 +1006,7 @@
 	hat_offset = module.hat_offset
 
 	magpulse = module.magpulsing
-	INVOKE_ASYNC(src, .proc/updatename)
+	INVOKE_ASYNC(src, PROC_REF(updatename))
 
 
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)

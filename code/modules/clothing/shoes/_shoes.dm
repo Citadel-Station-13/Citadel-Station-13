@@ -32,7 +32,7 @@
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, TYPE_PROC_REF(/atom, clean_blood))
 
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(rand(2)>1)

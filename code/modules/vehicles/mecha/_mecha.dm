@@ -575,7 +575,7 @@
 				return
 			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, L, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
 				return
-			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
+			INVOKE_ASYNC(selected, TYPE_PROC_REF(/obj/item/mecha_parts/mecha_equipment, action), user, target, params)
 			return
 		if((selected.range & MECHA_MELEE) && Adjacent(target))
 			if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
@@ -583,7 +583,7 @@
 				return
 			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, L, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
 				return
-			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
+			INVOKE_ASYNC(selected, TYPE_PROC_REF(/obj/item/mecha_parts/mecha_equipment, action), user, target, params)
 			return
 	if(!(L in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
 		to_chat(L, "<span class='warning'>You're in the wrong seat to interact with your hands.</span>")

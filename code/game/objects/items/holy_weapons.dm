@@ -742,7 +742,7 @@
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
 		H.adjustStaminaLoss(rand(12,18))
 		if(prob(25))
-			(INVOKE_ASYNC(src, .proc/jedi_spin, user))
+			(INVOKE_ASYNC(src, PROC_REF(jedi_spin), user))
 	else
 		return ..()
 

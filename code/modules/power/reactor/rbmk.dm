@@ -444,7 +444,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 //Results: Engineering becomes unusable and your engine irreparable
 /obj/machinery/atmospherics/components/trinary/nuclear_reactor/proc/meltdown()
 	set waitfor = FALSE
-	SSair.atmos_machinery -= src //Annd we're now just a useless brick.
+	SSair.stop_processing_machine(src)
 	slagged = TRUE
 	color = null
 	update_icon()
