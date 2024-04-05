@@ -27,12 +27,16 @@
 /datum/dna/Destroy()
 	if(iscarbon(holder))
 		var/mob/living/carbon/cholder = holder
+		// We do this because a lot of stuff keeps references on species, for some reason.
+		species.on_species_loss(holder)
 		if(cholder.dna == src)
 			cholder.dna = null
 	holder = null
 
 	if(delete_species)
 		QDEL_NULL(species)
+	else
+		species = null
 
 	mutations.Cut()					//This only references mutations, just dereference.
 	temporary_mutations.Cut()		//^

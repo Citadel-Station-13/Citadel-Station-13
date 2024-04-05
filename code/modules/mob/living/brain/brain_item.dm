@@ -282,6 +282,8 @@
 	if(brainmob)
 		QDEL_NULL(brainmob)
 	QDEL_LIST(traumas)
+	if(owner?.mind)
+		owner.mind.set_current(null)
 	return ..()
 
 //other types of brains

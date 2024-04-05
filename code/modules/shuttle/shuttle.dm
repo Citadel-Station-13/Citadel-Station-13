@@ -941,12 +941,18 @@
 
 /obj/docking_port/mobile/proc/count_engines()
 	. = 0
+	engine_list = list()
 	for(var/thing in shuttle_areas)
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
 			if(!QDELETED(E))
 				engine_list += E
+				RegisterSignal(E, COMSIG_PARENT_QDELETING, PROC_REF(on_engine_deleted))
 				. += E.engine_power
+
+/obj/docking_port/mobile/proc/on_engine_deleted(datum/source)
+	SIGNAL_HANDLER
+	engine_list -= source
 
 // Double initial engines to get to 0.5 minimum
 // Lose all initial engines to get to 2

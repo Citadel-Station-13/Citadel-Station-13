@@ -33,6 +33,14 @@
 		WARNING("More than one arrivals docking_port placed on map! Ignoring duplicates.")
 	SSshuttle.arrivals = src
 
+/obj/docking_port/mobile/arrivals/proc/on_console_deleted(datum/source)
+	SIGNAL_HANDLER
+	console = null
+	for(var/obj/machinery/requests_console/new_console as anything in GLOB.allConsoles)
+		var/area/console_area = get_area(new_console)
+		if(istype(console_area, /area/shuttle/arrival) && !QDELETED(new_console) && new_console != source)
+			console = new_console
+
 /obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
 
@@ -40,9 +48,17 @@
 	for(var/area/shuttle/arrival/A in GLOB.sortedAreas)
 		for(var/obj/structure/chair/C in A)
 			new_latejoin += C
-		if(!console)
-			console = locate(/obj/machinery/requests_console) in A
 		areas += A
+
+	if(!console)
+		for(var/obj/machinery/requests_console/new_console as anything in GLOB.allConsoles)
+			var/area/console_area = get_area(new_console)
+			if(!istype(console_area, /area/shuttle/arrival) || QDELETED(new_console))
+				continue
+			console = new_console
+			RegisterSignal(console, COMSIG_PARENT_QDELETING, PROC_REF(on_console_deleted))
+	else if(istype(console))
+		RegisterSignal(console, COMSIG_PARENT_QDELETING, PROC_REF(on_console_deleted))
 
 	if(SSjob.latejoin_trackers.len)
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")

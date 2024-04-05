@@ -57,7 +57,6 @@
 	var/encryptmod = FALSE
 	var/holoform = FALSE
 	var/canholo = TRUE
-	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
 	var/dynamic_chassis
 	var/dynamic_chassis_sit = FALSE			//whether we're sitting instead of resting spritewise
@@ -85,13 +84,21 @@
 	var/icon/custom_holoform_icon
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(signaler)
+	QDEL_NULL(pda)
 	QDEL_NULL(internal_instrument)
+	if(cable)
+		QDEL_NULL(cable)
+	hackdoor = null
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
 	card.cut_overlays()
 	card.add_overlay("pai-off")
+	card = null
+	current = null
 	GLOB.pai_list -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /mob/living/silicon/pai/Initialize(mapload)
