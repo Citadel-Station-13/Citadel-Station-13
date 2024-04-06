@@ -39,12 +39,13 @@
 	attached_atoms[target]++
 
 /datum/element/photosynthesis/Detach(datum/target)
-	attached_atoms[target]--
-	if(!attached_atoms[target])
-		attached_atoms -= target
-		if(!length(attached_atoms))
-			STOP_PROCESSING(SSobj, src)
-			attached_atoms = null
+	if(LAZYLEN(attached_atoms))
+		attached_atoms[target]--
+		if(!attached_atoms[target])
+			attached_atoms -= target
+			if(!length(attached_atoms))
+				STOP_PROCESSING(SSobj, src)
+				attached_atoms = null
 	return ..()
 
 /datum/element/photosynthesis/process()

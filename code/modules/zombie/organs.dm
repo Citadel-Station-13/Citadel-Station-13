@@ -28,11 +28,10 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/zombie_infection/Remove(special = FALSE)
-	if(owner)
-		if(iszombie(owner) && old_species)
-			owner.set_species(old_species)
-		if(timer_id)
-			deltimer(timer_id)
+	if(!QDELETED(owner) && iszombie(owner) && old_species)
+		owner.set_species(old_species)
+	if(timer_id)
+		deltimer(timer_id)
 	. = ..()
 	STOP_PROCESSING(SSobj, src) //Required to be done after the parent call to avoid conflicts with organ decay.
 

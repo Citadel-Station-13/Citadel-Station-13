@@ -97,8 +97,8 @@
 	endOxyloss = prey.getOxyLoss()
 	if(startOxyloss < endOxyloss)
 		Fail("Prey takes oxygen damage in a pred's belly! (Before: [startOxyloss]; after: [endOxyloss])")
-	qdel(prey)
-	qdel(pred)
+	QDEL_NULL(prey)
+	QDEL_NULL(pred)
 	return TRUE
 ////////////////////////////////////////////////////////////////
 /datum/unit_test/belly_spacesafe
@@ -160,8 +160,8 @@
 	endBruteloss = prey.getBruteLoss()
 	if(startBruteloss < endBruteloss)
 		Fail("Prey takes brute damage in space! (Before: [startBruteloss]; after: [endBruteloss])")
-	qdel(prey)
-	qdel(pred)
+	QDEL_NULL(prey)
+	QDEL_NULL(pred)
 	return TRUE
 ////////////////////////////////////////////////////////////////
 /datum/unit_test/belly_damage
@@ -213,6 +213,6 @@
 	endBruteBurn = prey.getBruteLoss() + prey.getFireLoss()
 	if(startBruteBurn >= endBruteBurn)
 		Fail("Prey doesn't take damage in digesting belly! (Before: [startBruteBurn]; after: [endBruteBurn])")
-	qdel(prey)
-	qdel(pred)
+	QDEL_NULL(prey)
+	QDEL_NULL(pred)
 	return TRUE

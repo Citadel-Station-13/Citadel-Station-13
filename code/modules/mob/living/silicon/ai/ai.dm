@@ -100,7 +100,9 @@
 	var/display_icon_override
 	var/emote_display = "Neutral" //text string of the current emote we set for the status displays, to prevent logins resetting it.
 
+	// TODO: Currently unused, needs port from TG.
 	var/datum/robot_control/robot_control
+	// TODO: Currently unused, needs port from TG.
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 	///remember AI's last location
@@ -119,7 +121,7 @@
 		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
-	ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, INNATE_TRAIT)
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
@@ -189,20 +191,34 @@
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
+	stop_controlling_display()
 	QDEL_NULL(eyeobj) // No AI, no Eye
+	QDEL_NULL(spark_system)
+	QDEL_NULL(deploy_action)
+	QDEL_NULL(redeploy_action)
+	QDEL_NULL(custom_holoform)
+	QDEL_NULL(master_multicam)
+	deployed_shell = null
+	parent = null
 	QDEL_NULL(spark_system)
 	QDEL_NULL(malf_picker)
 	QDEL_NULL(doomsday_device)
-	// TODO: Why these no work?
+	// TODO: Port implementation of these from TG or remove the unused code.
 	// QDEL_NULL(robot_control)
-	QDEL_NULL(aiMulti)
 	// QDEL_NULL(alert_control)
+	QDEL_NULL(aiMulti)
+	QDEL_NULL(aiPDA)
 	malfhack = null
 	current = null
 	Bot = null
 	controlled_equipment = null
 	linked_core = null
 	apc_override = null
+	for(var/mob/living/silicon/robot/linked_robot as anything in connected_robots)
+		if(QDELETED(linked_robot))
+			continue
+		linked_robot.set_connected_ai(null)
+	connected_robots.Cut()
 	return ..()
 
 /mob/living/silicon/ai/IgniteMob()
@@ -357,12 +373,12 @@
 		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_NORMAL
 		status_flags |= CANPUSH
-		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
+		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, INNATE_TRAIT)
 	else
 		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_OVERPOWERING
 		status_flags &= ~CANPUSH
-		ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
+		ADD_TRAIT(src, TRAIT_NO_TELEPORT, INNATE_TRAIT)
 
 /mob/living/silicon/ai/proc/ai_mob_to_structure()
 	disconnect_shell()
@@ -1097,6 +1113,10 @@
 	else
 		Remove(owner) //If the last shell is blown, destroy it.
 
+/datum/action/innate/deploy_last_shell/Destroy()
+	last_used_shell = null
+	return ..()
+
 /mob/living/silicon/ai/proc/disconnect_shell()
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, "<span class='danger'>Your remote connection has been reset!</span>")
@@ -1107,9 +1127,7 @@
 	return
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
-	. = ..()
-	if(!target_ai)
-		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
+	. = ..(mapload, L, src) //cheat! just give... ourselves as the spawned AI, because that's technically correct
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/camera/aiEye/moved_eye)
 	GLOB.cameranet.visibility(moved_eye, client, all_eyes, USE_STATIC_OPAQUE)
