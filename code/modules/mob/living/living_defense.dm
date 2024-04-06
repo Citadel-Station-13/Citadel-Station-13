@@ -109,7 +109,7 @@
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(!isitem(AM))
 		// Filled with made up numbers for non-items.
-		if(mob_run_block(AM, 30, "\the [AM.name]", ATTACK_TYPE_PROJECTILE, 0, throwingdatum.thrower, throwingdatum.thrower.zone_selected, list()))
+		if(mob_run_block(AM, 30, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum.thrower, throwingdatum.thrower.zone_selected, list()))
 			hitpush = FALSE
 			skipcatch = TRUE
 			blocked = TRUE
@@ -121,7 +121,7 @@
 	if(thrown_item.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
 		return ..()
 
-	if(mob_run_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", ATTACK_TYPE_PROJECTILE, 0, throwingdatum.thrower, throwingdatum.thrower.zone_selected, list()))
+	if(mob_run_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", ATTACK_TYPE_THROWN, 0, throwingdatum.thrower, throwingdatum.thrower.zone_selected, list()))
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
