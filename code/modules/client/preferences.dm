@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/screentip_pref = SCREENTIP_PREFERENCE_ENABLED
 	var/screentip_color = "#ffd391"
 	var/screentip_images = TRUE
-	var/hotkeys = FALSE
+	var/hotkeys = TRUE
 
 	///Runechat preference. If true, certain messages will be displayed on the map, not ust on the chat area. Boolean.
 	var/chat_on_map = TRUE
