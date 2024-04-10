@@ -38,6 +38,12 @@
 		/obj/item/toy/figure/captain
 	)
 
+	mail_goodies = list(
+		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
+		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
+		/obj/item/reagent_containers/food/drinks/bottle/champagne = 10
+	)
+
 /datum/job/captain/get_access()
 	return get_all_accesses()
 

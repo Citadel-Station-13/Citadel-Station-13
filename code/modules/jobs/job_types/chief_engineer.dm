@@ -37,7 +37,7 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/paraplegic, /datum/quirk/insanity)
 	threat = 2
-	
+
 	family_heirlooms = list(
 		/obj/item/clothing/head/hardhat,
 		/obj/item/screwdriver/brass/family,
@@ -45,6 +45,15 @@
 		/obj/item/weldingtool/mini, // No brass family variant
 		/obj/item/crowbar/brass/family,
 		/obj/item/wirecutters/brass/family
+	)
+
+	mail_goodies = list(
+		/obj/item/reagent_containers/food/snacks/cracker = 25, //you know. for poly
+		/obj/item/stack/sheet/mineral/diamond = 15,
+		/obj/item/stack/sheet/mineral/uranium/five = 15,
+		/obj/item/stack/sheet/mineral/plasma/five = 15,
+		/obj/item/stack/sheet/mineral/gold = 15,
+		/obj/effect/spawner/lootdrop/space/fancytool/engineonly = 3
 	)
 
 /datum/outfit/job/ce

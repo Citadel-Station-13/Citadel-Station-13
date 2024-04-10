@@ -19,12 +19,18 @@
 
 	display_order = JOB_DISPLAY_ORDER_JANITOR
 	threat = 0.2
-	
+
 	family_heirlooms = list(
 		/obj/item/mop,
 		/obj/item/clothing/suit/caution,
 		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/soap
+	)
+
+	mail_goodies = list(
+		/obj/item/grenade/chem_grenade/cleaner = 30,
+		/obj/item/storage/box/lights/mixed = 20,
+		/obj/item/lightreplacer = 10
 	)
 
 /datum/outfit/job/janitor

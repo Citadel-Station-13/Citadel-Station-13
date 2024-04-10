@@ -32,10 +32,14 @@
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 	threat = 0.5
-	
+
 	family_heirlooms = list(
 		/obj/item/stamp,
 		/obj/item/stamp/denied
+	)
+
+	mail_goodies = list(
+		/obj/item/circuitboard/machine/emitter = 3
 	)
 
 /datum/outfit/job/quartermaster

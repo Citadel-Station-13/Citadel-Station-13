@@ -21,9 +21,17 @@
 
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 	threat = 0 // honk
-	
+
 	family_heirlooms = list(
 		/obj/item/bikehorn/golden
+	)
+
+	mail_goodies = list(
+		/obj/item/reagent_containers/food/snacks/grown/banana = 100,
+		/obj/item/reagent_containers/food/snacks/pie/cream = 50,
+		/obj/item/clothing/shoes/clown_shoes/combat = 10,
+		/obj/item/reagent_containers/spray/waterflower/lube = 20, // lube
+		/obj/item/reagent_containers/spray/waterflower/superlube = 1 // Superlube, good lord.
 	)
 
 /datum/outfit/job/clown

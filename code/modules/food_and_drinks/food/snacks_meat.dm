@@ -473,3 +473,17 @@
 	list_reagents = list(/datum/reagent/consumable/eggyolk = 5)
 	tastes = list("dried eggs" = 1, "confusion" = 1)
 	dried_being = /mob/living/simple_animal/chicken
+
+/obj/item/reagent_containers/food/snacks/cube/chicken
+	name = "chicken cube"
+	desc = "A new Nanotrasen classic, the chicken cube. Tastes like everything!"
+	list_reagents = list(/datum/reagent/consumable/eggyolk = 30, /datum/reagent/medicine/strange_reagent = 1)
+	tastes = list("chicken" = 1, "the country" = 1, "chicken bouillon" = 1)
+	dried_being = /mob/living/simple_animal/chicken
+
+/obj/item/reagent_containers/food/snacks/cube/bee
+	name = "bee cube"
+	desc = "We were sure it was a good idea. Just add water."
+	list_reagents = list(/datum/reagent/consumable/honey = 10, /datum/reagent/toxin = 5, /datum/reagent/medicine/strange_reagent = 1)
+	tastes = list("buzzing" = 1, "honey" = 1, "regret" = 1)
+	dried_being = /mob/living/simple_animal/hostile/poison/bees

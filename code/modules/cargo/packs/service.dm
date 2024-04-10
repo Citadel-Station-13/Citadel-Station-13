@@ -23,7 +23,7 @@
 					/obj/item/stack/packageWrap,
 					/obj/item/stack/packageWrap,
 					/obj/item/stack/packageWrap,
-					/obj/item/destTagger,
+					/obj/item/dest_tagger,
 					/obj/item/hand_labeler)
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "wrapping paper crate"
@@ -35,7 +35,7 @@
 	contains = list(/obj/item/stamp,
 					/obj/item/stamp/denied,
 					/obj/item/export_scanner,
-					/obj/item/destTagger,
+					/obj/item/dest_tagger,
 					/obj/item/hand_labeler,
 					/obj/item/toner,
 					/obj/item/toner,

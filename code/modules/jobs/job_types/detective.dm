@@ -27,9 +27,20 @@
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/nonviolent, /datum/quirk/paraplegic, /datum/quirk/monophobia)
 	threat = 1
-	
+
 	family_heirlooms = list(
 		/obj/item/reagent_containers/food/drinks/flask/det
+	)
+
+	mail_goodies = list(
+		/obj/item/storage/fancy/cigarettes = 25,
+		/obj/item/ammo_box/c38 = 25,
+		/obj/item/ammo_box/c38/dumdum = 5,
+		/obj/item/ammo_box/c38/hotshot = 5,
+		/obj/item/ammo_box/c38/iceblox = 5,
+		/obj/item/ammo_box/c38/match = 5,
+		/obj/item/ammo_box/c38/trac = 5,
+		/obj/item/storage/belt/holster/full = 1 // detective/full
 	)
 
 /datum/outfit/job/detective
