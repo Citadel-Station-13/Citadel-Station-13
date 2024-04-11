@@ -1,20 +1,33 @@
 //every quirk in this folder should be coded around being applied on spawn
 //these are NOT "mob quirks" like GOTTAGOFAST, but exist as a medium to apply them and other different effects
 /datum/quirk
+	/// The name of the quirk
 	var/name = "Test Quirk"
+	/// The description of the quirk
 	var/desc = "This is a test quirk."
+	/// What the quirk is worth in preferences, zero = neutral / free
 	var/value = 0
 	var/human_only = TRUE
+	/// Text displayed when this quirk is assigned to a mob (and not transferred)
 	var/gain_text
+	/// Text displayed when this quirk is removed from a mob (and not transferred)
 	var/lose_text
-	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
-	var/antag_removal_text // Text will be given to the quirk holder if they get an antag that has it blacklisted.
+	/// This text will appear on medical records for the trait.
+	var/medical_record_text
+	/// Text will be given to the quirk holder if they get an antag that has it blacklisted.
+	var/antag_removal_text
 	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
-	var/mob_trait //if applicable, apply and remove this mob trait
+	/// if applicable, apply and remove this mob trait
+	var/mob_trait
 	/// should we immediately call on_spawn or add a timer to trigger
 	var/on_spawn_immediate = TRUE
+	/// Reference to the mob currently tied to this quirk datum. Quirks are not singletons.
 	var/mob/living/quirk_holder
 	var/processing_quirk = FALSE
+	/// A lazylist of items people can receive from mail who have this quirk enabled
+	/// The base weight for the each quirk's mail goodies list to be selected is 5
+	/// then the item selected is determined by pick(selected_quirk.mail_goodies)
+	var/list/mail_goodies
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
