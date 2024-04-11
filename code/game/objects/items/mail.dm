@@ -154,7 +154,7 @@
 		. += span_notice("<i>You notice the postmarking on the front of the mail...</i>")
 	var/datum/mind/recipient = recipient_ref.resolve()
 	if(recipient)
-		. += span_info("[postmarked ? "Certified NT" : "Uncertfieid"] mail for [recipient].")
+		. += span_info("[postmarked ? "Certified NT" : "Uncertified"] mail for [recipient].")
 	else if(postmarked)
 		. += span_info("Certified mail for [GLOB.station_name].")
 	else
