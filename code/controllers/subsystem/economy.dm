@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(economy)
 	for(var/account in bank_accounts)
 		var/datum/bank_account/bank_account = account
 		bank_account.payday(1)
-	var/effective_mailcount = round(living_player_count()/1) // (inflation_value - 0.5)) //More mail at low inflation, and vis versa.
+	var/effective_mailcount = round(living_player_count() / (rand(1, 5) - 0.5)) // fake inflation // (inflation_value - 0.5)) //More mail at low inflation, and vis versa.
 	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
 
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
