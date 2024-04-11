@@ -51,7 +51,7 @@
 
 /obj/item/mail/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
 	AddElement(/datum/element/item_scaling, 0.5, 1)
 	if(isnull(department_colors))
 		department_colors = list(
