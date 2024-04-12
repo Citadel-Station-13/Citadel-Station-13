@@ -14,7 +14,7 @@
 		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
 		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day
 		if(month == MM && day == DD)
-			return 1
+			return TRUE
 
 //returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format
 /proc/SQLtime(timevar)
@@ -41,7 +41,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 		if(28 to INFINITY)
 			return 5
 		else
-			return 1
+			return TRUE
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
@@ -75,10 +75,8 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 /proc/daysSince(realtimev)
 	return round((world.realtime - realtimev) / (24 HOURS))
 
-/proc/worldtime2text()
-	return gameTimestamp("hh:mm:ss", world.time)
+/proc/worldtime2text(wtime = world.timeofday)
+	return gameTimestamp("hh:mm:ss", wtime)
 
-/proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
-	if(!wtime)
-		wtime = world.time
+/proc/gameTimestamp(format = "hh:mm:ss", wtime=world.time)
 	return time2text(wtime - GLOB.timezoneOffset, format)

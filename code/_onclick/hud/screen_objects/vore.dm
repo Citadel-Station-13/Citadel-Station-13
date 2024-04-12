@@ -1,9 +1,9 @@
-/obj/screen/voretoggle
+/atom/movable/screen/voretoggle
 	name = "toggle vore mode"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
 	icon_state = "nom_off"
 
-/obj/screen/voretoggle/Click()
+/atom/movable/screen/voretoggle/Click()
 	if(usr != hud.mymob)
 		return
 	var/mob/living/carbon/C = usr
@@ -12,7 +12,7 @@
 		return
 	C.toggle_vore_mode()
 
-/obj/screen/voretoggle/update_icon_state()
+/atom/movable/screen/voretoggle/update_icon_state()
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return

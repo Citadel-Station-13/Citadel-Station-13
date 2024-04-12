@@ -8,7 +8,7 @@
 	var/obj/item/radio/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
-	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
+	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
@@ -32,7 +32,7 @@
 	else
 		. += "mmi_dead"
 
-/obj/item/mmi/Initialize()
+/obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
@@ -47,8 +47,20 @@
 		if(brain)
 			to_chat(user, "<span class='warning'>There's already a brain in the MMI!</span>")
 			return
-		if(!newbrain.brainmob)
-			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>")
+		if(newbrain.brainmob?.suiciding)
+			to_chat(user, span_warning("[newbrain] is completely useless."))
+			return
+		if(!newbrain.brainmob?.mind || !newbrain.brainmob)
+			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
+			if(install != "Yes")
+				return
+			if(!user.transferItemToLoc(newbrain, src))
+				return
+			user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
+			brain = newbrain
+			brain.organ_flags |= ORGAN_FROZEN
+			name = "[initial(name)]: [copytext(newbrain.name, 1, -8)]"
+			update_appearance()
 			return
 
 		if(!user.transferItemToLoc(O, src))
@@ -64,8 +76,8 @@
 		brainmob.container = src
 		if(!(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
-			GLOB.dead_mob_list -= brainmob
-			GLOB.alive_mob_list += brainmob
+			brainmob.remove_from_dead_mob_list()
+			brainmob.add_to_alive_mob_list()
 
 		brainmob.reset_perspective()
 		brain = newbrain
@@ -97,15 +109,15 @@
 		name = initial(name)
 
 /obj/item/mmi/proc/eject_brain(mob/user)
-	brainmob.container = null //Reset brainmob mmi var.
-	brainmob.forceMove(brain) //Throw mob into brain.
-	brainmob.stat = DEAD
-	brainmob.emp_damage = 0
-	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	GLOB.alive_mob_list -= brainmob //Get outta here
-	GLOB.dead_mob_list += brainmob
-	brain.brainmob = brainmob //Set the brain to use the brainmob
-	brainmob = null //Set mmi brainmob var to null
+	if(brain.brainmob)
+		brainmob.container = null //Reset brainmob mmi var.
+		brainmob.forceMove(brain) //Throw mob into brain.
+		brainmob.stat = DEAD
+		brainmob.emp_damage = 0
+		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
+		brain.brainmob = brainmob //Set the brain to use the brainmob
+		log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
+		brainmob = null //Set mmi brainmob var to null
 	if(user)
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
 	else
@@ -210,12 +222,44 @@
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
 
+/obj/item/mmi/proc/brain_check(mob/user)
+	var/mob/living/brain/B = brainmob
+	if(!B)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
+		return FALSE
+	if(brain?.decoy_override)
+		if(user)
+			to_chat(user, span_warning("This [name] does not seem to fit!"))
+		return FALSE
+	if(!B.key || !B.mind)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
+		return FALSE
+	if(!B.client)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
+		return FALSE
+	if(B.suiciding)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
+		return FALSE
+	if(B.stat == DEAD)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that the brain is dead!"))
+		return FALSE
+	if(brain?.organ_flags & ORGAN_FAILING)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that the brain is damaged!"))
+		return FALSE
+	return TRUE
+
 /obj/item/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 	overrides_aicore_laws = TRUE
 
-/obj/item/mmi/syndie/Initialize()
+/obj/item/mmi/syndie/Initialize(mapload)
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.on = 0

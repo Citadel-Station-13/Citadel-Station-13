@@ -17,7 +17,7 @@
 	var/convert_range = 10
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
-/obj/structure/destructible/clockwork/massive/ratvar/Initialize()
+/obj/structure/destructible/clockwork/massive/ratvar/Initialize(mapload)
 	. = ..()
 	GLOB.ratvar_awakens++
 	for(var/obj/O in GLOB.all_clockwork_objects)
@@ -30,7 +30,7 @@
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [get_area_name(src)] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	SSpersistence.station_was_destroyed = TRUE
-	INVOKE_ASYNC(src, .proc/purge_the_heresy)
+	INVOKE_ASYNC(src, PROC_REF(purge_the_heresy))
 
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
@@ -110,6 +110,7 @@
 
 //Put me in Reebe, will you? Ratvar has found and is going to do a hecking murder on Nar'Sie
 /obj/structure/destructible/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
+	set waitfor = FALSE
 	var/winner = "Undeclared"
 	var/base_victory_chance = 1
 	while(src && narsie)
@@ -170,7 +171,7 @@
 		priority_announce("Energy signal no longer detected.","Central Command Higher Dimensional Affairs")
 		return
 	sound_to_playing_players('sound/magic/clockwork/ark_activation_sequence.ogg', 80) //if this isn't lessened in volume it peaks for some reason
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/clockcult_ending_helper), 300)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_ending_helper)), 300)
 
 /proc/clockcult_ending_helper()
 	for(var/mob/M in GLOB.mob_list)

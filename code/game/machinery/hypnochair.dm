@@ -14,7 +14,7 @@
 	var/timerid = 0 ///Timer ID for interrogations
 	var/message_cooldown = 0 ///Cooldown for breakout message
 
-/obj/machinery/hypnochair/Initialize()
+/obj/machinery/hypnochair/Initialize(mapload)
 	. = ..()
 	open_machine()
 	update_icon()
@@ -95,7 +95,7 @@
 	START_PROCESSING(SSobj, src)
 	start_time = world.time
 	update_icon()
-	timerid = addtimer(CALLBACK(src, .proc/finish_interrogation), 450, TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(finish_interrogation)), 450, TIMER_STOPPABLE)
 
 /obj/machinery/hypnochair/process()
 	var/mob/living/carbon/C = occupant

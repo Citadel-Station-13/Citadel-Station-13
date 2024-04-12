@@ -46,9 +46,9 @@
 	// cost = CARGO_CRATE_VALUE * 3
 	cost = 1500
 	contains = list(/obj/item/book/codex_gigas,
-					/obj/item/book/manual/random/,
-					/obj/item/book/manual/random/,
-					/obj/item/book/manual/random/,
+					/obj/item/book/manual/random,
+					/obj/item/book/manual/random,
+					/obj/item/book/manual/random,
 					/obj/item/book/random,
 					/obj/item/book/random,
 					/obj/item/book/random)
@@ -172,10 +172,10 @@
 	cost = 3000
 	contains = list(/obj/item/circuitboard/computer/arcade/battle,
 					/obj/item/circuitboard/computer/arcade/battle,
+					/obj/item/circuitboard/computer/arcade/battle,
 					/obj/item/circuitboard/computer/arcade/orion_trail,
 					/obj/item/circuitboard/computer/arcade/orion_trail,
-					/obj/item/circuitboard/computer/arcade/minesweeper,
-					/obj/item/circuitboard/computer/arcade/minesweeper,
+					/obj/item/circuitboard/computer/arcade/orion_trail,
 					/obj/item/circuitboard/computer/slot_machine,
 					/obj/item/circuitboard/computer/slot_machine,
 					/obj/item/circuitboard/computer/slot_machine,
@@ -370,7 +370,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/misc/carpet
-	crate_type = /obj/structure/closet/secure_closet/goodies
+	crate_type = /obj/structure/closet/secure_closet/cargo
 	name = "Classic Carpet Single-Pack"
 	desc = "Plasteel floor tiles getting on your nerves? This 50 units stack of extra soft carpet will tie any room together."
 	cost = 200

@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(blackmarket)
 				if (!targetturf) // This shouldn't happen.
 					continue
 				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
-				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS) // do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/controller/subsystem/blackmarket, fake_teleport), purchase.entry.spawn_item(), targetturf), 60 SECONDS) // do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
 				queued_purchases -= purchase
 				qdel(purchase)
 			if(SHIPPING_METHOD_LAUNCH) // Get the current location of the uplink if it exists, then throws the item from space at the station from a random direction.

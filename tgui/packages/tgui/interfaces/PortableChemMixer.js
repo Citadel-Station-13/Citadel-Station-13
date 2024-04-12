@@ -1,9 +1,8 @@
+import { sortBy } from 'common/collections';
 import { toTitleCase } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
-import { sortBy } from 'common/collections';
 
 export const PortableChemMixer = (props, context) => {
   const { act, data } = useBackend(context);
@@ -21,9 +20,8 @@ export const PortableChemMixer = (props, context) => {
   const chemicals = sortBy(chem => chem.title)(data.chemicals);
   return (
     <Window
-      width={645}
-      height={550}
-      resizable>
+      width={465}
+      height={550}>
       <Window.Content scrollable>
         <Section
           title="Dispense"
@@ -39,13 +37,13 @@ export const PortableChemMixer = (props, context) => {
                 })} />
             ))
           )}>
-          <Box mr={-1}>
+          <Box>
             {chemicals.map(chemical => (
               <Button
                 key={chemical.id}
                 icon="tint"
-                width="150px"
-                lineHeight="21px"
+                fluid
+                lineHeight={1.75}
                 content={`(${chemical.volume}) ${chemical.title}`}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
@@ -79,12 +77,12 @@ export const PortableChemMixer = (props, context) => {
                 && 'Virtual beaker'
                 || data.isBeakerLoaded
                   && (
-                    <Fragment>
+                    <>
                       <AnimatedNumber
                         initial={0}
                         value={data.beakerCurrentVolume} />
                       /{data.beakerMaxVolume} units
-                    </Fragment>
+                    </>
                   )
                 || 'No beaker'}
             </LabeledList.Item>

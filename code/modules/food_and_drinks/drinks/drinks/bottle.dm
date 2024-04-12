@@ -31,11 +31,11 @@
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/headarmor = 0 // Target's head armor
-	var/armor_block = min(90, target.run_armor_check(affecting, "melee", null, null,armour_penetration)) // For normal attack damage
+	var/armor_block = min(90, target.run_armor_check(affecting, MELEE, null, null,armour_penetration)) // For normal attack damage
 
 	//If they have a hat/helmet and the user is targeting their head.
 	if(affecting == BODY_ZONE_HEAD)
-		var/obj/item/I = target.get_item_by_slot(SLOT_HEAD)
+		var/obj/item/I = target.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(I)
 			headarmor = I.armor.melee
 
@@ -89,7 +89,7 @@
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	sharpness = SHARP_EDGED
 
-/obj/item/broken_bottle/Initialize()
+/obj/item/broken_bottle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 200, 55)
 
@@ -243,7 +243,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/absinthe/empty
 	list_reagents = null
 
-/obj/item/reagent_containers/food/drinks/bottle/absinthe/Initialize()
+/obj/item/reagent_containers/food/drinks/bottle/absinthe/Initialize(mapload)
 	. = ..()
 	redact()
 
@@ -332,7 +332,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/sake/empty
 	list_reagents = null
 
-/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize()
+/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize(mapload)
 	. = ..()
 	if(prob(10))
 		name = "Fluffy Tail Sake"
@@ -496,6 +496,72 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/grenadine/empty
 	list_reagents = null
+
+/obj/item/reagent_containers/food/drinks/bottle/blank //Don't let players print these from a lathe, bottles should be obtained in mass from the bar only.
+	name = "glass bottle"
+	desc = "This blank bottle is unyieldingly anonymous, offering no clues to it's contents."
+	icon_state = "glassbottle"
+	volume = 90
+	spillable = TRUE
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/update_icon()
+	..()
+	add_overlay("[initial(icon_state)]shine")
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/get_part_rating()
+	return reagents.maximum_volume
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/on_reagent_change(changetype)
+	update_icon()
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/update_overlays()
+	. = ..()
+	if(!cached_icon)
+		cached_icon = icon_state
+
+	if(reagents.total_volume)
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[cached_icon]10", color = mix_color_from_reagents(reagents.reagent_list))
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 9)
+				filling.icon_state = "[cached_icon]0"
+			if(10 to 19)
+				filling.icon_state = "[cached_icon]10"
+			if(20 to 29)
+				filling.icon_state = "[cached_icon]20"
+			if(30 to 39)
+				filling.icon_state = "[cached_icon]30"
+			if(40 to 49)
+				filling.icon_state = "[cached_icon]40"
+			if(50 to 59)
+				filling.icon_state = "[cached_icon]50"
+			if(60 to 69)
+				filling.icon_state = "[cached_icon]60"
+			if(70 to 79)
+				filling.icon_state = "[cached_icon]70"
+			if(80 to 89)
+				filling.icon_state = "[cached_icon]80"
+			if(90 to INFINITY)
+				filling.icon_state = "[cached_icon]90"
+		. += filling
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/small
+	name = "small glass bottle"
+	desc = "This small bottle is unyieldingly anonymous, offering no clues to it's contents."
+	icon_state = "glassbottlesmall"
+	volume = 60
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/pitcher
+	name = "glass pitcher"
+	desc = "This is a pitcher for large amounts of liquid of any kind."
+	icon_state = "unipitcher"
+	volume = 120
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov

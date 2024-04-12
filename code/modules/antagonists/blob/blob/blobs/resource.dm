@@ -5,7 +5,7 @@
 	desc = "A thin spire of slightly swaying tendrils."
 	max_integrity = 60
 	point_return = 15
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 10, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 15, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	var/resource_delay = 0
 
 /obj/structure/blob/resource/scannerreport()

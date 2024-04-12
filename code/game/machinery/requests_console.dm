@@ -55,14 +55,14 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	max_integrity = 300
-	armor = list("melee" = 70, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/requests_console/power_change()
 	..()
 	update_icon()
 
 /obj/machinery/requests_console/update_icon_state()
-	if(CHECK_BITFIELD(stat, NOPOWER))
+	if((stat & NOPOWER))
 		set_light(0)
 	else
 		set_light(1.4, 0.7, "#34D352")//green light
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			icon_state="req_comp_open"
 		else
 			icon_state="req_comp_rewired"
-	else if(CHECK_BITFIELD(stat, NOPOWER))
+	else if((stat & NOPOWER))
 		if(icon_state != "req_comp_off")
 			icon_state = "req_comp_off"
 	else
@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		else
 			icon_state = "req_comp0"
 
-/obj/machinery/requests_console/Initialize()
+/obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
 	name = "\improper [department] requests console"
 	GLOB.allConsoles += src
@@ -338,7 +338,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			Radio.set_frequency(radio_freq)
 			Radio.talk_into(src, "[emergency] emergency in [department]!!", radio_freq)
 			update_icon()
-			addtimer(CALLBACK(src, .proc/clear_emergency), 5 MINUTES)
+			addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 
 	if(href_list["department"] && message)
 		var/sending = message
@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				radio_freq = FREQ_ENGINEERING
 			if("security")
 				radio_freq = FREQ_SECURITY
-			if("cargobay" || "mining")
+			if("cargobay", "mining")
 				radio_freq = FREQ_SUPPLY
 		Radio.set_frequency(radio_freq)
 

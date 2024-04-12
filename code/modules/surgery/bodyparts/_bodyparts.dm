@@ -9,7 +9,7 @@
 	icon_state = ""
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	var/mob/living/carbon/owner = null
-	var/mob/living/carbon/original_owner = null
+	var/datum/weakref/original_owner = null
 	var/status = BODYPART_ORGANIC
 	var/needs_processing = FALSE
 
@@ -32,6 +32,8 @@
 	var/max_stamina_damage = 0
 	var/incoming_stam_mult = 1 //Multiplier for incoming staminaloss, decreases when taking staminaloss when the limb is disabled, resets back to 1 when limb is no longer disabled.
 	var/max_damage = 0
+	/// Threshold at which we are disabled. Defaults to max_damage if unset.
+	var/disable_threshold
 	var/stam_heal_tick = 0		//per Life(). Defaults to 0 due to citadel changes
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
@@ -186,7 +188,7 @@
 	needs_processing = .
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life()
+/obj/item/bodypart/proc/on_life(seconds, times_fired)
 	if(stam_heal_tick && stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
 		if(heal_damage(brute = 0, burn = 0, stamina = (stam_heal_tick * (disabled ? 2 : 1)), only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
 			. |= BODYPART_LIFE_UPDATE_HEALTH
@@ -214,6 +216,7 @@
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take some additional burn //nothing can burn with so much snowflake code around
 			burn *= 1.2
+			stamina = 0
 
 	/*
 	// START WOUND HANDLING
@@ -225,6 +228,8 @@
 	var/mangled_state = get_mangled_state()
 	var/bio_state = owner.get_biological_state()
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
+	var/glass_bones = HAS_TRAIT(owner, TRAIT_GLASS_BONES)
+	var/paper_skin = HAS_TRAIT(owner, TRAIT_PAPER_SKIN)
 
 	if(wounding_type == WOUND_BLUNT)
 		if(sharpness == SHARP_EDGED)
@@ -239,22 +244,29 @@
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.5)
+				wounding_dmg *= (glass_bones ? 1.5 : 1)
 			else if(wounding_type == WOUND_PIERCE)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.75)
+				wounding_dmg *= (glass_bones ? 1.5 : 1)
 			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 		// if we're flesh only, all blunt attacks become weakened slashes in terms of wound damage
 		if(BIO_JUST_FLESH)
 			if(wounding_type == WOUND_BLUNT)
 				wounding_type = WOUND_SLASH
-				wounding_dmg *= (easy_dismember ? 1 : 0.3)
+				wounding_dmg *= (easy_dismember ? 1 : 0.5)
+				wounding_dmg *= (paper_skin ? 1.5 : 1)
 			if((mangled_state & BODYPART_MANGLED_FLESH) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 		// standard humanoids
 		if(BIO_FLESH_BONE)
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
+			if(wounding_type == WOUND_SLASH || wounding_type == WOUND_PIERCE)
+				wounding_dmg *= (paper_skin ? 1.5 : 1)
+			else
+				wounding_dmg *= (glass_bones ? 1.5 : 1)
 			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
 				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
@@ -385,7 +397,7 @@
 		for(var/i in clothing)
 			var/obj/item/clothing/clothes_check = i
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
-			if(clothes_check.armor.getRating("wound"))
+			if(clothes_check.armor.getRating(WOUND))
 				bare_wound_bonus = 0
 				break
 
@@ -444,7 +456,7 @@
 		for(var/c in clothing)
 			var/obj/item/clothing/C = c
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
-			armor_ablation += C.armor.getRating("wound")
+			armor_ablation += C.armor.getRating(WOUND)
 			if(wounding_type == WOUND_SLASH)
 				C.take_damage_zone(body_zone, damage, BRUTE, armour_penetration)
 			else if(wounding_type == WOUND_BURN && damage >= 10) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
@@ -504,6 +516,12 @@
 		return
 	set_disabled(is_disabled(silent), silent)
 
+/**
+ * Gets the damage at which point we're disabled.
+ */
+/obj/item/bodypart/proc/get_disable_threshold()
+	return isnull(disable_threshold)? max_damage : disable_threshold
+
 /obj/item/bodypart/proc/is_disabled(silent = FALSE)
 	if(!owner)
 		return
@@ -513,15 +531,16 @@
 		var/datum/wound/W = i
 		if(W.disabling)
 			return BODYPART_DISABLED_WOUND
+	var/disable_threshold = get_disable_threshold()
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
-		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
+		if(get_damage(TRUE) >= disable_threshold * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
 			if(!last_maxed && !silent)
 				owner.emote("scream")
 				last_maxed = TRUE
-			if(!is_organic_limb(FALSE) || stamina_dam >= max_damage)
+			if(!is_organic_limb(FALSE) || stamina_dam >= disable_threshold)
 				return BODYPART_DISABLED_DAMAGE
-		else if(disabled && (get_damage(TRUE) <= (max_damage * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
+		else if(disabled && (get_damage(TRUE) <= (disable_threshold * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
 			last_maxed = FALSE
 			return BODYPART_NOT_DISABLED
 	else
@@ -620,8 +639,8 @@
 	if(source)
 		C = source
 		if(!original_owner)
-			original_owner = source
-	else if(original_owner && owner != original_owner) //Foreign limb
+			original_owner = WEAKREF(source)
+	else if(original_owner && !IS_WEAKREF_OF(owner, original_owner)) //Foreign limb
 		no_update = TRUE
 	else
 		C = owner
@@ -782,6 +801,7 @@
 					. += image(marking_list[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+	var/image/second_limb
 	var/list/aux = list()
 	var/list/auxmarking = list()
 
@@ -814,6 +834,11 @@
 				limb.icon_state = "[species_id]_[digitigrade_type]_[use_digitigrade]_[body_zone]"
 		else
 			limb.icon_state = "[species_id]_[body_zone]"
+
+		if(istype(src, /obj/item/bodypart/l_leg) || istype(src, /obj/item/bodypart/r_leg))
+			second_limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+			second_limb.icon = limb.icon
+			. += second_limb
 
 		// Body markings
 		if(length(body_markings_list))
@@ -903,7 +928,8 @@
 			draw_color = "#[draw_color]"
 		if(draw_color)
 			if(grayscale)
-				limb.icon_state += "_g"
+				if(!second_limb)
+					limb.icon_state += "_g"
 			limb.color = draw_color
 			if(aux_icons)
 				for(var/a in aux)
@@ -920,6 +946,12 @@
 				if(species_id == "husk")
 					for(var/image/marking in markings_list)
 						marking.color = "#141414"
+
+	if(second_limb)
+		var/original_state = limb.icon_state
+		limb.icon_state = "[original_state]_front"
+		second_limb.icon_state = "[original_state]_behind"
+		second_limb.color = limb.color
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()

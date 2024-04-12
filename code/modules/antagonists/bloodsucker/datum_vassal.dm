@@ -38,7 +38,7 @@
 	// Master Pinpointer
 	owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
 	// Powers
-	var/datum/action/bloodsucker/vassal/recuperate/new_Recuperate = new ()
+	var/datum/action/cooldown/bloodsucker/vassal/recuperate/new_Recuperate = new ()
 	new_Recuperate.Grant(owner.current)
 	powers += new_Recuperate
 	// Give Vassal Objective
@@ -110,13 +110,13 @@
 
 /datum/status_effect/agent_pinpointer/vassal_edition
 	id = "agent_pinpointer"
-	alert_type = /obj/screen/alert/status_effect/agent_pinpointer/vassal_edition
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/vassal_edition
 	minimum_range = VASSAL_SCAN_MIN_DISTANCE
 	tick_interval = VASSAL_SCAN_PING_TIME
 	duration = -1 // runs out fast
 	range_fuzz_factor = 0
 
-/obj/screen/alert/status_effect/agent_pinpointer/vassal_edition
+/atom/movable/screen/alert/status_effect/agent_pinpointer/vassal_edition
 	name = "Blood Bond"
 	desc = "You always know where your master is."
 	//icon = 'icons/obj/device.dmi'

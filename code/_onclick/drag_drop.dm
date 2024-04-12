@@ -23,23 +23,31 @@
 	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user)
 	return
 
-
-/client/MouseDown(object, location, control, params)
-	if (mouse_down_icon)
+/client/MouseDown(datum/object, location, control, params)
+	if(!control)
+		return
+	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
+		return
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
+	if(mouse_down_icon)
 		mouse_pointer_icon = mouse_down_icon
 	var/delay = mob.CanMobAutoclick(object, location, params)
 	if(delay)
 		selected_target[1] = object
 		selected_target[2] = params
 		while(selected_target[1])
-			Click(selected_target[1], location, control, selected_target[2], TRUE)
+			Click(selected_target[1], location, control, selected_target[2])
 			sleep(delay)
 	active_mousedown_item = mob.canMobMousedown(object, location, params)
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDown(object, location, params, mob)
 
 /client/MouseUp(object, location, control, params)
-	if (mouse_up_icon)
+	if(!control)
+		return
+	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
+		click_intercept_time = world.time
+	if(mouse_up_icon)
 		mouse_pointer_icon = mouse_up_icon
 	selected_target[1] = null
 	if(active_mousedown_item)
@@ -74,53 +82,41 @@
 /obj/item/proc/onMouseUp(object, location, params, mob)
 	return
 
-/obj/item/gun/CanItemAutoclick(object, location, params)
-	. = automatic
-
 /atom/proc/IsAutoclickable()
 	. = 1
 
-/obj/screen/IsAutoclickable()
+/atom/movable/screen/IsAutoclickable()
 	. = 0
 
-/obj/screen/click_catcher/IsAutoclickable()
+/atom/movable/screen/click_catcher/IsAutoclickable()
 	. = 1
 
 //Please don't roast me too hard
-/client/MouseMove(object,location,control,params)
+/client/MouseMove(object, location, control, params)
 	mouseParams = params
-	mouseLocation = location
-	mouseObject = object
-	mouseControlObject = control
+	mouse_location_ref = WEAKREF(location)
+	mouse_object_ref = WEAKREF(object)
+	mouse_control_object = control
 	if(mob)
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOUSEMOVE, object, location, control, params)
+		// god forgive me for i have sinned - used for autoparry. currently at 5 objects.
+		moused_over_objects[object] = world.time
+		if(moused_over_objects.len > 7)
+			moused_over_objects.Cut(1, 2)
 	..()
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	var/list/L = params2list(params)
-	if (L["middle"])
-		if (src_object && src_location != over_location)
-			middragtime = world.time
-			middragatom = src_object
-		else
-			middragtime = 0
-			middragatom = null
 	mouseParams = params
-	mouseLocation = over_location
-	mouseObject = over_object
-	mouseControlObject = over_control
-	if(selected_target[1] && over_object && over_object.IsAutoclickable())
+	mouse_location_ref = WEAKREF(over_location)
+	mouse_object_ref = WEAKREF(over_object)
+	mouse_control_object = over_control
+	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
+	return ..()
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return
-
-/client/MouseDrop(src_object, over_object, src_location, over_location, src_control, over_control, params)
-	if (middragatom == src_object)
-		middragtime = 0
-		middragatom = null
-	..()

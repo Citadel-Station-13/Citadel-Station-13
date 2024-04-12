@@ -11,7 +11,6 @@
 	// Otherwise jump
 	else if(A.loc)
 		forceMove(get_turf(A))
-		update_parallax_contents()
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(check_click_intercept(params,A))
@@ -25,7 +24,10 @@
 		CtrlShiftClickOn(A)
 		return
 	if(modifiers["middle"])
-		MiddleClickOn(A)
+		if(modifiers["ctrl"])
+			CtrlMiddleClickOn(A)
+		else
+			MiddleClickOn(A)
 		return
 	if(modifiers["shift"])
 		ShiftClickOn(A)

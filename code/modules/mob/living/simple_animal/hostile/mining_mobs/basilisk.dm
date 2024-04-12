@@ -42,7 +42,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 	temperature = 50
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
@@ -50,7 +50,7 @@
 		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
+/mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target, origin)
 	switch(severity)
 		if(1)
 			gib()
@@ -75,6 +75,7 @@
 	icon_living = "watcher"
 	icon_aggro = "watcher"
 	icon_dead = "watcher_dead"
+	health_doll_icon = "watcher"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
@@ -94,32 +95,22 @@
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 	field_of_vision_type = FOV_270_DEGREES //Obviously, it's one eyeball.
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(stat == CONSCIOUS)
 		consume_bait()
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
-	var/list/L = list()
-	for(var/obj/O in view(src, 9))
-		L += O
-	var/obj/item/stack/ore/diamond/diamonds = locate(/obj/item/stack/ore/diamond) in L
-	if(diamonds)
-		var/distanced = 0
-		distanced = get_dist(loc,diamonds.loc)
-		if(distanced <= 1 && diamonds)
-			qdel(diamonds)
-			src.visible_message("<span class='notice'>[src] consumes [diamonds], and it disappears! ...At least, you think.</span>")
-	var/obj/item/pen/survival/bait = locate(/obj/item/pen/survival) in L
-	if(bait)
-		var/distanceb = 0
-		distanceb = get_dist(loc,bait.loc)
-		if(distanceb <= 1 && bait)
-			qdel(bait)
-			visible_message("<span class='notice'>[src] examines [bait] closer, and telekinetically shatters the pen.</span>")
+	for(var/obj/O in view(1, src))
+		if(istype(O, /obj/item/stack/ore/diamond))
+			qdel(O)
+			src.visible_message("<span class='notice'>[src] consumes [O], and it disappears! ...At least, you think.</span>")
+		else if(istype(O, /obj/item/pen/survival))
+			qdel(O)
+			src.visible_message("<span class='notice'>[src] examines [O] closer, and telekinetically shatters the pen.</span>")
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		if(prob(75))

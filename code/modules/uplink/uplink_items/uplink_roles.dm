@@ -30,7 +30,6 @@
 	item = /obj/item/gun/blastcannon
 	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled gas masked scientist.
 	restricted_roles = list("Research Director", "Scientist")
-	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/alientech
 	name = "Alien Research Disk"
@@ -99,7 +98,6 @@
 	player_minimum = 20
 	refundable = TRUE
 	restricted_roles = list("Chaplain")
-	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/arcane_tome
 	name = "Arcane Tome"
@@ -109,7 +107,6 @@
 	player_minimum = 20
 	refundable = TRUE
 	restricted_roles = list("Chaplain")
-	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"
@@ -195,7 +192,7 @@
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
-	item = /obj/item/reagent_containers/hypospray/magillitis
+	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 8
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 

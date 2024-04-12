@@ -277,7 +277,7 @@ Consuming extracts:
 	taste = "vanilla and " //Randomly selected color dye.
 	var/colour = "#FFFFFF"
 
-/obj/item/slime_cookie/pyrite/Initialize()
+/obj/item/slime_cookie/pyrite/Initialize(mapload)
 	. = ..()
 	var/tastemessage = "paint remover"
 	switch(rand(1,7))
@@ -322,7 +322,7 @@ Consuming extracts:
 	playsound(get_turf(M), 'sound/effects/splat.ogg', 10, 1)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.blood_volume += 25 //Half a vampire drain.
+		C.adjust_integration_blood(25) //Half a vampire drain.
 
 /obj/item/slimecross/consuming/green
 	colour = "green"

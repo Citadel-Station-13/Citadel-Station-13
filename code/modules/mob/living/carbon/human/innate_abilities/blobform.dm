@@ -37,7 +37,7 @@
 			to_chat(owner, "There's something stuck to your hand, stopping you from transforming!")
 			return
 	if(IsAvailable())
-		UpdateButtonIcon()
+		UpdateButtons()
 		var/mutcolor = owner.get_ability_property(INNATE_ABILITY_SLIME_BLOBFORM, PROPERTY_BLOBFORM_COLOR) || ("#" + H.dna.features["mcolor"])
 		if(!is_puddle)
 			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
@@ -56,14 +56,13 @@
 				ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
 				ADD_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
 				ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 				ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 				ADD_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
 				H.update_disabled_bodyparts(silent = TRUE)	//silently update arms to be paralysed
 
 				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 
-				ENABLE_BITFIELD(H.pass_flags, PASSMOB) //this actually lets people pass over you
+				H.pass_flags |= PASSMOB //this actually lets people pass over you
 				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg')) //blorble noise when people step on you
 
 				//if the user is a changeling, retract their sting
@@ -79,7 +78,7 @@
 				owner.update_antag_overlays()
 
 				transforming = FALSE
-				UpdateButtonIcon()
+				UpdateButtons()
 		else
 			detransform()
 	else
@@ -99,16 +98,15 @@
 	REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
-	REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_HUMAN_NO_RENDER, SLIMEPUDDLE_TRAIT)
 	H.update_disabled_bodyparts(silent = TRUE)
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
-	DISABLE_BITFIELD(H.pass_flags, PASSMOB)
+	H.pass_flags &= ~(PASSMOB)
 	is_puddle = FALSE
 	if(squeak)
 		squeak.RemoveComponent()
 	H.regenerate_icons()
 	transforming = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()

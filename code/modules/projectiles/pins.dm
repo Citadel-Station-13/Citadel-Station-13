@@ -13,7 +13,7 @@
 	var/pin_removeable = 0 // Can be replaced by any pin.
 	var/obj/item/gun/gun
 
-/obj/item/firing_pin/Initialize(newloc)
+/obj/item/firing_pin/Initialize(mapload, newloc)
 	. = ..()
 	if(istype(newloc, /obj/item/gun))
 		gun = newloc
@@ -238,7 +238,7 @@
 	var/only_lethals = FALSE
 	var/can_toggle = TRUE
 
-/obj/item/firing_pin/security_level/Initialize()
+/obj/item/firing_pin/security_level/Initialize(mapload)
 	. = ..()
 	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(NUM2SECLEVEL(GLOB.security_level))]. \
 					MIN: [uppertext(NUM2SECLEVEL(min_sec_level))]. MAX: [uppertext(NUM2SECLEVEL(max_sec_level))]. \

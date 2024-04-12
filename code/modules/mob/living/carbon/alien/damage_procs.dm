@@ -1,6 +1,6 @@
 
 /mob/living/carbon/alien/getToxLoss(toxins_type = TOX_OMNI)
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT) //alien immune to tox damage
 	return FALSE

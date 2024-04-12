@@ -12,7 +12,7 @@
 	icon_state = "spellcard"
 	damage_type = BURN
 	damage = 12
-	flag = "magic"
+	flag = MAGIC
 
 /obj/item/projectile/magic/spellcard/book/spark
 	damage = 4
@@ -25,7 +25,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-	
+
 	if(iscarbon(target))
 		M.adjust_fire_stacks(fire_stacks)
 		M.IgniteMob()

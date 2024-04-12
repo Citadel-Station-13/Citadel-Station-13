@@ -4,6 +4,13 @@
 /proc/cmp_numeric_asc(a,b)
 	return a - b
 
+// please don't ask
+/proc/cmp_numeric_text_desc(a, b)
+	return text2num(b) - text2num(a)
+
+/proc/cmp_numeric_text_asc(a, b)
+	return text2num(a) - text2num(b)
+
 /proc/cmp_text_asc(a,b)
 	return sorttext(b,a)
 
@@ -140,3 +147,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
+
+/proc/cmp_playtime(list/A, list/B)
+	return A["playtime"] - B["playtime"]

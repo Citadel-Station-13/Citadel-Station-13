@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/completed = FALSE				//currently only used for custom objectives.
 	var/completable = TRUE				//Whether this objective shows greentext when completed
 	var/martyr_compatible = FALSE		//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/objective_name = "Objective"	//name used in printing this objective (Objective #1)
 
 /datum/objective/New(var/text)
 	GLOB.objectives += src // CITADEL EDIT FOR CRYOPODS
@@ -160,12 +161,14 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 
 /datum/objective/proc/give_special_equipment(special_equipment)
 	var/datum/mind/receiver = pick(get_owners())
+	. = list()
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
+			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
+				. += O
 				H.equip_in_one_of_slots(O, slots, critical = TRUE)
 
 /datum/objective/assassinate
@@ -560,6 +563,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	name = "steal"
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
+	var/list/special_items_given = list()
 	martyr_compatible = 0
 
 /datum/objective/steal/get_target()
@@ -570,6 +574,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/objective_item/steal))
 			new I
+
+/datum/objective/steal/Destroy(force, ...)
+	if(length(special_items_given))
+		QDEL_LIST(special_items_given)
+	. = ..()
 
 /datum/objective/steal/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -589,7 +598,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		targetinfo = item
 		steal_target = targetinfo.targetitem
 		explanation_text = "Steal [targetinfo.name]"
-		give_special_equipment(targetinfo.special_equipment)
+		special_items_given = give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
 		explanation_text = "Free objective"
@@ -630,11 +639,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 			if(istype(I, steal_target))
 				if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
 					return TRUE
-				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return TRUE if the conditions are fulfilled.
 					return TRUE
 
 			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
-				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
+				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return FALSE if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
 	return FALSE
 
@@ -770,6 +779,24 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		target_amount = count
 	update_explanation_text()
 */
+/datum/objective/protect_object
+	name = "protect object"
+	var/obj/protect_target
+
+/datum/objective/protect_object/proc/set_target(obj/O)
+	protect_target = O
+	update_explanation_text()
+
+/datum/objective/protect_object/update_explanation_text()
+	. = ..()
+	if(protect_target)
+		explanation_text = "Protect \the [protect_target] at all costs."
+	else
+		explanation_text = "Free objective."
+
+/datum/objective/protect_object/check_completion()
+	return !QDELETED(protect_target)
+
 //Changeling Objectives
 
 /datum/objective/absorb
@@ -849,7 +876,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			continue
 		var/total_genetic_points = changeling.geneticpoints
 
-		for(var/obj/effect/proc_holder/changeling/p in changeling.purchasedpowers)
+		for(var/datum/action/changeling/p in changeling.purchasedpowers)
 			total_genetic_points += p.dna_cost
 
 		if(total_genetic_points > initial(changeling.geneticpoints))
@@ -1170,7 +1197,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 	I.forceMove(get_turf(owner))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK), critical = TRUE)
+		H.equip_in_one_of_slots(I, list("backpack" = ITEM_SLOT_BACKPACK), critical = TRUE)
 		hoarded_item = I
 
 
@@ -1180,6 +1207,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 /datum/objective/sabotage
 	name = "sabotage"
 	var/datum/sabotage_objective/targetinfo = null //composition > inheritance.
+	var/list/special_items_given = list()
 
 /datum/objective/sabotage/get_target()
 	return targetinfo.sabotage_type
@@ -1189,6 +1217,11 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	if(!GLOB.possible_sabotages.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/sabotage_objective))
 			new I
+
+/datum/objective/sabotage/Destroy()
+	if(length(special_items_given))
+		QDEL_LIST(special_items_given)
+	. = ..()
 
 /datum/objective/sabotage/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -1207,7 +1240,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	if(sabo)
 		targetinfo = sabo
 		explanation_text = "[targetinfo.name]"
-		give_special_equipment(targetinfo.special_equipment)
+		special_items_given = give_special_equipment(targetinfo.special_equipment)
 		return sabo
 	else
 		explanation_text = "Free objective"
@@ -1258,9 +1291,9 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/payout_bonus = 0
 	var/area/dropoff = null
 	var/static/list/blacklisted_areas = typecacheof(list(/area/ai_monitored/turret_protected,
-														/area/solars/,
-														/area/ruin/,	//thank you station space ruins
-														/area/science/test_area/,
+														/area/solars,
+														/area/ruin,	//thank you station space ruins
+														/area/science/test_area,
 														/area/shuttle/))
 
 /datum/objective/contract/proc/generate_dropoff()	// Generate a random valid area on the station that the dropoff will happen.

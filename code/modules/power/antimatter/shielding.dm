@@ -28,9 +28,9 @@
 	var/dirs = 0
 
 
-/obj/machinery/am_shielding/Initialize()
+/obj/machinery/am_shielding/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/controllerscan), 10)
+	addtimer(CALLBACK(src, PROC_REF(controllerscan)), 10)
 
 /obj/machinery/am_shielding/proc/overheat()
 	visible_message("<span class='danger'>[src] melts!</span>")
@@ -65,7 +65,7 @@
 
 	if(!control_unit)
 		if(!priorscan)
-			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
+			addtimer(CALLBACK(src, PROC_REF(controllerscan), 1), 20)
 			return
 		collapse()
 
@@ -80,7 +80,7 @@
 
 
 /obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target)
-	return 0
+	return FALSE
 
 
 /obj/machinery/am_shielding/process()
@@ -94,7 +94,7 @@
 /obj/machinery/am_shielding/emp_act()//Immune due to not really much in the way of electronics.
 	return
 
-/obj/machinery/am_shielding/ex_act(severity, target)
+/obj/machinery/am_shielding/ex_act(severity, target, origin)
 	stability -= (80 - (severity * 20))
 	check_stability()
 	return
@@ -102,7 +102,7 @@
 
 /obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
 	. = ..()
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		stability -= Proj.force/2
 		check_stability()
 
@@ -167,12 +167,12 @@
 //Call this to link a detected shilding unit to the controller
 /obj/machinery/am_shielding/proc/link_control(obj/machinery/power/am_control_unit/AMC)
 	if(!istype(AMC))
-		return 0
+		return FALSE
 	if(control_unit && control_unit != AMC)
 		return 0//Already have one
 	control_unit = AMC
 	control_unit.add_shielding(src,1)
-	return 1
+	return TRUE
 
 
 //Scans cards for shields or the control unit and if all there it
@@ -186,8 +186,8 @@
 				found_am_device = 1
 				break
 		if(!found_am_device)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /obj/machinery/am_shielding/proc/setup_core()

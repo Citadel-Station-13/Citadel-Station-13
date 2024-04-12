@@ -6,7 +6,7 @@
 	cooldown_per_use = 10
 	var/volume = 0
 
-/obj/item/integrated_circuit/reagent/Initialize()
+/obj/item/integrated_circuit/reagent/Initialize(mapload)
 	. = ..()
 	if(volume)
 		create_reagents(volume)
@@ -75,9 +75,9 @@
 	var/transfer_amount = 10
 	var/busy = FALSE
 
-/obj/item/integrated_circuit/reagent/injector/Initialize()
+/obj/item/integrated_circuit/reagent/injector/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	push_vol()
@@ -136,7 +136,7 @@
 			L.visible_message("<span class='danger'>[acting_object] is trying to inject [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to inject you!</span>")
 			busy = TRUE
-			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
+			if(do_atom(src, L, extra_checks=CALLBACK(L, TYPE_PROC_REF(/mob/living, can_inject),null,0)))
 				var/fraction = min(transfer_amount/reagents.total_volume, 1)
 				reagents.reaction(L, INJECT, fraction)
 				reagents.trans_to(L, transfer_amount)
@@ -165,7 +165,7 @@
 			L.visible_message("<span class='danger'>[acting_object] is trying to take a blood sample from [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to take a blood sample from you!</span>")
 			busy = TRUE
-			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
+			if(do_atom(src, L, extra_checks=CALLBACK(L, TYPE_PROC_REF(/mob/living, can_inject),null,0)))
 				if(L.transfer_blood_to(src, tramount))
 					L.visible_message("<span class='danger'>[acting_object] takes a blood sample from [L]!</span>", \
 					"<span class='userdanger'>[acting_object] takes a blood sample from you!</span>")
@@ -271,9 +271,9 @@
 	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/Initialize()
+/obj/item/integrated_circuit/reagent/storage/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -301,9 +301,9 @@
 	complexity = 8
 	spawn_flags = IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/cryo/Initialize()
+/obj/item/integrated_circuit/reagent/storage/cryo/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
+	reagents.reagents_holder_flags |= NO_REACT
 
 /obj/item/integrated_circuit/reagent/storage/grinder
 	name = "reagent grinder"
@@ -520,7 +520,7 @@
 	else
 		power_draw_idle = 0
 
-/obj/item/integrated_circuit/reagent/storage/heater/Initialize()
+/obj/item/integrated_circuit/reagent/storage/heater/Initialize(mapload)
 	.=..()
 	START_PROCESSING(SScircuit, src)
 
@@ -572,9 +572,9 @@
 	var/smoke_radius = 5
 	var/notified = FALSE
 
-/obj/item/integrated_circuit/reagent/smoke/Initialize()
+/obj/item/integrated_circuit/reagent/smoke/Initialize(mapload)
 	. = ..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
 	//reset warning only if we have reagents now
@@ -630,9 +630,9 @@
 	power_draw_per_use = 15
 	var/busy = FALSE
 
-/obj/item/integrated_circuit/reagent/extinguisher/Initialize()
+/obj/item/integrated_circuit/reagent/extinguisher/Initialize(mapload)
 	.=..()
-	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
+	reagents.reagents_holder_flags |= OPENCONTAINER
 	set_pin_data(IC_OUTPUT,2, src)
 
 /obj/item/integrated_circuit/reagent/extinguisher/on_reagent_change(changetype)
@@ -677,7 +677,7 @@
 		reagents.trans_to(W,1)
 
 	//Make em move dat ass, hun
-	addtimer(CALLBACK(src, /obj/item/integrated_circuit/reagent/extinguisher/proc/move_particles, water_particles), 2)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/integrated_circuit/reagent/extinguisher, move_particles), water_particles), 2)
 
 //This whole proc is a loop
 /obj/item/integrated_circuit/reagent/extinguisher/proc/move_particles(var/list/particles, var/repetitions=0)
@@ -699,7 +699,7 @@
 			break
 	if(repetitions < 4)
 		repetitions++	//Can't have math operations in addtimer(CALLBACK())
-		addtimer(CALLBACK(src, /obj/item/integrated_circuit/reagent/extinguisher/proc/move_particles, particles, repetitions), 2)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/integrated_circuit/reagent/extinguisher, move_particles), particles, repetitions), 2)
 	else
 		push_data()
 		activate_pin(2)

@@ -1,90 +1,99 @@
 //Lavaland Ruins
 
-/area/ruin/powered/beach
+/area/ruin/lavaland/unpowered
+	always_unpowered = FALSE
+
+/area/ruin/lavaland/unpowered/no_grav
+	has_gravity = FALSE
+
+/area/ruin/lavaland/powered
+	requires_power = FALSE
+
+/area/ruin/lavaland/powered/beach
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/clownplanet
+/area/ruin/lavaland/powered/clownplanet
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/animal_hospital
+/area/ruin/lavaland/powered/animal_hospital
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/snow_biodome
+/area/ruin/lavaland/powered/snow_biodome
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/gluttony
+/area/ruin/lavaland/powered/gluttony
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/golem_ship
+/area/ruin/lavaland/powered/golem_ship
 	name = "Free Golem Ship"
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/greed
+/area/ruin/lavaland/powered/greed
 	icon_state = "dk_yellow"
 
-/area/ruin/unpowered/hierophant
+/area/ruin/lavaland/unpowered/hierophant
 	name = "Hierophant's Arena"
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/pride
+/area/ruin/lavaland/powered/pride
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/seedvault
+/area/ruin/lavaland/powered/seedvault
 	icon_state = "dk_yellow"
 
-/area/ruin/unpowered/elephant_graveyard
+/area/ruin/lavaland/unpowered/elephant_graveyard
 	name = "Elephant Graveyard"
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/graveyard_shuttle
+/area/ruin/lavaland/powered/graveyard_shuttle
 	name = "Elephant Graveyard"
 	icon_state = "green"
 
-/area/ruin/unpowered/syndicate_lava_base
+/area/ruin/lavaland/unpowered/syndicate_lava_base
 	name = "Secret Base"
 	icon_state = "dk_yellow"
 	ambientsounds = HIGHSEC
 
-/area/ruin/unpowered/syndicate_lava_base/engineering
+/area/ruin/lavaland/unpowered/syndicate_lava_base/engineering
 	name = "Syndicate Lavaland Engineering"
 
-/area/ruin/unpowered/syndicate_lava_base/medbay
+/area/ruin/lavaland/unpowered/syndicate_lava_base/medbay
 	name = "Syndicate Lavaland Medbay"
 
-/area/ruin/unpowered/syndicate_lava_base/arrivals
+/area/ruin/lavaland/unpowered/syndicate_lava_base/arrivals
 	name = "Syndicate Lavaland Arrivals"
 
-/area/ruin/unpowered/syndicate_lava_base/bar
+/area/ruin/lavaland/unpowered/syndicate_lava_base/bar
 	name = "Syndicate Lavaland Bar"
 
-/area/ruin/unpowered/syndicate_lava_base/main
+/area/ruin/lavaland/unpowered/syndicate_lava_base/main
 	name = "Syndicate Lavaland Primary Hallway"
 
-/area/ruin/unpowered/syndicate_lava_base/cargo
+/area/ruin/lavaland/unpowered/syndicate_lava_base/cargo
 	name = "Syndicate Lavaland Cargo Bay"
 
-/area/ruin/unpowered/syndicate_lava_base/chemistry
+/area/ruin/lavaland/unpowered/syndicate_lava_base/chemistry
 	name = "Syndicate Lavaland Chemistry"
 
-/area/ruin/unpowered/syndicate_lava_base/virology
+/area/ruin/lavaland/unpowered/syndicate_lava_base/virology
 	name = "Syndicate Lavaland Virology"
 
-/area/ruin/unpowered/syndicate_lava_base/testlab
+/area/ruin/lavaland/unpowered/syndicate_lava_base/testlab
 	name = "Syndicate Lavaland Experimentation Lab"
 
-/area/ruin/unpowered/syndicate_lava_base/dormitories
+/area/ruin/lavaland/unpowered/syndicate_lava_base/dormitories
 	name = "Syndicate Lavaland Dormitories"
 
-/area/ruin/unpowered/syndicate_lava_base/telecomms
+/area/ruin/lavaland/unpowered/syndicate_lava_base/telecomms
 	name = "Syndicate Lavaland Telecommunications"
 
-/area/ruin/unpowered/syndicate_lava_base/circuits
+/area/ruin/lavaland/unpowered/syndicate_lava_base/circuits
 	name = "Syndicate Lavaland Circuit Lab"
 
 
 //Xeno Nest
 
-/area/ruin/unpowered/xenonest
+/area/ruin/lavaland/unpowered/xenonest
 	name = "The Hive"
 	always_unpowered = TRUE
 	power_environ = FALSE
@@ -93,5 +102,5 @@
 	poweralm = FALSE
 
 //ash walker nest
-/area/ruin/unpowered/ash_walkers
+/area/ruin/lavaland/unpowered/ash_walkers
 	icon_state = "red"

@@ -9,12 +9,14 @@
 
 /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/mech/Crossed(atom/movable/AM)
 	. = ..()
-	if(!istype(AM,/obj/mecha/))
+	if(!istype(AM,/obj/vehicle/sealed/mecha/))
 		return
 
-	var/obj/mecha/M = AM
-	if(M.occupant && is_servant_of_ratvar(M.occupant))
-		return
+	var/obj/vehicle/sealed/mecha/M = AM
+	if(LAZYLEN(M.occupants))
+		for(var/mob/living/MB in M.occupants)
+			if(is_servant_of_ratvar(MB))
+				return
 	audible_message("<i>*click*</i>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 	activate()

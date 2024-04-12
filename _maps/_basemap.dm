@@ -12,6 +12,7 @@
 		#include "map_files\PubbyStation\PubbyStation.dmm"
 		#include "map_files\BoxStation\BoxStation.dmm"
 		#include "map_files\LambdaStation\lambda.dmm"
+		#include "map_files\SpookyStation\SpookyStation.dmm"
 
 		#ifdef CIBUILDING
 			#include "templates.dm"

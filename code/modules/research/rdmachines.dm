@@ -18,7 +18,7 @@
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
-/obj/machinery/rnd/Initialize()
+/obj/machinery/rnd/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/rnd(src)
 
@@ -103,4 +103,4 @@
 		mat_name = M.name
 		use_power(min(1000, (amount_inserted / 100)))
 	add_overlay("protolathe_[mat_name]")
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[mat_name]"), 10)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "protolathe_[mat_name]"), 10)

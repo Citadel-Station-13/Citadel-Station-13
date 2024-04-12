@@ -858,7 +858,7 @@
 /turf/open/floor/plating/airless,
 /area/router/aux)
 "acf" = (
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/computer/arcade/battle,
 /turf/open/floor/carpet/arcade,
 /area/commons/arcade)
 "acg" = (
@@ -4505,7 +4505,7 @@
 /area/maintenance/solars/starboard/fore)
 "alg" = (
 /obj/structure/frame/machine,
-/obj/item/circuitboard/computer/arcade/minesweeper,
+/obj/item/circuitboard/computer/arcade/orion_trail,
 /turf/open/floor/plating,
 /area/construction/secondary)
 "alh" = (
@@ -8805,12 +8805,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
+/obj/structure/table,
+/obj/item/stack/medical/suture/five,
 /turf/open/floor/plasteel/white,
 /area/medical/clinic)
 "auS" = (
@@ -8876,9 +8875,7 @@
 	name = "Station Intercom (Common)";
 	pixel_y = 26
 	},
-/obj/machinery/sleep_console{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/clinic)
 "auZ" = (
@@ -9962,6 +9959,7 @@
 /area/security/prison)
 "axk" = (
 /obj/item/storage/pill_bottle/penis_enlargement,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "axl" = (
@@ -21247,9 +21245,6 @@
 /turf/open/floor/plasteel/dark/side,
 /area/security/courtroom)
 "aUF" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
 /turf/open/floor/carpet/green,
 /area/command/heads_quarters/hop)
 "aUG" = (
@@ -23666,14 +23661,14 @@
 	dir = 4;
 	light_color = "#e8eaff"
 	},
-/obj/item/aiModule/reset/purge{
+/obj/item/ai_module/reset/purge{
 	pixel_y = 6
 	},
-/obj/item/aiModule/reset{
+/obj/item/ai_module/reset{
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/aiModule/core/full/custom{
+/obj/item/ai_module/core/full/custom{
 	pixel_x = -4
 	},
 /obj/machinery/status_display{
@@ -24177,7 +24172,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/aiModule/core/full/asimov{
+/obj/item/ai_module/core/full/asimov{
 	pixel_x = 2;
 	pixel_y = 10
 	},
@@ -24188,11 +24183,11 @@
 /obj/effect/spawner/lootdrop/aimodule_harmless{
 	pixel_y = 6
 	},
-/obj/item/aiModule/core/freeformcore{
+/obj/item/ai_module/core/freeformcore{
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/aiModule/supplied/freeform{
+/obj/item/ai_module/supplied/freeform{
 	pixel_x = -2
 	},
 /obj/structure/cable{
@@ -26771,7 +26766,6 @@
 /turf/open/floor/engine,
 /area/engineering/teg)
 "bgS" = (
-/obj/machinery/computer/bounty,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -27426,6 +27420,9 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/cargo/office)
@@ -29096,9 +29093,6 @@
 /turf/open/floor/plasteel,
 /area/cargo/sorting)
 "blR" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -36750,9 +36744,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/storage/box/engineer{
-	pixel_y = 4
-	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "bCu" = (
@@ -38069,22 +38060,22 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/aiModule/supplied/oxygen{
+/obj/item/ai_module/supplied/oxygen{
 	pixel_x = 2;
 	pixel_y = 10
 	},
-/obj/item/aiModule/supplied/quarantine{
+/obj/item/ai_module/supplied/quarantine{
 	pixel_x = 1;
 	pixel_y = 8
 	},
-/obj/item/aiModule/zeroth/oneHuman{
+/obj/item/ai_module/zeroth/oneHuman{
 	pixel_y = 4
 	},
 /obj/effect/spawner/lootdrop/aimodule_harmful{
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/aiModule/supplied/protectStation{
+/obj/item/ai_module/supplied/protectStation{
 	pixel_x = -2
 	},
 /turf/open/floor/plasteel,
@@ -49205,6 +49196,9 @@
 	c_tag = "Robotics Lab";
 	dir = 4
 	},
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},
@@ -57325,7 +57319,7 @@
 	name = "Chief Engineer's RC";
 	pixel_y = -32
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Polly,
 /turf/open/floor/plasteel,
 /area/command/heads_quarters/ce)
 "csf" = (
@@ -58025,6 +58019,7 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/cargo/office)
 "ctx" = (
@@ -58339,9 +58334,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/east,
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "cua" = (
@@ -71005,6 +70998,11 @@
 /obj/machinery/atmospherics/pipe/simple/violet/visible,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
+"kTm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plating,
+/area/security/prison)
 "lcD" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
@@ -71078,6 +71076,11 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
+"mTf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "nvn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -95879,7 +95882,7 @@ adE
 aew
 afG
 agP
-agP
+kTm
 aiL
 ajT
 anu
@@ -95894,7 +95897,7 @@ aHT
 aJt
 aJN
 aQg
-akv
+mTf
 aew
 ayU
 aSQ
@@ -96395,7 +96398,7 @@ afY
 agP
 agP
 aiL
-akv
+mTf
 anw
 akv
 akv

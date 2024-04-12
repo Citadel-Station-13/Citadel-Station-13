@@ -18,14 +18,28 @@
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2,
 					/obj/item/reagent_containers/pill/morphine = 2)
 	premium = list(/obj/item/reagent_containers/medspray/synthflesh = 2)
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
-	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/wallmed
 	default_price = PRICE_FREE
 	extra_price = PRICE_NORMAL
 	payment_department = ACCOUNT_MED
-	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
 	tiltable = FALSE
+	light_mask = "wallmed-light-mask"
+
+/obj/machinery/vending/wallmed/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/vending/wallmed/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/vending/wallmed/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/vending/wallmed/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

@@ -4,6 +4,9 @@
 #define LOADOUT_SUBCATEGORY_NONE		"Miscellaneous"
 #define LOADOUT_SUBCATEGORIES_NONE		list("Miscellaneous")
 
+//accessory
+#define LOADOUT_CATEGORY_ACCESSORY "Accessory"
+
 //backpack
 #define LOADOUT_CATEGORY_BACKPACK 				"In backpack"
 #define LOADOUT_SUBCATEGORY_BACKPACK_GENERAL 	"General" //basically anything that there's not enough of to have its own subcategory
@@ -58,8 +61,11 @@
 //unlockable items
 #define LOADOUT_CATEGORY_UNLOCKABLE	"Unlockable"
 
+//errors with your savefile
+#define LOADOUT_CATEGORY_ERROR		"Errors"
+
 //how many prosthetics can we have
-#define MAXIMUM_LOADOUT_PROSTHETICS	2
+#define MAXIMUM_LOADOUT_PROSTHETICS	4
 
 //what limbs can be amputated or be prosthetic
 #define LOADOUT_ALLOWED_LIMB_TARGETS	list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
@@ -85,9 +91,23 @@
 
 //the names of the customization tabs
 #define SETTINGS_TAB			0
-#define GAME_PREFERENCES_TAB	1
-#define APPEARANCE_TAB			2
-#define SPEECH_TAB				3
-#define LOADOUT_TAB				4
-#define CONTENT_PREFERENCES_TAB	5
-#define KEYBINDINGS_TAB			6
+#define PREFERENCES_TAB			1
+#define KEYBINDINGS_TAB			2
+
+//subtabs for the character settings tab
+#define GENERAL_CHAR_TAB		0
+#define BACKGROUND_CHAR_TAB		1
+#define APPEARANCE_CHAR_TAB		2
+#define MARKINGS_CHAR_TAB		3
+#define SPEECH_CHAR_TAB			4
+#define LOADOUT_CHAR_TAB		5
+
+//subtabs for preferences tab
+#define GAME_PREFS_TAB			0
+#define OOC_PREFS_TAB			1
+#define CONTENT_PREFS_TAB		2
+
+//quirks
+#define QUIRK_POSITIVE	"Positive"
+#define QUIRK_NEGATIVE	"Negative"
+#define QUIRK_NEUTRAL	"Neutral"

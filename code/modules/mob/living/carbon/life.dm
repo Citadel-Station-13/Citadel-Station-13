@@ -1,6 +1,6 @@
-/mob/living/carbon/BiologicalLife(seconds, times_fired)
+/mob/living/carbon/BiologicalLife(delta_time, times_fired)
 	//Reagent processing needs to come before breathing, to prevent edge cases.
-	handle_organs()
+	handle_organs(delta_time, times_fired)
 	. = ..()		// if . is false, we are dead.
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -9,7 +9,7 @@
 		. = FALSE
 	if(!.)
 		return
-	handle_blood()
+	handle_blood(delta_time, times_fired)
 	// handle_blood *could* kill us.
 	// we should probably have a better system for if we need to check for death or something in the future hmw
 	if(stat != DEAD)
@@ -23,7 +23,7 @@
 		handle_brain_damage()
 
 	if(stat != DEAD)
-		handle_liver()
+		handle_liver(delta_time, times_fired)
 
 	if(stat != DEAD)
 		handle_corruption()
@@ -39,7 +39,7 @@
 //Procs called while dead
 /mob/living/carbon/proc/handle_death()
 	for(var/datum/reagent/R in reagents.reagent_list)
-		if(R.chemical_flags & REAGENT_DEAD_PROCESS)
+		if(R.chemical_flags & REAGENT_DEAD_PROCESS && !is_reagent_processing_invalid(R, src))
 			R.on_mob_dead(src)
 
 ///////////////
@@ -115,16 +115,18 @@
 				breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
 
 			else if(isturf(loc)) //Breathe from loc as turf
-				var/breath_moles = 0
+				var/breath_ratio = 0
 				if(environment)
-					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+					breath_ratio = BREATH_VOLUME/environment.return_volume()
 
-				breath = loc.remove_air(breath_moles)
+				breath = loc.remove_air_ratio(breath_ratio)
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src,0)
 
+	if(breath)
+		breath.set_volume(BREATH_VOLUME)
 	check_breath(breath)
 
 	if(breath)
@@ -153,8 +155,8 @@
 		adjustOxyLoss(1)
 
 		failed_last_breath = 1
-		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-		return 0
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+		return FALSE
 
 	var/safe_oxy_min = 16
 	var/safe_oxy_max = 50
@@ -163,11 +165,11 @@
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.return_temperature())/BREATH_VOLUME
-
-	var/O2_partialpressure = (breath.get_moles(/datum/gas/oxygen)/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath.get_moles(/datum/gas/plasma)/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath.get_moles(/datum/gas/carbon_dioxide)/breath.total_moles())*breath_pressure
+	var/moles = breath.total_moles()
+	var/breath_pressure = (moles*R_IDEAL_GAS_EQUATION*breath.return_temperature())/BREATH_VOLUME
+	var/O2_partialpressure = ((breath.get_moles(GAS_O2)/moles)*breath_pressure) + (((breath.get_moles(GAS_PLUOXIUM)*8)/moles)*breath_pressure)
+	var/Toxins_partialpressure = (breath.get_moles(GAS_PLASMA)/moles)*breath_pressure
+	var/CO2_partialpressure = (breath.get_moles(GAS_CO2)/moles)*breath_pressure
 
 
 	//OXYGEN
@@ -181,7 +183,7 @@
 				adjustOxyLoss(8)
 		if(prob(20))
 			emote("cough")
-		throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
+		throw_alert("too_much_oxy", /atom/movable/screen/alert/too_much_oxy)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
@@ -191,11 +193,11 @@
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath.get_moles(/datum/gas/oxygen)*ratio
+			oxygen_used = breath.get_moles(GAS_O2)*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	else //Enough oxygen
@@ -203,12 +205,12 @@
 		o2overloadtime = 0 //reset our counter for this too
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
-		oxygen_used = breath.get_moles(/datum/gas/oxygen)
+		oxygen_used = breath.get_moles(GAS_O2)
 		clear_alert("not_enough_oxy")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
-	breath.adjust_moles(/datum/gas/oxygen, -oxygen_used)
-	breath.adjust_moles(/datum/gas/carbon_dioxide, oxygen_used)
+	breath.adjust_moles(GAS_O2, -oxygen_used)
+	breath.adjust_moles(GAS_CO2, oxygen_used)
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > safe_co2_max)
@@ -227,15 +229,15 @@
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath.get_moles(/datum/gas/plasma)/safe_tox_max) * 10
+		var/ratio = (breath.get_moles(GAS_PLASMA)/safe_tox_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+		throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
-	if(breath.get_moles(/datum/gas/nitrous_oxide))
-		var/SA_partialpressure = (breath.get_moles(/datum/gas/nitrous_oxide)/breath.total_moles())*breath_pressure
+	if(breath.get_moles(GAS_NITROUS))
+		var/SA_partialpressure = (breath.get_moles(GAS_NITROUS)/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
@@ -248,26 +250,26 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
 	//BZ (Facepunch port of their Agent B)
-	if(breath.get_moles(/datum/gas/bz))
-		var/bz_partialpressure = (breath.get_moles(/datum/gas/bz)/breath.total_moles())*breath_pressure
+	if(breath.get_moles(GAS_BZ))
+		var/bz_partialpressure = (breath.get_moles(GAS_BZ)/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
 
 	//TRITIUM
-	if(breath.get_moles(/datum/gas/tritium))
-		var/tritium_partialpressure = (breath.get_moles(/datum/gas/tritium)/breath.total_moles())*breath_pressure
+	if(breath.get_moles(GAS_TRITIUM))
+		var/tritium_partialpressure = (breath.get_moles(GAS_TRITIUM)/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
 
 	//NITRYL
-	if(breath.get_moles(/datum/gas/nitryl))
-		var/nitryl_partialpressure = (breath.get_moles(/datum/gas/nitryl)/breath.total_moles())*breath_pressure
+	if(breath.get_moles(GAS_NITRYL))
+		var/nitryl_partialpressure = (breath.get_moles(GAS_NITRYL)/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
 
 	//MIASMA
-	if(breath.get_moles(/datum/gas/miasma))
-		var/miasma_partialpressure = (breath.get_moles(/datum/gas/miasma)/breath.total_moles())*breath_pressure
+	if(breath.get_moles(GAS_MIASMA))
+		var/miasma_partialpressure = (breath.get_moles(GAS_MIASMA)/breath.total_moles())*breath_pressure
 		if(miasma_partialpressure > MINIMUM_MOLES_DELTA_TO_MOVE)
 
 			if(prob(0.05 * miasma_partialpressure))
@@ -310,7 +312,7 @@
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
-	return 1
+	return TRUE
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
@@ -322,7 +324,7 @@
 
 	if(!HAS_TRAIT(src, TRAIT_NO_INTERNALS))
 		for(check in GET_INTERNAL_SLOTS(src))
-			if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+			if((check.clothing_flags & ALLOWINTERNALS))
 				internals = TRUE
 	if(internal)
 		if(internal.loc != src)
@@ -365,7 +367,7 @@
 
 	var/datum/gas_mixture/stank = new
 
-	stank.set_moles(/datum/gas/miasma,0.1)
+	stank.set_moles(GAS_MIASMA,0.1)
 
 	stank.set_temperature(BODYTEMP_NORMAL)
 
@@ -373,28 +375,28 @@
 
 	miasma_turf.air_update_turf()
 
-/mob/living/carbon/proc/handle_blood()
+/mob/living/carbon/proc/handle_blood(delta_time, times_fired)
 	return
 
-/mob/living/carbon/proc/handle_bodyparts()
+/mob/living/carbon/proc/handle_bodyparts(seconds, times_fired)
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
 		if(BP.needs_processing)
-			. |= BP.on_life()
+			. |= BP.on_life(seconds, times_fired)
 
-/mob/living/carbon/proc/handle_organs()
+/mob/living/carbon/proc/handle_organs(seconds, times_fired)
 	if(stat != DEAD)
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			if(O)
-				O.on_life()
+				O.on_life(seconds, times_fired)
 	else
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/preservahyde, 1)) // No organ decay if the body contains formaldehyde. Or preservahyde.
 			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			if(O)
-				O.on_death() //Needed so organs decay while inside the body.
+				O.on_death(seconds, times_fired) //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)
@@ -510,9 +512,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	var/combat_mode = SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)
 	if(getStaminaLoss() && !HAS_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION))
-		adjustStaminaLoss((!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? STAM_RECOVERY_STAM_CRIT : STAM_RECOVERY_RESTING) : STAM_RECOVERY_NORMAL) * (combat_mode? 0.25 : 1))
+		adjustStaminaLoss((!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? STAM_RECOVERY_STAM_CRIT : STAM_RECOVERY_RESTING) : STAM_RECOVERY_NORMAL))
 
 	if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && incomingstammult != 1)
 		incomingstammult = max(0.01, incomingstammult)
@@ -569,29 +570,17 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
-	if(stuttering)
-		stuttering = max(stuttering-1, 0)
-
-	if(slurring || drunkenness)
-		slurring = max(slurring-1,0,drunkenness)
-
-	if(cultslurring)
-		cultslurring = max(cultslurring-1, 0)
-
-	if(clockcultslurring)
-		clockcultslurring = max(clockcultslurring-1, 0)
+	if(druggy)
+		adjust_drugginess(-1)
 
 	if(silent)
 		silent = max(silent-1, 0)
-
-	if(druggy)
-		adjust_drugginess(-1)
 
 	if(hallucination)
 		handle_hallucinations()
 
 	if(drunkenness)
-		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
+		drunkenness *= 0.96
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(prob(25))
@@ -606,6 +595,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 			clear_alert("drunk")
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
+			drunkenness = max(drunkenness - 0.2, 0)
 
 		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
 			if(SSresearch.science_tech)
@@ -669,8 +659,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	if (HAS_TRAIT(src, TRAIT_COLDBLOODED))
-		return 0 //Return 0 as your natural temperature. Species proc handle_environment() will adjust your temperature based on this.
+	if(HAS_TRAIT(src, TRAIT_COLDBLOODED) || HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		return FALSE //return FALSE as your natural temperature. Species proc handle_environment() will adjust your temperature based on this.
 
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
 	switch(bodytemperature)
@@ -682,20 +672,72 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
+/mob/living/carbon/proc/get_cooling_efficiency()
+	if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		return TRUE
+
+	var/integration_bonus = min(blood_volume * SYNTH_INTEGRATION_COOLANT_CAP, integrating_blood * SYNTH_INTEGRATION_COOLANT_PENALTY)	//Integration blood somewhat helps, though only at 40% impact and to a cap of 25% of current blood level.
+	var/blood_effective_volume = blood_volume + integration_bonus
+	var/coolant_efficiency = min(blood_effective_volume / BLOOD_VOLUME_SAFE, 1)	//Low coolant is only a negative, adding more than needed will not help you.
+	var/environment_efficiency = get_environment_cooling_efficiency()
+
+	return min(coolant_efficiency * environment_efficiency, SYNTH_MAX_COOLING_EFFICIENCY)
+
+
+/mob/living/carbon/proc/get_environment_cooling_efficiency()
+	var/suitlink = check_suitlinking()
+	if(suitlink)
+		return suitlink //If you are wearing full EVA or lavaland hazard gear (on lavaland), assume it has been made to accomodate your cooling needs.
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(!environment)
+		return FALSE
+
+	var/pressure = environment.return_pressure()
+	var/heat = environment.return_temperature()
+
+	var/heat_efficiency = clamp(1 + ((bodytemperature - heat) * SYNTH_HEAT_EFFICIENCY_COEFF), 0, SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP)
+	var/pressure_efficiency = clamp(pressure / ONE_ATMOSPHERE, 0, SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP)
+
+	if(HAS_TRAIT(src, TRAIT_LOWPRESSURECOOLING))
+		pressure_efficiency = max(pressure_efficiency, 1)	//Space adaptation nulls drawbacks of low-pressure cooling.
+
+	var/total_environment_efficiency = min(heat_efficiency * pressure_efficiency, SYNTH_TOTAL_ENVIRONMENT_EFFECT_CAP)	//At best, you can get 200% total
+	return total_environment_efficiency
+
+/mob/living/carbon/proc/check_suitlinking()
+	var/suit_item = get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	var/head_item = get_item_by_slot(ITEM_SLOT_HEAD)
+	var/turf/T = get_turf(src)
+
+	if(istype(head_item, /obj/item/clothing/head/helmet/space) && istype(suit_item, /obj/item/clothing/suit/space))
+		return TRUE
+
+	if(istype(head_item, /obj/item/clothing/head/mod) && istype(suit_item, /obj/item/clothing/suit/mod))
+		var/obj/item/clothing/suit/mod/modsuit = suit_item
+		var/obj/item/mod/control/mod_control = modsuit.mod
+		if(mod_control && mod_control.active)
+			return TRUE
+
+	if(T && is_mining_level(T.z) && istype(head_item, /obj/item/clothing/head/hooded/explorer) && istype(suit_item, /obj/item/clothing/suit/hooded/explorer))
+		return TRUE
+
+	return FALSE
+
 /////////
 //LIVER//
 /////////
 
-/mob/living/carbon/proc/handle_liver()
+/mob/living/carbon/proc/handle_liver(seconds, times_fired)
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(!liver || liver.organ_flags & ORGAN_FAILING)
-		liver_failure()
+		liver_failure(seconds, times_fired)
 
-/mob/living/carbon/proc/liver_failure()
+/mob/living/carbon/proc/liver_failure(seconds, times_fired)
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
-	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
+	reagents.metabolize(src, seconds, times_fired, can_overdose=FALSE, liverless = TRUE)
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER))
 		return
 	adjustToxLoss(4, TRUE,  TRUE)

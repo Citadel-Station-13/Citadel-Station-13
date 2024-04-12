@@ -1,6 +1,6 @@
 /datum/gear/hands
 	category = LOADOUT_CATEGORY_HANDS
-	slot = SLOT_HANDS
+	slot = ITEM_SLOT_HANDS
 
 /datum/gear/hands/cane
 	name = "Cane"

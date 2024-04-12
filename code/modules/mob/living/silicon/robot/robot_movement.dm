@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/Process_Spacemove(movement_dir = 0)
 	if(ionpulse())
-		return 1
+		return TRUE
 	return ..()
 
 /mob/living/silicon/robot/mob_negates_gravity()
@@ -23,4 +23,4 @@
 	. = ..()
 	if(!resting && !(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		. += 1
-	. += speed
+	. += vtec_disabled? 0 : vtec

@@ -46,7 +46,7 @@
 	sharpness = SHARP_EDGED
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
-/obj/item/melee/synthetic_arm_blade/Initialize()
+/obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 80) //very imprecise
 
@@ -72,17 +72,19 @@
 	block_parry_data = /datum/block_parry_data/captain_saber
 
 /datum/block_parry_data/captain_saber
-	parry_time_windup = 0.5
-	parry_time_active = 4
-	parry_time_spindown = 1
+	parry_time_windup = 0
+	parry_time_active = 10
+	parry_time_spindown = 0
 	parry_time_perfect = 0.75
-	parry_time_perfect_leeway = 0.75
+	parry_time_perfect_leeway = 1.5
 	parry_imperfect_falloff_percent = 30
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = 2 SECONDS
+	parry_failed_clickcd_duration = 0
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK
+	parry_automatic_enabled = TRUE
 
-/obj/item/melee/sabre/Initialize()
+/obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
 	AddElement(/datum/element/sword_point)
@@ -105,7 +107,7 @@
 	..()
 
 /obj/item/melee/sabre/get_belt_overlay()
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "sabre")
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "sabre") // todo: make this and its rapier equivalent work for the inhands too
 
 /obj/item/melee/sabre/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-sabre")
@@ -137,8 +139,8 @@
 		var/speedbase = abs((4 SECONDS) / limbs_to_dismember.len)
 		for(bodypart in limbs_to_dismember)
 			i++
-			addtimer(CALLBACK(src, .proc/suicide_dismember, user, bodypart), speedbase * i)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), (5 SECONDS) * i)
+			addtimer(CALLBACK(src, PROC_REF(suicide_dismember), user, bodypart), speedbase * i)
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (5 SECONDS) * i)
 	return MANUAL_SUICIDE
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
@@ -176,30 +178,28 @@
 
 // Fast, efficient parry.
 /datum/block_parry_data/traitor_rapier
-	parry_time_windup = 0.5
-	parry_time_active = 5
+	parry_time_windup = 0
+	parry_time_active = 10
 	parry_time_spindown = 0
 	parry_time_active_visual_override = 3
 	parry_time_spindown_visual_override = 2
 	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
-	parry_time_perfect = 0
-	parry_time_perfect_leeway = 3
+	parry_time_perfect = 2
+	parry_time_perfect_leeway = 2
 	parry_time_perfect_leeway_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 1
-	)
-	parry_imperfect_falloff_percent_override = list(
-		TEXT_ATTACK_TYPE_PROJECTILE = 50				// useless after 3rd decisecond
 	)
 	parry_imperfect_falloff_percent = 30
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 1
-	parry_efficiency_perfect = 100
 	parry_data = list(
-		PARRY_DISARM_ATTACKER = TRUE,
-		PARRY_KNOCKDOWN_ATTACKER = 10
+		PARRY_KNOCKDOWN_ATTACKER = 10,
+		PARRY_DISARM_ATTACKER = TRUE
 	)
+	parry_efficiency_perfect = 100
+	parry_stamina_cost = 5
 	parry_failed_stagger_duration = 2 SECONDS
-	parry_failed_clickcd_duration = CLICK_CD_RANGE
+	parry_automatic_enabled = TRUE
 	parry_cooldown = 0
 
 /obj/item/melee/rapier/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
@@ -208,7 +208,7 @@
 		. |= BLOCK_SHOULD_REDIRECT
 		return_list[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 
-/obj/item/melee/rapier/Initialize()
+/obj/item/melee/rapier/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 65, 0)
 
@@ -225,7 +225,7 @@
 	..()
 
 /obj/item/melee/rapier/get_belt_overlay()
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "rapier")
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "rapier") // todo: same as sabre
 
 /obj/item/melee/rapier/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-rapier")
@@ -259,6 +259,8 @@
 	var/stam_dmg = 30
 	var/cooldown_check = 0 // Used internally, you don't want to modify
 	var/cooldown = 13 // Default wait time until can stun again.
+	/// block mitigation needed to prevent knockdown/disarms
+	var/block_percent_to_counter = 50
 	var/stun_time_silicon = 60 // How long it stuns silicons for - 6 seconds.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
@@ -275,7 +277,7 @@
 
 	wound_bonus = 15
 
-/obj/item/melee/classic_baton/Initialize()
+/obj/item/melee/classic_baton/Initialize(mapload)
 	. = ..()
 	if(sword_point)
 		AddElement(/datum/element/sword_point)
@@ -356,7 +358,8 @@
 		if(cooldown_check < world.time)
 			if(!UseStaminaBufferStandard(user, STAM_COST_BATON_MOB_MULT, warn = TRUE))
 				return DISCARD_LAST_ACTION
-			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS)
+			var/list/block_return = list()
+			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, block_return) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
 			if(ishuman(target))
@@ -367,7 +370,8 @@
 			if(stun_animation)
 				user.do_attack_animation(target)
 			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
-			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+			var/countered = block_return[BLOCK_RETURN_MITIGATION_PERCENT] > block_percent_to_counter
+			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, countered? 0 : hardstun_ds, stam_dmg, !countered)
 			additional_effects_carbon(target, user)
 			log_combat(user, target, "stunned", src)
 			add_fingerprint(user)
@@ -399,7 +403,7 @@
 	on_sound = 'sound/weapons/batonextend.ogg'
 	on_icon_state = "telebaton_1"
 	off_icon_state = "telebaton_0"
-	on_item_state = "nullrod"
+	on_item_state = "telebaton_1"
 	force_on = 10
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
@@ -453,6 +457,18 @@
 	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
 
+/obj/item/melee/classic_baton/telescopic/newspaper
+	name = "The Daily Whiplash"
+	desc = "A newspaper wrapped around a telescopic baton in such a way that it looks like you're beating people with a rolled up newspaper."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "newspaper"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	on_sound = 'sound/weapons/batonextend.ogg'
+	on_icon_state = "newspaper2"
+	off_icon_state = "newspaper"
+	on_item_state = "newspaper"
+
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
@@ -472,7 +488,7 @@
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 	on_icon_state = "contractor_baton_1"
 	off_icon_state = "contractor_baton_0"
-	on_item_state = "contractor_baton"
+	on_item_state = "contractor_baton_1"
 	force_on = 16
 	force_off = 5
 	weight_class_on = WEIGHT_CLASS_NORMAL
@@ -502,7 +518,7 @@
 	var/balanced = 1
 	force_string = "INFINITE"
 
-/obj/item/melee/supermatter_sword/Initialize()
+/obj/item/melee/supermatter_sword/Initialize(mapload)
 	. = ..()
 	shard = new /obj/machinery/power/supermatter_crystal(src)
 	qdel(shard.countdown)
@@ -541,7 +557,7 @@
 	..()
 	balanced = 0
 
-/obj/item/melee/supermatter_sword/ex_act(severity, target)
+/obj/item/melee/supermatter_sword/ex_act(severity, target, origin)
 	visible_message("<span class='danger'>The blast wave smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	consume_everything()
@@ -609,7 +625,7 @@
 	var/datum/beam/beam
 	total_mass = 2.5
 
-/obj/item/melee/roastingstick/Initialize()
+/obj/item/melee/roastingstick/Initialize(mapload)
 	. = ..()
 	if (!ovens)
 		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire, /obj/structure/destructible/clockwork/massive/ratvar))
@@ -695,11 +711,14 @@
 			playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
+	if(!held_sausage || held_sausage.roasted)
+		return	// no
 	to_chat(user, "You finish roasting [held_sausage]")
 	playsound(src,'sound/items/welder2.ogg',50,1)
 	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
+	held_sausage.roasted = TRUE
 	update_icon()
 
 /obj/item/melee/cleric_mace
@@ -722,7 +741,7 @@
 	var/overlay_state = "mace_handle"
 	var/mutable_appearance/overlay
 
-/obj/item/melee/cleric_mace/Initialize()
+/obj/item/melee/cleric_mace/Initialize(mapload)
 	. = ..()
 	overlay = mutable_appearance(icon, overlay_state)
 	overlay.appearance_flags = RESET_COLOR

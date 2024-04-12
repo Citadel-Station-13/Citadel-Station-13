@@ -16,7 +16,7 @@
 	animate(src, , alpha = 0, time = 5)
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/closet/cardboard/agent/Initialize()
+/obj/structure/closet/cardboard/agent/Initialize(mapload)
 	. = ..()
 	go_invisible()
 
@@ -36,7 +36,7 @@
 
 /obj/structure/closet/cardboard/agent/proc/reveal()
 	alpha = 255
-	addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(go_invisible)), 10, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/structure/closet/cardboard/agent/Bump(atom/movable/A)
 	. = ..()

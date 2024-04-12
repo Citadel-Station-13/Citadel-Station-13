@@ -1,20 +1,20 @@
 /datum/hud/marauder
-	var/obj/screen/hosthealth
-	var/obj/screen/blockchance
-	var/obj/screen/counterchance
+	var/atom/movable/screen/hosthealth
+	var/atom/movable/screen/blockchance
+	var/atom/movable/screen/counterchance
 
 /datum/hud/marauder/New(mob/living/simple_animal/hostile/clockwork/guardian/owner)
 	..()
-	var/obj/screen/using
+	var/atom/movable/screen/using
 
-	healths = new /obj/screen/healths/clock()
+	healths = new /atom/movable/screen/healths/clock()
 	infodisplay += healths
 
-	hosthealth = new /obj/screen/healths/clock()
+	hosthealth = new /atom/movable/screen/healths/clock()
 	hosthealth.screen_loc = ui_internal
 	infodisplay += hosthealth
 
-	using = new /obj/screen/marauder/emerge()
+	using = new /atom/movable/screen/marauder/emerge()
 	using.screen_loc = ui_zonesel
 	static_inventory += using
 
@@ -28,15 +28,15 @@
 	if(client && !hud_used)
 		hud_used = new /datum/hud/marauder(src, ui_style2icon(client.prefs.UI_style))
 
-/obj/screen/marauder
+/atom/movable/screen/marauder
 	icon = 'icons/mob/clockwork_mobs.dmi'
 
-/obj/screen/marauder/emerge
+/atom/movable/screen/marauder/emerge
 	icon_state = "clockguard_emerge"
 	name = "Emerge/Return"
 	desc = "Emerge or Return."
 
-/obj/screen/marauder/emerge/Click()
+/atom/movable/screen/marauder/emerge/Click()
 	if(istype(usr, /mob/living/simple_animal/hostile/clockwork/guardian))
 		var/mob/living/simple_animal/hostile/clockwork/guardian/G = usr
 		if(G.is_in_host())

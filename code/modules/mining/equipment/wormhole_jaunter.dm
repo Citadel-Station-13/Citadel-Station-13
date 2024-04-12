@@ -20,8 +20,8 @@
 
 /obj/item/wormhole_jaunter/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_BELT)
-		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROP, .proc/chasm_react)
+	if(slot == ITEM_SLOT_BELT)
+		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROP, PROC_REF(chasm_react))
 
 /obj/item/wormhole_jaunter/dropped(mob/user)
 	. = ..()
@@ -68,7 +68,7 @@
 
 	var/mob/M = loc
 	if(istype(M))
-		if(M.get_item_by_slot(SLOT_BELT) == src)
+		if(M.get_item_by_slot(ITEM_SLOT_BELT) == src)
 			if(prob(severity))
 				M.visible_message("<span class='warning'>[src] overloads and activates!</span>")
 				SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
@@ -103,4 +103,4 @@
 			L.DefaultCombatKnockdown(60)
 			if(ishuman(L))
 				shake_camera(L, 20, 1)
-				addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
+				addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living/carbon, vomit)), 20)

@@ -15,11 +15,11 @@
 	/// If the cutout actually appears as what it portray and not a discolored version
 	var/deceptive = FALSE
 
-/obj/item/cardboard_cutout/Initialize()
+/obj/item/cardboard_cutout/Initialize(mapload)
 	. = ..()
 	if(possible_appearances)
 		return
-	possible_appearances = sortList(list(
+	possible_appearances = sort_list(list(
 		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
 		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
 		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),
@@ -92,9 +92,9 @@
 		if(prob(I.force))
 			push_over()
 
-/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
+/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P, def_zone, piercing_hit = FALSE)
 	if(istype(P, /obj/item/projectile/bullet/reusable))
-		P.on_hit(src, 0)
+		P.on_hit(src, 0, piercing_hit)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))
@@ -109,10 +109,10 @@
   * * user The mob choosing a skin of the cardboard cutout
   */
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
-	var/new_appearance = show_radial_menu(user, src, possible_appearances, custom_check = CALLBACK(src, .proc/check_menu, user, crayon), radius = 36, require_near = TRUE)
+	var/new_appearance = show_radial_menu(user, src, possible_appearances, custom_check = CALLBACK(src, PROC_REF(check_menu), user, crayon), radius = 36, require_near = TRUE)
 	if(!new_appearance)
 		return
-	if(!do_after(user, 10, FALSE, src, TRUE))
+	if(!do_after(user, 1 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		return FALSE
 	if(!check_menu(user, crayon))
 		return FALSE

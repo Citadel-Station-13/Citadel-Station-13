@@ -94,10 +94,9 @@
 
 /datum/accent/dullahan/modify_speech(list/speech_args, datum/source, mob/living/carbon/owner)
 	if(owner)
-		if(isdullahan(owner))
-			var/datum/species/dullahan/D = owner.dna.species
-			if(isobj(D.myhead.loc))
-				var/obj/O = D.myhead.loc
-				O.say(speech_args[SPEECH_MESSAGE])
+		var/datum/component/dullahan/dullahan = owner.GetComponent(/datum/component/dullahan)
+		if(dullahan)
+			if(dullahan.dullahan_head)
+				dullahan.dullahan_head.say(speech_args[SPEECH_MESSAGE])
 	speech_args[SPEECH_MESSAGE] = ""
 	return speech_args

@@ -13,10 +13,12 @@
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 1
 	earliest_start = 7 MINUTES
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 
 /datum/round_event/shuttle_loan
-	announceWhen = 1
-	endWhen = 500
+	announce_when = 1
+	end_when = 500
 	var/dispatched = 0
 	var/dispatch_type = 0
 	var/bonus_points = 10000
@@ -72,7 +74,7 @@
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		D.adjust_money(bonus_points)
-	endWhen = activeFor + 1
+	end_when = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
 	SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
@@ -101,9 +103,9 @@
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
 		if(SSshuttle.supply.mode != SHUTTLE_IDLE)
-			endWhen = activeFor
+			end_when = activeFor
 		else
-			endWhen = activeFor + 1
+			end_when = activeFor + 1
 
 /datum/round_event/shuttle_loan/end()
 	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
@@ -271,7 +273,7 @@
 	name = "Objectives of a Bee Liberation Front Operative"
 	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
 
-/obj/machinery/syndicatebomb/shuttle_loan/Initialize()
+/obj/machinery/syndicatebomb/shuttle_loan/Initialize(mapload)
 	. = ..()
 	setAnchored(TRUE)
 	timer_set = rand(480, 600) //once the supply shuttle docks (after 5 minutes travel time), players have between 3-5 minutes to defuse the bomb

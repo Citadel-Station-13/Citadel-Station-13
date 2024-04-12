@@ -29,6 +29,8 @@
 	buffer = null // simple machine buffer for device linkage
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
+	drop_sound = 'sound/items/handling/multitool_drop.ogg'
+	pickup_sound = 'sound/items/handling/multitool_pickup.ogg'
 	var/mode = 0
 
 /obj/item/multitool/chaplain
@@ -45,7 +47,7 @@
 	throwforce = 10
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/multitool/chaplain/Initialize()
+/obj/item/multitool/chaplain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
@@ -130,7 +132,7 @@
 	var/mob/camera/aiEye/remote/ai_detector/eye
 	var/datum/action/item_action/toggle_multitool/toggle_action
 
-/obj/item/multitool/ai_detect/Initialize()
+/obj/item/multitool/ai_detect/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	eye = new /mob/camera/aiEye/remote/ai_detector()
@@ -184,7 +186,7 @@
 
 /obj/item/multitool/ai_detect/proc/show_hud(mob/user)
 	if(user && hud_type)
-		var/obj/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
+		var/atom/movable/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
 		PM.alpha = 150
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		if(!H.hudusers[user])
@@ -194,7 +196,7 @@
 
 /obj/item/multitool/ai_detect/proc/remove_hud(mob/user)
 	if(user && hud_type)
-		var/obj/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
+		var/atom/movable/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
 		PM.alpha = 255
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
@@ -236,11 +238,11 @@
 
 /datum/action/item_action/toggle_multitool/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(target)
 		var/obj/item/multitool/ai_detect/M = target
 		M.toggle_hud(owner)
-	return 1
+	return TRUE
 
 /obj/item/multitool/cyborg
 	name = "multitool"

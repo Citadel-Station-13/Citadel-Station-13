@@ -55,7 +55,7 @@
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
 	atoms -= humie
-	RegisterSignal(humie,COMSIG_MOB_DEATH,.proc/remove_ghoul)
+	RegisterSignal(humie,COMSIG_MOB_DEATH, PROC_REF(remove_ghoul))
 	ghouls += humie
 
 /datum/eldritch_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
@@ -114,7 +114,7 @@
 	log_game("[key_name_admin(human_target)] has become a ghoul, their master is [user.real_name]")
 	//we change it to true only after we know they passed all the checks
 	. = TRUE
-	RegisterSignal(human_target,COMSIG_MOB_DEATH,.proc/remove_ghoul)
+	RegisterSignal(human_target,COMSIG_MOB_DEATH, PROC_REF(remove_ghoul))
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
 	human_target.setMaxHealth(40)
 	human_target.health = 40
@@ -170,7 +170,7 @@
 	gain_text = "The Uncanny Man, who walks alone in the valley between the worlds... I was able to summon his aid."
 	desc = "You can now summon a Raw Prophet by transmutating a pair of eyes, a left arm and a pool of blood. Raw prophets have increased seeing range, as well as X-Ray vision, but they are very fragile."
 	cost = 1
-	required_atoms = list(/obj/item/organ/eyes,/obj/item/bodypart/l_arm,/obj/item/bodypart/r_arm,/obj/effect/decal/cleanable/blood)
+	required_atoms = list(/obj/item/organ/eyes,/obj/item/bodypart/l_arm,/obj/effect/decal/cleanable/blood)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/raw_prophet
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/rune_carver,/datum/eldritch_knowledge/curse/paralysis)
 	route = PATH_FLESH
@@ -217,6 +217,7 @@
 	desc = "Bring 3 bodies onto a transmutation rune to shed your human form and ascend to untold power."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 5
+	sacs_needed = 8
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/atoms, loc)
@@ -225,16 +226,16 @@
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shed_human_form)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
-	H.physiology.brute_mod *= 0.5
-	H.physiology.burn_mod *= 0.5
-	var/datum/antagonist/heretic/heretic = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/datum/eldritch_knowledge/flesh_grasp/ghoul1 = heretic.get_knowledge(/datum/eldritch_knowledge/flesh_grasp)
-	ghoul1.ghoul_amt *= 3
-	var/datum/eldritch_knowledge/flesh_ghoul/ghoul2 = heretic.get_knowledge(/datum/eldritch_knowledge/flesh_ghoul)
-	ghoul2.max_amt *= 3
+	var/mob/living/carbon/human/lord_of_arms = user
+	lord_of_arms.physiology.brute_mod *= 0.5
+	lord_of_arms.physiology.burn_mod *= 0.5
+	lord_of_arms.client?.give_award(/datum/award/achievement/misc/flesh_ascension, lord_of_arms)
+	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/eldritch_knowledge/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/eldritch_knowledge/flesh_grasp)
+	grasp_ghoul.ghoul_amt *= 3
+	var/datum/eldritch_knowledge/flesh_ghoul/better_ghoul = heretic_datum.get_knowledge(/datum/eldritch_knowledge/flesh_ghoul)
+	better_ghoul.max_amt *= 3
 
-	return ..()
 
 /datum/eldritch_knowledge/flesh_blade_upgrade_2
 	name = "Remembrance"
@@ -257,6 +258,11 @@
 	gain_text = "The ignorant mind that inhabits their feeble bodies will crumble when they acknowledge - willingly or not, the truth."
 	desc = "By forcing the knowledge of the Mansus upon my foes, I can show them things that would drive any normal man insane."
 	cost = 2
+	sacs_needed = 3
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mad_touch
 	next_knowledge = list(/datum/eldritch_knowledge/final/flesh_final)
 	route = PATH_FLESH
+
+/datum/eldritch_knowledge/spell/touch_of_madness/on_gain(mob/user)
+	. = ..()
+	priority_announce("The stench of rotting flesh fills the air... An approaching abomination has been detected!", sound = 'sound/misc/notice1.ogg')

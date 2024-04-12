@@ -34,19 +34,24 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	save_key = _save_key
 	examine_no_preview = _examine_no_preview
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(show_flavor))
 
 	if(can_edit && ismob(target)) //but only mobs receive the proc/verb for the time being
 		var/mob/M = target
 		LAZYOR(GLOB.mobs_with_editable_flavor_text[M], src)
 		add_verb(M, /mob/proc/manage_flavor_tests)
 
-	if(save_key && ishuman(target))
-		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, .proc/update_prefs_flavor_text)
+	if(!save_key)
+		return
+	if(ishuman(target))
+		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, PROC_REF(update_prefs_flavor_text))
+	else if(iscyborg(target))
+		RegisterSignal(target, COMSIG_MOB_ON_NEW_MIND, PROC_REF(borged_update_flavor_text))
+		RegisterSignal(target, COMSIG_MOB_CLIENT_JOINED_FROM_LOBBY, PROC_REF(borged_update_flavor_text))
 
 /datum/element/flavor_text/Detach(atom/A)
 	. = ..()
-	UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_HUMAN_PREFS_COPIED_TO))
+	UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_HUMAN_PREFS_COPIED_TO, COMSIG_MOB_ON_NEW_MIND, COMSIG_MOB_CLIENT_JOINED_FROM_LOBBY))
 	texts_by_atom -= A
 	if(can_edit && ismob(A))
 		var/mob/M = A
@@ -76,10 +81,10 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(examine_full_view)
 		examine_list += "[msg]"
 		return
-	if(length_char(msg) <= 40)
+	if(length_char(msg) <= MAX_FLAVOR_PREVIEW_LEN)
 		examine_list += "<span class='notice'>[msg]</span>"
 	else
-		examine_list += "<span class='notice'>[copytext_char(msg, 1, 37)]... <a href='?src=[REF(src)];show_flavor=[REF(target)]'>More...</span></a>"
+		examine_list += "<span class='notice'>[copytext_char(msg, 1, (MAX_FLAVOR_PREVIEW_LEN - 3))]... <a href='?src=[REF(src)];show_flavor=[REF(target)]'>More...</span></a>"
 
 /datum/element/flavor_text/Topic(href, href_list)
 	. = ..()
@@ -149,6 +154,20 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(P.features.Find(save_key))
 		texts_by_atom[H] = P.features[save_key]
 
+/datum/element/flavor_text/proc/borged_update_flavor_text(mob/new_character, client/C)
+	C = C || GET_CLIENT(new_character)
+	if(!C)
+		LAZYSET(texts_by_atom, new_character, "")
+		return
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		LAZYSET(texts_by_atom, new_character, "")
+		return
+	if(P.custom_names["cyborg"] == new_character.real_name)
+		LAZYSET(texts_by_atom, new_character, P.features[save_key])
+	else
+		LAZYSET(texts_by_atom, new_character, "")
+
 //subtypes with additional hooks for DNA and preferences.
 /datum/element/flavor_text/carbon
 	//list of antagonists etcetera that should have nothing to do with people's snowflakes.
@@ -161,11 +180,11 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	. = ..()
 	if(. == ELEMENT_INCOMPATIBLE)
 		return
-	RegisterSignal(target, COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, .proc/update_dna_flavor_text)
-	RegisterSignal(target, COMSIG_MOB_ANTAG_ON_GAIN, .proc/on_antag_gain)
+	RegisterSignal(target, COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, PROC_REF(update_dna_flavor_text))
+	RegisterSignal(target, COMSIG_MOB_ANTAG_ON_GAIN, PROC_REF(on_antag_gain))
 	if(ishuman(target))
-		RegisterSignal(target, COMSIG_HUMAN_HARDSET_DNA, .proc/update_dna_flavor_text)
-		RegisterSignal(target, COMSIG_HUMAN_ON_RANDOMIZE, .proc/unset_flavor)
+		RegisterSignal(target, COMSIG_HUMAN_HARDSET_DNA, PROC_REF(update_dna_flavor_text))
+		RegisterSignal(target, COMSIG_HUMAN_ON_RANDOMIZE, PROC_REF(unset_flavor))
 
 /datum/element/flavor_text/carbon/Detach(mob/living/carbon/C)
 	. = ..()
@@ -199,7 +218,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(ismob(target))
 		add_verb(target, /mob/proc/set_pose)
 
-/datum/element/flavor_Text/carbon/temporary/Detach(datum/source, force)
+/datum/element/flavor_text/carbon/temporary/Detach(datum/source, force)
 	. = ..()
 	if(ismob(source))
 		remove_verb(source, /mob/proc/set_pose)

@@ -107,9 +107,7 @@
 			if(air_contents.return_temperature() > 0)
 				var/transfer_moles = pressure_delta*environment.return_volume()/(air_contents.return_temperature() * R_IDEAL_GAS_EQUATION)
 
-				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
-				loc.assume_air(removed)
+				loc.assume_air_moles(air_contents, transfer_moles)
 				air_update_turf()
 
 	else // external -> internal
@@ -122,11 +120,7 @@
 				moles_delta = min(moles_delta, (internal_pressure_bound - air_contents.return_pressure()) * our_multiplier)
 
 			if(moles_delta > 0)
-				var/datum/gas_mixture/removed = loc.remove_air(moles_delta)
-				if (isnull(removed)) // in space
-					return
-
-				air_contents.merge(removed)
+				loc.transfer_air(air_contents, moles_delta)
 				air_update_turf()
 	update_parents()
 
@@ -148,7 +142,7 @@
 		"device" = "VP",
 		"timestamp" = world.time,
 		"power" = on,
-		"direction" = pump_direction ? "release" : "siphon",
+		"direction" = pump_direction,
 		"checks" = pressure_checks,
 		"internal" = internal_pressure_bound,
 		"external" = external_pressure_bound,
@@ -181,6 +175,9 @@
 		return
 
 	var/mob/signal_sender = signal.data["user"]
+
+	if((("is_siphoning" in signal.data) && pump_direction == RELEASING) || (("is_pressurizing" in signal.data) && pump_direction == SIPHONING))
+		return
 
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND

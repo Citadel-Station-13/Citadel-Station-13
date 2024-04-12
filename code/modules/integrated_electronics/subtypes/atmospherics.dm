@@ -17,9 +17,9 @@
 	var/datum/gas_mixture/air_contents
 	var/volume = 2 //Pretty small, I know
 
-/obj/item/integrated_circuit/atmospherics/Initialize()
+/obj/item/integrated_circuit/atmospherics/Initialize(mapload)
 	air_contents = new(volume)
-	..()
+	return ..()
 
 /obj/item/integrated_circuit/atmospherics/return_air()
 	return air_contents
@@ -57,7 +57,7 @@
 	var/target_pressure = PUMP_MAX_PRESSURE
 	power_draw_per_use = 20
 
-/obj/item/integrated_circuit/atmospherics/pump/Initialize()
+/obj/item/integrated_circuit/atmospherics/pump/Initialize(mapload)
 	air_contents = new(volume)
 	extended_desc += " Use negative pressure to move air from target to source. \
 					Note that only part of the gas is moved on each transfer, \
@@ -131,11 +131,10 @@
 	var/pressure_delta = target_pressure - target_air.return_pressure()
 	if(pressure_delta > 0.1)
 		var/transfer_moles = (pressure_delta*target_air.return_volume()/(source_air.return_temperature() * R_IDEAL_GAS_EQUATION))*PUMP_EFFICIENCY
-		var/datum/gas_mixture/removed = source_air.remove(transfer_moles)
 		if(istype(snowflake)) //Snowflake check for tanks specifically, because tank ruptures are handled in a very snowflakey way that expects all tank interactions to be handled via the tank's procs
-			snowflake.assume_air(removed)
+			snowflake.assume_air_moles(source_air, transfer_moles)
 		else
-			target_air.merge(removed)
+			source_air.transfer_to(target_air, transfer_moles)
 
 
 // - volume pump - // **Works**
@@ -183,12 +182,10 @@
 	//The second part of the min caps the pressure built by the volume pumps to the max pump pressure
 	var/transfer_ratio = min(transfer_rate,target_air.return_volume()*PUMP_MAX_PRESSURE/source_air.return_pressure())/source_air.return_volume()
 
-	var/datum/gas_mixture/removed = source_air.remove_ratio(transfer_ratio * PUMP_EFFICIENCY)
-
 	if(istype(snowflake))
-		snowflake.assume_air(removed)
+		snowflake.assume_air_ratio(source_air, transfer_ratio * PUMP_EFFICIENCY)
 	else
-		target_air.merge(removed)
+		source_air.transfer_ratio_to(target_air, transfer_ratio * PUMP_EFFICIENCY)
 
 
 // - gas vent - // **works**
@@ -249,7 +246,7 @@
 
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connector
 
-/obj/item/integrated_circuit/atmospherics/connector/Initialize()
+/obj/item/integrated_circuit/atmospherics/connector/Initialize(mapload)
 	air_contents = new(volume)
 	START_PROCESSING(SSobj, src)
 	. = ..()
@@ -376,7 +373,7 @@
 
 	for(var/filtered_gas in removed.get_gases())
 		//Get the name of the gas and see if it is in the list
-		if(GLOB.meta_gas_names[filtered_gas] in wanted)
+		if(GLOB.gas_data.names[filtered_gas] in wanted)
 			//The gas that is put in all the filtered out gases
 			filtered_out.set_temperature(removed.return_temperature())
 			filtered_out.set_moles(filtered_gas, removed.get_moles(filtered_gas))
@@ -401,7 +398,7 @@
 		contaminated_air.merge(removed)
 
 
-/obj/item/integrated_circuit/atmospherics/pump/filter/Initialize()
+/obj/item/integrated_circuit/atmospherics/pump/filter/Initialize(mapload)
 	air_contents = new(volume)
 	. = ..()
 	extended_desc = "Remember to properly spell and capitalize the filtered gas name. \
@@ -468,16 +465,12 @@
 
 	var/snowflakecheck = istype(gas_output, /obj/item/tank)
 
-	var/datum/gas_mixture/mix = source_1_gases.remove(transfer_moles * gas_percentage)
 	if(snowflakecheck)
-		gas_output.assume_air(mix)
+		gas_output.assume_air_moles(source_1_gases, transfer_moles * gas_percentage)
+		gas_output.assume_air_moles(source_2_gases, transfer_moles * (1-gas_percentage))
 	else
-		output_gases.merge(mix)
-	mix = source_2_gases.remove(transfer_moles * (1-gas_percentage))
-	if(snowflakecheck)
-		gas_output.assume_air(mix)
-	else
-		output_gases.merge(mix)
+		source_1_gases.transfer_to(output_gases, transfer_moles * gas_percentage)
+		source_2_gases.transfer_to(output_gases, transfer_moles * (1-gas_percentage))
 
 
 // - integrated tank - // **works**
@@ -492,7 +485,7 @@
 	volume = 3 //emergency tank sized
 	var/broken = FALSE
 
-/obj/item/integrated_circuit/atmospherics/tank/Initialize()
+/obj/item/integrated_circuit/atmospherics/tank/Initialize(mapload)
 	air_contents = new(volume)
 	START_PROCESSING(SSobj, src)
 	extended_desc = "Take care not to pressurize it above [round(TANK_FAILURE_PRESSURE)] kPa, or else it will break."
@@ -618,7 +611,7 @@
 	var/temperature = 293.15
 	var/heater_coefficient = 0.1
 
-/obj/item/integrated_circuit/atmospherics/cooler/Initialize()
+/obj/item/integrated_circuit/atmospherics/cooler/Initialize(mapload)
 	air_contents = new(volume)
 	START_PROCESSING(SSobj, src)
 	. = ..()
@@ -708,7 +701,7 @@
 
 	var/obj/item/tank/internals/current_tank
 
-/obj/item/integrated_circuit/input/tank_slot/Initialize()
+/obj/item/integrated_circuit/input/tank_slot/Initialize(mapload)
 	START_PROCESSING(SSobj, src)
 	. = ..()
 

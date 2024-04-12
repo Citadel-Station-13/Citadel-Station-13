@@ -26,6 +26,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	spacewalk = TRUE
 	icon_state = "mega_legion"
 	icon_living = "mega_legion"
+	health_doll_icon = "mega_legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	attack_verb_continuous = "chomps"
@@ -47,6 +48,8 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	score_achievement_type = /datum/award/score/legion_score
 	pixel_y = -16
 	pixel_x = -32
+	maptext_height = 96
+	maptext_width = 96
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 10
 	wander = FALSE
@@ -58,7 +61,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	var/size = 3
 	var/charging = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/legion/Initialize()
+/mob/living/simple_animal/hostile/megafauna/legion/Initialize(mapload)
 	. = ..()
 	internal = new/obj/item/gps/internal/legion(src)
 
@@ -123,15 +126,15 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	minimum_distance = 0
 	set_varspeed(0)
 	charging = TRUE
-	addtimer(CALLBACK(src, .proc/reset_charge), 60)
+	addtimer(CALLBACK(src, PROC_REF(reset_charge)), 60)
 	var/mob/living/L = target
 	if(!istype(L) || L.stat != DEAD) //I know, weird syntax, but it just works.
-		addtimer(CALLBACK(src, .proc/throw_thyself), 20)
+		addtimer(CALLBACK(src, PROC_REF(throw_thyself)), 20)
 
 ///This is the proc that actually does the throwing. Charge only adds a timer for this.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/throw_thyself()
 	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
-	throw_at(target, 7, 1.1, src, FALSE, FALSE, CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/meteorimpact.ogg', 50 * size, TRUE, 2), INFINITY)
+	throw_at(target, 7, 1.1, src, FALSE, FALSE, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/effects/meteorimpact.ogg', 50 * size, TRUE, 2), INFINITY)
 
 ///Deals some extra damage on throw impact.
 /mob/living/simple_animal/hostile/megafauna/legion/throw_impact(mob/living/hit_atom, datum/thrownthing/throwingdatum)
@@ -334,7 +337,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 100,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 100,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/item/projectile/beam/legion
 	///Time until the tracer gets shot
@@ -344,9 +347,9 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
 	var/faction = list("mining")
 
-/obj/structure/legionturret/Initialize()
+/obj/structure/legionturret/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/set_up_shot), initial_firing_time)
+	addtimer(CALLBACK(src, PROC_REF(set_up_shot)), initial_firing_time)
 
 ///Handles an extremely basic AI
 /obj/structure/legionturret/proc/set_up_shot()
@@ -370,7 +373,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, 0, 0, angle)
 	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
 	playsound(src, 'sound/machines/airlockopen.ogg', 100, TRUE)
-	addtimer(CALLBACK(src, .proc/fire_beam, angle), shot_delay)
+	addtimer(CALLBACK(src, PROC_REF(fire_beam), angle), shot_delay)
 
 ///Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.
 /obj/structure/legionturret/proc/fire_beam(angle)
@@ -393,7 +396,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	muzzle_type = /obj/effect/projectile/tracer/legion
 	impact_type = /obj/effect/projectile/tracer/legion
 	hitscan = TRUE
-	movement_type = UNSTOPPABLE
+	projectile_piercing = ALL
 
 ///Used for the legion turret tracer.
 /obj/effect/projectile/tracer/legion/tracer

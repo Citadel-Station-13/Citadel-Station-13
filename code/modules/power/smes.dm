@@ -44,7 +44,7 @@
 	if(!terminal)
 		. += "<span class='warning'>This SMES has no power terminal!</span>"
 
-/obj/machinery/power/smes/Initialize()
+/obj/machinery/power/smes/Initialize(mapload)
 	. = ..()
 	dir_loop:
 		for(var/d in GLOB.cardinals)

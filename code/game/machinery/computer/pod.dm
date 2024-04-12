@@ -15,7 +15,7 @@
 	/// Countdown timer for the mass driver's delayed launch functionality.
 	COOLDOWN_DECLARE(massdriver_countdown)
 
-/obj/machinery/computer/pod/Initialize()
+/obj/machinery/computer/pod/Initialize(mapload)
 	. = ..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
@@ -34,6 +34,7 @@
  * Initiates launching sequence by checking if all components are functional, opening poddoors, firing mass drivers and then closing poddoors
  */
 /obj/machinery/computer/pod/proc/alarm()
+	set waitfor = FALSE
 	if(stat & (NOPOWER|BROKEN))
 		return
 

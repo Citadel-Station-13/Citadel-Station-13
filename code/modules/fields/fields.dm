@@ -64,7 +64,8 @@
 		pass = FALSE
 	return pass
 
-/datum/proximity_monitor/advanced/process()
+/datum/proximity_monitor/advanced/proc/lag_checked_process()
+	set waitfor = FALSE
 	if(process_inner_turfs)
 		for(var/turf/T in field_turfs)
 			process_inner_turf(T)
@@ -72,7 +73,10 @@
 	if(process_edge_turfs)
 		for(var/turf/T in edge_turfs)
 			process_edge_turf(T)
-			CHECK_TICK	//Same here.
+			CHECK_TICK		//Same here.
+
+/datum/proximity_monitor/advanced/process()
+	lag_checked_process()
 
 /datum/proximity_monitor/advanced/proc/process_inner_turf(turf/T)
 
@@ -154,7 +158,7 @@
 	var/atom/_host = host
 	var/atom/new_host_loc = _host.loc
 	if(last_host_loc != new_host_loc)
-		INVOKE_ASYNC(src, .proc/recalculate_field)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_field))
 
 /datum/proximity_monitor/advanced/proc/post_setup_field()
 
@@ -285,7 +289,7 @@
 	var/datum/proximity_monitor/advanced/current = null
 	var/mob/listeningTo
 
-/obj/item/multitool/field_debug/Initialize()
+/obj/item/multitool/field_debug/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -306,7 +310,7 @@
 	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
 	if(!istype(current) && operating)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
 		listeningTo = user
 		setup_debug_field()
 	else if(!operating)

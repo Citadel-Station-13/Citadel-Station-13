@@ -94,9 +94,9 @@
 	if(istype(S) && S.hack_software)
 		data_out["canhack"] = TRUE
 
-	data_out["hacking"] = (hacking || CHECK_BITFIELD(obj_flags, EMAGGED))
+	data_out["hacking"] = (hacking || (obj_flags & EMAGGED))
 	if(hacking)
-		data_out["borg"] = ((isAI(user) || iscyborg(user)) && !CHECK_BITFIELD(obj_flags, EMAGGED)) //even borgs can't read emag
+		data_out["borg"] = ((isAI(user) || iscyborg(user)) && !(obj_flags & EMAGGED)) //even borgs can't read emag
 		return data_out
 
 	data_out["servers"] = list()
@@ -107,7 +107,7 @@
 			ref = REF(T)
 		)
 		data_out["servers"] += list(data)	// This /might/ cause an oom. Too bad!
-	data_out["servers"] = sortList(data_out["servers"]) //a-z sort
+	data_out["servers"] = sort_list(data_out["servers"]) //a-z sort
 
 	data_out["fake_message"] = list(
 		sender = customsender,
@@ -216,7 +216,7 @@
 			if(istype(S) && S.hack_software)
 				hacking = TRUE
 				//Time it takes to bruteforce is dependant on the password length.
-				addtimer(CALLBACK(src, .proc/BruteForce, usr), (10 SECONDS) * length(linkedServer.decryptkey))
+				addtimer(CALLBACK(src, PROC_REF(BruteForce), usr), (10 SECONDS) * length(linkedServer.decryptkey))
 
 		if("del_log")
 			if(!auth)
@@ -324,7 +324,7 @@
 			update_static_data(usr)
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(O.tool_behaviour == TOOL_SCREWDRIVER && CHECK_BITFIELD(obj_flags, EMAGGED))
+	if(O.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		//Why this though, you should make it emag to a board level. (i wont do it)
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
@@ -333,18 +333,18 @@
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	. = ..()
-	if(CHECK_BITFIELD(obj_flags, EMAGGED))
+	if((obj_flags & EMAGGED))
 		return
 	if(isnull(linkedServer))
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 		return
-	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags |= EMAGGED
 	spark_system.set_up(5, 0, src)
 	spark_system.start()
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 	// Will help make emagging the console not so easy to get away with.
 	MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-	addtimer(CALLBACK(src, .proc/UnmagConsole), (10 SECONDS) * length(linkedServer.decryptkey))
+	addtimer(CALLBACK(src, PROC_REF(UnmagConsole)), (10 SECONDS) * length(linkedServer.decryptkey))
 	//message = rebootmsg
 	return TRUE
 
@@ -366,7 +366,7 @@
 	message = ""
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	DISABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags &= ~(EMAGGED)
 	message = ""
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()

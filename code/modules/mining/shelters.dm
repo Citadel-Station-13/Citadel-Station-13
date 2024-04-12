@@ -85,3 +85,33 @@
 	. = ..()
 	whitelisted_turfs = typecacheof(/turf/closed/mineral)
 	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+/datum/map_template/shelter/epsilon
+	name = "Shelter Epsilon"
+	shelter_id = "shelter_epsilon"
+	description = "A small apartment in the palm of your hand."
+	mappath = "_maps/templates/shelter_5.dmm"
+
+/datum/map_template/shelter/epsilon/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+/datum/map_template/shelter/zeta
+	name = "Shelter zeta"
+	shelter_id = "shelter_zeta"
+	description = "A survival capsule with a garden and kitchen. Commonly used by space fast food joints everywhere."
+	mappath = "_maps/templates/shelter_6.dmm"
+
+/datum/map_template/shelter/zeta/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+// yes, I COULD make it a seperate object from the surv capsule but the code needed is indeticle soo...
+
+/datum/map_template/shelter/reactor
+	name = "RBMK Reactor"
+	shelter_id = "reactor"
+	description = "A reactor core, coolant and moderator loop not included."
+	mappath = "_maps/templates/reactor_1.dmm"

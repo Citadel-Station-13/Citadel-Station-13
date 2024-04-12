@@ -32,7 +32,7 @@
 	var/list/engymodels = list("Default", "Default - Treads", "Heavy", "Sleek", "Marina", "Can", "Spider", "Loader","Handy", "Pup Dozer", "Vale")
 
 
-/obj/item/borg_chameleon/Initialize()
+/obj/item/borg_chameleon/Initialize(mapload)
 	. = ..()
 	friendlyName = pick(GLOB.ai_names)
 
@@ -157,7 +157,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, signalCache)
-	RegisterSignal(user, signalCache, .proc/disrupt)
+	RegisterSignal(user, signalCache, PROC_REF(disrupt))
 	listeningTo = user
 
 /obj/item/borg_chameleon/proc/deactivate(mob/living/silicon/robot/user)

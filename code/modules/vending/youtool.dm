@@ -3,6 +3,7 @@
 	desc = "Tools for tools."
 	icon_state = "tool"
 	icon_deny = "tool-deny"
+	light_mask = "tool-light-mask"
 	products = list(/obj/item/stack/cable_coil/random = 15,
 					/obj/item/crowbar = 10,
 					/obj/item/weldingtool = 6,
@@ -19,13 +20,11 @@
 					/obj/item/multitool = 2)
 	premium = list(/obj/item/clothing/gloves/color/yellow = 2,
 					/obj/item/weldingtool/hugetank = 2)
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
-	refill_canister = /obj/item/vending_refill/tool
-	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/youtool
 	default_price = PRICE_REALLY_CHEAP
 	extra_price = PRICE_EXPENSIVE
 	payment_department = ACCOUNT_ENG
-	cost_multiplier_per_dept = list(ACCOUNT_ENG = 0)
 
-/obj/item/vending_refill/tool
+/obj/item/vending_refill/youtool
+	machine_name = "YouTool"
 	icon_state = "refill_engi"

@@ -25,7 +25,7 @@
 	if(multicam_on)
 		var/turf/T = get_turf(A)
 		if(T)
-			for(var/obj/screen/movable/pic_in_pic/ai/P in T.vis_locs)
+			for(var/atom/movable/screen/movable/pic_in_pic/ai/P in T.vis_locs)
 				if(P.ai == src)
 					P.Click(params)
 					break
@@ -55,11 +55,6 @@
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["middle"])
-		if(controlled_mech) //Are we piloting a mech? Placed here so the modifiers are not overridden.
-			controlled_mech.click_action(A, src, params) //Override AI normal click behavior.
-		return
-
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
@@ -75,11 +70,11 @@
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
-		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, pixel_turf, usr)
+		INVOKE_ASYNC(aicamera, TYPE_PROC_REF(/obj/item/camera, captureimage), pixel_turf, usr)
 		return
 	if(waypoint_mode)
 		waypoint_mode = FALSE
-		INVOKE_ASYNC(src, .proc/set_waypoint, A)
+		INVOKE_ASYNC(src, PROC_REF(set_waypoint), A)
 		return
 
 	A.attack_ai(src)

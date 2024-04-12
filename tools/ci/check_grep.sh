@@ -4,8 +4,18 @@ set -euo pipefail
 #nb: must be bash to support shopt globstar
 shopt -s globstar
 
+#ANSI Escape Codes for colors to increase contrast of errors
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+BLUE="\033[0;34m"
+NC="\033[0m" # No Color
+
 st=0
 
+if git grep -P "\r\n"; then
+    echo "ERROR: CRLF line endings detected. Please stop using the webeditor, and fix it using a desktop Git client."
+	st = 1
+fi;
 if grep -El '^\".+\" = \(.+\)' _maps/**/*.dmm;	then
     echo "ERROR: Non-TGM formatted map detected. Please convert it using Map Merger!"
     st=1
@@ -96,6 +106,10 @@ if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
     echo "Custom icon helper found. Please include dmis as standard assets instead for built-in maps."
     st=1
 fi;
+if grep -n '.Find()' code/**/*.dm; then
+    echo "Empty Find() found. Please try to figure out what was meant to be found."
+	st=1
+fi;
 for json in _maps/*.json
 do
     map_path=$(jq -r '.map_path' $json)
@@ -108,5 +122,21 @@ do
         fi
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
+
+# Check for non-515 compatable .proc/ syntax
+if grep -P --exclude='__byond_version_compat.dm' '\.proc/' code/**/*.dm; then
+    echo
+    echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
+    st=1
+fi;
+
+if [ $st = 0 ]; then
+    echo
+    echo -e "${GREEN}No errors found using grep!${NC}"
+fi;
+if [ $st = 1 ]; then
+    echo
+    echo -e "${RED}Errors found, please fix them and try again.${NC}"
+fi;
 
 exit $st

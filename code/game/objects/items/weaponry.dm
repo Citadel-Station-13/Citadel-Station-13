@@ -11,7 +11,7 @@
 	throw_range = 7
 	attack_verb = list("banned")
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/banhammer/suicide_act(mob/user)
@@ -67,11 +67,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
-/obj/item/claymore/Initialize()
+/obj/item/claymore/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 105)
 	AddElement(/datum/element/sword_point)
@@ -97,7 +97,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/obj/item/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
-/obj/item/claymore/highlander/Initialize()
+/obj/item/claymore/highlander/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 	START_PROCESSING(SSobj, src)
@@ -211,8 +211,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
 			user.update_icons()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
-			icon_state = "claymore_valhalla"
-			item_state = "cultblade"
+			icon_state = "claymore_gold"
+			item_state = "claymore_gold"
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
@@ -223,7 +223,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "claymore_cyborg"
 	var/mob/living/silicon/robot/robot
 
-/obj/item/claymore/highlander/robot/Initialize()
+/obj/item/claymore/highlander/robot/Initialize(mapload)
 	var/obj/item/robot_module/kiltkit = loc
 	robot = kiltkit.loc
 	if(!istype(robot))
@@ -250,7 +250,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
@@ -262,7 +262,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/cursed
 	slot_flags = null
 
-/obj/item/katana/cursed/Initialize()
+/obj/item/katana/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
@@ -332,6 +332,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 0
 	wound_bonus = 0
 
+/obj/item/melee/bokken/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	. = ..()
+	if(!istype(object, /obj/item/melee/bokken))
+		// no counterattack.
+		block_return[BLOCK_RETURN_FORCE_NO_PARRY_COUNTERATTACK] = TRUE
+
 /datum/block_parry_data/bokken // fucked up parry data, emphasizing quicker, shorter parries
 	parry_stamina_cost = 10 // be wise about when you parry, though, else you won't be able to fight enough to make it count
 	parry_time_windup = 0
@@ -358,13 +364,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect = 2.5 // however...
 	parry_time_perfect_leeway = 2 // the entire time, the parry is perfect
 	parry_failed_stagger_duration = 1 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit
 
 /datum/block_parry_data/bokken/quick_parry/proj
 	parry_efficiency_perfect_override = list()
 
-/obj/item/melee/bokken/Initialize()
+/obj/item/melee/bokken/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/sword_point)
 	if(!harm) //if initialised in non-harm mode, setup force accordingly
@@ -475,7 +480,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect = 1
 	parry_time_perfect_leeway = 1
 	parry_failed_stagger_duration = 1 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS
 
 /datum/block_parry_data/bokken/waki/quick_parry/proj
 	parry_efficiency_perfect_override = list()
@@ -579,6 +583,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 	wound_bonus = -10
 
+/obj/item/wirerod/Initialize(mapload)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/shard = list(
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft spear"),
+		),
+
+		/obj/item/assembly/igniter = list(
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft stunprod"),
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/shard))
 		var/obj/item/spear/S = new /obj/item/spear
@@ -611,9 +630,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
 	icon_state = "throwingstar"
-	item_state = "eshield0"
-	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	item_state = "throwingstar"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 2
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
@@ -626,8 +645,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	resistance_flags = FIRE_PROOF
 
 /obj/item/throwing_star/stamina
-	name = "shock throwing star"
+	name = "energy throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
+	icon_state = "energystar"
+	item_state = "energystar"
 	throwforce = 5
 	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
 
@@ -787,7 +808,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
 
-/obj/item/mounted_chainsaw/Initialize()
+/obj/item/mounted_chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -815,7 +836,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb = list("busted")
 	var/impressiveness = 45
 
-/obj/item/statuebust/Initialize()
+/obj/item/statuebust/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/art, impressiveness)
 	// AddComponent(/datum/component/beauty, 1000)
@@ -922,7 +943,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/throwforce_off // Damage when off
 	var/weight_class_on // What is the new size class when turned on
 
-/obj/item/melee/baseball_bat/Initialize()
+/obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		name = "cricket bat"
@@ -940,7 +961,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 	wound_bonus = -5
 
-/obj/item/melee/baseball_bat/chaplain/Initialize()
+/obj/item/melee/baseball_bat/chaplain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
@@ -1070,10 +1091,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
-/obj/item/melee/flyswatter/Initialize()
+/obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	strong_against = typecacheof(list(
-					/mob/living/simple_animal/hostile/poison/bees/,
+					/mob/living/simple_animal/hostile/poison/bees,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/cockroach,
 					/obj/item/queen_bee,
@@ -1099,15 +1120,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT // | HAND_ITEM
+	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
 	attack_verb = list("bopped")
 
-/obj/item/circlegame/Initialize()
+/obj/item/circlegame/Initialize(mapload)
 	. = ..()
 	var/mob/living/owner = loc
 	if(!istype(owner))
 		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(ownerExamined))
 
 /obj/item/circlegame/Destroy()
 	var/mob/owner = loc
@@ -1126,7 +1147,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(!istype(sucker) || !in_range(owner, sucker))
 		return
-	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
+	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 4)
 
 /// Stage 2: Fear sets in
 /obj/item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
@@ -1135,10 +1156,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(owner == sucker) // big mood
 		to_chat(owner, "<span class='danger'>Wait a second... you just looked at your own [src.name]!</span>")
-		addtimer(CALLBACK(src, .proc/selfGottem, owner), 10)
+		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 10)
 	else
 		to_chat(sucker, "<span class='danger'>Wait a second... was that a-</span>")
-		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
+		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 6)
 
 /// Stage 3A: We face our own failures
 /obj/item/circlegame/proc/selfGottem(mob/living/owner)
@@ -1201,7 +1222,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "nothing"
 	force = 0
 	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT // | HAND_ITEM
+	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
 
@@ -1220,6 +1241,120 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!user.can_use_guns(src))
 		return FALSE
 	return TRUE
+
+/obj/item/slapper/on_offered(mob/living/carbon/offerer)
+	. = TRUE
+
+	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
+		visible_message(span_danger("[offerer] raises [offerer.p_their()] arm, looking around for a high-five, but there's no one around!"), \
+			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)
+		return
+
+	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
+		span_notice("You post up, looking for a high-five!"), null, 2)
+	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src, /atom/movable/screen/alert/give/highfive)
+
+/// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
+/obj/item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	. = TRUE
+
+	var/open_hands_taker
+	var/slappers_giver
+	for(var/i in taker.held_items) // see how many hands the taker has open for high'ing
+		if(isnull(i))
+			open_hands_taker++
+
+	if(!open_hands_taker)
+		to_chat(taker, span_warning("You can't high-five [offerer] with no open hands!"))
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
+		return
+
+	for(var/i in offerer.held_items)
+		var/obj/item/slapper/slap_check = i
+		if(istype(slap_check))
+			slappers_giver++
+
+	if(slappers_giver >= 2) // we only check this if it's already established the taker has 2+ hands free
+		offerer.visible_message(span_notice("[taker] enthusiastically high-tens [offerer]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
+		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))
+		playsound(offerer, 'sound/weapons/slap.ogg', 100, TRUE, 1)
+		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
+	else
+		offerer.visible_message(span_notice("[taker] high-fives [offerer]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
+		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
+		playsound(offerer, 'sound/weapons/slap.ogg', 50, TRUE, -1)
+		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
+	qdel(src)
+
+/// Gangster secret handshakes.
+/obj/item/slapper/secret_handshake
+	name = "Secret Handshake"
+	icon_state = "recruit"
+	icon = 'icons/obj/gang/actions.dmi'
+	/// References the active families gamemode handler (if one exists), for adding new family members to.
+	var/datum/gang_handler/handler
+	/// The typepath of the gang antagonist datum that the person who uses the package should have added to them -- remember that the distinction between e.g. Ballas and Grove Street is on the antag datum level, not the team datum level.
+	var/gang_to_use
+	/// The team datum that the person who uses this package should be added to.
+	var/datum/team/gang/team_to_use
+
+
+/// Adds the user to the family that this package corresponds to, dispenses the free_clothes of that family, and adds them to the handler if it exists.
+/obj/item/slapper/secret_handshake/proc/add_to_gang(mob/living/user, original_name)
+	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
+	swappin_sides.original_name = original_name
+	swappin_sides.handler = handler
+	user.mind.add_antag_datum(swappin_sides, team_to_use)
+	var/policy = get_policy(ROLE_FAMILIES)
+	if(policy)
+		to_chat(user, policy)
+	team_to_use.add_member(user.mind)
+	swappin_sides.equip_gangster_in_inventory()
+	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
+		handler.gangbangers += user.mind
+
+/// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
+/obj/item/slapper/secret_handshake/proc/attempt_join_gang(mob/living/user)
+	if(!user?.mind)
+		return
+	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
+	var/real_name_backup = user.real_name
+	if(is_gangster)
+		if(is_gangster.my_gang == team_to_use)
+			return
+		real_name_backup = is_gangster.original_name
+		is_gangster.my_gang.remove_member(user.mind)
+		user.mind.remove_antag_datum(/datum/antagonist/gang)
+	add_to_gang(user, real_name_backup)
+
+/obj/item/slapper/secret_handshake/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	. = TRUE
+	if (!(null in taker.held_items))
+		to_chat(taker, span_warning("You can't get taught the secret handshake if [offerer] has no free hands!"))
+		return
+
+	if(HAS_TRAIT(taker, TRAIT_MINDSHIELD))
+		to_chat(taker, "You attended a seminar on not signing up for a gang and are not interested.")
+		return
+
+	var/datum/antagonist/gang/is_gangster = taker.mind.has_antag_datum(/datum/antagonist/gang)
+	if(is_gangster?.starter_gangster)
+		if(is_gangster.my_gang == team_to_use)
+			to_chat(taker, "You started your family. You don't need to join it.")
+			return
+		to_chat(taker, "You started your family. You can't turn your back on it now.")
+		return
+
+	offerer.visible_message(span_notice("[taker] is taught the secret handshake by [offerer]!"), span_nicegreen("All right! You've taught the secret handshake to [taker]!"), span_hear("You hear a bunch of weird shuffling and flesh slapping sounds!"), ignored_mobs=taker)
+	to_chat(taker, span_nicegreen("You get taught the secret handshake by [offerer]!"))
+	var/datum/antagonist/gang/owner_gang_datum = offerer.mind.has_antag_datum(/datum/antagonist/gang)
+	handler = owner_gang_datum.handler
+	gang_to_use = owner_gang_datum.type
+	team_to_use = owner_gang_datum.my_gang
+	attempt_join_gang(taker)
+	qdel(src)
 
 /obj/item/extendohand
 	name = "extendo-hand"
@@ -1255,7 +1390,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 // 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
 // 	icon = 'icons/obj/items_and_weapons.dmi'
 // 	icon_state = "gohei"
-// 	inhand_icon_state = "gohei"
+// 	item_state = "gohei"
 // 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 // 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
@@ -1278,10 +1413,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/vibro_weapon/Initialize()
+/obj/item/vibro_weapon/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
 
 /obj/item/vibro_weapon/ComponentInitialize()
 	. = ..()

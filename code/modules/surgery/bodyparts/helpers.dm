@@ -3,6 +3,8 @@
 	return
 
 /mob/living/carbon/get_bodypart(zone)
+	RETURN_TYPE(/obj/item/bodypart)
+
 	if(!zone)
 		zone = BODY_ZONE_CHEST
 	for(var/X in bodyparts)
@@ -92,10 +94,10 @@
 
 //sometimes we want to ignore that we don't have the required amount of arms.
 /mob/proc/get_arm_ignore()
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/larva/get_arm_ignore()
-	return 1 //so we can still handcuff larvas.
+	return TRUE //so we can still handcuff larvas.
 
 
 /mob/proc/get_num_legs(check_disabled = TRUE)
@@ -124,19 +126,25 @@
 /mob/living/carbon/alien/larva/get_leg_ignore()
 	return TRUE
 
-/mob/living/proc/get_missing_limbs()
+/mob/living/proc/get_missing_limbs(exclude_head = FALSE)
 	return list()
 
-/mob/living/carbon/get_missing_limbs()
+/mob/living/carbon/get_missing_limbs(exclude_head = FALSE)
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	for(var/zone in full)
+		if(exclude_head && zone == BODY_ZONE_HEAD) //this is needed in case we don't care for the lack of a dullahan's head or something.
+			full -= zone
+			continue
 		if(get_bodypart(zone))
 			full -= zone
 	return full
 
-/mob/living/carbon/alien/larva/get_missing_limbs()
+/mob/living/carbon/alien/larva/get_missing_limbs(exclude_head = FALSE)
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST)
 	for(var/zone in full)
+		if(exclude_head && zone == BODY_ZONE_HEAD) //I guess????
+			full -= zone
+			continue
 		if(get_bodypart(zone))
 			full -= zone
 	return full

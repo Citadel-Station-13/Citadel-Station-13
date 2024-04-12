@@ -13,7 +13,7 @@
 	var/wiggle_wiggle
 	var/mutable_appearance/impale_overlay //This is applied to any mob impaled so that they visibly have the skewer coming through their chest
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/Initialize()
+/obj/structure/destructible/clockwork/trap/brass_skewer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -57,7 +57,7 @@
 				"<span class='userdanger'>A massive brass spike rips through your chassis and bursts into shrapnel in your casing!</span>")
 				squirrel.adjustBruteLoss(50)
 				squirrel.Stun(20)
-				addtimer(CALLBACK(src, .proc/take_damage, max_integrity), 1)
+				addtimer(CALLBACK(src, PROC_REF(take_damage), max_integrity), 1)
 		else
 			squirrel.visible_message("<span class='boldwarning'>A massive brass spike erupts from the ground, impaling [squirrel]!</span>", \
 			"<span class='userdanger'>A massive brass spike rams through your chest, hoisting you into the air!</span>")
@@ -68,11 +68,11 @@
 		mouse_opacity = MOUSE_OPACITY_OPAQUE //So players can interact with the tile it's on to pull them off
 		buckle_mob(squirrel, TRUE)
 	else
-		var/obj/mecha/M = locate() in get_turf(src)
+		var/obj/vehicle/sealed/mecha/M = locate() in get_turf(src)
 		if(M)
-			M.take_damage(50,BRUTE,"melee")
+			M.take_damage(50,BRUTE,MELEE)
 			M.visible_message("<span class='danger'>A massive brass spike erupts from the ground, penetrating \the [M] and shattering the trap into pieces!</span>")
-			addtimer(CALLBACK(src, .proc/take_damage, max_integrity), 1)
+			addtimer(CALLBACK(src, PROC_REF(take_damage), max_integrity), 1)
 		else
 			visible_message("<span class='danger'>A massive brass spike erupts from the ground!</span>")
 
@@ -81,7 +81,7 @@
 	density = TRUE //Skewers are one-use only
 	desc = "A vicious brass spike protruding from the ground like a stala[pick("gm", "ct")]ite. It makes you sick to look at." //is stalagmite the ground one? or the ceiling one? who can ever remember?
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/user_buckle_mob()
+/obj/structure/destructible/clockwork/trap/brass_skewer/user_buckle_mob(check_loc)
 	return
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/post_buckle_mob(mob/living/L)

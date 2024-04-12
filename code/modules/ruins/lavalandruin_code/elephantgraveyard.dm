@@ -3,27 +3,28 @@
 /obj/structure/statue/bone
 	anchored = TRUE
 	max_integrity = 120
-	material_drop_type = /obj/item/stack/sheet/bone
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/rib
 	name = "collosal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
-	oreAmount = 4
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "collosal skull"
 	desc = "The gaping maw of a dead, titanic monster."
-	oreAmount = 12
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
-	oreAmount = 6
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull-half"
 
@@ -39,7 +40,7 @@
 	slowdown = 0.5
 	floor_variance = 30
 
-/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
+/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize(mapload)
 	.=..()
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,6)]"
@@ -68,7 +69,7 @@
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/oil
 
-/obj/structure/sink/oil_well/Initialize()
+/obj/structure/sink/oil_well/Initialize(mapload)
 	.=..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
@@ -84,7 +85,7 @@
 		to_chat(user, "You fill in the oil well with soil.")
 		O.play_tool_sound(src)
 		deconstruct()
-		return 1
+		return TRUE
 	if(istype(O, /obj/item/reagent_containers)) //Refilling bottles with oil
 		var/obj/item/reagent_containers/RG = O
 		if(RG.is_refillable())
@@ -96,7 +97,7 @@
 			return FALSE
 	if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='notice'>You won't have any luck getting \the [O] out if you drop it in the oil.</span>")
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -145,6 +146,8 @@
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
+		else
+			return
 
 /obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 	if(!opened)
@@ -167,14 +170,14 @@
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
 						to_chat(user, "<span class='boldwarning'>Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!</span>")
 						first_open = FALSE
-					return 1
-				return 1
+					return TRUE
+				return TRUE
 			else
 				to_chat(user, "<span class='notice'>You can't dig up a grave with \the [S.name].</span>")
-				return 1
+				return TRUE
 		else
 			to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
-			return 1
+			return TRUE
 
 	else if((user.a_intent != INTENT_HELP) && opened) //checks to attempt to remove the grave entirely.
 		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
@@ -183,7 +186,7 @@
 				to_chat(user, "<span class='notice'>You remove \the [src]  completely.</span>")
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
 				deconstruct(TRUE)
-				return 1
+				return TRUE
 	return
 
 /obj/structure/closet/crate/grave/bust_open()

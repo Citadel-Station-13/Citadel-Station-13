@@ -1,0 +1,242 @@
+2021-06-03:
+  MrJWhit:
+  - balance: Removed some debug tiles on the xenoruin.
+  TripleShades:
+  - rscadd: Added a camera to both solar entryways
+  - rscadd: Added an intercom to toxin's launch for the doppler
+  - rscdel: The fake nuke auth disk in the library
+2021-06-04:
+  MrJWhit:
+  - rscadd: Adds a missing pipe
+  Putnam3145:
+  - bugfix: sniper rifle doesn't ruin your round instantly now
+2021-06-05:
+  Arturlang:
+  - code_imp: float sanity now makes it not actually run if it's actively being thrown
+  coderbus13:
+  - bugfix: Pubby's toxins injector now starts at 200L, like it does on other maps
+  zeroisthebiggay:
+  - rscadd: light floppy dog ears
+2021-06-06:
+  bunny232:
+  - rscadd: Pools are capable of mist at lower temperatures
+2021-06-10:
+  Arturlang:
+  - balance: Holoparasites for traitors now cost 12 crystals, for operatives 8, the
+      ricochet eyepath traitor item now 4.
+  DrPainis:
+  - rscadd: goliath calamari
+  - rscadd: cat meteors
+  Linzolle:
+  - bugfix: cults can build in maintenance (and other small areas) again.
+  - bugfix: centcom can no longer be selected as the target area for narsie to be
+      summoned??????
+  MrJWhit:
+  - balance: Moves medical holodeck to the restricted category
+  SandPoot:
+  - code_imp: Uses some of the existing images for the typing indicators.
+  - bugfix: Fixes soulstone shard not working for non-cultists.
+  WanderingFox95:
+  - rscadd: A random event for the cat surgeon to invade the station. Listen for scary
+      noises!
+  - soundadd: Screaming Cat SFX, you know, for the mood.
+  bunny232:
+  - bugfix: Atmos resin now properly prevents all atmos from moving
+  - bugfix: Air tanks now properly have a 21/79 o2/n2 mix
+  - rscadd: Hydroponics can now make 5u of slimejelly by injecting 3 oil, 2 radium
+      and 1 tinea luxor into a glowshroom
+  keronshb:
+  - balance: Made it so Off Balance only disarms if they're shoved into a wall or
+      person.
+  - balance: Reduced Off Balance time to 2 seconds.
+  - balance: Pierced Realities despawn after 3 minutes and 15 seconds, new unresearched
+      realities spawn in after that time elsewhere to help other heretics get back
+      into the game.
+  - balance: A required sacrifice amount for heretic's second to last and last powers
+      are added to discourage only rushing for holes.
+  - balance: An announcement automatically plays to everyone that there's a heretic
+      gunning for ascension upon learning the 2nd to last power
+  - balance: 'Blade Shatters are now used in hand other than with a HUD icon tweak:
+      Adjusted some TGUI menus for the book to reflect how many sacrifices a heretic
+      has and how many are required for certain powers'
+  - bugfix: Fixes sprite issue for Void Cloak for people who have digigrade legs.
+  - bugfix: Fixes the Raw Prophet recipe to match the description
+  - balance: Lets the Cargo Shuttle use Disposal Pipes again
+  - rscadd: Adds motivation and adds it to the uplink
+  - rscadd: Adds Judgement Cut projectiles
+  - rscadd: Adds Judgement Cut hit effects and firing effects.
+  - soundadd: added sounds for the firing and hit sounds of Judgement Cuts, created
+      by @dzahlus
+  - rscadd: Adds Floor Cluwnes and event for midround
+  - rscadd: Adds Cluwne mutation
+  - rscadd: Adds Cluwne spell
+  - rscadd: Adds Cluwnes
+  - imageadd: Adds Cluwne Mask + shoes
+  - admin: Adds Floor Cluwne spawn button
+  - admin: Adds Cluwne smite button
+  zeroisthebiggay:
+  - bugfix: Fixed an exploit allowing you to grab people from anywhere with a clowncar.
+  - balance: revenant essence objective reduced
+2021-06-12:
+  silicons:
+  - bugfix: xenos are now truly immune to stamina damage.
+2021-06-14:
+  EmeraldSundisk:
+  - rscadd: 'Adds a brand new, wholly unique mining base to Snaxi tweak: A thorough
+      redesign of Snaxi (see PR #14818 for more info)'
+  - bugfix: Increases the number of electrical connections between substations
+  MrJWhit:
+  - balance: Removes cat meteors.
+  SandPoot:
+  - rscadd: Tablet computers now have a pen slot, they can almost replace your pda!
+  - spellcheck: Removed a bracket from printer's examine.
+  - bugfix: The cosmetic turtleneck and skirtleneck no longer start with broken sensors.
+  TripleShades:
+  - rscadd: Lights to AI Sat Walkways
+  - rscadd: Lights to Atmospherics
+  - rscadd: Floor labels to Atmospherics Gas Miner containment units
+  - rscdel: Gas canisters from Gas Miner containment units
+  - rscdel: Excessive wiring in Security and Detective's Office
+  qweq12yt:
+  - bugfix: Locker orders now properly bundle together in a single locker (still separated
+      by buyer).
+  - bugfix: Changed some package names to be more accurate.
+  timothyteakettle:
+  - rscadd: bees can go in containers and are released upon opening the container
+  - rscadd: 7 more round tips have been added
+  zeroisthebiggay:
+  - imageadd: new singularity hammer sprite
+  - imageadd: various slight sprite additions
+  - imageadd: distinctive combat defib sprite
+  - imageadd: a onesleeved croptop accessory sprited by trojan coyote
+  - imageadd: new bank machine sprite
+  - imagedel: unused goon coffin sprite
+  - imageadd: new water cooler sprite
+2021-06-15:
+  EmeraldSundisk:
+  - rscadd: Xenobiology now has proper lighting
+  - bugfix: The Corporate Showroom now has a proper front door
+  - bugfix: Mining snowmobiles now have keys
+  - bugfix: Adjusts area designations so GENTURF icons should no longer be visible
+      in-game
+2021-06-16:
+  silicons:
+  - bugfix: on_found works again
+2021-06-17:
+  Vynzill:
+  - rscadd: ability to change crafted armwrap sprite to alternate one.
+  - imageadd: extended armwrap icon and sprite
+  timothyteakettle:
+  - bugfix: fixes an oversight causing embed jostling to do 2x as much damage as it
+      should
+2021-06-19:
+  keronshb:
+  - bugfix: Ling Bone Gauntlets work again
+2021-06-20:
+  Arturlang:
+  - rscadd: Port's TG's nanite storage modification programs from the bepis
+  - bugfix: Fixes infective nanite progreams not syncing cloud ID.
+  - rscadd: Add's off icons for nanite machinery
+  - bugfix: Fixes antitox nanites runtiming on simplemobs
+  - rscadd: Updates the nanite dermal button icon set
+  - rscadd: Adds the ability to select the logic for nanite rules
+  - bugfix: Nanite programs with triggers won't ignore rules.
+  - bugfix: 'Coagluating nanite program research no longer has the wrong name tweak:
+      Nanite program''s have better descriptions now tweak: Nanite subdermal ID''s
+      now also include pulled ID''s for simplemobs'
+  - bugfix: Nanite voice sensors should properly work now.
+  - bugfix: Fixes nanite comm remote, now they should actually work
+  EmeraldSundisk:
+  - rscadd: 'Adds ColorMates to Snow Taxi tweak: Slight adjustments near the arrival
+      shuttle landing zone'
+  - rscdel: Removes an undesired corporate entity
+  Nanotrasen Structual Engineering Division:
+  - rscadd: Added lables to the atmos tanks on Metastation.
+  - rscadd: Adjusted Pubbystation's emitter room wall layout to prevent light-breakage
+      on startup of emitters.
+  - rscdel: Removed frestanding sink and showers from Metastation science airlock,
+      and Deltastation Xenobio. Added an emergency shower next to the kill room.
+  - bugfix: Removed a leftover pipe in Metastation security hallway.
+  bunny232:
+  - bugfix: Pressure tanks other then air tanks start with gas!
+  keronshb:
+  - rscadd: Adds the Space Dragon midround event
+  - soundadd: Space Dragon sounds
+  - imageadd: Space Dragon + effects
+  - code_imp: Added Spacewalk trait
+  - code_imp: Gibs the original owner if they are turned into a Space Dragon with
+      the traitor panel
+  - admin: logging for Space Dragon creation
+  kiwedespars:
+  - rscadd: a downside to wheely heelies ((made it actually detrimental))
+  zeroisthebiggay:
+  - imageadd: beltslot sprites for various items
+  - imageadd: resprite for telebaton
+2021-06-21:
+  silicons:
+  - bugfix: glowshroom scaling
+  timothyteakettle:
+  - bugfix: vore is 0.1% less shitcode
+2021-06-22:
+  bunny232:
+  - bugfix: Adds a missing win door to meta xenobiology pen 6
+  silicons:
+  - bugfix: no more doubleroasting
+2021-06-23:
+  DeltaFire15:
+  - bugfix: A bunch of small nanite things should be less wonky
+  - bugfix: Slimes are no longer immune to vomiting (undocumented change from a previous
+      PR)
+  - bugfix: Fruit wine exists again.
+  - code_imp: Airlock hacking no longer sleeps.
+  - code_imp: The clockwork gateway deconstruction no longer sleeps.
+  - code_imp: Teslium reactions and Holywater booms no longer sleep.
+  - code_imp: Slime timestop no longer sleeps.
+  Putnam3145:
+  - bugfix: inelastic exports no longer uselessly do exponential functions
+2021-06-24:
+  WanderingFox95:
+  - rscadd: An announcement to let players know the Cat Surgeon has come to visit.
+  - balance: Upped the Volume of his spawn noise and lowered the spawn weight slightly.
+2021-06-25:
+  MrJWhit:
+  - rscadd: Adds two missing decals to the 5x5 SM.
+  brokenOculus:
+  - rscadd: pillbottles and syringesare now printable from the medbay protolathe,
+      shiftstart. Hyposprays are now printable in medbay lathe under advanced biotech.
+2021-06-28:
+  Putnam3145:
+  - bugfix: APCs aren't infinite power anymore
+  - rscadd: FDA, LINDA without the bookkeeping.
+  - rscadd: Putnamos, a simpler replacement for Monstermos. If I can get Monstermos
+      to work, this will be Monstermos instead.
+  - rscdel: LINDA, the old active-turfs-based atmos subsystem.
+  - rscdel: Monstermos? I would rather not get rid of this, but I can't get it to
+      work correctly.
+  - server: Extools has been removed, and loading extools alongside auxtools will
+      cause massive problems. If this is tested or merged, remove extools from the
+      static files.
+  WanderingFox95:
+  - rscadd: Carrots are good for your eyes - but eyes are also good for your carrots.
+      Adds the googly eyes trait to walkingshrooms (Oculary Mimicry)
+  - imageadd: Googly Eyes - they make everything better.
+2021-06-30:
+  WanderingFox95:
+  - rscadd: More plushies in the code.
+  - imageadd: Nabbed some plushie sprites from Cit RP and TG and made some myself.
+      Enjoy!
+  - rscadd: The Daily Whiplash (Newspaper Baton) is now available! (Using sticky tape
+      to stick a newspaper onto a baton) Bap!
+  - imageadd: A rolled up newspaper sprite was provided.
+  - balance: Switched Gateway and Vault locations on Boxstation, bringing it more
+      in line with other stations.
+  bunny232:
+  - rscadd: The pubby xenobiology air/scrubber network is now isolated from the rest
+      of the station
+  qweq12yt:
+  - rscdel: HoP's cargo access was removed...
+  shellspeed1:
+  - balance: NT has lost experimental KA tech to miners who were lost in the field.
+      Make sure to try and recover it.
+  - rscadd: Adds an extremely expensive survival pod to mining for people to work
+      towards. Get to work cracking rocks today.

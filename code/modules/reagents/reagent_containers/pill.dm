@@ -15,7 +15,7 @@
 	var/self_delay = FALSE //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
 
-/obj/item/reagent_containers/pill/Initialize()
+/obj/item/reagent_containers/pill/Initialize(mapload)
 	. = ..()
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
@@ -29,7 +29,7 @@
 	return DEFAULT_VOLUME_TINY/2 + reagents.total_volume / reagents.maximum_volume * DEFAULT_VOLUME_TINY
 
 /obj/item/reagent_containers/pill/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
-	INVOKE_ASYNC(src, .proc/attempt_feed, M, user)
+	INVOKE_ASYNC(src, PROC_REF(attempt_feed), M, user)
 
 /obj/item/reagent_containers/pill/proc/attempt_feed(mob/living/M, mob/living/user)
 	if(!canconsume(M, user))
@@ -51,7 +51,7 @@
 
 	var/makes_me_think = pick(strings("redpill.json", "redpill_questions"))
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, M, "<span class='notice'>[makes_me_think]</span>"), 50)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, "<span class='notice'>[makes_me_think]</span>"), 50)
 
 	log_combat(user, M, "fed", reagents.log_list())
 	if(reagents.total_volume)
@@ -248,7 +248,7 @@
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
 	, "Surely, there's no way this could go bad.")
 
-/obj/item/reagent_containers/pill/floorpill/Initialize()
+/obj/item/reagent_containers/pill/floorpill/Initialize(mapload)
 	list_reagents = list(get_random_reagent_id() = rand(10,50))
 	. = ..()
 	name = pick(names)
@@ -265,3 +265,7 @@
 /obj/item/reagent_containers/pill/breast_enlargement
 	name = "breast enlargement pill"
 	list_reagents = list(/datum/reagent/fermi/breast_enlarger = 10)
+
+/obj/item/reagent_containers/pill/butt_enlargement
+	name = "butt enlargement pill"
+	list_reagents = list(/datum/reagent/fermi/butt_enlarger = 10)

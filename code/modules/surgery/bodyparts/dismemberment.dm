@@ -142,7 +142,7 @@
 
 	update_icon_dropped()
 	C.update_health_hud() //update the healthdoll
-	C.update_body()
+	C.update_body(FALSE, TRUE) // block recursive calls because we dont want to crash, i.e. don't tell a dullahan to update when dropping its limb
 	C.update_hair()
 	C.update_mobility()
 
@@ -237,7 +237,7 @@
 			C.handcuffed = null
 			C.update_handcuffed()
 		if(C.hud_used)
-			var/obj/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
+			var/atom/movable/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
 			if(R)
 				R.update_icon()
 		if(C.gloves)
@@ -255,7 +255,7 @@
 			C.handcuffed = null
 			C.update_handcuffed()
 		if(C.hud_used)
-			var/obj/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
+			var/atom/movable/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
 			if(L)
 				L.update_icon()
 		if(C.gloves)
@@ -340,7 +340,7 @@
 		if(C.dna.species.mutanthands && !is_pseudopart)
 			C.put_in_hand(new C.dna.species.mutanthands(), held_index)
 		if(C.hud_used)
-			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
+			var/atom/movable/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
 				hand.update_icon()
 		C.update_inv_gloves()
@@ -370,7 +370,7 @@
 	update_disabled()
 
 	C.updatehealth()
-	C.update_body()
+	C.update_body(FALSE, TRUE) // again block recursive calls because dullahans will try update their icons by regenerating their head
 	C.update_hair()
 	C.update_damage_overlays()
 	C.update_mobility()

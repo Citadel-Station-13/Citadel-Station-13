@@ -34,7 +34,7 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, beauty)), 0)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, _AddElement), list(/datum/element/beauty, beauty)), 0)
 
 /**
  * A data list is passed into this.
@@ -77,10 +77,10 @@
 	else
 		return ..()
 
-/obj/effect/decal/cleanable/ex_act()
+/obj/effect/decal/cleanable/ex_act(severity, target, origin)
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			R.on_ex_act()
+			R.on_ex_act(severity)
 	..()
 
 /obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)

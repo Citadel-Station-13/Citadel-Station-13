@@ -19,9 +19,14 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 	threat = 0.5
+	
+	family_heirlooms = list(
+		/obj/item/toy/windupToolbox,
+		/obj/item/reagent_containers/food/drinks/bottle/holywater
+	)
 
 
-/datum/job/chaplain/after_spawn(mob/living/H, mob/M)
+/datum/job/chaplain/after_spawn(mob/living/H, client/C)
 	. = ..()
 	if(H.mind)
 		H.mind.isholy = TRUE
@@ -34,19 +39,19 @@
 		B.icon_state = GLOB.bible_icon_state
 		B.item_state = GLOB.bible_item_state
 		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.")
-		H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
+		H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
 		H.put_in_hands(N)
 		return
 
 	var/new_religion = DEFAULT_RELIGION
-	if(M.client && M.client.prefs.custom_names["religion"])
-		new_religion = M.client.prefs.custom_names["religion"]
+	if(C && C.prefs.custom_names["religion"])
+		new_religion = C.prefs.custom_names["religion"]
 
 	var/new_deity = DEFAULT_DEITY
-	if(M.client && M.client.prefs.custom_names["deity"])
-		new_deity = M.client.prefs.custom_names["deity"]
+	if(C && C.prefs.custom_names["deity"])
+		new_deity = C.prefs.custom_names["deity"]
 
 	B.deity_name = new_deity
 
@@ -108,7 +113,7 @@
 	GLOB.bible_name = B.name
 	GLOB.deity = B.deity_name
 
-	H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 
 	SSblackbox.record_feedback("text", "religion_name", 1, "[new_religion]", 1)
 	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)

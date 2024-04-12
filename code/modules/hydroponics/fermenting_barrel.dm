@@ -10,7 +10,7 @@
 	var/open = FALSE
 	var/speed_multiplier = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.
 
-/obj/structure/fermenting_barrel/Initialize()
+/obj/structure/fermenting_barrel/Initialize(mapload)
 	create_reagents(300, DRAINABLE | AMOUNT_VISIBLE) //Bluespace beakers, but without the portability or efficiency in circuits.
 	. = ..()
 
@@ -47,7 +47,7 @@
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return TRUE
 		to_chat(user, "<span class='notice'>You place [I] into [src] to start the fermentation process.</span>")
-		addtimer(CALLBACK(src, .proc/makeWine, fruit), rand(80, 120) * speed_multiplier)
+		addtimer(CALLBACK(src, PROC_REF(makeWine), fruit), rand(80, 120) * speed_multiplier)
 		return TRUE
 	var/obj/item/W = I
 	if(W)
@@ -59,12 +59,12 @@
 /obj/structure/fermenting_barrel/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	open = !open
 	if(open)
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, DRAINABLE)
-		ENABLE_BITFIELD(reagents.reagents_holder_flags, REFILLABLE)
+		reagents.reagents_holder_flags &= ~(DRAINABLE)
+		reagents.reagents_holder_flags |= REFILLABLE
 		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
 	else
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, REFILLABLE)
-		ENABLE_BITFIELD(reagents.reagents_holder_flags, DRAINABLE)
+		reagents.reagents_holder_flags &= ~(REFILLABLE)
+		reagents.reagents_holder_flags |= DRAINABLE
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
 	update_icon()
 
@@ -73,3 +73,40 @@
 		icon_state = "barrel_open"
 	else
 		icon_state = "barrel"
+
+/obj/structure/custom_keg
+	name = "Plasteel Keg"
+	desc = "A large plasteel keg. You can use it to hold liquids. You may wanna label this, too."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "keg"
+	density = TRUE
+	anchored = FALSE
+	pressure_resistance = 2 * ONE_ATMOSPHERE
+	max_integrity = 300
+	var/open = FALSE
+
+/obj/structure/custom_keg/Initialize(mapload)
+	create_reagents(1000, DRAINABLE | AMOUNT_VISIBLE)
+	. = ..()
+
+/obj/structure/custom_keg/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>"
+
+/obj/structure/custom_keg/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	open = !open
+	if(open)
+		reagents.reagents_holder_flags &= ~(DRAINABLE)
+		reagents.reagents_holder_flags |= REFILLABLE
+		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
+	else
+		reagents.reagents_holder_flags &= ~(REFILLABLE)
+		reagents.reagents_holder_flags |= DRAINABLE
+		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
+	update_icon()
+
+/obj/structure/custom_keg/update_icon_state()
+	if(open)
+		icon_state = "keg_open"
+	else
+		icon_state = "keg"

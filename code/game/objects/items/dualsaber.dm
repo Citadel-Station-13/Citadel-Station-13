@@ -21,9 +21,9 @@
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
-	wound_bonus = -110
+	wound_bonus = -40
 	bare_wound_bonus = 20
 	block_parry_data = /datum/block_parry_data/dual_esword
 	block_chance = 60
@@ -41,7 +41,7 @@
 
 /datum/block_parry_data/dual_esword // please run at the man going apeshit with his funny doublesword
 	can_block_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST | BLOCK_DIR_WEST | BLOCK_DIR_EAST
-	block_damage_absorption = 2
+	block_damage_absorption = 5
 	block_damage_multiplier = 0.15
 	block_damage_multiplier_override = list(
 		ATTACK_TYPE_MELEE = 0.25
@@ -59,7 +59,7 @@
 	)
 
 	parry_time_windup = 0
-	parry_time_active = 8
+	parry_time_active = 12
 	parry_time_spindown = 0
 	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
 	parry_time_windup_visual_override = 1
@@ -69,12 +69,10 @@
 	parry_time_perfect = 2		// first ds isn't perfect
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 10
-	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 25		// VERY generous
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = CLICK_CD_MELEE
 
-/obj/item/dualsaber/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
+/obj/item/dualsaber/directional_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	if((attack_type & ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
 		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
@@ -83,20 +81,20 @@
 /obj/item/dualsaber/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 	. = ..()
 	if(parry_efficiency >= 90)		// perfect parry
-		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 		. |= BLOCK_SHOULD_REDIRECT
 
-/obj/item/dualsaber/Initialize()
+/obj/item/dualsaber/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
 
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, \
 					wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
 
-/obj/item/dualsaber/Initialize()
+/obj/item/dualsaber/Initialize(mapload)
 	. = ..()
 	if(LAZYLEN(possible_colors))
 		saber_color = pick(possible_colors)
@@ -135,7 +133,7 @@
 	total_mass = initial(total_mass)
 	wielded = FALSE
 	hitsound = "swing_hit"
-	slowdown_wielded -= slowdown_wielded
+	slowdown -= slowdown_wielded
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
 	RemoveElement(/datum/element/sword_point)
@@ -184,7 +182,7 @@
 		impale(user)
 		return
 	if(spinnable && (wielded) && prob(50))
-		INVOKE_ASYNC(src, .proc/jedi_spin, user)
+		INVOKE_ASYNC(src, PROC_REF(jedi_spin), user)
 
 /obj/item/dualsaber/proc/jedi_spin(mob/living/user)
 	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
@@ -211,7 +209,7 @@
 /obj/item/dualsaber/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
 		to_chat(user, "<span class='warning'>You can't pick up such dangerous item with your meaty hands without losing fingers, better not to!</span>")
-		return 1
+		return TRUE
 
 /obj/item/dualsaber/process()
 	if(wielded)
@@ -238,7 +236,7 @@
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
 	if(spinnable)
-		INVOKE_ASYNC(src, .proc/jedi_spin, user)
+		INVOKE_ASYNC(src, PROC_REF(jedi_spin), user)
 
 /obj/item/dualsaber/green
 	possible_colors = list("green")
@@ -280,6 +278,7 @@
 	desc = "A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter."
 	force = 7
 	hitsound_on = 'sound/weapons/nebhit.ogg'
+	wound_bonus = -20
 	armour_penetration = 60
 	light_color = "#37FFF7"
 	rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
@@ -369,14 +368,12 @@
 	parry_time_perfect = 1
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 7.5
-	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 80
 	parry_efficiency_perfect = 120
 	parry_efficiency_perfect_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 30,
 	)
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = 2 SECONDS
 
 /obj/item/dualsaber/hypereutactic/chaplain/ComponentInitialize()
 	. = ..()

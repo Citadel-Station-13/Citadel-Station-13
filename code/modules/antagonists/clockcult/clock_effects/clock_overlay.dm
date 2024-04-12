@@ -8,7 +8,7 @@
 		linked.examine(user)
 	return ..()
 
-/obj/effect/clockwork/overlay/ex_act()
+/obj/effect/clockwork/overlay/ex_act(severity, target, origin)
 	return FALSE
 
 /obj/effect/clockwork/overlay/singularity_act()
@@ -32,10 +32,10 @@
 	smooth = SMOOTH_TRUE
 	layer = CLOSED_TURF_LAYER
 
-/obj/effect/clockwork/overlay/wall/Initialize()
+/obj/effect/clockwork/overlay/wall/Initialize(mapload)
 	. = ..()
 	queue_smooth_neighbors(src)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/queue_smooth, src), 1)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(queue_smooth), src), 1)
 
 /obj/effect/clockwork/overlay/wall/Destroy()
 	queue_smooth_neighbors(src)

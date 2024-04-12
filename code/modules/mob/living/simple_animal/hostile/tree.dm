@@ -6,6 +6,7 @@
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
+	health_doll_icon = "pine_1"
 	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
@@ -43,18 +44,18 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
-/mob/living/simple_animal/hostile/tree/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/tree/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(isopenturf(loc))
 		var/turf/open/T = src.loc
 		if(T.air)
-			var/co2 = T.air.get_moles(/datum/gas/carbon_dioxide)
+			var/co2 = T.air.get_moles(GAS_CO2)
 			if(co2 > 0)
 				if(prob(25))
 					var/amt = min(co2, 9)
-					T.air.adjust_moles(/datum/gas/carbon_dioxide, -amt)
-					T.atmos_spawn_air("o2=[amt]")
+					T.air.adjust_moles(GAS_CO2, -amt)
+					T.atmos_spawn_air("o2=[amt];TEMP=293.15")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	. = ..()
@@ -72,5 +73,6 @@
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
+	health_doll_icon = "festivus_pole"
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")

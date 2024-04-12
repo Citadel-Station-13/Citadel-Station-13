@@ -90,7 +90,7 @@
 	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma"
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	thermal_conductivity = 0.004
+	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
@@ -272,12 +272,10 @@
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
 
-/turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
+/turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity, target, origin)
 	var/datum/explosion/acted_explosion = null
-	for(var/datum/explosion/E in GLOB.explosions)
-		if(E.explosion_id == explosion_id)
-			acted_explosion = E
-			break
+	if(istype(origin, /datum/explosion))
+		acted_explosion = origin
 	if(acted_explosion && istype(acted_explosion.explosion_source, /obj/item/bombcore))
 		var/obj/item/bombcore/large/bombcore = new(get_turf(src))
 		bombcore.detonate()

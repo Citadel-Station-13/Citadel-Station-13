@@ -110,7 +110,7 @@
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
-	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
+	addtimer(CALLBACK(src, PROC_REF(prime)), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/proc/prime(mob/living/lanced_by)
 	var/turf/T = get_turf(src)
@@ -135,16 +135,16 @@
 /obj/item/grenade/tool_act(mob/living/user, obj/item/I, tool_behaviour)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		switch(det_time)
-			if ("1")
-				det_time = 10
+			if(1)
+				det_time = 1 SECONDS
 				to_chat(user, "<span class='notice'>You set the [name] for 1 second detonation time.</span>")
-			if ("10")
-				det_time = 30
+			if(1 SECONDS)
+				det_time = 3 SECONDS
 				to_chat(user, "<span class='notice'>You set the [name] for 3 second detonation time.</span>")
-			if ("30")
-				det_time = 50
+			if(3 SECONDS)
+				det_time = 5 SECONDS
 				to_chat(user, "<span class='notice'>You set the [name] for 5 second detonation time.</span>")
-			if ("50")
+			if(5 SECONDS)
 				det_time = 1
 				to_chat(user, "<span class='notice'>You set the [name] for instant detonation.</span>")
 		add_fingerprint(user)

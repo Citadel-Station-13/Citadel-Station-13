@@ -66,6 +66,7 @@
 /obj/item/stake/afterattack(atom/target, mob/user, proximity)
 	//to_chat(world, "<span class='notice'>DEBUG: Staking </span>")
 	// Invalid Target, or not targetting chest with HARM intent?
+	. = ..()
 	if(!iscarbon(target) || check_zone(user.zone_selected) != "chest" || user.a_intent != INTENT_HARM)
 		return
 	var/mob/living/carbon/C = target
@@ -80,7 +81,7 @@
 	// Make Attempt...
 	to_chat(user, "<span class='notice'>You put all your weight into embedding the stake into [target]'s chest...</span>")
 	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
-	if(!do_mob(user, C, staketime, 0, 1, extra_checks=CALLBACK(C, /mob/living/carbon/proc/can_be_staked))) // user / target / time / uninterruptable / show progress bar / extra checks
+	if(!do_mob(user, C, staketime, NONE, extra_checks=CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, can_be_staked)))) // user / target / time / uninterruptable / show progress bar / extra checks
 		return
 	// Drop & Embed Stake
 	user.visible_message("<span class='danger'>[user.name] drives the [src] into [target]'s chest!</span>", \
@@ -139,9 +140,8 @@
 
 // Convert back to Silver
 /obj/item/stake/hardened/silver/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = I
-		if(WT.use(0))//remove_fuel(0, user))
+	if(I.tool_behaviour == TOOL_WELDER)
+		if(I.use(0))//remove_fuel(0, user))
 			var/obj/item/stack/sheet/mineral/silver/newsheet = new (user.loc)
 			for(var/obj/item/stack/sheet/mineral/silver/S in user.loc)
 				if(S == newsheet)

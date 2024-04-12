@@ -47,7 +47,7 @@
 				atoms += A
 			CHECK_TICK
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res = icon('icons/effects/camera_image_base.dmi', "")
 	res.Scale(psize_x, psize_y)
 
 	var/list/sorted = list()
@@ -63,7 +63,6 @@
 
 	var/xcomp = FLOOR(psize_x / 2, 1) - 15
 	var/ycomp = FLOOR(psize_y / 2, 1) - 15
-
 
 	for(var/atom/A in sorted)
 		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp

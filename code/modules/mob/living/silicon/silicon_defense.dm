@@ -45,14 +45,6 @@
 				adjustBruteLoss(damage)
 			if(BURN)
 				adjustFireLoss(damage)
-			if(TOX)
-				adjustToxLoss(damage)
-			if(OXY)
-				adjustOxyLoss(damage)
-			if(CLONE)
-				adjustCloneLoss(damage)
-			if(STAMINA)
-				adjustStaminaLoss(damage)
 
 /mob/living/silicon/attack_paw(mob/living/user)
 	return attack_hand(user)
@@ -79,6 +71,8 @@
 			M.visible_message("[M] pets [src].", \
 							"<span class='notice'>You pet [src].</span>", target = src,
 							target_message = "[M] pets you.")
+		if(INTENT_DISARM)
+			disarm_shove(M)
 		if(INTENT_GRAB)
 			grabbedby(M)
 		else
@@ -87,6 +81,9 @@
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
 				"<span class='warning'>[M] punches you, but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE, null, M,
 				"<span class='danger'>You punch [src], but don't leave a dent.</span>")
+
+/mob/living/silicon/proc/disarm_shove(mob/living/carbon/human/H)
+	visible_message(span_danger("[H] shoves [src], but doesn't manage to make much of an effect."))
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
@@ -98,7 +95,7 @@
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
 			M.electrocute_act(shock_damage/100, source, siemens_coeff, flags)	//Hard metal shell conducts!
-	return 0 //So borgs they don't die trying to fix wiring
+	return FALSE //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
 	. = ..()
@@ -115,7 +112,7 @@
 				"<span class='boldwarning'>You are thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
 
-/mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone, piercing_hit = FALSE)
 	var/totaldamage = P.damage
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		var/list/returnlist = list()
@@ -136,9 +133,9 @@
 				"<span class='boldwarning'>You are knocked off of [src] by the [P]!</span>")
 			unbuckle_mob(M)
 			M.DefaultCombatKnockdown(40)
-	P.on_hit(src, 0, def_zone)
+	P.on_hit(src, 0, def_zone, 0, piercing_hit)
 	return BULLET_ACT_HIT
 
-/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
+/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/tiled/flash/static)
 	if(affect_silicon)
 		return ..()

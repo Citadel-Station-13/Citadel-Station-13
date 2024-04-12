@@ -41,6 +41,7 @@
 		set waitfor = FALSE
 		var/turf/B = L
 		atoms += B
+		B.assemble_baseturfs(B.type)
 		for(var/A in B)
 			atoms += A
 			if(istype(A,/obj/structure/cable))

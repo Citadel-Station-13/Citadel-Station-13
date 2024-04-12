@@ -62,13 +62,13 @@
 			H.clear_alert("disgust")
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-			H.throw_alert("disgust", /obj/screen/alert/gross)
+			H.throw_alert("disgust", /atom/movable/screen/alert/gross)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/gross)
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-			H.throw_alert("disgust", /obj/screen/alert/verygross)
+			H.throw_alert("disgust", /atom/movable/screen/alert/verygross)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-			H.throw_alert("disgust", /obj/screen/alert/disgusted)
+			H.throw_alert("disgust", /atom/movable/screen/alert/disgusted)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
 /obj/item/organ/stomach/Remove(special = FALSE)
@@ -131,16 +131,23 @@
 	name = "ipc cell"
 	icon_state = "stomach-ipc"
 
+/obj/item/organ/stomach/ipc/on_life()
+	. = ..()
+	if(!.)
+		return
+	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM) && owner.nutrition >= NUTRITION_LEVEL_FED)
+		owner.satiety += 5	//We don't need to cap the value as it's already automatically capped during nutrition level handling. Also effectively only +4 as you lose 1 per life tick. 300 seconds of sufficient charge to reach full satiety.
+
 /obj/item/organ/stomach/ipc/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	switch(severity)
-		if(1)
-			owner.nutrition = min(owner.nutrition - 50, 0)
+		if(1 to 50)
+			owner.nutrition = max(owner.nutrition - 50, 0)
 			to_chat(owner, "<span class='warning'>Alert: Detected severe battery discharge!</span>")
-		if(2)
-			owner.nutrition = min(owner.nutrition - 100, 0)
+		if(50 to INFINITY)
+			owner.nutrition = max(owner.nutrition - 100, 0)
 			to_chat(owner, "<span class='warning'>Alert: Minor battery discharge!</span>")
 
 /obj/item/organ/stomach/ethereal
@@ -155,8 +162,8 @@
 
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
-	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
+	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
 /obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = 0)
 	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)

@@ -13,9 +13,12 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
-	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
-	var/fire = null
+	///Do we have an active fire alarm?
+	var/fire = FALSE
+	///How many fire alarm sources do we have?
+	var/triggered_firealarms = 0
 	///Whether there is an atmos alarm in this area
 	var/atmosalm = FALSE
 	var/poweralm = FALSE
@@ -41,7 +44,7 @@
 
 	///Will objects this area be needing power?
 	var/requires_power = TRUE
-	/// This gets overridden to 1 for space in area/Initialize().
+	/// This gets overridden to 1 for space in area/Initialize(mapload).
 	var/always_unpowered = FALSE
 
 	var/power_equip = TRUE
@@ -50,7 +53,12 @@
 
 	var/has_gravity = FALSE
 
-	var/parallax_movedir = 0
+	/// Parallax moving?
+	var/parallax_moving = FALSE
+	/// Parallax move speed - 0 to disable
+	var/parallax_move_speed = 0
+	/// Parallax move dir - degrees clockwise from north
+	var/parallax_move_angle = 0
 
 	var/list/ambientsounds = GENERIC
 	flags_1 = CAN_BE_DIRTY_1
@@ -119,6 +127,10 @@
 	/// Color on minimaps, if it's null (which is default) it makes one at random.
 	var/minimap_color
 
+	var/minimap_color2 // if this isn't null, then this will show as a checkerboard pattern mixed in with the above. works even if the above is null (for better or worse)
+
+	var/minimap_show_walls = TRUE
+
 /**
   * These two vars allow for multiple unique areas to be linked to a master area
   * and share some functionalities such as APC powernet nodes, fire alarms etc, without sacrificing
@@ -161,7 +173,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
+	sortTim(GLOB.teleportlocs, GLOBAL_PROC_REF(cmp_text_asc))
 
 /**
  * Called when an area loads
@@ -192,7 +204,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * returns INITIALIZE_HINT_LATELOAD
  */
-/area/Initialize()
+/area/Initialize(mapload)
 	icon_state = ""
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
@@ -310,7 +322,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				A.power_light = FALSE
 				A.power_equip = FALSE
 				A.power_environ = FALSE
-			INVOKE_ASYNC(A, .proc/power_change)
+			A.power_change()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -319,38 +331,38 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
  */
-/area/proc/poweralert(state, obj/source)
+/area/proc/poweralert(set_alarm, obj/source)
 	if (area_flags & NO_ALERTS)
 		return
-	if (state != poweralm)
-		poweralm = state
+	if (set_alarm != poweralm)
+		poweralm = set_alarm
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
-				if (state == 1)
-					aiPlayer.cancelAlarm("Power", src, source)
-				else
+				if (set_alarm)
 					aiPlayer.triggerAlarm("Power", src, cameras, source)
+				else
+					aiPlayer.cancelAlarm("Power", src, source)
 
 			for (var/item in GLOB.alert_consoles)
 				var/obj/machinery/computer/station_alert/a = item
-				if(state == 1)
-					a.cancelAlarm("Power", src, source)
-				else
+				if (set_alarm)
 					a.triggerAlarm("Power", src, cameras, source)
+				else
+					a.cancelAlarm("Power", src, source)
 
 			for (var/item in GLOB.drones_list)
 				var/mob/living/simple_animal/drone/D = item
-				if(state == 1)
-					D.cancelAlarm("Power", src, source)
-				else
+				if (set_alarm)
 					D.triggerAlarm("Power", src, cameras, source)
+				else
+					D.cancelAlarm("Power", src, source)
 			for(var/item in GLOB.alarmdisplay)
 				var/datum/computer_file/program/alarm_monitor/p = item
-				if(state == 1)
-					p.cancelAlarm("Power", src, source)
-				else
+				if (set_alarm)
 					p.triggerAlarm("Power", src, cameras, source)
+				else
+					p.cancelAlarm("Power", src, source)
 
 /area/proc/atmosalert(danger_level, obj/source)
 	if (area_flags & NO_ALERTS)
@@ -408,7 +420,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				if(D.operating)
 					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
 				else if(!(D.density ^ opening))
-					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
+					INVOKE_ASYNC(D, (opening ? TYPE_PROC_REF(/obj/machinery/door/firedoor, open) : TYPE_PROC_REF(/obj/machinery/door/firedoor, close)))
 
 /area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
@@ -434,7 +446,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	START_PROCESSING(SSobj, src)
 
 /area/proc/firereset(obj/source)
-	if (fire)
+	var/should_reset_alarms = fire
+	if(source)
+		if(istype(source, /obj/machinery/firealarm))
+			var/obj/machinery/firealarm/alarm = source
+			if(alarm.triggered)
+				alarm.triggered = FALSE
+				triggered_firealarms -= 1
+		if(triggered_firealarms > 0)
+			should_reset_alarms = FALSE
+		should_reset_alarms = should_reset_alarms & power_environ //No resetting if there's no power
+
+	if (should_reset_alarms) // if there's a source, make sure there's no fire alarms left
 		set_fire_alarm_effects(FALSE)
 		ModifyFiredoors(TRUE)
 
@@ -453,6 +476,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			p.cancelAlarm("Fire", src, source)
 
 	STOP_PROCESSING(SSobj, src)
+
+///Get rid of any dangling camera refs
+/area/proc/clear_camera(obj/machinery/camera/cam)
+	LAZYREMOVE(cameras, cam)
+	for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
+		aiPlayer.freeCamera(src, cam)
+	for (var/obj/machinery/computer/station_alert/comp as anything in GLOB.alert_consoles)
+		comp.freeCamera(src, cam)
+	for (var/mob/living/simple_animal/drone/drone_on as anything in GLOB.drones_list)
+		drone_on.freeCamera(src, cam)
+	for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
+		monitor.freeCamera(src, cam)
 
 /area/process()
 	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
@@ -478,7 +513,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/mob/living/silicon/SILICON = i
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
+			addtimer(CALLBACK(SILICON, TYPE_PROC_REF(/mob/living/silicon, cancelAlarm),"Burglar",src,trigger), 600)
 
 /area/proc/set_fire_alarm_effects(boolean)
 	fire = boolean
@@ -525,9 +560,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	switch(chan)
 		if(EQUIP)
 			return power_equip
@@ -536,24 +571,29 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(ENVIRON)
 			return power_environ
 
-	return 0
+	return FALSE
 
 /area/space/powered(chan) //Nope.avi
-	return 0
+	return FALSE
 
 // called when power status changes
 
 /area/proc/power_change()
-	for(var/obj/machinery/M in src)	// for each machine in the area
-		M.power_change()				// reverify power status (to update icons etc.)
-	if(sub_areas)
-		for(var/i in sub_areas)
-			var/area/A = i
-			A.power_light = power_light
-			A.power_equip = power_equip
-			A.power_environ = power_environ
-			INVOKE_ASYNC(A, .proc/power_change)
-	update_icon()
+	SHOULD_NOT_SLEEP(TRUE)
+	if(contents.len < GLOB.machines.len) // it would be faster to loop over contents
+		for(var/obj/machinery/M in src) // for each machine in the area
+			M.power_change() // reverify power status (to update icons etc.)
+	else // it would be faster to loop over the machines list
+		for(var/obj/machinery/M as anything in GLOB.machines) // for each machine
+			if(get_area(M) != src) // in the area
+				continue
+			M.power_change() // reverify power status (to update icons etc.)
+	for(var/area/A as anything in sub_areas)
+		A.power_light = power_light
+		A.power_equip = power_equip
+		A.power_environ = power_environ
+		A.power_change()
+	update_appearance()
 
 /area/proc/usage(chan)
 	switch(chan)
@@ -642,7 +682,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!L.client.played)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
-			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+			addtimer(CALLBACK(L.client, TYPE_PROC_REF(/client, ResetAmbiencePlayed)), 600)
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()

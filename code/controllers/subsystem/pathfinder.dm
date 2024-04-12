@@ -31,12 +31,12 @@ SUBSYSTEM_DEF(pathfinder)
 		while(flow[free])
 			CHECK_TICK
 			free = (free % lcount) + 1
-		var/t = addtimer(CALLBACK(src, /datum/flowcache.proc/toolong, free), 150, TIMER_STOPPABLE)
+		var/t = addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/flowcache, toolong), free), 150, TIMER_STOPPABLE)
 		flow[free] = t
 		flow[t] = M
 		return free
 	else
-		return 0
+		return FALSE
 
 /datum/flowcache/proc/toolong(l)
 	log_game("Pathfinder route took longer than 150 ticks, src bot [flow[flow[l]]]")

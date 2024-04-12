@@ -1,4 +1,4 @@
-/obj/screen/alert/status_effect/rainbow_protection
+/atom/movable/screen/alert/status_effect/rainbow_protection
 	name = "Rainbow Protection"
 	desc = "You are defended from harm, but so are those you might seek to injure!"
 	icon_state = "slime_rainbowshield"
@@ -6,7 +6,7 @@
 /datum/status_effect/rainbow_protection
 	id = "rainbow_protection"
 	duration = 100
-	alert_type = /obj/screen/alert/status_effect/rainbow_protection
+	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
 	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
@@ -29,7 +29,7 @@
 		"<span class='warning'>You no longer feel protected...</span>")
 	return ..()
 
-/obj/screen/alert/status_effect/slimeskin
+/atom/movable/screen/alert/status_effect/slimeskin
 	name = "Adamantine Slimeskin"
 	desc = "You are covered in a thick, non-neutonian gel."
 	icon_state = "slime_stoneskin"
@@ -37,7 +37,7 @@
 /datum/status_effect/slimeskin
 	id = "slimeskin"
 	duration = 300
-	alert_type = /obj/screen/alert/status_effect/slimeskin
+	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
 	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
@@ -68,7 +68,7 @@
 	var/icon/bluespace
 
 /datum/status_effect/slimerecall/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resistField))
 	to_chat(owner, "<span class='danger'>You feel a sudden tug from an unknown force, and feel a pull to bluespace!</span>")
 	to_chat(owner, "<span class='notice'>Resist if you wish avoid the force!</span>")
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -91,18 +91,18 @@
 	owner.forceMove(target.loc)
 	return ..()
 
-/obj/screen/alert/status_effect/freon/stasis
+/atom/movable/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
 
 /datum/status_effect/frozenstasis
 	id = "slime_frozen"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1 //Will remove self when block breaks.
-	alert_type = /obj/screen/alert/status_effect/freon/stasis
+	alert_type = /atom/movable/screen/alert/status_effect/freon/stasis
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(breakCube))
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -162,7 +162,7 @@
 		qdel(clone)
 	return ..()
 
-/obj/screen/alert/status_effect/clone_decay
+/atom/movable/screen/alert/status_effect/clone_decay
 	name = "Clone Decay"
 	desc = "You are simply a construct, and cannot maintain this form forever. You will be returned to your original body if you should fall."
 	icon_state = "slime_clonedecay"
@@ -171,7 +171,7 @@
 	id = "slime_clonedecay"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
-	alert_type = /obj/screen/alert/status_effect/clone_decay
+	alert_type = /atom/movable/screen/alert/status_effect/clone_decay
 
 /datum/status_effect/slime_clone_decay/tick()
 	owner.adjustToxLoss(1, 0)
@@ -180,7 +180,7 @@
 	owner.adjustFireLoss(1, 0)
 	owner.color = "#007BA7"
 
-/obj/screen/alert/status_effect/bloodchill
+/atom/movable/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
 	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
 	icon_state = "bloodchill"
@@ -188,7 +188,7 @@
 /datum/status_effect/bloodchill
 	id = "bloodchill"
 	duration = 100
-	alert_type = /obj/screen/alert/status_effect/bloodchill
+	alert_type = /atom/movable/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
@@ -202,7 +202,7 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 	return ..()
 
-/obj/screen/alert/status_effect/bloodchill
+/atom/movable/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
 	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
 	icon_state = "bloodchill"
@@ -210,7 +210,7 @@
 /datum/status_effect/bonechill
 	id = "bonechill"
 	duration = 80
-	alert_type = /obj/screen/alert/status_effect/bonechill
+	alert_type = /atom/movable/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
@@ -226,7 +226,7 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
 	return ..()
 
-/obj/screen/alert/status_effect/bonechill
+/atom/movable/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
 	desc = "You feel a shiver down your spine after hearing the haunting noise of bone rattling. You'll move slower and get frostbite for a while!"
 	icon_state = "bloodchill"
@@ -495,7 +495,11 @@
 
 /datum/status_effect/stabilized/orange/tick()
 	var/body_temperature_difference = BODYTEMP_NORMAL - owner.bodytemperature
-	owner.adjust_bodytemperature(min(5,body_temperature_difference))
+	var/cooling_cap = -5
+	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))
+		cooling_cap *= 0.5									//Only cools by half as much (which is 5 per life tick since this ticks twice as much as life) so it isn't true spaceproofness..
+		body_temperature_difference += SYNTH_COLD_OFFSET	//.. But also cools towards a cold temp, provided there is nothing that counters it.
+	owner.adjust_bodytemperature(clamp(body_temperature_difference, cooling_cap, 5))
 	return ..()
 
 /datum/status_effect/stabilized/purple
@@ -550,7 +554,7 @@
 
 		if(sheets.len > 0)
 			var/obj/item/stack/sheet/S = pick(sheets)
-			S.amount++
+			S.add(1) // Dare var edit directly again and i'll strangle you.
 			to_chat(owner, "<span class='notice'>[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!</span>")
 	return ..()
 
@@ -573,6 +577,10 @@
 	if(batteries.len)
 		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
 		ToCharge.charge += min(ToCharge.maxcharge - ToCharge.charge, ToCharge.maxcharge/10) //10% of the cell, or to maximum.
+		ToCharge.update_appearance() //make sure the cell gets their appearance updated.
+		var/atom/l = ToCharge.loc
+		if(isgun(l)) //updates the gun appearance as well if the cell is inside one.
+			l.update_appearance()
 		to_chat(owner, "<span class='notice'>[linked_extract] discharges some energy into a device you have.</span>")
 	return ..()
 
@@ -595,14 +603,14 @@
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/tick()
-	var/obj/item/I = owner.get_active_held_item()
-	var/obj/item/reagent_containers/food/snacks/F = I
-	if(istype(F))
-		if(F.cooked_type)
+	var/obj/item/item = owner.get_active_held_item()
+	if(item)
+		var/obj/item/reagent_containers/food/snacks/F = item
+		if(istype(F) && F.cooked_type)
 			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
 			F.microwave_act()
-	else
-		I.attackby(fire, owner)
+		else
+			item.attackby(fire, owner)
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
@@ -622,7 +630,9 @@
 	var/obj/O = owner.get_active_held_item()
 	if(O)
 		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
-		O.acid_level = 0
+		var/datum/component/acid/acid = O.GetComponent(/datum/component/acid)
+		if(acid)
+			acid.level = 0
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
@@ -659,7 +669,7 @@
 	return ..()
 
 //Bluespace has an icon because it's kinda active.
-/obj/screen/alert/status_effect/bluespaceslime
+/atom/movable/screen/alert/status_effect/bluespaceslime
 	name = "Stabilized Bluespace Extract"
 	desc = "You shouldn't see this, since we set it to change automatically!"
 	icon_state = "slime_bluespace_on"
@@ -672,7 +682,7 @@
 /datum/status_effect/stabilized/bluespace
 	id = "stabilizedbluespace"
 	colour = "bluespace"
-	alert_type = /obj/screen/alert/status_effect/bluespaceslime
+	alert_type = /atom/movable/screen/alert/status_effect/bluespaceslime
 	var/healthcheck
 
 /datum/status_effect/stabilized/bluespace/tick()
@@ -702,16 +712,20 @@
 /datum/status_effect/stabilized/sepia
 	id = "stabilizedsepia"
 	colour = "sepia"
-	var/mod = 0
+	var/list/possible = list(
+		-0.5,
+		-0.25,
+		0,
+		0.5,
+		1
+	)
+
+/datum/status_effect/stabilized/sepia/New(list/arguments)
+	. = ..()
+	possible = typelist(NAMEOF(src, possible), possible)
 
 /datum/status_effect/stabilized/sepia/tick()
-	if(prob(50) && mod > -1)
-		mod--
-		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 1)
-	else if(mod < 1)
-		mod++
-		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
-		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 0)
+	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = safepick(possible))
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
@@ -932,6 +946,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	ADD_TRAIT(owner, TRAIT_FREESPRINT, "stabilized_slime")
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/slime/light_pink)
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -943,6 +958,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_FREESPRINT, "stabilized_slime")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/slime/light_pink)
 	return ..()
 
 /datum/status_effect/stabilized/adamantine

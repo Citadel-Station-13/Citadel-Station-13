@@ -2,15 +2,10 @@
 	name = "Prepare Blood Magic"
 	button_icon_state = "carve"
 	desc = "Prepare blood magic by carving runes into your flesh. This rite is most effective with an <b>empowering rune</b>"
+	default_button_position = DEFAULT_BLOODSPELLS
 	var/list/spells = list()
 	var/channeling = FALSE
 	var/holy_dispel = FALSE
-
-/datum/action/innate/cult/blood_magic/Grant()
-	..()
-	button.screen_loc = DEFAULT_BLOODSPELLS
-	button.moved = DEFAULT_BLOODSPELLS
-	button.ordered = FALSE
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -23,15 +18,21 @@
 	return ..()
 
 /datum/action/innate/cult/blood_magic/proc/Positioning()
-	var/list/screen_loc_split = splittext(button.screen_loc,",")
-	var/list/screen_loc_X = splittext(screen_loc_split[1],":")
-	var/list/screen_loc_Y = splittext(screen_loc_split[2],":")
-	var/pix_X = text2num(screen_loc_X[2])
-	for(var/datum/action/innate/cult/blood_spell/B in spells)
-		if(B.button.locked)
-			var/order = pix_X+spells.Find(B)*31
-			B.button.screen_loc = "[screen_loc_X[1]]:[order],[screen_loc_Y[1]]:[screen_loc_Y[2]]"
-			B.button.moved = B.button.screen_loc
+	for(var/datum/hud/hud as anything in viewers)
+		var/our_view = hud.mymob?.client?.view || "15x15"
+		var/atom/movable/screen/movable/action_button/button = viewers[hud]
+		var/position = screen_loc_to_offset(button.screen_loc)
+		var/spells_iterated = 0
+		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
+			spells_iterated += 1
+			if(blood_spell.positioned)
+				continue
+			var/atom/movable/screen/movable/action_button/moving_button = blood_spell.viewers[hud]
+			if(!moving_button)
+				continue
+			var/our_x = position[1] + spells_iterated * world.icon_size // Offset any new buttons into our list
+			hud.position_action(moving_button, offset_to_screen_loc(our_x, position[2], our_view))
+			blood_spell.positioned = TRUE
 
 /datum/action/innate/cult/blood_magic/Activate()
 	if(holy_dispel)
@@ -99,6 +100,8 @@
 	var/base_desc //To allow for updating tooltips
 	var/invocation
 	var/health_cost = 0
+	/// Have we already been positioned into our starting location?
+	var/positioned = FALSE
 
 /datum/action/innate/cult/blood_spell/Grant(mob/living/owner, datum/action/innate/cult/blood_magic/BM)
 	if(health_cost)
@@ -106,9 +109,7 @@
 	base_desc = desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
 	all_magic = BM
-	..()
-	button.locked = TRUE
-	button.ordered = FALSE
+	return ..()
 
 /datum/action/innate/cult/blood_spell/Remove()
 	if(all_magic)
@@ -268,12 +269,12 @@
 		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
 		var/image/C = image('icons/effects/cult_effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
-		addtimer(CALLBACK(H,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), 2400, TIMER_OVERRIDE|TIMER_UNIQUE)
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/atom, remove_alt_appearance),"cult_apoc",TRUE), 2400, TIMER_OVERRIDE|TIMER_UNIQUE)
 		to_chat(ranged_ability_user,"<span class='cult'><b>[H] has been cursed with living nightmares!</b></span>")
 		attached_action.charges--
 		attached_action.desc = attached_action.base_desc
 		attached_action.desc += "<br><b><u>Has [attached_action.charges] use\s remaining</u></b>."
-		attached_action.UpdateButtonIcon()
+		attached_action.UpdateButtons()
 		if(attached_action.charges <= 0)
 			remove_ranged_ability("<span class='cult'>You have exhausted the spell's power!</span>")
 			qdel(src)
@@ -325,7 +326,7 @@
 		qdel(src)
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/cult/blood_spell/manipulation
 	name = "Blood Rites"
@@ -373,7 +374,7 @@
 			source.charges = uses
 			source.desc = source.base_desc
 			source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-			source.UpdateButtonIcon()
+			source.UpdateButtons()
 	..()
 
 /obj/item/melee/blood_magic/attack_self(mob/living/user)
@@ -387,8 +388,7 @@
 	log_combat(user, M, "used a cult spell on", source.name, "")
 	M.set_last_attacker(user)
 
-/obj/item/melee/blood_magic/afterattack(atom/target, mob/living/carbon/user, proximity)
-	. = ..()
+/obj/item/melee/blood_magic/proc/post_cast(atom/target, mob/living/carbon/user, proximity)
 	if(invocation)
 		user.whisper(invocation, language = /datum/language/common)
 	if(health_cost)
@@ -401,7 +401,7 @@
 	else if(source)
 		source.desc = source.base_desc
 		source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-		source.UpdateButtonIcon()
+		source.UpdateButtons()
 
 //Stun
 /obj/item/melee/blood_magic/stun
@@ -427,7 +427,7 @@
 			L.mob_light(_color = LIGHT_COLOR_HOLY_MAGIC, _range = 2, _duration = 100)
 			var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 			L.add_overlay(forbearance)
-			addtimer(CALLBACK(L, /atom/proc/cut_overlay, forbearance), 100)
+			addtimer(CALLBACK(L, TYPE_PROC_REF(/atom, cut_overlay), forbearance), 100)
 
 			if(istype(anti_magic_source, /obj/item))
 				var/obj/item/ams_object = anti_magic_source
@@ -467,6 +467,7 @@
 			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [is_servant_of_ratvar(L) ? "writhes in pain!" : "falls to the ground!"]</span>")
 		uses--
 	..()
+	post_cast(target, user, proximity)
 
 //Teleportation
 /obj/item/melee/blood_magic/teleport
@@ -480,39 +481,44 @@
 		to_chat(user, "<span class='warning'>You can only teleport adjacent cultists with this spell!</span>")
 		return
 	if(iscultist(user))
-		var/list/potential_runes = list()
-		var/list/teleportnames = list()
-		for(var/R in GLOB.teleport_runes)
-			var/obj/effect/rune/teleport/T = R
-			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
-
-		if(!potential_runes.len)
-			to_chat(user, "<span class='warning'>There are no valid runes to teleport to!</span>")
-			log_game("Teleport talisman failed - no other teleport runes")
-			return
-
-		var/turf/T = get_turf(src)
-		if(is_away_level(T.z))
-			to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
-			log_game("Teleport spell failed - user in away mission")
-			return
-
-		var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
-		var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-		if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune || !proximity)
-			return
-		var/turf/dest = get_turf(actual_selected_rune)
-		if(is_blocked_turf(dest, TRUE))
-			to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
-			return
-		uses--
-		var/turf/origin = get_turf(user)
-		var/mob/living/L = target
-		if(do_teleport(L, dest, channel = TELEPORT_CHANNEL_CULT))
-			origin.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
-				"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
-			dest.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
+		try_teleport(target, user, proximity)
 		..()
+
+/obj/item/melee/blood_magic/teleport/proc/try_teleport(atom/target, mob/living/carbon/user, proximity)
+	set waitfor = FALSE
+	var/list/potential_runes = list()
+	var/list/teleportnames = list()
+	for(var/R in GLOB.teleport_runes)
+		var/obj/effect/rune/teleport/T = R
+		potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
+
+	if(!potential_runes.len)
+		to_chat(user, "<span class='warning'>There are no valid runes to teleport to!</span>")
+		log_game("Teleport talisman failed - no other teleport runes")
+		return
+
+	var/turf/T = get_turf(src)
+	if(is_away_level(T.z))
+		to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
+		log_game("Teleport spell failed - user in away mission")
+		return
+
+	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune || !proximity)
+		return
+	var/turf/dest = get_turf(actual_selected_rune)
+	if(is_blocked_turf(dest, TRUE))
+		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
+		return
+	uses--
+	var/turf/origin = get_turf(user)
+	var/mob/living/L = target
+	if(do_teleport(L, dest, channel = TELEPORT_CHANNEL_CULT))
+		origin.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
+			"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
+		dest.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
+	post_cast(target, user, proximity)
 
 //Shackles
 /obj/item/melee/blood_magic/shackles
@@ -530,6 +536,7 @@
 			user.visible_message("<span class='cultitalic'>This victim doesn't have enough arms to complete the restraint!</span>")
 			return
 		..()
+		post_cast(target, user, proximity)
 
 /obj/item/melee/blood_magic/shackles/proc/CuffAttack(mob/living/carbon/C, mob/living/user)
 	if(!C.handcuffed)
@@ -583,6 +590,7 @@
 				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+				post_cast(target, proximity_flag, user)
 			else
 				to_chat(user, "<span class='warning'>You need 50 metal to produce a construct shell!</span>")
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
@@ -593,55 +601,72 @@
 				new /obj/item/stack/sheet/runed_metal(T,quantity)
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around the plasteel, transforming it into runed metal!</span>")
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+				post_cast(target, user, proximity_flag)
 		if(istype(target, /obj/item/clothing/suit/hooded/wintercoat) && target.type != /obj/item/clothing/suit/hooded/wintercoat/narsie)
-			if (do_after(user,30,target=target))
-				new /obj/item/clothing/suit/hooded/wintercoat/narsie(T)
-				qdel(target)
-				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [target], transforming it into a narsian winter coat!</span>")
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+			convert_coat(target, user, proximity_flag, T)
 		else if(istype(target,/mob/living/silicon/robot))
-			var/mob/living/silicon/robot/candidate = target
-			if(!iscultist(user, TRUE))
-				to_chat(user, "<span class='warning'>You are not strongly connected enough to Nar'sie to use make constructs...</span>")
-			else if(candidate.mmi)
-				user.visible_message("<span class='danger'>A dark cloud emanates from [user]'s hand and swirls around [candidate]!</span>")
-				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, 1)
-				var/prev_color = candidate.color
-				candidate.color = "black"
-				if(do_after(user, 90, target = candidate))
-					candidate.emp_act(80)
-					var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
-					user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
-					switch(construct_class)
-						if("Juggernaut")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, candidate, user, 0, T)
-						if("Wraith")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, 0, T)
-						if("Artificer")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, candidate, user, 0, T)
-					SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
-					uses--
-					candidate.mmi = null
-					qdel(candidate)
-				else
-					candidate.color = prev_color
-			else
-				uses--
-				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!</span>")
-				new /obj/structure/constructshell(T)
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+			convert_borg(target, user, proximity_flag, T)
 		else if(istype(target,/obj/machinery/door/airlock))
-			playsound(T, 'sound/machines/airlockforced.ogg', 50, 1)
-			do_sparks(5, TRUE, target)
-			if(do_after(user, 50, target = user))
-				target.narsie_act()
-				uses--
-				user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
-				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+			convert_door(target, user, proximity_flag, T)
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")
 			return
 		..()
+
+/obj/item/melee/blood_magic/construction/proc/convert_coat(atom/target, mob/user, proximity_flag, turf/T)
+	set waitfor = FALSE
+	if(do_after(user,30,target=target))
+		new /obj/item/clothing/suit/hooded/wintercoat/narsie(T)
+		qdel(target)
+		to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [target], transforming it into a narsian winter coat!</span>")
+		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+		post_cast(target, user, proximity_flag)
+
+/obj/item/melee/blood_magic/construction/proc/convert_door(atom/target, mob/user, proximity_flag, turf/T)
+	set waitfor = FALSE
+	playsound(T, 'sound/machines/airlockforced.ogg', 50, 1)
+	do_sparks(5, TRUE, target)
+	if(do_after(user, 50, target = user))
+		target.narsie_act()
+		uses--
+		user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
+		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+		post_cast(target, user, proximity_flag)
+
+/obj/item/melee/blood_magic/construction/proc/convert_borg(atom/target, mob/user, proximity_flag, turf/T)
+	set waitfor = FALSE
+	var/mob/living/silicon/robot/candidate = target
+	if(!iscultist(user, TRUE))
+		to_chat(user, "<span class='warning'>You are not strongly connected enough to Nar'sie to use make constructs...</span>")
+		return
+	else if(candidate.mmi)
+		user.visible_message("<span class='danger'>A dark cloud emanates from [user]'s hand and swirls around [candidate]!</span>")
+		playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, 1)
+		var/prev_color = candidate.color
+		candidate.color = "black"
+		if(do_after(user, 90, target = candidate))
+			candidate.emp_act(80)
+			var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+			user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
+			switch(construct_class)
+				if("Juggernaut")
+					makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, candidate, user, 0, T)
+				if("Wraith")
+					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, 0, T)
+				if("Artificer")
+					makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, candidate, user, 0, T)
+			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+			uses--
+			candidate.mmi = null
+			qdel(candidate)
+		else
+			candidate.color = prev_color
+	else
+		uses--
+		to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!</span>")
+		new /obj/structure/constructshell(T)
+		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+	post_cast(target, user, proximity_flag)
 
 //Armor: Gives the target a basic cultist combat loadout
 /obj/item/melee/blood_magic/armor
@@ -654,17 +679,18 @@
 		uses--
 		var/mob/living/carbon/C = target
 		C.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [C]!</span>")
-		C.equip_to_slot_or_del(new /obj/item/clothing/under/color/black,SLOT_W_UNIFORM)
-		C.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), SLOT_HEAD)
-		C.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), SLOT_WEAR_SUIT)
-		C.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), SLOT_SHOES)
-		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), SLOT_BACK)
-		C.equip_to_slot_or_del(new /obj/item/clothing/gloves/fingerless/pugilist/hungryghost(user), SLOT_GLOVES)
+		C.equip_to_slot_or_del(new /obj/item/clothing/under/color/black,ITEM_SLOT_ICLOTHING)
+		C.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), ITEM_SLOT_HEAD)
+		C.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), ITEM_SLOT_OCLOTHING)
+		C.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), ITEM_SLOT_FEET)
+		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), ITEM_SLOT_BACK)
+		C.equip_to_slot_or_del(new /obj/item/clothing/gloves/fingerless/pugilist/hungryghost(user), ITEM_SLOT_GLOVES)
 		if(C == user)
 			qdel(src) //Clears the hands
 		C.put_in_hands(new /obj/item/melee/cultblade(user))
 		C.put_in_hands(new /obj/item/restraints/legcuffs/bola/cult(user))
 		..()
+		post_cast(target, user, proximity)
 
 /obj/item/melee/blood_magic/manipulator
 	name = "Ritual Aura"
@@ -687,13 +713,15 @@
 				if(H.stat == DEAD)
 					to_chat(user,"<span class='warning'>Only a revive rune can bring back the dead!</span>")
 					return
-				if(H.blood_volume < (BLOOD_VOLUME_SAFE*H.blood_ratio))
+				if(H.functional_blood() < (BLOOD_VOLUME_SAFE*H.blood_ratio))
 					var/restore_blood = (BLOOD_VOLUME_SAFE*H.blood_ratio) - H.blood_volume
-					if(uses*2 < restore_blood)
-						H.blood_volume += uses*2
+					if(uses * 2 < restore_blood)
+						H.adjust_integration_blood(uses * 2)
 						to_chat(user,"<span class='danger'>You use the last of your blood rites to restore what blood you could!</span>")
 						uses = 0
-						return ..()
+						..()
+						post_cast(target, user, proximity)
+						return
 					else
 						H.blood_volume = (BLOOD_VOLUME_SAFE*H.blood_ratio)
 						uses -= round(restore_blood/2)
@@ -758,6 +786,7 @@
 		if(istype(target, /obj/effect/decal/cleanable/blood))
 			blood_draw(target, user)
 		..()
+		post_cast()
 
 /obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
 	var/temp = 0

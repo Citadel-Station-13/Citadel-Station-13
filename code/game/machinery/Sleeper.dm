@@ -29,7 +29,7 @@
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
 
-/obj/machinery/sleeper/Initialize()
+/obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
 	// if(mapload)
 	// 	component_parts -= circuit
@@ -278,7 +278,7 @@
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
 
-/obj/machinery/sleeper/syndie/Initialize()
+/obj/machinery/sleeper/syndie/Initialize(mapload)
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/sleeper/syndie(null)
@@ -289,7 +289,7 @@
 	component_parts += new /obj/item/stack/cable_coil(null)
 	RefreshParts()
 
-/obj/machinery/sleeper/syndie/fullupgrade/Initialize()
+/obj/machinery/sleeper/syndie/fullupgrade/Initialize(mapload)
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/sleeper/syndie(null)

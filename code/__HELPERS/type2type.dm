@@ -158,7 +158,7 @@
 /proc/dir2angle(D)
 	switch(D)
 		if(NORTH)
-			return 0
+			return FALSE
 		if(SOUTH)
 			return 180
 		if(EAST)
@@ -301,7 +301,7 @@
 /proc/unix2date(timestamp, seperator = "-")
 
 	if(timestamp < 0)
-		return 0 //Do not accept negative values
+		return FALSE //Do not accept negative values
 
 	var/year = 1970 //Unix Epoc begins 1970-01-01
 	var/dayInSeconds = 86400 //60secs*60mins*24hours
@@ -363,7 +363,7 @@
 	var/list/covered_parts = list()
 
 	if(!bpc)
-		return 0
+		return FALSE
 
 	if(bpc & FULL_BODY)
 		covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
@@ -412,25 +412,25 @@
 
 /proc/slot2body_zone(slot)
 	switch(slot)
-		if(SLOT_BACK, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_BELT, SLOT_WEAR_ID)
+		if(ITEM_SLOT_BACK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_ICLOTHING, ITEM_SLOT_BELT, ITEM_SLOT_ID)
 			return BODY_ZONE_CHEST
 
-		if(SLOT_GLOVES, SLOT_HANDS, SLOT_HANDCUFFED)
+		if(ITEM_SLOT_GLOVES, ITEM_SLOT_HANDS, ITEM_SLOT_HANDCUFFED)
 			return pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 
-		if(SLOT_HEAD, SLOT_NECK, SLOT_NECK, SLOT_EARS)
+		if(ITEM_SLOT_HEAD, ITEM_SLOT_NECK, ITEM_SLOT_NECK, ITEM_SLOT_EARS)
 			return BODY_ZONE_HEAD
 
-		if(SLOT_WEAR_MASK)
+		if(ITEM_SLOT_MASK)
 			return BODY_ZONE_PRECISE_MOUTH
 
-		if(SLOT_GLASSES)
+		if(ITEM_SLOT_EYES)
 			return BODY_ZONE_PRECISE_EYES
 
-		if(SLOT_SHOES)
+		if(ITEM_SLOT_FEET)
 			return pick(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
 
-		if(SLOT_LEGCUFFED)
+		if(ITEM_SLOT_LEGCUFFED)
 			return pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 //adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
@@ -557,7 +557,7 @@
 //assumes format #RRGGBB #rrggbb
 /proc/color_hex2num(A)
 	if(!A || length(A) != length_char(A))
-		return 0
+		return FALSE
 	var/R = hex2num(copytext(A, 2, 4))
 	var/G = hex2num(copytext(A, 4, 6))
 	var/B = hex2num(copytext(A, 6, 0))
@@ -591,9 +591,9 @@
 		switch(child)
 			if(/datum)
 				return null
-			if(/obj || /mob)
+			if(/obj, /mob)
 				return /atom/movable
-			if(/area || /turf)
+			if(/area, /turf)
 				return /atom
 			else
 				return /datum
@@ -652,31 +652,31 @@
 
 /proc/slot_to_string(slot)
 	switch(slot)
-		if(SLOT_BACK)
+		if(ITEM_SLOT_BACK)
 			return "Backpack"
-		if(SLOT_WEAR_MASK)
+		if(ITEM_SLOT_MASK)
 			return "Mask"
-		if(SLOT_HANDS)
+		if(ITEM_SLOT_HANDS)
 			return "Hands"
-		if(SLOT_BELT)
+		if(ITEM_SLOT_BELT)
 			return "Belt"
-		if(SLOT_EARS)
+		if(ITEM_SLOT_EARS)
 			return "Ears"
-		if(SLOT_GLASSES)
+		if(ITEM_SLOT_EYES)
 			return "Glasses"
-		if(SLOT_GLOVES)
+		if(ITEM_SLOT_GLOVES)
 			return "Gloves"
-		if(SLOT_NECK)
+		if(ITEM_SLOT_NECK)
 			return "Neck"
-		if(SLOT_HEAD)
+		if(ITEM_SLOT_HEAD)
 			return "Head"
-		if(SLOT_SHOES)
+		if(ITEM_SLOT_FEET)
 			return "Shoes"
-		if(SLOT_WEAR_SUIT)
+		if(ITEM_SLOT_OCLOTHING)
 			return "Suit"
-		if(SLOT_W_UNIFORM)
+		if(ITEM_SLOT_ICLOTHING)
 			return "Uniform"
-		if(SLOT_IN_BACKPACK)
+		if(ITEM_SLOT_BACKPACK)
 			return "In backpack"
 
 /proc/tg_ui_icon_to_cit_ui(ui_style)
@@ -689,5 +689,11 @@
 			return 'modular_citadel/icons/ui/screen_operative.dmi'
 		if('icons/mob/screen_clockwork.dmi')
 			return 'modular_citadel/icons/ui/screen_clockwork.dmi'
+		if('icons/mob/screen_glass.dmi')
+			return 'modular_citadel/icons/ui/screen_glass.dmi'
+		if('icons/mob/screen_trasenknox.dmi')
+			return 'modular_citadel/icons/ui/screen_trasenknox.dmi'
+		if('icons/mob/screen_detective.dmi')
+			return 'modular_citadel/icons/ui/screen_detective.dmi'
 		else
 			return 'modular_citadel/icons/ui/screen_midnight.dmi'

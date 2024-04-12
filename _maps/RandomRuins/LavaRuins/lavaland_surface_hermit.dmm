@@ -4,57 +4,57 @@
 /area/lavaland/surface/outdoors)
 "b" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "c" = (
 /turf/closed/wall/mineral/iron,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "d" = (
 /obj/item/clothing/head/helmet/space/orange,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating/asteroid/basalt,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "e" = (
 /obj/item/clothing/suit/space/orange,
 /turf/open/floor/plating/asteroid/basalt,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "f" = (
 /turf/open/floor/plating/asteroid/basalt,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "g" = (
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "h" = (
 /obj/item/shovel,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "i" = (
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "j" = (
 /obj/structure/sink/puddle,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "k" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "l" = (
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "m" = (
 /obj/structure/rack,
 /obj/item/seeds/reishi,
@@ -62,79 +62,79 @@
 /obj/item/seeds/plump,
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
 /turf/open/floor/plating/asteroid/basalt,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "n" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "o" = (
 /turf/open/floor/plating,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "p" = (
 /obj/structure/rack,
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/ore,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/plating/asteroid/basalt,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "q" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "r" = (
 /obj/structure/rack,
 /obj/item/pickaxe/emergency,
 /obj/item/tank/internals/oxygen,
 /turf/open/floor/plating/asteroid/basalt,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "s" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "t" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "u" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /turf/open/floor/plating,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "v" = (
 /obj/structure/fans,
 /turf/open/floor/pod/dark,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "w" = (
 /obj/machinery/smartfridge/survival_pod,
 /turf/open/floor/pod/dark,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "x" = (
 /obj/effect/mob_spawn/human/hermit,
 /turf/open/floor/pod/dark,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "y" = (
 /turf/open/floor/pod/dark,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "z" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/structure/tubes,
 /turf/open/floor/plating,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "A" = (
 /obj/structure/table,
 /obj/item/kitchen/knife/combat/survival,
 /turf/open/floor/plating,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "B" = (
 /obj/structure/table/survival_pod,
 /turf/open/floor/pod/dark,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "C" = (
 /obj/structure/tubes,
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/pod/dark,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "D" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1;
@@ -143,37 +143,37 @@
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "E" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/interior,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "F" = (
 /turf/closed/wall/mineral/titanium,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "G" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "H" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "I" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 "J" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/powered)
+/area/ruin/lavaland/powered)
 
 (1,1,1) = {"
 a

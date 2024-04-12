@@ -21,7 +21,7 @@
 			return ..()
 		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
 		qdel(src)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/effect/clockwork/sigil/attack_tk(mob/user)
@@ -36,7 +36,7 @@
 		return TRUE
 	. = ..()
 
-/obj/effect/clockwork/sigil/ex_act(severity)
+/obj/effect/clockwork/sigil/ex_act(severity, target, origin)
 	visible_message("<span class='warning'>[src] scatters into thousands of particles.</span>")
 	qdel(src)
 
@@ -111,6 +111,19 @@
 	sigil_name = "Sigil of Submission"
 	var/glow_type = /obj/effect/temp_visual/ratvar/sigil/submission
 
+/obj/effect/clockwork/sigil/submission/Crossed(atom/movable/AM)
+	. = ..()
+	if(istype(AM, /obj/item/aicard))
+		var/obj/item/aicard/cardy = AM
+		if(!cardy.AI)
+			return
+		var/mob/living/silicon/ai/aiconvert = cardy.AI
+		if(aiconvert.stat > stat_affected)
+			return
+		if(is_servant_of_ratvar(aiconvert) || !(aiconvert.mind || aiconvert.has_status_effect(STATUS_EFFECT_SIGILMARK)))
+			return
+		sigil_effects(aiconvert)
+
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	var/turf/T = get_turf(src)
 	var/has_sigil = FALSE
@@ -137,7 +150,7 @@
 		if(glow)
 			qdel(glow)
 		animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return
 	if(is_eligible_servant(L))
@@ -170,7 +183,7 @@
 			else
 				to_chat(M, "<span class='heavy_brass'>[message] [L.real_name]!</span>")
 	animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
-	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 20)
 	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 
 
@@ -187,11 +200,11 @@
 	sigil_name = "Sigil of Transmission"
 	affects_servants = TRUE
 
-/obj/effect/clockwork/sigil/transmission/Initialize()
+/obj/effect/clockwork/sigil/transmission/Initialize(mapload)
 	. = ..()
 	update_icon()
 
-/obj/effect/clockwork/sigil/transmission/ex_act(severity)
+/obj/effect/clockwork/sigil/transmission/ex_act(severity, target, origin)
 	if(severity == 3)
 		adjust_clockwork_power(500) //Light explosions charge the network!
 		visible_message("<span class='warning'>[src] flares a brilliant orange!</span>")
@@ -216,7 +229,7 @@
 	else if(get_clockwork_power())
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
-/obj/effect/clockwork/sigil/transmission/Initialize()
+/obj/effect/clockwork/sigil/transmission/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -225,24 +238,28 @@
 	return ..()
 
 /obj/effect/clockwork/sigil/transmission/process()
-    var/power_drained = 0
-    var/power_mod = 0.005
-    for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
-        var/turf/T = t
-        for(var/M in T)
-            var/atom/movable/A = M
-            power_drained += A.power_drain(TRUE)
+	do_process()
 
-        CHECK_TICK
+/obj/effect/clockwork/sigil/transmission/proc/do_process()
+	set waitfor = FALSE
+	var/power_drained = 0
+	var/power_mod = 0.005
+	for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
+		var/turf/T = t
+		for(var/M in T)
+			var/atom/movable/A = M
+			power_drained += A.power_drain(TRUE)
 
-    adjust_clockwork_power(power_drained * power_mod * 15)
-    new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
+		CHECK_TICK
+
+	adjust_clockwork_power(power_drained * power_mod * 15)
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
 
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))
 		return
 	to_chat(cyborg, "<span class='brass'>You start to charge from the [sigil_name]...</span>")
-	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, .proc/cyborg_checks, cyborg, TRUE)))
+	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, PROC_REF(cyborg_checks), cyborg, TRUE)))
 		return
 	var/giving_power = min(FLOOR(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), get_clockwork_power()) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(adjust_clockwork_power(-giving_power))
@@ -251,7 +268,7 @@
 		cyborg.color = list("#EC8A2D", "#EC8A2D", "#EC8A2D", rgb(0,0,0))
 		cyborg.apply_status_effect(STATUS_EFFECT_POWERREGEN, giving_power * 0.1) //ten ticks, restoring 10% each
 		animate(cyborg, color = previous_color, time = 100)
-		addtimer(CALLBACK(cyborg, /atom/proc/update_atom_colour), 100)
+		addtimer(CALLBACK(cyborg, TYPE_PROC_REF(/atom, update_atom_colour)), 100)
 
 /obj/effect/clockwork/sigil/transmission/proc/cyborg_checks(mob/living/silicon/robot/cyborg, silent)
 	if(!cyborg.cell)

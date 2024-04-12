@@ -43,7 +43,7 @@
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
 	to_chat(user, "<span class='danger'>You start drawing power from influence...</span>")
-	if(do_after(user,10 SECONDS,TRUE,RS))
+	if(do_after(user, 10 SECONDS, RS))
 		qdel(RS)
 		charge += 1
 
@@ -57,7 +57,7 @@
 	var/A = get_turf(target)
 	to_chat(user, "<span class='danger'>You start drawing a rune...</span>")
 
-	if(do_after(user,30 SECONDS,FALSE, user))
+	if(do_after(user, 30 SECONDS, user))
 
 		new /obj/effect/eldritch/big(A)
 
@@ -65,7 +65,7 @@
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
 
 	to_chat(user, "<span class='danger'>You start removing a rune...</span>")
-	if(do_after(user,2 SECONDS,FALSE, user))
+	if(do_after(user, 2 SECONDS, user))
 		qdel(target)
 
 /obj/item/forbidden_book/ui_interact(mob/user, datum/tgui/ui = null)
@@ -89,6 +89,7 @@
 	var/list/lore = list()
 
 	data["charges"] = charge
+	data["total_sacs"] = cultie.total_sacrifices
 
 	for(var/X in to_know)
 		lore = list()
@@ -96,7 +97,11 @@
 		lore["type"] = EK.type
 		lore["name"] = EK.name
 		lore["cost"] = EK.cost
-		lore["disabled"] = EK.cost <= charge ? FALSE : TRUE
+		lore["sacs"] = EK.sacs_needed
+		if(EK.cost <= charge && cultie.total_sacrifices >= EK.sacs_needed)
+			lore["disabled"] = FALSE
+		else
+			lore["disabled"] = TRUE
 		lore["path"] = EK.route
 		lore["state"] = "Research"
 		lore["flavour"] = EK.gain_text
@@ -108,6 +113,7 @@
 		var/datum/eldritch_knowledge/EK = known[X]
 		lore["name"] = EK.name
 		lore["cost"] = EK.cost
+		lore["sacs"] = EK.sacs_needed
 		lore["disabled"] = TRUE
 		lore["path"] = EK.route
 		lore["state"] = "Researched"

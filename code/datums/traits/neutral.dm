@@ -154,3 +154,29 @@
 /datum/quirk/longtimer/on_spawn()
 	var/mob/living/carbon/C = quirk_holder
 	C.generate_fake_scars(rand(min_scars, max_scars))
+
+/datum/quirk/trashcan
+	name = "Trashcan"
+	desc = "You are able to consume and digest trash."
+	value = 0
+	gain_text = "<span class='notice'>You feel like munching on a can of soda.</span>"
+	lose_text = "<span class='notice'>You no longer feel like you should be eating trash.</span>"
+	mob_trait = TRAIT_TRASHCAN
+
+// Moved Colorist quirk to a loadout item
+
+/datum/quirk/salt_sensitive
+	name = "Sodium Sensitivity"
+	desc = "Your body is sensitive to sodium, and is burnt upon contact. Ingestion or contact with it is not advised."
+	value = 0
+	medical_record_text = "Patient should not come into contact with sodium."
+	mob_trait = TRAIT_SALT_SENSITIVE
+
+/datum/quirk/dullahan
+	name = "Dullahan"
+	desc = "Your head is detached from your body."
+	value = 0
+	medical_record_text = "Patient seems to have some kind of spatial link with their decapitated head."
+
+/datum/quirk/dullahan/post_add()
+	quirk_holder.AddComponent(/datum/component/dullahan)

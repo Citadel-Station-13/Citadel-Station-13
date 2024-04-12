@@ -30,8 +30,6 @@
 
 	var/maptype = MAP_TYPE_STATION //This should be used to adjust ingame behavior depending on the specific type of map being played. For instance, if an overmap were added, it'd be appropriate for it to only generate with a MAP_TYPE_SHIP
 
-	var/announcertype = "standard" //Determines the announcer the map uses. standard uses the default announcer, classic, but has a random chance to use other similarly-themed announcers, like medibot
-
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
 		"cargo" = "cargo_box",
@@ -178,9 +176,6 @@
 	if ("maptype" in json)
 		maptype = json["maptype"]
 
-	if ("announcertype" in json)
-		announcertype = json["announcertype"]
-
 	if ("orientation" in json)
 		orientation = json["orientation"]
 		if(!(orientation in GLOB.cardinals))
@@ -277,7 +272,6 @@
 	jsonlist["year_offset"] = year_offset
 	jsonlist["minetype"] = minetype
 	jsonlist["maptype"] = maptype
-	jsonlist["announcertype"] = announcertype
 	jsonlist["orientation"] = orientation
 	jsonlist["allow_custom_shuttles"] = allow_custom_shuttles
 	jsonlist["job_whitelist"] = job_whitelist

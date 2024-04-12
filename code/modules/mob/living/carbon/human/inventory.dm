@@ -17,39 +17,39 @@
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(SLOT_BACK)
+		if(ITEM_SLOT_BACK)
 			return back
-		if(SLOT_WEAR_MASK)
+		if(ITEM_SLOT_MASK)
 			return wear_mask
-		if(SLOT_NECK)
+		if(ITEM_SLOT_NECK)
 			return wear_neck
-		if(SLOT_HANDCUFFED)
+		if(ITEM_SLOT_HANDCUFFED)
 			return handcuffed
-		if(SLOT_LEGCUFFED)
+		if(ITEM_SLOT_LEGCUFFED)
 			return legcuffed
-		if(SLOT_BELT)
+		if(ITEM_SLOT_BELT)
 			return belt
-		if(SLOT_WEAR_ID)
+		if(ITEM_SLOT_ID)
 			return wear_id
-		if(SLOT_EARS)
+		if(ITEM_SLOT_EARS)
 			return ears
-		if(SLOT_GLASSES)
+		if(ITEM_SLOT_EYES)
 			return glasses
-		if(SLOT_GLOVES)
+		if(ITEM_SLOT_GLOVES)
 			return gloves
-		if(SLOT_HEAD)
+		if(ITEM_SLOT_HEAD)
 			return head
-		if(SLOT_SHOES)
+		if(ITEM_SLOT_FEET)
 			return shoes
-		if(SLOT_WEAR_SUIT)
+		if(ITEM_SLOT_OCLOTHING)
 			return wear_suit
-		if(SLOT_W_UNIFORM)
+		if(ITEM_SLOT_ICLOTHING)
 			return w_uniform
-		if(SLOT_L_STORE)
+		if(ITEM_SLOT_LPOCKET)
 			return l_store
-		if(SLOT_R_STORE)
+		if(ITEM_SLOT_RPOCKET)
 			return r_store
-		if(SLOT_S_STORE)
+		if(ITEM_SLOT_SUITSTORE)
 			return s_store
 	return null
 
@@ -98,17 +98,17 @@
 
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
-		if(SLOT_BELT)
+		if(ITEM_SLOT_BELT)
 			belt = I
 			update_inv_belt()
-		if(SLOT_WEAR_ID)
+		if(ITEM_SLOT_ID)
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
-		if(SLOT_EARS)
+		if(ITEM_SLOT_EARS)
 			ears = I
 			update_inv_ears()
-		if(SLOT_GLASSES)
+		if(ITEM_SLOT_EYES)
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
@@ -121,13 +121,13 @@
 			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 				update_sight()
 			update_inv_glasses()
-		if(SLOT_GLOVES)
+		if(ITEM_SLOT_GLOVES)
 			gloves = I
 			update_inv_gloves()
-		if(SLOT_SHOES)
+		if(ITEM_SLOT_FEET)
 			shoes = I
 			update_inv_shoes()
-		if(SLOT_WEAR_SUIT)
+		if(ITEM_SLOT_OCLOTHING)
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
@@ -135,19 +135,23 @@
 				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
-		if(SLOT_W_UNIFORM)
+		if(ITEM_SLOT_ICLOTHING)
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
-		if(SLOT_L_STORE)
+		if(ITEM_SLOT_LPOCKET)
 			l_store = I
 			update_inv_pockets()
-		if(SLOT_R_STORE)
+		if(ITEM_SLOT_RPOCKET)
 			r_store = I
 			update_inv_pockets()
-		if(SLOT_S_STORE)
+		if(ITEM_SLOT_SUITSTORE)
 			s_store = I
 			update_inv_s_store()
+		if(ITEM_SLOT_ACCESSORY)
+			var/obj/item/clothing/under/attach_target = w_uniform
+			attach_target.attach_accessory(I, src, TRUE)
+			// updates handled by attach_accessory
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 			not_handled = TRUE
@@ -188,9 +192,9 @@
 				dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
 			if(l_store)
 				dropItemToGround(l_store, TRUE)
-			if(wear_id && !CHECK_BITFIELD(wear_id.item_flags, NO_UNIFORM_REQUIRED))
+			if(wear_id && !(wear_id.item_flags & NO_UNIFORM_REQUIRED))
 				dropItemToGround(wear_id)
-			if(belt && !CHECK_BITFIELD(belt.item_flags, NO_UNIFORM_REQUIRED))
+			if(belt && !(belt.item_flags & NO_UNIFORM_REQUIRED))
 				dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
@@ -209,7 +213,7 @@
 			update_tint()
 		if(G.vision_correction)
 			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
-				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+				overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/scaled/impaired, 1)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		if(!QDELETED(src))
@@ -278,9 +282,9 @@
 	else
 		O = outfit
 		if(!istype(O))
-			return 0
+			return FALSE
 	if(!O)
-		return 0
+		return FALSE
 
 	return O.equip(src, visualsOnly, preference_source)
 
@@ -296,7 +300,7 @@
 	if(incapacitated())
 		return
 	var/obj/item/thing = get_active_held_item()
-	var/obj/item/equipped_back = get_item_by_slot(SLOT_BACK)
+	var/obj/item/equipped_back = get_item_by_slot(ITEM_SLOT_BACK)
 	if(!equipped_back) // We also let you equip a backpack like this
 		if(!thing)
 			to_chat(src, "<span class='warning'>You have no backpack to take something out of!</span>")
@@ -304,7 +308,14 @@
 		if(equip_to_slot_if_possible(thing, ITEM_SLOT_BACK))
 			update_inv_hands()
 		return
-	if(!SEND_SIGNAL(equipped_back, COMSIG_CONTAINS_STORAGE)) // not a storage item
+	var/datum/component/storage/storage = equipped_back.GetComponent(/datum/component/storage)
+	if(istype(equipped_back, /obj/item/mod/control))
+		var/obj/item/mod/control/C = equipped_back
+		for(var/obj/item/mod/module/storage/S in C.modules)
+			if(S.stored)
+				equipped_back = S.stored
+				storage = S.stored.GetComponent(/datum/component/storage)
+	if(!storage)
 		if(!thing)
 			equipped_back.attack_hand(src)
 		else
@@ -314,10 +325,11 @@
 		if(!SEND_SIGNAL(equipped_back, COMSIG_TRY_STORAGE_INSERT, thing, src))
 			to_chat(src, "<span class='warning'>You can't fit anything in!</span>")
 		return
-	if(!equipped_back.contents.len) // nothing to take out
-		to_chat(src, "<span class='warning'>There's nothing in your backpack to take out!</span>")
+	var/atom/real_location = storage.real_location()
+	if(!real_location.contents.len) // nothing to take out
+		to_chat(src, "<span class='warning'>There's nothing in your [equipped_back.name] to take out!</span>")
 		return
-	var/obj/item/stored = equipped_back.contents[equipped_back.contents.len]
+	var/obj/item/stored = real_location.contents[real_location.contents.len]
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from backpack
@@ -327,7 +339,7 @@
 	if(incapacitated())
 		return
 	var/obj/item/thing = get_active_held_item()
-	var/obj/item/equipped_belt = get_item_by_slot(SLOT_BELT)
+	var/obj/item/equipped_belt = get_item_by_slot(ITEM_SLOT_BELT)
 	if(!equipped_belt) // We also let you equip a belt like this
 		if(!thing)
 			to_chat(src, "<span class='warning'>You have no belt to take something out of!</span>")

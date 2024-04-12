@@ -605,11 +605,17 @@
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/coco = 1)
 	mix_message = "The color changes as the mixture blends smoothly."
 
-/datum/chemical_reaction/eggnog
-	name = "eggnog"
+/datum/chemical_reaction/spiked_eggnog
+	name = "spiked eggnog"
 	id = /datum/reagent/consumable/ethanol/eggnog
 	results = list(/datum/reagent/consumable/ethanol/eggnog = 15)
-	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/eggyolk = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/eggnog = 10)
+
+/datum/chemical_reaction/eggnog
+	name = "eggnog"
+	id = /datum/reagent/consumable/eggnog
+	results = list(/datum/reagent/consumable/eggnog = 10)
+	required_reagents = list(/datum/reagent/consumable/cream = 5, /datum/reagent/consumable/eggyolk = 5)
 
 /datum/chemical_reaction/narsour
 	name = "Nar'sour"
@@ -771,8 +777,8 @@
 
 /datum/chemical_reaction/pinkmilk
 	name = "Strawberry Milk"
-	id = /datum/reagent/consumable/pinkmilk
-	results = list(/datum/reagent/consumable/pinkmilk = 2)
+	id = /datum/reagent/consumable/milk/pinkmilk
+	results = list(/datum/reagent/consumable/milk/pinkmilk = 2)
 	required_reagents = list(/datum/reagent/consumable/strawberryjuice = 1, /datum/reagent/consumable/milk = 1)
 	mix_message = "You feel a sweet aroma drift up your nose as the lactic mixture swirls. It reminds you of... a cafeteria."
 
@@ -1016,8 +1022,8 @@
 
 /datum/chemical_reaction/pinktea
 	name = "Strawberry Tea"
-	id = /datum/reagent/consumable/pinktea
-	results = list(/datum/reagent/consumable/pinktea = 5)
+	id = /datum/reagent/consumable/tea/pinktea
+	results = list(/datum/reagent/consumable/tea/pinktea = 5)
 	required_reagents = list(/datum/reagent/consumable/strawberryjuice = 1, /datum/reagent/consumable/tea/arnold_palmer = 1, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/catnip_tea

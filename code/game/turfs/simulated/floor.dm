@@ -11,6 +11,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	flags_1 = NO_SCREENTIPS_1
 
 	/// Minimum explosion power to break tile
 	var/explosion_power_break_tile = EXPLOSION_POWER_FLOOR_TILE_BREAK
@@ -27,7 +28,7 @@
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
-	thermal_conductivity = 0.004
+	thermal_conductivity = 0.04
 	heat_capacity = 10000
 	intact = 1
 	var/broken = 0
@@ -72,7 +73,7 @@
 	if(mapload && prob(66)) // 2/3 instead of 1/3 (default)
 		MakeDirty()
 
-/turf/open/floor/ex_act(severity, target)
+/turf/open/floor/ex_act(severity, target, origin)
 	var/shielded = is_shielded()
 	..()
 	if(severity != 1 && shielded && target != src)
@@ -156,14 +157,12 @@
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
 		if(A.level == 3)
-			return 1
+			return TRUE
 
 /turf/open/floor/blob_act(obj/structure/blob/B)
 	return
 
 /turf/open/floor/update_icon()
-	. = ..()
-	update_visuals()
 
 /turf/open/floor/attack_paw(mob/user)
 	return attack_hand(user)
@@ -213,12 +212,12 @@
 
 /turf/open/floor/attackby(obj/item/C, mob/user, params)
 	if(!C || !user)
-		return 1
+		return TRUE
 	if(..())
-		return 1
+		return TRUE
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
-	return 0
+	return FALSE
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
 	return intact ? FORCE_BOOLEAN(pry_tile(I, user)) : FALSE

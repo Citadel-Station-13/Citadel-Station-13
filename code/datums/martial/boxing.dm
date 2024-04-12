@@ -6,11 +6,11 @@
 
 /datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
-	return 1
+	return TRUE
 
 /datum/martial_art/boxing/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't grab while boxing!</span>")
-	return 1
+	return TRUE
 
 /datum/martial_art/boxing/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 
@@ -26,7 +26,7 @@
 		return TRUE
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, "melee")
+	var/armor_block = D.run_armor_check(affecting, MELEE)
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 
@@ -46,7 +46,7 @@
 			log_combat(A, D, "knocked out (boxing) ")
 		else if(D.lying)
 			D.forcesay(GLOB.hit_appends)
-	return 1
+	return TRUE
 
 /datum/martial_art/boxing/teach(mob/living/carbon/human/H, make_temporary = TRUE)
 	. = ..()
@@ -59,7 +59,7 @@
 
 /obj/item/clothing/gloves/boxing/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user) && slot == SLOT_GLOVES)
+	if(ishuman(user) && slot == ITEM_SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,TRUE)
 
@@ -68,5 +68,5 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(SLOT_GLOVES) == src)
+	if(H.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
 		style.remove(H)

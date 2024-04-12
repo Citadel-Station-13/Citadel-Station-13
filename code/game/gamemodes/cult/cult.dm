@@ -39,7 +39,7 @@
 	antag_flag = ROLE_CULTIST
 	false_report_weight = 10
 	chaos = 8
-	restricted_jobs = list("AI", "Cyborg")
+	restricted_jobs = list("Prisoner", "AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_players = 30
 	required_enemies = 3
@@ -154,9 +154,9 @@
 			if(cult_mind.current.onCentCom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 
 /datum/game_mode/cult/generate_report()

@@ -78,22 +78,29 @@ effective or pretty fucking useless.
 	var/ui_x = 320
 	var/ui_y = 335
 
+/obj/item/healthanalyzer/rad_laser/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/identification/syndicate, ID_COMPONENT_DEL_ON_IDENTIFY, ID_COMPONENT_EFFECT_NO_ACTIONS, ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR)
+
 /obj/item/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
 	if(!stealth || !irradiate)
-		..()
+		return ..()
+	var/knowledge = SEND_SIGNAL(src, COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK, user) == ID_COMPONENT_KNOWLEDGE_FULL
 	if(!irradiate)
 		return
 	if(!used)
-		log_combat(user, M, "irradiated", src)
+		log_combat(user, M, "[knowledge? "" : "unknowingly "]irradiated", src)
 		var/cooldown = get_cooldown()
 		used = TRUE
 		icon_state = "health1"
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
-		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
+		if(knowledge)
+			to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
+		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), M, intensity), (wavelength+(intensity*4))*5)
 	else
-		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
+		if(knowledge)
+			to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
 /obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
 	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
@@ -109,7 +116,9 @@ effective or pretty fucking useless.
 	interact(user)
 
 /obj/item/healthanalyzer/rad_laser/interact(mob/user)
-	ui_interact(user)
+	var/knowledge = SEND_SIGNAL(src, COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK, user) == ID_COMPONENT_KNOWLEDGE_FULL
+	if(knowledge)
+		ui_interact(user)
 
 /obj/item/healthanalyzer/rad_laser/ui_state(mob/user)
 	return GLOB.hands_state
@@ -199,7 +208,7 @@ effective or pretty fucking useless.
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(SLOT_BELT) == src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		if(!on)
 			Activate(usr)
 		else
@@ -207,8 +216,8 @@ effective or pretty fucking useless.
 	return
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_BELT)
-		return 1
+	if(slot == ITEM_SLOT_BELT)
+		return TRUE
 
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)
@@ -229,11 +238,11 @@ effective or pretty fucking useless.
 
 /obj/item/shadowcloak/dropped(mob/user)
 	..()
-	if(user && user.get_item_by_slot(SLOT_BELT) != src)
+	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
 /obj/item/shadowcloak/process()
-	if(user.get_item_by_slot(SLOT_BELT) != src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 		return
 	var/turf/T = get_turf(src)

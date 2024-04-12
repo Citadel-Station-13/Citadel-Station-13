@@ -48,7 +48,7 @@
 	. = ..()
 	class = class_
 	if(timer)
-		addtimer(CALLBACK(src, .proc/remove), timer)
+		addtimer(CALLBACK(src, PROC_REF(remove)), timer)
 		timed = TRUE
 	if(copymut && istype(copymut, /datum/mutation/human))
 		copy_mutation(copymut)
@@ -86,7 +86,7 @@
 
 	grant_spell()
 	if(!modified)
-		addtimer(CALLBACK(src, .proc/modify, 5)) //gonna want children calling ..() to run first
+		addtimer(CALLBACK(src, PROC_REF(modify), 5)) //gonna want children calling ..() to run first
 
 /datum/mutation/human/proc/get_visual_indicator()
 	return
@@ -119,8 +119,8 @@
 			owner.RemoveSpell(power)
 			qdel(power)
 		SEND_SIGNAL(owner, COMSIG_HUMAN_MUTATION_LOSS, src)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/mutation/human/proc/say_mod(message)
 	if(message)

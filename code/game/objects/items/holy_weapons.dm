@@ -5,7 +5,7 @@
 	desc = "Deus Vult."
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
-	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list(MELEE = 41, BULLET = 15, LASER = 5,ENERGY = 5, BOMB = 5, BIO = 2, RAD = 0, FIRE = 0, ACID = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
@@ -229,7 +229,7 @@
 	var/chaplain_spawnable = TRUE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
-/obj/item/nullrod/Initialize()
+/obj/item/nullrod/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
@@ -260,9 +260,9 @@
 			display_names[initial(rodtype.name)] = rodtype
 			nullrod_icons += list(initial(rodtype.name) = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state)))
 
-	nullrod_icons = sortList(nullrod_icons)
+	nullrod_icons = sort_list(nullrod_icons)
 
-	var/choice = show_radial_menu(L, src , nullrod_icons, custom_check = CALLBACK(src, .proc/check_menu, L), radius = 42, require_near = TRUE)
+	var/choice = show_radial_menu(L, src , nullrod_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), L), radius = 42, require_near = TRUE)
 	if(!choice || !check_menu(L))
 		return
 
@@ -314,7 +314,7 @@
 	attack_verb = list("punched", "cross countered", "pummeled")
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
-/obj/item/nullrod/godhand/Initialize()
+/obj/item/nullrod/godhand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -455,7 +455,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-/obj/item/nullrod/scythe/Initialize()
+/obj/item/nullrod/scythe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
@@ -582,7 +582,7 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 2
 
-/obj/item/nullrod/chainsaw/Initialize()
+/obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
@@ -662,7 +662,7 @@
 	bare_wound_bonus = 25
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
-/obj/item/nullrod/armblade/Initialize()
+/obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
@@ -742,7 +742,7 @@
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
 		H.adjustStaminaLoss(rand(12,18))
 		if(prob(25))
-			(INVOKE_ASYNC(src, .proc/jedi_spin, user))
+			(INVOKE_ASYNC(src, PROC_REF(jedi_spin), user))
 	else
 		return ..()
 
@@ -769,12 +769,33 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
+/obj/item/nullrod/tribal_knife/pickup(mob/user)
+	. = ..()
+	reroll()
+
 /obj/item/nullrod/tribal_knife/process()
-	slowdown = rand(-2, 2)
+	reroll()
+
+/obj/item/nullrod/tribal_knife/proc/reroll()
 	if(iscarbon(loc))
 		var/mob/living/carbon/wielder = loc
 		if(wielder.is_holding(src))
-			wielder.update_equipment_speed_mods()
+			var/current_tiles = 10 / max(wielder.cached_multiplicative_slowdown, world.tick_lag)
+			var/datum/movespeed_modifier/M = wielder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/item/arrhythmic_knife, update = FALSE, multiplicative_slowdown = pick(-10, -10, 0, (current_tiles - 2) / 10, (current_tiles - 4) / 10))
+			M.max_tiles_per_second_boost = pick(3, 6)
+			wielder.update_movespeed()		// update movespeed manually
+
+/obj/item/nullrod/tribal_knife/dropped(mob/user)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/item/arrhythmic_knife)
+	return ..()
+
+/datum/movespeed_modifier/item/arrhythmic_knife
+	variable = TRUE
+	flags = IGNORE_NOSLOW
+	movetypes = ~FLOATING
+	priority = 750
+	absolute_max_tiles_per_second = 20
+	max_tiles_per_second_boost = 6
 
 /obj/item/nullrod/pitchfork
 	icon_state = "pitchfork0"
@@ -810,7 +831,7 @@
 	var/praying = FALSE
 	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
 
-/obj/item/nullrod/rosary/Initialize()
+/obj/item/nullrod/rosary/Initialize(mapload)
 	.=..()
 	if(GLOB.deity)
 		deity_name = GLOB.deity

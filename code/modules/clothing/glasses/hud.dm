@@ -3,6 +3,8 @@
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
+	///Used for topic calls. Just because you have a HUD display doesn't mean you should be able to interact with stuff.
+	var/hud_trait = null
 
 /obj/item/clothing/glasses/hud/CheckParts(list/parts_list)
 	. = ..()
@@ -12,11 +14,12 @@
 		if(G.vision_correction)
 			vision_correction = TRUE
 			name = "prescription [name]"
+			desc += " These have been made with some form of vision-correcting eyewear, thus making them innately correct some vision deficiencies."
 			return
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(hud_type && slot == SLOT_GLASSES)
+	if(hud_type && slot == ITEM_SLOT_EYES)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
@@ -53,13 +56,9 @@
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
-/obj/item/clothing/glasses/hud/health/prescription
-	name = "prescription health scanner HUD"
-	desc = "A heads-up display, made with a prescription lens, that scans the humans in view and provides accurate data about their health status."
-	icon_state = "healthhud"
-	hud_type = DATA_HUD_MEDICAL_ADVANCED
-	vision_correction = 1
-	glass_colour_type = /datum/client_colour/glass_colour/lightblue
+/obj/item/clothing/glasses/hud/health/prescription/Initialize(mapload)
+	. = ..()
+	prescribe()
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "night vision health scanner HUD"
@@ -86,9 +85,9 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
-/obj/item/clothing/glasses/hud/health/sunglasses/prescription
-	name = "prescription medical HUDSunglasses"
-	vision_correction = 1
+/obj/item/clothing/glasses/hud/health/sunglasses/prescription/Initialize(mapload)
+	. = ..()
+	prescribe()
 
 /obj/item/clothing/glasses/hud/health/eyepatch
 	name = "eyepatch medHUD"
@@ -115,17 +114,13 @@
 	flash_protect = 1
 	tint = 1
 
-/obj/item/clothing/glasses/hud/diagnostic/prescription
-	name = "prescription diagnostic HUD"
-	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits. This one has a prescription lens."
-	icon_state = "diagnostichud"
-	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	vision_correction = 1
-	glass_colour_type = /datum/client_colour/glass_colour/lightorange
+/obj/item/clothing/glasses/hud/diagnostic/prescription/Initialize(mapload)
+	. = ..()
+	prescribe()
 
-/obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription
-	name = "prescription diagnostic HUDSunglasses"
-	vision_correction = 1
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription/Initialize(mapload)
+	. = ..()
+	prescribe()
 
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "night vision diagnostic HUD"
@@ -153,13 +148,9 @@
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
-/obj/item/clothing/glasses/hud/security/prescription
-	name = "prescription security HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records. This one has a prescription lens so you can see the banana peal that slipped you."
-	icon_state = "securityhud"
-	hud_type = DATA_HUD_SECURITY_ADVANCED
-	vision_correction = 1
-	glass_colour_type = /datum/client_colour/glass_colour/red
+/obj/item/clothing/glasses/hud/security/prescription/Initialize(mapload)
+	. = ..()
+	prescribe()
 
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "chameleon security HUD"
@@ -198,9 +189,9 @@
 	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
 	icon_state = "hudpatch"
 
-/obj/item/clothing/glasses/hud/security/sunglasses/prescription
-	name = "prescription security HUDSunglasses"
-	vision_correction = 1
+/obj/item/clothing/glasses/hud/security/sunglasses/prescription/Initialize(mapload)
+	. = ..()
+	prescribe()
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
@@ -290,3 +281,16 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	thermal_overload()
+
+/obj/item/clothing/glasses/hud/spacecop
+	name = "police aviators"
+	desc = "For thinking you look cool while brutalizing protestors and minorities."
+	icon_state = "bigsunglasses"
+	hud_type = ANTAG_HUD_GANGSTER
+
+/obj/item/clothing/glasses/hud/spacecop/hidden // for the undercover cop
+	name = "sunglasses"
+	desc = "These sunglasses are special, and let you view potential criminals."
+	icon_state = "sun"
+	item_state = "sunglasses"
+

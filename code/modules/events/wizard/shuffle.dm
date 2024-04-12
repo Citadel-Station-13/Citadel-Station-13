@@ -8,6 +8,7 @@
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
 	can_be_midround_wizard = FALSE // not removing it completely yet
+	description = "Shuffles everyone around on the station."
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
@@ -45,6 +46,7 @@
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
 	can_be_midround_wizard = FALSE // not removing it completely yet
+	description = "Shuffles the names of everyone around the station."
 
 /datum/round_event/wizard/shufflenames/start()
 	var/list/mobnames = list()
@@ -80,6 +82,7 @@
 	max_occurrences = 3
 	earliest_start = 0 MINUTES
 	can_be_midround_wizard = FALSE // not removing it completely yet
+	description = "Shuffles the minds of everyone around the station, except for the wizard."
 
 /datum/round_event/wizard/shuffleminds/start()
 	var/list/mobs	 = list()

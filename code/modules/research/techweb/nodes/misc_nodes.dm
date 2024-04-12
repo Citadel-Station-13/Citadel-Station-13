@@ -12,7 +12,7 @@
 	display_name = "Advanced Data Theory"
 	description = "Better insight into programming and data."
 	prereq_ids = list("datatheory")
-	design_ids = list("icprinter", "icupgadv", "icupgclo")
+	design_ids = list("icprinter", "icupgadv", "icupgclo","bounty_pad","bounty_pad_control")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /////////////////////////plasma tech/////////////////////////

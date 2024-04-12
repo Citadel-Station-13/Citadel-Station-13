@@ -1,0 +1,171 @@
+2022-06-01:
+  DeltaFire15:
+  - bugfix: Mechs now use power when moving.
+  - bugfix: The check for mining-only mechs is no longer inverted to only allow non-mining
+      z levels.
+  - bugfix: Reverted an accidental buff from the /tg/ mech code port and its adjustment
+      to citadel's mech state.
+  - bugfix: 'Mechs with different base movement power cost now actually have it apply
+      instead of immediately being overwritten. tweak: Adjusted part impact on movement
+      power use to make more sense.'
+  timothyteakettle:
+  - rscadd: 'optimises quirks somewhat tweak: nyctophobia will now stop run intent
+      when you try to move in darkness with it on, compared to the old behaviour of
+      automatically turning it off in darkness when it is on and you have been in
+      darkness for >= 0.2 seconds tweak: nyctophobia and lightless will both not update
+      your mood until you move now, as part of the optimisations made by changing
+      them to tg code'
+2022-06-02:
+  Bhijn & Myr:
+  - bugfix: You can no longer attach multiple tracking beacons to a single mech, fixing
+      an exploit where mechs can be nuked with minimal effort.
+  - bugfix: Omegastation's airmix filter is no longer inverted! The oxygen:nitrogen
+      levels of Omega later in the round should now be normal again.
+  - rscadd: 'The TGS bot is now capable of pinging the reboot role! Rejoice! tweak:
+      The TGS bot''s automated output can now be configured to define which channels
+      certain messages are output to.'
+  - rscadd: Jukeboxes now have a queue! You can pay 40 credits to have any song of
+      your choosing queued up for playback on the jukebox!
+  - rscadd: Jukeboxes can now be emagged, allowing you to boost their volume up to
+      210%, along with removing all of its access restrictions. Additionally, a sufficiently
+      loud jukebox is fully capable of causing potentially permanent damage to your
+      ears.
+  - rscadd: 'Jukeboxes now support multi-z! This is self-explanatory. tweak: Volume
+      knobs now work on jukeboxes! tweak: Muffled jukeboxes have been given a buff.
+      tweak: Sounds now factor in the distance multiplier for their baseline z offset.
+      tweak: SOUND_UPDATE now bypasses the can_hear() check in playsound_local() (thanks
+      Azarak for helping figure this out!)'
+  - bugfix: 'Jukebox audio no longer uses playsound_local(), allowing falloff to properly
+      apply to jukeboxes (this fixes the bug where they were significantly quieter
+      than intended) tweak: When deaf, jukeboxes no longer mute the playing track
+      permanently.'
+  - bugfix: Ears are capable of taking damage again.
+  - rscadd: Jukeboxes have been added to Boxstation, Lambdastation, Metastation, and
+      Omegastation
+  - bugfix: Boxstation's incinerator sensor now properly reports to atmos's machinery
+      again
+  Putnam3145:
+  - balance: Nitryl is higher risk, can't be sold for as much
+  - refactor: Gas prices are now part of the gas data structure
+  TrojanCoyote:
+  - rscadd: sprites for muzzled and non muzzled mobs for the masks, along with the
+      adjusted versions, icons for the masks as well.
+  bunny232:
+  - rscadd: Universal blood type now accepts bug blood.
+2022-06-03:
+  Bhijn & Myr:
+  - bugfix: Solar panels now actually face the proper direction. This is achieved
+      by reducing the iconstate to only 1 dir.
+2022-06-06:
+  SandPoot:
+  - refactor: Completely replaces the new player panel *not the admin one* with TG's.
+  timothyteakettle:
+  - rscadd: adds paper skin and glass bones quirks
+2022-06-08:
+  Bhijn & Myr:
+  - bugfix: Audiovisual redirection now works exactly as it used to. In laymen's terms,
+      this means folks in VR sleepers are aware of the world around them again!
+  - rscadd: During pride month, station nukes are significantly more efficient at
+      revealing genders.
+  - rscadd: Station pets now retain their color between shifts!
+  - bugfix: The shake animation, jiggle animation, squish animation, jitter animation,
+      and float animation, have all been fixed.
+  - bugfix: This also means that storage animations are fully working again. It's
+      been a few years!
+  - bugfix: 'The pull animation no longer interrupts ongoing animations. tweak: The
+      pull animation now supports diagonal directions (currently only applies to the
+      initial grab! pull code is spaghetti)'
+  - bugfix: All screenshake sources now fully support the screenshake pref
+  - code_imp: cit_screenshake.dm has been fully merged into the base files.
+  - bugfix: You can no longer remotely apply fingerprints to storage objects by clicking
+      and dragging it around. Additionally, storage objects now rustle again when
+      clicking and dragging (only took like,, a year to fix)
+  - bugfix: 'The pickup animation now properly slides into your spaceman again, instead
+      of just kinda disappearing. tweak: When pulling a resting mob, they''ll now
+      skip the laying animation entirely, fixing a visual oddity where they shrink
+      and grow to flip. tweak: Alerts are now a little snappier and bouncier, as they''ve
+      been swapped from sine easing, to back easing. tweak: Radial menus now use sine
+      easing, rather than linear easing. This just looks a little prettier. tweak:
+      Runechat now properly respects an object''s X offset. Previously, it relied
+      on a hardcoded check for dogborgs. tweak: The float animation now uses pixel_z
+      instead of pixel_y, fixing issues where the Y offset gets wiped due to the float
+      animation. This also makes floating fully compatible with ctrl+WASD.'
+  - bugfix: Admin vote deobfuscation now properly displays votes as 0 if they were
+      simply never voted for.
+  SandPoot:
+  - refactor: Does some extremely minor touches on pulling/pushing code.
+  timothyteakettle:
+  - rscadd: updates existing poly maid outfit with tg sprite but polychromatic
+  - rscadd: adds polychromic maid apron, gloves, collar, headband
+  - rscadd: adds support for polychromic accessories
+2022-06-12:
+  Bhijn & Myr:
+  - rscadd: The station minimap now features higher detail! Instead of just windows
+      and grilles being outlined, all dense+anchored structures and machinery are
+      shown on the minimap.
+  - rscadd: The station minimap now supports obfuscating entire areas, via the minimap_show_walls
+      var.
+  - rscadd: 'The station minimap now supports defining two area colors, allowing for
+      a checkerboard pattern! tweak: Hallways and maint have been given white and
+      gray colors, respectively, for ease of readability. tweak: Ruins are now obfuscated
+      on the minimap, and have been given a subtle, yet distinct, color pattern!'
+  - bugfix: The station minimap no longer errors when you mouse over it
+  - rscadd: 'The station minimap now supports multiz! (However, due to bugginess,
+      multiz minimaps won''t display area tooltips.) tweak: The station minimap now
+      features pixel-perfect scaling.'
+  - code_imp: The station minimap can now support managing data for up to 16,581,374
+      areas without any conflicts at all! Before, BYOND's psuedorandom RNG meant that
+      it was somewhat common for areas to collide with each others' data.
+  - rscadd: Talking is now accompanied with fully-customizable sounds! You can modify
+      your character's speech under the speech tab in chargen, and you can toggle
+      these sounds via the "Hear/Silence Vocal Barks" verb under the preferences tab!
+      This also fully supports genetics.
+  - bugfix: Admittedly an unatomized change, but Cit's DNA blocks can now properly
+      be updated through genetics. Before, these required a complete genetics reset
+      to apply.
+  - rscadd: 'The chat now supports blockquotes! tweak: Examining, medical scanners,
+      self-checking, and mood checkups, have all been converted to make use of blockquotes.'
+  Bhijn & Myr (+ UI work and cleanup by Sandpoot!):
+  - rscadd: 'Colormates now have HSV coloration! tweak: Colormates have had their
+      "please use white clothing" message removed, as that recommendation''s now mostly
+      pointless tweak: The default mode for colormates is now HSV coloration tweak:
+      The temp messages in colormates have been tweaked slightly to be more user-friendly,
+      as they''re user-facing. tweak: The description for constants in the colormate
+      matrix mode has been fixed; the constant variables have nothing to do with contrast,
+      they simply add color tweak: Matrix mode has been made a lot more usable; it''s
+      now clamped between -10 and 10, and features a step of 0.01, making it much
+      easier to simply click and drag to adjust the values, rather than having to
+      punch them in manually'
+  Putnam3145:
+  - balance: QCD matter is now worth 10x as much and makes 2 research pointer per
+      mole
+  SandPoot:
+  - rscadd: Added a search box to all vending machine uis.
+  - qol: Vending machines have candystripes for better clarity.
+  - bugfix: Fixed items that use strip_mod and strip_silence (stripping people faster
+      or without giving them a message)
+  keronshb:
+  - bugfix: Families fixed from crashing
+2022-06-13:
+  Bhijn & Myr:
+  - bugfix: Jukebox audio is now audible within closets, crates, etc!
+2022-06-19:
+  IHOPMommyLich:
+  - rscdel: Removed the forced dynamic, allowing the standard game mode vote.
+  TripleShades:
+  - bugfix: Cannabis mutation variants now use the proper growth state icons
+  - bugfix: Picking to make tea cups will now give the right starting glasswork base
+  - bugfix: Picking to make tea plates will now give the right starting glasswork
+      base
+  - spellcheck: Fixed a state typo in tea cup glassworking
+  - spellcheck: Fixed an incorrect step displayed on spout glassworking
+  - code_imp: Enables the make priority announcement admin verb for admin use
+2022-06-21:
+  Bhijn & Myr:
+  - balance: Ling abilities now have a default loudness of 0.5. This change applies
+      to every single ability that used to have 0 loudness.
+  TrojanCoyote:
+  - rscadd: Adds a plate carrier to HoS loadout, sprites for such
+2022-06-29:
+  Putnam3145:
+  - bugfix: GAS_OXYGEN -> GAS_O2

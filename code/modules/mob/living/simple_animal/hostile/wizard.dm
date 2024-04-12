@@ -37,7 +37,7 @@
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
-/mob/living/simple_animal/hostile/wizard/Initialize()
+/mob/living/simple_animal/hostile/wizard/Initialize(mapload)
 	. = ..()
 	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
 	fireball.clothes_req = NONE
@@ -62,7 +62,7 @@
 
 /mob/living/simple_animal/hostile/wizard/handle_automated_action()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/AutomatedCast)
+	INVOKE_ASYNC(src, PROC_REF(AutomatedCast))
 
 /mob/living/simple_animal/hostile/wizard/proc/AutomatedCast()
 	if(target && next_cast < world.time)

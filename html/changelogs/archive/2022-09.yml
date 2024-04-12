@@ -1,0 +1,74 @@
+2022-09-01:
+  Putnam3145:
+  - bugfix: Job code is no longer fricked (oh well)
+  - rscadd: Antag roles can be set to "low" rather than just "enabled" or "disabled",
+      which will prevent spending antag rep on that antag but make you a low priority
+      pick
+  - code_imp: Changed no antags from a special role to a toggle (why did i make it
+      a special role)
+  - code_imp: All direct references to ROLE_NO_ANTAGONISTS have been swapped to the
+      HAS_ANTAG_PREF macro or removed
+2022-09-02:
+  Putnam3145:
+  - tweak: comfy disky no longer wants the station to blow up
+  - balance: Field generators now yell if they fail (singuloose nerf)
+  ? zeroisthebiggay and Tastyfish (https://github.com/Tastyfish) and Fikou (https://github.com/Fikou)
+    and san7890 (https://github.com/san7890)
+  : - bugfix: The 2 types of weight machines now have unique in-game names.
+    - imageadd: New sprites for the weight machines.
+    - imageadd: new punching bag sprites!!!!!!!!!!!!!!!!
+    - soundadd: The next time you work out at the gym, please appreciate the new crispness
+        of the sound when that machine starts to squeak as a result of your effort.
+        So refreshing.
+2022-09-03:
+  Putnam3145:
+  - bugfix: Destructive analyzer now does not multiply your stack by 50
+2022-09-14:
+  timothyteakettle:
+  - rscadd: lets ghosts click a pAI device to download into it without a master
+2022-09-18:
+  Putnam3145:
+  - code_imp: Spurious for loop squashed
+  That REALLY Good Soda Flavor, jacklecroy on GitHub, ported by Hatterhat:
+  - rscadd: Using certain martial arts will create a combo meter when you attack.
+  - imageadd: Added combo meter icons.
+  shellspeed1:
+  - rscadd: The Quantum Spin design has been brought over from TG for testing in the
+      Citadel Station facilities.
+  - balance: Launchpads now have a targeting icon.
+  - balance: Massive gamebreaking balance. Xenohybrids can now eat DOUGHNUTS. Security
+      officers everywhere are afraid.
+  - bugfix: makes it some people can speak the encoded langauge.
+  - bugfix: makes the xenotongue a xenohybrid tongue so that people with it can speak
+      other langauges.
+  - rscadd: Adds the RBMK reactor from NSV. Credit to Kmc2000 for originally making
+      it. https://github.com/BeeStation/NSV13/pull/828
+2022-09-19:
+  Putnam3145:
+  - code_imp: Auxmos updated to 2.0.0
+2022-09-23:
+  shellspeed1:
+  - rscadd: Massively buffs talking by adding 3 new speech verbs improving the ability
+      of everyone to scream at each other.
+2022-09-24:
+  Putnam3145:
+  - bugfix: Added a check to from-ghosts midrounds making them not able to roll if
+      there are no ghosts
+  shellspeed1:
+  - rscadd: full auto is now available for some weapons.
+  - rscadd: All automatic weapons now come with a firemode selector switch.
+  - rscadd: You can now take people hostage with a gun by using it on someone with
+      the grab intent on.
+  - bugfix: cyborg mining point card now works again.
+  - rscadd: Added the posialert console, now ghosts can complain at the roboticist
+      for not making posibrains.
+  - rscadd: Borgs now receive access to the comms associated with their department
+      by default!
+  zeroisthebiggay, retlaw34 (https://github.com/retlaw34), any%, tetrazeta, zxaber(https://github.com/zxaber):
+  - imageadd: Restyles the hud
+  - imageadd: The Airlock Shock Indicator seen when using a Diagnostics Hud has a
+      new sprite.
+2022-09-27:
+  Putnam3145:
+  - bugfix: Your custom AI name is no longer stomped if someone decides to name a
+      station pet "Friend" or whatever

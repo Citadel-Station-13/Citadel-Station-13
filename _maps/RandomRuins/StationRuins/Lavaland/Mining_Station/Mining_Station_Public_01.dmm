@@ -994,13 +994,13 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "qh" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
+	},
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -2498,12 +2498,12 @@
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "Mj" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
 /obj/structure/mirror{
 	pixel_x = -28
+	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
@@ -2714,10 +2714,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"OI" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "ON" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/brown{
@@ -7031,7 +7027,7 @@ xv
 bg
 mI
 Cd
-OI
+es
 sz
 gk
 Wf

@@ -31,7 +31,7 @@
 	return ..()
 
 /obj/structure/transit_tube/station/should_stop_pod(pod, from_dir)
-	return 1
+	return TRUE
 
 /obj/structure/transit_tube/station/Bumped(atom/movable/AM)
 	if(!pod_moving && open_status == STATION_TUBE_OPEN && ismob(AM) && AM.dir == boarding_dir)
@@ -121,6 +121,7 @@
 
 
 /obj/structure/transit_tube/station/proc/launch_pod()
+	set waitfor = FALSE
 	if(launch_cooldown >= world.time)
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
@@ -131,8 +132,8 @@
 			if(open_status == STATION_TUBE_CLOSED && pod && pod.loc == loc)
 				pod.follow_tube()
 			pod_moving = 0
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/structure/transit_tube/station/process()
 	if(!pod_moving)
@@ -149,9 +150,7 @@
 		pod_moving = 0
 		if(!QDELETED(pod))
 			var/datum/gas_mixture/floor_mixture = loc.return_air()
-			floor_mixture.archive()
-			pod.air_contents.archive()
-			pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
+			equalize_all_gases_in_list(list(pod.air_contents,floor_mixture))
 			air_update_turf()
 
 /obj/structure/transit_tube/station/init_tube_dirs()

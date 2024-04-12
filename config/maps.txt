@@ -43,8 +43,20 @@ endmap
 map runtimestation
 endmap
 
+map spookystation
+	minplayers 150
+endmap
+
+map festivestation
+	minplayers 150
+endmap
+
 map multiz_debug
 endmap
 
 map kilostation
+endmap
+
+map syndicatestation
+	minplayers 300
 endmap

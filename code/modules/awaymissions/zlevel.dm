@@ -21,7 +21,7 @@
 	var/id
 	var/delay = TRUE // If the generated destination should be delayed by configured gateway delay
 
-/obj/effect/landmark/awaystart/Initialize()
+/obj/effect/landmark/awaystart/Initialize(mapload)
 	. = ..()
 	var/datum/gateway_destination/point/current
 	for(var/datum/gateway_destination/point/D in GLOB.gateway_destinations)

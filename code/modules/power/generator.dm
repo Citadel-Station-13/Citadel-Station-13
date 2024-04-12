@@ -12,12 +12,14 @@
 	var/lastgenlev = -1
 	var/lastcirc = "00"
 
+	var/max_efficiency = 0.45
+
 
 /obj/machinery/power/generator/Initialize(mapload)
 	. = ..()
 	find_circs()
 	connect_to_network()
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	update_icon()
 	component_parts = list(new /obj/item/circuitboard/machine/generator)
 
@@ -27,7 +29,7 @@
 
 /obj/machinery/power/generator/Destroy()
 	kill_circs()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	return ..()
 
 /obj/machinery/power/generator/update_overlays()
@@ -61,15 +63,12 @@
 
 
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
-				var/efficiency = 0.45
+				var/efficiency = LOGISTIC_FUNCTION(max_efficiency,0.0009,delta_temperature,10000)
 
 				var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 
-				var/heat = energy_transfer*(1-efficiency)
-				if(delta_temperature < 16800) // second point where derivative of below function = 1
-					lastgen += LOGISTIC_FUNCTION(500000,0.0009,delta_temperature,10000)
-				else
-					lastgen += delta_temperature + 482102 // value of above function at 16800, or very nearly so
+				lastgen += energy_transfer * efficiency
+				var/heat = energy_transfer * (1-efficiency)
 
 				hot_air.set_temperature(hot_air.return_temperature() - energy_transfer/hot_air_heat_capacity)
 				cold_air.set_temperature(cold_air.return_temperature() + heat/cold_air_heat_capacity)

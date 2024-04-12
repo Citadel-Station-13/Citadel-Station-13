@@ -55,7 +55,7 @@
 	. = ..()
 	if(dropping == user && isliving(user))
 		var/mob/living/L = user
-		if(L.resting && do_after(L, max(10, L.getStaminaLoss()*0.5), 0, src))
+		if(L.resting && do_after(L, max(10, L.getStaminaLoss()*0.5), src, IGNORE_HELD_ITEM))
 			if(Adjacent(L, src))
 				step(L, get_dir(L, src))
 				playsound(L, "rustle", 25, 1)
@@ -124,7 +124,7 @@
 	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
-/turf/open/indestructible/necropolis/Initialize()
+/turf/open/indestructible/necropolis/Initialize(mapload)
 	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
@@ -218,18 +218,12 @@
 			flash_color(L, flash_color = "#C80000", flash_time = 10)
 
 /turf/open/Initalize_Atmos(times_fired)
-	set_excited(FALSE)
-	update_visuals()
+	if(!istype(air,/datum/gas_mixture/turf))
+		air = new(2500,src)
+	air.copy_from_turf(src)
+	update_air_ref(planetary_atmos ? 1 : 2)
 
-	current_cycle = times_fired
 	ImmediateCalculateAdjacentTurfs()
-	for(var/i in atmos_adjacent_turfs)
-		var/turf/open/enemy_tile = i
-		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-		if(!get_excited() && air.compare(enemy_air))
-			//testing("Active turf found. Return value of compare(): [is_active]")
-			set_excited(TRUE)
-			SSair.add_to_active_extools(src)
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -251,7 +245,7 @@
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
-	return 1
+	return TRUE
 
 /turf/open/proc/water_vapor_gas_act()
 	MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
@@ -280,7 +274,7 @@
 		if(lube & NO_SLIP_WHEN_WALKING)
 			if(C.m_intent == MOVE_INTENT_WALK)
 				return FALSE
-			if(ishuman(C) && !(lube & SLIP_WHEN_JOGGING))
+			if(ishuman(C) && !(lube & SLIP_WHEN_JOGGING) && CONFIG_GET(flag/sprint_enabled))
 				var/mob/living/carbon/human/H = C
 				if(!(H.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && H.getStaminaLoss() <= 20)
 					return FALSE
@@ -304,7 +298,7 @@
 		lube |= SLIDE_ICE
 
 	if(lube&SLIDE)
-		new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+		new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, spin), 1, 1))
 	else if(lube&SLIDE_ICE)
 		new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 	return TRUE
@@ -323,8 +317,8 @@
 
 /turf/open/rad_act(pulse_strength)
 	. = ..()
-	if (air.get_moles(/datum/gas/carbon_dioxide) && air.get_moles(/datum/gas/oxygen))
-		pulse_strength = min(pulse_strength,air.get_moles(/datum/gas/carbon_dioxide)*1000,air.get_moles(/datum/gas/oxygen)*2000) //Ensures matter is conserved properly
-		air.set_moles(/datum/gas/carbon_dioxide, max(air.get_moles(/datum/gas/carbon_dioxide)-(pulse_strength/1000),0))
-		air.set_moles(/datum/gas/oxygen, max(air.get_moles(/datum/gas/oxygen)-(pulse_strength/2000),0))
-		air.adjust_moles(/datum/gas/pluoxium, pulse_strength/4000)
+	if (air.get_moles(GAS_CO2) && air.get_moles(GAS_O2))
+		pulse_strength = min(pulse_strength,air.get_moles(GAS_CO2)*1000,air.get_moles(GAS_O2)*2000) //Ensures matter is conserved properly
+		air.set_moles(GAS_CO2, max(air.get_moles(GAS_CO2)-(pulse_strength/1000),0))
+		air.set_moles(GAS_O2, max(air.get_moles(GAS_O2)-(pulse_strength/2000),0))
+		air.adjust_moles(GAS_PLUOXIUM, pulse_strength/4000)

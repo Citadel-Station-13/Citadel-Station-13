@@ -1,20 +1,23 @@
 /datum/round_event_control/supernova
 	name = "Supernova"
 	typepath = /datum/round_event/supernova
-	weight = 10
-	max_occurrences = 2
+	weight = 5
+	max_occurrences = 1
 	min_players = 2
+	category = EVENT_CATEGORY_SPACE
+	description = "Several modified radstorms hit the station."
 
 /datum/round_event/supernova
-	announceWhen = 40
-	startWhen = 1
-	endWhen = 300
+	announce_when = 40
+	start_when = 1
+	end_when = 300
 	var/power = 1
 	var/datum/sun/supernova
 	var/storm_count = 0
+	var/announced = FALSE
 
 /datum/round_event/supernova/setup()
-	announceWhen = rand(4, 60)
+	announce_when = rand(4, 60)
 	supernova = new
 	SSsun.suns += supernova
 	switch(rand(1,5))
@@ -30,9 +33,10 @@
 	supernova.power_mod = 0
 
 /datum/round_event/supernova/announce()
-	var/message = "[station_name()]: Our tachyon-doppler array has detected a supernova in your vicinity. Peak flux from the supernova estimated to be [round(power,0.1)] times current solar flux; if the supernova is close to your sun in the sky, your solars may receive this as a power boost.[power > 1 ? " Short burts of radiation may be possible, so please prepare accordingly." : ""] We hope you enjoy the light."
+	var/message = "[station_name()]: Our tachyon-doppler array has detected a supernova in your vicinity. Peak flux from the supernova estimated to be [round(power,0.1)] times current solar flux; if the supernova is close to your sun in the sky, your solars may receive this as a power boost.[power > 1 ? " Short burts of radiation may be possible, so please prepare accordingly." : "We expect no radiation bursts from this one."] We hope you enjoy the light."
 	if(prob(power * 25))
-		priority_announce(message, sender_override = "Nanotrasen Meteorology Division")
+		priority_announce(message, sender_override = "Nanotrasen Meteorology Division", has_important_message = TRUE)
+		announced = TRUE
 	else
 		print_command_report(message)
 
@@ -51,25 +55,26 @@
 		sucker_light.give_home_power()
 
 /datum/round_event/supernova/tick()
-	var/midpoint = round((endWhen-startWhen)/2)
+	var/midpoint = round((end_when-start_when)/2)
 	if(activeFor < midpoint)
 		supernova.power_mod = min(supernova.power_mod*1.2, power)
-	if(activeFor > endWhen-10)
+	if(activeFor > end_when-10)
 		supernova.power_mod /= 4
-	if(prob(round(supernova.power_mod*2)) && prob(3) && storm_count < 5 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
+	if(prob(round(supernova.power_mod)) && prob(5-storm_count) && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
 		SSweather.run_weather(/datum/weather/rad_storm/supernova)
 		storm_count++
 
 /datum/round_event/supernova/end()
 	SSsun.suns -= supernova
 	qdel(supernova)
-	priority_announce("The supernova's flux is now negligible. Radiation storms have ceased. Have a pleasant shift, [station_name()], and thank you for bearing with nature.",
-	sender_override = "Nanotrasen Meteorology Division")
+	if(announced)
+		priority_announce("The supernova's flux is now negligible. Radiation storms have ceased. Have a pleasant shift, [station_name()], and thank you for bearing with nature.",
+		sender_override = "Nanotrasen Meteorology Division")
 
 /datum/weather/rad_storm/supernova
 	weather_duration_lower = 50
 	weather_duration_upper = 100
 	telegraph_duration = 200
-	radiation_intensity = 1000
+	radiation_intensity = 500
 	weather_sound = null
 	telegraph_message = "<span class='userdanger'>The air begins to grow very warm!</span>"

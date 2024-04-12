@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/message_cooldown
 	var/breakout_time = 600
 
-/obj/structure/bodycontainer/Initialize()
+/obj/structure/bodycontainer/Initialize(mapload)
 	. = ..()
 	if(starting_tray)
 		connected = new starting_tray(src)
@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/scaled/impaired, 2)
 /*
  * Morgue
  */
@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums.Remove(src)
 	return ..()
 
-/obj/structure/bodycontainer/crematorium/Initialize()
+/obj/structure/bodycontainer/crematorium/Initialize(mapload)
 	. = ..()
 	GLOB.crematoriums.Add(src)
 
@@ -247,7 +247,13 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 		locked = TRUE
 		update_icon()
-
+		for(var/mob/living/simple_animal/jacq/J in conts)
+			visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
+			playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
+			J.poof()
+			locked = FALSE
+			update_icon()
+			return
 		for(var/mob/living/M in conts)
 			if (M.stat != DEAD)
 				M.emote("scream")
@@ -300,7 +306,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	layer = TRAY_LAYER
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
@@ -323,6 +329,17 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		add_fingerprint(user)
 	else
 		to_chat(user, "<span class='warning'>That's not connected to anything!</span>")
+
+/obj/structure/tray/attackby(obj/P, mob/user, params)
+	if(!istype(P, /obj/item/riding_offhand))
+		return ..()
+
+	var/obj/item/riding_offhand/riding_item = P
+	var/mob/living/carried_mob = riding_item.rider
+	if(carried_mob == user) //Piggyback user.
+		return
+	user.unbuckle_mob(carried_mob)
+	MouseDrop_T(carried_mob, user)
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
 	if(!ismovable(O) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
@@ -356,17 +373,18 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
+	pass_flags_self = PASSTABLE
 
-/obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
+/obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
-/obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
+/obj/structure/tray/m_tray/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
 	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSTABLE)
+	if(istype(caller))
+		. = . || (caller.pass_flags & PASSTABLE)

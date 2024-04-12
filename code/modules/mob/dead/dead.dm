@@ -7,13 +7,13 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	move_resist = INFINITY
 	throwforce = 0
 
-/mob/dead/Initialize()
+/mob/dead/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 	tag = "mob_[next_mob_id++]"
-	GLOB.mob_list += src
+	add_to_mob_list()
 
 	prepare_huds()
 
@@ -91,7 +91,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	var/client/C = client
 	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
-	new /obj/screen/splash(C)
+	new /atom/movable/screen/splash(C)
 
 	mob_transforming = TRUE
 	sleep(29)	//let the animation play
@@ -121,10 +121,13 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if (isturf(T))
 		update_z(T.z)
 
+/mob/dead/auto_deadmin_on_login()
+	return
+
 /mob/dead/Logout()
 	update_z(null)
 	return ..()
 
 /mob/dead/onTransitZ(old_z,new_z)
-	..()
+	. = ..()
 	update_z(new_z)

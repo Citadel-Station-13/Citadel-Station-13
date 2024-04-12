@@ -6,7 +6,7 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "cowboy"
 	desc = "A synthesized hat. You feel compelled to keep it on all times."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	//item_flags = NODROP //Tips their hat!
 
 /obj/item/clothing/head/hattip/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
@@ -37,15 +37,15 @@
 
 /obj/item/clothing/head/hattip/equipped(mob/M, slot)
 	. = ..()
-	if (slot == SLOT_HEAD)
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	if (slot == ITEM_SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/clothing/head/hattip/dropped(mob/M)
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/root_and_toot, src, src, 200))
+	addtimer(CALLBACK(src, PROC_REF(root_and_toot), src, src, 200))
 
 /obj/item/clothing/head/hattip/proc/root_and_toot(obj/item/clothing/head/hattip/hat)
 	hat.animate_atom_living()

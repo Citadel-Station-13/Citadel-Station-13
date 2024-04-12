@@ -3,7 +3,7 @@
 #define POWER_RESTORATION_SEARCH_APC 2
 #define POWER_RESTORATION_APC_FOUND 3
 
-/mob/living/silicon/ai/BiologicalLife(seconds, times_fired)
+/mob/living/silicon/ai/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	//I'm not removing that shitton of tabs, unneeded as they are. -- Urist
@@ -28,11 +28,15 @@
 	// Handle power damage (oxy)
 	if(aiRestorePowerRoutine)
 		// Lost power
-		adjustOxyLoss(1)
+		if (!battery)
+			to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
+			adjustOxyLoss(200)
+		else
+			battery--
 	else
 		// Gain Power
-		if(getOxyLoss())
-			adjustOxyLoss(-1)
+		if (battery < 200)
+			battery++
 
 	if(!lacks_power())
 		var/area/home = get_area(src)
@@ -53,11 +57,11 @@
 		if(NONE)
 			return FALSE
 		if(POWER_REQ_ALL)
-			return !T || !A || ((!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+			return !T || !A || ((!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/vehicle/sealed/mecha)))
 		if(POWER_REQ_CLOCKCULT)
 			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, SIGIL_ACCESS_RANGE))
 				return FALSE
-			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/vehicle/sealed/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
@@ -173,7 +177,7 @@
 	blind_eyes(1)
 	update_sight()
 	to_chat(src, "You've lost power!")
-	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)
+	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)
 
 #undef POWER_RESTORATION_OFF
 #undef POWER_RESTORATION_START

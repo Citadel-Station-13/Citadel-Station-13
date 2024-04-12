@@ -19,6 +19,13 @@
 
 	display_order = JOB_DISPLAY_ORDER_JANITOR
 	threat = 0.2
+	
+	family_heirlooms = list(
+		/obj/item/mop,
+		/obj/item/clothing/suit/caution,
+		/obj/item/reagent_containers/glass/bucket,
+		/obj/item/soap
+	)
 
 /datum/outfit/job/janitor
 	name = "Janitor"

@@ -4,11 +4,12 @@
 	max_occurrences = 3
 	weight = 2
 	min_players = 2
-
+	category = EVENT_CATEGORY_SPACE
+	description = "Space time anomalies appear on the station, randomly teleporting people who walk into them."
 
 /datum/round_event/wormholes
-	announceWhen = 10
-	endWhen = 60
+	announce_when = 10
+	end_when = 60
 
 	var/list/pick_turfs = list()
 	var/list/wormholes = list()
@@ -16,8 +17,8 @@
 	var/number_of_wormholes = 400
 
 /datum/round_event/wormholes/setup()
-	announceWhen = rand(0, 20)
-	endWhen = rand(40, 80)
+	announce_when = rand(0, 20)
+	end_when = rand(40, 80)
 
 /datum/round_event/wormholes/start()
 	for(var/turf/open/floor/T in world)
@@ -32,7 +33,7 @@
 		wormholes += new /obj/effect/portal/wormhole(T, 0, null, FALSE)
 
 /datum/round_event/wormholes/announce(fake)
-	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", "spanomalies")
+	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", "spanomalies", has_important_message = TRUE)
 
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)

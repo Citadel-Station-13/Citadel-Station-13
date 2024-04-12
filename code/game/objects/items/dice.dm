@@ -17,6 +17,11 @@
 				/obj/item/dice/d100
 				)
 
+/obj/item/storage/dice/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.can_hold = single_path_typecache_immutable(/obj/item/dice)
+
 /obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
 	new /obj/item/dice/d6(src)
@@ -45,7 +50,7 @@
 	var/can_be_rigged = TRUE
 	var/rigged = FALSE
 
-/obj/item/dice/Initialize()
+/obj/item/dice/Initialize(mapload)
 	. = ..()
 	result = roll(sides)
 	update_icon()
@@ -84,7 +89,7 @@
 	desc = "A die with six sides. 6 TIMES 255 TIMES 255 TILE TOTAL EXISTENCE, SQUARE YOUR MIND OF EDUCATED STUPID: 2 DOES NOT EXIST."
 	icon_state = "spaced6"
 
-/obj/item/dice/d6/space/Initialize()
+/obj/item/dice/d6/space/Initialize(mapload)
 	. = ..()
 	if(prob(10))
 		name = "spess cube"
@@ -163,7 +168,9 @@
 	diceroll(user)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	diceroll(thrownby)
+	var/mob/thrown_by = thrownby?.resolve()
+	if(thrown_by)
+		diceroll(thrown_by)
 	. = ..()
 
 /obj/item/dice/proc/diceroll(mob/user)

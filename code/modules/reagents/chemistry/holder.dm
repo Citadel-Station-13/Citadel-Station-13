@@ -14,6 +14,7 @@
 		GLOB.chemical_reagents_list[path] = D
 
 /proc/build_chemical_reactions_list()
+	message_admins("STARTY START START!")
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
 	// For example:
@@ -26,11 +27,20 @@
 	//Randomized need to go last since they need to check against conflicts with normal recipes
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
 	GLOB.chemical_reactions_list = list()
+	GLOB.normalized_chemical_reactions_list = list() // chemistry pda
+	GLOB.drink_reactions_list = list() // bartender pda
 
 	for(var/path in paths)
 
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
+		// store recipes separately for bartender/chemistry cartridges
+		if(D.id && !D.is_secret) // don't show things like secretcatchem or secret sauce
+			var/datum/reagent/r = D.id
+			if(ispath(D.id, /datum/reagent/consumable))
+				GLOB.drink_reactions_list[initial(r.name)] = D
+			if(ispath(D.id, /datum/reagent))
+				GLOB.normalized_chemical_reactions_list[initial(r.name)] = D
 
 		if(D.required_reagents && D.required_reagents.len)
 			for(var/reaction in D.required_reagents)
@@ -42,6 +52,31 @@
 				GLOB.chemical_reactions_list[id] = list()
 			GLOB.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant
+
+/proc/recipe_search(mob/M, list/reaction_list)
+	var/option = input(M, "Enter keyword to return a recipe.")
+	if(option)
+		option = lowertext(option)
+		var/list/reagents_required
+		var/found_reagent_name
+		var/required_temp
+		for(var/reagent_name in reaction_list)
+			if(findtext(lowertext(reagent_name), option))
+				var/datum/chemical_reaction/reaction = reaction_list[reagent_name]
+				found_reagent_name = reagent_name
+				reagents_required = reaction.required_reagents
+				required_temp = reaction.required_temp
+				break
+		if(length(reagents_required))
+			to_chat(M, "<b>Recipe found: [found_reagent_name]</b>[required_temp ? "<br>Required Temperature: [required_temp]K" : ""]<br>Required Reagents:")
+			var/reagents_required_string = ""
+			for(var/r in reagents_required)
+				var/datum/reagent/reagent = r
+				reagents_required_string += "<br>[initial(reagent.name)]: [reagents_required[r]]"
+			to_chat(M, reagents_required_string)
+			return
+		else
+			to_chat(M, "<span class='warning'>Reagent with term: [option] could not be located!</span>")
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -62,6 +97,7 @@
 	var/fermiIsReacting = FALSE //that prevents multiple reactions from occurring (i.e. add_reagent calls to process_reactions(), this stops any extra reactions.)
 	var/fermiReactID //instance of the chem reaction used during a fermireaction, kept here so it's cache isn't lost between loops/procs.
 	var/value_multiplier = DEFAULT_REAGENTS_VALUE //used for cargo reagents selling.
+	var/force_alt_taste = FALSE
 
 /datum/reagents/New(maximum=100, new_flags = NONE, new_value = DEFAULT_REAGENTS_VALUE)
 	maximum_volume = maximum
@@ -198,6 +234,7 @@
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
+			post_copy_data(T)
 		transferred += "[T] - [transfer_amount]"
 
 		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
@@ -238,7 +275,8 @@
 		var/datum/reagent/T = reagent
 		var/copy_amount = T.volume * part
 		if(preserve_data)
-			trans_data = T.data
+			trans_data = copy_data(T)
+			post_copy_data(T)
 		R.add_reagent(T.type, copy_amount * multiplier, trans_data)
 
 	src.update_total()
@@ -265,7 +303,8 @@
 		var/datum/reagent/current_reagent = CR
 		if(current_reagent.type == reagent)
 			if(preserve_data)
-				trans_data = current_reagent.data
+				trans_data = copy_data(current_reagent)
+				post_copy_data(current_reagent)
 			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, pH, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
 			if(log && amount > 0)
@@ -280,70 +319,115 @@
 	R.handle_reactions()
 	return amount
 
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
+/**
+ * Triggers metabolizing for all the reagents in this holder
+ *
+ * Arguments:
+ * * mob/living/carbon/carbon - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
+ * * delta_time - the time in server seconds between proc calls (when performing normally it will be 2)
+ * * times_fired - the number of times the owner's life() tick has been called aka The number of times SSmobs has fired
+ * * can_overdose - Allows overdosing
+ * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
+ */
+/datum/reagents/proc/metabolize(mob/living/carbon/owner, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE)
 	var/list/cached_reagents = reagent_list
-	var/list/cached_addictions = addiction_list
-	if(C)
-		expose_temperature(C.bodytemperature, 0.25)
-	var/need_mob_update = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		if(QDELETED(R.holder))
-			continue
-		if(liverless && !R.self_consuming) //need to be metabolized
-			continue
-		if(!C)
-			C = R.holder.my_atom
-		if(!R.metabolizing)
-			R.metabolizing = TRUE
-			R.on_mob_metabolize(C)
-		if(C && R)
-			if(C.reagent_check(R) != 1)
-				if(can_overdose)
-					if(R.overdose_threshold)
-						if(R.volume > R.overdose_threshold && !R.overdosed)
-							R.overdosed = 1
-							var/turf/CT = get_turf(C)
-							log_reagent("OVERDOSE START: [key_name(C)] at [AREACOORD(CT)] started overdosing on [R.volume] units of [R].")
-							need_mob_update += R.overdose_start(C)
-					if(R.addiction_threshold)
-						if(R.volume > R.addiction_threshold && !is_type_in_list(R, cached_addictions))
-							var/datum/reagent/new_reagent = new R.type()
-							cached_addictions.Add(new_reagent)
-					if(R.overdosed)
-						need_mob_update += R.overdose_process(C)
-					if(is_type_in_list(R,cached_addictions))
-						for(var/addiction in cached_addictions)
-							var/datum/reagent/A = addiction
-							if(istype(R, A))
-								A.addiction_stage = -15 // you're satisfied for a good while.
-				need_mob_update += R.on_mob_life(C)
-
+	if(owner)
+		expose_temperature(owner.bodytemperature, 0.25)
+	var/need_mob_update = FALSE
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose, liverless)
 	if(can_overdose)
 		if(addiction_tick == 6)
 			addiction_tick = 1
-			for(var/addiction in cached_addictions)
+			for(var/addiction in addiction_list)
 				var/datum/reagent/R = addiction
-				if(C && R)
+				if(owner && R)
 					R.addiction_stage++
 					if(1 <= R.addiction_stage && R.addiction_stage <= R.addiction_stage1_end)
-						need_mob_update += R.addiction_act_stage1(C)
+						need_mob_update += R.addiction_act_stage1(owner)
 					else if(R.addiction_stage1_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage2_end)
-						need_mob_update += R.addiction_act_stage2(C)
+						need_mob_update += R.addiction_act_stage2(owner)
 					else if(R.addiction_stage2_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage3_end)
-						need_mob_update += R.addiction_act_stage3(C)
+						need_mob_update += R.addiction_act_stage3(owner)
 					else if(R.addiction_stage3_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage4_end)
-						need_mob_update += R.addiction_act_stage4(C)
+						need_mob_update += R.addiction_act_stage4(owner)
 					else if(R.addiction_stage4_end < R.addiction_stage)
 						remove_addiction(R)
 					else
-						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+						SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 		addiction_tick++
-	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
-		C.updatehealth()
-		C.update_mobility()
-		C.update_stamina()
+	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
+		owner.updatehealth()
+		owner.update_mobility()
+		owner.update_stamina()
 	update_total()
+
+/*
+ * Metabolises a single reagent for a target owner carbon mob. See above.
+ *
+ * Arguments:
+ * * mob/living/carbon/owner - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
+ * * delta_time - the time in server seconds between proc calls (when performing normally it will be 2)
+ * * times_fired - the number of times the owner's life() tick has been called aka The number of times SSmobs has fired
+ * * can_overdose - Allows overdosing
+ * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
+ */
+/datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE)
+	var/need_mob_update = FALSE
+	if(QDELETED(reagent.holder))
+		return FALSE
+
+	if(!owner)
+		owner = reagent.holder.my_atom
+
+	if(owner && reagent)
+		if(!owner.reagent_check(reagent, delta_time, times_fired) != TRUE)
+			return
+		if(is_reagent_processing_invalid(reagent, owner))
+			return reagent.on_invalid_process(owner, delta_time, times_fired)
+		if(liverless && !reagent.self_consuming) //need to be metabolized
+			return
+		if(!reagent.metabolizing)
+			reagent.metabolizing = TRUE
+			reagent.on_mob_metabolize(owner)
+		if(can_overdose)
+			if(reagent.overdose_threshold)
+				if(reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
+					reagent.overdosed = TRUE
+					need_mob_update += reagent.overdose_start(owner)
+					log_game("[key_name(owner)] has started overdosing on [reagent.name] at [reagent.volume] units.")
+
+			// for(var/addiction in reagent.addiction_types)
+			// 	owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
+			if(reagent.addiction_threshold)
+				if(reagent.volume > reagent.addiction_threshold && !is_type_in_list(reagent, addiction_list))
+					var/datum/reagent/new_reagent = new reagent.type()
+					addiction_list.Add(new_reagent)
+			if(is_type_in_list(reagent, addiction_list))
+				for(var/addiction in addiction_list)
+					var/datum/reagent/A = addiction
+					if(istype(reagent, A))
+						A.addiction_stage = -15 // you're satisfied for a good while.
+
+			if(reagent.overdosed)
+				need_mob_update += reagent.overdose_process(owner, delta_time, times_fired)
+
+		need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
+	return need_mob_update
+
+/// Signals that metabolization has stopped, triggering the end of trait-based effects
+/datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(QDELETED(reagent.holder))
+			continue
+		if(keep_liverless && reagent.self_consuming) //Will keep working without a liver
+			continue
+		if(!C)
+			C = reagent.holder.my_atom
+		if(reagent.metabolizing)
+			reagent.metabolizing = FALSE
+			reagent.on_mob_end_metabolize(C)
 
 /datum/reagents/proc/remove_addiction(datum/reagent/R)
 	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
@@ -353,21 +437,6 @@
 		log_reagent("OVERDOSE STOP: [key_name(my_atom)] at [AREACOORD(T)] got over their need for [R].")
 	addiction_list.Remove(R)
 	qdel(R)
-
-//Signals that metabolization has stopped, triggering the end of trait-based effects
-/datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
-	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		if(QDELETED(R.holder))
-			continue
-		if(keep_liverless && R.self_consuming) //Will keep working without a liver
-			continue
-		if(!C)
-			C = R.holder.my_atom
-		if(R.metabolizing)
-			R.metabolizing = FALSE
-			R.on_mob_end_metabolize(C)
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -463,7 +532,7 @@
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && can_special_react)
 					possible_reactions  += C
 
-		sortTim(possible_reactions, /proc/cmp_chemical_reactions_default, FALSE)
+		sortTim(possible_reactions, GLOBAL_PROC_REF(cmp_chemical_reactions_default), FALSE)
 
 		if(possible_reactions.len)
 			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
@@ -483,7 +552,7 @@
 					fermiIsReacting = FALSE
 					SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
 					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
-					return 0
+					return FALSE
 
 				//This is just to calc the on_reaction multiplier, and is a candidate for removal.
 				for(var/B in cached_required_reagents)
@@ -492,11 +561,11 @@
 					targetVol = cached_results[P]*multiplier
 
 				if(!((chem_temp <= C.ExplodeTemp) && (chem_temp >= C.OptimalTempMin)))
-					return 0 //Not hot enough
+					return FALSE //Not hot enough
 				if(! ((pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) ))//To prevent pointless reactions
-					return 0
+					return FALSE
 				if (fermiIsReacting)
-					return 0
+					return FALSE
 				else
 					START_PROCESSING(SSprocessing, src)
 					selected_reaction.on_reaction(src, my_atom, multiplier)
@@ -512,7 +581,7 @@
 						fermiIsReacting = FALSE
 						SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
 						Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
-					return 0
+					return FALSE
 
 				for(var/B in cached_required_reagents) //
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
@@ -552,7 +621,7 @@
 
 	while(reaction_occurred)
 	update_total()
-	return 0
+	return FALSE
 
 /datum/reagents/process()
 	var/datum/chemical_reaction/C = fermiReactID
@@ -769,7 +838,7 @@
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(DEL_REAGENT)
-	return 1
+	return TRUE
 
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
@@ -784,7 +853,7 @@
 			total_volume += R.volume
 	if(!reagent_list || !total_volume)
 		pH = REAGENT_NORMAL_PH
-	return 0
+	return FALSE
 
 /datum/reagents/proc/clear_reagents()
 	var/list/cached_reagents = reagent_list
@@ -792,9 +861,9 @@
 		var/datum/reagent/R = reagent
 		del_reagent(R.type)
 	pH = REAGENT_NORMAL_PH
-	return 0
+	return FALSE
 
-/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1, from_gas = 0)
 	var/react_type
 	if(isliving(A))
 		react_type = "LIVING"
@@ -818,9 +887,10 @@
 					touch_protection = L.get_permeability_protection()
 				R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
 			if("TURF")
-				R.reaction_turf(A, R.volume * volume_modifier, show_message)
+				R.reaction_turf(A, R.volume * volume_modifier, show_message, from_gas)
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+	SEND_SIGNAL(A, COMSIG_ATOM_EXPOSE_REAGENTS, cached_reagents, src, method, volume_modifier, show_message, from_gas)
 
 /datum/reagents/proc/holder_full()
 	if(total_volume >= maximum_volume)
@@ -828,17 +898,16 @@
 	return FALSE
 
 //Returns the average specific heat for all reagents currently in this holder.
-/datum/reagents/proc/specific_heat()
+/datum/reagents/proc/heat_capacity()
 	. = 0
-	var/cached_amount = total_volume		//cache amount
 	var/list/cached_reagents = reagent_list		//cache reagents
 	for(var/I in cached_reagents)
 		var/datum/reagent/R = I
-		. += R.specific_heat * (R.volume / cached_amount)
+		. += R.specific_heat * R.volume
 
 /datum/reagents/proc/adjust_thermal_energy(J, min_temp = 2.7, max_temp = 1000)
-	var/S = specific_heat()
-	chem_temp = clamp(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
+	var/S = heat_capacity()
+	chem_temp = clamp(chem_temp + (J / S), min_temp, max_temp)
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.temp_check()
@@ -1006,9 +1075,9 @@
 				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					return R
 				else
-					return 0
+					return FALSE
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/get_reagent_amount(reagent)
 	var/list/cached_reagents = reagent_list
@@ -1017,7 +1086,7 @@
 		if (R.type == reagent)
 			return round(R.volume, CHEMICAL_QUANTISATION_LEVEL)
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/get_reagents()
 	var/list/names = list()
@@ -1030,7 +1099,7 @@
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount))
-		return 1
+		return TRUE
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 
@@ -1087,52 +1156,64 @@
 
 	return trans_data
 
+///
+// Should be ran after using copy_data. Calls the reagent's post_copy_data, which usually does nothing.
+/datum/reagents/proc/post_copy_data(datum/reagent/current_reagent)
+	return current_reagent.post_copy_data()
+
 /datum/reagents/proc/get_reagent(type)
 	var/list/cached_reagents = reagent_list
 	. = locate(type) in cached_reagents
 
 /datum/reagents/proc/generate_taste_message(minimum_percent=15)
-	// the lower the minimum percent, the more sensitive the message is.
 	var/list/out = list()
-	var/list/tastes = list() //descriptor = strength
-	if(minimum_percent <= 100)
-		for(var/datum/reagent/R in reagent_list)
-			if(!R.taste_mult)
-				continue
-
-			if(istype(R, /datum/reagent/consumable/nutriment))
-				var/list/taste_data = R.data
-				for(var/taste in taste_data)
-					var/ratio = taste_data[taste]
-					var/amount = ratio * R.taste_mult * R.volume
-					if(taste in tastes)
-						tastes[taste] += amount
-					else
-						tastes[taste] = amount
-			else
-				var/taste_desc = R.taste_description
-				var/taste_amount = R.volume * R.taste_mult
-				if(taste_desc in tastes)
-					tastes[taste_desc] += taste_amount
-				else
-					tastes[taste_desc] = taste_amount
-		//deal with percentages
-		// TODO it would be great if we could sort these from strong to weak
-		var/total_taste = counterlist_sum(tastes)
-		if(total_taste > 0)
-			for(var/taste_desc in tastes)
-				var/percent = tastes[taste_desc]/total_taste * 100
-				if(percent < minimum_percent)
+	if(!force_alt_taste)
+		// the lower the minimum percent, the more sensitive the message is.
+		var/list/tastes = list() //descriptor = strength
+		if(minimum_percent <= 100)
+			for(var/datum/reagent/R in reagent_list)
+				if(!R.taste_mult)
 					continue
-				var/intensity_desc = "a hint of"
-				if(ISINRANGE(percent, minimum_percent * 2, minimum_percent * 3)|| percent == 100)
-					intensity_desc = ""
-				else if(percent > minimum_percent * 3)
-					intensity_desc = "the strong flavor of"
-				if(intensity_desc != "")
-					out += "[intensity_desc] [taste_desc]"
+
+				if(istype(R, /datum/reagent/consumable/nutriment))
+					var/list/taste_data = R.data
+					for(var/taste in taste_data)
+						var/ratio = taste_data[taste]
+						var/amount = ratio * R.taste_mult * R.volume
+						if(taste in tastes)
+							tastes[taste] += amount
+						else
+							tastes[taste] = amount
 				else
-					out += "[taste_desc]"
+					var/taste_desc = R.taste_description
+					var/taste_amount = R.volume * R.taste_mult
+					if(taste_desc in tastes)
+						tastes[taste_desc] += taste_amount
+					else
+						tastes[taste_desc] = taste_amount
+			//deal with percentages
+			// TODO it would be great if we could sort these from strong to weak
+			var/total_taste = counterlist_sum(tastes)
+			if(total_taste > 0)
+				for(var/taste_desc in tastes)
+					var/percent = tastes[taste_desc]/total_taste * 100
+					if(percent < minimum_percent)
+						continue
+					var/intensity_desc = "a hint of"
+					if(ISINRANGE(percent, minimum_percent * 2, minimum_percent * 3)|| percent == 100)
+						intensity_desc = ""
+					else if(percent > minimum_percent * 3)
+						intensity_desc = "the strong flavor of"
+					if(intensity_desc != "")
+						out += "[intensity_desc] [taste_desc]"
+					else
+						out += "[taste_desc]"
+
+	else
+		// alternate taste is to force the taste of the atom if its a food item
+		if(my_atom && isfood(my_atom))
+			var/obj/item/reagent_containers/food/snacks/F = my_atom
+			out = F.tastes
 
 	return english_list(out, "something indescribable")
 

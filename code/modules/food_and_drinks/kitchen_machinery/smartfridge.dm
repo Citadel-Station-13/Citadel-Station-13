@@ -19,7 +19,7 @@
 	var/list/initial_contents
 	var/visible_contents = TRUE
 
-/obj/machinery/smartfridge/Initialize()
+/obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
 	create_reagents(100, NO_REACT)
 
@@ -59,6 +59,10 @@
 	else
 		icon_state = "[initial(icon_state)]-off"
 
+/obj/machinery/smartfridge/update_overlays()
+	. = ..()
+	if(!stat)
+		. += emissive_appearance(icon, "smartfridge-light-mask", alpha = src.alpha)
 
 
 /*******************
@@ -184,7 +188,7 @@
 				listofitems[md5name]["amount"]++	// The good news is, #30519 made smartfridge UIs non-auto-updating
 			else
 				listofitems[md5name] = list("name" = O.name, "type" = O.type, "amount" = 1)
-	sortList(listofitems)
+	sort_list(listofitems)
 
 	.["contents"] = listofitems
 	.["name"] = name
@@ -254,7 +258,7 @@
 	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
 	var/drying = FALSE
 
-/obj/machinery/smartfridge/drying_rack/Initialize()
+/obj/machinery/smartfridge/drying_rack/Initialize(mapload)
 	. = ..()
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
@@ -441,6 +445,10 @@
 	if(isorgan(O))
 		var/obj/item/organ/organ = O
 		organ.organ_flags |= ORGAN_FROZEN
+	if(isbodypart(O))
+		var/obj/item/bodypart/bodypart = O
+		for(var/obj/item/organ/stored in bodypart.contents)
+			stored.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -459,6 +467,10 @@
 	if(isorgan(AM))
 		var/obj/item/organ/O = AM
 		O.organ_flags &= ~ORGAN_FROZEN
+	if(isbodypart(AM))
+		var/obj/item/bodypart/bodypart = AM
+		for(var/obj/item/organ/stored in bodypart.contents)
+			stored.organ_flags &= ~ORGAN_FROZEN
 
 //cit specific??????
 /obj/machinery/smartfridge/organ/preloaded
@@ -467,8 +479,8 @@
 		/obj/item/reagent_containers/medspray/synthtissue = 1,
 		/obj/item/reagent_containers/medspray/sterilizine = 1)
 
-/obj/machinery/smartfridge/organ/preloaded/Initialize()
-	..()
+/obj/machinery/smartfridge/organ/preloaded/Initialize(mapload)
+	. = ..()
 	var/list = list(/obj/item/organ/tongue, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/organ/liver, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/tail, /obj/item/organ/stomach)
 	var/newtype = pick(list)
 	load(new newtype(src.loc))

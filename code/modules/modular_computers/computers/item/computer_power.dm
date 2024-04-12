@@ -16,7 +16,7 @@
 		if(cell.use(amount * GLOB.CELLRATE))
 			return TRUE
 		else // Discharge the cell anyway.
-			cell.use(min(amount*GLOB.CELLRATE, cell.charge))
+			cell.use(min(amount * GLOB.CELLRATE, cell.charge))
 			return FALSE
 	return FALSE
 
@@ -24,7 +24,7 @@
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
 	if(battery_module?.battery)
 		return battery_module.battery.give(amount)
-	return 0
+	return FALSE
 
 /obj/item/modular_computer/get_cell()
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]

@@ -6,13 +6,13 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	if(mob_transforming)
 		return
-
 	. = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds, times_fired)
 	if(!(. & COMPONENT_INTERRUPT_LIFE_PHYSICAL))
 		PhysicalLife(seconds, times_fired)
 	if(!(. & COMPONENT_INTERRUPT_LIFE_BIOLOGICAL))
 		BiologicalLife(seconds, times_fired)
-
+	if(!(. & COMPONET_INTERRUPT_STATUS_EFFECTS))
+		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 	// CODE BELOW SHOULD ONLY BE THINGS THAT SHOULD HAPPEN NO MATTER WHAT AND CAN NOT BE SUSPENDED!
 	// Otherwise, it goes into one of the two split Life procs!
 
@@ -24,7 +24,7 @@
 				break
 			var/msg = "[key_name_admin(src)] [ADMIN_JMP(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
-			INVOKE_ASYNC(GLOBAL_PROC, .proc/send2tgs_adminless_only, "Mob", msg, R_ADMIN)
+			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(send2tgs_adminless_only), "Mob", msg, R_ADMIN)
 			log_game("[key_name(src)] was found to have no .loc with an attached client.")
 
 		// This is a temporary error tracker to make sure we've caught everything
@@ -42,8 +42,8 @@
   * Handles biological life processes like chemical metabolism, breathing, etc
   * Returns TRUE or FALSE based on if we were interrupted. This is used by overridden variants to check if they should stop.
   */
-/mob/living/proc/BiologicalLife(seconds, times_fired)
-	SEND_SIGNAL(src,COMSIG_LIVING_BIOLOGICAL_LIFE, seconds, times_fired)
+/mob/living/proc/BiologicalLife(delta_time, times_fired)
+	SEND_SIGNAL(src,COMSIG_LIVING_BIOLOGICAL_LIFE, delta_time, times_fired)
 	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
 	handle_wounds()
@@ -67,11 +67,10 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	handle_block_parry(seconds)
+	handle_block_parry(delta_time)
 
-	// These two MIGHT need to be moved to base Life() if we get any in the future that's a "physical" effect that needs to fire even while in stasis.
 	handle_traits() // eye, ear, brain damages
-	handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+
 	return TRUE
 
 /**
@@ -84,7 +83,7 @@
 		handle_diginvis() //AI becomes unable to see mob
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, float), TRUE)
 
 	if(!loc)
 		return FALSE
@@ -134,14 +133,14 @@
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
 		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
-		return 1
+		return TRUE
 	if(fire_stacks > 0)
 		adjust_fire_stacks(-0.1) //the fire is slowly consumed
 	else
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.get_moles(/datum/gas/oxygen, 1))
+	if(!G.get_moles(GAS_O2, 1))
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
@@ -150,10 +149,25 @@
 /mob/living/proc/handle_stomach()
 	return
 
-//this updates all special effects: knockdown, druggy, stuttering, etc..
+/*
+ * this updates some effects: mostly old stuff such as drunkness, druggy, stuttering, etc.
+ * that should be converted to status effect datums one day.
+ */
 /mob/living/proc/handle_status_effects()
 	if(confused)
 		confused = max(0, confused - 1)
+
+	if(stuttering)
+		stuttering = max(stuttering-1, 0)
+
+	if(slurring)
+		slurring = max(slurring-1,0)
+
+	if(cultslurring)
+		cultslurring = max(cultslurring-1, 0)
+
+	if(clockcultslurring)
+		clockcultslurring = max(clockcultslurring-1, 0)
 
 /mob/living/proc/handle_traits()
 	//Eyes
@@ -187,7 +201,7 @@
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
 		add_filter("gravity",1, GRAVITY_MOTION_BLUR)
-	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
+	INVOKE_ASYNC(src, PROC_REF(gravity_pulse_animation))
 
 /mob/living/proc/gravity_pulse_animation()
 	animate(get_filter("gravity"), y = 1, time = 10)

@@ -1,0 +1,9 @@
+## Custom job threat values
+## List of job titles followed by dynamic threat value, all prefixed with JOB_THREAT. See code/modules/jobs/job_types for titles
+## e.g. 
+## JOB_THREAT Captain 5
+## JOB_THREAT Assistant 0.2
+
+## Custom antag threat values, see above
+## e.g.
+## ANTAG_THREAT Traitor 5

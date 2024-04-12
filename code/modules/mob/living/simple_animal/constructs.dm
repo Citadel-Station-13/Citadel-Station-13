@@ -44,31 +44,36 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
+	var/datum/action/innate/cult/create_rune/our_rune
+	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
+	var/theme = "cult"
 	var/datum/mind/original_mind
 
-/mob/living/simple_animal/hostile/construct/Initialize()
+/mob/living/simple_animal/hostile/construct/Initialize(mapload)
 	. = ..()
 	update_health_hud()
 	var/spellnum = 1
 	for(var/spell in construct_spells)
-		var/the_spell = new spell(null)
-		AddSpell(the_spell)
-		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
 		var/pos = 2+spellnum*31
 		if(construct_spells.len >= 4)
 			pos -= 31*(construct_spells.len - 4)
-		S.action.button.screen_loc = "6:[pos],4:-2"
-		S.action.button.moved = "6:[pos],4:-2"
+		var/obj/effect/proc_holder/spell/the_spell = new spell(null)
+		the_spell?.action.default_button_position ="6:[pos],4:-2"
+		AddSpell(the_spell)
 		spellnum++
 	if(runetype)
-		var/datum/action/innate/cult/create_rune/CR = new runetype(src)
-		CR.Grant(src)
 		var/pos = 2+spellnum*31
-		CR.button.screen_loc = "6:[pos],4:-2"
-		CR.button.moved = "6:[pos],4:-2"
+		if(construct_spells.len >= 4)
+			pos -= 31*(construct_spells.len - 4)
+		our_rune = new runetype(src)
+		our_rune.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
+		our_rune.Grant(src)
+	if(icon_state)
+		add_overlay("glow_[icon_state]_[theme]")
 
 /mob/living/simple_animal/hostile/construct/Destroy()
 	original_mind = null
+	QDEL_NULL(our_rune)
 	. = ..()
 
 /mob/living/simple_animal/hostile/construct/death()
@@ -83,13 +88,12 @@
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	. = list("<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
+	. = list("<span class='cult'>This is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]</span>")
 	if(health < maxHealth)
 		if(health >= maxHealth/2)
 			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
 		else
 			. += "<span class='warning'><b>[t_He] look[t_s] severely dented!</b></span>"
-	. += "*---------*</span>"
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(isconstruct(M)) //is it a construct?
@@ -275,17 +279,17 @@
 	if(isconstruct(A)) //is it a construct?
 		var/mob/living/simple_animal/hostile/construct/C = A
 		if(C.health < C.maxHealth) //is it hurt? let's go heal it if it is
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 	else
-		return 0
+		return FALSE
 
 /mob/living/simple_animal/hostile/construct/builder/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
+		return FALSE
 	if(Found(the_target) || ..()) //If we Found it or Can_Attack it normally, we Can_Attack it as long as it wasn't invisible
-		return 1 //as a note this shouldn't be added to base hostile mobs because it'll mess up retaliate hostile mobs
+		return TRUE //as a note this shouldn't be added to base hostile mobs because it'll mess up retaliate hostile mobs
 
 /mob/living/simple_animal/hostile/construct/builder/MoveToTarget(var/list/possible_targets)
 	..()
@@ -293,7 +297,7 @@
 		var/mob/living/L = target
 		if(isconstruct(L) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
 			LoseTarget()
-			return 0
+			return FALSE
 		if(L.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
 			retreat_distance = null
 			minimum_distance = 1
@@ -382,7 +386,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/simple_animal/hostile/construct/harvester/Initialize()
+/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
 	. = ..()
 	var/datum/action/innate/seek_prey/seek = new()
 	seek.Grant(src)
@@ -397,22 +401,16 @@
 	buttontooltipstyle = "cult"
 	button_icon_state = "cult_mark"
 	var/tracking = FALSE
-	var/mob/living/simple_animal/hostile/construct/the_construct
-
-
-/datum/action/innate/seek_master/Grant(var/mob/living/C)
-	the_construct = C
-	..()
 
 /datum/action/innate/seek_master/Activate()
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult)
 	if(!C)
 		return
 	if(!C.cult_team)
-		to_chat(the_construct, "<span class='cult italic'>You are alone, and have no team.</span>")
+		to_chat(owner, "<span class='cult italic'>You are alone, and have no team.</span>")
 		return
 	var/datum/objective/eldergod/summon_objective = locate() in C.cult_team.objectives
-
+	var/mob/living/simple_animal/hostile/construct/the_construct = owner
 	if(summon_objective.check_completion())
 		the_construct.master = C.cult_team.blood_target
 
@@ -438,15 +436,11 @@
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	button_icon_state = "cult_mark"
-	var/mob/living/simple_animal/hostile/construct/harvester/the_construct
-
-/datum/action/innate/seek_prey/Grant(var/mob/living/C)
-	the_construct = C
-	..()
 
 /datum/action/innate/seek_prey/Activate()
 	if(GLOB.cult_narsie == null)
 		return
+	var/mob/living/simple_animal/hostile/construct/the_construct = owner
 	if(the_construct.seeking)
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"

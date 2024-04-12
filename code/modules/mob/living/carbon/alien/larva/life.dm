@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva/BiologicalLife(seconds, times_fired)
+/mob/living/carbon/alien/larva/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	// GROW!

@@ -80,7 +80,7 @@
 	if(girder_type)
 		new /obj/item/stack/sheet/metal(src)
 
-/turf/closed/wall/ex_act(severity, target)
+/turf/closed/wall/ex_act(severity, target, origin)
 	if(target == src)
 		dismantle_wall(1,1)
 		return
@@ -88,7 +88,7 @@
 		if(1)
 			//SN src = null
 			var/turf/NT = ScrapeAway()
-			NT.contents_explosion(severity, target)
+			NT.contents_explosion(severity, target, origin)
 			return
 		if(2)
 			if (prob(50))
@@ -114,23 +114,6 @@
 		dismantle_wall()
 	else
 		add_dent(WALL_DENT_HIT)
-
-/turf/closed/wall/mech_melee_attack(obj/mecha/M)
-	M.do_attack_animation(src)
-	switch(M.damtype)
-		if(BRUTE)
-			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-			if(prob(hardness + M.force) && M.force > 20)
-				dismantle_wall(1)
-				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			else
-				add_dent(WALL_DENT_HIT)
-		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, 1)
-		if(TOX)
-			playsound(src, 'sound/effects/spray2.ogg', 100, 1)
-			return FALSE
 
 /turf/closed/wall/attack_paw(mob/living/user)
 	return attack_hand(user)

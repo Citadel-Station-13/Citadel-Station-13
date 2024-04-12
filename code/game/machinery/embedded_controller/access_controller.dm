@@ -18,7 +18,7 @@
 /obj/machinery/doorButtons/proc/findObjsByTag()
 	return
 
-/obj/machinery/doorButtons/Initialize()
+/obj/machinery/doorButtons/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -164,7 +164,7 @@
 	set waitfor = FALSE
 	if(A.density)
 		goIdle()
-		return 0
+		return FALSE
 	update_icon()
 	A.unbolt()
 	. = 1

@@ -126,6 +126,8 @@
 		return DISCARD_LAST_ACTION
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
+	if(force >= 20)
+		shake_camera(user, ((force - 15) * 0.01 + 1), ((force - 15) * 0.01))
 
 /atom/movable/proc/attacked_by()
 	return
@@ -234,7 +236,7 @@
 		attack_message_local = "You [message_verb] yourself[message_hit_area] with [I]"
 	visible_message("<span class='danger'>[attack_message]</span>",\
 		"<span class='userdanger'>[attack_message_local]</span>", null, COMBAT_MESSAGE_RANGE)
-	return 1
+	return TRUE
 
 /// How much stamina this takes to swing this is not for realism purposes hecc off.
 /obj/item/proc/getweight(mob/living/user, multiplier = 1, trait = SKILL_STAMINA_COST)
@@ -257,10 +259,10 @@
 	if(!isnull(stagger_force))
 		return stagger_force
 	/// totally not an untested, arbitrary equation.
-	return clamp((1.5 + (w_class/5)) * ((force_override || force) / 1.5), 0, 10 SECONDS)
+	return clamp((1.5 + (w_class/5)) * ((force_override || force) / 1.5), 0, 10 SECONDS) * CONFIG_GET(number/melee_stagger_factor)
 
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user, force_override)
-	if(!CHECK_BITFIELD(target.status_flags, CANSTAGGER))
+	if(!(target.status_flags & CANSTAGGER))
 		return FALSE
 	if(target.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		target.do_staggered_animation()

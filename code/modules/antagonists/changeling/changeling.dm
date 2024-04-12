@@ -2,6 +2,9 @@
 #define LING_DEAD_GENETICDAMAGE_HEAL_CAP	50	//The lowest value of geneticdamage handle_changeling() can take it to while dead.
 #define LING_ABSORB_RECENT_SPEECH			8	//The amount of recent spoken lines to gain on absorbing a mob
 
+/// Helper to format the text that gets thrown onto the chem hud element.
+#define FORMAT_CHEM_CHARGES_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(charges)]</font></div>")
+
 /datum/antagonist/changeling
 	name = "Changeling"
 	roundend_category  = "changelings"
@@ -34,19 +37,19 @@
 	var/geneticpoints = 10
 	var/maxgeneticpoints = 10
 	var/purchasedpowers = list()
+
 	var/mimicing = ""
-	var/canrespec = 0
+	var/can_respec = FALSE//set to TRUE in absorb.dm
 	var/changeling_speak = 0
 	var/loudfactor = 0 //Used for blood tests. This is is the average loudness of the ling's abilities calculated with the below two vars
 	var/loudtotal = 0 //Used to keep track of the sum of the ling's loudness
 	var/totalpurchases = 0 //Used to keep track of how many purchases the ling's made after free abilities have been added
 	var/datum/dna/chosen_dna
-	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	var/datum/action/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
 
-	// wip stuff
-	var/static/list/all_powers = typecacheof(/obj/effect/proc_holder/changeling,TRUE)
+	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
 
 
 /datum/antagonist/changeling/Destroy()
@@ -72,6 +75,7 @@
 /datum/antagonist/changeling/proc/create_actions()
 	cellular_emporium = new(src)
 	emporium_action = new(cellular_emporium)
+	emporium_action.Grant(owner.current)
 
 /datum/antagonist/changeling/on_gain()
 	generate_name()
@@ -127,11 +131,9 @@
 		reset_properties()
 		QDEL_NULL(cellular_emporium)
 		QDEL_NULL(emporium_action)
-		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
-			if(p.always_keep)
-				continue
+		for(var/datum/action/changeling/p in purchasedpowers)
 			purchasedpowers -= p
-			p.on_refund(owner.current)
+			p.Remove(owner.current)
 
 	//MOVE THIS
 	if(owner.current.hud_used)
@@ -144,7 +146,7 @@
 	create_actions()
 	//Repurchase free powers.
 	for(var/path in all_powers)
-		var/obj/effect/proc_holder/changeling/S = new path()
+		var/datum/action/changeling/S = new path()
 		if(!S.dna_cost)
 			if(!has_sting(S))
 				purchasedpowers += S
@@ -153,20 +155,28 @@
 	loudtotal = 0
 	totalpurchases = 0
 
-/datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
-	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
-		if(initial(power.name) == P.name)
+/datum/antagonist/changeling/proc/regain_powers()//for when action buttons are lost and need to be regained, such as when the mind enters a new mob
+	emporium_action.Grant(owner.current)
+	for(var/power in purchasedpowers)
+		var/datum/action/changeling/S = power
+		if(istype(S) && S.needs_button)
+			S.Grant(owner.current)
+
+/datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
+	for(var/P in purchasedpowers)
+		var/datum/action/changeling/otherpower = P
+		if(initial(power.name) == otherpower.name)
 			return TRUE
 	return FALSE
 
 
 /datum/antagonist/changeling/proc/purchase_power(sting_name)
-	var/obj/effect/proc_holder/changeling/thepower = null
+	var/datum/action/changeling/thepower
 
 	for(var/path in all_powers)
-		var/obj/effect/proc_holder/changeling/S = path
+		var/datum/action/changeling/S = path
 		if(initial(S.name) == sting_name)
-			thepower = new path()
+			thepower = new path
 			break
 
 	if(!thepower)
@@ -195,7 +205,7 @@
 
 	geneticpoints -= thepower.dna_cost
 	purchasedpowers += thepower
-	thepower.on_purchase(owner.current)
+	thepower.on_purchase(owner.current)//Grant() is ran in this proc, see changeling_powers.dm
 	loudtotal += thepower.loudness
 	totalpurchases++
 	var/oldloudness = loudfactor
@@ -213,23 +223,21 @@
 	if(!ishuman(owner.current))
 		to_chat(owner.current, "<span class='danger'>We can't remove our evolutions in this form!</span>")
 		return
-	if(canrespec)
+	if(can_respec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
 		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5)
-		canrespec = 0
+		can_respec = 0
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
-		return 1
+		return TRUE
 	else
 		to_chat(owner.current, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
-		return 0
+		return FALSE
 
 //Called in life()
-/datum/antagonist/changeling/proc/regenerate()
+/datum/antagonist/changeling/proc/regenerate()//grants the HuD in life.dm
 	var/mob/living/carbon/the_ling = owner.current
 	if(istype(the_ling))
-		if(emporium_action)
-			emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
@@ -237,7 +245,7 @@
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 			geneticdamage = max(0, geneticdamage-1)
 		owner.current.hud_used?.lingchemdisplay?.invisibility = 0
-		owner.current.hud_used?.lingchemdisplay?.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(chem_charges)]</font></div>"
+		owner.current.hud_used?.lingchemdisplay?.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
 
 /datum/antagonist/changeling/proc/get_dna(dna_owner)
@@ -277,7 +285,7 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	return 1
+	return TRUE
 
 
 /datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = 0)
@@ -297,8 +305,14 @@
 	prof.socks = H.socks
 	prof.socks_color = H.socks_color
 
-	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
-	for(var/slot in slots)
+	var/datum/icon_snapshot/entry = new
+	entry.name = H.name
+	entry.icon = H.icon
+	entry.icon_state = H.icon_state
+	entry.overlays = H.get_overlays_copy(list(HANDS_LAYER, HANDCUFF_LAYER, LEGCUFF_LAYER))
+	prof.profile_snapshot = entry
+
+	for(var/slot in GLOB.slots)
 		if(slot in H.vars)
 			var/obj/item/I = H.vars[slot]
 			if(!I)
@@ -348,7 +362,7 @@
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 	update_changeling_icons_added()
-	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/regenerate)
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE, PROC_REF(regenerate))
 	return
 
 /datum/antagonist/changeling/remove_innate_effects()
@@ -485,7 +499,7 @@
 /datum/antagonist/changeling/get_admin_commands()
 	. = ..()
 	if(stored_profiles.len && (owner.current.real_name != first_prof.name))
-		.["Transform to initial appearance."] = CALLBACK(src,.proc/admin_restore_appearance)
+		.["Transform to initial appearance."] = CALLBACK(src,PROC_REF(admin_restore_appearance))
 
 /datum/antagonist/changeling/proc/admin_restore_appearance(mob/admin)
 	if(!stored_profiles.len || !iscarbon(owner.current))
@@ -518,6 +532,9 @@
 	var/socks
 	var/socks_color
 
+	/// Icon snapshot of the profile
+	var/datum/icon_snapshot/profile_snapshot
+
 /datum/changelingprofile/Destroy()
 	qdel(dna)
 	. = ..()
@@ -535,13 +552,14 @@
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
-
+	newprofile.profile_snapshot = profile_snapshot
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"
 	give_objectives = FALSE
 	show_in_roundend = FALSE //These are here for admin tracking purposes only
 	you_are_greet = FALSE
+	antag_moodlet = FALSE
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()

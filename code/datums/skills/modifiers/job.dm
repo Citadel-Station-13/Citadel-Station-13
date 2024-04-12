@@ -35,5 +35,8 @@
 /datum/skill_modifier/job/level/wiring/basic
 	level_mod = JOB_SKILL_BASIC
 
+/datum/skill_modifier/job/level/wiring/expert
+	level_mod = JOB_SKILL_EXPERT
+
 /datum/skill_modifier/job/level/dwarfy/blacksmithing
 	target_skills = /datum/skill/level/dwarfy/blacksmithing

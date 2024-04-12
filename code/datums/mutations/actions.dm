@@ -205,6 +205,16 @@
 	synchronizer_coeff = 1
 	var/reek = 200
 
+/datum/mutation/human/olfaction/on_acquiring(mob/living/carbon/human/owner)
+	if(..() || HAS_TRAIT(owner, TRAIT_ANOSMIA))
+		return TRUE
+	ADD_TRAIT(owner, TRAIT_GOODSMELL, GENETIC_MUTATION)
+
+/datum/mutation/human/olfaction/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_GOODSMELL, GENETIC_MUTATION)
+
 /datum/mutation/human/olfaction/modify()
 	if(power)
 		var/obj/effect/proc_holder/spell/targeted/olfaction/S = power
@@ -227,7 +237,7 @@
 	//can we sniff? is there miasma in the air?
 	var/datum/gas_mixture/air = user.loc.return_air()
 
-	if(air.get_moles(/datum/gas/miasma))
+	if(air.get_moles(GAS_MIASMA))
 		user.adjust_disgust(sensitivity * 45)
 		to_chat(user, "<span class='warning'>With your overly sensitive nose, you get a whiff of stench and feel sick! Try moving to a cleaner area!</span>")
 		return
@@ -412,14 +422,14 @@
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
-	var/mob/living/carbon/human/fired_by
+	var/datum/weakref/fired_by
 	/// if we missed our target
 	var/missed = TRUE
 
 /obj/item/hardened_spike/Initialize(mapload, firedby)
 	. = ..()
-	fired_by = firedby
-	addtimer(CALLBACK(src, .proc/checkembedded), 5 SECONDS)
+	fired_by = WEAKREF(firedby)
+	addtimer(CALLBACK(src, PROC_REF(checkembedded)), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/checkembedded()
 	if(missed)
@@ -468,13 +478,16 @@
 		return
 	been_places = TRUE
 	chems = new
-	chems.transfered = embedded_mob
-	chems.spikey = src
-	to_chat(fired_by, "<span class='notice'>Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!</span>")
-	chems.Grant(fired_by)
+	chems.transfered = WEAKREF(embedded_mob)
+	var/mob/fired_by_mob = fired_by.resolve()
+	if(fired_by_mob)
+		to_chat(fired_by_mob, span_notice("Link established! Use the \"Transfer Chemicals\" ability to send your chemicals to the linked target!"))
+		chems.Grant(fired_by_mob)
 
 /obj/item/hardened_spike/chem/unembedded()
-	to_chat(fired_by, "<span class='warning'>Link lost!</span>")
+	var/mob/fired_by_mob = fired_by.resolve()
+	if(fired_by_mob)
+		to_chat(fired_by_mob, span_warning("Link lost!"))
 	QDEL_NULL(chems)
 	..()
 
@@ -486,19 +499,17 @@
 	name = "Transfer Chemicals"
 	desc = "Send all of your reagents into whomever the chem spike is embedded in. One use."
 	var/obj/item/hardened_spike/chem/spikey
-	var/mob/living/carbon/human/transfered
+	var/datum/weakref/transfered
 
 /datum/action/innate/send_chems/Activate()
-	if(!ishuman(transfered) || !ishuman(owner))
+	var/mob/living/carbon/human/transfered_mob = transfered?.resolve()
+	if(!ishuman(transfered_mob) || !ishuman(owner))
 		return
-	var/mob/living/carbon/human/transferer = owner
-
-	to_chat(transfered, "<span class='warning'>You feel a tiny prick!</span>")
-	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0)
+	to_chat(transfered_mob, span_warning("You feel a tiny prick!"))
+	owner.reagents.trans_to(transfered_mob, owner.reagents.total_volume, 1, 1, 0)
 
 	var/obj/item/bodypart/L = spikey.checkembedded()
 
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
-	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
-
+	transfered_mob.visible_message(span_notice("[spikey] falls out of [transfered_mob]!"))

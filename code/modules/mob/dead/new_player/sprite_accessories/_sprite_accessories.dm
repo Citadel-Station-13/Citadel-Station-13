@@ -28,10 +28,9 @@
 	for(var/path in typesof(prototype))
 		if(path == prototype && skip_prototype)
 			continue
-		if(roundstart)
-			var/datum/sprite_accessory/P = path
-			if(initial(P.locked))
-				continue
+		var/datum/sprite_accessory/P = path
+		if((roundstart && initial(P.locked)))
+			continue
 		var/datum/sprite_accessory/D = new path()
 
 		if(D.icon_state)
@@ -64,6 +63,7 @@
 	var/mutant_part_string //Also used in species.handle_mutant_bodyparts() to generate the overlay icon state.
 	var/alpha_mask_state
 	var/matrixed_sections = MATRIX_NONE //if color_src is MATRIXED, how many sections does it have? 1-3
+	var/ignore = FALSE //NEVER include in customization if set to TRUE
 
 	//Special / holdover traits for Citadel specific sprites.
 	var/extra = FALSE
@@ -76,6 +76,8 @@
 
 	//For soft-restricting markings to species IDs
 	var/list/recommended_species
+
+	var/mutable_category // simply do not worry about this value
 
 /datum/sprite_accessory/proc/is_not_visible(var/mob/living/carbon/human/H, var/tauric) //return if the accessory shouldn't be shown
 	return FALSE

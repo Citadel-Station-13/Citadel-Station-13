@@ -33,7 +33,8 @@ field_generator power level display
 	use_power = NO_POWER_USE
 	max_integrity = 500
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+	var/obj/item/radio/radio
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
@@ -54,10 +55,13 @@ field_generator power level display
 		. += "+p[power_level]"
 
 
-/obj/machinery/field/generator/Initialize()
+/obj/machinery/field/generator/Initialize(mapload)
 	. = ..()
 	fields = list()
 	connected_gens = list()
+	radio = new(src)
+	radio.listening = 0
+	radio.recalculateChannels()
 
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
@@ -72,7 +76,7 @@ field_generator power level display
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
 				to_chat(user, "<span class='warning'>You are unable to turn off [src] once it is online!</span>")
-				return 1
+				return TRUE
 			else
 				user.visible_message("[user] turns on [src].", \
 					"<span class='notice'>You turn on [src].</span>", \
@@ -153,12 +157,12 @@ field_generator power level display
 
 /obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)
-		return 0
+		return FALSE
 	else
 		..()
 
 /obj/machinery/field/generator/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		power = min(power + Proj.damage, field_generator_max_power)
 		check_power_level()
 	..()
@@ -166,6 +170,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/Destroy()
 	cleanup()
+	QDEL_NULL(radio)
 	return ..()
 
 
@@ -202,25 +207,25 @@ field_generator power level display
 
 	if(draw_power(round(power_draw/2,1)))
 		check_power_level()
-		return 1
+		return TRUE
 	else
 		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
 		turn_off()
 		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
 		power = 0
 		check_power_level()
-		return 0
+		return FALSE
 
 //This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
 /obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = FALSE, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
 	if((G && (G == src)) || (failsafe >= 8))//Loopin, set fail
-		return 0
+		return FALSE
 	else
 		failsafe++
 
 	if(power >= draw)//We have enough power
 		power -= draw
-		return 1
+		return TRUE
 
 	else//Need more power
 		draw -= power
@@ -231,14 +236,14 @@ field_generator power level display
 				continue
 			if(G)//Another gen is askin for power and we dont have it
 				if(FG.draw_power(draw,failsafe,G,src))//Can you take the load
-					return 1
+					return TRUE
 				else
-					return 0
+					return FALSE
 			else//We are askin another for power
 				if(FG.draw_power(draw,failsafe,src,src))
-					return 1
+					return TRUE
 				else
-					return 0
+					return FALSE
 
 
 /obj/machinery/field/generator/proc/start_fields()
@@ -261,22 +266,22 @@ field_generator power level display
 /obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/T = loc
 	if(!istype(T))
-		return 0
+		return FALSE
 
 	var/obj/machinery/field/generator/G = null
 	var/steps = 0
 	if(!NSEW)//Make sure its ran right
-		return 0
+		return FALSE
 	for(var/dist in 0 to 7) // checks out to 8 tiles away for another generator
 		T = get_step(T, NSEW)
 		if(T.density)//We cant shoot a field though this
-			return 0
+			return FALSE
 
 		G = locate(/obj/machinery/field/generator) in T
 		if(G)
 			steps -= 1
 			if(!G.active)
-				return 0
+				return FALSE
 			break
 
 		for(var/TC in T.contents)
@@ -284,12 +289,12 @@ field_generator power level display
 			if(ismob(A))
 				continue
 			if(A.density)
-				return 0
+				return FALSE
 
 		steps++
 
 	if(!G)
-		return 0
+		return FALSE
 
 	T = loc
 	for(var/dist in 0 to steps) // creates each field tile
@@ -333,6 +338,7 @@ field_generator power level display
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
 					var/turf/T = get_turf(src)
+					radio.talk_into(src, "A containment field has failed in [get_area_name(src, TRUE)] while a singularity exists.", null, language = get_selected_language())
 					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time

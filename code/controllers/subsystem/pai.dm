@@ -1,12 +1,18 @@
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
 
-	flags = SS_NO_INIT|SS_NO_FIRE
+	flags = SS_NO_FIRE
 
 	var/list/candidates = list()
 	var/ghost_spam = FALSE
 	var/spam_delay = 100
 	var/list/pai_card_list = list()
+	var/list/restricted_areas = list()
+
+/datum/controller/subsystem/pai/Initialize(var/time_of_day)
+	restricted_areas += typesof(/area/command/heads_quarters, /area/ai_monitored) // heads quarters and AI monitored places (like the armory)
+	initialized = TRUE
+	return ..()
 
 /datum/controller/subsystem/pai/Topic(href, href_list)
 	if(href_list["download"])
@@ -155,7 +161,7 @@ SUBSYSTEM_DEF(pai)
 			if(!G.can_reenter_round()) // this should use notify_ghosts() instead one day.
 				return FALSE
 			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
-		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
+		addtimer(CALLBACK(src, PROC_REF(spam_again)), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
 		available.Add(check_ready(c))

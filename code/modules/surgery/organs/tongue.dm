@@ -15,6 +15,7 @@
 	var/list/accents = list() //done in order of priority (please always apply abductor accent and stuttering last)
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
+		/datum/language/machine,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
@@ -26,6 +27,8 @@
 		/datum/language/vampiric,
 		/datum/language/dwarf,
 		/datum/language/signlanguage,
+		/datum/language/neokanji,
+		/datum/language/sylvan,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2
@@ -58,15 +61,15 @@
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
 	if(length(initial_accents) || length(accents))
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/organ/tongue/Remove(special = FALSE)
 	if(!QDELETED(owner))
 		if(say_mod && owner.dna?.species)
 			owner.dna.species.say_mod = initial(owner.dna.species.say_mod)
-		UnregisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
-		owner.RegisterSignal(owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+		UnregisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+		owner.RegisterSignal(owner, COMSIG_MOB_SAY, TYPE_PROC_REF(/mob/living/carbon/, handle_tongueless_speech))
 	return ..()
 
 /obj/item/organ/tongue/could_speak_language(language)
@@ -140,7 +143,7 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
-	maxHealth = 500 //They've a little mouth for a tongue, so it's pretty rhobust
+	maxHealth = 500 //They've a little mouth for a tongue, so it's pretty robust
 	initial_accents = list(/datum/accent/alien)
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
@@ -152,6 +155,13 @@
 /obj/item/organ/tongue/alien/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_alien
+
+/obj/item/organ/tongue/alien/hybrid
+	name = "xenohybrid tongue"
+
+/obj/item/organ/tongue/alien/hybrid/Initialize(mapload)
+	. = ..()
+	languages_possible = languages_possible_base
 
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""
@@ -166,7 +176,7 @@
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list(/datum/accent/span/sans, /datum/accent/span/papyrus)
 
-/obj/item/organ/tongue/bone/Initialize()
+/obj/item/organ/tongue/bone/Initialize(mapload)
 	initial_accents += pick(phomeme_types)
 	. = ..()
 
@@ -246,6 +256,7 @@
 	taste_sensitivity = 101 // Not a tongue, they can't taste shit
 	var/static/list/languages_possible_ethereal = typecacheof(list(
 		/datum/language/common,
+		/datum/language/machine,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
@@ -253,7 +264,8 @@
 		/datum/language/beachbum,
 		/datum/language/aphasia,
 		/datum/language/sylvan,
-		/datum/language/voltaic
+		/datum/language/voltaic,
+		/datum/language/neokanji,
 	))
 
 /obj/item/organ/tongue/ethereal/Initialize(mapload)
@@ -266,6 +278,7 @@
 	say_mod = "chitters"
 	var/static/list/languages_possible_arachnid = typecacheof(list(
 		/datum/language/common,
+		/datum/language/machine,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,

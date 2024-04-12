@@ -7,9 +7,9 @@
   * almost guaranteed to be doing something wrong.
   */
 /atom/movable/emissive_blocker
-	name = ""
-	plane = EMISSIVE_BLOCKER_PLANE
-	layer = EMISSIVE_BLOCKER_LAYER
+	name = "emissive blocker"
+	plane = EMISSIVE_PLANE
+	layer = FLOAT_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	//Why?
@@ -23,8 +23,10 @@
 	verbs.Cut() //Cargo culting from lighting object, this maybe affects memory usage?
 
 	render_source = source
+	color = GLOB.em_block_color
 
-/atom/movable/emissive_blocker/ex_act(severity)
+
+/atom/movable/emissive_blocker/ex_act(severity, target, origin)
 	return FALSE
 
 /atom/movable/emissive_blocker/singularity_act()

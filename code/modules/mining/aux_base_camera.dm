@@ -6,7 +6,7 @@
 	icon_state = "construction_drone"
 	var/area/starting_area
 
-/mob/camera/aiEye/remote/base_construction/Initialize()
+/mob/camera/aiEye/remote/base_construction/Initialize(mapload)
 	. = ..()
 	starting_area = get_area(loc)
 

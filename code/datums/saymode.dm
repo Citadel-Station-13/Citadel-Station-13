@@ -120,6 +120,17 @@
 		return FALSE
 	return TRUE
 
+/datum/saymode/statusdisplay
+	key = "q"
+	mode = MODE_STATUSDISPLAY
+
+/datum/saymode/statusdisplay/handle_message(mob/living/user, message, datum/language/language)
+	if(isAI(user))
+		var/mob/living/silicon/ai/AI = user
+		AI.statusdisplay_talk(message, language)
+		return FALSE
+	return TRUE
+
 /datum/saymode/monkey
 	key = "k"
 	mode = MODE_MONKEY

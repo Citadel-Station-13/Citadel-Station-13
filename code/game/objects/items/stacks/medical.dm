@@ -28,7 +28,7 @@
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/try_heal, M, user)
+	INVOKE_ASYNC(src, PROC_REF(try_heal), M, user)
 
 /obj/item/stack/medical/proc/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(!M.can_inject(user, TRUE))
@@ -36,12 +36,12 @@
 	if(M == user)
 		if(!silent)
 			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
-		if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
+		if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, TYPE_PROC_REF(/mob/living, can_inject), user, TRUE)))
 			return
 	else if(other_delay)
 		if(!silent)
 			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [M].</span>", "<span class='notice'>You begin applying \the [src] on [M]...</span>")
-		if(!do_mob(user, M, other_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
+		if(!do_mob(user, M, other_delay, extra_checks=CALLBACK(M, TYPE_PROC_REF(/mob/living, can_inject), user, TRUE)))
 			return
 
 	if(heal(M, user))
@@ -216,7 +216,8 @@
 
 /obj/item/stack/medical/gauze/cyborg
 	custom_materials = null
-	is_cyborg = 1
+	is_cyborg = TRUE
+	source = /datum/robot_energy_storage/medical
 	cost = 250
 
 /obj/item/stack/medical/suture
@@ -342,7 +343,7 @@
 /obj/item/stack/medical/mesh/advanced/one
 	amount = 1
 
-/obj/item/stack/medical/mesh/Initialize()
+/obj/item/stack/medical/mesh/Initialize(mapload)
 	. = ..()
 	if(amount == max_amount)	 //only seal full mesh packs
 		is_open = FALSE
@@ -383,7 +384,7 @@
 	. = ..()
 
 /obj/item/stack/medical/mesh/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(!is_open & user.get_inactive_held_item() == src)
+	if(!is_open && (user.get_inactive_held_item() == src))
 		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
 		return
 	. = ..()
@@ -440,7 +441,8 @@
 
 /obj/item/stack/medical/bone_gel/cyborg
 	custom_materials = null
-	is_cyborg = 1
+	is_cyborg = TRUE
+	source = /datum/robot_energy_storage/medical
 	cost = 250
 
 /obj/item/stack/medical/aloe
@@ -487,6 +489,9 @@
 	max_amount = 12	//Two synths worth of fixing, if every single bodypart of them has internal damage. Usually, probably more like 6-12.
 	icon_state = "nanogel"
 	var/being_applied = FALSE	//No doafter stacking.
+
+/obj/item/stack/medical/nanogel/one
+	amount = 1
 
 /obj/item/stack/medical/nanogel/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(being_applied)

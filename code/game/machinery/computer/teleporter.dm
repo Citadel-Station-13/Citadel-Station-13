@@ -14,7 +14,7 @@
 	var/turf/target
 	var/obj/item/implant/imp_t
 
-/obj/machinery/computer/teleporter/Initialize()
+/obj/machinery/computer/teleporter/Initialize(mapload)
 	. = ..()
 	id = "[rand(1000, 9999)]"
 	link_power_station()
@@ -90,7 +90,7 @@
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
 			power_station.update_icon()
-			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			. = TRUE
 
 /obj/machinery/computer/teleporter/proc/finish_calibration()
@@ -150,7 +150,7 @@
 			var/mob/living/M = target
 			var/obj/item/implant/tracking/I = locate() in M.implants
 			if(I)
-				RegisterSignal(I, COMSIG_IMPLANT_REMOVING, .proc/untarget_implant)
+				RegisterSignal(I, COMSIG_IMPLANT_REMOVING, PROC_REF(untarget_implant))
 				imp_t = I
 			else
 				target = null

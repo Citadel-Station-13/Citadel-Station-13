@@ -1,7 +1,8 @@
 /datum/gear/backpack
 	category = LOADOUT_CATEGORY_BACKPACK
 	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_GENERAL
-	slot = SLOT_IN_BACKPACK
+	slot = ITEM_SLOT_BACKPACK
+	handle_post_equip = TRUE
 
 /datum/gear/backpack/plushbox
 	name = "Plushie Choice Box"
@@ -172,6 +173,7 @@
 	path = /obj/item/storage/fancy/ringbox/diamond
 	cost = 5
 
-/datum/gear/backpack/necklace//this is here because loadout doesn't support proper accessories
-	name = "A renameable necklace"
-	path = /obj/item/clothing/accessory/necklace
+// Moved here from quirks
+/datum/gear/backpack/dyespray
+	name = "Hair dye spray"
+	path = /obj/item/dyespray

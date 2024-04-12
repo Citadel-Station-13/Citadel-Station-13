@@ -353,7 +353,7 @@
 	material_flags = NONE
 	sideslist = list("nanotrasen", "syndicate")
 
-/obj/item/coin/thunderdome/Initialize()
+/obj/item/coin/thunderdome/Initialize(mapload)
 	. = ..()
 	transform = matrix(0.5,0,0,0,0.5,0)
 
@@ -377,7 +377,7 @@
 	var/static/radial_shuffle = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle")
 	var/static/radial_pickup = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup")
 
-/obj/item/tcgcard_deck/Initialize()
+/obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()
 	LoadComponent(/datum/component/storage/concrete/tcg)
 
@@ -413,7 +413,7 @@
 		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
 		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -669,7 +669,7 @@
 	card.forceMove(src)
 	cards.Add(card)
 
-/obj/item/tcgcard_binder/full/Initialize() //For admemes.
+/obj/item/tcgcard_binder/full/Initialize(mapload) //For admemes.
 	. = ..()
 	for(var/cardtype in subtypesof(/datum/tcg_card))
 		var/obj/item/tcg_card/card = new(get_turf(src), cardtype)

@@ -87,7 +87,7 @@
 	power_draw_per_use = 80
 	var/obj/item/card/id/idc
 
-/obj/item/integrated_circuit/smart/advanced_pathfinder/Initialize()
+/obj/item/integrated_circuit/smart/advanced_pathfinder/Initialize(mapload)
 	.=..()
 	idc = new(src)
 
@@ -97,7 +97,7 @@
 		return
 	idc.access = assembly.access_card.access
 	var/turf/a_loc = get_turf(assembly)
-	var/list/P = cir_get_path_to(assembly, locate(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2),a_loc.z), /turf/proc/Distance_cardinal, 0, 200, id=idc, exclude=get_turf(get_pin_data_as_type(IC_INPUT,3, /atom)), simulated_only = 0)
+	var/list/P = get_path_to(assembly, locate(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2),a_loc.z), 200, id=idc, exclude=get_turf(get_pin_data_as_type(IC_INPUT,3, /atom)), simulated_only = 0)
 
 	if(!P)
 		activate_pin(3)

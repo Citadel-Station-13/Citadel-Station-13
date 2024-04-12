@@ -1,6 +1,6 @@
 /**
   * KILLER QUEEN
-  * 
+  *
   * Simple contact bomb component
   * Blows up the first person to touch it.
   */
@@ -26,7 +26,7 @@
 	var/flame = 0
 	/// only triggered by living mobs
 	var/living_only = TRUE
-	
+
 
 /datum/component/killerqueen/Initialize(ex_strength = EXPLODE_HEAVY, datum/callback/pre_explode, datum/callback/failure, examine_message, light = 0, heavy = 0, dev = 0, flame = 0, living_only = TRUE)
 	. = ..()
@@ -51,10 +51,10 @@
 
 /datum/component/killerqueen/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_ANIMAL), .proc/touch_detonate)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/bump_detonate)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_detonate)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_ANIMAL), PROC_REF(touch_detonate))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(bump_detonate))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_detonate))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/killerqueen/UnregisterFromParent()
 	. = ..()

@@ -101,7 +101,7 @@
 	var/multi = 1
 	var/lfwb =TRUE
 
-/obj/item/integrated_circuit/passive/power/chemical_cell/Initialize()
+/obj/item/integrated_circuit/passive/power/chemical_cell/Initialize(mapload)
 	. = ..()
 	create_reagents(volume, OPENCONTAINER)
 
@@ -122,8 +122,9 @@
 				var/datum/reagent/blood/B = locate() in reagents.reagent_list
 				if(lfwb)
 					if(B && B.data["cloneable"])
-						var/mob/M = B.data["donor"]
-						if(M && (M.stat != DEAD) && (M.client))
+						var/datum/weakref/donor_ref = B.data["donor"]
+						var/mob/donor = donor_ref.resolve()
+						if(donor && (donor.stat != DEAD) && (donor.client))
 							bp = 500000
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > bp)
 					if(reagents.remove_reagent(/datum/reagent/blood, 1))

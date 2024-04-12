@@ -44,13 +44,13 @@
 	if(powernet)
 		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/proc/avail(amount)
 	if(powernet)
 		return amount ? powernet.avail >= amount : powernet.avail
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/proc/add_delayedload(amount)
 	if(powernet)
@@ -60,13 +60,13 @@
 	if(powernet)
 		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/proc/newavail()
 	if(powernet)
 		return powernet.newavail
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
@@ -104,15 +104,23 @@
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
 
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-	else
+/obj/machinery/proc/power_change()
+	SHOULD_NOT_SLEEP(TRUE)
+	//SHOULD_CALL_PARENT(TRUE)
 
-		stat |= NOPOWER
-	return
+	if(stat & BROKEN)
+		return
+	if(powered(power_channel))
+		if(stat & NOPOWER)
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
+			. = TRUE
+		set_machine_stat(stat & ~NOPOWER)
+	else
+		if(!(stat & NOPOWER))
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
+			. = TRUE
+		set_machine_stat(stat | NOPOWER)
+	update_appearance()
 
 // connect the machine to a powernet if a node cable is present on the turf
 /obj/machinery/power/proc/connect_to_network()
@@ -301,17 +309,17 @@
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(!istype(M) || ismecha(M.loc))
-		return 0	//feckin mechs are dumb
+		return FALSE	//feckin mechs are dumb
 	if(dist_check)
 		if(!in_range(source,M))
-			return 0
+			return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)
 				SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
-				return 0		//to avoid spamming with insulated glvoes on
+				return FALSE		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
 	if(istype(power_source, /area))
@@ -334,12 +342,12 @@
 		if (apc.terminal)
 			PN = apc.terminal.powernet
 	else if (!power_source)
-		return 0
+		return FALSE
 	else
 		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
-		return 0
+		return FALSE
 	if (!cell && !PN)
-		return 0
+		return FALSE
 	var/PN_damage = 0
 	var/cell_damage = 0
 	if (PN)

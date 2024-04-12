@@ -9,14 +9,14 @@
 
 /datum/gas_mixture/heat_capacity() //joules per kelvin
 	var/list/cached_gases = gases
-	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	var/list/cached_gasheats = GLOB.gas_data.specific_heats
 	. = 0
 	for(var/id in cached_gases)
 		. += cached_gases[id] * cached_gasheats[id]
 
 /datum/gas_mixture/turf/heat_capacity() // Same as above except vacuums return HEAT_CAPACITY_VACUUM
 	var/list/cached_gases = gases
-	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	var/list/cached_gasheats = GLOB.gas_data.specific_heats
 	for(var/id in cached_gases)
 		. += cached_gases[id] * cached_gasheats[id]
 	if(!.)
@@ -41,7 +41,7 @@
 		TOTAL_MOLES(cached_gases, .)
 		. *= R_IDEAL_GAS_EQUATION * temperature / volume
 		return
-	return 0
+	return FALSE
 
 /datum/gas_mixture/return_temperature() //kelvins
 	return temperature
@@ -56,20 +56,20 @@
 	return gases[gas_type]
 /datum/gas_mixture/set_moles(gas_type, moles)
 	gases[gas_type] = moles
-/datum/gas_mixture/scrub_into(datum/gas_mixture/target, list/gases)
+/datum/gas_mixture/scrub_into(datum/gas_mixture/target, ratio, list/gases)
 	if(isnull(target))
 		return FALSE
 
-	var/list/removed_gases = target.gases
+	var/list/removed_gases = gases
 
 	//Filter it
 	var/datum/gas_mixture/filtered_out = new
 	var/list/filtered_gases = filtered_out.gases
 	filtered_out.temperature = removed.temperature
 	for(var/gas in filter_types & removed_gases)
-		filtered_gases[gas] = removed_gases[gas]
-		removed_gases[gas] = 0
-	merge(filtered_out)
+		filtered_gases[gas] = removed_gases[gas] * ratio
+		removed_gases[gas] = removed_gases[gas] * (1 - ratio)
+	target.merge(filtered_out)
 /datum/gas_mixture/mark_immutable()
 	return
 /datum/gas_mixture/get_gases()
@@ -91,11 +91,11 @@
 /datum/gas_mixture/archive()
 	temperature_archived = temperature
 	gas_archive = gases.Copy()
-	return 1
+	return TRUE
 
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
-		return 0
+		return FALSE
 
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -111,7 +111,7 @@
 	for(var/giver_id in giver_gases)
 		cached_gases[giver_id] += giver_gases[giver_id]
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/remove(amount)
 	var/sum
@@ -172,7 +172,7 @@
 	//remove all gases not in the sample
 	cached_gases &= sample_gases
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
@@ -182,7 +182,7 @@
 	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
 		temperature = model.temperature
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 
@@ -208,7 +208,7 @@
 	var/delta
 	var/gas_heat_capacity
 	//and also cache this shit rq because that results in sanic speed for reasons byond explanation
-	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	var/list/cached_gasheats = GLOB.gas_data.specific_heats
 	//GAS TRANSFER
 	for(var/id in cached_gases | sharer_gases) // transfer gases
 

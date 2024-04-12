@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(fail2topic)
 		while(i <= length(rate_limiting))
 			var/ip = rate_limiting[i]
 			var/last_attempt = rate_limiting[ip]
-			if(world.time - last_attempt > rate_limit)
+			if(REALTIMEOFDAY - last_attempt > rate_limit)
 				rate_limiting -= ip
 				fail_counts -= ip
 			else		//if we remove that, and the next element is in its place. check that instead of incrementing.
@@ -44,7 +44,24 @@ SUBSYSTEM_DEF(fail2topic)
 /datum/controller/subsystem/fail2topic/Shutdown()
 	DropFirewallRule()
 
+/datum/controller/subsystem/fail2topic/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, rule_name))
+		return FALSE
+	return ..()
+
+/datum/controller/subsystem/fail2topic/CanProcCall(procname)
+	. = ..()
+	if(.)
+		switch(procname)
+			if("IsRateLimited")
+				return FALSE
+			if("BanFromFirewall")
+				return FALSE
+
 /datum/controller/subsystem/fail2topic/proc/IsRateLimited(ip)
+	if(IsAdminAdvancedProcCall())
+		return FALSE
+
 	var/last_attempt = rate_limiting[ip]
 
 	var/static/datum/config_entry/keyed_list/topic_rate_limit_whitelist/cached_whitelist_entry
@@ -58,12 +75,12 @@ SUBSYSTEM_DEF(fail2topic)
 	if (active_bans[ip])
 		return TRUE
 
-	rate_limiting[ip] = world.time
+	rate_limiting[ip] = REALTIMEOFDAY
 
 	if (isnull(last_attempt))
 		return FALSE
 
-	if (world.time - last_attempt > rate_limit)
+	if (REALTIMEOFDAY - last_attempt > rate_limit)
 		fail_counts -= ip
 		return FALSE
 	else
@@ -82,8 +99,10 @@ SUBSYSTEM_DEF(fail2topic)
 /datum/controller/subsystem/fail2topic/proc/BanFromFirewall(ip)
 	if (!enabled)
 		return
+	if(IsAdminAdvancedProcCall())
+		return
 
-	active_bans[ip] = world.time
+	active_bans[ip] = REALTIMEOFDAY
 	fail_counts -= ip
 	rate_limiting -= ip
 

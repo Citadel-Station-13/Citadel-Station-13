@@ -3,13 +3,13 @@
 /datum/component/wearertargeting/phantomthief
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	signals = list(COMSIG_LIVING_COMBAT_ENABLED, COMSIG_LIVING_COMBAT_DISABLED)
-	proctype = .proc/handlefilterstuff
+	proctype = PROC_REF(handlefilterstuff)
 	var/filter_x
 	var/filter_y
 	var/filter_size
 	var/filter_color
 
-/datum/component/wearertargeting/phantomthief/Initialize(_x = -2, _y = 0, _size = 0, _color = "#E62111", list/_valid_slots = list(SLOT_GLASSES))
+/datum/component/wearertargeting/phantomthief/Initialize(_x = -2, _y = 0, _size = 0, _color = "#E62111", list/_valid_slots = list(ITEM_SLOT_EYES))
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return

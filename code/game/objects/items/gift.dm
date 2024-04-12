@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(gift_item_blacklist, typecacheof(list(
 	/obj/mafia_game_board,
 	/obj/docking_port,
 	/obj/shapeshift_holder,
-	/obj/screen
+	/atom/movable/screen
 	)))
 
 GLOBAL_LIST_EMPTY(possible_gifts)

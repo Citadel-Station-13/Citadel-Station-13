@@ -34,7 +34,7 @@
 					"<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
 					"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
 					"<span class='italics'>You hear squelching...</span>")
-				if(!do_after(M, 1200, target = src))
+				if(!do_after(M, 2 MINUTES, target = src, timed_action_flags = (IGNORE_HELD_ITEM | IGNORE_INCAPACITATED), extra_checks = CALLBACK(M, TYPE_PROC_REF(/mob/living/carbon, cuff_resist_check))))
 					if(M && M.buckled)
 						to_chat(M, "<span class='warning'>You fail to unbuckle yourself!</span>")
 					return
@@ -48,8 +48,8 @@
 			unbuckle_mob(M)
 			add_fingerprint(user)
 
-/obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/living/user)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
+/obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/living/carbon/user, check_loc)
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || !user.cuff_resist_check() || M.buckled )
 		return
 
 	if(M.getorgan(/obj/item/organ/alien/plasmavessel))

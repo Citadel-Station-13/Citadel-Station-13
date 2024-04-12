@@ -68,10 +68,19 @@
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
 		if(SP)
 			advanced_surgeries |= SP.advanced_surgeries
+	else
+		var/obj/item/surgical_processor/SP
+		for(var/obj/item/surgical_processor/processor in user.held_items)
+			SP = processor
+			break
+		if(!SP)
+			SP = locate(/obj/item/surgical_processor) in get_turf(user)
+		if(SP)
+			advanced_surgeries |= SP.advanced_surgeries
 
 	var/turf/T = get_turf(patient)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
-	if(table?.computer && !CHECK_BITFIELD(table.computer.stat, NOPOWER|BROKEN))
+	if(table?.computer && !(table.computer.stat & (NOPOWER|BROKEN)))
 		advanced_surgeries |= table.computer.advanced_surgeries
 
 	if(istype(tool, /obj/item/surgical_drapes/advanced))
@@ -85,7 +94,7 @@
 
 /datum/surgery/proc/next_step(mob/user, intent)
 	if(step_in_progress)
-		return 1
+		return TRUE
 
 	var/try_to_fail = FALSE
 	if(intent == INTENT_DISARM)
@@ -95,8 +104,6 @@
 	if(S)
 		var/obj/item/tool = user.get_active_held_item()
 		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
-			return TRUE
-		if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
 			return TRUE
 		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")
@@ -123,6 +130,8 @@
 
 	if(locate(/obj/structure/table/optable, T))
 		propability = 1
+	else if(locate(/obj/machinery/stasis))
+		propability = 0.9
 	else if(locate(/obj/structure/table, T))
 		propability = 0.8
 	else if(locate(/obj/structure/bed, T))
@@ -147,7 +156,7 @@
 	icon_state = "datadisk1"
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
-/obj/item/disk/surgery/debug/Initialize()
+/obj/item/disk/surgery/debug/Initialize(mapload)
 	. = ..()
 	surgeries = list()
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)

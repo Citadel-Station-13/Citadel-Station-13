@@ -20,12 +20,10 @@
 /mob/living/proc/update_density()
 	density = !lying && !HAS_TRAIT(src, TRAIT_LIVING_NO_DENSITY)
 
-/mob/living/CanPass(atom/movable/mover, turf/target)
-	if((mover.pass_flags & PASSMOB))
-		return TRUE
-	if(istype(mover, /obj/item/projectile))
-		var/obj/item/projectile/P = mover
-		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
+/mob/living/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
 	if(mover.throwing)
 		return (!density || lying)
 	if(buckled == mover)
@@ -36,8 +34,12 @@
 	if(ismob(mover))
 		if(mover in buckled_mobs)
 			return TRUE
+		if(HAS_TRAIT(mover, TRAIT_BEING_CARRIED))
+			return TRUE	//We're being carried and our carrier managed to pass, ergo, let us pass aswell.
 	var/mob/living/L = mover		//typecast first, check isliving and only check this if living using short circuit
-	return (!density || (isliving(mover)? L.can_move_under_living(src) : !mover.density))
+	if(isliving(L) && lying && L.lying)		//if we're both lying down and aren't already being thrown/shipped around, don't pass
+		return FALSE
+	return (isliving(mover)? L.can_move_under_living(src) : !mover.density)
 
 /mob/living/toggle_move_intent()
 	. = ..()
@@ -79,7 +81,7 @@
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
-			return 0
+			return FALSE
 
 	var/old_direction = dir
 	var/turf/T = loc
@@ -101,31 +103,6 @@
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
-
-	if(causes_dirt_buildup_on_floor && (movement_type & GROUND))
-		dirt_buildup()
-
-/**
- * Attempts to make the floor dirty.
- */
-/mob/living/proc/dirt_buildup(strength = 1)
-	var/turf/open/T = loc
-	if(!istype(T) || !T.dirt_buildup_allowed)
-		return
-	var/area/A = T.loc
-	if(!A.dirt_buildup_allowed)
-		return
-	var/multiplier = CONFIG_GET(number/turf_dirty_multiplier)
-	strength *= multiplier
-	var/obj/effect/decal/cleanable/dirt/D = locate() in T
-	if(D)
-		D.dirty(strength)
-	else
-		T.dirtyness += strength
-		if(T.dirtyness >= (isnull(T.dirt_spawn_threshold)? CONFIG_GET(number/turf_dirt_threshold) : T.dirt_spawn_threshold))
-			D = new /obj/effect/decal/cleanable/dirt(T)
-			D.dirty(T.dirt_spawn_threshold - T.dirtyness)
-			T.dirtyness = 0		// reset.
 
 /mob/living/Move_Pulled(atom/A)
 	. = ..()

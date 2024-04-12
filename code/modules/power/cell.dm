@@ -76,13 +76,13 @@
 /obj/item/stock_parts/cell/use(amount, can_explode = TRUE)
 	if(rigged && amount > 0 && can_explode)
 		explode()
-		return 0
+		return FALSE
 	if(charge < amount)
-		return 0
-	charge = (charge - amount)
+		return FALSE
+	charge -= amount
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	return 1
+	return TRUE
 
 // recharge the cell
 /obj/item/stock_parts/cell/proc/give(amount)
@@ -90,7 +90,7 @@
 		return
 	if(rigged && amount > 0)
 		explode()
-		return 0
+		return FALSE
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
@@ -142,7 +142,7 @@
 	if(charge < 0)
 		charge = 0
 
-/obj/item/stock_parts/cell/ex_act(severity, target)
+/obj/item/stock_parts/cell/ex_act(severity, target, origin)
 	..()
 	if(!QDELETED(src))
 		switch(severity)
@@ -182,27 +182,10 @@
 	if(charge >= 1000)
 		return clamp(round(charge/10000), 10, 90) + rand(-5,5)
 	else
-		return 0
+		return FALSE
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return rating * maxcharge
-
-// stuff so ipcs and synthlizards can eat power cells, taken from how moths can eat clothing
-/obj/item/reagent_containers/food/snacks/cell
-	name = "oops"
-	desc = "If you're reading this it means I messed up. This is related to ipcs/synths eating cells and I didn't know a better way to do it than making a new food object."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 0.5)
-	tastes = list("electricity" = 1, "metal" = 1)
-
-/obj/item/stock_parts/cell/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent != INTENT_HARM && isrobotic(M))
-		var/obj/item/reagent_containers/food/snacks/cell/cell_as_food = new
-		cell_as_food.name = name
-		if(cell_as_food.attack(M, user, def_zone))
-			take_damage(40, sound_effect=FALSE)
-		qdel(cell_as_food)
-	else
-		return ..()
 
 /* Cell variants*/
 /obj/item/stock_parts/cell/empty
@@ -315,7 +298,7 @@
 	chargerate = 30000
 
 /obj/item/stock_parts/cell/infinite/use()
-	return 1
+	return TRUE
 
 /obj/item/stock_parts/cell/infinite/abductor
 	name = "void core"
@@ -387,7 +370,7 @@
 	custom_materials = list(/datum/material/glass = 20)
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/stock_parts/cell/emergency_light/Initialize()
+/obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)

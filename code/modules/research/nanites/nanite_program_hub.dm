@@ -22,9 +22,16 @@
 		list(name = "Protocols"),
 	)
 
-/obj/machinery/nanite_program_hub/Initialize()
+/obj/machinery/nanite_program_hub/Initialize(mapload)
 	. = ..()
 	linked_techweb = SSresearch.science_tech
+
+/obj/machinery/nanite_program_hub/update_overlays()
+	. = ..()
+	if((stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+		return
+	. += mutable_appearance(icon, "nanite_program_hub_on")
+	. += emissive_appearance(icon, "nanite_program_hub_on")
 
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
@@ -140,3 +147,7 @@
 				disk.program = null
 				disk.name = initial(disk.name)
 			. = TRUE
+
+/obj/machinery/nanite_program_hub/admin/Initialize(mapload)
+	. = ..()
+	linked_techweb = SSresearch.admin_tech

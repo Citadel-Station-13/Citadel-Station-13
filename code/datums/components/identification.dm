@@ -24,11 +24,12 @@
 	identification_method_flags = id_method_flags
 
 /datum/component/identification/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK, PROC_REF(check_knowledge))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	if(identification_effect_flags & ID_COMPONENT_EFFECT_NO_ACTIONS)
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	if(identification_method_flags & ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR)
-		RegisterSignal(parent, COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN, .proc/on_deconstructor_deepscan)
+		RegisterSignal(parent, COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN, PROC_REF(on_deconstructor_deepscan))
 
 /datum/component/identification/UnregisterFromParent()
 	var/list/unregister = list(COMSIG_PARENT_EXAMINE)
@@ -60,7 +61,7 @@
 	if(identification_method_flags & ID_COMPONENT_EFFECT_NO_ACTIONS)
 		return COMPONENT_NO_GRANT_ACTIONS
 
-/datum/component/identification/proc/check_knowledge(mob/user)
+/datum/component/identification/proc/check_knowledge(datum/source, mob/user)
 	return ID_COMPONENT_KNOWLEDGE_NONE
 
 /datum/component/identification/proc/on_identify(mob/user)
@@ -82,7 +83,7 @@
   */
 /datum/component/identification/syndicate
 
-/datum/component/identification/syndicate/check_knowledge(mob/user)
+/datum/component/identification/syndicate/check_knowledge(datum/source, mob/user)
 	. = ..()
 	if(user?.mind?.has_antag_datum(/datum/antagonist/traitor))
 		. = max(., ID_COMPONENT_KNOWLEDGE_FULL)

@@ -4,7 +4,7 @@
 	var/list/alien_powers = list()
 	organ_flags = ORGAN_NO_SPOIL|ORGAN_EDIBLE
 
-/obj/item/organ/alien/Initialize()
+/obj/item/organ/alien/Initialize(mapload)
 	. = ..()
 	for(var/A in alien_powers)
 		if(ispath(A))
@@ -85,7 +85,7 @@
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
 			if(owner.blood_volume && (owner.blood_volume < BLOOD_VOLUME_NORMAL))
-				owner.blood_volume += 5
+				owner.adjust_integration_blood(5)
 	else
 		owner.adjustPlasma(plasma_rate * 0.1)
 
@@ -141,8 +141,8 @@
 	owner.stuttering += 30
 
 	recent_queen_death = 1
-	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
-	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
+	owner.throw_alert("alien_noqueen", /atom/movable/screen/alert/alien_vulnerable)
+	addtimer(CALLBACK(src, PROC_REF(clear_queen_death)), QUEEN_DEATH_DEBUFF_DURATION)
 
 
 /obj/item/organ/alien/hivenode/proc/clear_queen_death()

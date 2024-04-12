@@ -20,20 +20,20 @@
 		if(C.attached_accessory)
 			to_chat(user,"<span class='warning'>Kind of hard to sew around [C.attached_accessory].</span>")
 			return
-		if(C.armor.getRating("melee") < 10)
-			C.armor = C.armor.setRating("melee" = 10)
+		if(C.armor.getRating(MELEE) < 10)
+			C.armor = C.armor.setRating(MELEE = 10)
 			used = TRUE
-		if(C.armor.getRating("laser") < 10)
-			C.armor = C.armor.setRating("laser" = 10)
+		if(C.armor.getRating(LASER) < 10)
+			C.armor = C.armor.setRating(LASER = 10)
 			used = TRUE
-		if(C.armor.getRating("fire") < 40)
-			C.armor = C.armor.setRating("fire" = 40)
+		if(C.armor.getRating(FIRE) < 40)
+			C.armor = C.armor.setRating(FIRE = 40)
 			used = TRUE
-		if(C.armor.getRating("acid") < 10)
-			C.armor = C.armor.setRating("acid" = 10)
+		if(C.armor.getRating(ACID) < 10)
+			C.armor = C.armor.setRating(ACID = 10)
 			used = TRUE
-		if(C.armor.getRating("bomb") < 5)
-			C.armor = C.armor.setRating("bomb" = 5)
+		if(C.armor.getRating(BOMB) < 5)
+			C.armor = C.armor.setRating(BOMB = 5)
 			used = TRUE
 
 		if(used)

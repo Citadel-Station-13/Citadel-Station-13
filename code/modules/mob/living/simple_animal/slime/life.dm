@@ -6,8 +6,9 @@
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
 
+	typing_indicator_state = /obj/effect/overlay/typing_indicator/slime
 
-/mob/living/simple_animal/slime/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/slime/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(buckled)
@@ -128,7 +129,7 @@
 		Tempstun = 0
 
 	if(stat != DEAD)
-		var/bz_percentage = environment.total_moles() ? (environment.get_moles(/datum/gas/bz) / environment.total_moles()) : 0
+		var/bz_percentage = environment.total_moles() ? (environment.get_moles(GAS_BZ) / environment.total_moles()) : 0
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)
@@ -390,7 +391,7 @@
 				else if(CHECK_MOBILITY(src, MOBILITY_MOVE) && isturf(loc) && prob(33))
 					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
-			INVOKE_ASYNC(src, .proc/AIprocess)
+			INVOKE_ASYNC(src, PROC_REF(AIprocess))
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()
@@ -619,11 +620,11 @@
 
 /mob/living/simple_animal/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	if (docile)
-		return 0
+		return FALSE
 	if (hunger == 2 || rabid || attacked)
-		return 1
+		return TRUE
 	if (Leader)
-		return 0
+		return FALSE
 	if (holding_still)
-		return 0
-	return 1
+		return FALSE
+	return TRUE

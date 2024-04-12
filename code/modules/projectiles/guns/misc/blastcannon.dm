@@ -26,7 +26,7 @@
 	debug_power = 80
 	bombcheck = FALSE
 
-/obj/item/gun/blastcannon/Initialize()
+/obj/item/gun/blastcannon/Initialize(mapload)
 	. = ..()
 	if(!pin)
 		pin = new
@@ -72,20 +72,20 @@
 //returns the third value of a bomb blast
 /obj/item/gun/blastcannon/proc/calculate_bomb()
 	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
-		return 0
+		return FALSE
 	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, 0))
 	bomb.merge_gases(temp)
 	if(prereaction)
 		temp.react(src)
 		var/prereaction_pressure = temp.return_pressure()
 		if(prereaction_pressure < TANK_FRAGMENT_PRESSURE)
-			return 0
+			return FALSE
 	for(var/i in 1 to reaction_cycles)
 		temp.react(src)
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
-		return 0
+		return FALSE
 	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
@@ -114,7 +114,8 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	movement_type = FLYING | UNSTOPPABLE
+	movement_type = FLYING
+	projectile_phasing = ALL		// just blows up the turfs lmao - Silly-Cons
 	var/heavyr = 0
 	var/mediumr = 0
 	var/lightr = 0
@@ -156,5 +157,5 @@
 	mediumr = max(mediumr - 1, 0)
 	lightr = max(lightr - 1, 0)
 
-/obj/item/projectile/blastwave/ex_act()
+/obj/item/projectile/blastwave/ex_act(severity, target, origin)
 	return

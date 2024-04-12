@@ -4,7 +4,8 @@
 // ignore_castun = same logic as Paralyze() in general
 // override_duration = If this is set, does Paralyze() for this duration.
 // override_stam = If this is set, does this amount of stamina damage.
-/mob/living/proc/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
+// knocktofloor - whether to knock them to the ground
+/mob/living/proc/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg, knocktofloor = TRUE)
 	if(!iscarbon(src))
 		return Paralyze(amount, updating, ignore_canknockdown)
 	if(!ignore_canknockdown && !(status_flags & CANKNOCKDOWN))
@@ -13,7 +14,8 @@
 		buckled.unbuckle_mob(src)
 	var/drop_items = amount > 80		//80 is cutoff for old item dropping behavior
 	var/stamdmg = isnull(override_stamdmg)? (amount * 0.25) : override_stamdmg
-	KnockToFloor(drop_items, TRUE, updating)
+	if(knocktofloor)
+		KnockToFloor(drop_items, TRUE, updating)
 	adjustStaminaLoss(stamdmg)
 	if(!isnull(override_hardstun))
 		Paralyze(override_hardstun)
@@ -27,7 +29,7 @@
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	if(S)
 		return S.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -84,7 +86,7 @@
 	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 	if(K)
 		return K.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -140,7 +142,7 @@
 	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
 	if(I)
 		return I.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Immobilize(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -196,7 +198,7 @@
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
 	if(P)
 		return P.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Paralyze(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -252,7 +254,7 @@
 	var/datum/status_effect/incapacitating/dazed/I = IsDazed()
 	if(I)
 		return I.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Daze(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -308,7 +310,7 @@
 	var/datum/status_effect/staggered/I = IsStaggered()
 	if(I)
 		return I.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Stagger(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -415,7 +417,7 @@
 	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 	if(U)
 		return U.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -462,7 +464,7 @@
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
 		return S.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Sleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
@@ -597,7 +599,7 @@
 
 /mob/living/proc/become_nearsighted(source)
 	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/scaled/impaired, 1)
 	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
 
 /mob/living/proc/cure_husk(source)

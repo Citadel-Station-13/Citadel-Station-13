@@ -63,6 +63,9 @@
 
 #define THRESHOLD_UNHUSK 50 // health threshold for synthflesh/rezadone to unhusk someone
 
+#define SYNTHTISSUE_BORROW_CAP 250	//The cap for synthtissue's borrowed health value when used on someone dead or already having borrowed health.
+#define SYNTHTISSUE_DAMAGE_FLIP_CYCLES 45	//After how many cycles the damage will be pure toxdamage as opposed to clonedamage like initially. Gradually changes during its cycles.
+
 //reagent bitflags, used for altering how they works
 #define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body
 #define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing
@@ -72,7 +75,18 @@
 #define REAGENT_FORCEONNEW			(1<<5)  //Forces a on_new() call without a data overhead
 #define REAGENT_SNEAKYNAME          (1<<6)  //When inverted, the inverted chem uses the name of the original chem
 #define REAGENT_SPLITRETAINVOL      (1<<7)  //Retains initial volume of chem when splitting
+#define REAGENT_ORGANIC_PROCESS		(1<<8)	//Can be processed by organic carbons - will otherwise slowly dissipate
+#define REAGENT_ROBOTIC_PROCESS		(1<<9)	//Can be processed by robotic carbons - will otherwise slowly dissipate
+
+#define REAGENT_ALL_PROCESS (REAGENT_ORGANIC_PROCESS | REAGENT_ROBOTIC_PROCESS)	//expand this if you for some reason add more process flags
+
+#define INVALID_REAGENT_DISSIPATION 1		//How much of a reagent is removed per reagent tick if invalid processing-flag wise
 
 //Chemical reaction flags, for determining reaction specialties
 #define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
 #define REACTION_CLEAR_INVERSE      (1<<1)  //Convert into inverse on reaction completion when purity is low enough
+
+//Chemical blacklists for smartdarts
+GLOBAL_LIST_INIT(blacklisted_medchems, list(
+	/datum/reagent/medicine/morphine, /datum/reagent/medicine/haloperidol,	//harmful chemicals in medicine
+	))

@@ -27,7 +27,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/obj/item/gps/internal/base/locator
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 
-/obj/machinery/computer/auxillary_base/Initialize()
+/obj/machinery/computer/auxillary_base/Initialize(mapload)
 	. = ..()
 	locator = new(src)
 
@@ -283,7 +283,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	anti_spam_cd = 1
-	addtimer(CALLBACK(src, .proc/clear_cooldown), 50)
+	addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), 50)
 
 	var/turf/landing_spot = get_turf(src)
 

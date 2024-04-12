@@ -14,13 +14,13 @@
 		return ELEMENT_INCOMPATIBLE
 	impressiveness = impress
 	if(isobj(target))
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_obj_examine)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_obj_examine))
 		if(isstructure(target))
-			RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+			RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 		if(isitem(target))
-			RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
+			RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, PROC_REF(apply_moodlet))
 	else
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_other_examine)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_other_examine))
 
 /datum/element/art/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_ITEM_ATTACK_SELF))
@@ -54,11 +54,14 @@
 
 /datum/element/art/rev
 
-/datum/element/art/rev/apply_moodlet(atom/source, mob/M, impress)
-	M.visible_message("<span class='notice'>[M] stops to inspect [source].</span>", \
-						 "<span class='notice'>You take in [source], inspecting the fine craftsmanship of the proletariat.</span>")
-
-	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev))
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+/datum/element/art/rev/apply_moodlet(atom/source, mob/user, impress)
+	var/msg
+	if(user.mind?.has_antag_datum(/datum/antagonist/rev))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
 	else
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		msg = "Wow, [source.p_they()] sucks."
+
+	user.visible_message(span_notice("[user] stops to inspect [source]."), \
+		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))

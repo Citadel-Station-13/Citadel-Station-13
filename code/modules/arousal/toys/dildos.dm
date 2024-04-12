@@ -20,7 +20,7 @@
 	var/is_knotted		= FALSE
 	//Lists moved to _cit_helpers.dm as globals so they're not instanced individually
 
-/obj/item/dildo/proc/update_appearance()
+/obj/item/dildo/update_appearance()
 	icon_state = "[dildo_type]_[dildo_shape]_[dildo_size]"
 	var/sizeword = ""
 	switch(dildo_size)
@@ -71,7 +71,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/dildo/Initialize()
+/obj/item/dildo/Initialize(mapload)
 	. = ..()
 	if(random_color == TRUE)
 		var/randcolor = pick(GLOB.dildo_colors)

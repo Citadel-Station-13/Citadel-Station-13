@@ -96,7 +96,7 @@
 		var/static/list/blacklisted_error = typecacheof(list(
 			/obj/structure/closet/crate/secure,
 			/obj/structure/closet/crate/large,
-			/obj/structure/closet/secure_closet/goodies
+			/obj/structure/closet/secure_closet/cargo
 		))
 		if(is_type_in_list(container, blacklisted_error))
 			P.errors &= ~MANIFEST_ERROR_ITEM

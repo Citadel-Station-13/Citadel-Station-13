@@ -1,6 +1,8 @@
 /obj/item/restraints
 	breakouttime = 600
 	var/demoralize_criminals = TRUE // checked on carbon/carbon.dm to decide wheter to apply the handcuffed negative moodlet or not.
+	/// allow movement at all during breakout
+	var/allow_breakout_movement = FALSE
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -38,7 +40,7 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -120,9 +122,24 @@
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
+/obj/item/restraints/handcuffs/cable/Initialize(mapload)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/stack/rods = list(
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft wired rod"),
+		),
+
+		/obj/item/stack/sheet/metal = list(
+			SCREENTIP_CONTEXT_LMB = list(INTENT_ANY = "Craft bola"),
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /obj/item/restraints/handcuffs/cable/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start unwinding the cable restraints back into coil</span>")
-	if(!do_after(user, 25, TRUE, user))
+	if(!do_after(user, 25, user))
 		return
 	qdel(src)
 	var/obj/item/stack/cable_coil/coil = new(get_turf(user))
@@ -243,6 +260,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
+	allow_breakout_movement = TRUE
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
 /obj/item/restraints/legcuffs/proc/on_removed()
@@ -257,7 +275,7 @@
 	var/armed = FALSE
 	var/trap_damage = 20
 
-/obj/item/restraints/legcuffs/beartrap/Initialize()
+/obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
 	icon_state = "[initial(icon_state)][armed]"
 
@@ -312,11 +330,11 @@
 	trap_damage = 0
 	item_flags = DROPDEL
 	flags_1 = NONE
-	breakouttime = 25
+	breakouttime = 50
 
 /obj/item/restraints/legcuffs/beartrap/energy/New()
 	..()
-	addtimer(CALLBACK(src, .proc/dissipate), 100)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 100)
 
 /obj/item/restraints/legcuffs/beartrap/energy/proc/dissipate()
 	if(!ismob(loc))
@@ -328,7 +346,7 @@
 	. = ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
-	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
+	breakouttime = 40 // Cyborgs shouldn't have a strong restraint
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
@@ -379,7 +397,7 @@
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	breakouttime = 25
+	breakouttime = 50
 
 /obj/item/restraints/legcuffs/bola/energy/on_removed()
 	do_sparks(1, TRUE, src)

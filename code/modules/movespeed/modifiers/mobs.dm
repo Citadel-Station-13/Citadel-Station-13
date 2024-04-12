@@ -15,6 +15,7 @@
 
 /datum/movespeed_modifier/hunger
 	variable = TRUE
+	blacklisted_movetypes = FLOATING|FLYING
 
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
@@ -113,6 +114,7 @@
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN
 	movetypes = CRAWLING
 	flags = IGNORE_NOSLOW
+	priority = 20000
 
 /datum/movespeed_modifier/mob_config_speedmod
 	variable = TRUE
@@ -160,3 +162,12 @@
 	var/current_tiles = 10 / max(existing, world.tick_lag)
 	var/minimum_speed = 10 / min(max(SAMT.config_entry_value, current_tiles), current_tiles + SMTI.config_entry_value)
 	. = min(., max(minimum_speed, existing - SSI.config_entry_value))
+
+/datum/movespeed_modifier/dragon_rage
+	multiplicative_slowdown = -0.5
+
+/datum/movespeed_modifier/dragon_depression
+	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/gauntlet_concussion
+	multiplicative_slowdown = 5

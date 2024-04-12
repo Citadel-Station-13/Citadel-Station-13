@@ -42,7 +42,7 @@
 /obj/machinery/field/containment/blob_act(obj/structure/blob/B)
 	return FALSE
 
-/obj/machinery/field/containment/ex_act(severity, target)
+/obj/machinery/field/containment/ex_act(severity, target, origin)
 	return FALSE
 
 /obj/machinery/field/containment/attack_animal(mob/living/simple_animal/M)
@@ -100,10 +100,10 @@
 		return
 
 
-/obj/machinery/field/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/field/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
-	return ..()
 
 /obj/machinery/field/proc/shock(mob/living/user)
 	var/shock_damage = min(rand(30,40),rand(30,40))
@@ -133,4 +133,4 @@
 	do_sparks(5, TRUE, AM.loc)
 	var/atom/target = get_edge_target_turf(AM, get_dir(src, get_step_away(AM, src)))
 	AM.throw_at(target, 200, 4)
-	addtimer(CALLBACK(src, .proc/clear_shock), 5)
+	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 5)

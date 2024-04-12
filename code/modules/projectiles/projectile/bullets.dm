@@ -5,7 +5,7 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 	candink = TRUE
-	flag = "bullet"
+	flag = BULLET
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	sharpness = SHARP_POINTY

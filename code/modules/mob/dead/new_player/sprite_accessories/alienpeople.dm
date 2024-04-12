@@ -48,6 +48,7 @@
 	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 	mutant_part_string = "xhead"
 	relevant_layers = list(BODY_ADJ_LAYER)
+	mutable_category = "HEAD"
 
 /datum/sprite_accessory/xeno_head/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)

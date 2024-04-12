@@ -39,7 +39,7 @@
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
 
-/obj/singularity/energy_ball/ex_act(severity, target)
+/obj/singularity/energy_ball/ex_act(severity, target, origin)
 	return
 
 /obj/singularity/energy_ball/consume(severity, target)
@@ -132,7 +132,7 @@
 		energy_to_raise = energy_to_raise * 1.25
 
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, TRUE, extrarange = 30)
-		addtimer(CALLBACK(src, .proc/new_mini_ball), 100)
+		addtimer(CALLBACK(src, PROC_REF(new_mini_ball)), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise / 1.25
@@ -340,7 +340,7 @@
 	if(closest_type == LIVING)
 		var/mob/living/closest_mob = closest_atom
 		closest_mob.set_shocked()
-		addtimer(CALLBACK(closest_mob, /mob/living/proc/reset_shocked), 10)
+		addtimer(CALLBACK(closest_mob, TYPE_PROC_REF(/mob/living, reset_shocked)), 10)
 		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE) ? (min(round(power/600), 90) + rand(-5, 5)) : 0
 		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((zap_flags & ZAP_MOB_STUN) ? NONE : SHOCK_NOSTUN))
 		if(issilicon(closest_mob))
@@ -358,8 +358,16 @@
 		var/obj/singularity/energy_ball/tesla = source
 		if(istype(tesla))
 			if(istype(closest_atom,/obj/machinery/power/grounding_rod) && tesla.energy>13 && !tesla.contained)
-				qdel(closest_atom)							// each rod deletes two miniballs,
-				tesla.energy = round(tesla.energy/1.5625)	// if there are no miniballs the rod stays and continues to pull the ball in
+
+				// getting the grounding rod's capacitor rating for quick maths
+				var/obj/machinery/power/grounding_rod/rod = closest_atom
+				// assuming the rod is fully constructed the second part will always be a capacitor
+				var/obj/item/stock_parts/capacitor/capacitor = rod.component_parts[2]
+
+				tesla.energy = round(tesla.energy/(1 + 0.28125 * capacitor.rating))
+				qdel(closest_atom) // each rod removes tesla energy depending on the power of the capacitor,
+				// if there are no miniballs the rod stays and continues to pull the ball in
+
 	if(prob(20))//I know I know
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)

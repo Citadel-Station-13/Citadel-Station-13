@@ -70,7 +70,7 @@
 
 /obj/item/clockwork/slab/cyborg/engineer //six scriptures, plus a fabricator. Might revert this if its too OP, I just thought that engineering borgs should get the all the structures
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/clockwork_obelisk, /datum/clockwork_scripture/create_object/mania_motor)
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/clockwork_obelisk/cyborg, /datum/clockwork_scripture/create_object/mania_motor/cyborg)
 
 /obj/item/clockwork/slab/cyborg/medical //six scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
@@ -90,7 +90,7 @@
 */
 /obj/item/clockwork/slab/cyborg/service //six scriptures, plus xray vision
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
-	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
+	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk/cyborg)
 
 /obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_blaster)
@@ -106,7 +106,7 @@
 	if(!GLOB.ratvar_awakens)
 		SStgui.close_uis(src)
 
-/obj/item/clockwork/slab/Initialize()
+/obj/item/clockwork/slab/Initialize(mapload)
 	. = ..()
 	update_slab_info(src)
 	START_PROCESSING(SSobj, src)
@@ -123,7 +123,7 @@
 
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(CALLBACK(src, PROC_REF(check_on_mob), user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
@@ -264,7 +264,9 @@
 		ui.open()
 
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
-	. = list()
+	. = ..()
+	if(!.)
+		return
 	.["recollection"] = recollecting
 	.["power"] = DisplayPower(get_clockwork_power())
 	.["power_unformatted"] = get_clockwork_power()
@@ -275,6 +277,7 @@
 		if(S.tier == SCRIPTURE_PERIPHERAL) // This tier is skiped because this contains basetype stuff
 			continue
 
+		// FUTURE IMPL: cache these perhaps?
 		var/list/data = list()
 		data["name"] = S.name
 		data["descname"] = S.descname
@@ -355,7 +358,7 @@
 			recollecting = !recollecting
 			. = TRUE
 		if("recite")
-			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["script"]), usr, FALSE)
+			INVOKE_ASYNC(src, PROC_REF(recite_scripture), text2path(params["script"]), usr, FALSE)
 			. = TRUE
 		if("bind")
 			var/datum/clockwork_scripture/path = text2path(params["script"]) //we need a path and not a string
@@ -408,6 +411,6 @@
 			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
 			Q.desc = quickbind_slot.quickbind_desc
 			Q.button_icon_state = quickbind_slot.name
-			Q.UpdateButtonIcon()
+			Q.UpdateButtons()
 			if(isliving(loc))
 				Q.Grant(loc)

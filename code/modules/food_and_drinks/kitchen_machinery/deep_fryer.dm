@@ -49,7 +49,7 @@ God bless America.
 		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
-/obj/machinery/deepfryer/Initialize()
+/obj/machinery/deepfryer/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
@@ -57,7 +57,11 @@ God bless America.
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
 	component_parts += new /obj/item/stock_parts/micro_laser(null)
 	RefreshParts()
-	fry_loop = new(list(src), FALSE)
+	fry_loop = new(src, FALSE)
+
+/obj/machinery/deepfryer/Destroy()
+	QDEL_NULL(fry_loop)
+	return ..()
 
 /obj/machinery/deepfryer/RefreshParts()
 	var/oil_efficiency

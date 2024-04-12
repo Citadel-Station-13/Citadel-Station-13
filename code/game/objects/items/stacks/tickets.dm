@@ -11,7 +11,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/stack/arcadeticket/update_icon()
+/obj/item/stack/arcadeticket/update_icon_state()
 	var/amount = get_amount()
 	if((amount >= 12) && (amount > 0))
 		icon_state = "arcade-ticket_4"

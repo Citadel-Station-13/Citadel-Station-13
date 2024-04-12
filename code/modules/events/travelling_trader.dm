@@ -4,10 +4,12 @@
 	weight = 8
 	max_occurrences = 2
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_FRIENDLY
+	description = "A mysterious figure requests something to the crew and rewards them with something for getting it done."
 
 /datum/round_event/travelling_trader
-	startWhen = 0
-	endWhen = 900 //you effectively have 15 minutes to complete the traders request, before they disappear
+	start_when = 0
+	end_when = 900 //you effectively have 15 minutes to complete the traders request, before they disappear
 	var/mob/living/carbon/human/dummy/travelling_trader/trader
 	var/atom/spawn_location //where the trader appears
 
@@ -28,7 +30,7 @@
 	trader.visible_message("<b>[trader]</b> suddenly appears in a puff of smoke!")
 
 /datum/round_event/travelling_trader/announce(fake)
-	priority_announce("A mysterious figure has been detected on sensors at [get_area(spawn_location)]", "Mysterious Figure")
+	priority_announce("A mysterious figure has been detected on sensors at [get_area(spawn_location)]", "Mysterious Figure", has_important_message = !fake)
 
 /datum/round_event/travelling_trader/end()
 	if(trader) // the /datum/round_event/travelling_trader has given up on waiting!
@@ -98,7 +100,7 @@
 	var/reward = pickweight(possible_rewards)
 	new reward(get_turf(src))
 
-/mob/living/carbon/human/dummy/travelling_trader/Initialize()
+/mob/living/carbon/human/dummy/travelling_trader/Initialize(mapload)
 	. = ..() // return a hint you fuck
 	add_atom_colour("#570d6b", FIXED_COLOUR_PRIORITY) //make them purple (otherworldly!)
 	set_light(1, -0.7, "#AAD84B")
@@ -134,7 +136,7 @@
 		/obj/item/kitchen/fork/throwing = 1,
 		/mob/living/simple_animal/cow/random = 1)
 
-/mob/living/carbon/human/dummy/travelling_trader/cook/Initialize()
+/mob/living/carbon/human/dummy/travelling_trader/cook/Initialize(mapload)
 	//pick a random crafted food item as the requested item
 	var/datum/crafting_recipe/food_recipe = pick(subtypesof(/datum/crafting_recipe/food))
 	var/result = initial(food_recipe.result)
@@ -158,7 +160,7 @@
 		/obj/item/seeds/gatfruit = 1) //overall you have less chance of seeing them than a lifebringer just bringing the seeds to you directly
 
 
-/mob/living/carbon/human/dummy/travelling_trader/gardener/Initialize()
+/mob/living/carbon/human/dummy/travelling_trader/gardener/Initialize(mapload)
 	requested_item = pick(subtypesof(/obj/item/reagent_containers/food/snacks/grown) - list(/obj/item/reagent_containers/food/snacks/grown/shell,
 		/obj/item/reagent_containers/food/snacks/grown/shell/gatfruit,
 		/obj/item/reagent_containers/food/snacks/grown/cherry_bomb))
@@ -188,7 +190,7 @@
 		/mob/living/simple_animal/hostile/netherworld/blankbody = 1,
 		/mob/living/simple_animal/hostile/retaliate/goose = 1)
 
-/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize(mapload)
 	. = ..()
 	acceptance_speech = pick(list("This lifeform shall make for a great stew, thank you.", "This lifeform shall be of a true use to our cause, thank you.", "The lifeform is adequate. Goodbye.", "This lifeform shall make a great addition to my collection."))
 
@@ -222,7 +224,7 @@
 		/obj/structure/reagent_dispensers/keg/narsour = 3,
 		/obj/structure/reagent_dispensers/keg/quintuple_sec = 3)
 
-/mob/living/carbon/human/dummy/travelling_trader/bartender/Initialize() //pick a subtype of ethanol that isn't found in the default set of the booze dispensers reagents
+/mob/living/carbon/human/dummy/travelling_trader/bartender/Initialize(mapload) //pick a subtype of ethanol that isn't found in the default set of the booze dispensers reagents
 	. = ..() // RETURN A HINT.
 	requested_item = pick(subtypesof(/datum/reagent/consumable/ethanol) - list(/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/consumable/ethanol/kahlua,
@@ -276,7 +278,7 @@
 		/obj/item/stack/sticky_tape/infinite = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/cosmic = 2)
 
-/mob/living/carbon/human/dummy/travelling_trader/artifact_dealer/Initialize()
+/mob/living/carbon/human/dummy/travelling_trader/artifact_dealer/Initialize(mapload)
 	possible_rewards += list(pick(subtypesof(/obj/item/clothing/head/collectable)) = 1) //this is slightly lower because it's absolutely useless
 	..()
 

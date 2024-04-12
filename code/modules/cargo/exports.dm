@@ -33,6 +33,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	if(!GLOB.exports_list.len)
 		setupExports()
 
+	var/profit_ratio = 1 //Percentage that gets sent to the seller, rest goes to cargo.
+
 	var/list/contents = AM.GetAllContents()
 
 	var/datum/export_report/report = external_report
@@ -47,7 +49,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 			if(!E)
 				continue
 			if(E.applies_to(thing, allowed_categories, apply_elastic))
-				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic)
+				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, profit_ratio)
 				report.exported_atoms += " [thing.name]"
 				break
 		if(thing.reagents?.value_multiplier)
@@ -61,7 +63,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)
 			if(ismecha(thing))
-				var/obj/mecha/mech = thing
+				var/obj/vehicle/sealed/mecha/mech = thing
 				mech.wreckage = null // why a mech left a wreck when sold i will never know
 			qdel(thing)
 
@@ -84,17 +86,19 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 /datum/export/New()
 	..()
-	SSprocessing.processing += src
+	START_PROCESSING(SSprocessing, src)
 	init_cost = cost
 	export_types = typecacheof(export_types)
 	exclude_types = typecacheof(exclude_types)
 
 /datum/export/Destroy()
-	SSprocessing.processing -= src
+	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /datum/export/process()
-	..()
+	. = ..()
+	if(!k_elasticity)
+		return PROCESS_KILL
 	cost *= NUM_E**(k_elasticity * (1/30))
 	if(cost > init_cost)
 		cost = init_cost
@@ -113,7 +117,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
 /datum/export/proc/get_amount(obj/O)
-	return 1
+	return TRUE
 
 // Checks if the item is fit for export datum.
 /datum/export/proc/applies_to(obj/O, allowed_categories = NONE, apply_elastic = TRUE)
@@ -136,8 +140,18 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
 	var/amount = get_amount(O)
 
+	var/profit_ratio = 0
+
 	if(amount <=0 || the_cost <=0)
 		return FALSE
+
+	if(dry_run == FALSE)
+		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, allowed_categories , apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
+			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
+			the_cost = the_cost*((100-profit_ratio)/100)
+	else
+		profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
+		the_cost = the_cost*((100-profit_ratio)/100)
 
 	report.total_value[src] += the_cost
 

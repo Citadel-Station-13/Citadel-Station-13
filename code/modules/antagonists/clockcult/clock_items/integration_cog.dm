@@ -12,7 +12,7 @@
 	item_flags = NOBLUDGEON
 	var/obj/machinery/power/apc/apc
 
-/obj/item/clockwork/integration_cog/Initialize()
+/obj/item/clockwork/integration_cog/Initialize(mapload)
 	. = ..()
 	transform *= 0.5 //little cog!
 

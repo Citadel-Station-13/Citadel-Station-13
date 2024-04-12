@@ -1,70 +1,127 @@
-/datum/config_entry/flag/log_ooc	// log OOC channel
-	config_entry_value = TRUE
+/// log OOC channel
+/datum/config_entry/flag/log_ooc
+	default = TRUE
 
-/datum/config_entry/flag/log_access	// log login/logout
-	config_entry_value = TRUE
+/// log login/logout
+/datum/config_entry/flag/log_access
+	default = TRUE
 
-/datum/config_entry/flag/log_say	// log client say
-	config_entry_value = TRUE
+/// Config entry which special logging of failed logins under suspicious circumstances.
+/datum/config_entry/flag/log_suspicious_login
+	default = TRUE
 
-/datum/config_entry/flag/log_admin	// log admin actions
+/// log client say
+/datum/config_entry/flag/log_say
+	default = TRUE
+
+/// log admin actions
+/datum/config_entry/flag/log_admin
+	protection = CONFIG_ENTRY_LOCKED
+	default = TRUE
+
+/// log prayers
+/datum/config_entry/flag/log_prayer
+	default = TRUE
+
+/// log lawchanges
+/datum/config_entry/flag/log_law
+	default = TRUE
+
+/// log game events
+/datum/config_entry/flag/log_game
+	default = TRUE
+
+/// log mech data
+/datum/config_entry/flag/log_mecha
+	default = TRUE
+
+/// log virology data
+/datum/config_entry/flag/log_virus
+	default = TRUE
+
+/// log voting
+/datum/config_entry/flag/log_vote
+	default = TRUE
+
+/// log crafting
+/datum/config_entry/flag/log_craft
+	default = TRUE
+
+/// log client whisper
+/datum/config_entry/flag/log_whisper
+	default = TRUE
+
+/// log attack messages
+/datum/config_entry/flag/log_attack
+	default = TRUE
+
+/// log attack messages
+/datum/config_entry/flag/log_victim
+	default = TRUE
+
+/// log emotes
+/datum/config_entry/flag/log_emote
+	default = TRUE
+
+/// log admin chat messages
+/datum/config_entry/flag/log_adminchat
 	protection = CONFIG_ENTRY_LOCKED
 
-/datum/config_entry/flag/log_prayer	// log prayers
-	config_entry_value = TRUE
+/// log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+/datum/config_entry/flag/log_shuttle
+	default = TRUE
 
-/datum/config_entry/flag/log_law	// log lawchanges
-	config_entry_value = TRUE
+/// log pda messages
+/datum/config_entry/flag/log_pda
+	default = TRUE
 
-/datum/config_entry/flag/log_game	// log game events
-	config_entry_value = TRUE
+/// log telecomms messages
+/datum/config_entry/flag/log_telecomms
+	default = TRUE
 
-/datum/config_entry/flag/log_virus	// log virology data
-	config_entry_value = TRUE
+/// log economy
+/datum/config_entry/flag/log_econ
+	default = TRUE
 
-/datum/config_entry/flag/log_vote	// log voting
-	config_entry_value = TRUE
+/// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
+/datum/config_entry/flag/log_twitter
+	default = TRUE
 
-/datum/config_entry/flag/log_craft	// log crafting
-	config_entry_value = TRUE
+/// log all world.Topic() calls
+/datum/config_entry/flag/log_world_topic
+	default = TRUE
 
-/datum/config_entry/flag/log_whisper	// log client whisper
-	config_entry_value = TRUE
+/// log crew manifest to seperate file
+/datum/config_entry/flag/log_manifest
+	default = TRUE
 
-/datum/config_entry/flag/log_attack	// log attack messages
-	config_entry_value = TRUE
+/// log roundstart divide occupations debug information to a file
+/datum/config_entry/flag/log_job_debug
+	default = TRUE
 
-/datum/config_entry/flag/log_emote	// log emotes
-	config_entry_value = TRUE
-
-/datum/config_entry/flag/log_adminchat	// log admin chat messages
-	protection = CONFIG_ENTRY_LOCKED
-
-/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
-	config_entry_value = TRUE
-
-/datum/config_entry/flag/log_pda	// log pda messages
-	config_entry_value = TRUE
-
-/datum/config_entry/flag/log_telecomms	// log telecomms messages
-	config_entry_value = TRUE
-
-/datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
-	config_entry_value = TRUE
-
-/datum/config_entry/flag/log_world_topic	// log all world.Topic() calls
-	config_entry_value = TRUE
-
-/datum/config_entry/flag/log_manifest	// log crew manifest to seperate file
-	config_entry_value = TRUE
-
-/datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
-	config_entry_value = TRUE
-
+/// log photos taken by players with a camera
 /datum/config_entry/flag/log_pictures
 
+/// This is... shitcode, literally same as above, if one of them is inactive, won't log at all, PLEASE FUCKING REMOVE THIS.
 /datum/config_entry/flag/picture_logging_camera
 
 /// forces log_href for tgui
 /datum/config_entry/flag/emergency_tgui_logging
-	config_entry_value = FALSE
+	default = FALSE
+
+/// The "cooldown" time for each occurrence of a unique error
+/datum/config_entry/number/error_cooldown
+	default = 600
+	min_val = 0
+
+/// How many occurrences before the next will silence them
+/datum/config_entry/number/error_limit
+	default = 50
+
+/// How long a unique error will be silenced for
+/datum/config_entry/number/error_silence_time
+	default = 6000
+
+/// How long to wait between messaging admins about occurrences of a unique error
+/datum/config_entry/number/error_msg_delay
+	default = 50

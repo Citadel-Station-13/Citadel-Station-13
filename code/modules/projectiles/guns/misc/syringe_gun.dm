@@ -4,6 +4,7 @@
 	icon_state = "syringegun"
 	item_state = "syringegun"
 	w_class = WEIGHT_CLASS_NORMAL
+	recoil = 0.1
 	throw_speed = 3
 	throw_range = 7
 	force = 4
@@ -14,7 +15,7 @@
 	var/list/syringes = list()
 	var/max_syringes = 1
 
-/obj/item/gun/syringe/Initialize()
+/obj/item/gun/syringe/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
 
@@ -37,18 +38,18 @@
 /obj/item/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return 0
+		return FALSE
 
 	var/obj/item/reagent_containers/syringe/S = syringes[syringes.len]
 
 	if(!S)
-		return 0
+		return FALSE
 	S.forceMove(user.loc)
 
 	syringes.Remove(S)
 	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
 
-	return 1
+	return TRUE
 
 /obj/item/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	if(istype(A, /obj/item/reagent_containers/syringe))
@@ -83,7 +84,7 @@
 	name = "modified syringe gun"
 	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."
 
-/obj/item/gun/syringe/dna/Initialize()
+/obj/item/gun/syringe/dna/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/dnainjector(src)
 
@@ -113,8 +114,8 @@
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE
 
-/obj/item/gun/syringe/dart/Initialize()
-	..()
+/obj/item/gun/syringe/dart/Initialize(mapload)
+	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun/dart(src)
 
 /obj/item/gun/syringe/dart/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
@@ -127,7 +128,7 @@
 /obj/item/gun/syringe/dart/rapiddart
 	name = "Repeating dart gun"
 	icon_state = "rapiddartgun"
-	item_state = "rapiddartgun"
+	item_state = "syringegun"
 
 /obj/item/gun/syringe/dart/rapiddart/CheckParts(list/parts_list)
 	var/obj/item/reagent_containers/glass/beaker/B = locate(/obj/item/reagent_containers/glass/beaker) in parts_list
@@ -157,7 +158,7 @@
 	name = "blowgun"
 	desc = "Fire syringes at a short distance."
 	icon_state = "blowgun"
-	item_state = "blowgun"
+	item_state = "syringegun"
 	fire_sound = 'sound/items/syringeproj.ogg'
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)

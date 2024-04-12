@@ -5,8 +5,8 @@
 	icon_screen = "command"
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/aiModule))
-		var/obj/item/aiModule/M = O
+	if(istype(O, /obj/item/ai_module))
+		var/obj/item/ai_module/M = O
 		if(src.stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(!current)
@@ -27,8 +27,8 @@
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
@@ -45,9 +45,9 @@
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
-		return 0
+		return FALSE
 	if(A.control_disabled)
-		return 0
+		return FALSE
 	return ..()
 
 
@@ -66,7 +66,7 @@
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !iscyborg(B))
-		return 0
+		return FALSE
 	if(B.scrambledcodes || B.emagged)
-		return 0
+		return FALSE
 	return ..()

@@ -259,11 +259,6 @@
 
 	build_path = /obj/machinery/computer/arcade/orion_trail
 
-/obj/item/circuitboard/computer/arcade/minesweeper
-	name = "Minesweeper (Computer Board)"
-	icon_state = "generic"
-	build_path = /obj/machinery/computer/arcade/minesweeper
-
 /obj/item/circuitboard/computer/holodeck// Not going to let people get this, but it's just here for future
 	name = "Holodeck Control (Computer Board)"
 	icon_state = "generic"
@@ -318,7 +313,7 @@
 	var/challenge = FALSE
 	var/moved = FALSE
 
-/obj/item/circuitboard/computer/syndicate_shuttle/Initialize()
+/obj/item/circuitboard/computer/syndicate_shuttle/Initialize(mapload)
 	. = ..()
 	GLOB.syndicate_shuttle_boards += src
 
@@ -353,9 +348,9 @@
 	name = "Snow Taxi (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/snow_taxi
 
-// /obj/item/circuitboard/computer/bountypad
-// 	name = "Bounty Pad (Computer Board)"
-// 	build_path = /obj/machinery/computer/piratepad_control/civilian
+/obj/item/circuitboard/computer/bountypad
+	name = "Bounty Pad (Computer Board)"
+	build_path = /obj/machinery/computer/piratepad_control/civilian
 
 /obj/item/circuitboard/computer/security/shuttle
 	name = "Shuttlelinking Security Cameras (Computer Board)"

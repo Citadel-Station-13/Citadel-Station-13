@@ -17,7 +17,7 @@
 	var/list/allowed_projectile_typecache = list(/obj/item/projectile/beam)
 	var/rotation_angle = -1
 
-/obj/structure/reflector/Initialize()
+/obj/structure/reflector/Initialize(mapload)
 	. = ..()
 	icon_state = "reflector_base"
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
@@ -56,7 +56,7 @@
 	return ..(NORTH)
 
 /obj/structure/reflector/proc/dir_map_to_angle(dir)
-	return 0
+	return FALSE
 
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
 	var/pdir = P.dir
@@ -249,7 +249,7 @@
 	P.setAngle(rotation_angle)
 	return ..()
 
-/obj/structure/reflector/ex_act()
+/obj/structure/reflector/ex_act(severity, target, origin)
 	if(admin)
 		return
 	else
@@ -263,3 +263,7 @@
 		return
 	else
 		return ..()
+
+/obj/structure/reflector/shuttleRotate(rotation, params)
+	. = ..()
+	setAngle(SIMPLIFY_DEGREES(rotation_angle + rotation))

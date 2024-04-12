@@ -7,7 +7,7 @@
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
-	flag = "laser"
+	flag = LASER
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = LIGHT_COLOR_RED
@@ -30,7 +30,7 @@
 	wound_bonus = 0
 	damage = 25
 
-/obj/item/projectile/beam/laser/hellfire/Initialize()
+/obj/item/projectile/beam/laser/hellfire/Initialize(mapload)
 	. = ..()
 	transform *= 2
 
@@ -72,7 +72,7 @@
 	damage = 15
 	irradiate = 100
 	range = 15
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE
 
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
@@ -85,7 +85,7 @@
 	icon_state = "omnilaser"
 	damage = 28 // Citadel change for balance from 36
 	damage_type = STAMINA
-	flag = "energy"
+	flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 	pixels_per_second = TILES_TO_PIXELS(16.667)
@@ -150,7 +150,7 @@
 	hitsound = null
 	damage = 0
 	damage_type = STAMINA
-	flag = "laser"
+	flag = LASER
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
@@ -166,7 +166,7 @@
 /obj/item/projectile/beam/lasertag/mag		//the projectile, compatible with regular laser tag armor
 	icon_state = "magjectile-toy"
 	name = "lasertag magbolt"
-	movement_type = FLYING | UNSTOPPABLE		//for penetration memes
+	movement_type = FLYING | PHASING		//for penetration memes
 	range = 5		//so it isn't super annoying
 	light_range = 2
 	light_color = LIGHT_COLOR_YELLOW
@@ -231,7 +231,7 @@
 	hitsound = 'sound/weapons/shrink_hit.ogg'
 	damage = 0
 	damage_type = STAMINA
-	flag = "energy"
+	flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
 	light_color = LIGHT_COLOR_BLUE
 	var/shrink_time = 90

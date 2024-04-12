@@ -162,7 +162,7 @@
 	for(var/i in 1 to areas_to_move.len)
 		CHECK_TICK
 		var/area/internal_area = areas_to_move[i]
-		internal_area.afterShuttleMove(new_parallax_dir)													//areas
+		internal_area.afterShuttleMove(new_parallax_dir, parallax_speed)									//areas
 
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
@@ -205,3 +205,9 @@
 		var/turf/oldT = moved_atoms[moved_object]
 		moved_object.lateShuttleMove(oldT, movement_force, movement_direction)
 
+/obj/docking_port/mobile/proc/reset_air()
+	var/list/turfs = return_ordered_turfs(x, y, z, dir)
+	for(var/i in 1 to length(turfs))
+		var/turf/open/T = turfs[i]
+		if(istype(T))
+			T.air.copy_from_turf(T)

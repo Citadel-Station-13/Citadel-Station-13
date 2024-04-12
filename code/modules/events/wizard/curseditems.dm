@@ -5,6 +5,7 @@
 	max_occurrences = 3
 	earliest_start = 0 MINUTES
 	can_be_midround_wizard = FALSE
+	description = "Gives everyone a cursed item."
 
 //Note about adding items to this: Because of how NODROP_1 works if an item spawned to the hands can also be equiped to a slot
 //it will be able to be put into that slot from the hand, but then get stuck there. To avoid this make a new subtype of any
@@ -18,23 +19,23 @@
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout[SLOT_WEAR_SUIT] = /obj/item/clothing/suit/wizrobe
-			loadout[SLOT_SHOES] = /obj/item/clothing/shoes/sandal/magic
-			loadout[SLOT_HEAD] = /obj/item/clothing/head/wizard
+			loadout[ITEM_SLOT_OCLOTHING] = /obj/item/clothing/suit/wizrobe
+			loadout[ITEM_SLOT_FEET] = /obj/item/clothing/shoes/sandal/magic
+			loadout[ITEM_SLOT_HEAD] = /obj/item/clothing/head/wizard
 			ruins_spaceworthiness = 1
 		if("swords")
-			loadout[SLOT_HANDS] = /obj/item/katana/cursed
+			loadout[ITEM_SLOT_HANDS] = /obj/item/katana/cursed
 		if("bigfatdoobie")
-			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/cigarette/rollie/trippy
+			loadout[ITEM_SLOT_MASK] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
 		if("boxing")
-			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/luchador
-			loadout[SLOT_GLOVES] = /obj/item/clothing/gloves/boxing
+			loadout[ITEM_SLOT_MASK] = /obj/item/clothing/mask/luchador
+			loadout[ITEM_SLOT_GLOVES] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
 		if("voicemodulators")
-			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/chameleon
+			loadout[ITEM_SLOT_MASK] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
-			loadout[SLOT_HEAD] = /obj/item/clothing/head/kitty
+			loadout[ITEM_SLOT_HEAD] = /obj/item/clothing/head/kitty
 			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 

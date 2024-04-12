@@ -39,12 +39,13 @@
 	attached_atoms[target]++
 
 /datum/element/photosynthesis/Detach(datum/target)
-	attached_atoms[target]--
-	if(!attached_atoms[target])
-		attached_atoms -= target
-		if(!length(attached_atoms))
-			STOP_PROCESSING(SSobj, src)
-			attached_atoms = null
+	if(LAZYLEN(attached_atoms))
+		attached_atoms[target]--
+		if(!attached_atoms[target])
+			attached_atoms -= target
+			if(!length(attached_atoms))
+				STOP_PROCESSING(SSobj, src)
+				attached_atoms = null
 	return ..()
 
 /datum/element/photosynthesis/process()
@@ -59,7 +60,7 @@
 			var/mob/living/L = AM
 			if(L.stat == DEAD)
 				continue
-			if(light_nutrition_gain)
+			if(light_nutrition_gain && L.nutrition < NUTRITION_LEVEL_WELL_FED)
 				L.adjust_nutrition(light_amount * light_nutrition_gain * attached_atoms[AM], NUTRITION_LEVEL_WELL_FED)
 			if(light_amount > bonus_lum || light_amount < malus_lum)
 				var/mult = ((light_amount > bonus_lum) ? 1 : -1) * attached_atoms[AM]

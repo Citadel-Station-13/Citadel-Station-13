@@ -31,7 +31,7 @@
 		user.update_inv_hands()
 	loc.assume_air(air_contents)
 
-/obj/item/latexballon/ex_act(severity, target)
+/obj/item/latexballon/ex_act(severity, target, origin)
 	burst()
 	switch(severity)
 		if (1)

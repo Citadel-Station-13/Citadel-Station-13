@@ -9,7 +9,7 @@
 	announce_text = "Just have fun and enjoy the game!"
 
 /datum/game_mode/extended/pre_setup()
-	return 1
+	return TRUE
 
 /datum/game_mode/extended/generate_report()
 	return "The transmission mostly failed to mention your sector. It is possible that there is nothing in the Syndicate that could threaten your station during this shift."
@@ -30,4 +30,4 @@
 /datum/game_mode/extended/announced/send_intercept(report = 0)
 	if(flipseclevel) //CIT CHANGE - allows the sec level to be flipped roundstart
 		return ..()
-	priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", "commandreport")
+	priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound())

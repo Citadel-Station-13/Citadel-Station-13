@@ -16,7 +16,7 @@
 /datum/component/mirv/RegisterWithParent()
 	. = ..()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
-		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
+		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 
 /datum/component/mirv/UnregisterFromParent()
 	. = ..()
@@ -38,5 +38,5 @@
 			P.range = override_projectile_range
 		P.preparePixelProjectile(shootat_turf, target)
 		P.firer = firer // don't hit ourself that would be really annoying
-		P.permutated += target // don't hit the target we hit already with the flak
+		P.impacted = list(target = TRUE) // don't hit the target we hit already with the flak
 		P.fire()

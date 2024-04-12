@@ -12,6 +12,8 @@
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
 	throwforce = 0
+	drop_sound = 'sound/items/handling/taperecorder_drop.ogg'
+	pickup_sound = 'sound/items/handling/taperecorder_pickup.ogg'
 	var/recording = 0
 	var/playing = 0
 	var/playsleepseconds = 0
@@ -28,6 +30,10 @@
 		mytape = new starting_tape_type(src)
 	update_icon()
 
+/obj/item/taperecorder/Destroy()
+	// QDEL_NULL(soundloop)
+	QDEL_NULL(mytape)
+	return ..()
 
 /obj/item/taperecorder/examine(mob/user)
 	. = ..()
@@ -284,6 +290,8 @@
 	custom_materials = list(/datum/material/iron=20, /datum/material/glass=5)
 	force = 1
 	throwforce = 0
+	drop_sound = 'sound/items/handling/tape_drop.ogg'
+	pickup_sound = 'sound/items/handling/tape_pickup.ogg'
 	var/max_capacity = 600
 	var/used_capacity = 0
 	var/list/storedinfo = list()

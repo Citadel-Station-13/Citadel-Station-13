@@ -4,21 +4,24 @@
 #Final authority on what's required to fully build the project
 
 # byond version
-export BYOND_MAJOR=513
-export BYOND_MINOR=1536
+export BYOND_MAJOR=515
+export BYOND_MINOR=1634
 
 #rust_g git tag
-export RUST_G_VERSION=0.4.7
+export RUST_G_VERSION=0.4.10
 
 #node version
-export NODE_VERSION=12
-export NODE_VERSION_PRECISE=12.20.0
+export NODE_VERSION=16
+export NODE_VERSION_PRECISE=16.13.1
 
 # SpacemanDMM git tag
-export SPACEMAN_DMM_VERSION=suite-1.6
+export SPACEMAN_DMM_VERSION=suite-1.8
+
+# Python version for mapmerge and other tools
+export PYTHON_VERSION=3.7.9
+
+# Auxmos git tag
+export AUXMOS_VERSION=v2.5.1
 
 # Extools git tag
 export EXTOOLS_VERSION=v0.0.7
-
-# Python version for mapmerge and other tools
-export PYTHON_VERSION=3.6.8

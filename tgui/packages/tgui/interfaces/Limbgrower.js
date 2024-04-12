@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs } from '../components';
+import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
 export const Limbgrower = (props, context) => {
@@ -22,7 +22,7 @@ export const Limbgrower = (props, context) => {
     <Window
       title="Limb Grower"
       width={500}
-      height={550}>
+      height={760}>
       {!!busy && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />
@@ -42,12 +42,19 @@ export const Limbgrower = (props, context) => {
             <div>
               Containing data for {disk['name']},<br />
               Attempting to create genitalia will use the disk&apos;s data.
+              Any Synthetic Frameworks created will
+              overwrite the race category selected.
             </div>
           ) : disk['disk'] ? "No data." : "No disk."}
         </Section>
         <Section title="Reagents">
           <Box mb={1}>
-            {total_reagents} / {max_reagents} reagent capacity used.
+            {/* Total_reagents could be null or undefined, so let's be safe */
+              `Total Reagents/Maximum Reagents:
+            ${total_reagents ? total_reagents : 0}/${max_reagents}`
+            }
+            <ProgressBar value={(total_reagents && max_reagents)
+              ? (total_reagents / max_reagents) : 0} />
           </Box>
           <LabeledList>
             {reagents.map(reagent => (
@@ -56,13 +63,15 @@ export const Limbgrower = (props, context) => {
                 label={reagent.reagent_name}
                 buttons={(
                   <Button.Confirm
+                    key={`remove_${reagent.reagent_name}`}
                     textAlign="center"
                     content="Remove Reagent"
                     icon="fill-drip"
                     color="bad"
-                    onClick={() => act('empty_reagent', {
-                      reagent_type: reagent.reagent_type,
-                    })} />
+                    onClick={() => {
+                      act('empty_reagent', { reagent_type: reagent.reagent_type });
+
+                    }} />
                 )}>
                 {reagent.reagent_amount}u
               </LabeledList.Item>

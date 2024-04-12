@@ -148,7 +148,7 @@
 	power_draw_per_use = 10
 	var/list/sounds = list()
 
-/obj/item/integrated_circuit/output/sound/Initialize()
+/obj/item/integrated_circuit/output/sound/Initialize(mapload)
 	.= ..()
 	extended_desc = list()
 	extended_desc += "The first input pin determines which sound is used. The choices are; "
@@ -230,7 +230,7 @@
 	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is often found in AI announcement systems."
 	spawn_flags = IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/output/sound/vox/Initialize()
+/obj/item/integrated_circuit/output/sound/vox/Initialize(mapload)
 	.= ..()
 	sounds = GLOB.vox_sounds
 	extended_desc = "The first input pin determines which sound is used. It uses the AI Vox Broadcast word list. So either experiment to find words that work, or ask the AI to help in figuring them out. The second pin determines the volume of sound that is played, and the third determines if the frequency of the sound will vary with each activation."
@@ -324,7 +324,7 @@
 	oldLoc = get_turf(oldLoc)
 	if(!QDELETED(camera) && !updating && oldLoc != get_turf(src))
 		updating = TRUE
-		addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), VIDEO_CAMERA_BUFFER)
+		addtimer(CALLBACK(src, PROC_REF(do_camera_update), oldLoc), VIDEO_CAMERA_BUFFER)
 #undef VIDEO_CAMERA_BUFFER
 
 /obj/item/integrated_circuit/output/video_camera/proc/do_camera_update(oldLoc)

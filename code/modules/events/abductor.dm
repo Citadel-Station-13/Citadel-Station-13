@@ -4,7 +4,9 @@
 	weight = 10
 	max_occurrences = 1
 	min_players = 30
-	gamemode_blacklist = list("nuclear","wizard","revolution","dynamic")
+	dynamic_should_hijack = TRUE
+	category = EVENT_CATEGORY_INVASION
+	description = "One or more abductor teams spawns, and they plan to experiment on the crew."
 
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2

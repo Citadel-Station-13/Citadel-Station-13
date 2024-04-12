@@ -9,7 +9,7 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
 	speech_span = SPAN_ROBOT
 
-/mob/living/brain/Initialize()
+/mob/living/brain/Initialize(mapload)
 	. = ..()
 	create_dna(src)
 	if(stored_dna.blood_type)
@@ -34,16 +34,17 @@
 		if(stat!=DEAD)	//If not dead.
 			death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
 		if(mind)	//You aren't allowed to return to brains that don't exist
-			mind.current = null
+			mind.set_current(null)
 			mind.active = FALSE		//No one's using it anymore.
 		ghostize()		//Ghostize checks for key so nothing else is necessary.
 	container = null
+	QDEL_NULL(stored_dna)
 	return ..()
 
 /mob/living/brain/update_mobility()
-	return ((mobility_flags = (container?.in_contents_of(/obj/mecha)? MOBILITY_FLAGS_DEFAULT : NONE)))
+	return ((mobility_flags = (container?.in_contents_of(/obj/vehicle/sealed/mecha)? MOBILITY_FLAGS_DEFAULT : NONE)))
 
-/mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
+/mob/living/brain/ex_act(severity, target, origin) //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return
 
 /mob/living/brain/wave_ex_act(power, datum/wave_explosion/explosion, dir)
@@ -64,19 +65,12 @@
 /mob/living/brain/can_be_revived()
 	. = 1
 	if(!container || health <= HEALTH_THRESHOLD_DEAD)
-		return 0
+		return FALSE
 
 /mob/living/brain/fully_replace_character_name(oldname,newname)
 	..()
 	if(stored_dna)
 		stored_dna.real_name = real_name
-
-/mob/living/brain/ClickOn(atom/A, params)
-	..()
-	if(container)
-		var/obj/mecha/M = container.mecha
-		if(istype(M))
-			return M.click_action(A,src,params)
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
@@ -98,7 +92,7 @@
 	if(!container)
 		return
 	if (container.mecha)
-		var/obj/mecha/M = container.mecha
+		var/obj/vehicle/sealed/mecha/M = container.mecha
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
 	if (client && ranged_ability && ranged_ability.ranged_mousepointer)

@@ -15,7 +15,7 @@
 	var/start_lit = FALSE
 	var/heats_space = TRUE
 
-/obj/item/candle/Initialize()
+/obj/item/candle/Initialize(mapload)
 	. = ..()
 	if(start_lit)
 		light()

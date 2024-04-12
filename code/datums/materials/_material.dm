@@ -30,7 +30,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
-	var/armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
+	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit.
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.
@@ -82,7 +82,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = "[name] [source.name]"
 
 	// if(beauty_modifier) returnign in hardsync2 if i ever port ebeauty cmp
-	// 	addtimer(CALLBACK(source, /datum.proc/_AddElement, list(/datum/element/beauty, beauty_modifier * amount)), 0)
+	// 	addtimer(CALLBACK(source, TYPE_PROC_REF(/datum, _AddElement), list(/datum/element/beauty, beauty_modifier * amount)), 0)
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -120,7 +120,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		return
 	I.hitsound = item_sound_override
 	I.usesound = item_sound_override
-	I.throwhitsound = item_sound_override
+	I.mob_throw_hit_sound = item_sound_override
 	// I.mob_throw_hit_sound = item_sound_override
 	// I.equip_sound = item_sound_override
 	// I.pickup_sound = item_sound_override
@@ -152,7 +152,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = initial(source.name)
 
 	// if(beauty_modifier) //component/beauty/InheritComponent() will handle the removal.
-	// 	addtimer(CALLBACK(source, /datum.proc/_AddElement, list(/datum/element/beauty, -beauty_modifier * amount)), 0)
+	// 	addtimer(CALLBACK(source, TYPE_PROC_REF(/datum, _AddElement), list(/datum/element/beauty, -beauty_modifier * amount)), 0)
 
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, amount, material_flags)

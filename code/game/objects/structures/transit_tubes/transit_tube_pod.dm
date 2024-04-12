@@ -8,10 +8,10 @@
 	var/datum/gas_mixture/air_contents = new()
 
 
-/obj/structure/transit_tube_pod/Initialize()
+/obj/structure/transit_tube_pod/Initialize(mapload)
 	. = ..()
-	air_contents.set_moles(/datum/gas/oxygen, MOLES_O2STANDARD)
-	air_contents.set_moles(/datum/gas/nitrogen, MOLES_N2STANDARD)
+	air_contents.set_moles(GAS_O2, MOLES_O2STANDARD)
+	air_contents.set_moles(GAS_N2, MOLES_N2STANDARD)
 	air_contents.set_temperature(T20C)
 
 
@@ -50,14 +50,14 @@
 		empty_pod(location)
 	qdel(src)
 
-/obj/structure/transit_tube_pod/ex_act(severity, target)
+/obj/structure/transit_tube_pod/ex_act(severity, target, origin)
 	..()
 	if(!QDELETED(src))
 		empty_pod()
 
-/obj/structure/transit_tube_pod/contents_explosion(severity, target)
+/obj/structure/transit_tube_pod/contents_explosion(severity, target, origin)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act(severity, target)
+		AM.ex_act(severity, target, origin)
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()
@@ -83,7 +83,7 @@
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -153,8 +153,24 @@
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
 	return air_contents.merge(giver)
 
+/obj/structure/transit_tube_pod/assume_air_moles(datum/gas_mixture/giver, moles)
+	return giver.transfer_to(air_contents, moles)
+
+/obj/structure/transit_tube_pod/assume_air_ratio(datum/gas_mixture/giver, ratio)
+	return giver.transfer_ratio_to(air_contents, ratio)
+
 /obj/structure/transit_tube_pod/remove_air(amount)
 	return air_contents.remove(amount)
+
+/obj/structure/transit_tube_pod/remove_air_ratio(ratio)
+	return air_contents.remove_ratio(ratio)
+
+/obj/structure/transit_tube_pod/transfer_air(datum/gas_mixture/taker, moles)
+	return air_contents.transfer_to(taker, moles)
+
+/obj/structure/transit_tube_pod/transfer_air_ratio(datum/gas_mixture/taker, ratio)
+	return air_contents.transfer_ratio_to(taker, ratio)
+
 
 /obj/structure/transit_tube_pod/relaymove(mob/mob, direction)
 	if(istype(mob) && mob.client)

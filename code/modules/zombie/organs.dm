@@ -13,7 +13,7 @@
 	var/revive_time_max = 700
 	var/timer_id
 
-/obj/item/organ/zombie_infection/Initialize()
+/obj/item/organ/zombie_infection/Initialize(mapload)
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
@@ -28,11 +28,10 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/zombie_infection/Remove(special = FALSE)
-	if(owner)
-		if(iszombie(owner) && old_species)
-			owner.set_species(old_species)
-		if(timer_id)
-			deltimer(timer_id)
+	if(!QDELETED(owner) && iszombie(owner) && old_species)
+		owner.set_species(old_species)
+	if(timer_id)
+		deltimer(timer_id)
 	. = ..()
 	STOP_PROCESSING(SSobj, src) //Required to be done after the parent call to avoid conflicts with organ decay.
 
@@ -45,7 +44,7 @@
 	if(!owner)
 		return
 	if(!(src in owner.internal_organs))
-		Remove(owner)
+		INVOKE_ASYNC(src,PROC_REF(Remove),owner)
 	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
 		return
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
@@ -66,7 +65,7 @@
 		not even death can stop, you will rise again!</span>")
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
-	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(zombify)), revive_time, flags)
 
 /obj/item/organ/zombie_infection/proc/zombify()
 	timer_id = null

@@ -13,7 +13,7 @@
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 			if(blood_DNA)
-				. += mutable_appearance('icons/effects/blood.dmi', "maskblood", color = blood_DNA_to_color())
+				. += mutable_appearance('icons/effects/blood.dmi', "maskblood", color = blood_DNA_to_color(), blend_mode = blood_DNA_to_blend())
 
 /obj/item/clothing/neck/tie
 	name = "tie"
@@ -175,7 +175,7 @@
 	var/tagname = null
 	var/treat_path = /obj/item/reagent_containers/food/snacks/cookie
 
-/obj/item/clothing/neck/petcollar/Initialize()
+/obj/item/clothing/neck/petcollar/Initialize(mapload)
 	. = ..()
 	if(treat_path)
 		new treat_path(src)
@@ -226,7 +226,7 @@
 	return
 
 /obj/item/clothing/neck/petcollar/locked/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(loc == user && user.get_item_by_slot(SLOT_NECK) && lock != FALSE)
+	if(loc == user && user.get_item_by_slot(ITEM_SLOT_NECK) && lock != FALSE)
 		to_chat(user, "<span class='warning'>The collar is locked! You'll need unlock the collar before you can take it off!</span>")
 		return
 	..()
@@ -258,6 +258,15 @@
 /obj/item/key/collar
 	name = "Collar Key"
 	desc = "A key for a tiny lock on a collar or bag."
+
+/obj/item/clothing/neck/maid
+	name = "polychromic maid collar"
+	desc = "A collar that goes with the polychromic maid outfit."
+	icon_state = "maid_neck"
+
+/obj/item/clothing/neck/maid/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#333333", "#FFFFFF"), 2)
 
 //////////////
 //DOPE BLING//
@@ -323,7 +332,7 @@
 	. = ..()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if(C.get_item_by_slot(SLOT_NECK) == src)
+		if(C.get_item_by_slot(ITEM_SLOT_NECK) == src)
 			to_chat(user, "<span class='warning'>You can't untie [src] while wearing it!</span>")
 			return
 		if(user.is_holding(src))

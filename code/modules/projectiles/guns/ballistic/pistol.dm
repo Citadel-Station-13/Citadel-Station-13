@@ -7,7 +7,7 @@
 	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0
-	actions_types = list()
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
 	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
@@ -30,27 +30,28 @@
 	can_unsuppress = TRUE
 	automatic_burst_overlay = FALSE
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list("Default" = "cde",
-						"N-99" = "n99",
-						"Stealth" = "stealthpistol",
-						"HKVP-78" = "vp78",
-						"Luger" = "p08b",
-						"Mk.58" = "secguncomp",
-						"PX4 Storm" = "px4"
-						)
+	unique_reskin = list(
+		"Default" = list("icon_state" = "cde"),
+		"N-99" = list("icon_state" = "n99"),
+		"Stealth" = list("icon_state" = "stealthpistol"),
+		"HKVP-78" = list("icon_state" = "vp78"),
+		"Luger" = list("icon_state" = "p08b"),
+		"Mk.58" = list("icon_state" = "secguncomp"),
+		"PX4 Storm" = list("icon_state" = "px4")
+	)
 
 /obj/item/gun/ballistic/automatic/pistol/modular/update_icon_state()
 	if(current_skin)
-		icon_state = "[unique_reskin[current_skin]][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+		icon_state = "[unique_reskin[current_skin]["icon_state"]][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	else
 		icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/pistol/modular/update_overlays()
 	. = ..()
 	if(magazine && suppressed)
-		. += "[unique_reskin[current_skin]]-magazine-sup"	//Yes, this means the default iconstate can't have a magazine overlay
+		. += "[unique_reskin[current_skin]["icon_state"]]-magazine-sup"	//Yes, this means the default iconstate can't have a magazine overlay
 	else if (magazine)
-		. += "[unique_reskin[current_skin]]-magazine"
+		. += "[unique_reskin[current_skin]["icon_state"]]-magazine"
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
@@ -104,7 +105,7 @@
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
 	burst_size = 3
 	fire_delay = 2
-	actions_types = list(/datum/action/item_action/toggle_firemode)
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC, SELECT_BURST_SHOT, SELECT_FULLY_AUTOMATIC)
 
 /obj/item/gun/ballistic/automatic/pistol/stickman
 	name = "flat gun"
@@ -137,7 +138,7 @@
 	burst_size = 1
 	can_suppress = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
-	actions_types = list()
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
 	fire_sound = 'sound/weapons/noscope.ogg'
 	spread = 20		//damn thing has no rifling.
 	automatic_burst_overlay = FALSE

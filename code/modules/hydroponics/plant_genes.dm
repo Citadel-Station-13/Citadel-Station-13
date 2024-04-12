@@ -243,7 +243,7 @@
 	if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent(/datum/reagent/lube)))
 		stun_len /= 3
 
-	G.AddComponent(/datum/component/slippery, min(stun_len,140), NONE, CALLBACK(src, .proc/handle_slip, G))
+	G.AddComponent(/datum/component/slippery, min(stun_len,140), NONE, CALLBACK(src, PROC_REF(handle_slip), G))
 
 /datum/plant_gene/trait/slip/proc/handle_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/M)
 	for(var/datum/plant_gene/trait/T in G.seed.genes)
@@ -419,6 +419,15 @@
 		else
 			to_chat(user, "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>")
 
+/datum/plant_gene/trait/eyes
+	name = "Oculary Mimicry"
+	/// Our googly eyes appearance.
+	var/mutable_appearance/googly
+
+/datum/plant_gene/trait/eyes/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
+	googly.appearance_flags = RESET_COLOR
+	G.add_overlay(googly)
 
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"

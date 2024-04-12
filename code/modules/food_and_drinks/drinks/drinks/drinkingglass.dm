@@ -8,6 +8,8 @@
 	volume = 50
 	custom_materials = list(/datum/material/glass=500)
 	max_integrity = 20
+	drop_sound = 'sound/items/handling/drinkglass_drop.ogg'
+	pickup_sound = 'sound/items/handling/drinkglass_pickup.ogg'
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	obj_flags = UNIQUE_RENAME
@@ -74,7 +76,7 @@
 		desc = "A shot glass - the universal symbol for bad decisions."
 		return
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/Initialize()
+/obj/item/reagent_containers/food/drinks/drinkingglass/filled/Initialize(mapload)
 	. = ..()
 	on_reagent_change(ADD_REAGENT)
 

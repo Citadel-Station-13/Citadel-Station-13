@@ -29,8 +29,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	actions_types = list(/datum/action/item_action/toggle_light/pda)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+	always_reskinnable = TRUE
+	reskin_binding = COMSIG_CLICK_CTRL_SHIFT
 
 	//Main variables
 	var/owner = null // String name of owner
@@ -112,10 +116,42 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. += id ? "<span class='notice'>Alt-click to remove the id.</span>" : ""
 	if(inserted_item && (!isturf(loc)))
 		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
-	if(LAZYLEN(GLOB.pda_reskins))
-		. += "<span class='notice'>Ctrl-shift-click it to reskin it.</span>"
 
-/obj/item/pda/Initialize()
+/obj/item/pda/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(held_item)
+		if(istype(held_item, /obj/item/cartridge) && !cartridge)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert Cartridge")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(istype(held_item, /obj/item/card/id) && !id)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert ID")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(istype(held_item, /obj/item/paicard) && !pai)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert pAI")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(is_type_in_list(held_item, contained_item) && !inserted_item)
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert [held_item]")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(istype(held_item, /obj/item/photo))
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Scan photo")
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	if(id) // ID gets removed before inserted_item
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Remove ID")
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(inserted_item)
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Remove [inserted_item]")
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(inserted_item)
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Remove [inserted_item]")
+		. = CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
+
+/obj/item/pda/Initialize(mapload)
+	if(GLOB.pda_reskins)
+		unique_reskin = GLOB.pda_reskins
 	. = ..()
 	if(fon)
 		set_light(f_lum, f_pow, f_col)
@@ -130,28 +166,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	new_overlays = TRUE
 	update_icon()
 
-/obj/item/pda/CtrlShiftClick(mob/living/user)
-	. = ..()
-	if(GLOB.pda_reskins && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		reskin_obj(user)
+	register_context()
 
 /obj/item/pda/reskin_obj(mob/M)
-	if(!LAZYLEN(GLOB.pda_reskins))
-		return
-	var/dat = "<b>Reskin options for [name]:</b>"
-	for(var/V in GLOB.pda_reskins)
-		var/output = icon2html(GLOB.pda_reskins[V], M, icon_state)
-		dat += "\n[V]: <span class='reallybig'>[output]</span>"
-	to_chat(M, dat)
-
-	var/choice = input(M, "Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
-	var/new_icon = GLOB.pda_reskins[choice]
-	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	icon = new_icon
+	. = ..()
 	new_overlays = TRUE
 	update_icon()
-	to_chat(M, "[src] is now skinned as '[choice]'.")
 
 /obj/item/pda/proc/set_new_overlays()
 	if(!overlays_offsets || !(icon in overlays_offsets))
@@ -191,7 +211,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		else
 			font_index = MODE_MONO
 			font_mode = FONT_MONO
-	var/pref_skin = GLOB.pda_reskins[C.prefs.pda_skin]
+	var/pref_skin = GLOB.pda_reskins[C.prefs.pda_skin]["icon"]
 	if(icon != pref_skin)
 		icon = pref_skin
 		new_overlays = TRUE
@@ -369,6 +389,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'>[PDAIMG(rdoor)]Toggle Remote Door</a></li>"
 					if (cartridge.access & CART_DRONEPHONE)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'>[PDAIMG(dronephone)]Drone Phone</a></li>"
+					if (cartridge.access & CART_BARTENDER)
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Drink Recipe Browser'>[PDAIMG(bucket)]Drink Recipe Browser</a></li>"
+					if (cartridge.access & CART_CHEMISTRY)
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Chemistry Recipe Browser'>[PDAIMG(bucket)]Chemistry Recipe Browser</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=3'>[PDAIMG(atmos)]Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'>[PDAIMG(flashlight)][fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -447,7 +471,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						for(var/id in environment.get_gases())
 							var/gas_level = environment.get_moles(id)/total_moles
 							if(gas_level > 0)
-								dat += "[GLOB.meta_gas_names[id]]: [round(gas_level*100, 0.01)]%<br>"
+								dat += "[GLOB.gas_data.names[id]]: [round(gas_level*100, 0.01)]%<br>"
 
 					dat += "Temperature: [round(environment.return_temperature()-T0C)]&deg;C<br>"
 				dat += "<br>"
@@ -528,7 +552,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				update_label()
 				if (!silent)
 					playsound(src, 'sound/machines/terminal_processing.ogg', 15, 1)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/machines/terminal_success.ogg', 15, 1), 13)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/machines/terminal_success.ogg', 15, 1), 13)
 
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
@@ -704,6 +728,16 @@ GLOBAL_LIST_EMPTY(PDAs)
 						var/turf/T = get_turf(loc)
 						if(T)
 							pai.forceMove(T)
+
+//DRINK RECIPE BROWSER=============================
+			if("Drink Recipe Browser")
+				if(cartridge && cartridge.access & CART_BARTENDER)
+					recipe_search(U, GLOB.drink_reactions_list)
+
+//CHEMISTRY RECIPE BROWSER
+			if("Chemistry Recipe Browser")
+				if(cartridge && cartridge.access & CART_CHEMISTRY)
+					recipe_search(U, GLOB.normalized_chemical_reactions_list)
 
 //LINK FUNCTIONS===================================
 
@@ -929,7 +963,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/toggle_light()
 	if(hasSiliconAccessInArea(usr) || !usr.canUseTopic(src, BE_CLOSE))
-		return
+		return FALSE
 	if(fon)
 		fon = FALSE
 		set_light(0)
@@ -937,6 +971,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		fon = TRUE
 		set_light(f_lum, f_pow, f_col)
 	update_icon()
+	return TRUE
 
 /obj/item/pda/proc/remove_pen()
 
@@ -1147,7 +1182,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
 
-	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
+	var/c = input(user, "Please select a PDA") as null|anything in sort_list(plist)
 
 	if (!c)
 		return
@@ -1217,6 +1252,51 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!P.owner || P.toff || P.hidden)
 			continue
 		. += P
+
+//borg pda stuff
+/mob/living/silicon/robot/proc/cmd_send_pdamesg(mob/user)
+	var/list/plist = list()
+	var/list/namecounts = list()
+
+	if(aiPDA.toff)
+		to_chat(user, "Turn on your receiver in order to send messages.")
+		return
+
+	for (var/obj/item/pda/P in get_viewable_pdas())
+		if (P == src)
+			continue
+		else if (P == aiPDA)
+			continue
+
+		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
+
+	var/c = input(user, "Please select a PDA") as null|anything in sort_list(plist)
+
+	if (!c)
+		return
+
+	var/selected = plist[c]
+
+	if(aicamera.stored.len)
+		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
+		if(add_photo=="Yes")
+			var/datum/picture/Pic = aicamera.selectpicture(user)
+			aiPDA.picture = Pic
+
+	if(incapacitated())
+		return
+
+	aiPDA.create_message(src, selected)
+
+
+/mob/living/silicon/robot/proc/cmd_show_message_log(mob/user)
+	if(incapacitated())
+		return
+	if(!isnull(aiPDA))
+		var/HTML = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
+		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+	else
+		to_chat(user, "You do not have a PDA. You should make an issue report about this.")
 
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL

@@ -1,12 +1,3 @@
-//LISTMOS
-//indices of values in gas lists.
-#define META_GAS_SPECIFIC_HEAT	1
-#define META_GAS_NAME			2
-#define META_GAS_MOLES_VISIBLE	3
-#define META_GAS_OVERLAY		4
-#define META_GAS_DANGER			5
-#define META_GAS_ID				6
-#define META_GAS_FUSION_POWER   7
 //ATMOS
 //stuff you should probably leave well alone!
 #define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
@@ -77,6 +68,21 @@
 
 #define TEMPERATURE_DAMAGE_COEFFICIENT		1.5		//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
 
+#define SYNTH_PASSIVE_HEAT_GAIN 10							//Degrees C per handle_environment() Synths passively heat up. Mitigated by cooling efficiency. Can lead to overheating if not managed.
+#define SYNTH_MAX_PASSIVE_GAIN_TEMP 250						//Degrees C that a synth can be heated up to by their internal heat gain, provided their cooling is insufficient to mitigate it.
+#define SYNTH_MIN_PASSIVE_COOLING_TEMP -30					//Degrees C a synth can cool towards at very high cooling efficiency.
+#define SYNTH_HEAT_EFFICIENCY_COEFF 0.005					//How quick the difference between the Synth and the environment starts to matter. The smaller the higher the difference has to be for the same change.
+#define SYNTH_SINGLE_INFLUENCE_COOLING_EFFECT_CAP 3			//How big can the multiplier for heat / pressure cooling be in an optimal environment
+#define SYNTH_TOTAL_ENVIRONMENT_EFFECT_CAP 2				//How big of an multiplier can the environment give in an optimal scenario (maximum efficiency in the end is at a lower cap, this mostly counters low coolant levels)
+#define SYNTH_MAX_COOLING_EFFICIENCY 1.5					//The maximum possible cooling efficiency one can achieve at optimal conditions.
+#define SYNTH_ACTIVE_COOLING_TEMP_BOUNDARY 10				//The minimum distance from room temperature a Synth needs to have for active cooling to actively cool.
+#define SYNTH_ACTIVE_COOLING_LOW_PRESSURE_THRESHOLD 0.05	//At how much percentage of default pressure (or lower) active cooling gets a massive cost penalty.
+#define SYNTH_ACTIVE_COOLING_LOW_PRESSURE_PENALTY 2.5		//By how much is active cooling cost multiplied if in a very-low-pressure environment?
+#define SYNTH_ACTIVE_COOLING_MIN_ADJUSTMENT 5				//What is the minimum amount of temp you move towards the target point, even if it would be less with default calculations?
+#define SYNTH_INTEGRATION_COOLANT_PENALTY 0.4				//Integrating coolant is multiplied with this for calculation of impact on passive cooling.
+#define SYNTH_INTEGRATION_COOLANT_CAP 0.25					//Integrating coolant is capped at counting as current_blood * this number. This is so you can't just run on salglu or whatever.
+#define SYNTH_COLD_OFFSET -125								//How much colder temps Synths can tolerate. Used in their species.
+
 #define BODYTEMP_NORMAL						310.15			//The natural temperature for a body
 #define BODYTEMP_AUTORECOVERY_DIVISOR		11		//This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
 #define BODYTEMP_AUTORECOVERY_MINIMUM		12		//Minimum amount of kelvin moved toward 310K per tick. So long as abs(310.15 - bodytemp) is more than 50.
@@ -110,6 +116,7 @@
 #define GLOVES_MAX_TEMP_PROTECT				1500	//For some gloves
 #define SHOES_MIN_TEMP_PROTECT				2.0		//For gloves
 #define SHOES_MAX_TEMP_PROTECT				1500	//For gloves
+#define COAT_MAX_TEMP_PROTECT				330     //For winter coats (if they can stop you from getting cold why can't they do it the other way to a lesser extent)
 
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define MAX_HIGH_PRESSURE_DAMAGE			16		// CITADEL CHANGES Max to 16, low to 8.
@@ -137,6 +144,7 @@
 #define TANK_MAX_RELEASE_PRESSURE 			(ONE_ATMOSPHERE*3)
 #define TANK_MIN_RELEASE_PRESSURE 			0
 #define TANK_DEFAULT_RELEASE_PRESSURE 		17
+#define TANK_POST_FRAGMENT_REACTIONS		5
 
 //CANATMOSPASS
 #define ATMOS_PASS_YES 1
@@ -144,14 +152,18 @@
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
 
+// Adjacency flags
+#define ATMOS_ADJACENT_ANY		(1<<0)
+#define ATMOS_ADJACENT_FIRELOCK	(1<<1)
+
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
 #define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
 
 //OPEN TURF ATMOS
-#define OPENTURF_DEFAULT_ATMOS		"o2=22;n2=82;TEMP=293.15" //the default air mix that open turfs spawn
+#define OPENTURF_DEFAULT_ATMOS		"o2=21.78;n2=82.36;TEMP=293.15" //the default air mix that open turfs spawn, also is what the station vents output at assuming a 21/79% o2/n2 mix
 #define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15degC telecommunications. also used for xenobiology slime killrooms
 #define AIRLESS_ATMOS				"TEMP=2.7" //space
-#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15degC snow and ice turfs
+#define FROZEN_ATMOS				"o2=21.78;n2=82.36;TEMP=180" //-93.15degC snow and ice turfs
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370" //used in the holodeck burn test program
 
 //ATMOSPHERICS DEPARTMENT GAS TANK TURFS
@@ -160,14 +172,17 @@
 #define ATMOS_TANK_PLASMA			"plasma=70000;TEMP=293.15"
 #define ATMOS_TANK_O2				"o2=100000;TEMP=293.15"
 #define ATMOS_TANK_N2				"n2=100000;TEMP=293.15"
-#define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
+#define ATMOS_TANK_AIRMIX			"o2=2811;n2=10583;TEMP=293.15"
 
 //LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
-#define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+#define LAVALAND_DEFAULT_ATMOS "LAVALAND_ATMOS"
 
 //SNOSTATION
-#define ICEMOON_DEFAULT_ATMOS "o2=17;n2=63;TEMP=180"
+#define ICEMOON_DEFAULT_ATMOS "ICEMOON_ATMOS"
+
+//FESTIVESTATION
+#define FESTIVE_ATMOS "o2=22;n2=82;TEMP=266" //this goes here right putnam??
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
@@ -257,6 +272,45 @@
 #define PIPING_DEFAULT_LAYER_ONLY		(1<<2)	//can only exist at PIPING_LAYER_DEFAULT
 #define PIPING_CARDINAL_AUTONORMALIZE	(1<<3)	//north/south east/west doesn't matter, auto normalize on build.
 
+// Gas defines because i hate typepaths
+#define GAS_O2					"o2"
+#define GAS_N2					"n2"
+#define GAS_CO2					"co2"
+#define GAS_PLASMA				"plasma"
+#define GAS_H2O					"water_vapor"
+#define GAS_HYPERNOB			"nob"
+#define GAS_NITRIC				"no"
+#define GAS_NITROUS				"n2o"
+#define GAS_NITRYL				"no2"
+#define GAS_HYDROGEN			"hydrogen"
+#define GAS_TRITIUM				"tritium"
+#define GAS_BZ					"bz"
+#define GAS_STIMULUM			"stim"
+#define GAS_PLUOXIUM			"pluox"
+#define GAS_MIASMA				"miasma"
+#define GAS_METHANE				"methane"
+#define GAS_METHYL_BROMIDE		"methyl_bromide"
+#define GAS_BROMINE				"bromine"
+#define GAS_AMMONIA				"ammonia"
+#define GAS_FLUORINE			"fluorine"
+#define GAS_ETHANOL				"ethanol"
+#define GAS_QCD					"qcd"
+
+#define GAS_GROUP_CHEMICALS		"Chemicals"
+
+#define GAS_FLAG_DANGEROUS		(1<<0)
+#define GAS_FLAG_BREATH_PROC	(1<<1)
+#define GAS_FLAG_CHEMICAL		(1<<2)
+
+//SUPERMATTER DEFINES
+#define HEAT_PENALTY "heat penalties"
+#define TRANSMIT_MODIFIER "transmit"
+#define RADIOACTIVITY_MODIFIER "radioactivity"
+#define HEAT_RESISTANCE "heat resistance"
+#define POWERLOSS_INHIBITION "powerloss inhibition"
+#define ALL_SUPERMATTER_GASES "gases we care about"
+#define POWER_MIX "gas powermix"
+
 //HELPERS
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.dir & (NORTH|SOUTH)) {									\
@@ -273,27 +327,8 @@
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 
-
-#ifdef TESTING
-GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
-#define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }
-#else
-#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
-#endif
-
 //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
-
-GLOBAL_VAR(atmos_extools_initialized) // this must be an uninitialized (null) one or init_monstermos will be called twice because reasons
-#define ATMOS_EXTOOLS_CHECK if(!GLOB.atmos_extools_initialized){\
-	GLOB.atmos_extools_initialized=TRUE;\
-	if(fexists(EXTOOLS)){\
-		var/result = call(EXTOOLS,"init_monstermos")();\
-		if(result != "ok") {CRASH(result);}\
-	} else {\
-		CRASH("[EXTOOLS] does not exist!");\
-	}\
-}
 
 //Unomos - So for whatever reason, garbage collection actually drastically decreases the cost of atmos later in the round. Turning this into a define yields massively improved performance.
 #define GAS_GARBAGE_COLLECT(GASGASGAS)\

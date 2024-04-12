@@ -68,7 +68,7 @@
 	RECIPE_GLAIVE = /obj/item/smithing/glaivehead,
 	RECIPE_PIKE = /obj/item/smithing/pikehead)
 
-/obj/structure/anvil/Initialize()
+/obj/structure/anvil/Initialize(mapload)
 	..()
 	currentquality = anvilquality
 
@@ -164,7 +164,7 @@
 	user.visible_message("<span class='notice'>[user] works the metal on the anvil with their hammer with a loud clang!</span>", \
 						"<span class='notice'>You [stepdone] the metal with a loud clang!</span>")
 	playsound(src, 'sound/effects/clang2.ogg',40, 2)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 40, 2), 15)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/effects/clang2.ogg', 40, 2), 15)
 	if(length(stepsdone) >= 3)
 		tryfinish(user)
 	busy = FALSE
@@ -283,6 +283,13 @@
 /obj/structure/anvil/obtainable/basic
 	name = "anvil"
 	desc = "An anvil. It's got wheels bolted to the bottom."
+	anvilquality = 0
+	itemqualitymax = 6
+
+/obj/structure/anvil/obtainable/bone
+	name = "bone anvil"
+	desc = "An anvil. It's made of goliath bones and hide and held together by watcher sinews."
+	icon_state = "bonevil"
 	anvilquality = 0
 	itemqualitymax = 6
 

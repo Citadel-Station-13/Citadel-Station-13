@@ -8,6 +8,19 @@
 	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
+
+	var/list/pinged_admin_clients = check_admin_pings(msg)
+	if(length(pinged_admin_clients) && pinged_admin_clients[ADMINSAY_PING_UNDERLINE_NAME_INDEX])
+		msg = pinged_admin_clients[ADMINSAY_PING_UNDERLINE_NAME_INDEX]
+		pinged_admin_clients -= ADMINSAY_PING_UNDERLINE_NAME_INDEX
+
+	for(var/iter_ckey in pinged_admin_clients)
+		var/client/iter_admin_client = pinged_admin_clients[iter_ckey]
+		if(!iter_admin_client?.holder)
+			continue
+		window_flash(iter_admin_client)
+		SEND_SOUND(iter_admin_client.mob, sound('sound/misc/bloop.ogg'))
+
 	msg = emoji_parse(msg)
 	mob.log_talk(msg, LOG_ASAY)
 

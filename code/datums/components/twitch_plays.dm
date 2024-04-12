@@ -9,8 +9,8 @@
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, .proc/on_start_orbit)
-	RegisterSignal(parent, COMSIG_ATOM_ORBIT_END, .proc/on_end_orbit)
+	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, PROC_REF(on_start_orbit))
+	RegisterSignal(parent, COMSIG_ATOM_ORBIT_END, PROC_REF(on_end_orbit))
 
 /datum/component/twitch_plays/Destroy(force, silent)
 	for(var/i in players)
@@ -29,7 +29,7 @@
 
 /datum/component/twitch_plays/proc/AttachPlayer(mob/dead/observer)
 	players |= observer
-	RegisterSignal(observer, COMSIG_PARENT_QDELETING, .proc/on_end_orbit)
+	RegisterSignal(observer, COMSIG_PARENT_QDELETING, PROC_REF(on_end_orbit))
 
 /datum/component/twitch_plays/proc/DetachPlayer(mob/dead/observer)
 	players -= observer
@@ -46,11 +46,11 @@
 	. = ..()
 	if(. & COMPONENT_INCOMPATIBLE)
 		return
-	RegisterSignal(parent, COMSIG_TWITCH_PLAYS_MOVEMENT_DATA, .proc/fetch_data)
+	RegisterSignal(parent, COMSIG_TWITCH_PLAYS_MOVEMENT_DATA, PROC_REF(fetch_data))
 
 /datum/component/twitch_plays/simple_movement/AttachPlayer(mob/dead/observer)
 	. = ..()
-	RegisterSignal(observer, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move)
+	RegisterSignal(observer, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
 
 /datum/component/twitch_plays/simple_movement/DetachPlayer(mob/dead/observer)
 	. = ..()
@@ -82,12 +82,14 @@
 	var/move_delay = 2
 	var/last_move = 0
 
-/datum/component/twitch_plays/simple_movement/auto/Initialize(...)
+/datum/component/twitch_plays/simple_movement/auto/Initialize(move_delay)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	if(. & COMPONENT_INCOMPATIBLE)
 		return
+	if(!isnull(move_delay))
+		src.move_delay = move_delay
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/component/twitch_plays/simple_movement/auto/Destroy(force, silent)
@@ -95,10 +97,10 @@
 	return ..()
 
 /datum/component/twitch_plays/simple_movement/auto/process()
+	if(world.time < (last_move + move_delay))
+		return
 	var/dir = fetch_data(null, TRUE)
 	if(!dir)
-		return
-	if(world.time < (last_move + move_delay))
 		return
 	last_move = world.time
 	step(parent, dir)

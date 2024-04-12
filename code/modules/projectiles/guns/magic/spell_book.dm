@@ -10,7 +10,7 @@
 	variable_charges = FALSE
 
 /obj/item/gun/magic/wand/book/zap_self(mob/living/user)
-	to_chat(user, "The book has [charges] pages\s remaining.</span>")
+	to_chat(user, "The book has [charges] page\s remaining.</span>")
 
 /obj/item/gun/magic/wand/book/attackby(obj/item/S, mob/living/user, params)
 	if(!istype(S, /obj/item/paper))

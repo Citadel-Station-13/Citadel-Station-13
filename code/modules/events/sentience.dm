@@ -2,7 +2,8 @@
 	name = "Random Human-level Intelligence"
 	typepath = /datum/round_event/ghost_role/sentience
 	weight = 10
-
+	category = EVENT_CATEGORY_FRIENDLY
+	description = "An animal or robot becomes sentient!"
 
 /datum/round_event/ghost_role/sentience
 	minimum_required = 1
@@ -37,7 +38,7 @@
 			continue
 		if(L.mob_biotypes & blacklisted_biotypes)		//hey can you don't
 			continue
-		if(!(L in GLOB.player_list) && !L.mind)
+		if(!(L in GLOB.player_list) && !L.mind && !L.incapacitated())
 			potential += L
 
 	if(!potential.len)
@@ -75,6 +76,8 @@
 	name = "Station-wide Human-level Intelligence"
 	typepath = /datum/round_event/ghost_role/sentience/all
 	weight = 0
+	category = EVENT_CATEGORY_FRIENDLY
+	description = "ALL animals and robots become sentient, provided there is enough ghosts."
 
 /datum/round_event/ghost_role/sentience/all
 	one = "all"

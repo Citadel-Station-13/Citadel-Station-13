@@ -13,7 +13,7 @@
 	var/point_regen_amount = 1
 	sentience_type = SENTIENCE_BOSS
 
-/mob/living/simple_animal/hostile/boss/Initialize()
+/mob/living/simple_animal/hostile/boss/Initialize(mapload)
 	. = ..()
 
 	atb = new()
@@ -133,13 +133,17 @@
 	chance_to_hold_onto_points = highest_cost*0.5
 	if(points != max_points && prob(chance_to_hold_onto_points))
 		return //Let's save our points for a better ability (unless we're at max points, in which case we can't save anymore!)
+	do_ability()
+
+/datum/boss_active_timed_battle/proc/do_ability()
+	set waitfor = FALSE
 	if(!boss.client)
 		abilities = shuffle(abilities)
 	for(var/ab in abilities)
 		var/datum/action/boss/AB = ab
 		if(!boss.client && (!AB.req_statuses || (boss.AIStatus in AB.req_statuses)) && prob(AB.usage_probability) && AB.Trigger())
 			break
-		AB.UpdateButtonIcon(TRUE)
+		AB.UpdateButtons(TRUE)
 
 
 /datum/boss_active_timed_battle/Destroy()

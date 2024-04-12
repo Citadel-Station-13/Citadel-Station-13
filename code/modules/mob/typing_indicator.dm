@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 		return
 	typing_indicator_current = state_override
 	add_overlay(state_override)
-	typing_indicator_timerid = addtimer(CALLBACK(src, .proc/clear_typing_indicator), timeout_override, TIMER_STOPPABLE)
+	typing_indicator_timerid = addtimer(CALLBACK(src, PROC_REF(clear_typing_indicator)), timeout_override, TIMER_STOPPABLE)
 
 /**
   * Removes typing indicator.
@@ -55,3 +55,12 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	icon_state = "normal_typing"
 	appearance_flags = RESET_COLOR | TILE_BOUND | PIXEL_SCALE
 	layer = ABOVE_FLY_LAYER
+
+/obj/effect/overlay/typing_indicator/machine
+	icon_state = "machine_typing"
+
+/obj/effect/overlay/typing_indicator/machine/dogborg
+	icon = 'icons/mob/talk_64x64.dmi'
+
+/obj/effect/overlay/typing_indicator/slime
+	icon_state = "slime_typing"

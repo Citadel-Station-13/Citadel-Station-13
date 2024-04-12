@@ -27,6 +27,8 @@
 
 /datum/emote/slime/mood/run_emote(mob/user, params)
 	. = ..()
+	if(!.)
+		return
 	var/mob/living/simple_animal/slime/S = user
 	S.mood = mood
 	S.regenerate_icons()

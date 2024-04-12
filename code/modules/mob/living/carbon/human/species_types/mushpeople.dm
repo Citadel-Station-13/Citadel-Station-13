@@ -16,7 +16,7 @@
 	punchdamagehigh = 12 //still better than humans
 	punchstunthreshold = 10
 
-	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM)
+	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING)
 
 	burnmod = 1.25
 	heatmod = 1.5
@@ -38,7 +38,7 @@
 	H.faction |= "mushroom"
 	mush = new()
 	mush.teach(H, TRUE)
-	RegisterSignal(C, COMSIG_MOB_ON_NEW_MIND, .proc/on_new_mind)
+	RegisterSignal(C, COMSIG_MOB_ON_NEW_MIND, PROC_REF(on_new_mind))
 
 /datum/species/mush/proc/on_new_mind(mob/owner)
 	mush.teach(owner, TRUE) //make_temporary TRUE as it shouldn't carry over to other mobs on mind transfer_to.

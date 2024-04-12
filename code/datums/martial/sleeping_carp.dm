@@ -9,6 +9,7 @@
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 	block_parry_data = /datum/block_parry_data/sleeping_carp
 	pugilist = TRUE
+	display_combos = TRUE
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
@@ -126,7 +127,7 @@
 		return BULLET_ACT_HIT
 	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
 		return BULLET_ACT_HIT
-	if(A.in_throw_mode)
+	if(A.throw_mode)
 		A.visible_message("<span class='danger'>[A] effortlessly swats the projectile aside! They can deflect projectile with their bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
@@ -144,14 +145,16 @@
 	parry_time_active_visual_override = 3
 	parry_time_spindown_visual_override = 12
 	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		//can attack while
-	parry_time_perfect = 2.5		// first ds isn't perfect
-	parry_time_perfect_leeway = 1.5
+	parry_time_perfect = 2.5
+	parry_time_perfect_leeway = 2.5
 	parry_imperfect_falloff_percent = 5
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 4 SECONDS
+	parry_failed_cooldown_duration = 2 SECONDS
 	parry_cooldown = 0.5 SECONDS
+	parry_flags = NONE
 
 /mob/living/carbon/human/UseStaminaBuffer(amount, warn = FALSE, considered_action = TRUE)
 	amount *= physiology? physiology.stamina_buffer_mod : 1
@@ -165,6 +168,7 @@
 	ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_NOPUGILIST, SLEEPING_CARP_TRAIT) // cqc doesn't get this as it's intended to be able to stack with northstar gloves
 	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
 	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
 	H.physiology.stamina_mod *= 0.4 //You take less stamina damage overall, but you do not reduce the damage from stun batons as much
@@ -181,6 +185,7 @@
 	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_NOPUGILIST, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod = initial(H.physiology.brute_mod)
 	H.physiology.burn_mod = initial(H.physiology.burn_mod)
 	H.physiology.stamina_mod = initial(H.physiology.stamina_mod)
@@ -219,10 +224,10 @@
 	block_chance = 50
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/staff/bostaff/Initialize()
+/obj/item/staff/bostaff/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
 
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()

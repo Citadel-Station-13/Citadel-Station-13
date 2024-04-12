@@ -2,6 +2,7 @@
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	mutant_part_string = "ears"
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	mutable_category = "HEAD"
 
 /datum/sprite_accessory/ears/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
@@ -101,6 +102,13 @@
 	matrixed_sections = MATRIX_RED
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
+/datum/sprite_accessory/ears/lablight
+	name = "Dog, Floppy (Light)"
+	icon_state = "lablight"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+
 /datum/sprite_accessory/ears/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
@@ -162,10 +170,17 @@
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/rabbit
-	name = "Rabbit"
+	name = "Rabbit (Lop-eared)"
 	icon_state = "rabbit"
 	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED_GREEN
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+
+/datum/sprite_accessory/ears/human/rabbitalt
+	name = "Rabbit (Straight-eared)"
+	icon_state = "rabbitalt"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_ALL
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/pede
@@ -296,7 +311,7 @@
 /datum/sprite_accessory/ears/mam_ears/deer
 	name = "Deer"
 	icon_state = "deer"
-	color_src = MUTCOLORS3
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/eevee
 	name = "Eevee"
@@ -344,8 +359,13 @@
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/lab
-	name = "Dog, Long"
+	name = "Dog, Floppy"
 	icon_state = "lab"
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/ears/mam_ears/lablight
+	name = "Dog, Floppy (Light)"
+	icon_state = "lablight"
 	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/ears/mam_ears/murid
@@ -359,9 +379,14 @@
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/rabbit
-	name = "Rabbit"
+	name = "Rabbit (Lop-eared)"
 	icon_state = "rabbit"
 	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/rabbitalt
+	name = "Rabbit (Straight-eared)"
+	icon_state = "rabbitalt"
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/ears/mam_ears/pede
 	name = "Scolipede"
@@ -387,3 +412,85 @@
 	name = "Wolf"
 	icon_state = "wolf"
 	matrixed_sections = MATRIX_RED_BLUE
+
+/******************************************
+*************** Tall Ears *****************
+*******************************************/
+
+/datum/sprite_accessory/ears/human/bnnuy
+	name = "Bnnuy (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bnnuy"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/bnnuy
+	name = "Bnnuy (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bnnuy"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/bnnuy2
+	name = "Bnnuy (Alt) (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bnnuy2"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/bnnuy2
+	name = "Bnnuy (Alt) (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bnnuy2"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/bunnytall
+	name = "Bunny (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bunnytall"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/bunnytall
+	name = "Bunny (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "bunnytall"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/sandfox
+	name = "Sandfox (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "sandfox"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/sandfox
+	name = "Sandfox (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "sandfox"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/shadekinround
+	name = "Shadekin (Round) (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "shadekinround"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/mam_ears/shadekinround
+	name = "Shadekin (Round) (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "shadekinround"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/ears/human/jackalope
+	name = "Jackalope (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "jackalope"
+	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
+
+/datum/sprite_accessory/ears/mam_ears/jackalope
+	name = "Jackalope (Tall)"
+	icon = 'modular_citadel/icons/mob/32x64_mam_ears.dmi'
+	icon_state = "jackalope"
+	matrixed_sections = MATRIX_RED

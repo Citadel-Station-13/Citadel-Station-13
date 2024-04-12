@@ -7,19 +7,18 @@
 	circuit = /obj/item/circuitboard/machine/rdserver
 
 	var/datum/techweb/stored_research
-	var/heat_health = 100
 	//Code for point mining here.
 	var/working = TRUE			//temperature should break it.
 	var/server_id = 0
 	var/base_mining_income = 2
-	var/heat_gen = 100
+	var/heat_gen = 1
 	var/heating_power = 40000
 	var/delay = 5
 	var/temp_tolerance_low = 0
 	var/temp_tolerance_high = T20C
 	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
 
-/obj/machinery/rnd/server/Initialize()
+/obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
 	SSresearch.servers |= src
 	stored_research = SSresearch.science_tech
@@ -32,7 +31,7 @@
 	var/tot_rating = 0
 	for(var/obj/item/stock_parts/SP in src)
 		tot_rating += SP.rating
-	heat_gen /= max(1, tot_rating)
+	heat_gen = initial(src.heat_gen) / max(1, tot_rating)
 
 /obj/machinery/rnd/server/proc/refresh_working()
 	if(stat & EMPED)
@@ -45,7 +44,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	stat |= EMPED
-	addtimer(CALLBACK(src, .proc/unemp), severity*9)
+	addtimer(CALLBACK(src, PROC_REF(unemp)), severity*9)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()
@@ -56,31 +55,19 @@
 	. = base_mining_income
 	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
 	. = max(. - penalty, 0)
+	produce_heat(. / base_mining_income)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/datum/gas_mixture/environment = loc.return_air()
 	return environment.return_temperature()
 
-/obj/machinery/rnd/server/proc/produce_heat(heat_amt)
+/obj/machinery/rnd/server/proc/produce_heat(perc)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 		var/turf/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
-			if(env.return_temperature() < (heat_amt+T0C))
-
-				var/transfer_moles = 0.25 * env.total_moles()
-
-				var/datum/gas_mixture/removed = env.remove(transfer_moles)
-
-				if(removed)
-
-					var/heat_capacity = removed.heat_capacity()
-					if(heat_capacity == 0 || heat_capacity == null)
-						heat_capacity = 1
-					removed.set_temperature(min((removed.return_temperature()*heat_capacity + heating_power)/heat_capacity, 1000))
-
-				env.merge(removed)
-				air_update_turf()
+			env.adjust_heat(heating_power * perc * heat_gen)
+			air_update_turf()
 
 /proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()

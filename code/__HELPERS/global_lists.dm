@@ -55,11 +55,12 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/butt, GLOB.butt_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
 
 	for(var/gpath in subtypesof(/obj/item/organ/genital))
 		var/obj/item/organ/genital/G = gpath
-		if(!CHECK_BITFIELD(initial(G.genital_flags), GENITAL_BLACKLISTED))
+		if(!(initial(G.genital_flags) & GENITAL_BLACKLISTED))
 			GLOB.genitals_list[initial(G.name)] = gpath
 //END OF CIT CHANGES
 
@@ -78,21 +79,23 @@
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
-	init_keybindings()
+	for(var/path in subtypesof(/datum/bark))
+		var/datum/bark/B = new path()
+		GLOB.bark_list[B.id] = path
+		if(B.allow_random)
+			GLOB.bark_random_list[B.id] = path
 
-	//Uplink Items
-	for(var/path in subtypesof(/datum/uplink_item))
-		var/datum/uplink_item/I = path
-		if(!initial(I.item)) //We add categories to a separate list.
-			GLOB.uplink_categories |= initial(I.category)
-			continue
-		GLOB.uplink_items += path
-	//(sub)typesof entries are listed by the order they are loaded in the code, so we'll have to rearrange them here.
-	GLOB.uplink_items = sortList(GLOB.uplink_items, /proc/cmp_uplink_items_dsc)
+	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
+		var/datum/sprite_accessory/hair_gradient/H = new path()
+		GLOB.hair_gradients_list[H.name] = H
+
+	// Keybindings
+	init_keybindings()
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 
-	INVOKE_ASYNC(GLOBAL_PROC, /proc/init_ref_coin_values) //so the current procedure doesn't sleep because of UNTIL()
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(init_ref_coin_values)) //so the current procedure doesn't sleep because of UNTIL()
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
@@ -116,6 +119,6 @@
 	for(var/path in typesof(/obj/item/coin))
 		var/obj/item/coin/C = new path
 		UNTIL(C.flags_1 & INITIALIZED_1) //we want to make sure the value is calculated and not null.
-		GLOB.coin_values[path] = C.value
+		GLOB.coin_values[path] = C.get_item_credit_value()
 		qdel(C)
 

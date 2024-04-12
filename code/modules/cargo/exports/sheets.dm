@@ -6,7 +6,7 @@
 	var/obj/item/stack/S = O
 	if(istype(S))
 		return S.amount
-	return 0
+	return FALSE
 
 // Hides
 
@@ -58,6 +58,11 @@
 	cost = 300
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
+
+/datum/export/stack/licenseplate
+	cost = 25
+	unit_name = "license plate"
+	export_types = list(/obj/item/stack/license_plates/filled)
 
 // Common materials.
 // For base materials, see materials.dm

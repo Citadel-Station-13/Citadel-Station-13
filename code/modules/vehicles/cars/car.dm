@@ -2,21 +2,27 @@
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
 	default_driver_move = FALSE
+	var/explode_on_death = TRUE
 	var/car_traits = NONE //Bitflag for special behavior such as kidnapping
 	var/engine_sound = 'sound/vehicles/carrev.ogg'
 	var/last_enginesound_time
 	var/engine_sound_length = 20 //Set this to the length of the engine sound
 	var/escape_time = 200 //Time it takes to break out of the car
 
-/obj/vehicle/sealed/car/Initialize()
+/obj/vehicle/sealed/car/Initialize(mapload)
 	. = ..()
 	LoadComponent(/datum/component/riding)
+
+/obj/vehicle/sealed/car/Destroy()
+	. = ..()
+	if(explode_on_death)
+		explosion(loc, 0, 1, 2, 3, 0)
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/remove_key, VEHICLE_CONTROL_DRIVE)
 	if(car_traits & CAN_KIDNAP)
-		initialize_controller_action_type(/datum/action/vehicle/sealed/DumpKidnappedMobs, VEHICLE_CONTROL_DRIVE)
+		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/driver_move(mob/user, direction)
 	if(key_type && !is_key(inserted_key))
@@ -39,7 +45,7 @@
 	return ..()
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)
-	if(M == user && (occupants[M] & VEHICLE_CONTROL_KIDNAPPED))
+	if(M == user && (LAZYACCESS(occupants, M) & VEHICLE_CONTROL_KIDNAPPED))
 		to_chat(user, "<span class='notice'>You push against the back of [src] trunk to try and get out.</span>")
 		if(!do_after(user, escape_time, target = src))
 			return FALSE
@@ -67,7 +73,7 @@
 	if(do_after(user, 30))
 		if(return_amount_of_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 			to_chat(user, "<span class='notice'>The people stuck in [src]'s trunk all come tumbling out.</span>")
-			DumpSpecificMobs(VEHICLE_CONTROL_KIDNAPPED)
+			dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 		else
 			to_chat(user, "<span class='notice'>It seems [src]'s trunk was empty.</span>")
 
@@ -76,10 +82,14 @@
 		return FALSE
 	if(occupant_amount() >= max_occupants)
 		return FALSE
-	if(do_mob(forcer, get_enter_delay(M), target = src))
+	var/atom/old_loc = loc
+	if(do_mob(forcer, M, get_enter_delay(M), extra_checks=CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/car, is_car_stationary), old_loc)))
 		mob_forced_enter(M, silent)
 		return TRUE
 	return FALSE
+
+/obj/vehicle/sealed/car/proc/is_car_stationary(atom/old_loc)
+	return (old_loc == loc)
 
 /obj/vehicle/sealed/car/proc/mob_forced_enter(mob/M, silent = FALSE)
 	if(!silent)

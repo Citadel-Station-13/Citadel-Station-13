@@ -3,8 +3,8 @@
 	desc = "A cheap, Syndicate-branded paper face mask. They'll never see it coming."
 	mob_overlay_icon = 'icons/mob/clothing/mask.dmi'
 	icon = 'icons/obj/clothing/masks.dmi'
-	icon_state = "s-ninja"
-	item_state = "s-ninja"
+	icon_state = "ninjaOLD"
+	item_state = "ninjaOLD"
 
 /obj/item/clothing/glasses/phantomthief/ComponentInitialize()
 	. = ..()
@@ -17,7 +17,7 @@
 
 /obj/item/clothing/glasses/phantomthief/syndicate/examine(mob/user)
 	. = ..()
-	if(user.get_item_by_slot(SLOT_GLASSES) == src)
+	if(user.get_item_by_slot(ITEM_SLOT_EYES) == src)
 		if(world.time >= nextadrenalinepop)
 			. += "<span class='notice'>The built-in adrenaline injector is ready for use.</span>"
 		else
@@ -33,9 +33,9 @@
 	. = ..()
 	if(!istype(user))
 		return
-	if(slot != SLOT_GLASSES)
+	if(slot != ITEM_SLOT_EYES)
 		return
-	RegisterSignal(user, COMSIG_LIVING_COMBAT_ENABLED, .proc/injectadrenaline)
+	RegisterSignal(user, COMSIG_LIVING_COMBAT_ENABLED, PROC_REF(injectadrenaline))
 
 /obj/item/clothing/glasses/phantomthief/syndicate/dropped(mob/user)
 	. = ..()

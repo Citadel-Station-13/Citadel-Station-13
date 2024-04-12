@@ -44,7 +44,7 @@
 		tickets.Cut()
 	update_icon()
 
-/obj/machinery/ticket_machine/Initialize()
+/obj/machinery/ticket_machine/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -69,7 +69,7 @@
 	req_access = list()
 	id = "ticket_machine_default"
 
-/obj/machinery/button/ticket_machine/Initialize()
+/obj/machinery/button/ticket_machine/Initialize(mapload)
 	. = ..()
 	if(device)
 		var/obj/item/assembly/control/ticket_machine/ours = device
@@ -82,17 +82,17 @@
 		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
 			return
 		var/obj/item/assembly/control/ticket_machine/controller = device
-		controller.linked = M.buffer
+		controller.linked = WEAKREF(M.buffer)
 		id = null
 		controller.id = null
-		to_chat(user, "<span class='warning'>You've linked [src] to [controller.linked].</span>")
+		to_chat(user, "<span class='warning'>You've linked [src] to [M.buffer].</span>")
 
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HoP's ticket machine."
-	var/obj/machinery/ticket_machine/linked //To whom are we linked?
+	var/datum/weakref/linked //To whom are we linked?
 
-/obj/item/assembly/control/ticket_machine/Initialize()
+/obj/item/assembly/control/ticket_machine/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -102,7 +102,7 @@
 /obj/item/assembly/control/ticket_machine/proc/find_machine() //Locate the one to which we're linked
 	for(var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
 		if(ticketsplease.id == id)
-			linked = ticketsplease
+			linked = WEAKREF(ticketsplease)
 	if(linked)
 		return TRUE
 	else
@@ -113,8 +113,11 @@
 		return
 	if(!linked)
 		return
+	var/obj/machinery/ticket_machine/machine = linked.resolve()
+	if(!machine)
+		return
 	cooldown = TRUE
-	linked.increment()
+	machine.increment()
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 /obj/machinery/ticket_machine/update_icon()
@@ -139,7 +142,7 @@
 			maptext_x = 10
 		if(100)
 			maptext_x = 8
-	maptext = "[current_number]" //Finally, apply the maptext
+	maptext = MAPTEXT("[current_number]") //Finally, apply the maptext
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
@@ -179,11 +182,7 @@
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number ++
 	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
-	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
-	theirticket.name = "Ticket #[ticket_number]"
-	theirticket.maptext = "<font color='#000000'>[ticket_number]</font>"
-	theirticket.saved_maptext = "<font color='#000000'>[ticket_number]</font>"
-	theirticket.ticket_number = ticket_number
+	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src), ticket_number)
 	theirticket.source = src
 	theirticket.owner = user
 	user.put_in_hands(theirticket)
@@ -191,7 +190,7 @@
 	tickets += theirticket
 	if(obj_flags & EMAGGED) //Emag the machine to destroy the HOP's life.
 		ready = FALSE
-		addtimer(CALLBACK(src, .proc/reset_cooldown), cooldown)//Small cooldown to prevent piles of flaming tickets
+		addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), cooldown)//Small cooldown to prevent piles of flaming tickets
 		theirticket.fire_act()
 		user.dropItemToGround(theirticket)
 		user.adjust_fire_stacks(1)
@@ -208,10 +207,25 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
+	var/number
 	var/saved_maptext = null
 	var/mob/living/carbon/owner
 	var/obj/machinery/ticket_machine/source
-	var/ticket_number
+
+/obj/item/ticket_machine_ticket/Initialize(mapload, num)
+	. = ..()
+	number = num
+	if(!isnull(num))
+		name += " #[num]"
+		saved_maptext = MAPTEXT(num)
+		maptext = saved_maptext
+
+/obj/item/ticket_machine_ticket/examine(mob/user)
+	. = ..()
+	if(!isnull(number))
+		. += span_notice("The ticket reads shimmering text that tells you that you are number [number] in queue.")
+		if(source)
+			. += span_notice("Below that, you can see that you are [number - source.current_number] spot\s away from being served.")
 
 /obj/item/ticket_machine_ticket/attack_hand(mob/user)
 	. = ..()
@@ -230,7 +244,7 @@
 /obj/item/ticket_machine_ticket/Destroy()
 	if(owner && source)
 		source.ticket_holders -= owner
-		source.tickets[ticket_number] = null
+		source.tickets[number] = null
 		owner = null
 		source = null
 	return ..()

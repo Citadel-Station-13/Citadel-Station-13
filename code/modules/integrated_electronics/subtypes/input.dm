@@ -652,7 +652,7 @@
 	var/datum/radio_frequency/radio_connection
 	var/hearing_range = 1
 
-/obj/item/integrated_circuit/input/signaler/Initialize()
+/obj/item/integrated_circuit/input/signaler/Initialize(mapload)
 	. = ..()
 	spawn(40)
 		set_frequency(frequency)
@@ -697,11 +697,11 @@
 	if(isnum(new_code))
 		code = new_code
 	if(!signal)
-		return 0
+		return FALSE
 	if(signal.data["code"] != code)
-		return 0
+		return FALSE
 	if(signal.source == src) // Don't trigger ourselves.
-		return 0
+		return FALSE
 
 	activate_pin(3)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
@@ -738,7 +738,7 @@
 	power_draw_per_use = 50
 	var/address
 
-/obj/item/integrated_circuit/input/ntnet_packet/Initialize()
+/obj/item/integrated_circuit/input/ntnet_packet/Initialize(mapload)
 	. = ..()
 	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
 	address = net.hardware_id
@@ -786,7 +786,7 @@
 	power_draw_per_use = 50
 	var/address
 
-/obj/item/integrated_circuit/input/ntnet_advanced/Initialize()
+/obj/item/integrated_circuit/input/ntnet_advanced/Initialize(mapload)
 	. = ..()
 	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
 	address = net.hardware_id
@@ -1163,7 +1163,7 @@
 	var/list/gas_names = list()
 	var/list/gas_amounts = list()
 	for(var/id in air_contents.get_gases())
-		var/name = GLOB.meta_gas_names[id]
+		var/name = GLOB.gas_data.names[id]
 		var/amt = round(air_contents.get_moles(id), 0.001)
 		gas_names.Add(name)
 		gas_amounts.Add(amt)

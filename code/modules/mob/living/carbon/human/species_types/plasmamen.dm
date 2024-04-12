@@ -23,8 +23,11 @@
 	outfit_important_for_life = /datum/outfit/plasmaman
 
 	species_category = SPECIES_CATEGORY_SKELETON
+	wings_icons = SPECIES_WINGS_SKELETAL
 
 	ass_image = 'icons/ass/assplasma.png'
+	balance_point_values = TRUE
+	blacklisted_quirks = list(/datum/quirk/paper_skin)
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -37,7 +40,7 @@
 	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
 		if(environment)
 			if(environment.total_moles())
-				if(environment.get_moles(/datum/gas/oxygen) >= 1) //Same threshhold that extinguishes fire
+				if(environment.get_moles(GAS_O2) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.5)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
@@ -67,7 +70,7 @@
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
-	return 0
+	return FALSE
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)

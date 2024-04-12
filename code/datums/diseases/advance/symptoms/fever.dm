@@ -58,4 +58,4 @@ Bonus
 		M.adjust_bodytemperature(get_heat * A.stage, 0, BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
 	else
 		M.adjust_bodytemperature(get_heat * A.stage)
-	return 1
+	return TRUE

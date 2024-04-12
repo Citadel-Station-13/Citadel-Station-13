@@ -253,7 +253,7 @@
 	///chem transfer rate / second
 	var/transfer_rate = 5
 
-/obj/item/pet_carrier/bluespace/Initialize()
+/obj/item/pet_carrier/bluespace/Initialize(mapload)
 	. = ..()
 	create_reagents(300, OPENCONTAINER, DEFAULT_REAGENTS_VALUE) //equivalent of bsbeakers
 
@@ -289,10 +289,11 @@
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
 		var/turf/TT = get_turf(hit_atom)
 		var/throwerstring
-		if(thrownby)
-			log_combat(thrownby, M, "splashed", R)
-			var/turf/AT = get_turf(thrownby)
-			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
+		var/mob/thrown_by = thrownby?.resolve()
+		if(thrown_by)
+			log_combat(thrown_by, M, "splashed", R)
+			var/turf/AT = get_turf(thrown_by)
+			throwerstring = " THROWN BY [key_name(thrown_by)] at [AT] (AREACOORD(AT)]"
 		log_reagent("SPLASH: [src] mob throw_impact() onto [key_name(hit_atom)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(hit_atom, TOUCH)
 		reagents.clear_reagents()
@@ -307,7 +308,7 @@
 
 	if(isanimal(occupant))
 		var/mob/living/simple_animal/animal = occupant
-		occupant_gas_supply[/datum/gas/oxygen] = 0.0064 //make sure it has some gas in so it isn't depressurized
+		occupant_gas_supply[GAS_O2] = 0.0064 //make sure it has some gas in so it isn't depressurized
 		occupant_gas_supply.set_temperature(animal.minbodytemp) //simple animals only care about temperature/pressure when their turf isnt a location
 
 	if(ishuman(occupant)) //humans require resistance to cold/heat and living in no air while inside, and lose this when outside

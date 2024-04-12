@@ -147,7 +147,7 @@
 
 		//ommitted list
 		// "shrink_grow_size",
-/obj/belly/Initialize()
+/obj/belly/Initialize(mapload)
 	. = ..()
 	take_ownership(src.loc)
 
@@ -278,14 +278,14 @@
 		SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
 		SEND_SIGNAL(ML, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
 
-		if(CHECK_BITFIELD(ML.vore_flags,ABSORBED))
-			DISABLE_BITFIELD(ML.vore_flags,ABSORBED)
+		if((ML.vore_flags & ABSORBED))
+			ML.vore_flags &= ~(ABSORBED)
 			if(ishuman(M) && ishuman(OW))
 				var/mob/living/carbon/human/Prey = M
 				var/mob/living/carbon/human/Pred = OW
 				var/absorbed_count = 2 //Prey that we were, plus the pred gets a portion
 				for(var/mob/living/P in contents)
-					if(CHECK_BITFIELD(P.vore_flags,ABSORBED))
+					if((P.vore_flags & ABSORBED))
 						absorbed_count++
 				Pred.reagents.trans_to(Prey, Pred.reagents.total_volume / absorbed_count)
 
@@ -338,7 +338,7 @@
 
 	// Setup the autotransfer checks if needed
 	if(transferlocation != null && autotransferchance > 0)
-		addtimer(CALLBACK(src, /obj/belly/.proc/check_autotransfer, prey), autotransferwait)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), prey), autotransferwait)
 
 /obj/belly/proc/check_autotransfer(var/mob/prey, var/obj/belly/target)
 	// Some sanity checks
@@ -347,7 +347,7 @@
 			transfer_contents(prey, transferlocation)
 		else
 			// Didn't transfer, so wait before retrying
-			addtimer(CALLBACK(src, /obj/belly/.proc/check_autotransfer, prey), autotransferwait)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), prey), autotransferwait)
 
 //Transfers contents from one belly to another
 /obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
@@ -390,7 +390,7 @@
 		formatted_message = replacetext(formatted_message,"%pred",owner)
 		formatted_message = replacetext(formatted_message,"%prey",english_list(contents))
 		for(var/mob/living/P in contents)
-			if(!CHECK_BITFIELD(P.vore_flags, ABSORBED)) //This is required first, in case there's a person absorbed and not absorbed in a stomach.
+			if(!(P.vore_flags & ABSORBED)) //This is required first, in case there's a person absorbed and not absorbed in a stomach.
 				total_bulge += P.mob_size
 		if(total_bulge >= bulge_size && bulge_size != 0)
 			return("<span class='warning'>[formatted_message]</span><BR>")
@@ -485,7 +485,7 @@
 
 // Handle a mob being absorbed
 /obj/belly/proc/absorb_living(var/mob/living/M)
-	ENABLE_BITFIELD(M.vore_flags, ABSORBED)
+	M.vore_flags |= ABSORBED
 	to_chat(M,"<span class='notice'>[owner]'s [lowertext(name)] absorbs your body, making you part of them.</span>")
 	to_chat(owner,"<span class='notice'>Your [lowertext(name)] absorbs [M]'s body, making them part of you.</span>")
 
@@ -499,7 +499,7 @@
 	for(var/belly in M.vore_organs)
 		var/obj/belly/B = belly
 		for(var/mob/living/Mm in B)
-			if(CHECK_BITFIELD(Mm.vore_flags, ABSORBED))
+			if((Mm.vore_flags & ABSORBED))
 				absorb_living(Mm)
 
 	//Update owner
@@ -539,7 +539,7 @@
 
 //Handle a mob struggling
 // Called from /mob/living/carbon/relaymove()
-/obj/belly/proc/relay_resist(var/mob/living/R)
+/obj/belly/proc/relay_resist(mob/living/R)
 	if (!(R in contents))
 		return  // User is not in this belly
 
@@ -547,7 +547,7 @@
 		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime/10] seconds.)</span>")
 		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
 
-		if(do_after(R, owner, escapetime))
+		if(do_after(R, escapetime, owner, (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 			if((owner.stat || escapable) && (R.loc == src)) //Can still escape?
 				release_specific_contents(R)
 				return
@@ -604,7 +604,7 @@
 		if(prob(escapechance)) //Let's have it check to see if the prey escapes first.
 			to_chat(R,"<span class='warning'>You start to climb out of \the [lowertext(name)].</span>")
 			to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
-			if(do_after(R, escapetime))
+			if(do_after(R, escapetime, owner, (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 				if((escapable) && (R.loc == src)) //Can still escape?
 					release_specific_contents(R)
 					to_chat(R,"<span class='warning'>You climb out of \the [lowertext(name)].</span>")

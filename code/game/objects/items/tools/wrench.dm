@@ -13,11 +13,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	usesound = 'sound/items/ratchet.ogg'
 	custom_materials = list(/datum/material/iron=150)
+	drop_sound = 'sound/items/handling/wrench_drop.ogg'
+	pickup_sound = 'sound/items/handling/wrench_pickup.ogg'
 
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 
 	wound_bonus = -10
 	bare_wound_bonus = 5
@@ -43,6 +45,13 @@
 
 /obj/item/wrench/brass/family
 	toolspeed = 1
+
+/obj/item/wrench/ashwalker
+	name = "bone wrench"
+	desc = "A shoddy wrench made out of bent bones and sinew."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "wrench_bone"
+	toolspeed = 0.75
 
 /obj/item/wrench/bronze
 	name = "bronze plated wrench"

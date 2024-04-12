@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = TRUE
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -22,7 +22,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = TRUE
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/florarevolution
 	name = "gamma somatorary"
@@ -30,4 +30,4 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = TRUE
-	flag = "energy"
+	flag = ENERGY

@@ -20,25 +20,19 @@
 	. += "<span class='notice'>You can hold <b>Alt</b> and click on it to maximize its flow rate.</span>"
 
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
-	var/area/A = get_area(src)
-	var/turf/T = get_turf(src)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		on = !on
-		update_icon()
-		investigate_log("Filter, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-		message_admins("Filter, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_appearance()
 		return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
-	. = ..()
-	var/area/A = get_area(src)
-	var/turf/T = get_turf(src)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
+	if(can_interact(user))
 		transfer_rate = MAX_TRANSFER_RATE
-		to_chat(user,"<span class='notice'>You maximize the flow rate on the [src].</span>")
-		investigate_log("Filter, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-		message_admins("Filter, [src.name], was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
-		return TRUE
+		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "volume output set to [transfer_rate] L/s")
+		update_appearance()
+	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -98,33 +92,14 @@
 	//Actually transfer the gas
 
 	if(transfer_ratio > 0)
-		var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
-		if(!removed)
-			return
-
-		var/filtering = TRUE
-		if(!ispath(filter_type))
-			if(filter_type)
-				filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
+		if(filter_type && air2.return_pressure() <= 9000)
+			if(filter_type in GLOB.gas_data.groups)
+				air1.scrub_into(air2, transfer_ratio, GLOB.gas_data.groups[filter_type])
 			else
-				filtering = FALSE
-
-		if(filtering && removed.get_moles(filter_type))
-			var/datum/gas_mixture/filtered_out = new
-
-			filtered_out.set_temperature(removed.return_temperature())
-			filtered_out.set_moles(filter_type, removed.get_moles(filter_type))
-
-			removed.set_moles(filter_type, 0)
-
-			var/datum/gas_mixture/target = (air2.return_pressure() < 9000 ? air2 : air1)
-			target.merge(filtered_out)
-
+				air1.scrub_into(air2, transfer_ratio, list(filter_type))
 		if(air3.return_pressure() <= 9000)
-			air3.merge(removed)
-		else
-			air1.merge(removed) // essentially just leaving it in
+			air1.transfer_ratio_to(air3, transfer_ratio)
 
 	update_parents()
 
@@ -145,10 +120,12 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 
 	data["filter_types"] = list()
-	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !filter_type))
-	for(var/path in GLOB.meta_gas_ids)
-		data["filter_types"] += list(list("name" = GLOB.meta_gas_names[path], "id" = GLOB.meta_gas_ids[path], "selected" = (path == gas_id2path(filter_type))))
-
+	data["filter_types"] += list(list("name" = "Nothing", "id" = "", "selected" = !filter_type))
+	for(var/id in GLOB.gas_data.ids)
+		if(!(id in GLOB.gas_data.groups_by_gas))
+			data["filter_types"] += list(list("name" = GLOB.gas_data.names[id], "id" = id, "selected" = (id == filter_type)))
+	for(var/group in GLOB.gas_data.groups)
+		data["filter_types"] += list(list("name" = group, "id" = group, "selected" = (group == filter_type)))
 	return data
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
@@ -177,10 +154,10 @@
 		if("filter")
 			filter_type = null
 			var/filter_name = "nothing"
-			var/gas = gas_id2path(params["mode"])
-			if(gas in GLOB.meta_gas_names)
+			var/gas = params["mode"]
+			if(gas in GLOB.gas_data.names)
 				filter_type = gas
-				filter_name	= GLOB.meta_gas_names[gas]
+				filter_name	= GLOB.gas_data.names[gas]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()

@@ -24,10 +24,12 @@
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features(pref_species?.id, gender)
+	bark_id = pick(GLOB.bark_random_list)
+	bark_pitch = BARK_PITCH_RAND(gender)
+	bark_variance = BARK_VARIANCE_RAND
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon(current_tab)
-	var/equip_job = (current_tab != APPEARANCE_TAB)
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob = get_highest_job()
 
@@ -46,13 +48,25 @@
 	mannequin.add_overlay(mutable_appearance('modular_citadel/icons/ui/backgrounds.dmi', bgstate, layer = SPACE_LAYER))
 	copy_to(mannequin, initial_spawn = TRUE)
 
-	if(current_tab == LOADOUT_TAB)
-		//give it its loadout if not on the appearance tab
-		SSjob.equip_loadout(parent.mob, mannequin, FALSE, bypass_prereqs = TRUE, can_drop = FALSE)
-	else
-		if(previewJob && equip_job)
-			mannequin.job = previewJob.title
-			previewJob.equip(mannequin, TRUE, preference_source = parent)
+	switch(preview_pref)
+		if(PREVIEW_PREF_JOB)
+			if(previewJob)
+				mannequin.job = previewJob.title
+				previewJob.equip(mannequin, TRUE, preference_source = parent)
+		if(PREVIEW_PREF_LOADOUT)
+			SSjob.equip_loadout(parent.mob, mannequin, bypass_prereqs = TRUE, can_drop = FALSE)
+			SSjob.post_equip_loadout(parent.mob, mannequin, bypass_prereqs = TRUE, can_drop = FALSE)
+		if(PREVIEW_PREF_NAKED)
+			mannequin.hidden_underwear = TRUE
+			mannequin.hidden_undershirt = TRUE
+			mannequin.hidden_socks = TRUE
+		if(PREVIEW_PREF_NAKED_AROUSED)
+			mannequin.hidden_underwear = TRUE
+			mannequin.hidden_undershirt = TRUE
+			mannequin.hidden_socks = TRUE
+			for(var/obj/item/organ/genital/genital in mannequin.internal_organs)
+				if(genital.genital_flags & GENITAL_CAN_AROUSE)
+					genital.set_aroused_state(TRUE, null)
 
 	mannequin.regenerate_icons()
 

@@ -43,29 +43,25 @@
 			to_chat(user, "<span class='brass'>You break [src] apart, refunding some of the power used.</span>")
 			adjust_clockwork_power(power_refund)
 			take_damage(max_integrity)
-			return 0
+			return FALSE
 		if(active)
-			return 0
+			return FALSE
 		var/turf/T = get_turf(src)
 		if(!T || !is_station_level(T.z))
 			to_chat(user, "<span class='warning'>[src] must be on the station to function!</span>")
-			return 0
+			return FALSE
 		if(SSshuttle.emergency.mode != SHUTTLE_CALL)
 			to_chat(user, "<span class='warning'>No emergency shuttles are attempting to arrive at the station!</span>")
-			return 0
+			return FALSE
 		if(!try_use_power(get_delay_cost()))
 			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
-			return 0
+			return FALSE
 		delay_cost += delay_cost_increase
 		delay_remaining += PRISM_DELAY_DURATION
 		toggle(0, user)
 
-/obj/structure/destructible/clockwork/powered/prolonging_prism/process()
-	var/turf/own_turf = get_turf(src)
-	if(SSshuttle.emergency.mode != SHUTTLE_CALL || delay_remaining <= 0 || !own_turf || !is_station_level(own_turf.z))
-		forced_disable(FALSE)
-		return
-	. = ..()
+/obj/structure/destructible/clockwork/powered/prolonging_prism/proc/do_process()
+	set waitfor = FALSE
 	var/delay_amount = 40
 	delay_remaining -= delay_amount
 	var/efficiency = get_efficiency_mod()
@@ -113,6 +109,14 @@
 			else if(prob(50 * efficiency))
 				new /obj/effect/temp_visual/ratvar/prolonging_prism(T)
 		CHECK_TICK //we may be going over a hell of a lot of turfs
+
+/obj/structure/destructible/clockwork/powered/prolonging_prism/process()
+	var/turf/own_turf = get_turf(src)
+	if(SSshuttle.emergency.mode != SHUTTLE_CALL || delay_remaining <= 0 || !own_turf || !is_station_level(own_turf.z))
+		forced_disable(FALSE)
+		return
+	. = ..()
+	do_process()
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/proc/get_delay_cost()
 	return FLOOR(delay_cost, MIN_CLOCKCULT_POWER)

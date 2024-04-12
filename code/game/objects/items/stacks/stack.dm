@@ -42,13 +42,19 @@
 	var/matter_amount = 0
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
+	if(is_cyborg)
+		if(!istype(loc, /obj/item/robot_module))
+			stack_trace("Cyborg stack created outside of a robot module, deleting.")
+			return INITIALIZE_HINT_QDEL
+		prepare_estorage(loc)
+
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
 		amount -= max_amount
 		new type(loc, max_amount, FALSE)
 	if(!merge_type)
-		merge_type = type
+		merge_type = src.type
 
 	if(LAZYLEN(mats_per_unit))
 		set_mats_per_unit(mats_per_unit, 1)
@@ -62,7 +68,7 @@
 	if(merge)
 		for(var/obj/item/stack/S in loc)
 			if(can_merge(S))
-				INVOKE_ASYNC(src, .proc/merge, S)
+				INVOKE_ASYNC(src, PROC_REF(merge), S)
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
@@ -132,6 +138,19 @@
 	else
 		icon_state = "[initial(icon_state)]_3"
 
+/obj/item/stack/update_overlays()
+	. = ..()
+	if(isturf(loc))
+		return
+	var/atom/movable/screen/storage/item_holder/holder = locate(/atom/movable/screen/storage/item_holder) in vis_locs
+	if(holder?.master && istype(holder.master, /datum/component/storage/concrete))
+		var/datum/component/storage/concrete/storage = holder.master
+		if(storage.display_numerical_stacking)
+			return // It's being handled by the storage we're in, forget about it.
+	var/mutable_appearance/number = mutable_appearance(appearance_flags = APPEARANCE_UI_IGNORE_ALPHA)
+	number.maptext = MAPTEXT(get_amount())
+	. += number
+
 /obj/item/stack/examine(mob/user)
 	. = ..()
 	if (is_cyborg)
@@ -150,6 +169,14 @@
 	else
 		. += "There is [get_amount()] in the stack."
 	. += "<span class='notice'>Alt-click to take a custom amount.</span>"
+
+/obj/item/stack/equipped(mob/user, slot)
+	. = ..()
+	update_icon()
+
+/obj/item/stack/dropped(mob/user, slot)
+	. = ..()
+	update_icon()
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -358,11 +385,13 @@
 					return FALSE
 	return TRUE
 
-/obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
+/obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return FALSE = borked; return TRUE = had enough
 	if(check && zero_amount())
 		return FALSE
 	if (is_cyborg)
-		return source.use_charge(used * cost)
+		. = source.use_charge(used * cost)
+		update_icon()
+		return
 	if (amount < used)
 		return FALSE
 	amount -= used
@@ -465,9 +494,53 @@
 		return
 	//get amount from user
 	var/max = get_amount()
-	var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as null|num)
-	max = get_amount()
-	stackmaterial = min(max, stackmaterial)
+	var/list/quick_split
+	for(var/option in list(2, 3, 4, 5, 6, 7, "One", "Five", "Ten", "Custom"))
+		var/mutable_appearance/option_display = new(src)
+		option_display.filters = null
+		option_display.cut_overlays()
+		option_display.pixel_x = 0
+		option_display.pixel_y = 0
+
+		switch(option)
+			if("Custom")
+				var/list/sort_numbers = quick_split
+				sort_numbers = sort_list(sort_numbers, /proc/cmp_numeric_text_desc)
+				option_display.maptext = MAPTEXT("?")
+				quick_split = list("Custom" = option_display)
+				quick_split += sort_numbers
+			if("One")
+				option = 1
+				option_display.maptext = MAPTEXT("1")
+			if("Five")
+				if(max > 5)
+					option = 5
+					option_display.maptext = MAPTEXT("5")
+				else
+					continue
+			if("Ten")
+				if(max > 10)
+					option = 10
+					option_display.maptext = MAPTEXT("10")
+				else
+					continue
+			else
+				if(max % option == 0)
+					option_display.maptext = MAPTEXT(max / option)
+					option = max / option
+				else
+					continue
+		if(option != "Custom")
+			LAZYSET(quick_split, "[option]", option_display)
+	var/stackmaterial
+	if(length(quick_split) <= 2)
+		stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack?\nMax: [max]") as null|num)
+	else
+		stackmaterial = show_radial_menu(user, get_atom_on_turf(src), quick_split, require_near = TRUE, tooltips = TRUE)
+		if(stackmaterial == "Custom")
+			stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack?\nMax: [max]") as null|num)
+		stackmaterial = isnum(stackmaterial) ? stackmaterial : text2num(stackmaterial)
+	stackmaterial = min(get_amount(), stackmaterial)
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, TRUE, FALSE)) //, !iscyborg(user)
 		return
 	split_stack(user, stackmaterial)
@@ -491,7 +564,11 @@
 			F.forceMove(user.drop_location())
 		add_fingerprint(user)
 		F.add_fingerprint(user)
-	zero_amount()
+	if(!zero_amount())
+		var/atom/movable/screen/storage/item_holder/holder = locate(/atom/movable/screen/storage/item_holder) in vis_locs
+		if(holder?.master && istype(holder.master, /datum/component/storage/concrete))
+			var/datum/component/storage/concrete/storage = holder.master
+			storage.refresh_mob_views()
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(can_merge(W))
@@ -515,43 +592,11 @@
 	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
 
-/*
- * Recipe datum
- */
-/datum/stack_recipe
-	var/title = "ERROR"
-	var/result_type
-	var/req_amount = 1
-	var/res_amount = 1
-	var/max_res_amount = 1
-	var/time = 0
-	var/one_per_turf = FALSE
-	var/on_floor = FALSE
-	var/placement_checks = FALSE
-	var/applies_mats = FALSE
-	var/trait_booster = null
-	var/trait_modifier = 1
+/obj/item/stack/proc/prepare_estorage(obj/item/robot_module/module)
+	if(source)
+		source = module.get_or_create_estorage(source)
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
-	src.title = title
-	src.result_type = result_type
-	src.req_amount = req_amount
-	src.res_amount = res_amount
-	src.max_res_amount = max_res_amount
-	src.time = time
-	src.one_per_turf = one_per_turf
-	src.on_floor = on_floor
-	src.placement_checks = placement_checks
-	src.applies_mats = applies_mats
-	src.trait_booster = trait_booster
-	src.trait_modifier = trait_modifier
-/*
- * Recipe list datum
- */
-/datum/stack_recipe_list
-	var/title = "ERROR"
-	var/list/recipes
-
-/datum/stack_recipe_list/New(title, recipes)
-	src.title = title
-	src.recipes = recipes
+/obj/item/stack/Moved(old_loc, dir)
+	. = ..()
+	if(isturf(loc))
+		update_icon()

@@ -6,7 +6,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
 
 	if (handcuffed)
 		. += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>"
@@ -152,8 +152,11 @@
 				. += "[t_He] look[p_s()] very happy."
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
 				. += "[t_He] look[p_s()] ecstatic."
+
+	if(LAZYLEN(.) > 1)
+		.[2] = "<hr>[.[2]]"
+
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
-	. += "*---------*</span>"
 
 /mob/living/carbon/examine_more(mob/user)
 	if(!all_scars)

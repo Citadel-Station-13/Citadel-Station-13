@@ -17,6 +17,7 @@
 	exotic_blood = /datum/reagent/blood/jellyblood
 	exotic_bloodtype = "GEL"
 	exotic_blood_color = "BLOOD_COLOR_SLIME"
+	exotic_blood_blend_mode = BLEND_DEFAULT
 	damage_overlay_type = ""
 	liked_food = TOXIC | MEAT
 	disliked_food = null
@@ -29,7 +30,13 @@
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
 	species_category = SPECIES_CATEGORY_JELLY
+	wings_icons = SPECIES_WINGS_JELLY
 	ass_image = 'icons/ass/assslime.png'
+	blacklisted_quirks = list(/datum/quirk/glass_bones)
+
+	family_heirlooms = list(
+		/obj/item/toy/plush/slimeplushie
+	)
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	C.faction -= "slime"
@@ -52,35 +59,44 @@
 	//update blood color to body color
 	exotic_blood_color = "#" + H.dna.features["mcolor"]
 
-/datum/species/jelly/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
-		return
-	if(!H.blood_volume)
-		H.blood_volume += 5
-		H.adjustBruteLoss(5)
-		to_chat(H, "<span class='danger'>You feel empty!</span>")
+/datum/species/jelly/handle_blood(mob/living/carbon/human/H, delta_time, times_fired)
+	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
+		return TRUE // we dont handle blood when dead
 
-	if(H.blood_volume < (BLOOD_VOLUME_NORMAL * H.blood_ratio))
+	if(H.blood_volume <= 0)
+		H.blood_volume += 2.5 * delta_time
+		H.adjustBruteLoss(2.5 * delta_time)
+		to_chat(H, span_danger("You feel empty!"))
+
+	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += 3
-			H.nutrition -= 2.5
-	if(H.blood_volume < (BLOOD_VOLUME_OKAY*H.blood_ratio))
-		if(prob(5))
-			to_chat(H, "<span class='danger'>You feel drained!</span>")
-	if(H.blood_volume < (BLOOD_VOLUME_BAD*H.blood_ratio))
+			H.blood_volume += 1.5 * delta_time
+			H.adjust_nutrition(-1.25 * delta_time)
+
+	if(H.blood_volume < BLOOD_VOLUME_OKAY)
+		if(DT_PROB(2.5, delta_time))
+			to_chat(H, span_danger("You feel drained!"))
+
+	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
+
+	var/datum/action/innate/ability/regrowth = H.ability_actions[INNATE_ABILITY_LIMB_REGROWTH]
+	if(regrowth)
+		regrowth.UpdateButtons()
+
+	return FALSE // to let living/handle_blood know that the species is handling blood instead
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
-	if(!limbs_to_consume.len)
+	if(!length(limbs_to_consume))
 		H.losebreath++
 		return
 	if(H.get_num_legs(FALSE)) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
-	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
+	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
 	H.blood_volume += 20
 
@@ -151,7 +167,7 @@
 		if(prob(5))
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.blood_volume += 3
+		H.adjust_integration_blood(3)
 		H.nutrition -= 2.5
 
 	..()
@@ -167,8 +183,8 @@
 	if(..())
 		var/mob/living/carbon/human/H = owner
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -182,7 +198,7 @@
 
 	H.mob_transforming = TRUE
 
-	if(do_after(owner, delay=60, needhand=FALSE, target=owner, progress=TRUE))
+	if(do_after(owner, 6 SECONDS, owner))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
 		else
@@ -304,17 +320,17 @@
 		L["name"] = body.name
 		L["ref"] = "[REF(body)]"
 		L["occupied"] = occupied
-		var/button
+		var/button_state
 		if(occupied == "owner")
-			button = "selected"
+			button_state = "selected"
 		else if(occupied == "stranger")
-			button = "danger"
+			button_state = "danger"
 		else if(can_swap(body))
-			button = null
+			button_state = null
 		else
-			button = "disabled"
+			button_state = "disabled"
 
-		L["swap_button_state"] = button
+		L["swap_button_state"] = button_state
 		L["swappable"] = (occupied == "available") && can_swap(body)
 
 		data["bodies"] += list(L)
@@ -404,14 +420,14 @@
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,HAS_FLESH)
 	inherent_traits = list(TRAIT_TOXINLOVER)
-	mutant_bodyparts = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None", "legs" = "Plantigrade")
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None", "legs" = "Plantigrade")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 160 //a notch brighter so it blends better.
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
-
+	balance_point_values = TRUE
 	allowed_limb_ids = list(SPECIES_SLIME,SPECIES_STARGAZER,SPECIES_SLIME_LUMI)
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
@@ -456,9 +472,9 @@
 
 /datum/species/jelly/luminescent/proc/update_slime_actions()
 	integrate_extract.update_name()
-	integrate_extract.UpdateButtonIcon()
-	extract_minor.UpdateButtonIcon()
-	extract_major.UpdateButtonIcon()
+	integrate_extract.UpdateButtons()
+	extract_minor.UpdateButtons()
+	extract_major.UpdateButtons()
 
 /datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/C, intensity)
 	if(intensity)
@@ -472,7 +488,7 @@
 	light_color = "#FFFFFF"
 	light_range = LUMINESCENT_DEFAULT_GLOW
 
-/obj/effect/dummy/luminescent_glow/Initialize()
+/obj/effect/dummy/luminescent_glow/Initialize(mapload)
 	. = ..()
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
@@ -498,14 +514,14 @@
 		name = "Eject Extract"
 		desc = "Eject your current slime extract."
 
-/datum/action/innate/integrate_extract/UpdateButtonIcon(status_only, force)
+/datum/action/innate/integrate_extract/UpdateButton(atom/movable/screen/movable/action_button/button, status_only, force)
 	if(!species || !species.current_extract)
 		button_icon_state = "slimeconsume"
 	else
 		button_icon_state = "slimeeject"
 	..()
 
-/datum/action/innate/integrate_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/innate/integrate_extract/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	..(current_button, TRUE)
 	if(species && species.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
@@ -559,7 +575,7 @@
 			return TRUE
 		return FALSE
 
-/datum/action/innate/use_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/innate/use_extract/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	..(current_button, TRUE)
 	if(species && species.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
@@ -626,8 +642,8 @@
 	linked_mobs.Add(M)
 	if(!selflink)
 		to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
-		RegisterSignal(M, COMSIG_MOB_DEATH , .proc/unlink_mob)
-		RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unlink_mob)
+		RegisterSignal(M, COMSIG_MOB_DEATH , PROC_REF(unlink_mob))
+		RegisterSignal(M, COMSIG_PARENT_QDELETING, PROC_REF(unlink_mob))
 	var/datum/action/innate/linked_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(M)
@@ -729,9 +745,9 @@
 	background_icon_state = "bg_alien"
 	var/datum/species/jelly/stargazer/species
 
-/datum/action/innate/link_minds/New(_species)
+/datum/action/innate/link_minds/New(species)
 	..()
-	species = _species
+	src.species = species
 
 /datum/action/innate/link_minds/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -755,3 +771,7 @@
 		else
 			to_chat(H, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
 			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+
+/datum/action/innate/link_minds/Destroy()
+	species = null
+	return ..()

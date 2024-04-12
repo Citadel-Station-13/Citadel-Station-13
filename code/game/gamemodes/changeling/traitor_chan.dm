@@ -4,7 +4,7 @@
 	false_report_weight = 10
 	chaos = 6
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
-	restricted_jobs = list("AI", "Cyborg")
+	restricted_jobs = list("Prisoner", "AI", "Cyborg")
 	required_players = 25
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
@@ -20,11 +20,11 @@
 
 /datum/game_mode/traitor/changeling/can_start()
 	if(!..())
-		return 0
+		return FALSE
 	possible_changelings = get_players_for_role(ROLE_CHANGELING)
 	if(possible_changelings.len < required_enemies)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/game_mode/traitor/changeling/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -55,7 +55,7 @@
 			changeling.restricted_roles = restricted_jobs
 		return ..()
 	else
-		return 0
+		return FALSE
 
 /datum/game_mode/traitor/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)

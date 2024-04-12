@@ -16,7 +16,7 @@
 	light_color = "#DAAA18"
 	var/star_light_star_bright = FALSE //If this stargazer can see starlight
 
-/obj/structure/destructible/clockwork/stargazer/Initialize()
+/obj/structure/destructible/clockwork/stargazer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 
@@ -52,7 +52,7 @@
 				break
 	if(has_starlight && anchored)
 		var/area/A = get_area(src)
-		if(A.outdoors || A.map_name == "Space" || !(A.area_flags & VALID_TERRITORY))
+		if(A.outdoors || A.map_name == "Space" || !(A?.area_flags & CULT_PERMITTED))
 			has_starlight = FALSE
 	if(old_status != has_starlight)
 		if(has_starlight)

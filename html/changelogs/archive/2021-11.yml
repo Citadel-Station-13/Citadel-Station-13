@@ -1,0 +1,152 @@
+2021-11-05:
+  keronshb:
+  - balance: removes required enemies
+  - balance: Lowers assassination threat threshold
+2021-11-06:
+  Putnam3145:
+  - bugfix: Ashwalkers should no longer suffocate on lavaland (and hypothetical other
+      future problems)
+  - bugfix: A gas mix with 0 oxygen should now properly suffocate you (or 0 plasma,
+      for ashwalkers)
+2021-11-08:
+  timothyteakettle:
+  - bugfix: fixes party pod sprite
+  - bugfix: fixes red panda head marking
+2021-11-10:
+  Ethan4303:
+  - rscadd: Added two wire nodes under the engineering PA room Apc and under the HOS
+      office APC
+  - rscadd: Added cables to connect the second floor relay to the power grid
+  - rscdel: Removed the generic broken computer from Hos Office
+  - bugfix: Fixed Hos office not having the Security records console
+  Putnam3145:
+  - bugfix: Power alerts now work
+  - bugfix: No longer have too much O2 from too much CO2
+  SandPoot:
+  - rscadd: Crayon precision mode.
+2021-11-11:
+  DrPainis:
+  - bugfix: The universe has realized that not every species uses hemoglobin again.
+  Putnam3145:
+  - refactor: '"REM" removed, replaced with "REAGENTS_EFFECT_MULTIPLIER", which "REM"
+      is short for'
+2021-11-13:
+  Putnam3145:
+  - balance: Chonker cubans pete now no longer have a reasonable chance to be unbeatable
+2021-11-14:
+  TripleShades:
+  - rscadd: (Pubby) Surgery table to Brig Medical
+  - rscadd: (Pubby) Dirt decals added to Command maint
+  - rscadd: (Pubby) Decals and gavel block to Courtroom
+  - rscadd: (Pubby) Training bomb to Birg
+  - rscdel: (Pubby) Chapel stripper pole room
+  - rscdel: '(Pubby) Command maint storage shed room tweak: (Pubby) Makes Arrivals
+      atmos room into a main atmos grid room akin to what Meta has'
+  - bugfix: (Pubby) Gulag shuttle spawning in a tile off from the airlocks
+  - bugfix: (Pubby) Air Injector in Medical maints having no power
+  - bugfix: (Pubby) Incorrect area on one side at AI Sat where the turrets are
+  - bugfix: (Pubby) Arrivals atmos is now linked to the main atmos grid
+  - bugfix: (Pubby) Medbay front airlocks access
+  keronshb:
+  - admin: Admins get messaged if dynamic midrounds fail to hijack
+2021-11-16:
+  Putnam3145:
+  - bugfix: Lavaland can no longer go below 281 kelvins
+  TripleShades:
+  - bugfix: (Pubby) Engineering security checkpoint no longer has a duplicate records
+      console
+2021-11-18:
+  DeltaFire15:
+  - bugfix: Devastation level explosions no longer delete your organs after gibbing
+      you.
+  - code_imp: Adjusted all overrides of ex_act() and contents_explosion() to take
+      account of current args for them.
+  - code_imp: 'Reebe can now be loaded via a proc. tweak: The clockwork relay in reebe
+      is now indestructible and not deconstrutible to avoid some issues.'
+  Putnam3145:
+  - bugfix: Regal rat can no longer keep spawning stuff while dead
+  SandPoot:
+  - rscadd: When your statpanel doesn't load, you'll get a message with a button to
+      fix it.
+  - bugfix: The fix chat message button now works.
+  keronshb:
+  - rscadd: Ball
+  - rscadd: Spookystation Map
+  - rscadd: Tree chopping/Grass cutting
+  - rscadd: Vectorcars
+2021-11-19:
+  shellspeed1:
+  - rscadd: 'An experimental smart dart repeater rifle has been added by NT. It accepts
+      both a large and small hypovials and uses it to fill the smart darts it synthesizes.
+      It can hold 6 smart darts and makes a new one every 20 seconds.  To research
+      it, grab the medical weaponry node. tweak: Reagent gun renamed to reagent repeater'
+  - balance: reagent repeater now holds 6 syringes.
+  - balance: Reagent repeater and smart dart repeater rifle start with 4 syringes
+      instead of a full clip.
+  - balance: 'reagent repeater synthesizes a new syringe every 20 seconds. tweak:
+      smart dart guns now use the syringe gun as an inhands sprite.'
+2021-11-20:
+  SandPoot:
+  - bugfix: Acid will disappear when not existant.
+  - code_imp: Updates component Destroy code, might result in less component related
+      runtimes.
+2021-11-21:
+  DeltaFire15:
+  - rscadd: Power cord implants can now also be connected to cells to recharge.
+  - rscdel: Synthetics can no longer bite power cells.
+  LetterN:
+  - rscadd: Search option on the cwc slab
+  MrJWhit:
+  - balance: Reduces the HP from loot piles to 100, from 300.
+  TripleShades:
+  - rscadd: '(Pubby) Loot piles to maint halls remove: (Pubby) CMO''s sex dungeon
+      tweak: (Pubby) Surgery layout is now more open'
+  keronshb:
+  - rscadd: 'Adds Cogscarab spell tweak: Cogscarabs gib now because I have no idea
+      how to fix the issue of dead pogscarabs eating up the limit.'
+2021-11-23:
+  TripleShades:
+  - rscadd: '(Pubby) Paramedic Office tweak: (Pubby) Moved Medbay delivery to the
+      south hall entrance'
+  - bugfix: (Pubby) Morgue wall being labeled as Bar
+2021-11-24:
+  timothyteakettle:
+  - bugfix: oil drum now recognises synthetic anthormorphs as synths
+2021-11-25:
+  Arturlang:
+  - rscadd: Buldmode mapgen save tool
+  SandPoot:
+  - rscadd: Double Bed Type. Miners can also make Double Pod Beds to really feel like
+      an Alaskan King.
+  - rscadd: Bedsheets to match! Try to share those big blankets with a lizard if you
+      see that they're shivering!
+  - code_imp: Stuff that lets you interact with the benches and beds in-game, so that
+      you too can enjoy being a king.
+  - imageadd: Ports the Double Bed sprites from Skyrat.
+  - bugfix: Dealt with some weirdness when buckling to beds.
+2021-11-28:
+  SandPoot:
+  - imageadd: Legless sprite for it
+  TripleShades:
+  - rscadd: (Meta) Adds meters to the refill/scrubber station outside Engineering
+  - rscadd: (Meta) Adds a small light fixture to southeast solar access
+  - rscadd: (Meta) Places an intercom to southeast solar access
+  - rscadd: (Meta) Gives a cautery to Robotics
+  - rscadd: (Meta) Camera to Incinerator
+  - rscadd: (Meta) Linen bin to dorms
+  - rscadd: (Box) Camera to Incinerator
+  - rscadd: (Box) Painting mounts to Library
+  - rscadd: (Pubby) Painting mounts to Library
+  - rscdel: '(Meta) Removes the example tanks from the Atmospherics gas chambers tweak:
+      (Box) Moves the Bar camera from out behind the soda dispenser tweak: (Box) Gives
+      dorm room 6 a double bed to start tweak: (Pubby) Moves linen bin in washroom
+      to a table tweak: (Delta) Moves the plant in Medbay''s Storage to not be in
+      front of a vendor tweak: (Delta) Moves the gas miners and labels inside the
+      Atmoshperics gas chambers to the centers'
+  - bugfix: (Box) Made the upper Execution Chamber airlock unable to be used by the
+      AI
+  - bugfix: (Box) Moves prison cell 4 and 6's shutter button to the wall
+  keronshb:
+  - rscadd: FestiveMap
+  - rscadd: Specific Truck and Ambulance vector cars
+  - rscadd: Radials for those cars

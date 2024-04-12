@@ -29,7 +29,7 @@
 	opaque = FALSE
 	alpha = 100
 
-/obj/machinery/smoke_machine/Initialize()
+/obj/machinery/smoke_machine/Initialize(mapload)
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -38,7 +38,7 @@
 
 /obj/machinery/smoke_machine/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, PROC_REF(can_be_rotated)))
 
 /obj/machinery/smoke_machine/proc/can_be_rotated(mob/user, rotation_type)
 	return !anchored

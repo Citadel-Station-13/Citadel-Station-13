@@ -861,10 +861,6 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/gov)
-"di" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plating,
-/area/awaymission/wildwest/refine)
 "dj" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/wood,
@@ -1282,10 +1278,6 @@
 	icon_state = "ironsand4"
 	},
 /area/awaymission/wildwest/gov)
-"eA" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
 "eC" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/wood,
@@ -29059,7 +29051,7 @@ aG
 aG
 aG
 et
-eA
+eu
 eu
 eu
 eu
@@ -33673,7 +33665,7 @@ bc
 bc
 bc
 bc
-di
+bc
 bc
 bh
 aW

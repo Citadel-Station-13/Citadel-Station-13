@@ -26,11 +26,11 @@
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/crab/Initialize()
+/mob/living/simple_animal/crab/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
-/mob/living/simple_animal/crab/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/crab/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	//CRAB movement

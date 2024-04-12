@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	use_power(6)
 	affecting = loc.contents - src		// moved items will be all in loc
-	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
+	addtimer(CALLBACK(src, PROC_REF(convey), affecting), 1)
 
 /obj/machinery/conveyor/proc/convey(list/affecting)
 	var/turf/T = get_step(src, movedir)
@@ -268,15 +268,18 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // timed process
 // if the switch changed, update the linked conveyors
 
-/obj/machinery/conveyor_switch/process()
-	if(!operated)
-		return
-	operated = 0
-
+/obj/machinery/conveyor_switch/proc/do_process()
+	set waitfor = FALSE
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
 		C.update_move_direction()
 		CHECK_TICK
+
+/obj/machinery/conveyor_switch/process()
+	if(!operated)
+		return
+	operated = 0
+	do_process()
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/interact(mob/user)
@@ -305,20 +308,39 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		S.update_icon()
 		CHECK_TICK
 
-/obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
-		C.id = id
-		transfer_fingerprints_to(C)
-		to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
-		qdel(src)
+/obj/machinery/conveyor_switch/crowbar_act(mob/user, obj/item/tool)
+	tool.play_tool_sound(src, 50)
+	var/obj/item/conveyor_switch_construct/switch_construct = new/obj/item/conveyor_switch_construct(src.loc)
+	switch_construct.id = id
+	transfer_fingerprints_to(switch_construct)
+	to_chat(user, span_notice("You detach [src]."))
+	qdel(src)
+	return TRUE
+
+/obj/machinery/conveyor_switch/screwdriver_act(mob/user, obj/item/tool)
+	tool.play_tool_sound(src, 50)
+	oneway = !oneway
+	to_chat(user, span_notice("You set [src] to [oneway ? "one way" : "default"] configuration."))
+	return TRUE
+
+/obj/machinery/conveyor_switch/wrench_act(mob/user, obj/item/tool)
+	tool.play_tool_sound(src, 50)
+	invert_icon = !invert_icon
+	update_appearance()
+	to_chat(user, span_notice("You set [src] to [invert_icon ? "inverted": "normal"] position."))
+	return TRUE
+
+/obj/machinery/conveyor_switch/examine(mob/user)
+	. = ..()
+	. += span_notice("[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with a <b>screwdriver</b>.")
+	. += span_notice("[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with a <b>wrench</b>.")
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"
 	desc = "A conveyor control switch. It appears to only go in one direction."
 	oneway = TRUE
 
-/obj/machinery/conveyor_switch/oneway/Initialize()
+/obj/machinery/conveyor_switch/oneway/Initialize(mapload)
 	. = ..()
 	if((dir == NORTH) || (dir == WEST))
 		invert_icon = TRUE
@@ -331,7 +353,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	w_class = WEIGHT_CLASS_NORMAL
 	var/id = "" //inherited by the switch
 
-/obj/item/conveyor_switch_construct/Initialize()
+/obj/item/conveyor_switch_construct/Initialize(mapload)
 	. = ..()
 	id = "[rand()]" //this couldn't possibly go wrong
 

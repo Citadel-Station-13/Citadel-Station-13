@@ -3,8 +3,9 @@
 	desc = "A basic wireless network card for usage with standard NTNet frequencies."
 	power_usage = 50
 	icon_state = "radio_mini"
-	var/identification_id = null	// Identification ID. Technically MAC address of this device. Can't be changed by user.
-	var/identification_string = "" 	// Identification string, technically nickname seen in the network. Can be set by user.
+	// network_id = NETWORK_CARDS // Network we are on
+	var/hardware_id = null // Identification ID. Technically MAC address of this device. Can't be changed by user.
+	var/identification_string = "" // Identification string, technically nickname seen in the network. Can be set by user.
 	var/long_range = 0
 	var/ethernet = 0 // Hard-wired, therefore always on, ignores NTNet wireless checks.
 	malfunction_probability = 1
@@ -13,7 +14,7 @@
 
 /obj/item/computer_hardware/network_card/diagnostics(mob/user)
 	..()
-	to_chat(user, "NIX Unique ID: [identification_id]")
+	to_chat(user, "NIX Unique ID: [hardware_id]")
 	to_chat(user, "NIX User Tag: [identification_string]")
 	to_chat(user, "Supported protocols:")
 	to_chat(user, "511.m SFS (Subspace) - Standard Frequency Spread")
@@ -24,25 +25,25 @@
 
 /obj/item/computer_hardware/network_card/New(l)
 	..()
-	identification_id = ntnet_card_uid++
+	hardware_id = ntnet_card_uid++
 
 // Returns a string identifier of this network card
 /obj/item/computer_hardware/network_card/proc/get_network_tag()
-	return "[identification_string] (NID [identification_id])"
+	return "[identification_string] (NID [hardware_id])"
 
 // 0 - No signal, 1 - Low signal, 2 - High signal. 3 - Wired Connection
 /obj/item/computer_hardware/network_card/proc/get_signal(specific_action = 0)
 	if(!holder) // Hardware is not installed in anything. No signal. How did this even get called?
-		return 0
+		return FALSE
 
 	if(!check_functionality())
-		return 0
+		return FALSE
 
 	if(ethernet) // Computer is connected via wired connection.
 		return 3
 
 	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
-		return 0
+		return FALSE
 
 	if(holder)
 
@@ -52,12 +53,12 @@
 			if(long_range)
 				return 2
 			else
-				return 1
+				return TRUE
 
 	if(long_range) // Computer is not on station, but it has upgraded network card. Low signal.
-		return 1
+		return TRUE
 
-	return 0 // Computer is not on station and does not have upgraded network card. No signal.
+	return FALSE // Computer is not on station and does not have upgraded network card. No signal.
 
 
 /obj/item/computer_hardware/network_card/advanced

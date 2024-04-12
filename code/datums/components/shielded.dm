@@ -40,11 +40,11 @@
 /datum/component/shielded/RegisterWithParent()
 	. = ..()
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	else //it's a mob
 		var/mob/living/L = parent
-		RegisterSignal(L, COMSIG_LIVING_RUN_BLOCK, .proc/living_block)
+		RegisterSignal(L, COMSIG_LIVING_RUN_BLOCK, PROC_REF(living_block))
 		holder = L
 		var/to_add = charges >= 1 ? shield_state : broken_state
 		if(to_add)
@@ -108,12 +108,12 @@
 		SSvis_overlays.add_vis_overlay(holder, 'icons/effects/effects.dmi', to_add, layer, GAME_PLANE, holder.dir)
 
 /datum/component/shielded/proc/on_equip(obj/item/source, mob/living/equipper, slot)
-	if(!(accepted_slots & slotdefine2slotbit(slot)))
+	if(!(accepted_slots & slot))
 		return
 	holder = equipper
-	RegisterSignal(parent, COMSIG_ITEM_RUN_BLOCK, .proc/on_run_block)
-	RegisterSignal(parent, COMSIG_ITEM_CHECK_BLOCK, .proc/on_check_block)
-	RegisterSignal(equipper, COMSIG_LIVING_GET_BLOCKING_ITEMS, .proc/include_shield)
+	RegisterSignal(parent, COMSIG_ITEM_RUN_BLOCK, PROC_REF(on_run_block))
+	RegisterSignal(parent, COMSIG_ITEM_CHECK_BLOCK, PROC_REF(on_check_block))
+	RegisterSignal(equipper, COMSIG_LIVING_GET_BLOCKING_ITEMS, PROC_REF(include_shield))
 	var/to_add = charges >= 1 ? shield_state : broken_state
 	if(to_add)
 		var/layer = (holder.layer > MOB_LAYER ? holder.layer : MOB_LAYER) + 0.01

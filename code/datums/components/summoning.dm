@@ -26,11 +26,11 @@
 /datum/component/summoning/RegisterWithParent()
 	. = ..()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
-		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
+		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 	else if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
+		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
 	else if(ishostile(parent))
-		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
 
 /datum/component/summoning/UnregisterFromParent()
 	. = ..()
@@ -49,11 +49,11 @@
 
 /datum/component/summoning/proc/do_spawn_mob(atom/spawn_location, summoner)
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return FALSE
 	if(last_spawned_time > world.time)
-		return 0
+		return FALSE
 	if(!prob(spawn_chance))
-		return 0
+		return FALSE
 	last_spawned_time = world.time + spawn_delay
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(spawn_location)
@@ -63,7 +63,7 @@
 	spawned_mobs += L
 	if(faction != null)
 		L.faction = faction
-	RegisterSignal(L, COMSIG_MOB_DEATH, .proc/on_spawned_death) // so we can remove them from the list, etc (for mobs with corpses)
+	RegisterSignal(L, COMSIG_MOB_DEATH, PROC_REF(on_spawned_death)) // so we can remove them from the list, etc (for mobs with corpses)
 	playsound(spawn_location,spawn_sound, 50, 1)
 	spawn_location.visible_message("<span class='danger'>[L] [spawn_text].</span>")
 

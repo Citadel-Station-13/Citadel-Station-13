@@ -1,0 +1,76 @@
+2021-10-13:
+  Hatterhat:
+  - rscadd: Contraband dealers are now embracing their inner Old Space Westerner.
+      Look for the Old West Surplus Crate on your mildly-hacked cargo console today.
+  MrJWhit:
+  - rscadd: Adds more fire-saftey closets and trashpiles to boxstation
+  - rscadd: Adds trashpiles to delta.
+2021-10-16:
+  Ryll/Shaps:
+  - rscadd: Asay now supports pings (via using @[adminckey])
+  SandPoot:
+  - bugfix: If a gamemode fails to load too many times, a safe gamemode will be loaded
+      instead.
+  - code_imp: Dynamic is no longer hardcoded, and you can now set a gamemode to be
+      forced in the configs.
+  - bugfix: Equip delays are a bit less weird now, only relevant for coders/people
+      who use straight jackets... on themself, since that's the only thing that uses
+      it right now.
+  - bugfix: Toggling arousal will properly update your sprite.
+  - bugfix: That also means no spam when moving it in your hands.
+  WanderingFox95:
+  - bugfix: Removes the quick attack loop (like TG did it)
+  dapnee:
+  - rscadd: 'BEPIS to science tweak: moved the courtroom'
+  keronshb:
+  - rscadd: Adds the fat dart cigarette and to vendors
+  - imageadd: Adds the sprites for the fat dart
+2021-10-20:
+  Putnam3145:
+  - bugfix: Removed a panic from auxmos
+  - bugfix: Properly implemented hysteresis on heat exchanger processing
+2021-10-22:
+  Putnam3145:
+  - bugfix: Ashwalker lungs more aggressively attempt to be safe on lavaland
+  WanderingFox95:
+  - bugfix: fixed the wielded sprites not showing up properly.
+  - bugfix: fixed a runtime in the bark box vendor
+  - imageadd: added a missing tennis ball sprite
+2021-10-25:
+  Putnam3145:
+  - rscadd: Vent pumps can now be set to siphoning via the air alarm UI
+  keronshb:
+  - balance: 10k pirate spending money
+2021-10-26:
+  WanderingFox95:
+  - rscadd: bone anvils and bone ingots
+  - imageadd: bone anvil sprites
+2021-10-28:
+  Hatterhat:
+  - rscadd: 'Proto-kinetic gauntlets! Less straight damage, extra damage on backstabs,
+      slows Lavaland fauna on counterhit. tweak: The glaive kit has been renamed to
+      the premium kinetic melee kit, and now has a voucher for either a glaive or
+      gauntlets.'
+  - rscadd: NanoTrasen is rolling out a prototype Autoloom, hidden behind Botanical
+      Engineering. It only processes cotton and logs. Despite its visual similarity
+      to the recycler, it is entirely tamperproof.
+  Linzolle:
+  - bugfix: plasmamen now spawn in their proper outfit in the ghostcafe
+  Putnam3145:
+  - rscdel: Removed minesweeper
+  keronshb:
+  - balance: -40 wound bonus for DSword
+  - balance: -20 Wound bonus for Hyper Eu
+  - bugfix: Fixes hyper eu's slowdown when it's not wielded
+2021-10-30:
+  keronshb:
+  - balance: Jacq can't burn in the cremator anymore
+  - balance: Jacq also can't be cheesed off station
+  - balance: Barth also cannot be destroyed
+2021-10-31:
+  DeltaFire15:
+  - bugfix: You can now drag things over prone people again.
+  DrPainis:
+  - bugfix: Walking no longer makes you fat.
+  keronshb:
+  - balance: Christmas trees are now indestructible

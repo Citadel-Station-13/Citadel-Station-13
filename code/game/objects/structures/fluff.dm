@@ -62,6 +62,8 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "drake_statue"
 	pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
@@ -77,6 +79,12 @@
 	icon_state = "lightpost"
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
+
+/obj/structure/fluff/lightpost/light
+	desc = "That which most enchants the Edinians is the lighting by gas of the boulevards... These humble rows of lamps, shining with a clarity white and pure, have a marvelous effect upon the streets on Nova Edina. Adorned with a cheery garb, in tune with the festive spirits of the city."
+	light_power = 0.8
+	light_range = 10
+	light_color = "#ffeeab"
 
 /obj/structure/fluff/bus
 	name = "bus"

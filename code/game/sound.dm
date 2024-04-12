@@ -43,7 +43,8 @@ falloff_distance - Distance at which falloff begins. Sound is at peak volume (in
 
 */
 
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, envwet = -10000, envdry = 0)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE,
+	falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, envwet = -10000, envdry = 0, distance_multiplier = SOUND_DEFAULT_DISTANCE_MULTIPLIER, distance_multiplier_min_range = SOUND_DEFAULT_MULTIPLIER_EFFECT_RANGE)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 
@@ -83,11 +84,11 @@ falloff_distance - Distance at which falloff begins. Sound is at peak volume (in
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, null, envwet, envdry)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, get_dist(M, turf_source) <= distance_multiplier_min_range? 1 : distance_multiplier, envwet, envdry)
 	for(var/P in SSmobs.dead_players_by_zlevel[source_z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, null, envwet, envdry)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, get_dist(M, turf_source) <= distance_multiplier_min_range? 1 : distance_multiplier, envwet, envdry)
 
 /*! playsound
 
@@ -108,12 +109,20 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 
 */
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, envwet = -10000, envdry = 0)
-	if(!client || !can_hear())
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance,
+	falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = SOUND_DEFAULT_DISTANCE_MULTIPLIER, envwet = -10000, envdry = 0, virtual_hearer)
+	if(audiovisual_redirect)
+		virtual_hearer = get_turf(src)
+		audiovisual_redirect.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, max_distance, falloff_distance, distance_multiplier, max(0, envwet), -10000, virtual_hearer)
+		//No return here, as we want to deliberately support the possibility of shenanigans in which mobs with clients can have active AV redirects to completely different players
+	if(!client)
 		return
 
 	if(!S)
 		S = sound(get_sfx(soundin))
+
+	if(!can_hear() && !(S.status & SOUND_UPDATE)) //This is primarily to make sure sound updates still go through when a spaceman's deaf
+		return
 
 	S.wait = 0 //No queue
 	S.channel = channel || SSsounds.random_available_channel()
@@ -129,7 +138,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 			S.frequency = get_rand_frequency()
 
 	if(isturf(turf_source))
-		var/turf/T = get_turf(src)
+		var/turf/T = virtual_hearer || get_turf(src)
 
 		//sound volume falloff with distance
 		var/distance = get_dist(T, turf_source)
@@ -171,7 +180,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 		var/dz = turf_source.y - T.y // Hearing from infront/behind
 		S.z = dz * distance_multiplier
 		var/dy = (turf_source.z - T.z) * 5 * distance_multiplier // Hearing from  above / below, multiplied by 5 because we assume height is further along coords.
-		S.y = dy
+		S.y = dy + distance_multiplier
 
 		S.falloff = isnull(max_distance)? FALLOFF_SOUNDS : max_distance //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
 

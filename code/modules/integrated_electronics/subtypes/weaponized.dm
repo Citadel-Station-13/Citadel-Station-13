@@ -162,7 +162,7 @@
 	var/pre_attached_grenade_type
 	demands_object_input = TRUE	// You can put stuff in once the circuit is in assembly,passed down from additem and handled by attackby()
 
-/obj/item/integrated_circuit/weaponized/grenade/Initialize()
+/obj/item/integrated_circuit/weaponized/grenade/Initialize(mapload)
 	. = ..()
 	if(pre_attached_grenade_type)
 		var/grenade = new pre_attached_grenade_type(src)
@@ -201,7 +201,7 @@
 			dt = clamp(detonation_time.data, 1, 12)*10
 		else
 			dt = 15
-		addtimer(CALLBACK(attached_grenade, /obj/item/grenade.proc/prime), dt)
+		addtimer(CALLBACK(attached_grenade, TYPE_PROC_REF(/obj/item/grenade, prime)), dt)
 		var/atom/holder = loc
 		message_admins("activated a grenade assembly. Last touches: Assembly: [holder.fingerprintslast] Circuit: [fingerprintslast] Grenade: [attached_grenade.fingerprintslast]")
 
@@ -292,10 +292,7 @@
 	if(!source_air || !target_air)
 		return
 
-	var/datum/gas_mixture/removed = source_air.remove(gas_per_throw)
-	if(!removed)
-		return
-	target_air.merge(removed)
+	source_air.transfer_to(target_air, gas_per_throw)
 
 	// If the item is in a grabber circuit we'll update the grabber's outputs after we've thrown it.
 	var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc
@@ -342,7 +339,7 @@
 /obj/item/integrated_circuit/weaponized/proc/attempt_stun(var/mob/living/L,var/stunforce = 70) //Copied from stunbaton code.
 
 	if(!L || !isliving(L))
-		return 0
+		return FALSE
 
 	L.DefaultCombatKnockdown(stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
@@ -355,4 +352,4 @@
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
-	return 1
+	return TRUE

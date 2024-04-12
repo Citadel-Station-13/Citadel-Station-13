@@ -199,7 +199,7 @@
 
 	eject_disk(user)
 
-/obj/machinery/computer/scan_consolenew/Initialize()
+/obj/machinery/computer/scan_consolenew/Initialize(mapload)
 	. = ..()
 
 	// Connect with a nearby DNA Scanner on init
@@ -263,7 +263,7 @@
 	if(!ui)
 		ui = new(user, src, "DnaConsole")
 		ui.open()
-		
+
 /obj/machinery/computer/scan_consolenew/ui_assets()
 	. = ..() || list()
 	. += get_asset_datum(/datum/asset/simple/genetics)

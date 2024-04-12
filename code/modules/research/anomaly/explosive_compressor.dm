@@ -1,4 +1,4 @@
-#define MAX_RADIUS_REQUIRED 8000		//tritbomb
+#define MAX_RADIUS_REQUIRED 175		//tritbomb
 #define MIN_RADIUS_REQUIRED 20		//maxcap
 /**
   * # Explosive compressor machines

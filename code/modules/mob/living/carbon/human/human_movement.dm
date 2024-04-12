@@ -11,14 +11,14 @@
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
-		return 0
+		return FALSE
 	if (!(lube & GALOSHES_DONT_HELP))
 		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
-			return 0
+			return FALSE
 		if(shoes && istype(shoes, /obj/item/clothing))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP)
-				return 0
+				return FALSE
 	if (lube & SLIDE_ICE)
 		if(shoes && istype(shoes, /obj/item/clothing))
 			var/obj/item/clothing/CS = shoes
@@ -32,7 +32,7 @@
 	if(shoes && istype(shoes, /obj/item/clothing))
 		var/obj/item/clothing/S = shoes
 		if (S.clothing_flags & NOSLIP)
-			return 0
+			return FALSE
 	return ..()
 
 /mob/living/carbon/human/mob_has_gravity()
@@ -85,18 +85,37 @@
 							FP.blood_DNA["color"] = S.last_blood_color
 						else
 							FP.blood_DNA["color"] = BlendRGB(FP.blood_DNA["color"], S.last_blood_color)
+						FP.blood_DNA["blendmode"] = S.last_blood_blend
 					FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints
 
 				S.step_action()
+	if(movement_type & GROUND)
+		dirt_buildup()
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))
 		return TRUE
 	return ..()
 
-/mob/living/carbon/human/dirt_buildup(strength)
+/mob/living/carbon/human/proc/dirt_buildup(strength = 1)
 	if(!shoes || !(shoes.body_parts_covered & FEET))
 		return	// barefoot advantage
-	return ..()
+	var/turf/open/T = loc
+	if(!istype(T) || !T.dirt_buildup_allowed)
+		return
+	var/area/A = T.loc
+	if(!A.dirt_buildup_allowed)
+		return
+	var/multiplier = CONFIG_GET(number/turf_dirty_multiplier)
+	strength *= multiplier
+	var/obj/effect/decal/cleanable/dirt/D = locate() in T
+	if(D)
+		D.dirty(strength)
+	else
+		T.dirtyness += strength
+		if(T.dirtyness >= (isnull(T.dirt_spawn_threshold)? CONFIG_GET(number/turf_dirt_threshold) : T.dirt_spawn_threshold))
+			D = new /obj/effect/decal/cleanable/dirt(T)
+			D.dirty(T.dirt_spawn_threshold - T.dirtyness)
+			T.dirtyness = 0		// reset.

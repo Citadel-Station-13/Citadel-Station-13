@@ -1,0 +1,112 @@
+2020-10-01:
+  BlueWildrose:
+  - soundadd: Slimepeople are given unique laughs and screams.
+  - tweak: Adds "warbles", "chimpers", and "puffs" to the customizable speech verbs
+      for character.
+2020-10-02:
+  ArcaneMusic, with minor tweaks by TheObserver-sys:
+  - rscadd: Adds and modifies fertilizers, as well as a new stat, Instability.
+  - rscdel: Removes the rather disused functionality of irrigation hoses, temporarily
+      disables circuit use on hydroponics trays.
+  - tweak: Plant Analyzer have been upgraded. Using one in hand will now switch between
+      a stat view of your plant, and a chemical view of your plant. tweak:Trays now
+      accept and store reagents, as well as coming with an autogrow mode. However,
+      these upgrades came at the cost of old self sufficiency, meaning you must attend
+      to your plants a bit more often.
+  - tweak: Earthsblood, while not being able to gild trays anymore, has been found
+      to still be quite powerful as a fertilizer.
+  CoreFlare:
+  - rscadd: Altcloaks! Available in loadout.
+  Detective-Google:
+  - rscadd: a smattering of clothes from the RP server
+  - rscadd: detective wardrobe
+  EmeraldSundisk:
+  - rscadd: Adds the "Skelter" space ruin
+  - code_imp: Creates a few new area designations for the Skelter
+  - rscadd: Cargo techs now have access to a "long pants" variant of their standard
+      work uniform
+  - rscadd: Adds said uniform to CargoDrobes and the loadout menu
+  ItzGabby:
+  - rscadd: Three new turf tiles.
+  - imageadd: Turf icons with multiple damage icons, with in-hand icons for each tile.
+  - spellcheck: Edited the name and description to wooden.
+  LetterN:
+  - rscadd: craftable railings
+  - code_imp: ports robust savefiles
+  MrJWhit:
+  - tweak: tweaked heavy suit dmi
+  - bugfix: Fixes drones not being able to quickslot items
+  Putnam3145:
+  - rscadd: New policy config for pyroclastic slimes.
+  - tweak: SDGF clones now naked.
+  - balance: SDGF is now way more likely to make a clone that will align with the
+      creator's goals, with purity, making it a better antagging tool.
+  - bugfix: SDGF clones now have the same traits as the original.
+  - bugfix: transfer_ckey now resets view, preventing things like SDGF clones with
+      much larger view range.
+  - config: 'Policy configs have been added for SDGF, currently unused: SDGF, SDGF_ALIGNED,
+      SDGF_UNALIGNED.'
+  - bugfix: Shivering now has thresholds and fever's thresholds now work.
+  - bugfix: Made allturfs setup actually set up all turfs.
+  - balance: Dynamic is now more aggressive with adding antags.
+  - bugfix: Fixes vore pref saving.
+  SandPoot:
+  - bugfix: Fixes headslugs being unable to recover their human form.
+  Tupinambis:
+  - rscadd: Adds methane and methyl bromide gases.
+  - tweak: Minor gas name/desc changes to improve consistency
+  - imageadd: Ports the methyl bromide tank from bay. Adds two new canister sprites
+      for the new gases and CH4 screen alerts.
+  - bugfix: fixed a mispelling in the wound armor value for the bounty hunter suit
+  dapnee:
+  - rscadd: atrium, clinic, an extra office, a pseudo public mining area, two more
+      deluxe dorms, micro beach, aux bathroom, two construction areas, mass driver,
+      more intercoms
+  - tweak: moved all of service, chapel, dorms, garden, holodeck to a different z-level,
+      RnD is more open, maintenance is a bit more random, more firelocks, added more
+      mine-able rock
+  - bugfix: fixed the buttons in xenobio, gave shutters to cargo's storage area, fixed
+      holodeck so it works now, fixed some techfabs being lathes, added sensors to
+      atmos tanks, more decals, couple more signs, little floral areas and sitting
+      areas added to break up hallway monotony, mech chargers are no longer missing
+      their consoles, whiteship won't crash into arrivals anymore while the area it
+      takes up is more telegraphed, APC placement on AI sat entrance, missing wire
+      node for the outer portion of the AI sat, civilian level now has a telecom relay
+  lolman360:
+  - bugfix: smonk machine runtimes
+  - bugfix: automatic hydro tray has a unique sprite now (fancy robot arm)
+  timothyteakettle:
+  - rscadd: added luminescent and stargazer sprites as selectable body sprites for
+      slimes
+  - tweak: wound exponent lowered slightly from 1.225 to 1.2
+  - config: wound exponent and limb damage multiplier are now config values
+  - rscadd: ipcs and synthlizards are now treated as actual robots, with robotic limbs,
+      an extra organ, and better emp acts
+  - rscadd: surgeries for healing robotic limbs, and brain surgery for robotic heads
+  - bugfix: androids limbs now show up as intended
+  - refactor: emps now work from 1-100 severity instead of 1/2 and the severity reduces
+      as you move from the epicentre
+  zeroisthebiggay:
+  - rscadd: ratvar gf is complete
+2020-10-04:
+  DeltaFire15:
+  - bugfix: Synths / IPCs are no longer wound immune.
+  - bugfix: Husked IPCs / Synths should now be rendered correctly.
+  - bugfix: Falling vendors now squish synths / IPCs' limbs again.
+  - bugfix: Synths and IPCs now do not have some fun roundstart oversights anymore.
+  - bugfix: Regenerate_limbs now works for carbons with the ROBOTIC_LIMBS trait.
+  - bugfix: Pacifists no longer counterattack on parries if that attack would be harmful.
+  - tweak: Heretic sacrifices now husk with the reason of burn, and deal some additional
+      damage.
+  - bugfix: Neovgre can no longer become invincible on clock tiles.
+  - bugfix: Plushlings no longer break when absorbing snowflake plushies.
+  Detective-Google:
+  - bugfix: the snow cabin doors actually bolt now
+  Putnam3145:
+  - bugfix: Ghosts are no longer incapable of going away.
+  monster860:
+  - tweak: The slimeperson swap-body UI stays open when you switch bodies
+  timothyteakettle:
+  - bugfix: limb id entry in mutant bodyparts now supports switching to/from species
+      with gendered body parts
+  - tweak: the minimum brightness of mutant parts is now a define

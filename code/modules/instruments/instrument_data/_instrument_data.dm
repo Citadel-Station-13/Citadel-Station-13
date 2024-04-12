@@ -55,14 +55,14 @@
 		id = "[type]"
 
 /datum/instrument/proc/Initialize()
-	if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
+	if(instrument_flags & (INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return
 	calculate_samples()
 
 /datum/instrument/proc/ready()
-	if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_LEGACY))
+	if((instrument_flags & INSTRUMENT_LEGACY))
 		return legacy_instrument_path && legacy_instrument_ext
-	else if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_DO_NOT_AUTOSAMPLE))
+	else if((instrument_flags & INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return length(samples)
 	return (length(samples) >= 128)
 
@@ -83,7 +83,7 @@
 	samples = list()
 	for(var/key in real_samples)
 		real_keys += text2num(key)
-	sortTim(real_keys, /proc/cmp_numeric_asc, associative = FALSE)
+	sortTim(real_keys, GLOBAL_PROC_REF(cmp_numeric_asc), associative = FALSE)
 
 	for(var/i in 1 to (length(real_keys) - 1))
 		var/from_key = real_keys[i]

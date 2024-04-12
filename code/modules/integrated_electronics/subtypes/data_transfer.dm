@@ -16,7 +16,7 @@
 	power_draw_per_use = 4
 	var/number_of_pins = 2
 
-/obj/item/integrated_circuit/transfer/multiplexer/Initialize()
+/obj/item/integrated_circuit/transfer/multiplexer/Initialize(mapload)
 	for(var/i = 1 to number_of_pins)
 		inputs["input [i]"] = IC_PINTYPE_ANY // This is just a string since pins don't get built until ..() is called.
 
@@ -64,7 +64,7 @@
 	power_draw_per_use = 4
 	var/number_of_pins = 2
 
-/obj/item/integrated_circuit/transfer/demultiplexer/Initialize()
+/obj/item/integrated_circuit/transfer/demultiplexer/Initialize(mapload)
 	for(var/i = 1 to number_of_pins)
 		outputs["output [i]"] = IC_PINTYPE_ANY
 	complexity = number_of_pins
@@ -113,7 +113,7 @@
 	power_draw_per_use = 4
 	var/number_of_pins = 2
 
-/obj/item/integrated_circuit/transfer/pulsedemultiplexer/Initialize()
+/obj/item/integrated_circuit/transfer/pulsedemultiplexer/Initialize(mapload)
 	for(var/i = 1 to number_of_pins)
 		activators["output [i]"] = IC_PINTYPE_PULSE_OUT
 	complexity = number_of_pins
@@ -158,7 +158,7 @@
 	power_draw_per_use = 4
 	var/number_of_pins = 2
 
-/obj/item/integrated_circuit/transfer/pulsemultiplexer/Initialize()
+/obj/item/integrated_circuit/transfer/pulsemultiplexer/Initialize(mapload)
 	for(var/i = 1 to number_of_pins)
 		inputs["input [i]"] = IC_PINTYPE_ANY
 	for(var/i = 1 to number_of_pins)

@@ -48,9 +48,9 @@
 	baseiconstate = "raiqbawks"
 	availabletrackids = list("hotline.ogg","chiptune.ogg","genesis.ogg")
 
-/obj/item/boombox/raiq/Initialize()
+/obj/item/boombox/raiq/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/start_party)
+	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, PROC_REF(start_party))
 
 /obj/item/boombox/raiq/proc/start_party()
 	if(boomingandboxing)

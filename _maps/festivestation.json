@@ -1,0 +1,14 @@
+{
+    "map_name": "FestiveStation",
+    "map_path": "map_files/FestiveBall",
+    "map_file": "FestiveStation.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    },
+	"traits": [
+		{ "Weather_Icestorm":true }
+	]
+}

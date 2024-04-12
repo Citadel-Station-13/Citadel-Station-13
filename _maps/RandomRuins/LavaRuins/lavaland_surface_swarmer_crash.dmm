@@ -7,24 +7,24 @@
 /area/template_noop)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "d" = (
 /turf/open/floor/mineral/plastitanium/red{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 "f" = (
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
 /turf/open/floor/mineral/plastitanium/red{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/ruin/lavaland/unpowered)
 
 (1,1,1) = {"
 a

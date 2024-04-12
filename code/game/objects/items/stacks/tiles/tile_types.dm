@@ -530,13 +530,14 @@
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/tile/plasteel/cyborg
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
-	is_cyborg = 1
-	cost = 125
+	is_cyborg = TRUE
+	source = /datum/robot_energy_storage/metal
+	cost = MINERAL_MATERIAL_AMOUNT * 0.0625
 
 /obj/item/stack/tile/material
 	name = "floor tile"
@@ -555,3 +556,10 @@
 	color = "#92661A"
 	turf_type = /turf/open/floor/bronze
 	custom_materials = list(/datum/material/bronze = 250)
+
+/obj/item/stack/tile/catwalk
+	name = "catwalk tile"
+	singular_name = "catwalk floor tile"
+	desc = "Flooring that shows its contents underneath. Engineers love it!"
+	icon_state = "catwalk_tile"
+	turf_type = /turf/open/floor/catwalk_floor

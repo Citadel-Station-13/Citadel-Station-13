@@ -33,9 +33,9 @@
 	var/recalls_remaining = 1
 	var/recalling
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/spawn_animation)
+	INVOKE_ASYNC(src, PROC_REF(spawn_animation))
 	glow = new(get_turf(src))
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src
@@ -131,7 +131,7 @@
 	recalling = TRUE
 	sound_to_playing_players('sound/machines/clockcult/ark_recall.ogg', 75, FALSE)
 	hierophant_message("<span class='bold large_brass'>The Eminence has initiated a mass recall! You are being transported to the Ark!</span>")
-	addtimer(CALLBACK(src, .proc/mass_recall), 100)
+	addtimer(CALLBACK(src, PROC_REF(mass_recall)), 100)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
@@ -141,7 +141,7 @@
 		if(isliving(M.current) && M.current.stat != DEAD)
 			var/turf/t_turf = isAI(M.current) ? get_step(get_step(src, NORTH),NORTH) : get_turf(src) // AI too fat, must make sure it always ends up a 2 tiles north instead of on the ark.
 			do_teleport(M.current, t_turf, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
-			M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			M.current.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/tiled/flash)
 			M.current.clear_fullscreen("flash", 5)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, FALSE)
 	recalls_remaining--
@@ -181,9 +181,15 @@
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
-			sleep(27)
-			explosion(src, 1, 3, 8, 8)
-			sound_to_playing_players('sound/effects/explosion_distant.ogg', volume = 50)
+			addtimer(CALLBACK(src, PROC_REF(go_boom)), 2.7 SECONDS)
+			return
+	qdel(src)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/go_boom()
+	if(QDELETED(src))
+		return
+	explosion(src, 1, 3, 8, 8)
+	sound_to_playing_players('sound/effects/explosion_distant.ogg', volume = 50)
 	qdel(src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
@@ -191,9 +197,9 @@
 		glow = new /obj/effect/clockwork/overlay/gateway_glow(get_turf(src))
 		glow.linked = src
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity, target, origin)
 	var/damage = max((obj_integrity * 0.7) / severity, 100) //requires multiple bombs to take down
-	take_damage(damage, BRUTE, "bomb", 0)
+	take_damage(damage, BRUTE, BOMB, 0)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_time(var/deciseconds = TRUE)
 	if(seconds_until_activation)
@@ -240,6 +246,36 @@
 				if(GATEWAY_RATVAR_COMING to INFINITY)
 					. += "<span class='boldwarning'>The anomaly is stable! Something is coming through!</span>"
 
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/fulfill_purpose()
+	set waitfor = FALSE
+	countdown.stop()
+	resistance_flags |= INDESTRUCTIBLE
+	purpose_fulfilled = TRUE
+	make_glow()
+	animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
+	sound_to_playing_players('sound/effects/ratvar_rises.ogg', 90, FALSE, channel = CHANNEL_JUSTICAR_ARK)
+	sleep(125)
+	make_glow()
+	animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
+	QDEL_IN(src, 3)
+	sleep(3)
+	GLOB.clockwork_gateway_activated = TRUE
+	var/turf/T = SSmapping.get_station_center()
+	new /obj/structure/destructible/clockwork/massive/ratvar(T)
+	var/x0 = T.x
+	var/y0 = T.y
+	for(var/I in spiral_range_turfs(255, T, tick_checked = TRUE))
+		var/turf/T2 = I
+		if(!T2)
+			continue
+		var/dist = cheap_hypotenuse(T2.x, T2.y, x0, y0)
+		if(dist < 100)
+			dist = TRUE
+		else
+			dist = FALSE
+		T.ratvar_act(dist)
+		CHECK_TICK
+
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	adjust_clockwork_power(2.5) //Provides weak power generation on its own
 	if(seconds_until_activation)
@@ -265,7 +301,7 @@
 	for(var/obj/O in orange(1, src))
 		if(!O.pulledby && !iseffect(O) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
-				O.take_damage(50, BURN, "bomb")
+				O.take_damage(50, BURN, BOMB)
 			O.update_icon()
 
 	conversion_pulse() //Converts the nearby area into clockcult-style
@@ -275,58 +311,32 @@
 		var/turf/T = get_turf(M)
 		if(is_servant_of_ratvar(M) && (!T || T.z != z))
 			M.forceMove(get_step(src, SOUTH))
-			M.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			M.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/tiled/flash)
 			M.clear_fullscreen("flash", 5)
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!second_sound_played)
 				sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 30, FALSE)
-				sound_to_playing_players(volume = 10, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
+				sound_to_playing_players('sound/effects/clockcult_gateway_charging.ogg', 10, FALSE, channel = CHANNEL_JUSTICAR_ARK)
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!third_sound_played)
-				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', TRUE))
+				sound_to_playing_players('sound/effects/clockcult_gateway_active.ogg', 30, FALSE, channel = CHANNEL_JUSTICAR_ARK)
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!fourth_sound_played)
-				sound_to_playing_players(volume = 70, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', TRUE))
+				sound_to_playing_players('sound/effects/clockcult_gateway_closing.ogg', 70, FALSE, channel = CHANNEL_JUSTICAR_ARK)
 				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
 			if(!purpose_fulfilled)
-				countdown.stop()
-				resistance_flags |= INDESTRUCTIBLE
-				purpose_fulfilled = TRUE
-				make_glow()
-				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				sound_to_playing_players(volume = 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/ratvar_rises.ogg')) //End the sounds
-				sleep(125)
-				make_glow()
-				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
-				QDEL_IN(src, 3)
-				sleep(3)
-				GLOB.clockwork_gateway_activated = TRUE
-				var/turf/T = SSmapping.get_station_center()
-				new /obj/structure/destructible/clockwork/massive/ratvar(T)
-				var/x0 = T.x
-				var/y0 = T.y
-				for(var/I in spiral_range_turfs(255, T, tick_checked = TRUE))
-					var/turf/T2 = I
-					if(!T2)
-						continue
-					var/dist = cheap_hypotenuse(T2.x, T2.y, x0, y0)
-					if(dist < 100)
-						dist = TRUE
-					else
-						dist = FALSE
-					T.ratvar_act(dist)
-					CHECK_TICK
+				fulfill_purpose()
 
 //Converts nearby turfs into their clockwork equivalent, with ever-increasing range the closer the ark is to summoning Ratvar
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/conversion_pulse()

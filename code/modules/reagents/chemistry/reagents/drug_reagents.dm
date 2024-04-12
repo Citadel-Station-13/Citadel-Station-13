@@ -59,7 +59,7 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
 	M.AdjustAllImmobility(-20, 0)
 	M.AdjustUnconscious(-20, 0)
-	M.adjustStaminaLoss(-0.5*REM, 0)
+	M.adjustStaminaLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -83,30 +83,30 @@
 	. = 1
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REAGENTS_EFFECT_MULTIPLIER)
 	..()
 
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
+	M.adjustToxLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustBruteLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -128,14 +128,14 @@
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REM)
-	M.adjustToxLoss(0.25*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(0.25*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -147,7 +147,7 @@
 /datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
 	if(prob(25))
 		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
-	M.adjustBruteLoss(3*REM, 0)
+	M.adjustBruteLoss(3*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
@@ -155,71 +155,63 @@
 	CHECK_DNA_AND_SPECIES(M)
 	if(!istype(M.dna.species, /datum/species/krokodil_addict))
 		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
-		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
+		M.adjustBruteLoss(50*REAGENTS_EFFECT_MULTIPLIER, 0) // holy shit your skin just FELL THE FUCK OFF
 		M.set_species(/datum/species/krokodil_addict)
 	else
-		M.adjustBruteLoss(5*REM, 0)
+		M.adjustBruteLoss(5*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
-	description = "Reduces stun times by about 300%, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
+	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
-	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	var/brain_damage = TRUE
-	var/jitter = TRUE
-	var/confusion = TRUE
 	pH = 5
+	addiction_threshold = 10
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, type)
-	L.update_movespeed()
-	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, type)
-	L.update_movespeed()
-	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 	..()
 
-/datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
-	if(prob(5))
-		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.AdjustAllImmobility(-40, 0)
-	M.AdjustUnconscious(-40, 0)
-	M.adjustStaminaLoss(-7.5 * REM, 0)
-	if(jitter)
-		M.Jitter(2)
-	if(brain_damage)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
-	M.heal_overall_damage(2, 2)
-	if(prob(5))
+	if(DT_PROB(2.5, delta_time))
+		to_chat(M, span_notice("[high_message]"))
+	// SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
+	M.AdjustStun(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.AdjustKnockdown(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.AdjustUnconscious(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.AdjustParalyzed(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.AdjustImmobilized(-40 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.adjustStaminaLoss(-2 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+	M.Jitter(2 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	if(DT_PROB(2.5, delta_time))
 		M.emote(pick("twitch", "shiver"))
 	..()
-	. = 1
+	. = TRUE
 
-/datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
+/datum/reagent/drug/methamphetamine/overdose_process(mob/living/M, delta_time, times_fired)
 	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
-		for(var/i in 1 to 4)
+		for(var/i in 1 to round(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 1))
 			step(M, pick(GLOB.cardinals))
-	if(prob(20))
+	if(DT_PROB(10, delta_time))
 		M.emote("laugh")
-	if(prob(33))
-		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
+	if(DT_PROB(18, delta_time))
+		M.visible_message(span_danger("[M]'s hands flip out and flail everywhere!"))
 		M.drop_all_held_items()
 	..()
-	M.adjustToxLoss(1, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
-	. = 1
+	M.adjustToxLoss(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	. = TRUE
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
 	M.Jitter(5)
@@ -255,14 +247,6 @@
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	. = 1
-
-/datum/reagent/drug/methamphetamine/changeling
-	name = "Changeling Adrenaline"
-	addiction_threshold = 35
-	overdose_threshold = 35
-	jitter = FALSE
-	brain_damage = FALSE
-	value = REAGENT_VALUE_RARE
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
@@ -502,8 +486,8 @@
 			H.dna.species.punchstunthreshold += 2
 
 /datum/reagent/drug/skooma/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM)
-	M.adjustToxLoss(1*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REAGENTS_EFFECT_MULTIPLIER)
+	M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 	if(prob(10))
 		M.adjust_blurriness(2)
 	..()
@@ -547,7 +531,7 @@
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/syndicateadrenals/on_mob_life(mob/living/M)
-	M.adjustStaminaLoss(-5*REM)
+	M.adjustStaminaLoss(-5*REAGENTS_EFFECT_MULTIPLIER)
 	. = ..()
 
 /datum/reagent/syndicateadrenals/on_mob_metabolize(mob/living/M)

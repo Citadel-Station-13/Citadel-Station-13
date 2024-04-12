@@ -11,7 +11,7 @@
 	resistance_flags = FLAMMABLE
 	var/persistence_id
 
-/obj/item/storage/photo_album/Initialize()
+/obj/item/storage/photo_album/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.can_hold = typecacheof(list(/obj/item/photo))

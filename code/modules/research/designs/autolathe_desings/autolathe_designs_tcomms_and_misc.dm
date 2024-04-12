@@ -92,6 +92,11 @@
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/airlock_painter/decal/tile
+	name = "Tile Sprayer"
+	id = "tile_sprayer"
+	build_path = /obj/item/airlock_painter/decal/tile
+
 /datum/design/cultivator
 	name = "Cultivator"
 	id = "cultivator"

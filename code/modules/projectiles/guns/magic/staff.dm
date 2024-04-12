@@ -86,7 +86,7 @@
 	sharpness = SHARP_EDGED
 	max_charges = 4
 
-/obj/item/gun/magic/staff/spellblade/Initialize()
+/obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
 

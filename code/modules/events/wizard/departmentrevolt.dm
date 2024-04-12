@@ -5,6 +5,7 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	can_be_midround_wizard = FALSE // not removing it completely yet
+	description = "A department is turned into an independent state."
 
 /datum/round_event/wizard/deprevolt/start()
 

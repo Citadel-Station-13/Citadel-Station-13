@@ -16,6 +16,9 @@
 	burnmod = 1.25
 
 	species_category = SPECIES_CATEGORY_SKELETON //they have their own category that's disassociated from undead, paired with plasmapeople
+	wings_icons = SPECIES_WINGS_SKELETAL
+	balance_point_values = TRUE
+	blacklisted_quirks = list(/datum/quirk/paper_skin)
 
 /datum/species/skeleton/New()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN]) //skeletons are stronger during the spooky season!
@@ -34,6 +37,7 @@
 	id = SPECIES_SKELETON_SPACE
 	limbs_id = SPECIES_SKELETON
 	blacklisted = 1
+	balance_point_values = FALSE
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT, TRAIT_FAKEDEATH, TRAIT_CALCIUM_HEALER)
 
 /datum/species/skeleton/space/check_roundstart_eligible()

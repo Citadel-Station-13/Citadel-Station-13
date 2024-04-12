@@ -5,14 +5,23 @@
 	min_players = 2
 	earliest_start = 10 MINUTES
 	max_occurrences = 6
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Summons a school of space carp."
+
+/datum/round_event_control/carp_migration/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CARP_INFESTATION))
+		weight *= 3
+		max_occurrences *= 2
+		earliest_start *= 0.5
 
 /datum/round_event/carp_migration
-	announceWhen	= 3
-	startWhen = 50
+	announce_when	= 3
+	start_when = 50
 	var/hasAnnounced = FALSE
 
 /datum/round_event/carp_migration/setup()
-	startWhen = rand(40, 60)
+	start_when = rand(40, 60)
 
 /datum/round_event/carp_migration/announce(fake)
 	if(prob(50))

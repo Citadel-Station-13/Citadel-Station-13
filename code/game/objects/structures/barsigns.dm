@@ -6,12 +6,12 @@
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 0.5
-	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	buildable_sign = 0
 	var/list/barsigns=list()
 	var/panel_open = FALSE
 
-/obj/structure/sign/barsign/Initialize()
+/obj/structure/sign/barsign/Initialize(mapload)
 	. = ..()
 
 //filling the barsigns list
@@ -111,7 +111,7 @@
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	addtimer(CALLBACK(src, .proc/syndie_bar_good), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(syndie_bar_good)), 10 SECONDS)
 	return TRUE
 
 /obj/structure/sign/barsign/proc/syndie_bar_good()

@@ -1,18 +1,16 @@
-/obj/effect/proc_holder/changeling/transform
+/datum/action/changeling/transform
 	name = "Transform"
-	desc = "We take on the appearance and voice of one we have absorbed."
+	desc = "We take on the appearance and voice of one we have absorbed. Costs 5 chemicals."
+	button_icon_state = "transform"
 	chemical_cost = 5
 	dna_cost = 0
 	req_dna = 1
-	req_human = 1
-	action_icon = 'icons/mob/actions/actions_changeling.dmi'
-	action_icon_state = "ling_transform"
-	action_background_icon_state = "bg_ling"
+	req_human = TRUE
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
 
-/obj/item/clothing/glasses/changeling/Initialize()
+/obj/item/clothing/glasses/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -27,7 +25,7 @@
 /obj/item/clothing/under/changeling
 	name = "flesh"
 
-/obj/item/clothing/under/changeling/Initialize()
+/obj/item/clothing/under/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -43,7 +41,7 @@
 	name = "flesh"
 	allowed = list(/obj/item/changeling)
 
-/obj/item/clothing/suit/changeling/Initialize()
+/obj/item/clothing/suit/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -58,7 +56,7 @@
 /obj/item/clothing/head/changeling
 	name = "flesh"
 
-/obj/item/clothing/head/changeling/Initialize()
+/obj/item/clothing/head/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -72,7 +70,7 @@
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
 
-/obj/item/clothing/shoes/changeling/Initialize()
+/obj/item/clothing/shoes/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -87,7 +85,7 @@
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
 
-/obj/item/clothing/gloves/changeling/Initialize()
+/obj/item/clothing/gloves/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -102,7 +100,7 @@
 /obj/item/clothing/mask/changeling
 	name = "flesh"
 
-/obj/item/clothing/mask/changeling/Initialize()
+/obj/item/clothing/mask/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -119,7 +117,7 @@
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
 
-/obj/item/changeling/Initialize()
+/obj/item/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
@@ -132,9 +130,9 @@
 	. = ..()
 
 //Change our DNA to that of somebody we've absorbed.
-/obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
+/datum/action/changeling/transform/sting_action(mob/living/carbon/human/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	var/datum/changelingprofile/chosen_prof = changeling.select_dna("Select the target DNA: ", "Target DNA")
+	var/datum/changelingprofile/chosen_prof = changeling.select_dna()
 
 	if(!chosen_prof)
 		return
@@ -142,15 +140,21 @@
 	changeling_transform(user, chosen_prof)
 	return TRUE
 
-/datum/antagonist/changeling/proc/select_dna(var/prompt, var/title)
+/**
+ * Gives a changeling a list of all possible dnas in their profiles to choose from and returns profile containing their chosen dna
+ */
+/datum/antagonist/changeling/proc/select_dna()
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
-	var/list/names = list("Drop Flesh Disguise")
-	for(var/datum/changelingprofile/prof in stored_profiles)
-		names += "[prof.name]"
+	var/list/disguises = list("Drop Flesh Disguise" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_drop"))
+	for(var/datum/changelingprofile/current_profile in stored_profiles)
+		var/datum/icon_snapshot/snap = current_profile.profile_snapshot
+		var/image/disguise_image = image(icon = snap.icon, icon_state = snap.icon_state)
+		disguise_image.overlays = snap.overlays
+		disguises[current_profile.name] = disguise_image
 
-	var/chosen_name = input(prompt, title, null) as null|anything in names
+	var/chosen_name = show_radial_menu(user, user, disguises, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE, tooltips = TRUE)
 	if(!chosen_name)
 		return
 
@@ -158,6 +162,21 @@
 		for(var/slot in GLOB.slots)
 			if(istype(user.vars[slot], GLOB.slot2type[slot]))
 				qdel(user.vars[slot])
+		return
 
 	var/datum/changelingprofile/prof = get_dna(chosen_name)
 	return prof
+
+/**
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The carbon mob interacting with the menu
+ */
+/datum/antagonist/changeling/proc/check_menu(mob/living/carbon/user)
+	if(!istype(user))
+		return FALSE
+	var/datum/antagonist/changeling/changeling_datum = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!changeling_datum)
+		return FALSE
+	return TRUE

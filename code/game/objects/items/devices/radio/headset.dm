@@ -56,9 +56,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/ComponentInitialize()
 	. = ..()
 	if (bowman)
-		AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+		AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
-/obj/item/radio/headset/Initialize()
+/obj/item/radio/headset/Initialize(mapload)
 	. = ..()
 	recalculateChannels()
 
@@ -94,16 +94,22 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "team leader headset"
 	command = TRUE
 
-/obj/item/radio/headset/syndicate/Initialize()
+/obj/item/radio/headset/syndicate/Initialize(mapload)
 	. = ..()
 	make_syndie()
 
 /obj/item/radio/headset/binary
-/obj/item/radio/headset/binary/Initialize()
+/obj/item/radio/headset/binary/Initialize(mapload)
 	. = ..()
 	qdel(keyslot)
 	keyslot = new /obj/item/encryptionkey/binary
 	recalculateChannels()
+
+/obj/item/radio/headset/headset_prisoner
+	name = "prison radio headset"
+	desc = "An updated, modular intercom that fits over the head. Takes encryption keys. It looks like it has been modified to not broadcast."
+	icon_state = "prisoner_headset"
+	prison_radio = TRUE
 
 /obj/item/radio/headset/headset_sec
 	name = "security radio headset"
@@ -263,6 +269,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
+/obj/item/radio/headset/silicon/pai/emp_act(severity)
+	. = ..()
+	return EMP_PROTECT_SELF
+
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
@@ -363,4 +373,4 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = replacetext(name,"headset", "bowman headset")
 	desc = "[desc] Protects ears from flashbangs."
 	bowman = TRUE
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))

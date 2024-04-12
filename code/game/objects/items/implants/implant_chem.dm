@@ -21,7 +21,7 @@
 				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
-/obj/item/implant/chem/Initialize()
+/obj/item/implant/chem/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	GLOB.tracked_chem_implants += src
@@ -59,7 +59,7 @@
 /obj/item/implant/chem/activate(cause)
 	. = ..()
 	if(!cause || !imp_in)
-		return 0
+		return FALSE
 	var/mob/living/carbon/R = imp_in
 	var/injectamount = null
 	if (cause == "action_button")

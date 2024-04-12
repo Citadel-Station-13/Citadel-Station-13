@@ -3,7 +3,6 @@
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	flags_1 = NONE
-	area_flags = VALID_TERRITORY | UNIQUE_AREA
 	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 
 	var/obj/machinery/computer/holodeck/linked
@@ -15,7 +14,7 @@
 	Asserts are to avoid the inevitable infinite loops
 */
 
-/area/holodeck/Initialize()
+/area/holodeck/Initialize(mapload)
 	. = ..()
 	var/list/update_holodeck_cache = SSholodeck?.rejected_areas[type]
 	if(update_holodeck_cache)
@@ -27,18 +26,18 @@
 
 /area/holodeck/powered(var/chan)
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	if(!linked)
-		return 0
+		return FALSE
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return A.powered(chan)
 
 /area/holodeck/usage(var/chan)
 	if(!linked)
-		return 0
+		return FALSE
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return A.usage(chan)
@@ -52,7 +51,7 @@
 
 /area/holodeck/use_power(var/amount, var/chan)
 	if(!linked)
-		return 0
+		return FALSE
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return A.use_power(amount,chan)
@@ -86,9 +85,6 @@
 
 /area/holodeck/rec_center/lounge
 	name = "Holodeck - Lounge"
-
-/area/holodeck/rec_center/medical
-	name = "Holodeck - Emergency Medical"
 
 /area/holodeck/rec_center/pet_lounge
 	name = "Holodeck - Pet Park"
@@ -126,6 +122,10 @@
 
 /area/holodeck/rec_center/bunker
 	name = "Holodeck - Holdout Bunker"
+	restricted = 1
+
+/area/holodeck/rec_center/medical
+	name = "Holodeck - Emergency Medical"
 	restricted = 1
 
 /area/holodeck/rec_center/anthophila

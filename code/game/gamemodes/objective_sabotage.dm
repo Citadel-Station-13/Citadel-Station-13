@@ -23,7 +23,7 @@
 	START_PROCESSING(SSprocessing, src)
 
 /datum/sabotage_objective/processing/proc/check_condition_processing()
-	return 1
+	return TRUE
 
 /datum/sabotage_objective/processing/process()
 	check_condition_processing()
@@ -36,7 +36,7 @@
 /datum/sabotage_objective/ai_law
 	name = "Upload a hacked law to the AI."
 	sabotage_type = "ailaw"
-	special_equipment = list(/obj/item/aiModule/syndicate)
+	special_equipment = list(/obj/item/ai_module/syndicate)
 	excludefromjob = list("Chief Engineer","Research Director","Head of Personnel","Captain","Chief Medical Officer","Head Of Security")
 
 /datum/sabotage_objective/ai_law/can_run()

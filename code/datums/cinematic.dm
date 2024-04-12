@@ -18,7 +18,7 @@
 	playing.play(watcher)
 	qdel(playing)
 
-/obj/screen/cinematic
+/atom/movable/screen/cinematic
 	icon = 'icons/effects/station_explosion.dmi'
 	icon_state = "station_intact"
 	plane = SPLASHSCREEN_PLANE
@@ -32,7 +32,7 @@
 	var/list/watching = list() //List of clients watching this
 	var/list/locked = list() //Who had mob_transforming set during the cinematic
 	var/is_global = FALSE //Global cinematics will override mob-specific ones
-	var/obj/screen/cinematic/screen
+	var/atom/movable/screen/cinematic/screen
 	var/datum/callback/special_callback //For special effects synced with animation (explosions after the countdown etc)
 	var/cleanup_time = 300 //How long for the final screen to remain
 	var/stop_ooc = TRUE //Turns off ooc when played globally.
@@ -66,7 +66,7 @@
 	//We are now playing this cinematic
 
 	//Handle what happens when a different cinematic tries to play over us
-	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, .proc/replacement_cinematic)
+	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, PROC_REF(replacement_cinematic))
 
 	//Pause OOC
 	var/ooc_toggled = FALSE
@@ -74,11 +74,11 @@
 		ooc_toggled = TRUE
 		toggle_ooc(FALSE)
 
-	//Place /obj/screen/cinematic into everyone's screens, prevent them from moving
+	//Place /atom/movable/screen/cinematic into everyone's screens, prevent them from moving
 	for(var/MM in watchers)
 		var/mob/M = MM
 		show_to(M, M.client)
-		RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
+		RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(show_to))
 		//Close watcher ui's
 		SStgui.close_user_uis(M)
 
@@ -101,7 +101,7 @@
 	if(!C)
 		return
 	watching += C
-	M.overlay_fullscreen("cinematic",/obj/screen/fullscreen/cinematic_backdrop)
+	M.overlay_fullscreen("cinematic",/atom/movable/screen/fullscreen/tiled/cinematic_backdrop)
 	C.screen += screen
 
 //Sound helper

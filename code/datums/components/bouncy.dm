@@ -18,11 +18,11 @@
 		var/list/diff_bounces = difflist(bounce_signals, _bounce_signals, TRUE)
 		for(var/bounce in diff_bounces)
 			bounce_signals += bounce
-			RegisterSignal(parent, bounce, .proc/bounce_up)
+			RegisterSignal(parent, bounce, PROC_REF(bounce_up))
 
 /datum/component/bouncy/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, bounce_signals, .proc/bounce_up)
+	RegisterSignal(parent, bounce_signals, PROC_REF(bounce_up))
 
 /datum/component/bouncy/UnregisterFromParent()
 	. = ..()
@@ -32,7 +32,7 @@
 	var/atom/movable/A = parent
 	switch(rand(1, 3))
 		if(1)
-			A.do_jiggle(45 + rand(-10, 10) * bouncy_mod, 14)
+			A.do_jiggle(25 + rand(-5, 5) * bouncy_mod, 14)
 		if(2)
 			var/min_b = 0.6/bouncy_mod
 			var/max_b = 1.2 * bouncy_mod

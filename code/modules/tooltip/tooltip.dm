@@ -13,7 +13,7 @@ Configuration:
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
-	/obj/screen/hud
+	/atom/movable/screen/hud
 		MouseEntered(location, control, params)
 			usr.client.tooltip.show(params, title = src.name, content = src.desc)
 
@@ -87,12 +87,12 @@ Notes:
 
 
 /datum/tooltip/proc/hide()
+	queueHide = showing ? TRUE : FALSE
+
 	if (queueHide)
-		addtimer(CALLBACK(src, .proc/do_hide), 1)
+		addtimer(CALLBACK(src, PROC_REF(do_hide)), 1)
 	else
 		do_hide()
-
-	queueHide = showing ? TRUE : FALSE
 
 	return TRUE
 
@@ -121,34 +121,34 @@ Notes:
 	if(istype(user))
 		if(user.client && user.client.tooltips)
 			user.client.tooltips.hide()
+			deltimer(user.client.tip_timer) //delete any in-progress timer if the mouse is moved off the item before it finishes
+			user.client.tip_timer = null
 
 /**
- * # `get_tooltip_data()`
- *
  * If set, will return a list for the tooltip (that will also be put together in a `Join()`)
- * However, if returning `null`, falls back to default behavior, which is `examine(src)`, and it will definitely include
- * images since it is the default behavior
+ * However, if returning `null`, the tooltip will not be shown as #14942 changed it.
  *
  * Though no tooltips will be created for atoms that have `tooltips = FALSE`
 */
 /atom/movable/proc/get_tooltip_data()
-	return
+	return // i did not ask you to create a list, this shit is meant to be overriden
 
 /atom/movable/MouseEntered(location, control, params)
 	. = ..()
 	if(tooltips)
-		if(!QDELETED(src))
-			var/list/examine_list = examine(src)
-			var/get_tooltip_data = get_tooltip_data()
-			if(length(get_tooltip_data))
-				examine_list = get_tooltip_data
-			var/examine_data = examine_list.Join("<br />")
-			openToolTip(usr, src, params, title = name, content = examine_data)
+		if(!QDELETED(usr) && !QDELETED(src) && usr?.client?.prefs.enable_tips)
+			var/list/tooltip_data = get_tooltip_data()
+			if(length(tooltip_data))
+				var/examine_data = tooltip_data.Join("<br />")
+				var/timedelay = max(usr.client.prefs.tip_delay * 0.01, 0.01) // I heard multiplying is faster, also runtimes from very low/negative numbers
+				usr.client.tip_timer = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(openToolTip), usr, src, params, name, examine_data), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. multiplying by 0.01 converts it.
 
 /atom/movable/MouseExited(location, control, params)
 	. = ..()
 	closeToolTip(usr)
 
 /client/MouseDown(object, location, control, params)
-	closeToolTip(usr)
 	. = ..()
+	closeToolTip(usr)
+
+// Break my stuff again and i'll kill you, kisses

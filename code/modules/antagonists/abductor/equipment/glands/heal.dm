@@ -23,7 +23,7 @@
 		return
 
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
-	if((!lungs && !HAS_TRAIT(owner, TRAIT_NOBREATH)) || (lungs && (istype(lungs, /obj/item/organ/lungs/cybernetic))))
+	if((!lungs && (HAS_TRAIT_FROM(owner, TRAIT_AUXILIARY_LUNGS, SPECIES_TRAIT) || !HAS_TRAIT(owner, TRAIT_NOBREATH))) || (lungs && (istype(lungs, /obj/item/organ/lungs/cybernetic))))
 		replace_lungs(lungs)
 		return
 
@@ -107,7 +107,7 @@
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble behind your eye sockets...</span>")
 
-	addtimer(CALLBACK(src, .proc/finish_replace_eyes), rand(100, 200))
+	addtimer(CALLBACK(src, PROC_REF(finish_replace_eyes)), rand(100, 200))
 
 /obj/item/organ/heart/gland/heal/proc/finish_replace_eyes()
 	var/eye_type = /obj/item/organ/eyes
@@ -125,7 +125,7 @@
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one.</span>")
 
-	addtimer(CALLBACK(src, .proc/finish_replace_limb, body_zone), rand(150, 300))
+	addtimer(CALLBACK(src, PROC_REF(finish_replace_limb), body_zone), rand(150, 300))
 
 /obj/item/organ/heart/gland/heal/proc/finish_replace_limb(body_zone)
 	owner.visible_message("<span class='warning'>With a loud snap, [owner]'s [parse_zone(body_zone)] rapidly grows back from [owner.p_their()] body!</span>",
@@ -144,7 +144,7 @@
 	owner.Stun(15)
 	owner.adjustToxLoss(-15, TRUE, TRUE)
 
-	owner.blood_volume = min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20)
+	owner.adjust_integration_blood(20)
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
 		keep_going = TRUE
 
@@ -155,7 +155,7 @@
 		if(owner.reagents.has_reagent(R.type))
 			keep_going = TRUE
 	if(keep_going)
-		addtimer(CALLBACK(src, .proc/keep_replacing_blood), 30)
+		addtimer(CALLBACK(src, PROC_REF(keep_replacing_blood)), 30)
 
 /obj/item/organ/heart/gland/heal/proc/replace_chest(obj/item/bodypart/chest/chest)
 	if(chest.is_robotic_limb(FALSE))

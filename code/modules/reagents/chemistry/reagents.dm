@@ -1,4 +1,3 @@
-#define REM REAGENTS_EFFECT_MULTIPLIER
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /proc/build_name2reagent()
@@ -51,9 +50,13 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/inverse_chem_val 		= 0			// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
 	var/inverse_chem					// What chem is metabolised when purity is below inverse_chem_val, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/metabolizing = FALSE
-	var/chemical_flags // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
+	var/chemical_flags = REAGENT_ORGANIC_PROCESS // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME, REAGENT_ORGANIC_PROCESS, REAGENT_ROBOTIC_PROCESS
 	var/value = REAGENT_VALUE_NONE //How much does it sell for in cargo?
 	var/datum/material/material //are we made of material?
+	var/gas = null //do we have an associated gas? (expects a string, not a datum typepath!)
+	var/boiling_point = null // point at which this gas boils; if null, will never boil (and thus not become a gas)
+	var/condensation_amount = 1
+	var/molarity = 5 // How many units per mole of this reagent. Technically this is INVERSE molarity, but hey.
 
 /datum/reagent/New()
 	. = ..()
@@ -68,25 +71,43 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
 			var/modifier = clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(type, amount)
-	return 1
+	return TRUE
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
-	return
+	if(O && volume && boiling_point)
+		var/temp = holder ? holder.chem_temp : T20C
+		if(temp > boiling_point)
+			O.atmos_spawn_air("[get_gas()]=[volume/molarity];TEMP=[temp]")
 
-/datum/reagent/proc/reaction_turf(turf/T, volume)
-	return
+/datum/reagent/proc/reaction_turf(turf/T, volume, show_message, from_gas)
+	if(!from_gas && boiling_point)
+		var/temp = holder?.chem_temp
+		if(!temp)
+			if(isopenturf(T))
+				var/turf/open/O = T
+				var/datum/gas_mixture/air = O.return_air()
+				temp = air.return_temperature()
+			else
+				temp = T20C
+		if(temp > boiling_point)
+			T.atmos_spawn_air("[get_gas()]=[volume/molarity];TEMP=[temp]")
 
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	if(holder)
 		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+
+//Called when an reagent is incompatible with its processing carbon (e.g. robot carbon and reagent with only organic processing)
+/datum/reagent/proc/on_invalid_process(mob/living/carbon/M)
+	if(holder)
+		holder.remove_reagent(type, INVALID_REAGENT_DISSIPATION)	//Not influenced by normal metab rate nor efficiency.
 
 //called when a mob processes chems when dead.
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/M)
@@ -178,6 +199,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
 		log_reagent("MOB ADD: on_merge() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
 
+//Ran by a reagent holder on a specific reagent after copying its data.
+/datum/reagent/proc/post_copy_data()
+	return
+
 /datum/reagent/proc/on_update(atom/A)
 	return
 
@@ -230,6 +255,43 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		rs += "[R.name], [R.volume]"
 
 	return rs.Join(" | ")
+
+/datum/reagent/proc/define_gas()
+	var/list/cached_reactions = GLOB.chemical_reactions_list
+	for(var/reaction in cached_reactions[src.type])
+		var/datum/chemical_reaction/C = reaction
+		if(!istype(C))
+			continue
+		if(C.required_reagents.len < 2) // no reagents that react on their own
+			return null
+	var/datum/gas/G = new
+	G.id = "[src.type]"
+	G.name = name
+	G.specific_heat = specific_heat / 10
+	G.color = color
+	G.breath_reagent = src.type
+	G.group = GAS_GROUP_CHEMICALS
+	G.moles_visible = MOLES_GAS_VISIBLE
+	return G
+
+/datum/reagent/proc/create_gas()
+	var/datum/gas/G = define_gas()
+	if(istype(G)) // if this reagent should never be a gas, define_gas may return null
+		GLOB.gas_data.add_gas(G)
+		var/datum/gas_reaction/condensation/condensation_reaction = new(src) // did you know? you can totally just add new reactions at runtime. it's allowed
+		SSair.add_reaction(condensation_reaction)
+	return G
+
+
+/datum/reagent/proc/get_gas()
+	if(gas)
+		return gas
+	else
+		var/datum/auxgm/cached_gas_data = GLOB.gas_data
+		. = "[src.type]"
+		if(!(. in cached_gas_data.ids))
+			create_gas()
+
 
 //For easy bloodsucker disgusting and blood removal
 /datum/reagent/proc/disgust_bloodsucker(mob/living/carbon/C, disgust, blood_change, blood_puke = TRUE, force)

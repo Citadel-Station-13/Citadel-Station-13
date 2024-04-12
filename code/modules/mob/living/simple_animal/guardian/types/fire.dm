@@ -13,7 +13,7 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
 
-/mob/living/simple_animal/hostile/guardian/fire/BiologicalLife(seconds, times_fired)
+/mob/living/simple_animal/hostile/guardian/fire/BiologicalLife(delta_time, times_fired)
 	if(!(. = ..()))
 		return
 	if(summoner)

@@ -34,7 +34,7 @@
 		qdel(src)
 
 	else
-		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return 0 or just end it.
+		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return FALSE or just end it.
 			return ..()						//Stops it from opening and turning invisible when items are used on it.
 
 		else

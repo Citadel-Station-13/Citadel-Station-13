@@ -4,7 +4,7 @@
 /area/lavaland/surface/outdoors)
 "b" = (
 /turf/closed/wall/mineral/diamond,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "c" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -13,20 +13,20 @@
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "f" = (
 /obj/structure/mirror{
 	pixel_x = 32
 	},
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "g" = (
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "i" = (
 /obj/item/clothing/gloves/ring,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "j" = (
 /obj/structure/mirror{
 	pixel_x = -32
@@ -35,11 +35,11 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "k" = (
 /obj/structure/mirror/magic/pride,
 /turf/closed/wall/mineral/diamond,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "l" = (
 /obj/structure/mirror{
 	pixel_x = -32
@@ -49,7 +49,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "m" = (
 /obj/structure/mirror{
 	pixel_x = 32
@@ -58,43 +58,43 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "o" = (
 /obj/structure/mirror{
 	pixel_x = -32
 	},
 /obj/item/lipstick/random,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "q" = (
 /obj/structure/mirror{
 	pixel_x = -32
 	},
 /obj/item/clothing/gloves/ring/silver,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "r" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "u" = (
 /obj/structure/mirror{
 	pixel_x = 32
 	},
 /obj/item/lipstick/random,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "D" = (
 /obj/item/clothing/head/wig/random,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "G" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "I" = (
 /obj/item/clothing/gloves/ring/silver,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "J" = (
 /obj/structure/mirror{
 	pixel_x = 32
@@ -103,25 +103,25 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "L" = (
 /obj/item/lipstick/random,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "O" = (
 /obj/item/clothing/gloves/ring/diamond,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "V" = (
 /obj/item/clothing/head/wig,
 /turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 "Y" = (
 /obj/machinery/door/airlock/silver/glass,
 /turf/open/floor/mineral/silver{
 	blocks_air = 1
 	},
-/area/ruin/powered/pride)
+/area/ruin/lavaland/powered/pride)
 
 (1,1,1) = {"
 a

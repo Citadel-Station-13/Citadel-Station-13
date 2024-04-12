@@ -1,6 +1,6 @@
 /obj/item/blackmarket_uplink
 	name = "Black Market Uplink"
-	desc = "A mishmash of a subspace amplifier, a radio, and an analyzer.  Somehow able to access the black market, with a variable inventory in limited stock at inflated prices. No refunds, customer responsible for pick-ups." 
+	desc = "A mishmash of a subspace amplifier, a radio, and an analyzer.  Somehow able to access the black market, with a variable inventory in limited stock at inflated prices. No refunds, customer responsible for pick-ups."
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 	// UI variables.
@@ -13,7 +13,7 @@
 	var/money = 0 // How much money is inserted into the uplink.
 	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket) // List of typepaths for "/datum/blackmarket_market"s that this uplink can access.
 
-/obj/item/blackmarket_uplink/Initialize()
+/obj/item/blackmarket_uplink/Initialize(mapload)
 	. = ..()
 	if(accessible_markets.len)
 		viewing_market = accessible_markets[1]

@@ -30,8 +30,8 @@
 			SplashReagents(user)
 			return
 		else
-			DISABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
-			ENABLE_BITFIELD(reagents.reagents_holder_flags, DRAWABLE |INJECTABLE )
+			reagents.reagents_holder_flags &= ~(OPENCONTAINER)
+			reagents.reagents_holder_flags |= (DRAWABLE|INJECTABLE)
 			spillable = FALSE
 			sealed = TRUE
 			to_chat(user, "<span class='notice'>You seal the bag.</span>")

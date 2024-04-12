@@ -5,7 +5,7 @@
 
 /datum/emote/living/blush/run_emote(mob/user, params)
 	. = ..()
-	if(. && isipcperson(user))
+	if(. && isrobotic(user))
 		do_fake_sparks(5,FALSE,user)
 
 /datum/emote/living/bow
@@ -129,7 +129,7 @@
 				H.CloseWings()
 			else
 				H.OpenWings()
-			addtimer(CALLBACK(H, open ? /mob/living/carbon/human.proc/OpenWings : /mob/living/carbon/human.proc/CloseWings), wing_time)
+			addtimer(CALLBACK(H, open ? TYPE_PROC_REF(/mob/living/carbon/human, OpenWings) : TYPE_PROC_REF(/mob/living/carbon/human, CloseWings)), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
@@ -489,7 +489,7 @@
 		if(E.can_run_emote(user, status_check = FALSE))
 			keys += E.key
 
-	keys = sortList(keys)
+	keys = sort_list(keys)
 
 	for(var/emote in keys)
 		if(LAZYLEN(message) > 1)
@@ -518,6 +518,8 @@
 
 /datum/emote/living/circle/run_emote(mob/user, params)
 	. = ..()
+	if(!.)
+		return
 	var/obj/item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
 		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")

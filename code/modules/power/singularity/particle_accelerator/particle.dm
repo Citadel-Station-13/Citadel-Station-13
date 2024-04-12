@@ -25,7 +25,7 @@
 /obj/effect/accelerated_particle/New(loc)
 	..()
 
-	addtimer(CALLBACK(src, .proc/move), 1)
+	addtimer(CALLBACK(src, PROC_REF(move)), 1)
 
 
 /obj/effect/accelerated_particle/Bump(atom/A)
@@ -49,7 +49,7 @@
 		toxmob(A)
 
 
-/obj/effect/accelerated_particle/ex_act(severity, target)
+/obj/effect/accelerated_particle/ex_act(severity, target, origin)
 	qdel(src)
 
 /obj/effect/accelerated_particle/singularity_pull()

@@ -3,7 +3,6 @@
  * @copyright 2020 LetterN (https://github.com/LetterN)
  * @license MIT
  */
-import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 import { toFixed } from 'common/math';
@@ -35,7 +34,7 @@ export const TelecommsInteraction = (props, context) => {
       width={520}
       height={500}>
       <Window.Content scrollable>
-        <Fragment>
+        <>
           {!!notice && (
             <NoticeBox>
               {notice}
@@ -51,8 +50,8 @@ export const TelecommsInteraction = (props, context) => {
                   {power ? 'On' : 'Off'}
                 </Button>
               </LabeledList.Item>
-              {power ? (
-                <Fragment>
+              {!!power && (
+                <>
                   <LabeledList.Item label="Identification String">
                     <Input
                       value={id}
@@ -77,7 +76,7 @@ export const TelecommsInteraction = (props, context) => {
                     {prefab ? 'TRUE' : 'FALSE'}
                   </LabeledList.Item>
                   {!!isrelay && (
-                    <Fragment>
+                    <>
                       <LabeledList.Item label="Broadcasting">
                         <Button
                           icon={machine.broadcast ? 'check' : 'times'}
@@ -98,7 +97,7 @@ export const TelecommsInteraction = (props, context) => {
                           {machine.receiving ? 'YES' : 'NO'}
                         </Button>
                       </LabeledList.Item>
-                    </Fragment>
+                    </>
                   )}
                   {!!isbus && (
                     <LabeledList.Item label="Change Signal Frequency">
@@ -139,7 +138,7 @@ export const TelecommsInteraction = (props, context) => {
                     <LabeledList.Item
                       label="Multitool buffer"
                       buttons={multitool_buf ? (
-                        <Fragment>
+                        <>
                           <Button
                             onClick={() => act('multitool', {
                               'Link': true,
@@ -152,7 +151,7 @@ export const TelecommsInteraction = (props, context) => {
                             })}>
                             Flush
                           </Button>
-                        </Fragment>
+                        </>
                       ) : (
                         <Button
                           onClick={() => act('multitool', {
@@ -166,13 +165,11 @@ export const TelecommsInteraction = (props, context) => {
                       )}
                     </LabeledList.Item>
                   )}
-                </Fragment>
-              ) : (
-                ''
+                </>
               )}
             </LabeledList>
-            {power ? (
-              <Fragment>
+            {!!power && (
+              <>
                 <Section
                   title="Linked Network Entities"
                   level={2}>
@@ -230,12 +227,10 @@ export const TelecommsInteraction = (props, context) => {
                     ''
                   )}
                 </Section>
-              </Fragment>
-            ) : (
-              ''
+              </>
             )}
           </Section>
-        </Fragment>
+        </>
       </Window.Content>
     </Window>
   );

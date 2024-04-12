@@ -4,12 +4,13 @@
 	earliest_start = 10 MINUTES
 	min_players = 5
 	weight = 40
-	alert_observers = FALSE
+	category = EVENT_CATEGORY_ENGINEERING
+	description = "Destroys all lights in a large area."
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount	= 1
 	var/lightsoutRange	= 25
-	announceWhen	= 1
+	announce_when	= 1
 
 /datum/round_event/electrical_storm/announce(fake)
 	if(prob(50))

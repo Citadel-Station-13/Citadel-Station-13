@@ -25,7 +25,7 @@
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
 
-/mob/living/carbon/true_devil/Initialize()
+/mob/living/carbon/true_devil/Initialize(mapload)
 	create_bodyparts() //initialize bodyparts
 	create_internal_organs()
 	grant_all_languages()
@@ -59,11 +59,11 @@
 	stat = DEAD
 	..(gibbed)
 	drop_all_held_items()
-	INVOKE_ASYNC(mind.has_antag_datum(/datum/antagonist/devil), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
+	INVOKE_ASYNC(mind.has_antag_datum(/datum/antagonist/devil), TYPE_PROC_REF(/datum/antagonist/devil, beginResurrectionCheck), src)
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!")
+	. = list("<span class='info'>This is [icon2html(src, user)] <b>[src]</b>!")
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
@@ -81,10 +81,10 @@
 		. += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>"
 	else if(health < (maxHealth/2))
 		. += "<span class='warning'>You can see hellfire inside its wounds.</span>"
-	. += "*---------*</span>"
+	. += "</span>"
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/resist_buckle()
 	if(buckled)
@@ -104,13 +104,13 @@
 /mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
 
-/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash, override_protection = 0)
+/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/tiled/flash, override_protection = 0)
 	if(mind && has_bane(BANE_LIGHT))
 		mind.disrupt_spells(-500)
 		return ..() //flashes don't stop devils UNLESS it's their bane.
 
 /mob/living/carbon/true_devil/soundbang_act()
-	return 0
+	return FALSE
 
 /mob/living/carbon/true_devil/get_ear_protection()
 	return 2
@@ -124,7 +124,7 @@
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
-		return 0
+		return FALSE
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
@@ -138,7 +138,7 @@
 		return ..()
 
 /mob/living/carbon/true_devil/can_be_revived()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/resist_fire()
 	//They're immune to fire.
@@ -177,9 +177,9 @@
 	// devils do not need to breathe
 
 /mob/living/carbon/true_devil/is_literate()
-	return 1
+	return TRUE
 
-/mob/living/carbon/true_devil/ex_act(severity, ex_target)
+/mob/living/carbon/true_devil/ex_act(severity, target, origin)
 	if(!ascended)
 		var/b_loss
 		switch (severity)

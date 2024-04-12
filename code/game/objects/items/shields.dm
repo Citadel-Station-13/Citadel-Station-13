@@ -3,7 +3,7 @@
 	icon = 'icons/obj/shields.dmi'
 	item_flags = ITEM_CAN_BLOCK
 	block_parry_data = /datum/block_parry_data/shield
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	/// Shield flags
 	var/shield_flags = SHIELD_FLAGS_DEFAULT
 	/// Last shieldbash world.time
@@ -34,6 +34,10 @@
 	block_damage_absorption = 5
 	block_resting_stamina_penalty_multiplier = 2
 	block_projectile_mitigation = 75
+	block_damage_absorption_override = list(
+		TEXT_ATTACK_TYPE_TACKLE = INFINITY,
+		TEXT_ATTACK_TYPE_THROWN = 10
+	)
 
 /obj/item/shield/examine(mob/user)
 	. = ..()
@@ -74,7 +78,7 @@
 	animate(effect, alpha = 0, pixel_x = px * 1.5, pixel_y = py * 1.5, time = 3, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 
 /obj/item/shield/proc/bash_target(mob/living/user, mob/living/target, bashdir, harmful)
-	if(!(target.status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
+	if(!(HAS_TRAIT(target, CANKNOCKDOWN)) || HAS_TRAIT(target, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
 		// unified stun absorption system when lol
 		target.visible_message("<span class='warning'>[user] slams [target] with [src], but [target] doesn't falter!</span>", "<span class='userdanger'>[user] slams you with [src], but it barely fazes you!</span>")
 		return FALSE
@@ -120,8 +124,6 @@
 	return TRUE
 
 /obj/item/shield/proc/user_shieldbash(mob/living/user, atom/target, harmful)
-	if(!SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)) //Combat mode has to be enabled for shield bashing
-		return FALSE
 	if(!(shield_flags & SHIELD_CAN_BASH))
 		to_chat(user, "<span class='warning'>[src] can't be used to shield bash!</span>")
 		return FALSE
@@ -172,11 +174,11 @@
 /obj/item/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(ismovable(object))
 		var/atom/movable/AM = object
-		if(CHECK_BITFIELD(shield_flags, SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
+		if((shield_flags & SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
 			return BLOCK_NONE
-	if(CHECK_BITFIELD(shield_flags, SHIELD_NO_RANGED) && (attack_type & ATTACK_TYPE_PROJECTILE))
+	if((shield_flags & SHIELD_NO_RANGED) && (attack_type & ATTACK_TYPE_PROJECTILE))
 		return BLOCK_NONE
-	if(CHECK_BITFIELD(shield_flags, SHIELD_NO_MELEE) && (attack_type & ATTACK_TYPE_MELEE))
+	if((shield_flags & SHIELD_NO_MELEE) && (attack_type & ATTACK_TYPE_MELEE))
 		return BLOCK_NONE
 	if(attack_type & ATTACK_TYPE_THROWN)
 		final_block_chance += 30
@@ -245,38 +247,44 @@
 	var/final_damage = damage
 
 	if(attack_type & ATTACK_TYPE_MELEE)
-		var/obj/hittingthing = object
-		if(hittingthing.damtype == BURN)
-			if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_WEAK))
-				final_damage *= 2
-			else if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_STRONG))
-				final_damage *= 0.5
+		if(istype(object, /obj))	//Assumption: non-object attackers are a meleeing mob. Therefore: Assuming physical attack in this case.
+			var/obj/hittingthing = object
+			if(hittingthing.damtype == BURN)
+				if((shield_flags & SHIELD_ENERGY_WEAK))
+					final_damage *= 2
+				else if((shield_flags & SHIELD_ENERGY_STRONG))
+					final_damage *= 0.5
 
-		if(hittingthing.damtype == BRUTE)
-			if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_WEAK))
-				final_damage *= 2
-			else if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_STRONG))
-				final_damage *= 0.5
+			if(hittingthing.damtype == BRUTE)
+				if((shield_flags & SHIELD_KINETIC_WEAK))
+					final_damage *= 2
+				else if((shield_flags & SHIELD_KINETIC_STRONG))
+					final_damage *= 0.5
 
-		if(hittingthing.damtype == STAMINA || hittingthing.damtype == TOX || hittingthing.damtype == CLONE || hittingthing.damtype == BRAIN || hittingthing.damtype == OXY)
-			final_damage = 0
+			if(hittingthing.damtype == STAMINA || hittingthing.damtype == TOX || hittingthing.damtype == CLONE || hittingthing.damtype == BRAIN || hittingthing.damtype == OXY)
+				final_damage = 0
+		else
+			if((shield_flags & SHIELD_KINETIC_WEAK))
+				final_damage *= 2
+			else if((shield_flags & SHIELD_KINETIC_STRONG))
+				final_damage *= 0.5
 
 	if(attack_type & ATTACK_TYPE_PROJECTILE)
 		var/obj/item/projectile/shootingthing = object
 		if(is_energy_reflectable_projectile(shootingthing))
-			if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_WEAK))
+			if((shield_flags & SHIELD_ENERGY_WEAK))
 				final_damage *= 2
-			else if(CHECK_BITFIELD(shield_flags, SHIELD_ENERGY_STRONG))
+			else if((shield_flags & SHIELD_ENERGY_STRONG))
 				final_damage *= 0.5
 
 		if(!is_energy_reflectable_projectile(object))
-			if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_WEAK))
+			if((shield_flags & SHIELD_KINETIC_WEAK))
 				final_damage *= 2
-			else if(CHECK_BITFIELD(shield_flags, SHIELD_KINETIC_STRONG))
+			else if((shield_flags & SHIELD_KINETIC_STRONG))
 				final_damage *= 0.5
 
 		if(shootingthing.damage_type == STAMINA)
-			if(CHECK_BITFIELD(shield_flags, SHIELD_DISABLER_DISRUPTED))
+			if((shield_flags & SHIELD_DISABLER_DISRUPTED))
 				final_damage *= 3 //disablers melt these kinds of shields. Really meant more for holoshields.
 			else
 				final_damage = 0
@@ -296,7 +304,7 @@
 /obj/item/shield/riot/energy_proof
 	name = "energy resistant shield"
 	desc = "An ablative shield designed to absorb and disperse energy attacks. This comes at significant cost to its ability to withstand ballistics and kinetics, breaking apart easily."
-	armor = list("melee" = 30, "bullet" = -10, "laser" = 80, "energy" = 80, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = -10, LASER = 80, ENERGY = 80, BOMB = -40, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	icon_state = "riot_laser"
 	item_state = "riot_laser"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -307,7 +315,7 @@
 /obj/item/shield/riot/kinetic_proof
 	name = "kinetic resistant shield"
 	desc = "A polymer and ceramic shield designed to absorb ballistic projectiles and kinetic force. It doesn't do very well into energy attacks, especially from weapons that inflict burns."
-	armor = list("melee" = 30, "bullet" = 80, "laser" = 0, "energy" = 0, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = 80, LASER = 0, ENERGY = 0, BOMB = -40, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	icon_state = "riot_bullet"
 	item_state = "riot_bullet"
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_KINETIC_STRONG | SHIELD_ENERGY_WEAK
@@ -326,7 +334,7 @@
 
 /obj/item/shield/riot/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	shield_flags = SHIELD_ENERGY_WEAK | SHIELD_KINETIC_WEAK | SHIELD_NO_RANGED
 	max_integrity = 40
 
@@ -358,7 +366,7 @@
 	item_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash
 
-/obj/item/shield/riot/flash/Initialize()
+/obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
 	embedded_flash = new(src)
 
@@ -376,10 +384,9 @@
 
 /obj/item/shield/riot/flash/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	. = ..()
-	if (. && !embedded_flash.crit_fail)
+	if (. && damage && !embedded_flash.crit_fail)
 		embedded_flash.activate()
 		update_icon()
-
 
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/assembly/flash/handheld))
@@ -464,7 +471,7 @@
 /obj/item/shield/makeshift
 	name = "metal shield"
 	desc = "A large shield made of wired and welded sheets of metal. The handle is made of cloth and leather, making it unwieldy."
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 5, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 80)
+	armor = list(MELEE = 25, BULLET = 25, LASER = 5, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 70, ACID = 80)
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	item_state = "metal"
@@ -478,7 +485,7 @@
 /obj/item/shield/riot/tower
 	name = "tower shield"
 	desc = "An immense tower shield. Designed to ensure maximum protection to the user, at the expense of mobility."
-	armor = list("melee" = 95, "bullet" = 95, "laser" = 75, "energy" = 60, "bomb" = 90, "bio" = 90, "rad" = 0, "fire" = 90, "acid" = 10) //Armor for the item, dosnt transfer to user
+	armor = list(MELEE = 95, BULLET = 95, LASER = 75, ENERGY = 60, BOMB = 90, BIO = 90, RAD = 0, FIRE = 90, ACID = 10) //Armor for the item, dosnt transfer to user
 	item_state = "metal"
 	icon_state = "metal"
 	force = 16
@@ -523,7 +530,7 @@
 /obj/item/shield/riot/implant/Moved()
 	. = ..()
 	if(istype(loc, /obj/item/organ/cyberimp/arm/shield))
-		recharge_timerid = addtimer(CALLBACK(src, .proc/recharge), recharge_delay, flags = TIMER_STOPPABLE)
+		recharge_timerid = addtimer(CALLBACK(src, PROC_REF(recharge)), recharge_delay, flags = TIMER_STOPPABLE)
 	else		//extending
 		if(recharge_timerid)
 			deltimer(recharge_timerid)
@@ -547,14 +554,14 @@
 	force = 3
 	throwforce = 3
 	throw_speed = 3
-	var/base_icon_state = "eshield" // [base_icon_state]1 for expanded, [base_icon_state]0 for contracted
+	base_icon_state = "eshield" // [base_icon_state]1 for expanded, [base_icon_state]0 for contracted
 	var/on_force = 10
 	var/on_throwforce = 8
 	var/on_throw_speed = 2
 	var/active = 0
 	var/clumsy_check = TRUE
 
-/obj/item/shield/energy/Initialize()
+/obj/item/shield/energy/Initialize(mapload)
 	. = ..()
 	icon_state = "[base_icon_state]0"
 
@@ -564,7 +571,7 @@
 		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
 	return ..()
 
-/obj/item/shield/energy/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
+/obj/item/shield/energy/directional_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	if((attack_type & ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT

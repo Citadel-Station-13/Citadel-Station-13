@@ -61,13 +61,16 @@
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
-	occupier.adjustOxyLoss(-1, 0)
-	occupier.adjustFireLoss(-1, 0)
-	occupier.adjustToxLoss(-1, 0)
-	occupier.adjustBruteLoss(-1, 0)
+	occupier.adjustOxyLoss(-1, FALSE, FALSE)
+	occupier.adjustFireLoss(-1, FALSE, FALSE)
+	occupier.adjustBruteLoss(-5, FALSE)
+
 	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
-		occupier.revive()
+		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
+		if(!occupier.radio_enabled)
+			occupier.radio_enabled = TRUE
+			to_chat(occupier, span_warning("Your Subspace Transceiver has been enabled!"))
 	return occupier.health < 100
 
 /obj/machinery/computer/aifixer/process()

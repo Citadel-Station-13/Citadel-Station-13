@@ -11,11 +11,11 @@
 	var/lifespan = 5 MINUTES //how many deciseconds does the implant last?
 	allow_teleport = FALSE
 
-/obj/item/implant/tracking/c38/Initialize()
+/obj/item/implant/tracking/c38/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, lifespan)
 
-/obj/item/implant/tracking/Initialize()
+/obj/item/implant/tracking/Initialize(mapload)
 	. = ..()
 	GLOB.tracked_implants += src
 

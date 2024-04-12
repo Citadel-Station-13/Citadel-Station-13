@@ -14,7 +14,7 @@ Difficulty: Hard
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	weather_immunities = list("snow")
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -32,6 +32,9 @@ Difficulty: Hard
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
+	achievement_type = /datum/award/achievement/boss/wendigo_kill
+	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
+	score_achievement_type = /datum/award/score/wendigo_score
 	deathmessage = "falls, shaking the ground around it"
 	deathsound = 'sound/effects/gravhit.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
@@ -67,7 +70,7 @@ Difficulty: Hard
 	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
 	chosen_attack_num = 3
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Initialize()
+/mob/living/simple_animal/hostile/megafauna/wendigo/Initialize(mapload)
 	. = ..()
 	starting = get_turf(src)
 
@@ -111,7 +114,7 @@ Difficulty: Hard
 	. = ..()
 	stored_move_dirs &= ~direct
 	if(!stored_move_dirs)
-		INVOKE_ASYNC(src, .proc/ground_slam, stomp_range, 1)
+		INVOKE_ASYNC(src, PROC_REF(ground_slam), stomp_range, 1)
 
 /// Slams the ground around the wendigo throwing back enemies caught nearby
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/ground_slam(range, delay)

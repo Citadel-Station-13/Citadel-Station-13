@@ -1,0 +1,310 @@
+2021-03-01:
+  SmArtKar:
+  - bugfix: Fixes decks breaking your screen
+  - bugfix: Fixes binders not saving cards
+  - bugfix: Fixes binders not saving multiple cards of the same type
+  Vynzill:
+  - bugfix: cursed rice hat right in front of the jungle gateway's entrance is now
+      removed from this dimensional plane
+2021-03-02:
+  LetterN:
+  - bugfix: 'colorpainter: let''s not dispense null'
+  SandPoot:
+  - bugfix: Changelings will actually become the person they want to be when using
+      "human form" ability(after having used last resort).
+2021-03-03:
+  MarinaGryphon:
+  - bugfix: The AOOC mute pref is now properly respected.
+  - bugfix: Muting adminhelp sounds no longer mutes AOOC.
+  Putnam3145:
+  - config: pAIs now have a policy config
+  - rscadd: '"Supermatter surge" event, which might cause problems if the supermatter
+      is not sufficiently cooled (i.e. the setup is messed up in some way)'
+  - rscdel: Fusion can no longer be done in open air.
+  - rscdel: Valentine's day event no longer gives everyone a valentine's antag.
+  SandPoot:
+  - bugfix: Legions should now pass their type to the person they infect (if valid).
+  dzahlus:
+  - rscadd: Added new subtype to lesser ash drake balanced around player control
+  - balance: rebalanced dragon transformation to a 1 minute cooldown as well as using
+      the new subtype of megafauna
+  qweq12yt:
+  - bugfix: fixed infectious zombies not being able to attack if host was pacifist
+  - rscadd: adds a way for species to have blacklisted quirks, the removal, and restoration
+      of said quirks upon species changes
+  - bugfix: Now pacifists won't be able to use flamethrowers
+  - bugfix: Kinetic Accelerator now properly reloads a charge to it's chamber instead
+      of nulling the variable forever
+  - bugfix: Now pacifists won't be able to use Kinetic Accelerators if a non-pacifist
+      shoots it first
+2021-03-04:
+  LetterN:
+  - code_imp: removes bsql
+2021-03-05:
+  Putnam3145:
+  - tweak: Lowered ash storm volume
+  - tweak: Minesweeper can no longer be made to lag the server on purpose
+  keronshb:
+  - tweak: Prevents heat from going through reinforced plasma glass.
+2021-03-07:
+  Hatterhat:
+  - rscadd: You can now reskin your improvised shotguns.
+  - rscadd: The spontaneous brain trauma event now announces to ghosts whoever got
+      funnied upon.
+  - imageadd: Ports EikoBiko's cat tail sprite.
+  Putnam3145:
+  - bugfix: nitryl now consumes oxygen/nitrogen instead of generating them
+  - balance: Hyper-nob and nitryl are easier to make.
+  dzahlus:
+  - rscadd: Added taser microbattery for MWS-01
+  - tweak: tweaked MWS-01 beacondrop to have more batteries
+  - balance: rebalanced MWS-01 disabler battery to fire 10 shots
+  - soundadd: added unique sound to the MWS-01
+  - spellcheck: fixed Modula Weapons System to "Modular Weapon System"
+  timothyteakettle:
+  - balance: exiting a bluespace jar through any means, hardstuns you for 5 seconds
+2021-03-09:
+  LetterN:
+  - refactor: tg hardsync, mostly contains tgui
+2021-03-10:
+  Hatterhat:
+  - rscadd: The femur breaker now actually breaks legs by applying a compound fracture.
+  Putnam3145:
+  - balance: uncapped TEG power, buffing high-temp TEGs
+2021-03-12:
+  R3dtail:
+  - spellcheck: Adds Periods and moves some words around.
+2021-03-14:
+  Adelphon:
+  - rscadd: messy2
+  - bugfix: papermask
+  Hatterhat:
+  - rscadd: Robotic limb repair surgery now has tiers.
+  - rscadd: 'Pubby and Delta now have roundstart limb-growers relatively close to,
+      if not in, the operating theaters. tweak: Box QM''s console now can announce
+      things.'
+  Putnam3145:
+  - bugfix: chaos loads now
+  kiwedespars:
+  - rscadd: adds a cute new plushie
+  necromanceranne:
+  - bugfix: Fixes cosmetic augments missing their foot sprites.
+2021-03-16:
+  GrayRachnid:
+  - balance: removed red toolbox, agent id, and guerilla gloves from unlocking illegal
+      tech.
+  HeroWithYay:
+  - bugfix: fixed spelling error
+  LetterN:
+  - bugfix: Borg light icons not turning off
+  - bugfix: Double ai icon select + Fixes ai core not having icons
+  - bugfix: Missing air tank icon
+  - bugfix: Computer boards being dumb and  nullspacing/qdeling itself
+  Putnam3145:
+  - balance: Supernova now much lower chance to be inconsequential
+  - balance: Made hyper-nob's point values way lower (25/20 for science/cargo instead
+      of 1000/1000)
+  - balance: Made nitryl's cargo sell value less (10 instead of 30)
+  SandPoot:
+  - bugfix: Fixed interacting with telecomms.
+2021-03-17:
+  KeRSedChaplain:
+  - rscadd: Added three new rites, and makes soul vessels obtainable
+  - bugfix: fixes clockwork guardians inheriting marauders blocking
+  - soundadd: added sounds for the ratvar end sequence, voiced by @dzahlus
+  timothyteakettle:
+  - rscadd: speech panel added to main menu customization
+2021-03-18:
+  Arturlang:
+  - bugfix: Combat mode right click and right click verb give's are now actualyl targeted
+  Hatterhat:
+  - rscadd: Hypospray vials are now printable from the medical techshift start.
+  - rscadd: 'Empty hypospray kits are now printable behind biological technology.
+      tweak: Quantum electromag (T4 lasers) are now behind Advanced Bluespace like
+      the rest of T4.'
+2021-03-19:
+  DeltaFire15:
+  - rscdel: 'Bluespace jars can no longer be printed / acquired from lathes / techwebs.
+      tweak: The travelling animal trader now gives you your reward in a one-use bluespace
+      jar.'
+  Putnam3145:
+  - rscadd: '"Antag" role that can be toggled to disable all antags'
+  SandPoot:
+  - rscadd: Tactitool Skirtleneck.
+  - rscadd: Adds the tactitool skirtleneck to the loadout.
+  kiwedespars:
+  - rscadd: 'New heretic path - Path of Void- it specializes in being extremely stealthy.
+      tweak : Removed curse of blindness replaced with mask of madness. hey it even
+      rhymes.'
+  - bugfix: fixes heretic mass deletion during transmutation bug.
+  - bugfix: Fixes heretic brews being permanent.
+  - bugfix: 'Fixes void storm breaking after resurrecting. tweak: Heretic has received
+      a minor textual facelift. tweak: Heretics who finish the Void Path and become
+      an Aristocrat of the Void can now survive in the Void (space).'
+  - bugfix: Heretics who research Aristocrats Way on the Void Path will no longer
+      suffocate in their own storm when they ascend (no longer breathes).
+  - bugfix: Mark of Void and Seeking Blade are once again exclusive only to Void.
+  - balance: 'Carving knife now deals more damage on throw and can embed in your enemies.
+      tweak: Grasp of Rust only rusts floors and machines on harm intent. tweak: when
+      u choose a sac target as heretic it ll also tell the job of the sac'
+  - rscadd: 2 new void spells, one a placeholder.
+  - rscadd: flesh mansus grasp buffed, now gives you 5u eldritch fluid when hitting
+      someone.
+  zeroisthebiggay:
+  - bugfix: fixes spriteless heretic book
+2021-03-20:
+  Hatterhat:
+  - bugfix: Bluespace beaker filling icons for that narrow band between 90 and 80%
+      full now actually exist.
+2021-03-21:
+  Arturlang:
+  - bugfix: Vampire statpanel no longer shows spans unnecesary
+  GrayRachnid:
+  - bugfix: fixed the holopad autocall bug
+  - bugfix: properly incorporated the secure holopad that was commented out in the
+      code.
+  - config: the in_character_filter.txt is now usable
+  - admin: headmins should edit the in_character_filter.txt
+  - server: someone with box access should delete racism with the in_character_filter.txt
+  - balance: buffed particle defender disabler shots from 13->15 stamina (15*6=90)
+  - balance: buffed particle defender laser ammo to 4 shots
+  Hatterhat:
+  - rscdel: removes pacifism from ghost cafe. have fun beating up your coworkers
+  LetterN:
+  - rscadd: Art gallery (meta)
+  - rscadd: Laptop vendor (meta, delta, box)
+  Putnam3145:
+  - balance: Buffed supermatter surge massively.
+  The-Sun-In-Splendour:
+  - bugfix: You cannot revive yourself (as a changeling) if you've been absorbed anymore
+  dzahlus:
+  - balance: rebalanced hierophant STAFF to do 15 damage on all attacks
+  timothyteakettle:
+  - bugfix: using the puddle ability when stunned wont break it
+2021-03-23:
+  LetterN:
+  - bugfix: NIRM departamental purchases now work. Have fun spending the entire R&D
+      Budget!
+2021-03-24:
+  BlueWildrose:
+  - bugfix: The nightmare's light eater can now destroy messes that emit light, like
+      glowing goo or ectoplasmic puddles.
+  Hatterhat:
+  - bugfix: The NOGUNS trait now takes precedence over the triggerguard checks.
+  - balance: Medicated sutures and advanced regenerative mesh are now easier to make.
+      Reagent-quantity wise, anyway.
+  ItzGabby:
+  - rscadd: Fluff Items with polychromic support
+  - rscadd: A new vendor called Bark box
+  - rscadd: A new form of snack with it's own box
+  - rscadd: Two harness, one of them being lewd
+  - rscadd: One new collar, with a ribbon. Classy.
+  - rscadd: More locked forms of collars
+  - rscdel: Purged old balls
+  - balance: Removed the funny buffs each colored tennis ball had, down with the powergame!
+  - imageadd: Added polychromic fluff icons, vendor icons, suit icons, snack icons,
+      fancy box icons, and a polychromic version of Izzy's ball.
+  - imagedel: Deleted old balls, Izzy's Ball, except the rainbow one since it's special
+      and as I did not go out of my way to get permission to touch.
+  - spellcheck: Walked into vending.dm and glared for a moment at hydroponics' grammar.
+  LetterN:
+  - bugfix: fixed laptops pickability
+  - bugfix: fixed closets being unweldable
+  YakumoChen:
+  - balance: Genetics - Thermal vision is a recipe instead of a natural gene now.
+      Nearsighted+Stimmed. Other minor nerfs, Thermal is 40 instability.
+  - balance: Research - X-ray eyes are now an illegal tech.
+  qweq12yt:
+  - rscadd: added the black market uplink
+  - imageadd: added blackmarket.dmi
+  - bugfix: increased the black market interface's width, now the delivery options
+      will show properly when the LTSRBT is built
+  zeroisthebiggay:
+  - rscadd: biodegrade works on legcuffs
+2021-03-25:
+  zeroisthebiggay:
+  - balance: strained muscles isn't free
+2021-03-26:
+  BlueWildrose:
+  - balance: Clothing no longer drops when shredded. It just becomes useless.
+  - balance: Suit sensors are guaranteed to short out when the clothes become shredded,
+      not damaged now.
+  - balance: Uniform limb integrity increased from 30 to 120.
+  - balance: 'Suit sensor damage has been added. The more damaged your suit sensors
+      get, the less features that will be available from these suit sensors. It takes
+      two e-sword hits to ruin your tracking beacon for instance. tweak: Examine text
+      on uniforms is now more clear about needing cable coil to repair your suit sensors.'
+  - bugfix: Fixed prisoner uniform sprite paths
+  CuteMoff:
+  - balance: Diamond's forcemod was changed from 1.1x to 1.2x
+  Hatterhat:
+  - rscadd: Lever-action rifles, chambered in .38, are now sitting in the code. They
+      might be buyable from Cargo or the Black Market soon. Watch this space.
+  - rscadd: Sawed-off shotguns now look like shotguns, but short, when inhand, instead
+      of "generic gun".
+  timothyteakettle:
+  - bugfix: slimes can be delimbed
+  - bugfix: the loadout now colours pet collars correctly
+2021-03-28:
+  CuteMoff:
+  - balance: Changed Strength Modifier from the default (1.0) too .7
+  Hatterhat:
+  - bugfix: As a heretic, shattering your blade no longer interferes with bluespace.
+  Putnam3145:
+  - rscadd: Threat tracking is now universal, rather than dynamic-only
+  - rscadd: Slaughter demon event now increases weight based on how much blood there
+      is.
+  R3dtail:
+  - rscdel: Removed ichor creates
+  - balance: Removed ichor crates and adjusted crate rolling appropriately
+  - balance: Removed the bonespear from the blackmarket uplink, and made EMP grenades
+      harder to get from the same item.
+  - rscadd: Added a description to the black market uplink
+  Shadow-Quill:
+  - imageadd: Added small versions of the walk icon for all hud styles, except Retro.
+  dzahlus:
+  - rscadd: Added radial menu to joy mask for alt reskins
+  - imageadd: added pensive, angry and flushed sprites to joy mask
+  keronshb:
+  - balance: Radioactive microlasers can no longer knock out creatures who are immune
+      to the effects of radiation.
+  - bugfix: The radioactive microlaser now calculates the strength of its delay effect
+      using the intensity setting it had when you initially used it on your victim,
+      not the intensity setting it currently has. This prevents people from "cheating
+      out" its intensity 20 effect with only a 2 second delay and a 1 second cooldown.
+  - balance: Radioactive microlasers no longer contain twice as much metal as normal
+      health analyzers do.
+  necromanceranne:
+  - rscadd: Replaces the useless bullet and laser shields with new Kinetic and Ablative
+      shields, which do as they advertise.
+  - rscadd: Replaces the shield implants shield with a hardlight shield that can take
+      large amounts of brute damage, but disintegrates when shot with disablers.
+  - bugfix: Fixes Fake Roman Shields being able to be used as normal riot shields.
+  - bugfix: Fixes nonlethal/non-physical damage types destroying shields. (stamina,
+      toxins, oxygen, clone, brain)
+  - bugfix: Fixes tower shields not doing anything, while also giving them intergrity
+      to match their advertised durability.
+  - bugfix: Uses additional flags to determine what kind effects work well and what
+      works poorly against various shields.
+  timothyteakettle:
+  - rscadd: ghost cafe residents can now disguise themselves as any mob or object
+  - bugfix: fixes character preview not updating when selecting the loadout tab
+  zeroisthebiggay:
+  - rscadd: triple kitsune tail
+2021-03-29:
+  BlueWildrose:
+  - bugfix: Fixed being unable to fix suit sensors if damaged at all unless destroyed
+      completely
+  YakumoChen:
+  - rscadd: A less-than-new Syndicate bundle that reminds you of the good old days
+      when we didn't need all those newfangled traitor items the young-uns get. We
+      had 6 items in the uplink and we had Monkey in rotation and by god we made do.
+  qweq12yt:
+  - rscadd: Added Earmuffs
+  - rscadd: Added Random Drink
+  - rscadd: Added Clear PDA
+  - rscadd: Added Internals Box
+  - rscadd: Added Meson Goggles
+  - rscadd: Added Smoke Grenade
+  silicons:
+  - bugfix: automated hydroponics system design now works properly

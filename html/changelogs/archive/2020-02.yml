@@ -1,0 +1,587 @@
+2020-02-26:
+  AnturK ported by kevinz000:
+  - rscadd: Dueling pistols have been added.
+  Arturlang:
+  - rscadd: Replaces a lot of ingame UIs with TGUI next, increasing performance drastically.
+  - rscadd: Each night for bloodsuckers will last longer due to the sun dimming.
+  - tweak: You cant level up for free, now you have to pay blood for power.
+  - balance: Bloodsuckers are no longer as resistant to hard stuns and regenerate
+      less stamina. and a lot of their cooldowns are a lot higher.
+  - rscdel: Removed text macros from the chem dispenser.
+  - rscadd: Replaced with dispenser input recording macros.
+  - bugfix: Fancifying makeshift switchblades now works
+  - balance: Shields will no longer block lasers, and will break if they take too
+      much damage.
+  - rscadd: Added a TGUI Next interface for crafting
+  - rscdel: Removed the old TGUI slow crafting interface
+  - tweak: The MK2 hypospray now
+  - admin: The debug outfit is now kitted out for whatever debbuging needs.
+  - bugfix: Fixed the pandemic naming and the radiation healing symptom UI crashing
+  - tweak: Hyposprays now switch modes on CTRL click, instead of alt, as it was already
+      reserved for dispension amount.
+  - rscadd: Nanite interfaces have gotten a rework to TGUI Next, and can now support
+      sub-programs. add:Adds the nanite sting program, which will allow you to manually
+      sting people to give them nanites, changeling style.
+  - balance: The pandemic can no longer make vaccines or synthblood as quickly.
+  - rscadd: The syndicate uplinks interface has been redone in TGUI Next
+  - tweak: Valentines can now be converted by bloodsuckers
+  Bhijn:
+  - tweak: Click-dragging will now only perform the quick item usage behavior if you're
+      in combat mode.
+  BlueWildrose:
+  - bugfix: podpeople tail wagging
+  - tweak: lifebringer ghost role fixes
+  BuffEngineering, nemvar.:
+  - bugfix: Addicts can now feel like they're getting their fix or kicking it.
+  - bugfix: Aheals now remove addictions and restore your mood to default.
+  CameronWoof:
+  - tweak: Lighting looks better now. I can say that because the PR wouldn't be merged
+      and you wouldn't be reading this if it wasn't true.
+  - rscadd: Ammonia and saltpetre can now be made at the biogenerator.
+  Commandersand:
+  - tweak: uplink centcomm suit doesn't have sensors
+  DeltaFire15:
+  - balance: Nar'Sie runes no longer benefit from runed floors.
+  Detective-Google:
+  - rscadd: 'the POOL. remove: boxstation dorms 7'
+  - bugfix: valentines candy no longer prefbreaks
+  - rscadd: Loudness Booster pAI program
+  - rscadd: Encryption Key pAI program
+  EmeraldSundisk:
+  - bugfix: Connects mining's disposal unit on Delta.
+  - tweak: Slight visual adjustments to the immediate affected area.
+  Feasel:
+  - balance: Buffed dissection success chances.
+  Ghommie:
+  - tweak: The anomalous honking crystal should now properly clown your mind.
+  - bugfix: Stopped the ellipsis question mark from being displayed twice in the examine
+      message for masked/unknown human mobs.
+  - tweak: Made the aforementioned ellipsis question mark display on flavor-text-less
+      masked/unknown human mobs too for consistency.
+  - bugfix: Stopped an APTFT exploit with spray bottles.
+  - bugfix: Fixed the detective revolver being quite risky to use.
+  - bugfix: Hair styles and undergarments are yet again free from gender restrictions.
+  - tweak: Clown ops will find bombananas and clown bomb beacons instead of minibombs
+      and bomb beacons in their infiltrator ship now.
+  - tweak: For safety, the syndicate shuttle minibombs and bombananas come shipped
+      in a box. Please don't instinctively eat any of those nanas, thank you.
+  - tweak: Uplink items excluded (such as mulligan, chameleon, ebow) from or exclusive
+      (such as cyber implants) to normal nuke ops will now be properly unavailable/available
+      to clown ops.
+  - bugfix: Fixed bananium energy sword/shield slips.
+  - balance: Buffed said slips to ignore no-grav/crawling/flying as well as adding
+      some deadly force to the e-sword.
+  - bugfix: Fixed the 'stache grenade anti-non-clumsy user check.
+  - balance: Doubled the timer for the sticky mustaches effect from the above grenade
+      (from 1 to 2 minutes)
+  - bugfix: Fixed an edge case with the chaplain armaments beacon spawning the box
+      in nullspace.
+  - tweak: The playback device's cooldown now proportionally increases with messages
+      longer than 60 characters (3 seconds is the default assembly cooldown).
+  - bugfix: Fixed space ninjas "Nothing" objective. Now you gotta steal some dandy
+      stuff such as corgi meat and pinpointers as a ninja too.
+  - bugfix: Fixed maploaded APC terminals direction.
+  - balance: Nerfed magnetic rifles/pistols by re(?)adding power cell requirements
+      for it. These firearms must be recharged after firing 2 magazines worth of projectiles
+      and are slightly more susceptible to EMPs.
+  - bugfix: Fixed the tearstache nade not properly working.
+  - balance: Buffed it against space helmet internals.
+  - tweak: Holographic fans won't display above mobs and other objects anymore.
+  - bugfix: Fixed paraplegics appearing as shoeless.
+  - bugfix: Fixed the petting element.
+  - bugfix: Fixed slipping.
+  - refactor: Refactored mob holders into an element.
+  - bugfix: Fixed a few minor issues with that feature. such as mismatching sprites
+      for certain held mobs and a slight lack of safety checks.
+  - rscdel: holdable mobs can't force themselves into people's hands anymore.
+  - bugfix: Milkies fix.
+  - bugfix: Fixed some mounted defibrillator issue with the altclicking functionality.
+  - bugfix: Fixed no-grav lavaland labor/mining shuttle areas.
+  - bugfix: Fixed a little issue with sleeper UI and blood types.
+  - bugfix: Fixing accidental nerfs to the magpistol magazine.
+  - bugfix: The Lavaland's Herald speech sound should only play if they are actually
+      speaking.
+  - bugfix: Nerfed cargo passive points generation from 500 to 125 creds per minute.
+  - bugfix: Fixed whitelisted/donor loadouts
+  - bugfix: Childproofs double-esword and hypereuplastic blade toys.
+  - balance: Some reagent holders (such as cigarettes, food) are not suitable for
+      reagents export anymore, while unprocessed botany crops will only net 1/3 of
+      the standard reagents values.
+  - bugfix: Export scanners now include the reagents value in the price report.
+  - bugfix: Fixed a little inconvenience with the character setup preview dummy having
+      extra unwarranted bits.
+  - bugfix: Stopped role restricted uplink items from being discounted despite not
+      being purchasable most times.
+  - bugfix: Missing words replacement file for the gondola mask.
+  - bugfix: Fixed an issue with the nearsighted prescription glasses taking over worn
+      eyewear.
+  - bugfix: Fixed AI unanchoring not properly removing the no teleport trait. My bad.
+  - bugfix: Fixed another issue with hering comsig.
+  - imageadd: Fixed dozen missing privates sprites.
+  - bugfix: A little fix concerning some R&D and reagents.
+  - bugfix: Further mob holder fixes.
+  - bugfix: Fixed being unable to dump a trash bag's contents directly into disposal
+      bins.
+  - bugfix: Doubled the halved flavor text maximum length.
+  - bugfix: Reduced tongue organ damage and tasting pH message spam.
+  - bugfix: Fixed agent IDs not registering the inputted name. Thanks MrPerson.
+  - bugfix: Fixed solar panels/trackers (de)construction being a bit wonky.
+  - bugfix: Fixed something about slime blood and the law of conservation of mass.
+  - bugfix: Fixed flypeople being emetic machine guns.
+  - bugfix: Fixed virology being unable to be done with synthetic blood.
+  - rscdel: Renamed "blaster carbine" and "blaster rifles" back to "energy gun" and
+      "laser gun" respectively
+  - bugfix: Fixed magnetic rifles & co being inconsistent with printed energy guns
+      and start with an empty power cell.
+  - imagedel: Reverted practice laser gun sprites back to their former glory. Mostly.
+  - bugfix: Fixed sprint buffer cost and regen being rounded down.
+  - balance: Nerfed the fermenting barrel export industry.
+  - tweak: Reagent dispensers selling price no longer takes in account the reagents
+      volume. It's already handled by reagents export.
+  - bugfix: pAIs are yet again unable to perform certain silicon interactions with
+      machineries yet again.
+  - bugfix: Fixed pAI radios inability to be toggled on/off.
+  ? Ghommie (original PRs by Floyd/Qustinnus, 4Dplanner, Willox, ninjanomnom, mrdoombringer,
+    Fikou, Fox McCloud, TheChosenEvilOne, nemvar, bobbahbrown, Time-Green, Stonebaykyle,
+    MrPerson, ArcaneMusic and zxaber)
+  : - rscadd: You can now make toolboxes out of almost any solid material in an autolathe
+    - rscadd: adds Knight's Armour made out of any materials
+    - rscadd: new ruin found in lavaland protected by dark wizards, I wonder what
+        they're guarding
+    - rscadd: You can now put a bunch more mats in the coin mint and autolathe
+    - rscadd: Adamantine and Mythril are now materials (Adamantine still only from
+        xenobio, Mythril still only from badminnery). Adamantine boosts an item's
+        force by 1.5, Mythril gives an item RPG statistics.
+    - rscdel: most custom sprites for coins have been lost
+    - rscadd: You can now give your ass acute radiation poisoning
+    - rscadd: floydmats now apply to all objs / items
+    - rscadd: you can now make tables and chairs out of any material
+    - bugfix: Fixes being able to exploit fully upgraded destructive analyzers to
+        multiply materials
+    - rscadd: An old monastery from a previously abandoned sector of space has recently
+        resurfaced in some regions surrounding the station.
+    - rscadd: Latent scans of the surrounding systems have picked up trace signs of
+        new, smaller cult constructs, however these signatures quickly vanished.
+    - rscadd: In other news, scavengers in your sector have been seen occasionally
+        with classically recreated maces, so autolathe firmware has been upgraded
+        to accommodate this.
+  Hatterhat:
+  - balance: Zombie powder is now instant when ingested, but delayed when injected
+      or applied through touch.
+  - tweak: The H.E.C.K. suit is now goliath tentacle resistant and probably better
+      for acid resistance.
+  - rscadd: The Engineering techfab can now print standard and large RCD compressed
+      matter cartridges.
+  - rscadd: The Experimental Tools node now has the Combifan projector, blocking both
+      temperature and atmospheric changes.
+  - tweak: fiddles with the seed extractor upgrade examine to make it not shit
+  - rscadd: Formaldehyde prevents organ decay and corpses' miasma production at 1u
+      in the body.
+  - rscadd: Epinephrine pens now contain 3u formaldehyde. This should not kill you.
+  - rscadd: The ships often crashed by Free Golems on Lavaland now have GPSes. They're
+      off, by default, but an awakening Golem could easily turn one on.
+  - tweak: Standard RCD ammo can now be printed from Engineering-keyed techfabs once
+      you hit Industrial Engineering.
+  - tweak: Consoleless interfaces are now default - this means unrestricted protolathes
+      and circuit imprinters can now be interfaced with by interacting with the machine
+      itself.
+  - bugfix: Multitools can now actually be printed from Engineering and Science protolathes/techfabs
+      once you unlock Basic Tools.
+  - rscadd: Husking (from being burned to shit) can now be reverted! 5u rezadone or
+      100u synthflesh, at below 50 burn.
+  - balance: Turning a body into a burnt husk now takes more effort. 300 burn's worth
+      of effort.
+  - balance: Buckshot individual pellet damage up from 10 to 12.5. Still firing 6
+      pellets.
+  - rscadd: Preservahyde! Made with water, bromine, and formaldehyde, it doesn't decay
+      into histamine. Instead, it just prevents your organs from rotting into nothing.
+  - balance: You can now purify eldritch longswords with a bible. This creates purified
+      longswords, which do not have anti-magic properties, but are still good for
+      swinging at cultists.
+  - rscadd: Extend votes! Ported from Hyper, ported from AUstation.
+  - bugfix: mechs with stock parts now have icons
+  - balance: Pie reagent transfer now requires an uncovered mouth.
+  - bugfix: Biogenerators can now actually generate universal enzyme.
+  - bugfix: The Basic Tools node now unlocks the multitool for printing on Engineering
+      and Science fabricators.
+  - rscadd: The Ash Walkers' nest on Lavaland now starts with three bowyery slabs.
+  - rscadd: You can now welder-harden arrows. It might take longer.
+  - balance: Silkstring's costs adjusted for bows and whatnot.
+  - spellcheck: Grammar adjusted on a lot of things relating to bows.
+  - bugfix: Pipe bows' bowstring doesn't look like it replicated itself upon draw.
+  IHOPMommyLich:
+  - tweak: Changed the multiplicative_slowdown of Stimulants from -1 to -0.5
+  IronEleven:
+  - balance: Minor stat changes to Choking, Spontaneous Combustion, Autophagocytosis
+      Necrosis, Hallucigen, Narcolepsy, Shivering, and Vomiting symptoms.
+  KathrinBailey:
+  - bugfix: Missing turf_decals in Cargo Office.
+  - bugfix: Turns on the docking beacons on Box.
+  - bugfix: Fixes Starboard Quarter maint room being spaced. It was never intended
+      to be like how it was.
+  - bugfix: The aforementioned maint room not having stuff in it.
+  - bugfix: varedited photocopier sometimes not opening any UI.
+  - bugfix: Atmos differences in Starboard Quarter maint.
+  - bugfix: Atmos differences in destroyed shuttle/EVA bridge. Plating replaced with
+      airless plating.
+  - bugfix: Rotates AI satellite computers. These have probably been like this since
+      computers had the old sprites and no directional ones. You shouldn't sit at
+      a chair to operate a sideways computer.
+  KrabSpider:
+  - imageadd: The Van Dyke is no longer Fu Manchu.
+  - imagedel: Gets rid of a Fu Manchu imitation.
+  Kraseo:
+  - bugfix: You can no longer pull before wearing boxing gloves to bypass the grab
+      check.
+  - bugfix: Nightmares no longer delete entire guns from existence for merely having
+      a light on them.
+  Linzolle:
+  - bugfix: Bows now will not delete an arrow if it cant fire it.
+  - bugfix: bows now like and respect sprite changes
+  MalricB:
+  - rscadd: '"Shaggy" sprite from virgo'
+  - rscadd: '"shaggy" option in the character customization'
+  MrJWhit:
+  - rscdel: Removed meteor defense tech node
+  - tweak: TEG
+  Naksu:
+  - bugfix: Odysseus chem synthesizing now works again.
+  Owai-Seek:
+  - rscadd: Burger, Cargo Packaging, Dirty Magazine, Air Pump, and Scrubber crates.
+  - rscdel: Duplicate Crate, Festive Wrapping Paper Crate, Contraband Monkey Meat
+      Crate
+  - tweak: Gave Seed Crate Ambrosia Seed, gave Biker Gang Crate Spraypaint.
+  - tweak: Organised some crates with sub-categories. Also, moved all vendor refills
+      to a new tab.
+  - tweak: Moved Grill to Service Tab
+  - bugfix: Engineering Hardsuit Access
+  - tweak: Blood Crate now has all of the current blood types.
+  - tweak: Birthday Cake Recipe is now the same as TG.
+  - tweak: Added Soy Sauce and BBQ Packets to Dinnerware Vendor.
+  - tweak: Added nurse outfit, nurse cap, and mailman hat to loadout.
+  - tweak: Changed the name of scrubs to blue, green, and purple scrubs.
+  - rscadd: Bacon and Eggs food item. Delicious! Added a Lemony Poppy Seed Muffin.
+  - tweak: Snack Vendor has Chocolates, Tortilla Chips, and a Marshmallow Box
+  - balance: Mops can now be printed at service lathe once tools are researched.
+  - balance: Biobags can hold most organic limbs/organs, but not brains, implants,
+      or cybernetics.
+  - balance: Trash Bag can now hold limbs (but not heads.)
+  - balance: Most snack vendor items reduced by 1.
+  - bugfix: Trash Cans are now actually craftable, and only require metal instead
+      of plastic.
+  - imageadd: Bacon and Eggs, Drying Agent Bottle.
+  - imageadd: Mugs now show reagent colors of contained reagents. Thanks Seris!
+  - tweak: Reorganized all food recipes, (hopefully) making things easier to find.
+  - balance: Trays now have a whitelist, allowing them to pick up normal sized foods,
+      bowls, glassware, booze, ect.
+  - bugfix: Easter foods are no longer their own Misc Food Category on the top of
+      the menu.
+  - spellcheck: fixed a few typos/capitalization consistency.
+  - tweak: Mexican Foods are their own Subcategory.
+  - tweak: Donuts are their own Subcategory
+  - tweak: Moved Sweets from Misc Food in with Pies. Renamed to Pies & Sweets
+  - rscadd: BROOM
+  - tweak: Janitor Vendor now has gear for two Janitors.
+  PersianXerxes:
+  - rscadd: 'SMES and PACMAN attached to gulag Security to power electrified windows
+      remove: Removed Sec vendor from gulag Security'
+  - tweak: Separation of gulag and public mining
+  - rscadd: Better clarified the comment explaining the contraband tag.
+  - tweak: Cargo nuclear defusal kits now require an emag'd drop pod console to be
+      purchased.
+  - rscadd: Added Kilo Station
+  - tweak: Adjusts Kilo Station to be more in line with Citadel standards
+  - imageadd: Added area icons required to make Kilo Station editable on Citadel code
+  - code_imp: Fixed a reagent container on Kilo pointing to a nonexistent reagent
+  - config: Adds Kilo Station to the maps config file, does not fix Meta Station's
+      population requirement
+  Psody-Mordheim:
+  - rscadd: You can now make synth-flesh with synthetic blood.
+  - rscadd: You can now make synthetic blood via mixing saline glucose, iron, stable
+      plasma and heating it to 350 temp.
+  - rscadd: You can mix synthetic blood and cryoxadone to create synth-meat in addition
+      to normal blood.
+  - rscadd: Disfiguration Symptom.
+  - rscadd: Deoxyribonucleic Acid Saboteur Symptom.
+  - rscadd: Polyvitiligo Symptom.
+  - rscdel: Revitiligo Symptom.
+  - rscdel: Vitiligo Symptom.
+  Putnam3145:
+  - admin: Added logging to various consent things.
+  - rscadd: Lots of new traitor objectives
+  - bugfix: gender change potion now respects prefs
+  - bugfix: Hypno prefs work better.
+  - admin: Panic bunker is now round-to-round persistent
+  - tweak: Relief valve now has a TGUI-next UI
+  - bugfix: Atmos reaction priority works now.
+  - rscadd: map voting doesn't suck anymore
+  - bugfix: Dynamic now defaults to "classic" storyteller instead of just failing
+      if the vote didn't choose a storyteller.
+  - bugfix: antag quirk blacklisting works now
+  - tweak: default should be... default
+  - balance: all supermatter damage is now hardcapped
+  - tweak: Supermatter sabotage objective no longer shows up with no supermatter
+  - bugfix: Mining vendors no longer fail and eat your points iff you have precisely
+      enough points to pay for an item
+  - tweak: Licking pref
+  - bugfix: Fixed IRV.
+  - bugfix: Runtime if nobody has a chaos pref set
+  - bugfix: IRV fixed... again
+  - bugfix: temporary flavor text can now be of reasonable length
+  - balance: Shooting the supermatter now adds to the supermatter's power. CO2 setups
+      beware!
+  - rscadd: Logging for renaming
+  Raiq & Linzolle:
+  - rscadd: Bone bow - Ash walkers crafting , bone arrows - Ash walkers crafting,
+      silk string used in bow crafting, harden arrows - Ash walkers crafting, ash
+      walker only crafting book, basic pipe bow, and bow & arrow selling. Quivers
+      for ash walkers as well, just to hold some arrows well out on the hunt!
+  Seris02:
+  - tweak: tweaked the way the SM works
+  - rscadd: custom reagent pie smite
+  - rscadd: hijack implant
+  - code_imp: changed mentions of the issilion proc to hasSiliconAccessInArea based
+      on what the proc is used for
+  - rscadd: recipe for mammal mutation toxin
+  - rscadd: polychromic winter coat
+  - rscadd: thief's gloves
+  - rscadd: crushing magboots
+  - bugfix: golden plastitanium toolbox being actually plastitanuium
+  - bugfix: character slot amount
+  - balance: rebalanced rising bass
+  - bugfix: string highlighting whitespace
+  - bugfix: glitch with PKA
+  - bugfix: meteor hallucinations (again)
+  - rscadd: Added naked hallucination
+  - rscadd: crowbarring manifests off crates
+  - balance: makes RCDs cost a better amount
+  - bugfix: apc icons
+  - rscadd: rest hotkey
+  - rscadd: hsl instead of sum of rgb for spraycan lum check
+  - balance: bloodcrawl's cooldown
+  ShadeAware:
+  - rscadd: Craftable Switchblades, a weaker subtype of normal switchblades that can
+      be crafted using a Kitchen Knife, Modular Receiver, Rifle Stock and some Cable
+      Coil. Requires a welder to complete.
+  - bugfix: You can now actually craft Switchblades.
+  - bugfix: Switchblades no longer regain their old Makeshift sprite after retracting
+      if you've made them fancy with Silver.
+  - rscadd: 'The Captain''s Wardrobe, a special one-of-a-kind and ID-locked wardrobe
+      for the Captain that holds all of their snowflakey gear. Remove: Snowflake gear
+      from the Captain''s locker, since now it has its own vendor.'
+  Tlaltecuhtli, ported by Hatterhat:
+  - balance: Ripley, Firefighter, Odysseus and H.O.N.K. mechs now also use scanning
+      modules and capacitors on construction. This means that they also gain reduced
+      power consumption and EMP protection from higher-tier stock parts.
+  Trilbyspaceclone:
+  - bugfix: Vault hallway door being all access
+  - server: Updates change logs
+  - rscadd: Crafts are now made of plasteel and can be made with 5 sheets
+  - rscadd: Takes away NT's connections to the Aliens that run the Syndicats
+  - rscadd: Carps have evolved to take more damage
+  - rscadd: restock crates for each vender
+  - rscadd: restock units for all station venders
+  - bugfix: Sec-vender missing icon
+  - bugfix: 'Box station captain office issues maping: Gulag on box can now be accessed'
+  - rscadd: Alien stools and chairs
+  - tweak: Bone armor/Dagger are now crafting from bones rather then crafting menu
+  - rscadd: Firing pins that only works when not on station
+  - rscadd: Medical locked crates
+  - balance: Russian gear crates have less gear in some cases but all will cost more
+  - bugfix: Medical locked crates that were not locked
+  - spellcheck: Crates that were out of date are corrected
+  - balance: Heads of staff have been better screened by NT before being promoted
+  - balance: The suit full of spiders also known as a ninja now is a tactical turtleneck
+  - balance: The Wiznerds now dont have suits set to max
+  - tweak: Meat wheat no longer has blood
+  - bugfix: Flat guns can no longer be suppressed
+  - tweak: replaced stickmans .45 caliber with 10mm, for consistency.
+  - tweak: Meatwheat and Oats now have rarity
+  - balance: Oats now have at lest 50% more flour in them
+  - balance: BDM now uses a PKA rather then a normal KA
+  - tweak: Gang tower shield is no longer transparent
+  - tweak: Cosmic winter coat now glows like the bedsheet, and holds normal winter
+      coat gear
+  - server: Express console is now logging what it buys, like the normal console should
+  - bugfix: Crabs are now made of crab meat.
+  - bugfix: AIs now understand the old ways of drunken dwarfs
+  - balance: Removes some armored Russian hats from box station round start
+  - bugfix: Doner items spawning
+  - balance: Engi/Sec Trek suit no longer has 10% melee protection
+  - bugfix: IPC hearts are now made of robomeat and roboblood thats emp proof. Heals
+      and is all and all just like an normal heart
+  - imageadd: All robotic organs now have an animation.
+  - imageadd: IPC's now organs now look like robotic ones, even tho thats not the
+      case game wise
+  - imageadd: Added a new bee themed bar sign
+  - imageadd: Makes plywood chair not look as bad.
+  - bugfix: corndog sprite being miss-spelled
+  - bugfix: Ash from land of lava now is useable for sandstone
+  - bugfix: Peach cake slices are no long made by mimes
+  Tupinambis:
+  - tweak: the portion of laws that require harm prevention by silicons has been removed.
+  - server: silicon_laws.txt config file is required to be modified for full implementation.
+  - bugfix: masks no longer improperly stick out of helmets when they should be hidden.
+  - bugfix: Status Displays should now update correctly.
+  - balance: stunbatons now take 4 hits to inflict hard crit, up from 3.
+  - balance: stunbatons no longer disarm targets.
+  Yakumo Chen:
+  - rscadd: Rings for your fingers!
+  - rscadd: New cargo crates and loadout options to bling your rings!
+  YakumoChen:
+  - tweak: Observe is back in the OOC tab
+  - imageadd: Rings look nicer. Sprites used from RP.
+  - imageadd: Ring on-hands. Diamond rings sparkle!
+  - tweak: You can now propose using a diamond ring in your hand.
+  - tweak: Legion skulls behave like bees!!!!
+  Zellular:
+  - imageadd: Movement state for pupdozer and its decals
+  - tweak: Tweaked the movement state for the pupdozer's eyes
+  ancientpower:
+  - bugfix: Fixes an error in pH strips' feedback message.
+  - rscadd: Ported drink sliding from /vg/station.
+  - bugfix: Fixes color mismatching with the "genitals use skintone" preference.
+  - imageadd: Bunny ear style for humanoid species.
+  - tweak: Ghosts are now literate.
+  bunny232:
+  - tweak: Changes the simple animal sentience event from the xenomorph preference
+      to sentience potion preference.
+  coiax:
+  - rscadd: Admin and event only pair pinpointers! They come in a box of two, and
+      each pinpointer will always point at its corresponding pair. Aww.
+  deathride58:
+  - bugfix: Spacemen no longer run at lightspeed on local servers.
+  kappa-sama:
+  - bugfix: the plant dudes can actually make plant disks now
+  keronshb:
+  - rscadd: Added repairable turrets
+  - rscadd: Adds Tiny Fans to the pirate ship
+  - tweak: changes some reinforced windows to plastinanium pirate windows
+  - tweak: made the pirate shuttle + turrets bomb resistant
+  - tweak: made most pirate machines + consoles indestructible
+  - tweak: increased pirate turret health
+  - rscadd: Adds the CogChamp drink and Sprite
+  - rscadd: Added burn and knockback to stunhand during HALOS on cult.
+  - balance: Added burn and knockback to stunhand during HALOS on cult.
+  - bugfix: fixed accelerated regeneration nanites
+  - bugfix: fixed mechanical repair nanites
+  - bugfix: fixed bio reconstruction nanites
+  kevinz000:
+  - refactor: Custom snowflake plushies are now in config rather than code.
+  - balance: Abductor mindsnapping (aka abductee objectives) can now be "cured" with
+      brain surgery.
+  - rscadd: Shuttle hijacking has been completely reworked. Alt-click the shuttle
+      as a hijack-capable mind (so traitors, and especially traitors with hijack)
+      to begin or continue a hacking process.
+  - refactor: 'A good amount of the blood RGB rework was cleaned up/reverted, with
+      some notable gameplay changes including: Gibs and blood not having max blood
+      by default (no more easy rampages, cultists), infinite gib streaking, etc etc.'
+  - balance: meteor waves are now directional and announces the direction on the command
+      report.
+  - rscadd: CTF CLAYMORES
+  - balance: shoves buffed, now shoving into a wall twice rapidly will also disarm
+      their weapon.
+  - balance: traitor+bro gamemode minimum population set to 25 until there can be
+      more in depth configuration systems for gamemodes.
+  - bugfix: no more bluespace skittish locker diving,
+  - rscadd: moths now have unique laughs and can *chitter.
+  - tweak: nuke explosion is now full dev radius for anti lag purposes
+  - balance: Gangs can now only tag with a gang uplink bought spraycan.
+  - tweak: dueling pistol accesses have been changed to be more accessible.
+  - bugfix: mechs no longer have admin logs flooding into IC control console log viewing
+  - refactor: Guncode and energy guns have been refactored a bit.
+  - rscadd: You can now combat mode ight click on an energy gun to attempt to switch
+      firing modes. This only works on guns without right click functions overridden.
+  - balance: shoes can now fit magpistols again.
+  - balance: Projectiles now always hit chest if targeting chest, snipers have 100%
+      targeting zone accuracy. All other cases are unchanged.
+  - tweak: The lawyer's PDA cartridge has been rebranded to something more accurate
+      to its true nature.
+  - refactor: Refactored ghostreading/etc
+  - balance: Cyborgization will now de-gang people, even gangheads.
+  - bugfix: reactive repulse armor now has an item limit
+  - bugfix: beam rifle runtime fix during aiming_beam
+  - bugfix: 'fail2topic runtime fix: taking out an ip while incrementing index resulted
+      in accessing the next-next entry instead of the next and results in out of bound
+      errors.'
+  - rscadd: gravity gun repulse and chaos now work in all angles, rather than just
+      basic cardinals and diagonals. fun.
+  - balance: Public autolathes can no longer be hacked.
+  - bugfix: Energy weapons now once again have their lens in contents.
+  - bugfix: pais are no longer muted for literally a whole hour on emp.
+  - rscadd: auto profiler subsystem from tg
+  - bugfix: Brig cells now are more accurate by using timeofday instead of realtime
+  - bugfix: Cryo now actually transfers reagents at tier 4 on enter rather than every
+      80 machine fire()-process()s regardless of if it was "reset" by open/close.
+  - rscadd: cmo now gets advanced surgery drapes that techweb-sync for advanced surgeries
+      without an operating console.
+  - bugfix: ctf claymores now actually spawn (and fit).
+  - bugfix: STOP_PROCESSING now removes from currentrun to prevent another process
+      cycle from happening where it shouldn't.
+  - balance: hand teleporters now require 30 deciseconds of still movement by the
+      user to dispel portals. there's a beam effect too.
+  - balance: Sort of a bugfix but cult blood magic and all guns now respect stamina
+      softcrit.
+  - balance: Organ healing rate doubled. Organ decay rate halved to match its define
+      (15 minutes for full decay, so at around 8-10 minutes it'll be really fucked).
+  - tweak: Storage now caches max screen size and only stores when being opened by
+      a non ghost, meaning ghosts will no longer distort living player screens when
+      viewing storage.
+  - balance: Stunbatons changed yet again.
+  - tweak: the game's built in autoclicker aka CanMobAutoclick no longer triggers
+      client/Click()'s anti clickspam guard.
+  - balance: pais can no longer bodyblock bullets
+  - balance: pai radio short changed to 3 minutes down from 5
+  - balance: pais are no longer fulltile click opacity.
+  - refactor: vampire "immortal haste" has been reworked to be more reliable and consistent.
+  - tweak: hand teles use a less atrocious beam
+  necromanceranne:
+  - rscadd: Ebows now disarm people hit by them.
+  - rscadd: Ebows now do 60 stamina damage on hit.
+  - rscdel: Ebows no longer inflict drowsiness
+  - balance: Miniature ebows do 15 toxin damage, up from 8.
+  - balance: Ebows have considerably shorter knockdowns.
+  - balance: Ebows now make you slur rather than stutter.
+  - balance: Large ebows are now heavy and bulky.
+  - rscdel: You can no longer order spinfusors or their ammo from cargo.
+  - rscdel: Removed the formal security officer jacket from the secdrobe
+  - tweak: formal security jackets are now armor vests
+  - rscdel: Bullets causing bleed rates equal to unmitigated damage through all forms
+      of defense.
+  - balance: 'Reverted #9092, crew mecha no longer spawn with tracking beacons.'
+  - balance: '[Port] Mecha ballistics weapons now require ammo created from an Exosuit
+      Fabricator or the Security Protolathe, though they will start with a full magazine
+      and in most cases enough for one full reload. Reloading these weapons no longer
+      chunks your power cell. Clown (and mime) mecha equipment have not changed.'
+  - balance: '[Port] The SRM-8 Missile Launcher has been replaced with the BRM-6 Breaching
+      Missile Launcher in techwebs (Nukie Mauler remains equipped with the SRM-8).'
+  - balance: '[Port] Both Missile Launchers and the Clusterbang Launcher do not have
+      an ammo cache, and cannot be reloaded by the pilot. Once the initial loaded
+      ammo has been spent, you can use the appropriate ammo box to load the weapon
+      directly.'
+  - rscadd: '[Port] Utility mechs that have a clamp equipped can load ammo from their
+      own cargo hold into other mechs.'
+  - rscadd: '[Port] Nuke Ops can purchase spare ammo duffel bags for their mecha weapons,
+      should they run low.'
+  - bugfix: Literally unclickability with a cham projector
+  nemvar:
+  - code_imp: Slight changes the self-repair borg module. It no longer references
+      the borg that owns it.
+  - bugfix: Trash from food now gets generated at the location of the food item, instead
+      of in the hands of the eater.
+  - code_imp: Changed mob biotypes from lists to flags.
+  r4d6:
+  - rscadd: Added a dwarf language
+  - rscadd: Added more engines
+  - tweak: RPD subcategories and preview icons reorganized.
+  - rscadd: RPD now starts with painting turned off, hitting pipes with build and
+      no paint will target the turf underneath instead. Bye bye turf pixelhunting.
+  - config: Made dwarves into a roundstart races
+  - tweak: Meteor Timer back to 3-5 minutes
+  - bugfix: Mining no longer lead to spess
+  - rscadd: Added Plasteel Pickaxe
+  - rscadd: Added Titanium Pickaxe
+  - bugfix: fixed a missing tile
+  tralezab, bandit, Skoglol:
+  - rscadd: The mime's PDA messages are silent now!
+  - rscadd: 30 new emoji have been added. Mime buff, mime now OP.

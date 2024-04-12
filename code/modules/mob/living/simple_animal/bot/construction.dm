@@ -208,7 +208,7 @@
 	created_name = "Floorbot"
 	var/toolbox = /obj/item/storage/toolbox
 
-/obj/item/bot_assembly/floorbot/Initialize()
+/obj/item/bot_assembly/floorbot/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -277,7 +277,7 @@
 	var/healthanalyzer = /obj/item/healthanalyzer
 	var/firstaid = /obj/item/storage/firstaid
 
-/obj/item/bot_assembly/medbot/Initialize()
+/obj/item/bot_assembly/medbot/Initialize(mapload)
 	. = ..()
 	spawn(5)
 		if(skin)

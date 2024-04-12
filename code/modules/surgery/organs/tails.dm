@@ -13,6 +13,9 @@
 		owner.dna.species.stop_wagging_tail(owner)
 	return ..()
 
+/obj/item/organ/tail/on_life()
+	return
+
 /obj/item/organ/tail/cat
 	name = "cat tail"
 	desc = "A severed cat tail. Who's wagging now?"

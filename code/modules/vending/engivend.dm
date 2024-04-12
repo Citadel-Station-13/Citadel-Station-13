@@ -27,13 +27,13 @@
 					/obj/item/rcd_ammo/large = 5,
 					/obj/item/storage/bag/material = 3
 					)
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	refill_canister = /obj/item/vending_refill/engivend
 	resistance_flags = FIRE_PROOF
 	default_price = PRICE_ALMOST_EXPENSIVE
 	extra_price = PRICE_ABOVE_EXPENSIVE
 	payment_department = ACCOUNT_ENG
-	cost_multiplier_per_dept = list(ACCOUNT_ENG = 0)
+	light_mask = "engivend-light-mask"
 
 /obj/item/vending_refill/engivend
+	machine_name = "Engi-Vend"
 	icon_state = "refill_engi"

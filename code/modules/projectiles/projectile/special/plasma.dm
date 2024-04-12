@@ -13,7 +13,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/plasma_cutter
 	impact_type = /obj/effect/projectile/impact/plasma_cutter
 
-/obj/item/projectile/plasma/Initialize()
+/obj/item/projectile/plasma/Initialize(mapload)
 	. = ..()
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
 		name = "weakened [name]"

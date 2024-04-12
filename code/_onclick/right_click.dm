@@ -11,15 +11,11 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(ismecha(loc))
-		var/obj/mecha/M = loc
-		return M.click_action(A,src,params)
-
 	if(restrained())
 		DelayNextAction(CLICK_CD_HANDCUFFED)
 		return RestrainedClickOn(A)
 
-	if(in_throw_mode)
+	if(throw_mode)
 		throw_item(A)//todo: make it plausible to lightly toss items via right-click
 		return
 

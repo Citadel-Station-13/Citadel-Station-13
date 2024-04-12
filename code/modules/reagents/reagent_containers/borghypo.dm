@@ -34,7 +34,7 @@ Borg Hypospray
 								//Used as list for input() in shakers.
 	var/list/reagent_names = list()
 
-/obj/item/reagent_containers/borghypo/Initialize()
+/obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
 
 	for(var/R in reagent_ids)
@@ -53,7 +53,7 @@ Borg Hypospray
 		charge_tick = 0
 
 	//update_icon()
-	return 1
+	return TRUE
 
 // Use this to add more chemicals for the borghypo to produce.
 /obj/item/reagent_containers/borghypo/proc/add_reagent(datum/reagent/reagent)

@@ -28,7 +28,7 @@
 	id = /obj/item/card/id/syndicate/locked_banking
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	l_pocket = /obj/item/paper/fluff/vr/fluke_ops
-	backpack_contents = list(/obj/item/storage/box/syndie=1,\
+	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival)
 	starting_funds = 0 //Should be operating, not shopping.
 
@@ -36,7 +36,7 @@
 	. = ..()
 	var/key = H.key ? H.key : preference_source ? preference_source.key : null
 	var/obj/item/uplink/U = new /obj/item/uplink/nuclear_restricted(H, key, 80)
-	H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(U, ITEM_SLOT_BACKPACK)
 	var/obj/item/implant/weapons_auth/W = new
 	W.implant(H)
 	var/obj/item/implant/explosive/E = new

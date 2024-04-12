@@ -1,25 +1,26 @@
 //Investigate logging defines
-#define INVESTIGATE_ATMOS			"atmos"
-#define INVESTIGATE_BOTANY			"botany"
-#define INVESTIGATE_CARGO			"cargo"
-#define INVESTIGATE_EXPERIMENTOR	"experimentor"
-#define INVESTIGATE_GRAVITY			"gravity"
-#define INVESTIGATE_RECORDS			"records"
-#define INVESTIGATE_SINGULO			"singulo"
-#define INVESTIGATE_SUPERMATTER		"supermatter"
-#define INVESTIGATE_TELESCI			"telesci"
-#define INVESTIGATE_WIRES			"wires"
-#define INVESTIGATE_PORTAL			"portals"
-#define INVESTIGATE_RESEARCH		"research"
-#define INVESTIGATE_HALLUCINATIONS	"hallucinations"
-#define INVESTIGATE_RADIATION		"radiation"
-#define INVESTIGATE_EXONET			"exonet"
-#define INVESTIGATE_NANITES			"nanites"
-#define INVESTIGATE_CIRCUIT			"circuit"
-#define INVESTIGATE_FERMICHEM       "fermichem"
-#define INVESTIGATE_RCD				"rcd"
-#define INVESTIGATE_CRYOGENICS		"cryogenics"
-#define INVESTIGATE_GHOST			"ghost"
+#define INVESTIGATE_ATMOS "atmos"
+#define INVESTIGATE_BOTANY "botany"
+#define INVESTIGATE_CARGO "cargo"
+#define INVESTIGATE_CIRCUIT "circuit"
+#define INVESTIGATE_CRYOGENICS "cryogenics"
+#define INVESTIGATE_DEATHS "deaths"
+#define INVESTIGATE_EXONET "exonet"
+#define INVESTIGATE_EXPERIMENTOR "experimentor"
+#define INVESTIGATE_FERMICHEM "fermichem"
+#define INVESTIGATE_GHOST "ghost"
+#define INVESTIGATE_GRAVITY "gravity"
+#define INVESTIGATE_HALLUCINATIONS "hallucinations"
+#define INVESTIGATE_NANITES "nanites"
+#define INVESTIGATE_PORTAL "portals"
+#define INVESTIGATE_RADIATION "radiation"
+#define INVESTIGATE_RCD "rcd"
+#define INVESTIGATE_RECORDS "records"
+#define INVESTIGATE_RESEARCH "research"
+#define INVESTIGATE_SINGULO "singulo"
+#define INVESTIGATE_SUPERMATTER "supermatter"
+#define INVESTIGATE_TELESCI "telesci"
+#define INVESTIGATE_WIRES "wires"
 
 // Logging types for log_message()
 #define LOG_ATTACK		(1 << 0)
@@ -39,16 +40,19 @@
 #define LOG_ADMIN_PRIVATE (1 << 14)
 #define LOG_ASAY		(1 << 15)
 #define LOG_VIRUS		(1 << 16)
+#define LOG_MECHA (1 << 17)
 #define LOG_SHUTTLE		(1 << 18)
+#define LOG_VICTIM 		(1 << 19)
+#define LOG_ECON		(1 << 20)
 
 //Individual logging panel pages
-#define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)
+#define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK | LOG_VICTIM)
 #define INDIVIDUAL_SAY_LOG			(LOG_SAY | LOG_WHISPER | LOG_DSAY)
 #define INDIVIDUAL_EMOTE_LOG		(LOG_EMOTE | LOG_SUBTLER)
 #define INDIVIDUAL_COMMS_LOG		(LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS)
 #define INDIVIDUAL_OOC_LOG			(LOG_OOC | LOG_ADMIN)
 #define INDIVIDUAL_OWNERSHIP_LOG	(LOG_OWNERSHIP)
-#define INDIVIDUAL_SHOW_ALL_LOG		(LOG_ATTACK | LOG_SAY | LOG_WHISPER | LOG_EMOTE | LOG_DSAY | LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS | LOG_OOC | LOG_ADMIN | LOG_OWNERSHIP | LOG_GAME)
+#define INDIVIDUAL_SHOW_ALL_LOG		(LOG_ATTACK | LOG_SAY | LOG_WHISPER | LOG_EMOTE | LOG_DSAY | LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS | LOG_OOC | LOG_ADMIN | LOG_OWNERSHIP | LOG_GAME | LOG_VICTIM | LOG_ECON)
 
 #define LOGSRC_CLIENT "Client"
 #define LOGSRC_MOB "Mob"

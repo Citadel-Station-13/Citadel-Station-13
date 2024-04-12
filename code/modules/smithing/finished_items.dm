@@ -18,7 +18,7 @@
 	var/wielded_mult = 1
 	var/wield_force = 15
 
-/obj/item/melee/smith/Initialize()
+/obj/item/melee/smith/Initialize(mapload)
 	..()
 	if(desc == "cringe")
 		desc = "A handmade [name]."
@@ -55,7 +55,7 @@
 	icon_state = "minipick" //todo:sprite
 	sharpness = SHARP_POINTY//it doesnt have a blade it has a point
 
-/obj/item/mining_scanner/prospector/Initialize()
+/obj/item/mining_scanner/prospector/Initialize(mapload)
 	..()
 	var/mutable_appearance/overlay
 	desc = "A handmade [name]."
@@ -73,7 +73,7 @@
 	icon_state = "pickaxe"
 	sharpness = SHARP_POINTY
 
-/obj/item/pickaxe/smithed/Initialize()
+/obj/item/pickaxe/smithed/Initialize(mapload)
 	..()
 	desc = "A handmade [name]."
 	var/mutable_appearance/overlay
@@ -94,7 +94,7 @@
 	icon_state = "shovel"
 	sharpness = SHARP_EDGED //it cuts through the earth
 
-/obj/item/shovel/smithed/Initialize()
+/obj/item/shovel/smithed/Initialize(mapload)
 	..()
 	desc = "A handmade [name]."
 	var/mutable_appearance/overlay
@@ -209,7 +209,7 @@
 	parry_time_perfect = 2
 	parry_time_perfect_leeway = 0.75
 	parry_imperfect_falloff_percent = 7.5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 80
 	parry_efficiency_perfect = 120
 	parry_failed_stagger_duration = 3 SECONDS
@@ -266,14 +266,15 @@
 	parry_time_perfect = 2
 	parry_time_perfect_leeway = 2
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = 3 SECONDS
 	parry_time_windup = 0
 	parry_time_spindown = 0
 	parry_imperfect_falloff_percent = 0
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 120
 	parry_efficiency_perfect = 120
 	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 4)
+	parry_automatic_enabled = TRUE
+	autoparry_single_efficiency = 75
 
 //unique hammers
 /obj/item/melee/smith/hammer/toolbox

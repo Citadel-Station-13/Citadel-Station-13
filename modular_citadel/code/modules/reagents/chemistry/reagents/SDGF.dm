@@ -109,7 +109,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					ZI.Insert(SM)
 					log_reagent("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
 
-				var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+				var/list/policies = CONFIG_GET(keyed_list/policy)
 				var/policy = policies[POLICYCONFIG_SDGF]
 				if(policy)
 					to_chat(SM,policy)
@@ -127,7 +127,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					else
 						to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original.</span>")
 					log_reagent("FERMICHEM: [SM] ckey: [SM.key]'s is not bound by [M] ckey [M.key]'s will, and is free to determine their own goals, while respecting and acting as their origin.")
-	
+
 				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you. Before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with your original, a perfect clone of your origin.</span>")
 				SM.client?.change_view(CONFIG_GET(string/default_view))
 				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you. Before you get a chance to think about it, a mass splits from you, and find yourself face to face with yourself.</span>")
@@ -169,17 +169,17 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 						if(21)
 							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
 						if(22 to 29)
-							M.adjust_nutrition(M.nutrition/10)
+							M.adjust_nutrition(10)
 						if(30)
 							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
 						if(31 to 49)
-							M.adjust_nutrition(M.nutrition/5)
+							M.adjust_nutrition(20)
 						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 							M.action_cooldown_mod += 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(51 to 79)
-							M.adjust_nutrition(M.nutrition/2)
+							M.adjust_nutrition(50)
 						if(80)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
 							if (M.nutrition < 20000)
@@ -226,7 +226,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.adjustCloneLoss(-10, 0) //I don't want to make Rezadone obsolete.
 		M.adjustBruteLoss(-25, 0)// Note that this takes a long time to apply and makes you fat and useless when it's in you, I don't think this small burst of healing will be useful considering how long it takes to get there.
 		M.adjustFireLoss(-25, 0)
-		M.blood_volume += 250
+		M.adjust_integration_blood(250)
 		M.heal_bodypart_damage(1,1)
 		M.action_cooldown_mod = 1
 		if (M.nutrition < 1500)
@@ -236,7 +236,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		to_chat(M, "<span class='notice'>the cells fail to hold enough mass to generate a clone, instead diffusing into your system.</span>")
 		M.adjustBruteLoss(-10, 0)
 		M.adjustFireLoss(-10, 0)
-		M.blood_volume += 100
+		M.adjust_integration_blood(100)
 		M.action_cooldown_mod = 1
 		if (M.nutrition < 1500)
 			M.adjust_nutrition(500)
@@ -304,12 +304,13 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/SDGFheal
 	name = "synthetic-derived healing factor"
 	description = "Leftover SDGF is transferred into the resulting clone, which quickly heals up the stresses from suddenly splitting. Restores blood, nutrition, and repaires brain and clone damage quickly. Only obtainable from using excess SDGF, and only enters the cloned body."
+	taste_description = "slime"
 	metabolization_rate = 0.8
 	can_synth = FALSE
 
 /datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.blood_volume += 10
+		M.adjust_integration_blood(10)
 	M.adjustCloneLoss(-2, 0)
 	M.setOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	M.adjust_nutrition(10)
@@ -336,7 +337,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/startHunger
 	can_synth = TRUE
 	taste_description = "a weird chemical fleshy flavour"
-	chemical_flags = REAGENT_SNEAKYNAME
+	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_ALL_PROCESS
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.

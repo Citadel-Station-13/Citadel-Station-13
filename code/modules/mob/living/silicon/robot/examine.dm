@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/examine(mob/user)
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>, a [src.module.name] unit!")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>, a [src.module.name] unit!")
 	if(desc)
 		. += "[desc]"
 
@@ -49,8 +49,9 @@
 		if(DEAD)
 			. += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>"
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
+	if(LAZYLEN(.) > 1)
+		.[2] = "<hr>[.[2]]"
 
-	. += "*---------*</span>"
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
 
 	. += ..()

@@ -206,12 +206,12 @@
 				var/count = 0
 				while(!isliving(M))
 					if(!M || !M.loc)
-						return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
+						return FALSE //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 					M = M.loc
 					count++
 					if(count >= 6)
 						to_chat(src, "You are not being carried by anyone!")
-						return 0
+						return FALSE
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")
@@ -575,7 +575,7 @@
 			for(var/id in environment.get_gases())
 				var/gas_level = environment.get_moles(id)/total_moles
 				if(gas_level > 0.01)
-					dat += "[GLOB.meta_gas_names[id]]: [round(gas_level*100)]%<br>"
+					dat += "[GLOB.gas_data.names[id]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.return_temperature()-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
