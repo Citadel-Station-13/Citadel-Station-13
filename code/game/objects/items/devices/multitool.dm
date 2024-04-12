@@ -29,6 +29,8 @@
 	buffer = null // simple machine buffer for device linkage
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
+	drop_sound = 'sound/items/handling/multitool_drop.ogg'
+	pickup_sound = 'sound/items/handling/multitool_pickup.ogg'
 	var/mode = 0
 
 /obj/item/multitool/chaplain
