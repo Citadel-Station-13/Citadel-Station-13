@@ -131,7 +131,7 @@
 /datum/action/cooldown/bloodsucker/proc/CheckCanDeactivate(display_error)
 	return TRUE
 
-/datum/action/cooldown/bloodsucker/UpdateButton(atom/movable/screen/movable/action_button/button, force = FALSE)
+/datum/action/cooldown/bloodsucker/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
 	background_icon_state = active? background_icon_state_on : background_icon_state_off
 	..()//UpdateButton()
 
