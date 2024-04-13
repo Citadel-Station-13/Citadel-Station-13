@@ -26,6 +26,15 @@
 		/obj/item/toy/plush/beeplushie,
 	)
 
+	mail_goodies = list(
+		/datum/reagent/toxin/mutagen = 20,
+		/datum/reagent/saltpetre = 20,
+		/datum/reagent/diethylamine = 20,
+		/obj/item/gun/energy/floragun = 10,
+		/obj/effect/spawner/lootdrop/seed_vault = 5,// These are strong, rare seeds, so use sparingly.
+		/obj/item/reagent_containers/food/snacks/cube/bee = 2
+	)
+
 /datum/outfit/job/botanist
 	name = "Botanist"
 	jobtype = /datum/job/hydro

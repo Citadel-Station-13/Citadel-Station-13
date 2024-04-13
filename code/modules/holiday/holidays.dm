@@ -12,6 +12,9 @@
 	var/year_offset = 0
 	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 
+	// Special things to be given during this!
+	var/list/mail_goodies
+
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
 	return
@@ -397,6 +400,11 @@
 	begin_month = OCTOBER
 	end_day = 2
 	end_month = NOVEMBER
+
+	mail_goodies = list(
+		/obj/item/reagent_containers/food/snacks/lollipop = 10,
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 10
+	)
 
 /datum/holiday/halloween/greet()
 	return "Have a spooky Halloween!"

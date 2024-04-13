@@ -1851,11 +1851,11 @@
 	pixel_y = 23
 	},
 /obj/structure/table/reinforced,
-/obj/item/destTagger{
+/obj/item/dest_tagger{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /turf/open/floor/plasteel,
 /area/cargo/sorting)
 "adu" = (

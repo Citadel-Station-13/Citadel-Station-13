@@ -20,11 +20,18 @@
 	bounty_types = CIV_JOB_DRINK
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
 	threat = 0.5
-	
+
 	family_heirlooms = list(
 		/obj/item/reagent_containers/rag,
 		/obj/item/clothing/head/that,
 		/obj/item/reagent_containers/food/drinks/shaker
+	)
+
+	mail_goodies = list(
+		/obj/item/storage/box/rubbershot = 30,
+		/datum/reagent/consumable/clownstears = 10,
+		/obj/item/stack/sheet/mineral/plasma = 10,
+		/obj/item/stack/sheet/mineral/uranium = 10,
 	)
 
 /datum/outfit/job/bartender

@@ -28627,7 +28627,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile,
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/item/hand_labeler,
 /obj/machinery/airalarm{
 	dir = 8;

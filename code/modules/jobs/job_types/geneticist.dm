@@ -24,9 +24,13 @@
 	threat = 1.5
 
 	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
-	
+
 	family_heirlooms = list(
 		/obj/item/clothing/under/shorts/purple
+	)
+
+	mail_goodies = list(
+		/obj/item/storage/box/monkeycubes = 10
 	)
 
 /datum/outfit/job/geneticist

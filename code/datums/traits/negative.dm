@@ -9,12 +9,36 @@
 	antag_removal_text = "Your antagonistic nature has removed your blood deficiency."
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
+/datum/quirk/blooddeficiency/add()
+	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN, PROC_REF(update_mail))
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	update_mail(new_species = human_holder.dna.species)
+
 /datum/quirk/blooddeficiency/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
 		quirk_holder.blood_volume -= 0.2
+
+/datum/quirk/blooddeficiency/proc/update_mail(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
+
+	mail_goodies.Cut()
+
+	if(isnull(new_species.exotic_blood)) // && isnull(new_species.exotic_bloodtype)) // We don't really support your blood yet :(
+		if(NOBLOOD in new_species.inherent_traits)
+			return
+
+		mail_goodies += /obj/item/reagent_containers/blood/OMinus
+		return
+
+	for(var/obj/item/reagent_containers/blood/blood_bag as anything in typesof(/obj/item/reagent_containers/blood))
+		var/right_blood_type = !isnull(new_species.exotic_bloodtype) && initial(blood_bag.blood_type) == new_species.exotic_bloodtype
+//		var/right_blood_reagent = !isnull(new_species.exotic_blood) && initial(blood_bag.unique_blood) == new_species.exotic_blood
+		if(right_blood_type) // || right_blood_reagent)
+			mail_goodies += blood_bag
 
 /datum/quirk/depression
 	name = "Depression"

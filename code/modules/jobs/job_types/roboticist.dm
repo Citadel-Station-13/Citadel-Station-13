@@ -24,9 +24,15 @@
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 	threat = 1
-	
+
 	family_heirlooms = list(
 		/obj/item/toy/figure/borg
+	)
+
+	mail_goodies = list(
+		/obj/item/storage/box/flashes = 20,
+		/obj/item/stack/sheet/metal/twenty = 15,
+		/obj/item/modular_computer/tablet/preset/advanced = 5
 	)
 
 /datum/outfit/job/roboticist

@@ -22,7 +22,7 @@
 	threat = 0.5
 
 	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
-	
+
 	family_heirlooms = list(
 		/obj/item/storage/firstaid/ancient/heirloom,
 		/obj/item/scalpel,
@@ -30,6 +30,16 @@
 		/obj/item/circular_saw,
 		/obj/item/retractor,
 		/obj/item/cautery
+	)
+
+	mail_goodies = list(
+		/obj/item/healthanalyzer/advanced = 15,
+		/obj/item/scalpel/advanced = 6,
+		/obj/item/retractor/advanced = 6,
+		/obj/item/surgicaldrill/advanced = 6,
+		/datum/reagent/toxin/formaldehyde = 6,
+		/obj/effect/spawner/lootdrop/organ_spawner = 5,
+//		/obj/effect/spawner/lootdrop/memeorgans = 1
 	)
 
 /datum/outfit/job/doctor
