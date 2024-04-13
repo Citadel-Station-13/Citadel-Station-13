@@ -21,6 +21,7 @@
 	charge_sections = 3
 	gunlight_state = "mini-light"
 	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
+	shot_type_overlay = FALSE
 
 /obj/item/gun/energy/e_gun/mini/Initialize(mapload)
 	gun_light = new /obj/item/flashlight/seclite(src)
