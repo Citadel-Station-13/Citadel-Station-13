@@ -220,6 +220,7 @@
 	can_suppress = FALSE
 	burst_size = 3
 	burst_shot_delay = 1
+	automatic_burst_overlay = FALSE
 
 // Bulldog shotgun //
 
