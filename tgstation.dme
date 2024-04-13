@@ -90,6 +90,7 @@
 #include "code\__DEFINES\movespeed_modification.dm"
 #include "code\__DEFINES\nanites.dm"
 #include "code\__DEFINES\networks.dm"
+#include "code\__DEFINES\overlays.dm"
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\plumbing.dm"
