@@ -654,7 +654,7 @@
 
 /obj/item/integrated_circuit/input/signaler/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/init_frequency), 4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(init_frequency)), 4 SECONDS)
 
 /obj/item/integrated_circuit/input/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
