@@ -87,10 +87,7 @@
 	button_icon_state = "slam"
 	cooldown_time = 45 SECONDS
 
-/datum/action/cooldown/slam/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/slam/Activate()
 	var/mob/living/simple_animal/slaughter/user = owner
 	user.slam_mode = !user.slam_mode
 	to_chat(user, user.slam_mode ? "Ready to slam!" : "Maybe not now.")
