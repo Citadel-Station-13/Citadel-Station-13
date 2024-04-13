@@ -391,7 +391,7 @@
 				else if(CHECK_MOBILITY(src, MOBILITY_MOVE) && isturf(loc) && prob(33))
 					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
-			INVOKE_ASYNC(src, .proc/AIprocess)
+			INVOKE_ASYNC(src, PROC_REF(AIprocess))
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()
@@ -620,11 +620,11 @@
 
 /mob/living/simple_animal/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	if (docile)
-		return 0
+		return FALSE
 	if (hunger == 2 || rabid || attacked)
-		return 1
+		return TRUE
 	if (Leader)
-		return 0
+		return FALSE
 	if (holding_still)
-		return 0
-	return 1
+		return FALSE
+	return TRUE

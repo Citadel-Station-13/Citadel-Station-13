@@ -4,6 +4,12 @@ set -euo pipefail
 #nb: must be bash to support shopt globstar
 shopt -s globstar
 
+#ANSI Escape Codes for colors to increase contrast of errors
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+BLUE="\033[0;34m"
+NC="\033[0m" # No Color
+
 st=0
 
 if git grep -P "\r\n"; then
@@ -116,5 +122,21 @@ do
         fi
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
+
+# Check for non-515 compatable .proc/ syntax
+if grep -P --exclude='__byond_version_compat.dm' '\.proc/' code/**/*.dm; then
+    echo
+    echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
+    st=1
+fi;
+
+if [ $st = 0 ]; then
+    echo
+    echo -e "${GREEN}No errors found using grep!${NC}"
+fi;
+if [ $st = 1 ]; then
+    echo
+    echo -e "${RED}Errors found, please fix them and try again.${NC}"
+fi;
 
 exit $st

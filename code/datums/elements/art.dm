@@ -14,13 +14,13 @@
 		return ELEMENT_INCOMPATIBLE
 	impressiveness = impress
 	if(isobj(target))
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_obj_examine)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_obj_examine))
 		if(isstructure(target))
-			RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+			RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 		if(isitem(target))
-			RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
+			RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, PROC_REF(apply_moodlet))
 	else
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_other_examine)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_other_examine))
 
 /datum/element/art/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_ITEM_ATTACK_SELF))

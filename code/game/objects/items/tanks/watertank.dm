@@ -26,7 +26,7 @@
 
 /obj/item/watertank/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == user.getBackSlot())
-		return 1
+		return TRUE
 
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
@@ -88,7 +88,7 @@
 /obj/item/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -361,7 +361,7 @@
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_BACK)
-		return 1
+		return TRUE
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr

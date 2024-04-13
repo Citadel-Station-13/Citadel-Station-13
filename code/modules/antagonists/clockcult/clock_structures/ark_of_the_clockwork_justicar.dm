@@ -35,7 +35,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/spawn_animation)
+	INVOKE_ASYNC(src, PROC_REF(spawn_animation))
 	glow = new(get_turf(src))
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src
@@ -149,7 +149,7 @@
 	recalling = TRUE
 	sound_to_playing_players('sound/machines/clockcult/ark_recall.ogg', 75, FALSE)
 	hierophant_message("<span class='bold large_brass'>The Eminence has initiated a mass recall! You are being transported to the Ark!</span>")
-	addtimer(CALLBACK(src, .proc/mass_recall), 100)
+	addtimer(CALLBACK(src, PROC_REF(mass_recall)), 100)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
@@ -183,7 +183,7 @@
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
-			addtimer(CALLBACK(src, .proc/go_boom), 2.7 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(go_boom)), 2.7 SECONDS)
 			return
 	qdel(src)
 

@@ -9,12 +9,36 @@
 	antag_removal_text = "Your antagonistic nature has removed your blood deficiency."
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
+/datum/quirk/blooddeficiency/add()
+	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN, PROC_REF(update_mail))
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	update_mail(new_species = human_holder.dna.species)
+
 /datum/quirk/blooddeficiency/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
 		quirk_holder.blood_volume -= 0.2
+
+/datum/quirk/blooddeficiency/proc/update_mail(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
+
+	mail_goodies.Cut()
+
+	if(isnull(new_species.exotic_blood)) // && isnull(new_species.exotic_bloodtype)) // We don't really support your blood yet :(
+		if(NOBLOOD in new_species.inherent_traits)
+			return
+
+		mail_goodies += /obj/item/reagent_containers/blood/OMinus
+		return
+
+	for(var/obj/item/reagent_containers/blood/blood_bag as anything in typesof(/obj/item/reagent_containers/blood))
+		var/right_blood_type = !isnull(new_species.exotic_bloodtype) && initial(blood_bag.blood_type) == new_species.exotic_bloodtype
+//		var/right_blood_reagent = !isnull(new_species.exotic_blood) && initial(blood_bag.unique_blood) == new_species.exotic_blood
+		if(right_blood_type) // || right_blood_reagent)
+			mail_goodies += blood_bag
 
 /datum/quirk/depression
 	name = "Depression"
@@ -43,11 +67,11 @@
 
 GLOBAL_LIST_EMPTY(family_heirlooms)
 
-/datum/quirk/family_heirloom/on_spawn()	
+/datum/quirk/family_heirloom/on_spawn()
 	// Define holder and type
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/heirloom_type
-	
+
 	// The quirk holder's species - we have a 50% chance, if we have a species with a set heirloom, to choose a species heirloom.
 	var/datum/species/holder_species = human_holder.dna?.species
 	if(holder_species && LAZYLEN(holder_species.family_heirlooms) && prob(50))
@@ -61,13 +85,13 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	// If we didn't find an heirloom somehow, throw them a generic one
 	if(!heirloom_type)
 		heirloom_type = pick(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20)
-	
+
 	// Create the heirloom item
 	heirloom = new heirloom_type(get_turf(quirk_holder))
-	
+
 	// Add to global list
 	GLOB.family_heirlooms += heirloom
-	
+
 	// Determine and assign item location
 	var/list/slots = list(
 		"in your left pocket" = ITEM_SLOT_LPOCKET,
@@ -156,7 +180,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 
 /datum/quirk/nyctophobia/add()
-	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 
 /datum/quirk/nyctophobia/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
@@ -197,7 +221,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	medical_record_text = "Despite my warnings, the patient refuses turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
 
 /datum/quirk/lightless/add()
-	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 
 /datum/quirk/lightless/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
@@ -334,8 +358,8 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	processing_quirk = TRUE
 
 /datum/quirk/social_anxiety/add()
-	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
-	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
+	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, PROC_REF(eye_contact))
+	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, PROC_REF(looks_at_floor))
 
 /datum/quirk/social_anxiety/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
@@ -363,7 +387,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	if(prob(85) || (istype(mind_check) && mind_check.mind))
 		return
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
 
 /datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
 	if(prob(75))
@@ -386,7 +410,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 			msg += "causing you to freeze up!"
 
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='userdanger'>[msg]</span>"), 3) // so the examine signal has time to fire and this will print after
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), quirk_holder, "<span class='userdanger'>[msg]</span>"), 3) // so the examine signal has time to fire and this will print after
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/mood_event/anxiety_eyecontact

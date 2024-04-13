@@ -68,7 +68,7 @@
 
 /mob/living/simple_animal/hostile/wizard/handle_automated_action()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/AutomatedCast)
+	INVOKE_ASYNC(src, PROC_REF(AutomatedCast))
 
 /mob/living/simple_animal/hostile/wizard/proc/AutomatedCast()
 	if(target && next_cast < world.time)

@@ -135,7 +135,7 @@
 	. = ..()
 	add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
 	var/slowdown_time = 6 SECONDS + (0.5 * consumed_buff)
-	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), slowdown_time, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(remove_movespeed_modifier), /datum/movespeed_modifier/slaughter), slowdown_time, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /mob/living/simple_animal/slaughter/Destroy()
 	release_victims()
@@ -210,7 +210,7 @@
 	return ..()
 
 /obj/item/organ/heart/demon/Stop()
-	return 0 // Always beating.
+	return FALSE // Always beating.
 
 /mob/living/simple_animal/slaughter/laughter
 	// The laughter demon! It's everyone's best friend! It just wants to hug

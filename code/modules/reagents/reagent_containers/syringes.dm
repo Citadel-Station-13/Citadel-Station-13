@@ -58,7 +58,7 @@
 
 /obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/attempt_inject, target, user, proximity)
+	INVOKE_ASYNC(src, PROC_REF(attempt_inject), target, user, proximity)
 
 /obj/item/reagent_containers/syringe/proc/attempt_inject(atom/target, mob/user, proximity)
 	if(busy)
@@ -93,7 +93,7 @@
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
 					busy = TRUE
-					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
+					if(!do_mob(user, target, extra_checks=CALLBACK(L, TYPE_PROC_REF(/mob/living, can_inject),user,1)))
 						busy = FALSE
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
@@ -143,7 +143,7 @@
 				if(L != user)
 					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
 											"<span class='userdanger'>[user] is trying to inject [L]!</span>")
-					if(!do_mob(user, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
+					if(!do_mob(user, L, extra_checks=CALLBACK(L, TYPE_PROC_REF(/mob/living, can_inject),user,1)))
 						return
 					if(!reagents.total_volume)
 						return
@@ -189,7 +189,7 @@
 	if(reagents && reagents.total_volume)
 		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
 	else
-		return 0
+		return FALSE
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"

@@ -12,8 +12,8 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/restore) //basically, unfry people who are being cleaned (badmemes fried someone)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(restore)) //basically, unfry people who are being cleaned (badmemes fried someone)
 
 	fry_power = frying_power
 	owner = parent

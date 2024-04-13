@@ -195,7 +195,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	countdown = new(src)
 	countdown.start()
 	GLOB.poi_list |= src
@@ -208,13 +208,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		GLOB.main_supermatter_engine = src
 
 	AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, PROC_REF(call_explode))
 
 	soundloop = new(src, TRUE)
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	QDEL_NULL(radio)
 	GLOB.poi_list -= src
 	QDEL_NULL(countdown)
@@ -720,7 +720,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(damage > explosion_point)
 			countdown()
 
-	return 1
+	return TRUE
 
 /obj/machinery/power/supermatter_crystal/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
@@ -1140,7 +1140,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else if(isliving(target))//If we got a fleshbag on our hands
 			var/mob/living/creature = target
 			creature.set_shocked()
-			addtimer(CALLBACK(creature, /mob/living/proc/reset_shocked), 10)
+			addtimer(CALLBACK(creature, TYPE_PROC_REF(/mob/living, reset_shocked)), 10)
 			//3 shots a human with no resistance. 2 to crit, one to death. This is at at least 10000 power.
 			//There's no increase after that because the input power is effectivly capped at 10k
 			//Does 1.5 damage at the least

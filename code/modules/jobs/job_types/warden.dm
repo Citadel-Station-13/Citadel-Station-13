@@ -34,6 +34,15 @@
 		/obj/item/book/manual/wiki/security_space_law
 	)
 
+	mail_goodies = list(
+		/obj/item/storage/fancy/cigarettes = 15,
+		/obj/item/storage/box/handcuffs = 10,
+		/obj/item/storage/box/teargas = 10,
+		/obj/item/storage/box/flashbangs = 10,
+		/obj/item/storage/box/rubbershot = 10,
+		/obj/item/storage/box/lethalshot = 5
+	)
+
 /datum/job/warden/get_access()
 	var/list/L = list()
 	L = ..() | check_config_for_sec_maint()

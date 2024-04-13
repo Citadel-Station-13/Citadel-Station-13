@@ -51,7 +51,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_HEAD)
-		return 1
+		return TRUE
 
 /obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
 	..()
@@ -159,7 +159,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
-		return 1
+		return TRUE
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine
@@ -241,7 +241,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/mining/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
-	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
+	RegisterSignal(src, COMSIG_ARMOR_PLATED, PROC_REF(upgrade_icon))
 
 /obj/item/clothing/head/helmet/space/hardsuit/mining/proc/upgrade_icon(datum/source, amount, maxamount)
 	SIGNAL_HANDLER
@@ -274,7 +274,7 @@
 /obj/item/clothing/suit/space/hardsuit/mining/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
-	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
+	RegisterSignal(src, COMSIG_ARMOR_PLATED, PROC_REF(upgrade_icon))
 
 /obj/item/clothing/suit/space/hardsuit/mining/proc/upgrade_icon(datum/source, amount, maxamount)
 	SIGNAL_HANDLER
@@ -349,7 +349,7 @@
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.UpdateButtons()
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
@@ -746,7 +746,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
 	listeningTo = user
 
 /obj/item/clothing/suit/space/hardsuit/ancient/dropped(mob/user)
@@ -949,7 +949,7 @@
 		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.UpdateButtons()
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/update_overlays()
 	. = ..()

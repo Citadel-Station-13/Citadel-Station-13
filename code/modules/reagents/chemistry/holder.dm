@@ -532,7 +532,7 @@
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && can_special_react)
 					possible_reactions  += C
 
-		sortTim(possible_reactions, /proc/cmp_chemical_reactions_default, FALSE)
+		sortTim(possible_reactions, GLOBAL_PROC_REF(cmp_chemical_reactions_default), FALSE)
 
 		if(possible_reactions.len)
 			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
@@ -552,7 +552,7 @@
 					fermiIsReacting = FALSE
 					SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
 					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
-					return 0
+					return FALSE
 
 				//This is just to calc the on_reaction multiplier, and is a candidate for removal.
 				for(var/B in cached_required_reagents)
@@ -561,11 +561,11 @@
 					targetVol = cached_results[P]*multiplier
 
 				if(!((chem_temp <= C.ExplodeTemp) && (chem_temp >= C.OptimalTempMin)))
-					return 0 //Not hot enough
+					return FALSE //Not hot enough
 				if(! ((pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) ))//To prevent pointless reactions
-					return 0
+					return FALSE
 				if (fermiIsReacting)
-					return 0
+					return FALSE
 				else
 					START_PROCESSING(SSprocessing, src)
 					selected_reaction.on_reaction(src, my_atom, multiplier)
@@ -581,7 +581,7 @@
 						fermiIsReacting = FALSE
 						SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
 						Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
-					return 0
+					return FALSE
 
 				for(var/B in cached_required_reagents) //
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
@@ -621,7 +621,7 @@
 
 	while(reaction_occurred)
 	update_total()
-	return 0
+	return FALSE
 
 /datum/reagents/process()
 	var/datum/chemical_reaction/C = fermiReactID
@@ -838,7 +838,7 @@
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(DEL_REAGENT)
-	return 1
+	return TRUE
 
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
@@ -853,7 +853,7 @@
 			total_volume += R.volume
 	if(!reagent_list || !total_volume)
 		pH = REAGENT_NORMAL_PH
-	return 0
+	return FALSE
 
 /datum/reagents/proc/clear_reagents()
 	var/list/cached_reagents = reagent_list
@@ -861,7 +861,7 @@
 		var/datum/reagent/R = reagent
 		del_reagent(R.type)
 	pH = REAGENT_NORMAL_PH
-	return 0
+	return FALSE
 
 /datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1, from_gas = 0)
 	var/react_type
@@ -1075,9 +1075,9 @@
 				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					return R
 				else
-					return 0
+					return FALSE
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/get_reagent_amount(reagent)
 	var/list/cached_reagents = reagent_list
@@ -1086,7 +1086,7 @@
 		if (R.type == reagent)
 			return round(R.volume, CHEMICAL_QUANTISATION_LEVEL)
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/get_reagents()
 	var/list/names = list()
@@ -1099,7 +1099,7 @@
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount))
-		return 1
+		return TRUE
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 

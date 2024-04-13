@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), S = vocal_bark, distance_multiplier = 1)
 
 /atom/movable/proc/can_speak()
-	return 1
+	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, atom/movable/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
 	var/rendered = compose_message(src, message_language, message, , spans, message_mode, source)
@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		for(var/i in 1 to barks)
 			if(total_delay > BARK_MAX_TIME)
 				break
-			addtimer(CALLBACK(src, .proc/bark, hearers, range, vocal_volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark), total_delay)
+			addtimer(CALLBACK(src, PROC_REF(bark), hearers, range, vocal_volume, BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark), total_delay)
 			total_delay += rand(DS2TICKS(vocal_speed / BARK_SPEED_BASELINE), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS(vocal_speed / BARK_SPEED_BASELINE)) TICKS
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE, atom/movable/source)
@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "[src]"	//Returns the atom's name, prepended with 'The' if it's not a proper noun
 
 /atom/movable/proc/IsVocal()
-	return 1
+	return TRUE
 
 /atom/movable/proc/get_alt_name()
 

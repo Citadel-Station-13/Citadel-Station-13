@@ -30,7 +30,7 @@
 	stored_research = new
 	host_research = SSresearch.science_tech
 	update_research()
-	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
+	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, _after_insert=CALLBACK(src, PROC_REF(AfterMaterialInsert)))
 	RefreshParts()
 
 /obj/machinery/rnd/production/Destroy()
@@ -107,7 +107,7 @@
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo
-		return 0
+		return FALSE
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	var/A = materials.mat_container.get_material_amount(mat)
@@ -175,8 +175,8 @@
 	if(production_animation)
 		flick(production_animation, src)
 	var/timecoeff = D.lathe_time_factor * print_cost_coeff
-	addtimer(CALLBACK(src, .proc/reset_busy), (20 * timecoeff * amount) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction, usr), (20 * timecoeff * amount) ** 0.5)
+	addtimer(CALLBACK(src, PROC_REF(reset_busy)), (20 * timecoeff * amount) ** 0.5)
+	addtimer(CALLBACK(src, PROC_REF(do_print), D.build_path, amount, efficient_mats, D.dangerous_construction, usr), (20 * timecoeff * amount) ** 0.5)
 	return TRUE
 
 /obj/machinery/rnd/production/proc/search(string)
@@ -344,10 +344,10 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)
 		say("No access to material storage, please contact the quartermaster.")
-		return 0
+		return FALSE
 	if (materials.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
+		return FALSE
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 	var/list/matlist = list()
 	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT

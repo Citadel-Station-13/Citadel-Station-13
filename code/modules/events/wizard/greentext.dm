@@ -13,7 +13,7 @@
 		if(!ishuman(M))
 			holder_canadates -= M
 	if(!holder_canadates) //Very unlikely, but just in case
-		return 0
+		return FALSE
 
 	var/mob/living/carbon/human/H = pick(holder_canadates)
 	new /obj/item/greentext(H.loc)
@@ -36,7 +36,7 @@
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
 	GLOB.poi_list |= src
-	roundend_callback = CALLBACK(src,.proc/check_winner)
+	roundend_callback = CALLBACK(src,PROC_REF(check_winner))
 	SSticker.OnRoundend(roundend_callback)
 
 /obj/item/greentext/Destroy(force)

@@ -17,14 +17,14 @@
 
 	src.hud_loc = hud_loc
 
-	RegisterSignal(L, SIGNAL_TRAIT(TRAIT_COMBAT_MODE_LOCKED), .proc/update_combat_lock)
-	RegisterSignal(L, COMSIG_TOGGLE_COMBAT_MODE, .proc/user_toggle_intentional_combat_mode)
-	RegisterSignal(L, COMSIG_DISABLE_COMBAT_MODE, .proc/safe_disable_combat_mode)
-	RegisterSignal(L, COMSIG_ENABLE_COMBAT_MODE, .proc/safe_enable_combat_mode)
-	RegisterSignal(L, COMSIG_MOB_DEATH, .proc/on_death)
-	RegisterSignal(L, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout)
-	RegisterSignal(L, COMSIG_MOB_HUD_CREATED, .proc/on_mob_hud_created)
-	RegisterSignal(L, COMSIG_COMBAT_MODE_CHECK, .proc/check_flags)
+	RegisterSignal(L, SIGNAL_TRAIT(TRAIT_COMBAT_MODE_LOCKED), PROC_REF(update_combat_lock))
+	RegisterSignal(L, COMSIG_TOGGLE_COMBAT_MODE, PROC_REF(user_toggle_intentional_combat_mode))
+	RegisterSignal(L, COMSIG_DISABLE_COMBAT_MODE, PROC_REF(safe_disable_combat_mode))
+	RegisterSignal(L, COMSIG_ENABLE_COMBAT_MODE, PROC_REF(safe_enable_combat_mode))
+	RegisterSignal(L, COMSIG_MOB_DEATH, PROC_REF(on_death))
+	RegisterSignal(L, COMSIG_MOB_CLIENT_LOGOUT, PROC_REF(on_logout))
+	RegisterSignal(L, COMSIG_MOB_HUD_CREATED, PROC_REF(on_mob_hud_created))
+	RegisterSignal(L, COMSIG_COMBAT_MODE_CHECK, PROC_REF(check_flags))
 
 	update_combat_lock()
 
@@ -88,8 +88,8 @@
 			to_chat(source, self_message)
 		if(playsound)
 			source.playsound_local(source, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
-	RegisterSignal(source, COMSIG_MOB_CLIENT_MOUSEMOVE, .proc/onMouseMove)
-	RegisterSignal(source, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(source, COMSIG_MOB_CLIENT_MOUSEMOVE, PROC_REF(onMouseMove))
+	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	if(hud_icon)
 		hud_icon.combat_on = TRUE
 		hud_icon.update_icon()

@@ -117,7 +117,7 @@ Difficulty: Hard
 			SetRecoveryTime(15)
 		else
 			for(var/i = 1 to 5)
-				INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 10, 2, 0)
+				INVOKE_ASYNC(src, PROC_REF(hallucination_charge_around), 2, 10, 2, 0)
 				sleep(5)
 			SetRecoveryTime(10)
 
@@ -153,7 +153,7 @@ Difficulty: Hard
 	if(is_enraged())
 		visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, 1)
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/ex_act(severity, target, origin)
@@ -254,7 +254,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
-		INVOKE_ASYNC(src, .proc/bloodattack, targets, prob(50))
+		INVOKE_ASYNC(src, PROC_REF(bloodattack), targets, prob(50))
 		return TRUE
 	return FALSE
 
@@ -320,7 +320,7 @@ Difficulty: Hard
 				var/turf/targetturf = get_step(src, dir)
 				L.forceMove(targetturf)
 				playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, 1, -1)
-				addtimer(CALLBACK(src, .proc/devour, L), 2)
+				addtimer(CALLBACK(src, PROC_REF(devour), L), 2)
 	sleep(1)
 
 /obj/effect/temp_visual/dragon_swoop/bubblegum
@@ -394,7 +394,7 @@ Difficulty: Hard
 	change_move_delay(3.75)
 	var/newcolor = rgb(149, 10, 10)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
-	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
+	var/datum/callback/cb = CALLBACK(src, PROC_REF(blood_enrage_end))
 	addtimer(cb, boost_time)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(var/newcolor = rgb(149, 10, 10))
@@ -441,7 +441,7 @@ Difficulty: Hard
 			continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
 		B.forceMove(place)
-		INVOKE_ASYNC(B, .proc/charge, chargeat, delay, chargepast)
+		INVOKE_ASYNC(B, PROC_REF(charge), chargeat, delay, chargepast)
 	if(useoriginal)
 		charge(chargeat, delay, chargepast)
 

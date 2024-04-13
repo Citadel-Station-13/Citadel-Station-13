@@ -15,6 +15,7 @@
 	name = "auxillary base management console"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	icon_keyboard = null
 	var/shuttleId = "colony_drop"
 	desc = "Allows a deployable expedition base to be dropped from the station to a designated mining location. It can also \
 interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
@@ -283,7 +284,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	anti_spam_cd = 1
-	addtimer(CALLBACK(src, .proc/clear_cooldown), 50)
+	addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), 50)
 
 	var/turf/landing_spot = get_turf(src)
 

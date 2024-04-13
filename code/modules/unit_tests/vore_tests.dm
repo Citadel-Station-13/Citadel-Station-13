@@ -35,11 +35,11 @@
 	H = new(T)
 	startOxyloss = H.getOxyLoss()
 
-	return 1
+	return TRUE
 
 /datum/unit_test/space_suffocation/check_result()
 	if(H.life_tick < 10)
-		return 0
+		return FALSE
 
 	endOxyloss = H.getOxyLoss()
 
@@ -47,7 +47,7 @@
 		TEST_FAIL("Human mob is not taking oxygen damage in space. (Before: [startOxyloss]; after: [endOxyloss])")
 
 	qdel(H)
-	return 1
+	return TRUE
 
 /datum/unit_test/belly_nonsuffocation
 	name = "MOB: human mob does not suffocate in a belly"
@@ -97,8 +97,8 @@
 	endOxyloss = prey.getOxyLoss()
 	if(startOxyloss < endOxyloss)
 		TEST_FAIL("Prey takes oxygen damage in a pred's belly! (Before: [startOxyloss]; after: [endOxyloss])")
-	qdel(prey)
-	qdel(pred)
+	QDEL_NULL(prey)
+	QDEL_NULL(pred)
 	return TRUE
 ////////////////////////////////////////////////////////////////
 /datum/unit_test/belly_spacesafe
@@ -160,8 +160,8 @@
 	endBruteloss = prey.getBruteLoss()
 	if(startBruteloss < endBruteloss)
 		TEST_FAIL("Prey takes brute damage in space! (Before: [startBruteloss]; after: [endBruteloss])")
-	qdel(prey)
-	qdel(pred)
+	QDEL_NULL(prey)
+	QDEL_NULL(pred)
 	return TRUE
 ////////////////////////////////////////////////////////////////
 /datum/unit_test/belly_damage
@@ -213,6 +213,6 @@
 	endBruteBurn = prey.getBruteLoss() + prey.getFireLoss()
 	if(startBruteBurn >= endBruteBurn)
 		TEST_FAIL("Prey doesn't take damage in digesting belly! (Before: [startBruteBurn]; after: [endBruteBurn])")
-	qdel(prey)
-	qdel(pred)
+	QDEL_NULL(prey)
+	QDEL_NULL(pred)
 	return TRUE

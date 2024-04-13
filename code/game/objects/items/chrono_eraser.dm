@@ -35,7 +35,7 @@
 
 /obj/item/chrono_eraser/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_BACK)
-		return 1
+		return TRUE
 
 /obj/item/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
@@ -108,9 +108,9 @@
 			var/turf/currentpos = get_turf(src)
 			var/mob/living/user = src.loc
 			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && !user.lying && (user.stat == CONSCIOUS))
-				return 1
+				return TRUE
 		field_disconnect(F)
-		return 0
+		return FALSE
 
 /obj/item/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
 	if(TED)

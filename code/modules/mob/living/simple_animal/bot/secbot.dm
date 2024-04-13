@@ -240,7 +240,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
 	var/judgement_criteria = judgement_criteria()
-	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 	threatlevel += 6
 	if(threatlevel >= 4)
 		target = H
@@ -351,12 +351,13 @@
 		..()
 
 
-/mob/living/simple_animal/bot/secbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
-		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))
-			var/mob/living/carbon/human/H = I.thrownby
-			retaliate(H)
+/mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	if(istype(hitting_atom, /obj/item))
+		var/obj/item/item_hitby = hitting_atom
+		var/mob/thrown_by = item_hitby.thrownby?.resolve()
+		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))
+			var/mob/living/carbon/human/human_throwee = thrown_by
+			retaliate(human_throwee)
 	..()
 
 
@@ -380,7 +381,7 @@
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C)
 	var/judgement_criteria = judgement_criteria()
 	icon_state = "secbot-c"
-	addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2)
 	var/threat = 5
 	if(ishuman(C))
 		if(stored_fashion)
@@ -392,12 +393,12 @@
 		C.stuttering = 5
 		C.DefaultCombatKnockdown(100)
 		var/mob/living/carbon/human/H = C
-		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 	else
 		playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 		C.DefaultCombatKnockdown(100)
 		C.stuttering = 5
-		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 
 	log_combat(src,C,"stunned")
 	if(declare_arrests)
@@ -499,13 +500,13 @@
 	target = null
 	last_found = world.time
 	frustration = 0
-	INVOKE_ASYNC(src, .proc/handle_automated_action)
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 
 /mob/living/simple_animal/bot/secbot/proc/back_to_hunt()
 	anchored = FALSE
 	frustration = 0
 	mode = BOT_HUNT
-	INVOKE_ASYNC(src, .proc/handle_automated_action)
+	INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 // look for a criminal in view of the bot
 
 /mob/living/simple_animal/bot/secbot/proc/look_for_perp()
@@ -518,7 +519,7 @@
 		if((C.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 
 		if(!threatlevel)
 			continue
@@ -530,7 +531,7 @@
 			playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 			visible_message(process_emote("TAUNT", target, threatlevel))
 			mode = BOT_HUNT
-			INVOKE_ASYNC(src, .proc/handle_automated_action)
+			INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 			break
 		else
 			continue

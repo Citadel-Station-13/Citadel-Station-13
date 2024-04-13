@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	save_key = _save_key
 	examine_no_preview = _examine_no_preview
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(show_flavor))
 
 	if(can_edit && ismob(target)) //but only mobs receive the proc/verb for the time being
 		var/mob/M = target
@@ -44,10 +44,10 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(!save_key)
 		return
 	if(ishuman(target))
-		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, .proc/update_prefs_flavor_text)
+		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, PROC_REF(update_prefs_flavor_text))
 	else if(iscyborg(target))
-		RegisterSignal(target, COMSIG_MOB_ON_NEW_MIND, .proc/borged_update_flavor_text)
-		RegisterSignal(target, COMSIG_MOB_CLIENT_JOINED_FROM_LOBBY, .proc/borged_update_flavor_text)
+		RegisterSignal(target, COMSIG_MOB_ON_NEW_MIND, PROC_REF(borged_update_flavor_text))
+		RegisterSignal(target, COMSIG_MOB_CLIENT_JOINED_FROM_LOBBY, PROC_REF(borged_update_flavor_text))
 
 /datum/element/flavor_text/Detach(atom/A)
 	. = ..()
@@ -157,16 +157,16 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 /datum/element/flavor_text/proc/borged_update_flavor_text(mob/new_character, client/C)
 	C = C || GET_CLIENT(new_character)
 	if(!C)
-		LAZYREMOVE(texts_by_atom, new_character)
+		LAZYSET(texts_by_atom, new_character, "")
 		return
 	var/datum/preferences/P = C.prefs
 	if(!P)
-		LAZYREMOVE(texts_by_atom, new_character)
+		LAZYSET(texts_by_atom, new_character, "")
 		return
 	if(P.custom_names["cyborg"] == new_character.real_name)
 		LAZYSET(texts_by_atom, new_character, P.features[save_key])
 	else
-		LAZYREMOVE(texts_by_atom, new_character)
+		LAZYSET(texts_by_atom, new_character, "")
 
 //subtypes with additional hooks for DNA and preferences.
 /datum/element/flavor_text/carbon
@@ -180,11 +180,11 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	. = ..()
 	if(. == ELEMENT_INCOMPATIBLE)
 		return
-	RegisterSignal(target, COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, .proc/update_dna_flavor_text)
-	RegisterSignal(target, COMSIG_MOB_ANTAG_ON_GAIN, .proc/on_antag_gain)
+	RegisterSignal(target, COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, PROC_REF(update_dna_flavor_text))
+	RegisterSignal(target, COMSIG_MOB_ANTAG_ON_GAIN, PROC_REF(on_antag_gain))
 	if(ishuman(target))
-		RegisterSignal(target, COMSIG_HUMAN_HARDSET_DNA, .proc/update_dna_flavor_text)
-		RegisterSignal(target, COMSIG_HUMAN_ON_RANDOMIZE, .proc/unset_flavor)
+		RegisterSignal(target, COMSIG_HUMAN_HARDSET_DNA, PROC_REF(update_dna_flavor_text))
+		RegisterSignal(target, COMSIG_HUMAN_ON_RANDOMIZE, PROC_REF(unset_flavor))
 
 /datum/element/flavor_text/carbon/Detach(mob/living/carbon/C)
 	. = ..()

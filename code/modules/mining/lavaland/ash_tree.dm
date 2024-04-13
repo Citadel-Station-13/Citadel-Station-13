@@ -73,7 +73,7 @@
 			container_used = W
 			//So we dont lose are bowl when cutting it down + needed for the harvest sap proc
 			user.transferItemToLoc(W, src)
-			addtimer(CALLBACK(src, .proc/harvest_sap), harvest_sap_time SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(harvest_sap)), harvest_sap_time SECONDS)
 		else
 			to_chat(user, "<span class='notice'>There is no sap to collect.</span>")
 

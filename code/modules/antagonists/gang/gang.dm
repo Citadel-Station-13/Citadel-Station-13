@@ -41,7 +41,7 @@
 
 /datum/antagonist/gang/get_admin_commands()
 	. = ..()
-	.["Give extra equipment"] = CALLBACK(src,.proc/equip_gangster_in_inventory)
+	.["Give extra equipment"] = CALLBACK(src,PROC_REF(equip_gangster_in_inventory))
 
 /datum/antagonist/gang/create_team(team_given) // gets called whenever add_antag_datum() is called on a mind
 	if(team_given)

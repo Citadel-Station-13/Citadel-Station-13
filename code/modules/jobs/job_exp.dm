@@ -4,24 +4,24 @@ GLOBAL_PROTECT(exp_to_update)
 // Procs
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
-		return 0
+		return FALSE
 	if(!CONFIG_GET(flag/use_exp_tracking))
-		return 0
+		return FALSE
 	if(!SSdbcore.Connect())
-		return 0
+		return FALSE
 	if(!exp_requirements || !exp_type)
-		return 0
+		return FALSE
 	if(!job_is_xp_locked(src.title))
-		return 0
+		return FALSE
 	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights_for(C,R_ADMIN))
-		return 0
+		return FALSE
 	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
-		return 0
+		return FALSE
 	var/my_exp = C.calc_exp_type(get_exp_req_type())
 	var/job_requirement = get_exp_req_amount()
 	if(my_exp >= job_requirement)
-		return 0
+		return FALSE
 	else
 		return (job_requirement - my_exp)
 
@@ -265,7 +265,7 @@ GLOBAL_PROTECT(exp_to_update)
 			"ckey" = ckey,
 			"minutes" = jvalue)))
 		prefs.exp[jtype] += jvalue
-	addtimer(CALLBACK(SSblackbox,/datum/controller/subsystem/blackbox/proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(SSblackbox, TYPE_PROC_REF(/datum/controller/subsystem/blackbox, update_exp_db)),20,TIMER_OVERRIDE|TIMER_UNIQUE)
 
 
 //ALWAYS call this at beginning to any proc touching player flags, or your database admin will probably be mad

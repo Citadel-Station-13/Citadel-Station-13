@@ -37,14 +37,14 @@
 	if((sensordamage || (has_sensor < HAS_SENSORS && has_sensor != NO_SENSORS)) && istype(I, /obj/item/stack/cable_coil))
 		if(damaged_clothes == CLOTHING_SHREDDED)
 			to_chat(user,"<span class='warning'>[src] is too damaged to have its suit sensors repaired! Repair it first.</span>")
-			return 0
+			return FALSE
 		var/obj/item/stack/cable_coil/C = I
 		I.use_tool(src, user, 0, 1)
 		has_sensor = HAS_SENSORS
 		sensordamage = 0
 		sensor_mode = sensor_mode_intended
 		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
-		return 1
+		return TRUE
 
 	if(!attach_accessory(I, user))
 		return ..()
@@ -233,13 +233,13 @@
 		return
 	if(src.has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
-		return 0
+		return FALSE
 	if(src.sensor_flags & SENSOR_LOCKED)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return FALSE
 	if(src.has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
-		return 0
+		return FALSE
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
@@ -292,10 +292,10 @@
 
 	if(src.has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
-		return 0
+		return FALSE
 	if(src.sensor_flags & SENSOR_LOCKED)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return FALSE
 	if(has_sensor <= NO_SENSORS)
 		to_chat(user, "This suit does not have any sensors.")
 		return

@@ -206,12 +206,12 @@
 				var/count = 0
 				while(!isliving(M))
 					if(!M || !M.loc)
-						return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
+						return FALSE //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 					M = M.loc
 					count++
 					if(count >= 6)
 						to_chat(src, "You are not being carried by anyone!")
-						return 0
+						return FALSE
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")

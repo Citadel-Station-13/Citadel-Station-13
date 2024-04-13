@@ -37,7 +37,7 @@
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	to_chat(chassis.occupants, "[icon2html(chassis, owner)]<span class='notice'>Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].</span>")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
@@ -61,7 +61,7 @@
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You select [chassis.selected].</span>")
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
-		UpdateButtonIcon()
+		UpdateButtons()
 		return
 	var/number = 0
 	for(var/equipment in available_equipment)
@@ -77,7 +77,7 @@
 			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to [chassis.selected].</span>")
 			button_icon_state = "mech_cycle_equip_on"
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
-		UpdateButtonIcon()
+		UpdateButtons()
 		return
 
 
@@ -100,7 +100,7 @@
 		chassis.set_light(0)
 	to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].</span>")
 	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/mech_view_stats
 	name = "View Stats"
@@ -140,7 +140,7 @@
 
 	for(var/occupant in occupants)
 		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/strafe)
-		action?.UpdateButtonIcon()
+		action?.UpdateButtons()
 
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.
@@ -176,7 +176,7 @@
 		chassis.movedelay = initial(chassis.movedelay)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You disable leg actuators overload.</span>")
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/mech_smoke
 	name = "Smoke"
@@ -208,7 +208,7 @@
 			SEND_SOUND(owner, sound('sound/mecha/imag_enh.ogg',volume=50))
 		else
 			owner.client.view_size.resetToDefault() //Let's not let this stack shall we?
-		UpdateButtonIcon()
+		UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/mech_switch_damtype
 	name = "Reconfigure arm microtool arrays"
@@ -231,7 +231,7 @@
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(chassis, 'sound/mecha/mechmove01.ogg', 50, TRUE)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 ///swap seats, for two person mecha
 /datum/action/vehicle/sealed/mecha/swap_seat
@@ -272,4 +272,4 @@
 	chassis.phasing = !chassis.phasing
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
 	to_chat(owner, "[icon2html(chassis, owner)]<font color=\"[chassis.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
-	UpdateButtonIcon()
+	UpdateButtons()

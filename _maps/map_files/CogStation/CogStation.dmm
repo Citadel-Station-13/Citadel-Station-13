@@ -5422,7 +5422,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -7390,7 +7390,7 @@
 	dir = 1;
 	light_color = "#ffc1c1"
 	},
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/machinery/requests_console{
 	department = "Service Router";
 	name = "Service Router RC";
@@ -21060,7 +21060,7 @@
 /obj/item/stack/packageWrap,
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/machinery/requests_console{
 	department = "Public Router";
 	name = "Public Router RC";
@@ -23661,14 +23661,14 @@
 	dir = 4;
 	light_color = "#e8eaff"
 	},
-/obj/item/aiModule/reset/purge{
+/obj/item/ai_module/reset/purge{
 	pixel_y = 6
 	},
-/obj/item/aiModule/reset{
+/obj/item/ai_module/reset{
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/aiModule/core/full/custom{
+/obj/item/ai_module/core/full/custom{
 	pixel_x = -4
 	},
 /obj/machinery/status_display{
@@ -24172,7 +24172,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/aiModule/core/full/asimov{
+/obj/item/ai_module/core/full/asimov{
 	pixel_x = 2;
 	pixel_y = 10
 	},
@@ -24183,11 +24183,11 @@
 /obj/effect/spawner/lootdrop/aimodule_harmless{
 	pixel_y = 6
 	},
-/obj/item/aiModule/core/freeformcore{
+/obj/item/ai_module/core/freeformcore{
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/aiModule/supplied/freeform{
+/obj/item/ai_module/supplied/freeform{
 	pixel_x = -2
 	},
 /obj/structure/cable{
@@ -33416,7 +33416,7 @@
 /obj/structure/table,
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console{
 	department = "EVA Router";
@@ -38060,22 +38060,22 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/aiModule/supplied/oxygen{
+/obj/item/ai_module/supplied/oxygen{
 	pixel_x = 2;
 	pixel_y = 10
 	},
-/obj/item/aiModule/supplied/quarantine{
+/obj/item/ai_module/supplied/quarantine{
 	pixel_x = 1;
 	pixel_y = 8
 	},
-/obj/item/aiModule/zeroth/oneHuman{
+/obj/item/ai_module/zeroth/oneHuman{
 	pixel_y = 4
 	},
 /obj/effect/spawner/lootdrop/aimodule_harmful{
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/aiModule/supplied/protectStation{
+/obj/item/ai_module/supplied/protectStation{
 	pixel_x = -2
 	},
 /turf/open/floor/plasteel,
@@ -50542,7 +50542,7 @@
 "ceL" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/table,
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -56748,9 +56748,9 @@
 "crd" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
-/obj/item/destTagger,
-/obj/item/destTagger,
-/obj/item/destTagger,
+/obj/item/dest_tagger,
+/obj/item/dest_tagger,
+/obj/item/dest_tagger,
 /obj/structure/sign/warning{
 	name = "\improper KEEP CLEAR: HIGH SPEED DELIVERIES";
 	pixel_y = 32
@@ -59004,7 +59004,7 @@
 /area/router/air)
 "cvn" = (
 /obj/structure/table,
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
@@ -69200,7 +69200,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/machinery/light,
 /obj/machinery/requests_console{
 	department = "MedSci Router";

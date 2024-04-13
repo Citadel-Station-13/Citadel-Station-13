@@ -24,7 +24,7 @@
 				break
 			var/msg = "[key_name_admin(src)] [ADMIN_JMP(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
-			INVOKE_ASYNC(GLOBAL_PROC, .proc/send2tgs_adminless_only, "Mob", msg, R_ADMIN)
+			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(send2tgs_adminless_only), "Mob", msg, R_ADMIN)
 			log_game("[key_name(src)] was found to have no .loc with an attached client.")
 
 		// This is a temporary error tracker to make sure we've caught everything
@@ -83,7 +83,7 @@
 		handle_diginvis() //AI becomes unable to see mob
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, float), TRUE)
 
 	if(!loc)
 		return FALSE
@@ -133,7 +133,7 @@
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
 		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
-		return 1
+		return TRUE
 	if(fire_stacks > 0)
 		adjust_fire_stacks(-0.1) //the fire is slowly consumed
 	else
@@ -201,7 +201,7 @@
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
 		add_filter("gravity",1, GRAVITY_MOTION_BLUR)
-	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
+	INVOKE_ASYNC(src, PROC_REF(gravity_pulse_animation))
 
 /mob/living/proc/gravity_pulse_animation()
 	animate(get_filter("gravity"), y = 1, time = 10)

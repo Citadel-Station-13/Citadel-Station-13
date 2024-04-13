@@ -24,7 +24,7 @@
 	ninja.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
 	a_boost = FALSE
 	to_chat(ninja, "<span class='notice'>You have used the adrenaline boost.</span>")
-	addtimer(CALLBACK(src, .proc/ninjaboost_after), 70)
+	addtimer(CALLBACK(src, PROC_REF(ninjaboost_after)), 70)
 
 /**
  * Proc called to inject the ninja with radium.

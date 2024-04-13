@@ -143,8 +143,8 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
 	if((isitem(O) || isstructure(O)) && !is_type_in_list(O, GLOB.protected_objects))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
 	if(destroy_original || CheckObject(O))
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			faction += "[REF(creator)]" // very unique
 		if(destroy_original)
 			qdel(O)
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/hostile/mimic/copy/DestroySurroundings()
 	if(destroy_objects)
@@ -197,11 +197,11 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/machine/CanAttack(atom/the_target)
 	if(the_target == creator) // Don't attack our creator AI.
-		return 0
+		return FALSE
 	if(iscyborg(the_target))
 		var/mob/living/silicon/robot/R = the_target
 		if(R.connected_ai == creator) // Only attack robots that aren't synced to our creator AI.
-			return 0
+			return FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged

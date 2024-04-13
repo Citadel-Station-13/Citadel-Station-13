@@ -38,7 +38,7 @@
 			var/client/C = X
 			if(C && C.holder && !C.holder.fakekey)
 				assembled += "\t <font color='#FF0000'>[C.key]</font>[admin_mode? "[show_admin_info(C)]":""] ([round(C.avgping, 1)]ms)"
-		Lines += sortList(assembled)
+		Lines += sort_list(assembled)
 	assembled.len = 0
 	if(length(GLOB.mentors))
 		Lines += "<b>Mentors:</b>"
@@ -46,10 +46,10 @@
 			var/client/C = X
 			if(C && (!C.holder || (C.holder && !C.holder.fakekey)))			//>using stuff this complex instead of just using if/else lmao
 				assembled += "\t <font color='#0033CC'>[C.key]</font>[admin_mode? "[show_admin_info(C)]":""] ([round(C.avgping, 1)]ms)"
-		Lines += sortList(assembled)
+		Lines += sort_list(assembled)
 	assembled.len = 0
 	Lines += "<b>Players:</b>"
-	for(var/X in sortList(GLOB.clients))
+	for(var/X in sort_list(GLOB.clients))
 		var/client/C = X
 		if(!C)
 			continue
@@ -57,8 +57,8 @@
 		if(C.holder && C.holder.fakekey)
 			key = C.holder.fakekey
 		assembled += "\t [key][admin_mode? "[show_admin_info(C)]":""] ([round(C.avgping, 1)]ms)"
-	Lines += sortList(assembled)
-	
+	Lines += sort_list(assembled)
+
 	for(var/line in Lines)
 		msg += "[line]\n"
 

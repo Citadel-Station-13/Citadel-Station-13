@@ -11,9 +11,9 @@
  * @code
 /hook/foo/proc/bar()
 	if(1)
-		return 1 //Sucessful
+		return TRUE //Sucessful
 	else
-		return 0 //Error, or runtime.
+		return FALSE //Error, or runtime.
  * @endcode
  * All hooks must return nonzero on success, as runtimes will force return null.
  */

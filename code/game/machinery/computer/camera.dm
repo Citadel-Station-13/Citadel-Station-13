@@ -209,7 +209,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -252,6 +252,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
@@ -277,13 +278,13 @@
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_CLICK, .proc/BigClick)
+	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, /atom.proc/interact, usr)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), usr)
 
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
 	if(on && icon_state == icon_state_off)

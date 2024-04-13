@@ -124,7 +124,7 @@
 	quality = MINOR_NEGATIVE
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/structure/spacevine/holder, temp, volume)
-	return 1
+	return TRUE
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
 	if(I && I.damtype == "fire")
@@ -379,7 +379,7 @@
 		event.announce_to_ghosts(SV)
 	START_PROCESSING(SSobj, src)
 	vine_mutations_list = list()
-	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
+	init_subtypes(/datum/spacevine_mutation, vine_mutations_list)
 	if(potency != null)
 		mutativeness = potency / 10
 	if(production != null)

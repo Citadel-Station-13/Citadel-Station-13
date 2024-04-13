@@ -37,7 +37,7 @@
 		return
 	if(isobj(A) && Adjacent(A))
 		if(bomb_cooldown <= world.time && !stat)
-			var/datum/component/killerqueen/K = A.AddComponent(/datum/component/killerqueen, EXPLODE_HEAVY, CALLBACK(src, .proc/on_explode), CALLBACK(src, .proc/on_failure), \
+			var/datum/component/killerqueen/K = A.AddComponent(/datum/component/killerqueen, EXPLODE_HEAVY, CALLBACK(src, PROC_REF(on_explode)), CALLBACK(src, PROC_REF(on_failure)), \
 			examine_message = "<span class='holoparasite'>It glows with a strange <font color=\"[guardiancolor]\">light</font>!</span>")
 			QDEL_IN(K, 1 MINUTES)
 			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</span></B>")

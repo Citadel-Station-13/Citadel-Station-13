@@ -24,7 +24,7 @@ The proc you're attemping should return nonzero values on success.
 	catch(var/exception/e)
 		stack_trace("attempt_vr runtimed when calling [procname] on [callon].")
 		stack_trace("attempt_vr catch: [e] on [e.file]:[e.line]")
-		return 0
+		return FALSE
 
 /*
 This is the _vr version of calling hooks.

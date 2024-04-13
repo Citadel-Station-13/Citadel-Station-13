@@ -59,8 +59,8 @@
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
 				SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
 	var/turf/T = get_turf(src)
@@ -292,9 +292,7 @@
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 
-			SSticker.mode.remove_antag_for_borging(BM.mind)
-			if(!istype(M.laws, /datum/ai_laws/ratvar))
-				remove_servant_of_ratvar(BM, TRUE)
+			BM.mind.remove_antags_for_borging()
 			BM.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
@@ -312,6 +310,7 @@
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename()
+			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 			SSblackbox.record_feedback("amount", "cyborg_birth", 1)
 			forceMove(O)
 			O.robot_suit = src

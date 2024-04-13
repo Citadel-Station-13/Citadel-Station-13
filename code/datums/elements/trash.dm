@@ -3,7 +3,7 @@
 
 /datum/element/trash/Attach(datum/target)
 	. = ..()
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(UseFromHand))
 
 /datum/element/trash/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	if((M == user || user.vore_flags & TRASH_FORCEFEED) && ishuman(user))

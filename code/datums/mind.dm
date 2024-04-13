@@ -67,6 +67,8 @@
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
+	///has this mind ever been an AI
+	var/has_ever_been_ai = FALSE
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 	var/list/learned_recipes //List of learned recipe TYPES.
@@ -85,7 +87,7 @@
 	/// A lazy list of statuses to add next to this mind in the traitor panel
 	var/list/special_statuses
 
-/datum/mind/New(var/key)
+/datum/mind/New(key)
 	skill_holder = new(src)
 	src.key = key
 	soulOwner = src
@@ -93,12 +95,8 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
-	if(islist(antag_datums))
-		for(var/i in antag_datums)
-			var/datum/antagonist/antag_datum = i
-			if(antag_datum.delete_on_mind_deletion)
-				qdel(i)
-		antag_datums = null
+	QDEL_LIST(antag_datums)
+	QDEL_NULL(language_holder)
 	QDEL_NULL(skill_holder)
 	set_current(null)
 	soulOwner = null
@@ -303,6 +301,21 @@
 //Todo make this reset signal
 		if(O)
 			O.unlock_code = null
+
+/// Remove the antagonists that should not persist when being borged
+/datum/mind/proc/remove_antags_for_borging()
+	remove_antag_datum(/datum/antagonist/cult)
+
+	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
+	revolutionary?.remove_revolutionary(TRUE)
+
+	if(!isbrain(current))
+		return
+	if(!istype(current.loc, /obj/item/mmi))
+		return
+	var/obj/item/mmi/B = current.loc.loc
+	if(!istype(B.laws, /datum/ai_laws/ratvar))
+		remove_servant_of_ratvar(current, TRUE)
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
 	remove_changeling()
@@ -826,7 +839,7 @@ GLOBAL_LIST(objective_choices)
 			do_edit_objectives_ambitions()
 			return
 		S_TIMER_COOLDOWN_START(src, COOLDOWN_OBJ_ADMIN_PING, ADMIN_PING_COOLDOWN_TIME)
-		RegisterSignal(src, list(COMSIG_CD_STOP(COOLDOWN_OBJ_ADMIN_PING), COMSIG_CD_RESET(COOLDOWN_OBJ_ADMIN_PING)), .proc/on_objectives_request_cd_end)
+		RegisterSignal(src, list(COMSIG_CD_STOP(COOLDOWN_OBJ_ADMIN_PING), COMSIG_CD_RESET(COOLDOWN_OBJ_ADMIN_PING)), PROC_REF(on_objectives_request_cd_end))
 		log_admin("Objectives review request - [key_name(usr)] has requested a review of their objective changes, pinging the admins.")
 		for(var/a in GLOB.admins)
 			var/client/admin_client = a
@@ -1662,8 +1675,8 @@ GLOBAL_LIST(objective_choices)
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		S.updateButtonIcon()
-		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
+		S.UpdateButton()
+		INVOKE_ASYNC(S, TYPE_PROC_REF(/obj/effect/proc_holder/spell, start_recharge))
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in GLOB.dead_mob_list)

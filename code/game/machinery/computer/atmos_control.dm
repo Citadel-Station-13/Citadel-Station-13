@@ -73,11 +73,11 @@
 
 /obj/machinery/air_sensor/Initialize(mapload)
 	. = ..()
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
@@ -251,7 +251,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		IO |= text[1]
 	if(!IO.len)
 		to_chat(user, "<span class='alert'>No machinery detected.</span>")
-	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in sortList(IO)
+	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in sort_list(IO)
 	if(src)
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"

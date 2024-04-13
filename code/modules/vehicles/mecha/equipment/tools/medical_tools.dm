@@ -9,7 +9,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/vehicle/sealed/mecha/medical/M)
 	if(..() && istype(M))
-		return 1
+		return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/attach(obj/vehicle/sealed/mecha/M)
@@ -46,7 +46,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Exit(atom/movable/O)
-	return 0
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/source, mob/living/carbon/target, params)
 	if(!action_checks(target))
@@ -197,7 +197,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
 	if(!R || !patient || !SG || !(SG in chassis.equipment))
-		return 0
+		return FALSE
 	var/to_inject = min(R.volume, inject_amount)
 	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='notice'>Injecting [patient] with [to_inject] units of [R.name].</span>")
@@ -213,7 +213,7 @@
 			send_byjax(chassis.occupants,"msleeper.browser","lossinfo",get_patient_dam())
 			send_byjax(chassis.occupants,"msleeper.browser","reagents",get_patient_reagents())
 			send_byjax(chassis.occupants,"msleeper.browser","injectwith",get_available_reagents())
-		return 1
+		return TRUE
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist(mob/living/user)
@@ -456,23 +456,23 @@
 	if(syringes.len<max_syringes)
 		if(get_dist(src,S) >= 2)
 			to_chat(user, "[icon2html(src, user)]<span class='warning'>The syringe is too far away!</span>")
-			return 0
+			return FALSE
 		for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
 			if(!(D.CanPass(S,src.loc)))
 				to_chat(user, "[icon2html(src, user)]<span class='warning'>Unable to load syringe!</span>")
-				return 0
+				return FALSE
 		for(var/obj/machinery/door/D in S.loc)//Checks for doors
 			if(!(D.CanPass(S,src.loc)))
 				to_chat(user, "[icon2html(src, user)]<span class='warning'>Unable to load syringe!</span>")
-				return 0
+				return FALSE
 		S.reagents.trans_to(src, S.reagents.total_volume)
 		S.forceMove(src)
 		syringes += S
 		to_chat(user, "[icon2html(src, user)]<span class='notice'>Syringe loaded.</span>")
 		update_equip_info()
-		return 1
+		return TRUE
 	to_chat(user, "[icon2html(src, user)]<span class='warning'>[src]'s syringe chamber is full!</span>")
-	return 0
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/analyze_reagents(atom/A, mob/user)
 	if(get_dist(src,A) >= 4)

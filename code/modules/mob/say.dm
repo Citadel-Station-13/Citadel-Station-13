@@ -154,7 +154,7 @@
 		return TRUE
 
 /mob/proc/hivecheck()
-	return 0
+	return FALSE
 
 /mob/proc/lingcheck()
 	return LINGHIVE_NONE

@@ -24,7 +24,7 @@
 /obj/vehicle/sealed/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
 	if(!damage_amount)
-		return 0
+		return FALSE
 	var/booster_deflection_modifier = 1
 	var/booster_damage_modifier = 1
 	if(damage_flag == BULLET || damage_flag == LASER || damage_flag == ENERGY)
@@ -47,7 +47,7 @@
 	if(prob(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_message("Armor saved.", LOG_MECHA)
-		return 0
+		return FALSE
 	if(.)
 		. *= booster_damage_modifier
 
@@ -72,7 +72,7 @@
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
-		return 0
+		return FALSE
 	else
 		var/play_soundeffect = 1
 		if(user.environment_smash)
@@ -84,7 +84,7 @@
 		animal_damage = min(animal_damage, 20*user.environment_smash)
 		log_combat(user, src, "attacked")
 		attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
-		return 1
+		return TRUE
 
 
 /obj/vehicle/sealed/mecha/hulk_damage()
@@ -105,7 +105,7 @@
 
 /obj/vehicle/sealed/mecha/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //wrapper
 	log_message("Hit by [AM].", LOG_MECHA, color="red")
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
 	if(!enclosed && LAZYLEN(occupants) && !(mecha_flags  & SILICON_PILOT) && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit the pilot of open-canopy mechs
@@ -156,9 +156,9 @@
 		for(var/occus in occupants)
 			var/mob/living/occupant = occus
 			occupant.update_mouse_pointer()
-	if(!equipment_disabled && occupants) //prevent spamming this message with back-to-back EMPs
+	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
-	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = 1
 
 /obj/vehicle/sealed/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

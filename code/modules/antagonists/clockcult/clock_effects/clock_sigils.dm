@@ -21,7 +21,7 @@
 			return ..()
 		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
 		qdel(src)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/effect/clockwork/sigil/attack_tk(mob/user)
@@ -150,7 +150,7 @@
 		if(glow)
 			qdel(glow)
 		animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return
 	if(is_eligible_servant(L))
@@ -183,7 +183,7 @@
 			else
 				to_chat(M, "<span class='heavy_brass'>[message] [L.real_name]!</span>")
 	animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
-	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 20)
 	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 
 
@@ -259,7 +259,7 @@
 	if(!cyborg_checks(cyborg))
 		return
 	to_chat(cyborg, "<span class='brass'>You start to charge from the [sigil_name]...</span>")
-	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, .proc/cyborg_checks, cyborg, TRUE)))
+	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, PROC_REF(cyborg_checks), cyborg, TRUE)))
 		return
 	var/giving_power = min(FLOOR(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), get_clockwork_power()) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(adjust_clockwork_power(-giving_power))
@@ -268,7 +268,7 @@
 		cyborg.color = list("#EC8A2D", "#EC8A2D", "#EC8A2D", rgb(0,0,0))
 		cyborg.apply_status_effect(STATUS_EFFECT_POWERREGEN, giving_power * 0.1) //ten ticks, restoring 10% each
 		animate(cyborg, color = previous_color, time = 100)
-		addtimer(CALLBACK(cyborg, /atom/proc/update_atom_colour), 100)
+		addtimer(CALLBACK(cyborg, TYPE_PROC_REF(/atom, update_atom_colour)), 100)
 
 /obj/effect/clockwork/sigil/transmission/proc/cyborg_checks(mob/living/silicon/robot/cyborg, silent)
 	if(!cyborg.cell)

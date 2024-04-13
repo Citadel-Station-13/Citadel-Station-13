@@ -132,7 +132,7 @@
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		reagent_flags = NONE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/cyborg_recharge, user), 80)
+	addtimer(CALLBACK(src, PROC_REF(cyborg_recharge), user), 80)
 
 /obj/item/reagent_containers/hypospray/medipen/proc/cyborg_recharge(mob/living/silicon/robot/user)
 	if(!reagents.total_volume && iscyborg(user))
@@ -485,7 +485,7 @@
 
 /obj/item/hypospray/mkii/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/attempt_inject, target, user, proximity)
+	INVOKE_ASYNC(src, PROC_REF(attempt_inject), target, user, proximity)
 
 /obj/item/hypospray/mkii/proc/attempt_inject(atom/target, mob/user, proximity)
 	if(!vial || !proximity || !isliving(target))
@@ -523,7 +523,7 @@
 	if(L != user)
 		L.visible_message("<span class='danger'>[user] is trying to [fp_verb] [L] with [src]!</span>", \
 						"<span class='userdanger'>[user] is trying to [fp_verb] you with [src]!</span>")
-	if(!do_mob(user, L, inject_wait, extra_checks = CALLBACK(L, /mob/living/proc/can_inject, user, FALSE, user.zone_selected, penetrates)))
+	if(!do_mob(user, L, inject_wait, extra_checks = CALLBACK(L, TYPE_PROC_REF(/mob/living, can_inject), user, FALSE, user.zone_selected, penetrates)))
 		return
 	if(!vial.reagents.total_volume)
 		return

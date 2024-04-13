@@ -384,13 +384,13 @@
 		return
 	active = TRUE
 	set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
-	addtimer(CALLBACK(src, .proc/lightUp), 5)
+	addtimer(CALLBACK(src, PROC_REF(lightUp)), 5)
 
 /obj/item/clothing/shoes/kindleKicks/proc/lightUp(mob/user)
 	if(lightCycle < 15)
 		set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
 		lightCycle += 1
-		addtimer(CALLBACK(src, .proc/lightUp), 5)
+		addtimer(CALLBACK(src, PROC_REF(lightUp)), 5)
 	else
 		set_light(0)
 		lightCycle = 0
@@ -469,7 +469,7 @@
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
-		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
+		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE, PROC_REF(intercept_user_move))
 
 /obj/item/clothing/shoes/wallwalkers/dropped(mob/user)
 	. = ..()

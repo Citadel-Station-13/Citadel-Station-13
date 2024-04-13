@@ -28,7 +28,7 @@
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/try_heal, M, user)
+	INVOKE_ASYNC(src, PROC_REF(try_heal), M, user)
 
 /obj/item/stack/medical/proc/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(!M.can_inject(user, TRUE))
@@ -36,12 +36,12 @@
 	if(M == user)
 		if(!silent)
 			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
-		if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
+		if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, TYPE_PROC_REF(/mob/living, can_inject), user, TRUE)))
 			return
 	else if(other_delay)
 		if(!silent)
 			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [M].</span>", "<span class='notice'>You begin applying \the [src] on [M]...</span>")
-		if(!do_mob(user, M, other_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
+		if(!do_mob(user, M, other_delay, extra_checks=CALLBACK(M, TYPE_PROC_REF(/mob/living, can_inject), user, TRUE)))
 			return
 
 	if(heal(M, user))
@@ -216,7 +216,8 @@
 
 /obj/item/stack/medical/gauze/cyborg
 	custom_materials = null
-	is_cyborg = 1
+	is_cyborg = TRUE
+	source = /datum/robot_energy_storage/medical
 	cost = 250
 
 /obj/item/stack/medical/suture
@@ -440,7 +441,8 @@
 
 /obj/item/stack/medical/bone_gel/cyborg
 	custom_materials = null
-	is_cyborg = 1
+	is_cyborg = TRUE
+	source = /datum/robot_energy_storage/medical
 	cost = 250
 
 /obj/item/stack/medical/aloe

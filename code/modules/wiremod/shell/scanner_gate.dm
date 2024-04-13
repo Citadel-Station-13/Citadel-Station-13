@@ -9,7 +9,7 @@
 	. = ..()
 	set_scanline("passive")
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -33,7 +33,7 @@
 	deltimer(scanline_timer)
 	add_overlay(type)
 	if(duration)
-		scanline_timer = addtimer(CALLBACK(src, .proc/set_scanline, "passive"), duration, TIMER_STOPPABLE)
+		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
 
 /obj/item/circuit_component/scanner_gate
 	display_name = "Scanner Gate"
@@ -53,7 +53,7 @@
 	. = ..()
 	if(istype(shell, /obj/structure/scanner_gate_shell))
 		attached_gate = shell
-		RegisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS, .proc/on_trigger)
+		RegisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS, PROC_REF(on_trigger))
 
 /obj/item/circuit_component/scanner_gate/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS)

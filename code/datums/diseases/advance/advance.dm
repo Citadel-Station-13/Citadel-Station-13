@@ -98,7 +98,7 @@
 		advance_diseases += P
 	var/replace_num = advance_diseases.len + 1 - DISEASE_LIMIT //amount of diseases that need to be removed to fit this one
 	if(replace_num > 0)
-		sortTim(advance_diseases, /proc/cmp_advdisease_resistance_asc)
+		sortTim(advance_diseases, GLOBAL_PROC_REF(cmp_advdisease_resistance_asc))
 		for(var/i in 1 to replace_num)
 			var/datum/disease/advance/competition = advance_diseases[i]
 			if(totalTransmittable() > competition.totalResistance())
@@ -135,11 +135,11 @@
 /datum/disease/advance/IsSame(datum/disease/advance/D)
 
 	if(!(istype(D, /datum/disease/advance)))
-		return 0
+		return FALSE
 
 	if(GetDiseaseID() != D.GetDiseaseID())
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 // Returns the advance disease with a different reference memory.
 /datum/disease/advance/Copy()
@@ -178,8 +178,8 @@
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
 		if(symp.type == S.type)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(level_min, level_max, amount_get = 0)
@@ -361,7 +361,7 @@
 				L += "[S.id]N"
 			else
 				L += S.id
-		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
+		L = sort_list(L) // Sort the list so it doesn't matter which order the symptoms are in.
 		var/result = jointext(L, ":")
 		id = result
 	return id

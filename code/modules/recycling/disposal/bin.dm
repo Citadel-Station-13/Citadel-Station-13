@@ -210,7 +210,7 @@
 	flush = FALSE
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
-	for(var/obj/item/smallDelivery/O in src)
+	for(var/obj/item/small_delivery/O in src)
 		H.tomail = TRUE
 		return
 
@@ -359,10 +359,10 @@
 	if(isitem(AM) && AM.CanEnterDisposals())
 		if(prob(75))
 			AM.forceMove(src)
-			visible_message("<span class='notice'>[AM] lands in [src].</span>")
-			update_icon()
+			visible_message(span_notice("[AM] lands in [src]."))
+			update_appearance()
 		else
-			visible_message("<span class='notice'>[AM] bounces off of [src]'s rim!</span>")
+			visible_message(span_notice("[AM] bounces off of [src]'s rim!"))
 			return ..()
 	else
 		return ..()

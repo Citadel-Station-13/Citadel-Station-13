@@ -38,11 +38,11 @@
 		L += make_appearances ? mutable_appearance(mut_icon, overlays_states[I], color = col) : col
 	colors_by_atom[A] = L
 
-	RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlays)
+	RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlays))
 
 	if(_flags & POLYCHROMIC_ALTCLICK)
-		RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-		RegisterSignal(A, COMSIG_CLICK_ALT, .proc/set_color)
+		RegisterSignal(A, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(A, COMSIG_CLICK_ALT, PROC_REF(set_color))
 
 	if(!overlays_names && names) //generate
 		overlays_names = names
@@ -55,16 +55,16 @@
 
 	if(isitem(A))
 		if(_flags & POLYCHROMIC_ACTION)
-			RegisterSignal(A, COMSIG_ITEM_EQUIPPED, .proc/grant_user_action)
-			RegisterSignal(A, COMSIG_ITEM_DROPPED, .proc/remove_user_action)
+			RegisterSignal(A, COMSIG_ITEM_EQUIPPED, PROC_REF(grant_user_action))
+			RegisterSignal(A, COMSIG_ITEM_DROPPED, PROC_REF(remove_user_action))
 		if(!(_flags & POLYCHROMIC_NO_WORN) || !(_flags & POLYCHROMIC_NO_HELD))
 			A.AddElement(/datum/element/update_icon_updates_onmob)
-			RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
+			RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, PROC_REF(apply_worn_overlays))
 			if(suits_with_helmet_typecache[A.type])
-				RegisterSignal(A, COMSIG_SUIT_MADE_HELMET, .proc/register_helmet) //you better work now you slut
+				RegisterSignal(A, COMSIG_SUIT_MADE_HELMET, PROC_REF(register_helmet)) //you better work now you slut
 	else if(_flags & POLYCHROMIC_ACTION && ismob(A)) //in the event mob update icon procs are ever standarized.
-		var/datum/action/polychromic/P = new(A)
-		RegisterSignal(P, COMSIG_ACTION_TRIGGER, .proc/activate_action)
+		var/datum/action/item_action/polychromic/P = new(A)
+		RegisterSignal(P, COMSIG_ACTION_TRIGGER, PROC_REF(activate_action))
 		actions_by_atom[A] = P
 		P.Grant(A)
 
@@ -73,7 +73,7 @@
 /datum/element/polychromic/Detach(atom/A)
 	. = ..()
 	colors_by_atom -= A
-	var/datum/action/polychromic/P = actions_by_atom[A]
+	var/datum/action/item_action/polychromic/P = actions_by_atom[A]
 	if(P)
 		actions_by_atom -= A
 		qdel(P)
@@ -146,17 +146,17 @@
 /datum/element/polychromic/proc/grant_user_action(atom/source, mob/user, slot)
 	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED || slot == ITEM_SLOT_HANDCUFFED || slot == ITEM_SLOT_DEX_STORAGE)
 		return
-	var/datum/action/polychromic/P = actions_by_atom[source]
+	var/datum/action/item_action/polychromic/P = actions_by_atom[source]
 	if(!P)
 		P = new (source)
 		P.name = "Modify [source]'\s Colors"
 		actions_by_atom[source] = P
 		P.check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
-		RegisterSignal(P, COMSIG_ACTION_TRIGGER, .proc/activate_action)
+		RegisterSignal(P, COMSIG_ACTION_TRIGGER, PROC_REF(activate_action))
 	P.Grant(user)
 
 /datum/element/polychromic/proc/remove_user_action(atom/source, mob/user)
-	var/datum/action/polychromic/P = actions_by_atom[source]
+	var/datum/action/item_action/polychromic/P = actions_by_atom[source]
 	P?.Remove(user)
 
 /datum/element/polychromic/proc/activate_action(datum/action/source, atom/target)
@@ -187,9 +187,9 @@
 	suit_by_helmet[H] = source
 	helmet_by_suit[source] = H
 	colors_by_atom[H] = colors_by_atom[source]
-	RegisterSignal(H, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlays)
-	RegisterSignal(H, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
-	RegisterSignal(H, COMSIG_PARENT_QDELETING, .proc/unregister_helmet)
+	RegisterSignal(H, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlays))
+	RegisterSignal(H, COMSIG_ITEM_WORN_OVERLAYS, PROC_REF(apply_worn_overlays))
+	RegisterSignal(H, COMSIG_PARENT_QDELETING, PROC_REF(unregister_helmet))
 
 /datum/element/polychromic/proc/unregister_helmet(atom/source)
 	var/obj/item/clothing/suit/S = suit_by_helmet[source]
@@ -197,9 +197,14 @@
 	helmet_by_suit -= S
 	colors_by_atom -= source
 
-/datum/action/polychromic
+/datum/action/item_action/polychromic
 	name = "Modify Polychromic Colors"
 	background_icon_state = "bg_polychromic"
-	use_target_appearance = TRUE
 	button_icon_state = null
-	target_appearance_matrix = list(0.8,0,0,0,0.8,0)
+	check_flags = NONE
+
+/datum/action/item_action/polychromic/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+	var/matrix/save_matrix = target.transform
+	target.transform = matrix(0.8, 0, 0, 0, 0.8, 0)
+	. = ..()
+	target.transform = save_matrix

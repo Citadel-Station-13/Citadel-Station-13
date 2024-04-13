@@ -122,7 +122,7 @@
 				update_icon()
 			//to_chat(user, "<span class='notice'>You flip a secret latch and unlock [src].</span>") // Don't bother. We know it's unlocked.
 			locked = FALSE
-			return 1
+			return TRUE
 		else
 			playsound(get_turf(src), 'sound/machines/door_locked.ogg', 20, 1)
 			to_chat(user, "<span class='notice'>[src] is locked tight from the inside.</span>")

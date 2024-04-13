@@ -10,7 +10,7 @@
 
 /obj/structure/closet/secure_closet/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE && damage_amount < melee_min_damage)
-		return 0
+		return FALSE
 	. = ..()
 
 // Exists to work around the minimum 700 cr price for goodies / small items / materials

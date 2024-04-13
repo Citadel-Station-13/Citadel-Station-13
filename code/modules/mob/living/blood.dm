@@ -185,7 +185,7 @@
 /mob/living/carbon/get_blood_data()
 	var/blood_data = list()
 	//set the blood data
-	blood_data["donor"] = src
+	blood_data["donor"] = WEAKREF(src)
 	blood_data["viruses"] = list()
 
 	for(var/thing in diseases)

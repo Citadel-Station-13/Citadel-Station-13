@@ -32,7 +32,7 @@ Doesn't work on other aliens/AI.*/
 	return
 
 /obj/effect/proc_holder/alien/fire(mob/living/carbon/user)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/alien/get_panel_text()
 	. = ..()
@@ -72,10 +72,10 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		to_chat(user, "There's already a weed node here.")
-		return 0
+		return FALSE
 	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/alien/whisper
 	name = "Whisper"
@@ -89,7 +89,7 @@ Doesn't work on other aliens/AI.*/
 		options += Ms
 	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
 	if(!M)
-		return 0
+		return FALSE
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		to_chat(user, "<span class='noticealien'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 		return FALSE
@@ -108,8 +108,8 @@ Doesn't work on other aliens/AI.*/
 			var/follow_link_whispee = FOLLOW_LINK(ded, M)
 			to_chat(ded, "[follow_link_user] <span class='name'>[user]</span> <span class='alertalien'>Alien Whisper --> </span> [follow_link_whispee] <span class='name'>[M]</span> <span class='noticealien'>[msg]</span>")
 	else
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/alien/transfer
 	name = "Transfer Plasma"
@@ -124,7 +124,7 @@ Doesn't work on other aliens/AI.*/
 			aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
 	if(!M)
-		return 0
+		return FALSE
 	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
@@ -153,21 +153,21 @@ Doesn't work on other aliens/AI.*/
 	if(target in oview(1,user))
 		if(target.acid_act(200, 100))
 			user.visible_message("<span class='alertalien'>[user] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
-			return 1
+			return TRUE
 		else
 			to_chat(user, "<span class='noticealien'>You cannot dissolve this object.</span>")
 
 
-			return 0
+			return FALSE
 	else
 		to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
-		return 0
+		return FALSE
 
 
 /obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
 	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
 	if(!O || user.incapacitated())
-		return 0
+		return FALSE
 	else
 		return corrode(O,user)
 
@@ -200,7 +200,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/neurotoxin/update_icon()
 	action.button_icon_state = "alien_neurotoxin_[active]"
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 
 /obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
@@ -320,21 +320,21 @@ Doesn't work on other aliens/AI.*/
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
-		return 0
+		return FALSE
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
-		return 0
+		return FALSE
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/X in abilities)
 		var/obj/effect/proc_holder/alien/APH = X
 		if(APH.has_action)
-			APH.action.UpdateButtonIcon()
-	return 1
+			APH.action.UpdateButtons()
+	return TRUE
 
 /mob/living/carbon/alien/adjustPlasma(amount)
 	. = ..()
@@ -343,6 +343,6 @@ Doesn't work on other aliens/AI.*/
 /mob/living/carbon/proc/usePlasma(amount)
 	if(getPlasma() >= amount)
 		adjustPlasma(-amount)
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE

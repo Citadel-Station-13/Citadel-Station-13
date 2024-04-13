@@ -25,7 +25,6 @@
 	var/icon/combined = new
 	for(var/d in GLOB.cardinals)
 		mannequin.setDir(d)
-		COMPILE_OVERLAYS(mannequin)
 		CHECK_TICK
 		var/icon/capture = getFlatIcon(mannequin)
 		CHECK_TICK

@@ -48,11 +48,11 @@
 
 /obj/item/summon/dropped(mob/user, silent)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/check_activation), 0, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(check_activation)), 0, TIMER_UNIQUE)
 
 /obj/item/summon/equipped(mob/user, slot)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/check_activation), 0, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(check_activation)), 0, TIMER_UNIQUE)
 
 /obj/item/summon/proc/check_activation()
 	if(!host)
@@ -346,7 +346,7 @@
 		Wake()
 
 /datum/summon_weapon/proc/ResetIn(ds)
-	reset_timerid = addtimer(CALLBACK(src, .proc/Reset), ds, TIMER_STOPPABLE)
+	reset_timerid = addtimer(CALLBACK(src, PROC_REF(Reset)), ds, TIMER_STOPPABLE)
 
 /datum/summon_weapon/proc/Target(atom/victim)
 	if(!istype(victim) || !isturf(victim.loc) || (host && !host.CheckTarget(victim)))
@@ -364,7 +364,7 @@
 /datum/summon_weapon/proc/AnimationLock(duration)
 	if(animation_timerid)
 		deltimer(animation_timerid)
-	animation_timerid = addtimer(CALLBACK(src, .proc/Act), duration, TIMER_CLIENT_TIME | TIMER_STOPPABLE)
+	animation_timerid = addtimer(CALLBACK(src, PROC_REF(Act)), duration, TIMER_CLIENT_TIME | TIMER_STOPPABLE)
 
 /datum/summon_weapon/proc/Act()
 	animation_timerid = null
@@ -378,7 +378,7 @@
 			state = STATE_RECOVER
 			// register hit at the halfway mark
 			// we can do better math to approximate when the attack will hit but i'm too tired to bother
-			addtimer(CALLBACK(src, .proc/Hit, victim), attack_length / 2, TIMER_CLIENT_TIME)
+			addtimer(CALLBACK(src, PROC_REF(Hit), victim), attack_length / 2, TIMER_CLIENT_TIME)
 			// we need to approximate our incoming angle - again, better math exists but why bother
 			var/incoming_angle = angle
 			if(isturf(atom.loc) && (atom.loc != victim.loc))
@@ -398,7 +398,7 @@
 				return
 			var/reset_angle = rand(0, 360)
 			AnimationLock(MoveTo(host.master, null, reset_angle, 30, 90, reset_speed))
-			addtimer(CALLBACK(src, .proc/Orbit, host.master, reset_angle, 30, 3 SECONDS), reset_speed, TIMER_CLIENT_TIME)
+			addtimer(CALLBACK(src, PROC_REF(Orbit), host.master, reset_angle, 30, 3 SECONDS), reset_speed, TIMER_CLIENT_TIME)
 		if(STATE_RECOVER)
 			state = STATE_ATTACK
 			AnimationLock(Rotate(rand(-angle_vary, angle_vary), attack_speed, null))
@@ -437,7 +437,7 @@
 		src.rotation = rotation
 		// end animations
 		animate(atom, time = 0, flags = ANIMATION_END_NOW)
-		return 0
+		return FALSE
 
 	// grab source
 	var/rel_x = (destination.x - relative_to.x) * world.icon_size + src.dist * sin(src.angle)
@@ -464,7 +464,7 @@
 /datum/summon_weapon/proc/Rotate(degrees, time, rotation)
 	. = time
 	if(!dist)
-		return 0
+		return FALSE
 	var/matrix/M = ConstructMatrix(angle + degrees, dist, rotation || src.rotation)
 	if(rotation)
 		src.rotation = rotation
@@ -526,7 +526,7 @@
 	locked = target
 	forceMove(locked.loc)
 	if(ismovable(locked))
-		RegisterSignal(locked, COMSIG_MOVABLE_MOVED, .proc/Update)
+		RegisterSignal(locked, COMSIG_MOVABLE_MOVED, PROC_REF(Update))
 
 /atom/movable/summon_weapon_effect/proc/Release()
 	if(ismovable(locked))

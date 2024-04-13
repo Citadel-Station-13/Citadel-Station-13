@@ -42,7 +42,7 @@
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, .proc/take_contents), 0)
+		addtimer(CALLBACK(src, PROC_REF(take_contents)), 0)
 	. = ..()
 	update_icon()
 	if(should_populate_contents)
@@ -76,7 +76,8 @@
 		. += "[icon_door_override ? icon_door : icon_state]_open"
 		return
 
-	. += "[icon_door || icon_state]_door"
+	if(icon_door)
+		. += "[icon_door || icon_state]_door"
 	if(welded)
 		. += icon_welded
 
@@ -269,7 +270,7 @@
 	if(user in src)
 		return
 	if(src.tool_interact(W,user))
-		return 1 // No afterattack
+		return TRUE // No afterattack
 	else
 		return ..()
 
@@ -396,7 +397,7 @@
 				close()
 	else
 		O.forceMove(T)
-	return 1
+	return TRUE
 
 /obj/structure/closet/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))

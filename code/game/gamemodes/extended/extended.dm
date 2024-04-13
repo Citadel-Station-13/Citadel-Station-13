@@ -9,7 +9,7 @@
 	announce_text = "Just have fun and enjoy the game!"
 
 /datum/game_mode/extended/pre_setup()
-	return 1
+	return TRUE
 
 /datum/game_mode/extended/generate_report()
 	return "The transmission mostly failed to mention your sector. It is possible that there is nothing in the Syndicate that could threaten your station during this shift."

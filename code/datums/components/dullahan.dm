@@ -17,7 +17,7 @@
 	update_name()
 
 	dullahan_head.owner = H
-	RegisterSignal(H, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
+	RegisterSignal(H, COMSIG_LIVING_REGENERATE_LIMBS, PROC_REF(unlist_head))
 
 	// make sure the brain can't decay or fall out
 	var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
@@ -57,7 +57,7 @@
 
 	H.flags_1 &= ~(HEAR_1)
 
-	RegisterSignal(dullahan_head, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
+	RegisterSignal(dullahan_head, COMSIG_ATOM_HEARER_IN_VIEW, PROC_REF(include_owner))
 
 	dullahan_head.update_appearance()
 
@@ -69,7 +69,7 @@
 		dullahan_head.name = "[H.name]'s head"
 		dullahan_head.desc = "the decapitated head of [H.name]"
 		return TRUE
-	addtimer(CALLBACK(src, .proc/update_name, retries + 1), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(update_name), retries + 1), 2 SECONDS)
 
 /datum/component/dullahan/proc/include_owner(datum/source, list/processing_list, list/hearers)
 	if(!QDELETED(parent))

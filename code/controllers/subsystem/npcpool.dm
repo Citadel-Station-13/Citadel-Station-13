@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(npcpool)
 
 		invoking = TRUE
 		invoke_start = world.time
-		INVOKE_ASYNC(src, .proc/invoke_process, SA)
+		INVOKE_ASYNC(src, PROC_REF(invoke_process), SA)
 		if(invoking)
 			stack_trace("WARNING: [SA] ([SA.type]) slept during NPCPool processing.")
 			invoking = FALSE

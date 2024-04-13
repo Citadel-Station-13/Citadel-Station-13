@@ -76,7 +76,7 @@
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
-	return 0
+	return FALSE
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
 
@@ -941,12 +941,18 @@
 
 /obj/docking_port/mobile/proc/count_engines()
 	. = 0
+	engine_list = list()
 	for(var/thing in shuttle_areas)
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
 			if(!QDELETED(E))
 				engine_list += E
+				RegisterSignal(E, COMSIG_PARENT_QDELETING, PROC_REF(on_engine_deleted))
 				. += E.engine_power
+
+/obj/docking_port/mobile/proc/on_engine_deleted(datum/source)
+	SIGNAL_HANDLER
+	engine_list -= source
 
 // Double initial engines to get to 0.5 minimum
 // Lose all initial engines to get to 2
@@ -954,7 +960,7 @@
 /obj/docking_port/mobile/proc/get_engine_coeff(current,engine_mod)
 	var/new_value = max(0,current + engine_mod)
 	if(new_value == initial_engines)
-		return 1
+		return TRUE
 	if(new_value > initial_engines)
 		var/delta = new_value - initial_engines
 		var/change_per_engine = (1 - ENGINE_COEFF_MIN) / ENGINE_DEFAULT_MAXSPEED_ENGINES // 5 by default

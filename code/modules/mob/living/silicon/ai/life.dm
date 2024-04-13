@@ -28,11 +28,15 @@
 	// Handle power damage (oxy)
 	if(aiRestorePowerRoutine)
 		// Lost power
-		adjustOxyLoss(1)
+		if (!battery)
+			to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
+			adjustOxyLoss(200)
+		else
+			battery--
 	else
 		// Gain Power
-		if(getOxyLoss())
-			adjustOxyLoss(-1)
+		if (battery < 200)
+			battery++
 
 	if(!lacks_power())
 		var/area/home = get_area(src)
@@ -173,7 +177,7 @@
 	blind_eyes(1)
 	update_sight()
 	to_chat(src, "You've lost power!")
-	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)
+	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)
 
 #undef POWER_RESTORATION_OFF
 #undef POWER_RESTORATION_START

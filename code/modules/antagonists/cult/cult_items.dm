@@ -236,7 +236,7 @@
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
 /datum/action/innate/dash/cult/IsAvailable(silent = FALSE)
-	if(iscultist(holder) && current_charges)
+	if(iscultist(owner) && current_charges)
 		return TRUE
 	else
 		return FALSE
@@ -268,7 +268,7 @@
 	sword.spinning = TRUE
 	sword.block_chance = 100
 	sword.slowdown += 1.5
-	addtimer(CALLBACK(src, .proc/stop_spinning), 50)
+	addtimer(CALLBACK(src, PROC_REF(stop_spinning)), 50)
 	holder.update_action_buttons_icon()
 
 /datum/action/innate/cult/spin2win/proc/stop_spinning()
@@ -723,8 +723,8 @@
 
 /obj/item/cult_spear/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
 
 /obj/item/cult_spear/ComponentInitialize()
 	. = ..()
@@ -800,14 +800,13 @@
 	desc = "Call the blood spear back to your hand!"
 	background_icon_state = "bg_demon"
 	button_icon_state = "bloodspear"
+	default_button_position = "6:157,4:-2"
 	var/obj/item/cult_spear/spear
 	var/cooldown = 0
 
 /datum/action/innate/cult/spear/Grant(mob/user, obj/blood_spear)
 	. = ..()
 	spear = blood_spear
-	button.screen_loc = "6:157,4:-2"
-	button.moved = "6:157,4:-2"
 
 /datum/action/innate/cult/spear/Activate()
 	if(owner == spear.loc || cooldown > world.time)
@@ -894,10 +893,10 @@
 		qdel(src)
 		return
 	charging = TRUE
-	INVOKE_ASYNC(src, .proc/charge, user)
+	INVOKE_ASYNC(src, PROC_REF(charge), user)
 	if(do_after(user, 90, target = user))
 		firing = TRUE
-		INVOKE_ASYNC(src, .proc/pewpew, user, params)
+		INVOKE_ASYNC(src, PROC_REF(pewpew), user, params)
 		var/obj/structure/emergency_shield/invoker/N = new(user.loc)
 		if(do_after(user, 90, target = user))
 			user.DefaultCombatKnockdown(40)
@@ -970,7 +969,7 @@
 						playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
 						L.emote("scream")
 		var/datum/beam/current_beam = new(user,temp_target,time=7,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
-		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+		INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
 
 
 /obj/effect/ebeam/blood
@@ -1017,7 +1016,7 @@
 			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
 			if(illusions > 0)
 				illusions--
-				addtimer(CALLBACK(src, /obj/item/shield/mirror.proc/readd), 450)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
 				if(prob(60))
 					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
 					M.faction = list("cult")

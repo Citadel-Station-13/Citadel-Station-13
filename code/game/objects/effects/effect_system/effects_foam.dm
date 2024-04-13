@@ -169,14 +169,14 @@
 
 /obj/effect/particle_effect/foam/proc/foam_mob(mob/living/L)
 	if(lifetime<1)
-		return 0
+		return FALSE
 	if(!istype(L))
-		return 0
+		return FALSE
 	var/fraction = 1/initial(reagent_divisor)
 	if(lifetime % reagent_divisor)
 		reagents.reaction(L, VAPOR, fraction)
 	lifetime--
-	return 1
+	return TRUE
 
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
@@ -315,7 +315,7 @@
 /obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
 	neutralize_air()
-	addtimer(CALLBACK(src, .proc/neutralize_air), 5)		// yeah this sucks, maybe when auxmos is out
+	addtimer(CALLBACK(src, PROC_REF(neutralize_air)), 5)		// yeah this sucks, maybe when auxmos is out
 
 /obj/structure/foamedmetal/resin/proc/neutralize_air()
 	if(isopenturf(loc))

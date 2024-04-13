@@ -72,6 +72,7 @@
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
+		/*/obj/item/mod/module/injector,*/ //Injector module unported as of now.
 	)
 
 /obj/item/mod/control/pre_equipped/research
@@ -172,31 +173,41 @@
 		/obj/item/mod/module/holster,
 	)
 	var/insignia_type = /obj/item/mod/module/insignia
+	var/additional_module
 
 /obj/item/mod/control/pre_equipped/responsory/Initialize(mapload, new_theme, new_skin)
 	initial_modules.Insert(1, insignia_type)
+	if(additional_module)
+		initial_modules.Add(additional_module)
 	return ..()
 
 /obj/item/mod/control/pre_equipped/responsory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
+	additional_module = /obj/item/mod/module/noslip
 
 /obj/item/mod/control/pre_equipped/responsory/security
 	insignia_type = /obj/item/mod/module/insignia/security
+	additional_module = /obj/item/mod/module/gps
 
 /obj/item/mod/control/pre_equipped/responsory/engineer
 	insignia_type = /obj/item/mod/module/insignia/engineer
+	additional_module = /obj/item/mod/module/rad_protection
 
 /obj/item/mod/control/pre_equipped/responsory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
+	additional_module = /obj/item/mod/module/quick_carry
 
 /obj/item/mod/control/pre_equipped/responsory/janitor
 	insignia_type = /obj/item/mod/module/insignia/janitor
+	additional_module = /obj/item/mod/module/clamp
 
 /obj/item/mod/control/pre_equipped/responsory/clown
 	insignia_type = /obj/item/mod/module/insignia/clown
+	additional_module = /obj/item/mod/module/bikehorn
 
 /obj/item/mod/control/pre_equipped/responsory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
+	/*additional_module = /obj/item/mod/module/injector*/ //Injector module unported as of now.
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory
 	initial_modules = list(
@@ -211,15 +222,19 @@
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
+	additional_module = /obj/item/mod/module/noslip
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
 	insignia_type = /obj/item/mod/module/insignia/security
+	additional_module = /obj/item/mod/module/gps
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
+	additional_module = /obj/item/mod/module/quick_carry
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
+	/*additional_module = /obj/item/mod/module/injector*/ //Injector module unported as of now.
 
 /obj/item/mod/control/pre_equipped/apocryphal
 	theme = /datum/mod_theme/apocryphal
@@ -250,6 +265,7 @@
 		/obj/item/mod/module/bikehorn,
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/tether,
+		/*/obj/item/mod/module/injector,*/ //Injector module unported as of now.
 	) //one of every type of module, for testing if they all work correctly
 
 /obj/item/mod/control/pre_equipped/administrative

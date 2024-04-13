@@ -613,7 +613,10 @@
 			cut_overlay(managed_overlays)
 			managed_overlays = null
 		if(length(new_overlays))
-			managed_overlays = new_overlays
+			if (length(new_overlays) == 1)
+				managed_overlays = new_overlays[1]
+			else
+				managed_overlays = new_overlays
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
@@ -667,7 +670,7 @@
 	if((explosion_flags & EXPLOSION_FLAG_DENSITY_DEPENDENT) && !density)
 		return power	// no block
 	else if((explosion_flags & EXPLOSION_FLAG_HARD_OBSTACLE) && !QDELETED(src))
-		return 0		// fully blocked
+		return FALSE		// fully blocked
 
 /**
   * Called when a wave explosion hits this atom.
@@ -686,13 +689,29 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
-/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
-		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
+/**
+ * React to being hit by a thrown object
+ *
+ * Default behaviour is to call [hitby_react][/atom/proc/hitby_react] on ourselves after 2 seconds if we are dense
+ * and under normal gravity.
+ *
+ * Im not sure why this the case, maybe to prevent lots of hitby's if the thrown object is
+ * deleted shortly after hitting something (during explosions or other massive events that
+ * throw lots of items around - singularity being a notable example)
+ */
+/atom/proc/hitby(atom/movable/hitting_atom, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	SEND_SIGNAL(src, COMSIG_ATOM_HITBY, hitting_atom, skipcatch, hitpush, blocked, throwingdatum)
+	if(density && !has_gravity(hitting_atom)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
+		addtimer(CALLBACK(src, PROC_REF(hitby_react), hitting_atom), 2)
 
-/atom/proc/hitby_react(atom/movable/AM)
-	if(AM && isturf(AM.loc))
-		step(AM, turn(AM.dir, 180))
+/**
+ * We have have actually hit the passed in atom
+ *
+ * Default behaviour is to move back from the item that hit us
+ */
+/atom/proc/hitby_react(atom/movable/harmed_atom)
+	if(harmed_atom && isturf(harmed_atom.loc))
+		step(harmed_atom, turn(harmed_atom.dir, 180))
 
 /atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	return
@@ -903,7 +922,7 @@
 	if(STR == src_object)
 		progress.end_progress()
 		return
-	while(do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
+	while(do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(STR, TYPE_PROC_REF(/datum/component/storage, handle_mass_item_insertion), things, src_object, user, progress)))
 		stoplag(1)
 	progress.end_progress()
 	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents into [STR.insert_preposition]to [src] as you can.</span>")
@@ -1302,7 +1321,7 @@
 
 /atom/proc/update_filters()
 	filters = null
-	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
+	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
@@ -1339,6 +1358,11 @@
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
+
+/// Returns the indice in filters of the given filter name.
+/// If it is not found, returns null.
+/atom/proc/get_filter_index(name)
+	return filter_data?.Find(name)
 
 /atom/proc/remove_filter(name_or_names)
 	if(!filter_data)
@@ -1395,7 +1419,7 @@
 		T = get_turf(src)
 
 	if(!T)
-		return 0
+		return FALSE
 
 	var/list/forced_gravity = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
@@ -1408,7 +1432,7 @@
 		return max_grav
 
 	if(isspaceturf(T)) // Turf never has gravity
-		return 0
+		return FALSE
 
 	var/area/A = get_area(T)
 	if(A.has_gravity) // Areas which always has gravity

@@ -59,8 +59,8 @@
 		// 	threat_msg.title = "Business proposition"
 		// 	threat_msg.content = "Ahoy! This be the [ship_name]. Cough up [payoff] credits or you'll walk the plank."
 		// 	threat_msg.possible_answers = list("We'll pay.","We will not be extorted.")
-	threat_msg.answer_callback = CALLBACK(GLOBAL_PROC, .proc/pirates_answered, threat_msg, payoff, ship_name, initial_send_time, response_max_time, ship_template)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/spawn_pirates, threat_msg, ship_template, FALSE), response_max_time)
+	threat_msg.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirates_answered), threat_msg, payoff, ship_name, initial_send_time, response_max_time, ship_template)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat_msg, ship_template, FALSE), response_max_time)
 	SScommunications.send_message(threat_msg,unique = TRUE)
 
 /proc/pirates_answered(datum/comm_message/threat_msg, payoff, ship_name, initial_send_time, response_max_time, ship_template)
@@ -423,7 +423,7 @@
 	status_report = "Sending... "
 	pad.visible_message("<span class='notice'>[pad] starts charging up.</span>")
 	pad.icon_state = pad.warmup_state
-	sending_timer = addtimer(CALLBACK(src,.proc/send),warmup_time, TIMER_STOPPABLE)
+	sending_timer = addtimer(CALLBACK(src,PROC_REF(send)),warmup_time, TIMER_STOPPABLE)
 
 /obj/machinery/computer/piratepad_control/proc/stop_sending(custom_report)
 	if(!sending)
@@ -458,9 +458,9 @@
 /datum/export/pirate/ransom/get_cost(atom/movable/AM)
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind || !H.mind.assigned_role) //mint condition only
-		return 0
+		return FALSE
 	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
-		return 0
+		return FALSE
 	else
 		if(H.mind.assigned_role in GLOB.command_positions)
 			return 3000

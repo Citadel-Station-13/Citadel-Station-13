@@ -1479,15 +1479,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 
 /datum/reagent/consumable/ethanol/eggnog
-	name = "Eggnog"
+	name = "Spiked Eggnog"
 	description = "The traditional way to get absolutely hammered at a Christmas party."
 	color = "#fcfdc6" // rgb: 252, 253, 198
 	nutriment_factor = 2 * REAGENTS_METABOLISM
-	boozepwr = 1
+	boozepwr = 20
 	quality = DRINK_VERYGOOD
 	taste_description = "custard and alcohol"
 	glass_icon_state = "nog3"
-	glass_name = "eggnog"
+	glass_name = "spiked eggnog"
 	glass_desc = "The traditional way to get absolutely hammered at a Christmas party."
 
 /datum/reagent/consumable/ethanol/narsour
@@ -2574,7 +2574,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/proc/generate_data_info(list/data)
-	var/minimum_percent = 0.15 //Percentages measured between 0 and 1.
+	// BYOND's compiler fails to catch non-consts in a ranged switch case, and it causes incorrect behavior. So this needs to explicitly be a constant.
+	var/const/minimum_percent = 0.15 //Percentages measured between 0 and 1.
 	var/list/primary_tastes = list()
 	var/list/secondary_tastes = list()
 	glass_name = "glass of [name]"
@@ -2588,7 +2589,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	var/minimum_name_percent = 0.35
 	name = ""
-	var/list/names_in_order = sortTim(names, /proc/cmp_numeric_dsc, TRUE)
+	var/list/names_in_order = sortTim(names, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
 	var/named = FALSE
 	for(var/fruit_name in names)
 		if(names[fruit_name] >= minimum_name_percent)

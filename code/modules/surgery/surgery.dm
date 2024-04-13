@@ -94,7 +94,7 @@
 
 /datum/surgery/proc/next_step(mob/user, intent)
 	if(step_in_progress)
-		return 1
+		return TRUE
 
 	var/try_to_fail = FALSE
 	if(intent == INTENT_DISARM)
@@ -104,8 +104,6 @@
 	if(S)
 		var/obj/item/tool = user.get_active_held_item()
 		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
-			return TRUE
-		if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
 			return TRUE
 		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")

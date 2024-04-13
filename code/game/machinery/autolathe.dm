@@ -51,7 +51,7 @@
 	matching_designs = list()
 
 /obj/machinery/autolathe/ComponentInitialize()
-	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, TRUE, null, null, CALLBACK(src, PROC_REF(AfterMaterialInsert)))
 
 /obj/machinery/autolathe/Destroy()
 	QDEL_NULL(wires)
@@ -210,7 +210,7 @@
 						if(materials.materials[i] > 0)
 							list_to_show += i
 
-					used_material = tgui_input_list(usr, "Choose [used_material]", "Custom Material", sortList(list_to_show, /proc/cmp_typepaths_asc))
+					used_material = tgui_input_list(usr, "Choose [used_material]", "Custom Material", sort_list(list_to_show, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 					if(isnull(used_material))
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials[used_material] += amount_needed
@@ -223,7 +223,7 @@
 				use_power(power)
 				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
-				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack, usr), time)
+				addtimer(CALLBACK(src, PROC_REF(make_item), power, materials_used, custom_materials, multiplier, coeff, is_stack, usr), time)
 				. = TRUE
 			else
 				to_chat(usr, span_alert("Not enough materials for this operation."))
@@ -477,4 +477,4 @@
 // override the base to allow plastics
 /obj/machinery/autolathe/ComponentInitialize()
 	var/list/extra_mats = list(/datum/material/plastic)
-	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID] + extra_mats, 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID] + extra_mats, 0, TRUE, null, null, CALLBACK(src, PROC_REF(AfterMaterialInsert)))

@@ -119,7 +119,7 @@
 	if(stasis)
 		return
 	if(revealed && essence <= 0)
-		INVOKE_ASYNC(src, .proc/death)
+		INVOKE_ASYNC(src, PROC_REF(death))
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = FALSE
@@ -150,7 +150,7 @@
 			essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
 		else if(!essence)
 			essencecolor = "#1D2953" //oh jeez you're dying
-		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>"
+		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
 /mob/living/simple_animal/revenant/med_hud_set_health()
 	return //we use no hud
@@ -175,7 +175,7 @@
 //Immunities
 
 /mob/living/simple_animal/revenant/ex_act(severity, target, origin)
-	return 1 //Immune to the effects of explosions.
+	return TRUE //Immune to the effects of explosions.
 
 /mob/living/simple_animal/revenant/wave_ex_act(power, datum/wave_explosion/explosion, dir)
 	return power
@@ -201,7 +201,7 @@
 		adjustBruteLoss(25) //hella effective
 		inhibited = TRUE
 		update_action_buttons_icon()
-		addtimer(CALLBACK(src, .proc/reset_inhibit), 30)
+		addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 30)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
@@ -225,7 +225,7 @@
 
 /mob/living/simple_animal/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
-		return 0
+		return FALSE
 	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	mob_transforming = TRUE
@@ -333,7 +333,7 @@
 			to_chat(src, "<span class='revennotice'>Gained [essence_amt]E[source ? " from [source]":""].</span>")
 		else
 			to_chat(src, "<span class='revenminor'>Lost [essence_amt]E[source ? " from [source]":""].</span>")
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/revenant/proc/telekinesis_cooldown_end()
 	if(!telekinesis_cooldown)
@@ -369,7 +369,7 @@
 
 /obj/item/ectoplasm/revenant/New()
 	..()
-	addtimer(CALLBACK(src, .proc/try_reform), 600)
+	addtimer(CALLBACK(src, PROC_REF(try_reform)), 600)
 
 /obj/item/ectoplasm/revenant/proc/scatter()
 	qdel(src)
@@ -478,7 +478,7 @@
 		log_combat(throwable, over, "spooky telekinesised at", throwable)
 		var/obj/effect/temp_visual/telekinesis/T = new(get_turf(throwable))
 		T.color = "#8715b4"
-		addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 50)
+		addtimer(CALLBACK(spooker, TYPE_PROC_REF(/mob/living/simple_animal/revenant, telekinesis_cooldown_end)), 50)
 		sleep(5)
 		throwable.float(FALSE, TRUE)
 

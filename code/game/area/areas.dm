@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
+	sortTim(GLOB.teleportlocs, GLOBAL_PROC_REF(cmp_text_asc))
 
 /**
  * Called when an area loads
@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				A.power_light = FALSE
 				A.power_equip = FALSE
 				A.power_environ = FALSE
-			INVOKE_ASYNC(A, .proc/power_change)
+			A.power_change()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -420,7 +420,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				if(D.operating)
 					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
 				else if(!(D.density ^ opening))
-					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
+					INVOKE_ASYNC(D, (opening ? TYPE_PROC_REF(/obj/machinery/door/firedoor, open) : TYPE_PROC_REF(/obj/machinery/door/firedoor, close)))
 
 /area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
@@ -513,7 +513,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/mob/living/silicon/SILICON = i
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
+			addtimer(CALLBACK(SILICON, TYPE_PROC_REF(/mob/living/silicon, cancelAlarm),"Burglar",src,trigger), 600)
 
 /area/proc/set_fire_alarm_effects(boolean)
 	fire = boolean
@@ -560,9 +560,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	switch(chan)
 		if(EQUIP)
 			return power_equip
@@ -571,23 +571,28 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(ENVIRON)
 			return power_environ
 
-	return 0
+	return FALSE
 
 /area/space/powered(chan) //Nope.avi
-	return 0
+	return FALSE
 
 // called when power status changes
 
 /area/proc/power_change()
-	for(var/obj/machinery/M in src)	// for each machine in the area
-		M.power_change()				// reverify power status (to update icons etc.)
-	if(sub_areas)
-		for(var/i in sub_areas)
-			var/area/A = i
-			A.power_light = power_light
-			A.power_equip = power_equip
-			A.power_environ = power_environ
-			INVOKE_ASYNC(A, .proc/power_change)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(contents.len < GLOB.machines.len) // it would be faster to loop over contents
+		for(var/obj/machinery/M in src) // for each machine in the area
+			M.power_change() // reverify power status (to update icons etc.)
+	else // it would be faster to loop over the machines list
+		for(var/obj/machinery/M as anything in GLOB.machines) // for each machine
+			if(get_area(M) != src) // in the area
+				continue
+			M.power_change() // reverify power status (to update icons etc.)
+	for(var/area/A as anything in sub_areas)
+		A.power_light = power_light
+		A.power_equip = power_equip
+		A.power_environ = power_environ
+		A.power_change()
 	update_appearance()
 
 /area/proc/usage(chan)
@@ -677,7 +682,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!L.client.played)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
-			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+			addtimer(CALLBACK(L.client, TYPE_PROC_REF(/client, ResetAmbiencePlayed)), 600)
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()

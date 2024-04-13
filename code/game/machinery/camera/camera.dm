@@ -117,7 +117,7 @@
 						if(can_use())
 							GLOB.cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
-						addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+						addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client.eye == src)
@@ -274,7 +274,7 @@
 
 /obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE && damage_amount < 12 && !(stat & BROKEN))
-		return 0
+		return FALSE
 	. = ..()
 
 /obj/machinery/camera/obj_break(damage_flag)
@@ -325,7 +325,7 @@
 		change_msg = "reactivates"
 		triggerCameraAlarm()
 		if(!QDELETED(src)) //We'll be doing it anyway in destroy
-			addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
@@ -417,4 +417,4 @@
 	else
 		user.sight = 0
 		user.see_in_dark = 2
-	return 1
+	return TRUE

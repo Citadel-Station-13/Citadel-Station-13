@@ -388,7 +388,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress, TRUE, user)))
+	while (do_after(usr, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object, TYPE_PROC_REF(/datum/component/storage, mass_remove_from_storage), src, things, progress, TRUE, user)))
 		stoplag(1)
 	progress.end_progress()
 
@@ -476,11 +476,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/atom/A
 	for(var/i in contents)
 		if(. <= 0)
-			return 0
+			return FALSE
 		A = i
 		if(!QDELETED(A) && A.level >= affecting_level)
 			.  = A.wave_explode(., explosion, dir)
-	maptext = "[.]"
+	maptext = MAPTEXT("[.]")
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)

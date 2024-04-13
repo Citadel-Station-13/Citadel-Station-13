@@ -62,15 +62,15 @@
 /obj/item/camera_bug/check_eye(mob/user)
 	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
 		user.unset_machine()
-		return 0
+		return FALSE
 	var/turf/T_user = get_turf(user.loc)
 	var/turf/T_current = get_turf(current)
 	if(T_user.z != T_current.z || !current.can_use())
 		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
 		current = null
 		user.unset_machine()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 /obj/item/camera_bug/on_unset_machine(mob/user)
 	user.reset_perspective(null)
 
@@ -82,7 +82,7 @@
 				continue
 			if(length(list("ss13","mine", "rd", "labor", "toxins", "minisat")&camera.network))
 				bugged_cameras[camera.c_tag] = camera
-	return sortList(bugged_cameras)
+	return sort_list(bugged_cameras)
 
 
 /obj/item/camera_bug/proc/menu(list/cameras)

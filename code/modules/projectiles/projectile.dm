@@ -723,7 +723,7 @@
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_increment_amount)
 	fired = TRUE
 	if(hitscan)
-		INVOKE_ASYNC(src, .proc/process_hitscan)
+		INVOKE_ASYNC(src, PROC_REF(process_hitscan))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
@@ -939,12 +939,10 @@
 		var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
 
 		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-		var/list/screenview = getviewsize(user.client.view)
-		var/screenviewX = screenview[1] * world.icon_size
-		var/screenviewY = screenview[2] * world.icon_size
+		var/list/screenview = view_to_pixels(user.client.view)
 
-		var/ox = round(screenviewX/2) - user.client.pixel_x //"origin" x
-		var/oy = round(screenviewY/2) - user.client.pixel_y //"origin" y
+		var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
+		var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
 		angle = arctan(y - oy, x - ox)
 	return list(angle, p_x, p_y)
 

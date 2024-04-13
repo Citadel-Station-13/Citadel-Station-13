@@ -19,7 +19,7 @@
 	return null
 
 /datum/computer/file/embedded_program/process()
-	return 0
+	return FALSE
 
 /obj/machinery/embedded_controller
 	var/datum/computer/file/embedded_program/program
@@ -44,7 +44,7 @@
 /obj/machinery/embedded_controller/proc/return_text()
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
-	return 0
+	return FALSE
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
 	if(istype(signal) && program)
@@ -52,14 +52,14 @@
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
 	if(..())
-		return 0
+		return FALSE
 
 	if(program)
 		program.receive_user_command(href_list["command"])
-		addtimer(CALLBACK(program, /datum/computer/file/embedded_program.proc/process), 5)
+		addtimer(CALLBACK(program, TYPE_PROC_REF(/datum/computer/file/embedded_program, process)), 5)
 
 	usr.set_machine(src)
-	addtimer(CALLBACK(src, .proc/updateDialog), 5)
+	addtimer(CALLBACK(src, PROC_REF(updateDialog)), 5)
 
 /obj/machinery/embedded_controller/process()
 	if(program)

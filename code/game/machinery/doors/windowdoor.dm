@@ -129,7 +129,7 @@
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/window/CanAStarPass(obj/item/card/id/ID, to_dir)
@@ -144,19 +144,19 @@
 
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
-		return 0
+		return FALSE
 	if(!forced)
 		if(!hasPower())
-			return 0
+			return FALSE
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
-			return 0
+			return FALSE
 	if(!src.operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state ="[src.base_state]open"
-	addtimer(CALLBACK(src, .proc/finish_opening), 10)
+	addtimer(CALLBACK(src, PROC_REF(finish_opening)), 10)
 	return TRUE
 
 /obj/machinery/door/window/proc/finish_opening()
@@ -171,13 +171,13 @@
 
 /obj/machinery/door/window/close(forced=0)
 	if (src.operating)
-		return 0
+		return FALSE
 	if(!forced)
 		if(!hasPower())
-			return 0
+			return FALSE
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
-			return 0
+			return FALSE
 	operating = TRUE
 	do_animate("closing")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
@@ -186,7 +186,7 @@
 	density = TRUE
 	air_update_turf(1)
 	update_freelook_sight()
-	addtimer(CALLBACK(src, .proc/finish_closing), 10)
+	addtimer(CALLBACK(src, PROC_REF(finish_closing)), 10)
 	return TRUE
 
 /obj/machinery/door/window/proc/finish_closing()
@@ -231,7 +231,7 @@
 	operating = TRUE
 	flick("[src.base_state]spark", src)
 	playsound(src, "sparks", 75, 1)
-	addtimer(CALLBACK(src, .proc/open_windows_me), 6)
+	addtimer(CALLBACK(src, PROC_REF(open_windows_me)), 6)
 	return TRUE
 
 /obj/machinery/door/window/proc/open_windows_me()
@@ -349,11 +349,11 @@
 				return
 
 			if(density)
-				INVOKE_ASYNC(src, .proc/open)
+				INVOKE_ASYNC(src, PROC_REF(open))
 			else
-				INVOKE_ASYNC(src, .proc/close)
+				INVOKE_ASYNC(src, PROC_REF(close))
 		if("touch")
-			INVOKE_ASYNC(src, .proc/open_and_close)
+			INVOKE_ASYNC(src, PROC_REF(open_and_close))
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"
@@ -419,12 +419,12 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/window/northleft
 	dir = NORTH

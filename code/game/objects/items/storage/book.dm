@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	var/obj/item/storage/book/bible/B = locate() in src
 	if(is_holding(B))
 		return B
-	return 0
+	return FALSE
 
 /obj/item/storage/book/bible
 	name = "bible"
@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		var/image/bible_image = image(icon = 'icons/obj/storage.dmi', icon_state = GLOB.biblestates[i])
 		skins += list("[GLOB.biblenames[i]]" = bible_image)
 
-	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
+	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	var/bible_index = GLOB.biblenames.Find(choice)
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		var/obj/item/bodypart/BP = X
 		if(BP.is_robotic_limb())
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
-			return 0
+			return FALSE
 
 	var/heal_amt = 5
 	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1)
@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
-	return 1
+	return TRUE
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1, heal_mode = TRUE)
 

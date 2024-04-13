@@ -20,9 +20,16 @@
 	display_order = JOB_DISPLAY_ORDER_MIME
 
 	threat = 0
-	
+
 	family_heirlooms = list(
 		/obj/item/reagent_containers/food/snacks/baguette
+	)
+
+	mail_goodies = list(
+		/obj/item/reagent_containers/food/snacks/baguette = 15,
+		/obj/item/reagent_containers/food/snacks/store/cheesewheel = 10,
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 10,
+//		/obj/item/book/mimery = 1,
 	)
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, client/C)

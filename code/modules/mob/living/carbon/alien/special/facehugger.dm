@@ -97,19 +97,19 @@
 /obj/item/clothing/mask/facehugger/on_found(mob/finder)
 	if(stat == CONSCIOUS)
 		return HasProximity(finder)
-	return 0
+	return FALSE
 
 /obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
 	if(CanHug(AM) && Adjacent(AM))
 		return Leap(AM)
-	return 0
+	return FALSE
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]_thrown"
-		addtimer(CALLBACK(src, .proc/clear_throw_icon_state), 15)
+		addtimer(CALLBACK(src, PROC_REF(clear_throw_icon_state)), 15)
 
 /obj/item/clothing/mask/facehugger/proc/clear_throw_icon_state()
 	if(icon_state == "[initial(icon_state)]_thrown")
@@ -181,7 +181,7 @@
 	// early returns and validity checks done: attach.
 	attached++
 	//ensure we detach once we no longer need to be attached
-	addtimer(CALLBACK(src, .proc/detach), MAX_IMPREGNATION_TIME)
+	addtimer(CALLBACK(src, PROC_REF(detach)), MAX_IMPREGNATION_TIME)
 
 
 	if(!sterile)
@@ -190,7 +190,7 @@
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
-	addtimer(CALLBACK(src, .proc/Impregnate, M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
+	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/detach()
 	attached = 0
@@ -233,7 +233,7 @@
 	stat = UNCONSCIOUS
 	icon_state = "[initial(icon_state)]_inactive"
 
-	addtimer(CALLBACK(src, .proc/GoActive), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
+	addtimer(CALLBACK(src, PROC_REF(GoActive)), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
@@ -256,7 +256,7 @@
 		return FALSE
 
 	if(ismonkey(M))
-		return 1
+		return TRUE
 
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(ITEM_SLOT_MASK in C.dna.species.no_equip))

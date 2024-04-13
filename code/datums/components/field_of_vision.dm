@@ -82,14 +82,14 @@
 	var/mob/M = parent
 	if(M.client)
 		generate_fov_holder(M, angle)
-	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/on_mob_login)
-	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_mob_logout)
-	RegisterSignal(M, COMSIG_MOB_GET_VISIBLE_MESSAGE, .proc/on_visible_message)
-	RegisterSignal(M, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
-	RegisterSignal(M, COMSIG_MOB_FOV_VIEW, .proc/on_fov_view)
-	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/on_change_view)
-	RegisterSignal(M, COMSIG_MOB_RESET_PERSPECTIVE, .proc/on_reset_perspective)
-	RegisterSignal(M, COMSIG_MOB_FOV_VIEWER, .proc/is_viewer)
+	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(on_mob_login))
+	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, PROC_REF(on_mob_logout))
+	RegisterSignal(M, COMSIG_MOB_GET_VISIBLE_MESSAGE, PROC_REF(on_visible_message))
+	RegisterSignal(M, COMSIG_MOB_EXAMINATE, PROC_REF(on_examinate))
+	RegisterSignal(M, COMSIG_MOB_FOV_VIEW, PROC_REF(on_fov_view))
+	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, PROC_REF(on_change_view))
+	RegisterSignal(M, COMSIG_MOB_RESET_PERSPECTIVE, PROC_REF(on_reset_perspective))
+	RegisterSignal(M, COMSIG_MOB_FOV_VIEWER, PROC_REF(is_viewer))
 
 /datum/component/field_of_vision/UnregisterFromParent()
 	. = ..()
@@ -134,14 +134,14 @@
 		if(_angle)
 			rotate_shadow_cone(_angle)
 	fov.alpha = M.stat == DEAD ? 0 : 255
-	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/hide_fov)
-	RegisterSignal(M, COMSIG_LIVING_REVIVE, .proc/show_fov)
-	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
-	RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_mob_moved)
-	RegisterSignal(M, COMSIG_ROBOT_UPDATE_ICONS, .proc/manual_centered_render_source)
+	RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(hide_fov))
+	RegisterSignal(M, COMSIG_LIVING_REVIVE, PROC_REF(show_fov))
+	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	RegisterSignal(M, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_moved))
+	RegisterSignal(M, COMSIG_ROBOT_UPDATE_ICONS, PROC_REF(manual_centered_render_source))
 	var/atom/A = M
 	if(M.loc && !isturf(M.loc))
-		REGISTER_NESTED_LOCS(M, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+		REGISTER_NESTED_LOCS(M, nested_locs, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_moved))
 		A = nested_locs[nested_locs.len]
 	CENTERED_RENDER_SOURCE(owner_mask, A, src)
 	M.client.images += shadow_mask
@@ -213,7 +213,7 @@
 	var/turf/T
 	if(!isturf(source.loc)) //Recalculate all nested locations.
 		UNREGISTER_NESTED_LOCS( nested_locs, COMSIG_MOVABLE_MOVED, 1)
-		REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+		REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_moved))
 		var/atom/movable/topmost = nested_locs[nested_locs.len]
 		T = topmost.loc
 		CENTERED_RENDER_SOURCE(owner_mask, topmost, src)
@@ -233,7 +233,7 @@
 	var/atom/movable/prev_topmost = nested_locs[nested_locs.len]
 	if(prev_topmost != source)
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, nested_locs.Find(source) + 1)
-	REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+	REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_moved))
 	var/atom/movable/topmost = nested_locs[nested_locs.len]
 	if(topmost != prev_topmost)
 		CENTERED_RENDER_SOURCE(owner_mask, topmost, src)

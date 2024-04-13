@@ -19,7 +19,7 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	play_sound("enter",user)
 	for(var/mob/living/target in targets)
-		INVOKE_ASYNC(src, .proc/do_jaunt, target)
+		INVOKE_ASYNC(src, PROC_REF(do_jaunt), target)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
 	target.mob_transforming = 1
@@ -39,7 +39,7 @@
 		return
 	mobloc = get_turf(target.loc)
 	jaunt_steam(mobloc)
-	ADD_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
+	ADD_TRAIT(target, TRAIT_MOBILITY_NOMOVE, MAGIC_TRAIT)
 	target.update_mobility()
 	holder.reappearing = 1
 	play_sound("exit",target)
@@ -55,7 +55,7 @@
 				if(T)
 					if(target.Move(T))
 						break
-		REMOVE_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
+		REMOVE_TRAIT(target, TRAIT_MOBILITY_NOMOVE, MAGIC_TRAIT)
 		target.update_mobility()
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)

@@ -21,7 +21,7 @@
 			user.tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 		user.fakedeath("changeling", TRUE) //play dead
 		user.update_stat()
-		addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/user)
@@ -44,7 +44,7 @@
 	name = "Reviving Stasis"
 	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies. Costs 15 chemicals."
 	button_icon_state = "fake_death"
-	UpdateButtonIcon()
+	UpdateButtons()
 	chemical_cost = 15
 	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 
@@ -56,7 +56,7 @@
 			name = "Revive"
 			desc = "We arise once more."
 			button_icon_state = "revive"
-			UpdateButtonIcon()
+			UpdateButtons()
 			chemical_cost = 0
 			revive_ready = TRUE
 

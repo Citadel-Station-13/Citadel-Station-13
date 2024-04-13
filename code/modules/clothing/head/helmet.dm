@@ -389,7 +389,7 @@
 		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.UpdateButtons()
 
 /obj/item/clothing/head/helmet/durathread
 	name = "makeshift helmet"

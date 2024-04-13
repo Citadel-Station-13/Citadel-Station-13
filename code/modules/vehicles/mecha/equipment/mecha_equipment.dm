@@ -41,7 +41,7 @@
 			chassis.selected = null
 		update_chassis_page()
 		log_message("[src] is destroyed.", LOG_MECHA)
-		if(chassis.occupants)
+		if(!LAZYLEN(chassis?.occupants))
 			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='danger'>[src] is destroyed!</span>")
 			playsound(chassis, destroy_sound, 50)
 		if(!detachable) //If we're a built-in nondetachable equipment, let's lock up the slot that we were in.
@@ -100,10 +100,10 @@
 	if(!chassis)
 		return FALSE
 	chassis.use_power(energy_drain)
-	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target))
+	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target))
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
-	return do_after(user, delay, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target))
+	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target))
 
 /// do after checks for the mecha equipment do afters
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target)

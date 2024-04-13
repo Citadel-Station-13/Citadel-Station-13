@@ -9,7 +9,9 @@
 
 	var/list/paths = subtypesof(/obj/item/stack) - blacklist
 
-	for(var/stackpath in paths)
+	for(var/obj/item/stack/stackpath as anything in paths)
+		if(initial(stackpath.is_cyborg))
+			continue
 		var/obj/item/stack/stack = new stackpath
 		if(!stack.merge_type)
 			TEST_FAIL("([stack]) lacks set merge_type variable!")

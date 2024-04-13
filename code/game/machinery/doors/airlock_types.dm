@@ -255,7 +255,7 @@
 	qdel(src)
 
 /obj/machinery/door/airlock/plasma/BlockThermalConductivity() //we don't stop the heat~
-	return 0
+	return FALSE
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
@@ -507,11 +507,11 @@
 
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
-		return 1
+		return TRUE
 	if(friendly || iscultist(L) || isshade(L) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
-		return 1
+		return TRUE
 	else
 		if(!stealthy)
 			new /obj/effect/temp_visual/cult/sac(loc)
@@ -521,7 +521,7 @@
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.DefaultCombatKnockdown(40)
 			L.throw_at(throwtarget, 5, 1)
-		return 0
+		return FALSE
 
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -619,7 +619,7 @@
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/clockwork/ratvar_act()
-	return 0
+	return FALSE
 
 /obj/machinery/door/airlock/clockwork/narsie_act()
 	..()
@@ -627,7 +627,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
 
 /obj/machinery/door/airlock/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(!attempt_construction(I, user))
@@ -635,8 +635,8 @@
 
 /obj/machinery/door/airlock/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/airlock/clockwork/hasPower()
 	return TRUE //yes we do have power
@@ -657,36 +657,36 @@
 
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
-		return 0
+		return FALSE
 	else if(I.tool_behaviour == TOOL_WRENCH)
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
 			if(!I.use_tool(src, user, 75, volume=50) || construction_state != GEAR_SECURE)
-				return 1
+				return TRUE
 			user.visible_message("<span class='notice'>[user] loosens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel pops off and dangles loosely.</span>")
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			construction_state = GEAR_LOOSE
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s cogwheel...</span>", "<span class='notice'>You begin tightening [src]'s cogwheel into place...</span>")
 			if(!I.use_tool(src, user, 75, volume=50) || construction_state != GEAR_LOOSE)
-				return 1
+				return TRUE
 			user.visible_message("<span class='notice'>[user] tightens [src]'s cogwheel!</span>", "<span class='notice'>You firmly tighten [src]'s cogwheel into place.</span>")
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			construction_state = GEAR_SECURE
-		return 1
+		return TRUE
 	else if(I.tool_behaviour == TOOL_CROWBAR)
 		if(construction_state == GEAR_SECURE)
 			to_chat(user, "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>")
-			return 1
+			return TRUE
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")
 			if(!I.use_tool(src, user, 75, volume=50) || construction_state != GEAR_LOOSE)
-				return 1
+				return TRUE
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s cogwheel, causing it to fall apart!</span>", \
 			"<span class='notice'>You lift off [src]'s cogwheel, causing it to fall apart!</span>")
 			deconstruct(TRUE)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/airlock/clockwork/brass
 	glass = TRUE

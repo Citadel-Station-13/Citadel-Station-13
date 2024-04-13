@@ -2,15 +2,10 @@
 	name = "Prepare Blood Magic"
 	button_icon_state = "carve"
 	desc = "Prepare blood magic by carving runes into your flesh. This rite is most effective with an <b>empowering rune</b>"
+	default_button_position = DEFAULT_BLOODSPELLS
 	var/list/spells = list()
 	var/channeling = FALSE
 	var/holy_dispel = FALSE
-
-/datum/action/innate/cult/blood_magic/Grant()
-	..()
-	button.screen_loc = DEFAULT_BLOODSPELLS
-	button.moved = DEFAULT_BLOODSPELLS
-	button.ordered = FALSE
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -23,15 +18,21 @@
 	return ..()
 
 /datum/action/innate/cult/blood_magic/proc/Positioning()
-	var/list/screen_loc_split = splittext(button.screen_loc,",")
-	var/list/screen_loc_X = splittext(screen_loc_split[1],":")
-	var/list/screen_loc_Y = splittext(screen_loc_split[2],":")
-	var/pix_X = text2num(screen_loc_X[2])
-	for(var/datum/action/innate/cult/blood_spell/B in spells)
-		if(B.button.locked)
-			var/order = pix_X+spells.Find(B)*31
-			B.button.screen_loc = "[screen_loc_X[1]]:[order],[screen_loc_Y[1]]:[screen_loc_Y[2]]"
-			B.button.moved = B.button.screen_loc
+	for(var/datum/hud/hud as anything in viewers)
+		var/our_view = hud.mymob?.client?.view || "15x15"
+		var/atom/movable/screen/movable/action_button/button = viewers[hud]
+		var/position = screen_loc_to_offset(button.screen_loc)
+		var/spells_iterated = 0
+		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
+			spells_iterated += 1
+			if(blood_spell.positioned)
+				continue
+			var/atom/movable/screen/movable/action_button/moving_button = blood_spell.viewers[hud]
+			if(!moving_button)
+				continue
+			var/our_x = position[1] + spells_iterated * world.icon_size // Offset any new buttons into our list
+			hud.position_action(moving_button, offset_to_screen_loc(our_x, position[2], our_view))
+			blood_spell.positioned = TRUE
 
 /datum/action/innate/cult/blood_magic/Activate()
 	if(holy_dispel)
@@ -99,6 +100,8 @@
 	var/base_desc //To allow for updating tooltips
 	var/invocation
 	var/health_cost = 0
+	/// Have we already been positioned into our starting location?
+	var/positioned = FALSE
 
 /datum/action/innate/cult/blood_spell/Grant(mob/living/owner, datum/action/innate/cult/blood_magic/BM)
 	if(health_cost)
@@ -106,9 +109,7 @@
 	base_desc = desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
 	all_magic = BM
-	..()
-	button.locked = TRUE
-	button.ordered = FALSE
+	return ..()
 
 /datum/action/innate/cult/blood_spell/Remove()
 	if(all_magic)
@@ -268,12 +269,12 @@
 		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
 		var/image/C = image('icons/effects/cult_effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
-		addtimer(CALLBACK(H,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), 2400, TIMER_OVERRIDE|TIMER_UNIQUE)
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/atom, remove_alt_appearance),"cult_apoc",TRUE), 2400, TIMER_OVERRIDE|TIMER_UNIQUE)
 		to_chat(ranged_ability_user,"<span class='cult'><b>[H] has been cursed with living nightmares!</b></span>")
 		attached_action.charges--
 		attached_action.desc = attached_action.base_desc
 		attached_action.desc += "<br><b><u>Has [attached_action.charges] use\s remaining</u></b>."
-		attached_action.UpdateButtonIcon()
+		attached_action.UpdateButtons()
 		if(attached_action.charges <= 0)
 			remove_ranged_ability("<span class='cult'>You have exhausted the spell's power!</span>")
 			qdel(src)
@@ -325,7 +326,7 @@
 		qdel(src)
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/cult/blood_spell/manipulation
 	name = "Blood Rites"
@@ -374,7 +375,7 @@
 			source.charges = uses
 			source.desc = source.base_desc
 			source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-			source.UpdateButtonIcon()
+			source.UpdateButtons()
 	return ..()
 
 /obj/item/melee/blood_magic/attack_self(mob/living/user)
@@ -401,7 +402,7 @@
 	else if(source)
 		source.desc = source.base_desc
 		source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-		source.UpdateButtonIcon()
+		source.UpdateButtons()
 
 //Stun
 /obj/item/melee/blood_magic/stun
@@ -427,7 +428,7 @@
 			L.mob_light(_color = LIGHT_COLOR_HOLY_MAGIC, _range = 2, _duration = 100)
 			var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 			L.add_overlay(forbearance)
-			addtimer(CALLBACK(L, /atom/proc/cut_overlay, forbearance), 100)
+			addtimer(CALLBACK(L, TYPE_PROC_REF(/atom, cut_overlay), forbearance), 100)
 
 			if(istype(anti_magic_source, /obj/item))
 				var/obj/item/ams_object = anti_magic_source

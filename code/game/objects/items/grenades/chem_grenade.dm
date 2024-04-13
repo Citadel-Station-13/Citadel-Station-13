@@ -309,7 +309,7 @@
 		message_admins("grenade primed by an assembly at [AREACOORD(DT)], attached by [ADMIN_LOOKUPFLW(M)] and last touched by [ADMIN_LOOKUPFLW(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name])</a>.")
 		log_game("grenade primed by an assembly at [AREACOORD(DT)], attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name])")
 	else
-		addtimer(CALLBACK(src, .proc/prime), det_time)
+		addtimer(CALLBACK(src, PROC_REF(prime)), det_time)
 	log_game("A grenade detonated at [AREACOORD(DT)]")
 	return TRUE
 

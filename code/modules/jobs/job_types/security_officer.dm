@@ -34,6 +34,14 @@
 		/obj/item/clothing/head/beret/sec
 	)
 
+	mail_goodies = list(
+		/obj/item/reagent_containers/food/snacks/donut/caramel = 10,
+		/obj/item/reagent_containers/food/snacks/donut/matcha = 10,
+		/obj/item/reagent_containers/food/snacks/donut/blumpkin = 5,
+//		/obj/item/clothing/mask/whistle = 5,
+		/obj/item/melee/baton/boomerang/loaded = 1
+	)
+
 /datum/job/officer/get_access()
 	var/list/L = list()
 	L |= ..() | check_config_for_sec_maint()

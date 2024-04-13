@@ -35,7 +35,7 @@
 	panel.layer = FLY_LAYER
 	Make(S)
 	connect_to_network()
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(queue_update_solar_exposure))
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
@@ -264,7 +264,7 @@
 			tracker = TRUE
 			qdel(W)
 			user.visible_message("[user] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
-			return 1
+			return TRUE
 	else
 		if(W.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
@@ -303,7 +303,7 @@
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(timed_track))
 	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)

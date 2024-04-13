@@ -106,7 +106,7 @@
 	. = ..()
 	if(can_be_held)
 		//icon/item state is defined in mob_holder/drone_worn_icon()
-		AddElement(/datum/element/mob_holder, null, 'icons/mob/clothing/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', ITEM_SLOT_HEAD, /datum/element/mob_holder.proc/drone_worn_icon)
+		AddElement(/datum/element/mob_holder, null, 'icons/mob/clothing/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', ITEM_SLOT_HEAD, TYPE_PROC_REF(/datum/element/mob_holder, drone_worn_icon))
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -276,7 +276,7 @@
 		return ..()
 
 /mob/living/simple_animal/drone/mob_negates_gravity()
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/drone/mob_has_gravity()
 	return ..() || mob_negates_gravity()
@@ -286,10 +286,10 @@
 
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	return 0 //So they don't die trying to fix wiring
+	return FALSE //So they don't die trying to fix wiring
 
 /mob/living/simple_animal/drone/can_see_reagents()
 	. = ..()

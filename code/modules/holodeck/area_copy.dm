@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
 	//		 into the new area will not be moved.
 
 	if(!A || !src)
-		return 0
+		return FALSE
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)

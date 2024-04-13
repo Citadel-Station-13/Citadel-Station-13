@@ -29,7 +29,7 @@
 	return DEFAULT_VOLUME_TINY/2 + reagents.total_volume / reagents.maximum_volume * DEFAULT_VOLUME_TINY
 
 /obj/item/reagent_containers/pill/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
-	INVOKE_ASYNC(src, .proc/attempt_feed, M, user)
+	INVOKE_ASYNC(src, PROC_REF(attempt_feed), M, user)
 
 /obj/item/reagent_containers/pill/proc/attempt_feed(mob/living/M, mob/living/user)
 	if(!canconsume(M, user))
@@ -51,7 +51,7 @@
 
 	var/makes_me_think = pick(strings("redpill.json", "redpill_questions"))
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, M, "<span class='notice'>[makes_me_think]</span>"), 50)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, "<span class='notice'>[makes_me_think]</span>"), 50)
 
 	log_combat(user, M, "fed", reagents.log_list())
 	if(reagents.total_volume)

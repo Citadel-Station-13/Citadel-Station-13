@@ -9,10 +9,10 @@
 /datum/element/spellcasting/Attach(datum/target, _flags, _slots)
 	. = ..()
 	if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_drop)
+		RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+		RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	else if(ismob(target))
-		RegisterSignal(target, COMSIG_MOB_SPELL_CAN_CAST, .proc/on_cast)
+		RegisterSignal(target, COMSIG_MOB_SPELL_CAN_CAST, PROC_REF(on_cast))
 		stacked_spellcasting_by_user[target]++
 	else
 		return ELEMENT_INCOMPATIBLE
@@ -39,7 +39,7 @@
 		return
 	users_by_item[source] = equipper
 	if(!stacked_spellcasting_by_user[equipper])
-		RegisterSignal(equipper, COMSIG_MOB_SPELL_CAN_CAST, .proc/on_cast)
+		RegisterSignal(equipper, COMSIG_MOB_SPELL_CAN_CAST, PROC_REF(on_cast))
 	stacked_spellcasting_by_user[equipper]++
 
 /datum/element/spellcasting/proc/on_drop(datum/source, mob/user)

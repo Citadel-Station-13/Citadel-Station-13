@@ -29,7 +29,7 @@
 
 /obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot != ITEM_SLOT_EYES)
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/clothing/glasses/judicial_visor/equipped(mob/living/user, slot)
@@ -38,7 +38,7 @@
 		update_status(FALSE)
 		if(blaster.ranged_ability_user)
 			blaster.remove_ranged_ability()
-		return 0
+		return FALSE
 	if(is_servant_of_ratvar(user))
 		update_status(TRUE)
 	else
@@ -48,11 +48,11 @@
 		to_chat(user, "<span class='userdanger'>You suddenly catch fire!</span>")
 		user.adjust_fire_stacks(5)
 		user.IgniteMob()
-	return 1
+	return TRUE
 
 /obj/item/clothing/glasses/judicial_visor/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(CALLBACK(src, PROC_REF(check_on_mob), user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clothing/glasses/judicial_visor/proc/check_on_mob(mob/user)
 	if(user && src != user.get_item_by_slot(ITEM_SLOT_EYES)) //if we happen to check and we AREN'T in the slot, we need to remove our shit from whoever we got dropped from
@@ -67,27 +67,27 @@
 /obj/item/clothing/glasses/judicial_visor/proc/update_status(change_to)
 	if(recharging || !isliving(loc))
 		icon_state = "judicial_visor_0"
-		return 0
+		return FALSE
 	if(active == change_to)
-		return 0
+		return FALSE
 	var/mob/living/L = loc
 	active = change_to
 	icon_state = "judicial_visor_[active]"
 	L.update_action_buttons_icon()
 	L.update_inv_glasses()
 	if(!is_servant_of_ratvar(L) || L.stat)
-		return 0
+		return FALSE
 	switch(active)
 		if(TRUE)
 			to_chat(L, "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
 			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>")
 		if(FALSE)
 			to_chat(L, "<span class='notice'>As you take off [src], its lens darkens once more.</span>")
-	return 1
+	return TRUE
 
 /obj/item/clothing/glasses/judicial_visor/proc/recharge_visor(mob/living/user)
 	if(!src)
-		return 0
+		return FALSE
 	recharging = FALSE
 	if(user && src == user.get_item_by_slot(ITEM_SLOT_EYES))
 		to_chat(user, "<span class='brass'>Your [name] hums. It is ready.</span>")
@@ -131,7 +131,7 @@
 				continue
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
-			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), (GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2)
+			addtimer(CALLBACK(V, TYPE_PROC_REF(/obj/item/clothing/glasses/judicial_visor, recharge_visor), ranged_ability_user), (GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2)
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/targetturf = get_turf(target)
@@ -139,7 +139,7 @@
 		log_combat(ranged_ability_user, targetturf, "created a judicial marker")
 		ranged_ability_user.update_action_buttons_icon()
 		ranged_ability_user.update_inv_glasses()
-		addtimer(CALLBACK(visor, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown)//Cooldown is reduced by 10x if Ratvar is up
+		addtimer(CALLBACK(visor, TYPE_PROC_REF(/obj/item/clothing/glasses/judicial_visor, recharge_visor), ranged_ability_user), GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown)//Cooldown is reduced by 10x if Ratvar is up
 		remove_ranged_ability()
 
 		return TRUE
@@ -161,7 +161,7 @@
 	. = ..()
 	set_light(1.4, 2, "#FE9C11")
 	user = caster
-	INVOKE_ASYNC(src, .proc/judicialblast)
+	INVOKE_ASYNC(src, PROC_REF(judicialblast))
 
 /obj/effect/clockwork/judicial_marker/singularity_act()
 	return

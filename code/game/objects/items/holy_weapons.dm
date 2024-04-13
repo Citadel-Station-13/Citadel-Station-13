@@ -260,9 +260,9 @@
 			display_names[initial(rodtype.name)] = rodtype
 			nullrod_icons += list(initial(rodtype.name) = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state)))
 
-	nullrod_icons = sortList(nullrod_icons)
+	nullrod_icons = sort_list(nullrod_icons)
 
-	var/choice = show_radial_menu(L, src , nullrod_icons, custom_check = CALLBACK(src, .proc/check_menu, L), radius = 42, require_near = TRUE)
+	var/choice = show_radial_menu(L, src , nullrod_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), L), radius = 42, require_near = TRUE)
 	if(!choice || !check_menu(L))
 		return
 
@@ -742,7 +742,7 @@
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
 		H.adjustStaminaLoss(rand(12,18))
 		if(prob(25))
-			(INVOKE_ASYNC(src, .proc/jedi_spin, user))
+			(INVOKE_ASYNC(src, PROC_REF(jedi_spin), user))
 	else
 		return ..()
 

@@ -39,11 +39,15 @@
 
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/prosopagnosia, /datum/quirk/insanity)
 	threat = 2
-	
+
 	family_heirlooms = list(
 		/obj/item/reagent_containers/food/drinks/trophy/silver_cup
 	)
 
+	mail_goodies = list(
+		/obj/item/card/id/silver = 10,
+		/obj/item/stack/sheet/bone = 5
+	)
 
 /datum/outfit/job/hop
 	name = "Head of Personnel"
@@ -59,3 +63,11 @@
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced = 1)
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
+
+//only pet worth reviving
+/datum/job/hop/get_mail_goodies(mob/recipient)
+	. = ..()
+	// Strange Reagent if the pet is dead.
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/staff_pet in GLOB.dead_mob_list)
+		. += list(/datum/reagent/medicine/strange_reagent = 20)
+		break

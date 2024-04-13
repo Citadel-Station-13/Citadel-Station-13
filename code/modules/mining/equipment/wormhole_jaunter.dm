@@ -21,7 +21,7 @@
 /obj/item/wormhole_jaunter/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_BELT)
-		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROP, .proc/chasm_react)
+		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROP, PROC_REF(chasm_react))
 
 /obj/item/wormhole_jaunter/dropped(mob/user)
 	. = ..()
@@ -103,4 +103,4 @@
 			L.DefaultCombatKnockdown(60)
 			if(ishuman(L))
 				shake_camera(L, 20, 1)
-				addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
+				addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living/carbon, vomit)), 20)

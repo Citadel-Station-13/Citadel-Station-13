@@ -27,7 +27,7 @@
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/walk2derpless(target)
 	if(!target || IsStandingStill())
-		return 0
+		return FALSE
 
 	if(myPath.len <= 0)
 		myPath = get_path_to(src, target, 250, 1)
@@ -39,14 +39,14 @@
 					if(myPath.len >= 1)
 						walk_to(src,myPath[1],0,5)
 						myPath -= myPath[1]
-			return 1
+			return TRUE
 
 	// failed to path correctly so just try to head straight for a bit
 	walk_to(src,get_turf(target),0,5)
 	sleep(1)
 	walk_to(src,0)
 
-	return 0
+	return FALSE
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/IsDeadOrIncap(checkDead = TRUE)
@@ -74,7 +74,7 @@
 	if(I.force >= best_force)
 		best_force = I.force
 	else
-		addtimer(CALLBACK(src, .proc/pickup_and_wear, I), 5)
+		addtimer(CALLBACK(src, PROC_REF(pickup_and_wear), I), 5)
 
 	return TRUE
 
@@ -117,7 +117,7 @@
 				pickupTarget = null
 				pickupTimer = 0
 			else
-				INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
+				INVOKE_ASYNC(src, PROC_REF(walk2derpless), pickupTarget.loc)
 				if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc)) // next to target
 					drop_all_held_items() // who cares about these items, i want that one!
 					if(isturf(pickupTarget.loc)) // on floor
@@ -131,7 +131,7 @@
 						if(!pickpocketing)
 							pickpocketing = TRUE
 							M.visible_message("[src] starts trying to take [pickupTarget] from [M]", "[src] tries to take [pickupTarget]!")
-							INVOKE_ASYNC(src, .proc/pickpocket, M)
+							INVOKE_ASYNC(src, PROC_REF(pickpocket), M)
 			return TRUE
 
 	switch(mode)
@@ -167,7 +167,7 @@
 				return TRUE
 
 			if(target != null)
-				INVOKE_ASYNC(src, .proc/walk2derpless, target)
+				INVOKE_ASYNC(src, PROC_REF(walk2derpless), target)
 
 			// pickup any nearby weapon
 			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
@@ -252,7 +252,7 @@
 
 			if(target.pulledby != src && !istype(target.pulledby, /mob/living/carbon/monkey/))
 
-				INVOKE_ASYNC(src, .proc/walk2derpless, target.loc)
+				INVOKE_ASYNC(src, PROC_REF(walk2derpless), target.loc)
 
 				if(Adjacent(target) && isturf(target.loc))
 					a_intent = INTENT_GRAB
@@ -265,11 +265,11 @@
 						frustration = 0
 
 			else if(!disposing_body)
-				INVOKE_ASYNC(src, .proc/walk2derpless, bodyDisposal.loc)
+				INVOKE_ASYNC(src, PROC_REF(walk2derpless), bodyDisposal.loc)
 
 				if(Adjacent(bodyDisposal))
 					disposing_body = TRUE
-					addtimer(CALLBACK(src, .proc/stuff_mob_in), 5)
+					addtimer(CALLBACK(src, PROC_REF(stuff_mob_in)), 5)
 
 				else
 					var/turf/olddist = get_dist(src, bodyDisposal)
@@ -396,12 +396,13 @@
 				retaliate(Proj.firer)
 	return ..()
 
-/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
-		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))
-			var/mob/living/carbon/human/H = I.thrownby
-			retaliate(H)
+/mob/living/carbon/monkey/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	if(istype(hitting_atom, /obj/item))
+		var/obj/item/item_hitby = hitting_atom
+		var/mob/thrown_by = item_hitby.thrownby?.resolve()
+		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))
+			var/mob/living/carbon/human/human_throwee = thrown_by
+			retaliate(human_throwee)
 	..()
 
 /mob/living/carbon/monkey/Crossed(atom/movable/AM)

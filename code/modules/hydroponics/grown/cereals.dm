@@ -105,4 +105,4 @@
 	var/obj/item/reagent_containers/food/snacks/meat/slab/meatwheat/M = new
 	qdel(src)
 	user.put_in_hands(M)
-	return 1
+	return TRUE

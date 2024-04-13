@@ -46,9 +46,9 @@
 	// cost = CARGO_CRATE_VALUE * 3
 	cost = 1500
 	contains = list(/obj/item/book/codex_gigas,
-					/obj/item/book/manual/random/,
-					/obj/item/book/manual/random/,
-					/obj/item/book/manual/random/,
+					/obj/item/book/manual/random,
+					/obj/item/book/manual/random,
+					/obj/item/book/manual/random,
 					/obj/item/book/random,
 					/obj/item/book/random,
 					/obj/item/book/random)

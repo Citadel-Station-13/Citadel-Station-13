@@ -57,7 +57,6 @@
 	var/encryptmod = FALSE
 	var/holoform = FALSE
 	var/canholo = TRUE
-	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
 	var/dynamic_chassis
 	var/dynamic_chassis_sit = FALSE			//whether we're sitting instead of resting spritewise
@@ -88,13 +87,18 @@
 	QDEL_NULL(signaler)
 	QDEL_NULL(pda)
 	QDEL_NULL(internal_instrument)
+	if(cable)
+		QDEL_NULL(cable)
+	hackdoor = null
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
 	card.cut_overlays()
 	card.add_overlay("pai-off")
 	card = null
+	current = null
 	GLOB.pai_list -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /mob/living/silicon/pai/Initialize(mapload)
@@ -232,7 +236,7 @@
 
 /datum/action/innate/pai/Trigger()
 	if(!ispAI(owner))
-		return 0
+		return FALSE
 	P = owner
 
 /datum/action/innate/pai/software
@@ -370,7 +374,7 @@
 		deltimer(radio_short_timerid)
 	radio_short = TRUE
 	to_chat(src, "<span class='danger'>Your radio shorts out!</span>")
-	radio_short_timerid = addtimer(CALLBACK(src, .proc/unshort_radio), radio_short_cooldown, flags = TIMER_STOPPABLE)
+	radio_short_timerid = addtimer(CALLBACK(src, PROC_REF(unshort_radio)), radio_short_cooldown, flags = TIMER_STOPPABLE)
 
 /mob/living/silicon/pai/proc/unshort_radio()
 	radio_short = FALSE

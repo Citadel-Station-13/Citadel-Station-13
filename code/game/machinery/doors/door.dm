@@ -222,13 +222,13 @@
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		try_to_crowbar(I, user)
-		return 1
+		return TRUE
 	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user)
-		return 1
+		return TRUE
 	else if(!(I.item_flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -254,7 +254,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(prob(severity/5) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
-		INVOKE_ASYNC(src, .proc/open)
+		INVOKE_ASYNC(src, PROC_REF(open))
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = MACHINE_NOT_ELECTRIFIED
@@ -284,7 +284,7 @@
 
 /obj/machinery/door/proc/open()
 	if(!density)
-		return 1
+		return TRUE
 	if(operating)
 		return
 	operating = TRUE
@@ -302,7 +302,7 @@
 	if(autoclose)
 		spawn(autoclose)
 			close()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/close()
 	if(density)
@@ -335,7 +335,7 @@
 		CheckForMobs()
 	else if(!(flags_1 & ON_BORDER_1))
 		crush()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))
@@ -377,10 +377,10 @@
 		close()
 
 /obj/machinery/door/proc/autoclose_in(wait)
-	addtimer(CALLBACK(src, .proc/autoclose), wait, TIMER_UNIQUE | TIMER_NO_HASH_WAIT | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(autoclose)), wait, TIMER_UNIQUE | TIMER_NO_HASH_WAIT | TIMER_OVERRIDE)
 
 /obj/machinery/door/proc/requiresID()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/hasPower()
 	return !(stat & NOPOWER)
@@ -391,8 +391,8 @@
 
 /obj/machinery/door/BlockThermalConductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

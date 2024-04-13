@@ -40,7 +40,7 @@
 		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		user.update_inv_hands()
-		return 1
+		return TRUE
 
 /datum/action/changeling/weapon/sting_action(mob/living/user)
 	var/obj/item/held = user.get_active_held_item()
@@ -325,7 +325,7 @@
 	..()
 
 /obj/item/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
-	if(H.in_throw_mode)
+	if(H.throw_mode)
 		H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
 
 /obj/item/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
@@ -390,12 +390,12 @@
 
 					if(INTENT_GRAB)
 						C.visible_message("<span class='danger'>[L] is grabbed by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
-						C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, .proc/tentacle_grab, H, C))
+						C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, PROC_REF(tentacle_grab), H, C))
 						return BULLET_ACT_HIT
 
 					if(INTENT_HARM)
 						C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
-						C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, .proc/tentacle_stab, H, C))
+						C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, PROC_REF(tentacle_stab), H, C))
 						return BULLET_ACT_HIT
 			else
 				L.visible_message("<span class='danger'>[L] is pulled by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
@@ -597,7 +597,7 @@
 /datum/action/changeling/gloves/proc/check_gloves(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!ishuman(user) || !changeling)
-		return 1
+		return TRUE
 	var/mob/living/carbon/human/H = user
 	if(istype(H.gloves, glove_type))
 		H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms [H.p_their()] [glove_name_simple] into hands!</span>", "<span class='warning'>We assimilate our [glove_name_simple].</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -609,7 +609,7 @@
 			playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
 
 		changeling.chem_recharge_slowdown -= recharge_slowdown
-		return 1
+		return TRUE
 
 /datum/action/changeling/gloves/Remove(mob/user)
 	if(!ishuman(user))
@@ -711,7 +711,7 @@
 		enhancement = slow_enhancement // fuck em up kiddo
 		wound_enhancement = slow_wound_enhancement // really. fuck em up.
 	to_chat(user, "<span class='notice'>[src] are now formed to allow for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"].</span>")
-	addtimer(CALLBACK(src, .proc/use_buffs, user, TRUE), 0.1) // go fuckin get em
+	addtimer(CALLBACK(src, PROC_REF(use_buffs), user, TRUE), 0.1) // go fuckin get em
 
 /obj/item/clothing/gloves/fingerless/pugilist/cling/Initialize(mapload)
 	. = ..()

@@ -37,12 +37,12 @@
 			ref = REF(T)
 		)
 		data_out["servers"] += list(data)
-	data_out["servers"] = sortList(data_out["servers"])
+	data_out["servers"] = sort_list(data_out["servers"])
 
 	if(!SelectedMachine) //null is bad.
 		data_out["selected"] = null //but in js, null is good.
 		return data_out
-	
+
 	data_out["selected"] = list(
 		name = SelectedMachine.name,
 		id = SelectedMachine.id,
@@ -90,7 +90,7 @@
 			if(LAZYLEN(machinelist) > 0)
 				notice = "FAILED: Cannot probe when buffer full"
 				return
-			
+
 			for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 				if(T.network == network)
 					LAZYADD(machinelist, T)

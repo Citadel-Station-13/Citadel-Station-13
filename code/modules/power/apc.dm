@@ -253,7 +253,7 @@
 		set_machine_stat(stat | MAINT)
 
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/update), 5)
+	addtimer(CALLBACK(src, PROC_REF(update)), 5)
 
 	GLOB.apcs_list += src
 
@@ -289,7 +289,7 @@
 		name = "\improper [get_area_name(area, TRUE)] APC"
 		set_machine_stat(stat | MAINT)
 		update_appearance()
-		addtimer(CALLBACK(src, .proc/update), 5)
+		addtimer(CALLBACK(src, PROC_REF(update)), 5)
 	register_context()
 
 /obj/machinery/power/apc/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -861,7 +861,7 @@
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE && damage_amount < 10 && (!(stat & BROKEN) || malfai))
-		return 0
+		return FALSE
 	. = ..()
 
 
@@ -1145,8 +1145,8 @@
 				return
 			for (var/obj/machinery/door/D in GLOB.airlocks)
 				if (get_area(D) == area)
-					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
-					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
+					INVOKE_ASYNC(D,TYPE_PROC_REF(/obj/machinery/door, hostile_lockdown),usr, FALSE)
+					addtimer(CALLBACK(D,TYPE_PROC_REF(/obj/machinery/door, disable_lockdown), FALSE), 30 SECONDS)
 			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
 			H.stealthcooldown = world.time + 3 MINUTES
 		if("occupy")
@@ -1164,7 +1164,7 @@
 			for(var/obj/machinery/light/L in area)
 				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
 					L.no_emergency = emergency_lights
-					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+					INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light, update), FALSE)
 				CHECK_TICK
 	return TRUE
 
@@ -1233,7 +1233,7 @@
 		return
 	to_chat(malf, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
 	malf.malfhack = src
-	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
+	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai, malfhacked), src), 600, TIMER_STOPPABLE)
 
 	var/atom/movable/screen/alert/hackingapc/A
 	A = malf.throw_alert("hackingapc", /atom/movable/screen/alert/hackingapc)
@@ -1344,7 +1344,7 @@
 	if(terminal)
 		return terminal.surplus()
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/apc/add_load(amount)
 	if(terminal && terminal.powernet)
@@ -1354,7 +1354,7 @@
 	if(terminal)
 		return terminal.avail(amount)
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/apc/process()
 	if(icon_update_needed)
@@ -1583,7 +1583,7 @@
 	environ = APC_CHANNEL_OFF
 	update_appearance()
 	update()
-	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
+	addtimer(CALLBACK(src, PROC_REF(reset), APC_RESET_EMP), 600)
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
@@ -1609,7 +1609,7 @@
 		return
 	if( cell && cell.charge>=20)
 		cell.use(20)
-		INVOKE_ASYNC(src, .proc/break_lights)
+		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
 	for(var/obj/machinery/light/L in area)

@@ -15,22 +15,22 @@
 		if(I == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /mob/living/simple_animal/drone/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
 	switch(slot)
 		if(ITEM_SLOT_HEAD)
 			if(head)
-				return 0
+				return FALSE
 			if(!((I.slot_flags & ITEM_SLOT_HEAD) || (I.slot_flags & ITEM_SLOT_MASK)))
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 		if(ITEM_SLOT_DEX_STORAGE)
 			if(internal_storage)
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 	..()
 
 

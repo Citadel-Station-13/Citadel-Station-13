@@ -52,7 +52,7 @@
 				chamber_round()
 				A.update_icon()
 				update_icon()
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 
@@ -220,6 +220,7 @@
 	can_suppress = FALSE
 	burst_size = 3
 	burst_shot_delay = 1
+	automatic_burst_overlay = FALSE
 
 // Bulldog shotgun //
 

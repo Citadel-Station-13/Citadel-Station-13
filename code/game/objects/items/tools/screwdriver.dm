@@ -31,6 +31,8 @@
 		"cyan" = rgb(24, 162, 213),
 		"yellow" = rgb(255, 165, 0)
 	)
+	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
+	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
 
 	wound_bonus = -10
 	bare_wound_bonus = 5

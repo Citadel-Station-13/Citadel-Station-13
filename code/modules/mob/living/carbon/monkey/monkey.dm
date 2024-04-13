@@ -171,8 +171,8 @@ GLOBAL_LIST_INIT(strippable_monkey_items, create_strippable_list(list(
 
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot(ORGAN_SLOT_LUNGS))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/monkey/can_use_guns(obj/item/G)
 	return TRUE

@@ -44,7 +44,7 @@
 	icon = I
 	parent = P
 	icon_state = credited
-	maptext = MAPTEXT(credited)
+	maptext = MAPTEXT_PIXELLARI(credited)
 	maptext_x = world.icon_size + 8
 	maptext_y = (world.icon_size / 2) - 4
 	maptext_width = world.icon_size * 3
@@ -53,7 +53,7 @@
 	animate(src, transform = M, time = CREDIT_ROLL_SPEED)
 	target = M
 	animate(src, alpha = 255, time = CREDIT_EASE_DURATION, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, .proc/FadeOut), CREDIT_ROLL_SPEED - CREDIT_EASE_DURATION)
+	addtimer(CALLBACK(src, PROC_REF(FadeOut)), CREDIT_ROLL_SPEED - CREDIT_EASE_DURATION)
 	QDEL_IN(src, CREDIT_ROLL_SPEED)
 	if(parent)
 		parent.screen += src

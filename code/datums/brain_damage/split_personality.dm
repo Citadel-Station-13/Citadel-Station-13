@@ -20,7 +20,7 @@
 	..()
 	make_backseats()
 	get_ghost()
-	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/revert_to_normal)
+	RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(revert_to_normal))
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
@@ -198,7 +198,7 @@
 	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	if(findtext(message, codeword))
 		hearing_args[HEARING_RAW_MESSAGE] = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")
-		addtimer(CALLBACK(src, /datum/brain_trauma/severe/split_personality.proc/switch_personalities), 10)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/brain_trauma/severe/split_personality, switch_personalities)), 10)
 
 /datum/brain_trauma/severe/split_personality/brainwashing/handle_speech(datum/source, list/speech_args)
 	if(findtext(speech_args[SPEECH_MESSAGE], codeword))

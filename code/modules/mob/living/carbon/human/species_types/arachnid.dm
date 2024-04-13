@@ -43,7 +43,7 @@
 /datum/species/arachnid/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 9 //flyswatters deal 10x damage to arachnids
-	return 0
+	return FALSE
 
 /datum/species/arachnid/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
@@ -125,7 +125,7 @@
 		 (Press ALT+CLICK on the target to start wrapping.)</span>")
 		H.adjust_nutrition(E.spinner_rate * -0.5)
 		addtimer(VARSET_CALLBACK(E, web_ready, TRUE), E.web_cooldown)
-		RegisterSignal(H, list(COMSIG_MOB_ALTCLICKON), .proc/cocoonAtom)
+		RegisterSignal(H, list(COMSIG_MOB_ALTCLICKON), PROC_REF(cocoonAtom))
 		return
 	else
 		to_chat(H, "<span class='warning'>You're too hungry to spin web right now, eat something first!</span>")

@@ -29,13 +29,13 @@
 	permanent = _permanent
 	if(!permanent)
 		START_PROCESSING(SSwet_floors, src)
-	addtimer(CALLBACK(src, .proc/gc, TRUE), 1)		//GC after initialization.
+	addtimer(CALLBACK(src, PROC_REF(gc), TRUE), 1)		//GC after initialization.
 	last_process = world.time
 
 /datum/component/wet_floor/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_TURF_IS_WET, .proc/is_wet)
-	RegisterSignal(parent, COMSIG_TURF_MAKE_DRY, .proc/dry)
+	RegisterSignal(parent, COMSIG_TURF_IS_WET, PROC_REF(is_wet))
+	RegisterSignal(parent, COMSIG_TURF_MAKE_DRY, PROC_REF(dry))
 
 /datum/component/wet_floor/UnregisterFromParent()
 	. = ..()
@@ -96,7 +96,7 @@
 			qdel(parent.GetComponent(/datum/component/slippery))
 			return
 
-	var/datum/component/slippery/S = parent.LoadComponent(/datum/component/slippery, NONE, CALLBACK(src, .proc/AfterSlip))
+	var/datum/component/slippery/S = parent.LoadComponent(/datum/component/slippery, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
 	S.intensity = intensity
 	S.lube_flags = lube_flags
 

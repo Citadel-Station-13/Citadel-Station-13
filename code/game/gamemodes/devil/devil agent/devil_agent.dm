@@ -41,8 +41,8 @@
 		outsellobjective.target = target_mind
 		outsellobjective.update_explanation_text()
 		D.objectives += outsellobjective
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/game_mode/devil/devil_agents/generate_report()
 	return "Multiple soul merchants have been spotted in the quadrant, and appear to be competing over who can purchase the most souls.  Be advised that they are likely to manufacture \
