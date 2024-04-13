@@ -20,7 +20,8 @@
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
-	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
+	///If it's a grown that acts as a battery, add a wire overlay to it.
+	var/grown_battery = FALSE
 	rad_flags = RAD_NO_CONTAMINATE // Prevent the same cheese as with the stock parts
 
 /obj/item/stock_parts/cell/get_cell()
@@ -61,7 +62,8 @@
 /obj/item/stock_parts/cell/update_overlays()
 	. = ..()
 	if(grown_battery)
-		. += image('icons/obj/power.dmi',"grown_wires")
+		. += image('icons/obj/power.dmi', "grown_wires")
+		return
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)

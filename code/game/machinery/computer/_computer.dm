@@ -43,18 +43,23 @@
 /obj/machinery/computer/update_overlays()
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(stat & NOPOWER)
-		. += "[icon_keyboard]_off"
-		return
-	. += icon_keyboard
+	if(icon_keyboard)
+		if(stat & NOPOWER)
+			. += "[icon_keyboard]_off"
+		else
+			. += icon_keyboard
 
-	// This whole block lets screens ignore lighting and be visible even in the darkest room
-	// We can't do this for many things that emit light unfortunately because it layers over things that would be on top of it
-	var/overlay_state = icon_screen
 	if(stat & BROKEN)
-		overlay_state = "[icon_state]_broken"
-	. += mutable_appearance(icon, overlay_state)
-	. += emissive_appearance(icon, overlay_state)
+		. += mutable_appearance(icon, "[icon_state]_broken")
+		return // If we don't do this broken computers glow in the dark.
+
+	if(stat & NOPOWER) // Your screen can't be on if you've got no damn charge
+		return
+
+	// This lets screens ignore lighting and be visible even in the darkest room
+	if(icon_screen)
+		. += mutable_appearance(icon, icon_screen)
+		. += emissive_appearance(icon, icon_screen)
 
 /obj/machinery/computer/power_change()
 	..()

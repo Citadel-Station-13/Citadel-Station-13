@@ -1342,7 +1342,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		var/datum/preferences/prefs = C.client.prefs
 		var/mob/living/carbon/human/dummy/M = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_HALLUCINATION)
 		prefs.copy_to(M)
-		COMPILE_OVERLAYS(M)
 		CHECK_TICK
 		image = image(M,C)
 		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_HALLUCINATION)

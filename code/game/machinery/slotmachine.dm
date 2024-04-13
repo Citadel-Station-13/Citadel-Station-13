@@ -19,6 +19,7 @@
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "slots1"
+	icon_keyboard = null
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
