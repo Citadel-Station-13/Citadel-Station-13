@@ -92,7 +92,11 @@
 	. = 1
 
 //Please don't roast me too hard
+//Oh don't worry, We Will.
 /client/MouseMove(object, location, control, params)
+	if(next_mousemove > world.time)
+		return
+	next_mousemove = world.time + world.tick_lag
 	mouseParams = params
 	mouse_location_ref = WEAKREF(location)
 	mouse_object_ref = WEAKREF(object)
