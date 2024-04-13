@@ -3,6 +3,7 @@
 	name = "large cardboard box"
 	desc = "Just a box..."
 	icon_state = "cardboard"
+	icon_door = null
 	mob_storage_capacity = 1
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
