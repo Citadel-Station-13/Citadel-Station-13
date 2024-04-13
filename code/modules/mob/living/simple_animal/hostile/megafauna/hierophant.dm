@@ -112,7 +112,7 @@ Difficulty: Normal
 	if(health > 0 || stat == DEAD)
 		return
 	else
-		stat = DEAD
+		set_stat(DEAD)
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		burst_range = 10
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")

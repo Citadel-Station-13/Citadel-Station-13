@@ -10,6 +10,7 @@
 
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
+	var/has_door_icon = TRUE // Set to false to skip trying to draw a door icon.
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/opened = FALSE
 	var/welded = FALSE
@@ -76,7 +77,7 @@
 		. += "[icon_door_override ? icon_door : icon_state]_open"
 		return
 
-	if(icon_door)
+	if(has_door_icon)
 		. += "[icon_door || icon_state]_door"
 	if(welded)
 		. += icon_welded
