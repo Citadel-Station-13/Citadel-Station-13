@@ -69,6 +69,7 @@
 	icon_state = "cell_mini"
 	w_class = WEIGHT_CLASS_TINY
 	maxcharge = 750
+	has_charge_overlay = FALSE
 
 /obj/item/stock_parts/cell/computer/advanced
 	name = "advanced battery"

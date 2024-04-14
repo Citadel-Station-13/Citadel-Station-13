@@ -260,6 +260,7 @@
 	#define COMPONENT_EXAMINATE_BLIND 3 //outputs the "something is there but you can't see it" message.
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 	#define COMPONENT_BLOCK_DEATH_BROADCAST 1					//stops the death from being broadcasted in deadchat.
+#define COMSIG_MOB_STATCHANGE "mob_statchange"					//!from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_CLICKON "mob_clickon"						//from base of mob/clickon(): (atom/A, params)
 	#define COMSIG_MOB_CANCEL_CLICKON 1
 #define COMSIG_MOB_GHOSTIZE "mob_ghostize"						//from base of mob/Ghostize(): (can_reenter_corpse, special, penalize)

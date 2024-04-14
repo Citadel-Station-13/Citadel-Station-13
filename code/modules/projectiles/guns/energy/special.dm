@@ -334,6 +334,7 @@
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
+	automatic_charge_overlays = FALSE // This has no charge overlays.
 
 /obj/item/gun/energy/laser/instakill/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."

@@ -49,6 +49,10 @@
 		Remove(owner)
 	owner = M
 	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref), override = TRUE)
+	// Register some signals based on our check_flags
+	// so that our button icon updates when relevant
+	if(check_flags & AB_CHECK_CONSCIOUS)
+		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
 
 	GiveAction(M)
 
@@ -68,7 +72,10 @@
 	viewers = list()
 
 	if(owner)
-		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(owner, list(
+			COMSIG_PARENT_QDELETING,
+			COMSIG_MOB_STATCHANGE
+		))
 		if(target == owner)
 			RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref))
 		owner = null
@@ -217,6 +224,11 @@
 		if(bitfield & bitflag)
 			our_button.id = bitflag
 			return
+
+/// A general use signal proc that reacts to an event and updates JUST our button's status
+/datum/action/proc/update_status_on_signal(datum/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+	UpdateButton(status_only = TRUE)
 
 //Presets for item actions
 /datum/action/item_action

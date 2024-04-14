@@ -241,7 +241,7 @@
 			owner.current.Unconscious(20, 1)
 
 /datum/antagonist/bloodsucker/proc/Torpor_Begin(amInCoffin = FALSE)
-	owner.current.stat = UNCONSCIOUS
+	owner.current.set_stat(UNCONSCIOUS)
 	owner.current.apply_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 	ADD_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker") // Come after UNCONSCIOUS or else it fails
 	ADD_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")	// Without this, you'll just keep dying while you recover.
@@ -260,7 +260,7 @@
 		to_chat(owner.current, "<span class='warning'>Your body keeps you going, even as you try to end yourself.</span>")
 
 /datum/antagonist/bloodsucker/proc/Torpor_End()
-	owner.current.stat = SOFT_CRIT
+	owner.current.set_stat(SOFT_CRIT)
 	owner.current.remove_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 	REMOVE_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")

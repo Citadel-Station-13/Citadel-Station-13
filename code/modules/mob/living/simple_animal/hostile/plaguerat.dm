@@ -167,10 +167,7 @@ GLOBAL_LIST_EMPTY(plague_rats)
 	button_icon_state = "coffer"
 	cooldown_time = 50
 
-/datum/action/cooldown/scavenge/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/scavenge/Activate()
 	var/turf/T = get_turf(owner)
 	var/loot = rand(1,100)
 	switch(loot)

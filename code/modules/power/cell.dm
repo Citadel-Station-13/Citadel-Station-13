@@ -22,6 +22,8 @@
 	var/ratingdesc = TRUE
 	///If it's a grown that acts as a battery, add a wire overlay to it.
 	var/grown_battery = FALSE
+	/// If true, add the o1 and o2 overlays based on charge level.
+	var/has_charge_overlay = TRUE
 	rad_flags = RAD_NO_CONTAMINATE // Prevent the same cheese as with the stock parts
 
 /obj/item/stock_parts/cell/get_cell()
@@ -64,7 +66,7 @@
 	if(grown_battery)
 		. += image('icons/obj/power.dmi', "grown_wires")
 		return
-	if(charge < 0.01)
+	if(!has_charge_overlay || charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
 		. += "cell-o2"

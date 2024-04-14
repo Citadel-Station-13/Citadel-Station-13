@@ -226,19 +226,11 @@
 	/// The family antagonist datum of the "owner" of this action.
 	var/datum/antagonist/gang/my_gang_datum
 
-/datum/action/cooldown/spawn_induction_package/Trigger()
-	if(!..())
-		return FALSE
-	if(!IsAvailable())
-		return FALSE
+/datum/action/cooldown/spawn_induction_package/Activate()
 	if(!my_gang_datum)
 		return FALSE
-	if(!istype(owner, /mob/living/carbon/human))
+	if(!ishuman(owner))
 		return FALSE
-	var/mob/living/carbon/human/H = owner
-	if(H.stat)
-		return FALSE
-
 	var/obj/item/slapper/secret_handshake/secret_handshake_item = new(owner)
 	if(owner.put_in_hands(secret_handshake_item))
 		to_chat(owner, span_notice("You ready your secret handshake."))
@@ -248,14 +240,15 @@
 		return FALSE
 	owner.visible_message(span_notice("[owner] is offering to induct people into the Family."),
 		span_notice("You offer to induct people into the Family."), null, 2)
-	if(H.has_status_effect(STATUS_EFFECT_HANDSHAKE))
+	var/mob/living/living_owner = owner
+	if(living_owner.has_status_effect(STATUS_EFFECT_HANDSHAKE))
 		return FALSE
 	if(!(locate(/mob/living/carbon) in orange(1, owner)))
 		owner.visible_message(span_danger("[owner] offers to induct people into the Family, but nobody was around."), \
 			span_warning("You offer to induct people into the Family, but nobody is around."), null, 2)
 		return FALSE
 
-	H.apply_status_effect(STATUS_EFFECT_HANDSHAKE, secret_handshake_item)
+	living_owner.apply_status_effect(STATUS_EFFECT_HANDSHAKE, secret_handshake_item)
 	StartCooldown()
 	return TRUE
 

@@ -20,7 +20,9 @@
 
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
 	var/cell_type = /obj/item/stock_parts/cell
-	var/modifystate = 0
+	var/modifystate = FALSE
+	/// If TRUE, when modifystate is TRUE this energy gun gets an overlay based on its selected shot type, like "[icon_state]_disable".
+	var/shot_type_overlay = TRUE
 	/// = TRUE/FALSE decides if the user can switch to it of their own accord
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy = TRUE)
 	/// The index of the ammo_types/firemodes which we're using right now
@@ -259,7 +261,11 @@
 	var/ratio = get_charge_ratio()
 	if (modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
-		. += "[icon_state]_[shot.select_name]"
+		// Some guns, like the mini egun, don't have non-charge mode states. Remove or rework this check when that's fixed.
+		// Currently, it's entirely too hyperspecific; there's no way to have the non-charge overlay without the charge overlay, for example.
+		// Oh, well.
+		if (shot_type_overlay)
+			. += "[icon_state]_[shot.select_name]"
 		overlay_icon_state += "_[shot.select_name]"
 	if(ratio == 0)
 		. += "[icon_state]_empty"

@@ -413,7 +413,7 @@
 	else
 		the_mmi.forceMove(get_turf(src))
 	if(the_mmi.brainmob.stat == DEAD && !suiciding)
-		the_mmi.brainmob.stat = CONSCIOUS
+		the_mmi.brainmob.set_stat(CONSCIOUS)
 	if(mind)
 		mind.transfer_to(the_mmi.brainmob)
 	the_mmi.update_appearance()
