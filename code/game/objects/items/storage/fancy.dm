@@ -170,6 +170,7 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 	custom_price = PRICE_ALMOST_CHEAP
 	var/spawn_coupon = TRUE
+	var/has_open_overlay = TRUE
 
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len == 0 && spawn_coupon)
@@ -227,7 +228,8 @@
 	. = ..()
 	if(!fancy_open || !contents.len)
 		return
-	. += "[icon_state]_open"
+	if(has_open_overlay)
+		. += "[icon_state]_open"
 	var/cig_position = 1
 	for(var/C in contents)
 		var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
@@ -436,6 +438,7 @@
 	icon_type = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 	spawn_coupon = FALSE
+	has_open_overlay = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
