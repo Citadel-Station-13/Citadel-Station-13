@@ -236,7 +236,7 @@
 
 /// Subtype that's always junkmail
 /obj/item/mail/junkmail/Initialize()
-	..()
+	. = ..()
 	junk_mail()
 
 /// Crate for mail from CentCom.
