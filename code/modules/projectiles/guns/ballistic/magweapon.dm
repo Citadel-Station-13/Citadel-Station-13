@@ -18,6 +18,7 @@
 	dualwield_spread_mult = 1.4
 	weapon_weight = WEAPON_MEDIUM
 	w_class = WEIGHT_CLASS_BULKY
+	automatic_burst_overlay = FALSE
 	var/obj/item/stock_parts/cell/cell
 	var/cell_type = /obj/item/stock_parts/cell/magnetic
 
