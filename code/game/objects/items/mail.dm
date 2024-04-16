@@ -342,11 +342,11 @@
 	storage.max_combined_w_class = 42
 	storage.max_items = 21
 	storage.display_numerical_stacking = FALSE
-	storage.can_hold = list(
+	storage.can_hold = typecacheof(list(
 		/obj/item/mail,
 		/obj/item/small_delivery,
 		/obj/item/paper
-	)
+	))
 
 /obj/item/paper/fluff/junkmail_redpill
 	name = "smudged paper"
