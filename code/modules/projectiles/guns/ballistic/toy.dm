@@ -128,6 +128,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	dualwield_spread_mult = 1.4
 	w_class = WEIGHT_CLASS_BULKY
+	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/shotgun/toy/mag
 	name = "foam force magpistol"

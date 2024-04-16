@@ -77,3 +77,4 @@
 	icon_state = "m1911"
 	item_state = "gun"
 	cell_type = /obj/item/stock_parts/cell/infinite
+	modifystate = FALSE
