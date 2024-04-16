@@ -29,14 +29,15 @@
 
 /datum/element/dwarfism/Detach(mob/living/L)
 	. = ..()
+	attached_targets -= L
+	UnregisterSignal(L, comsig)
 	if(QDELETED(L))
 		return
 	if(L.lying != 0)
 		L.transform = L.transform.Scale(TALL, 1)
 	else
 		L.transform = L.transform.Scale(1, TALL)
-	UnregisterSignal(L, comsig)
-	attached_targets -= L
+		L.transform = L.transform.Translate(0, 16*(TALL-1)) //Makes sure you stand on the tile no matter the size - sand
 
 #undef SHORT
 #undef TALL

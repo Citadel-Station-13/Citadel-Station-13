@@ -118,10 +118,9 @@
 
 	//PDA
 	pda = new(src)
-	spawn(5)
-		pda.ownjob = "pAI Messenger"
-		pda.owner = text("[]", src)
-		pda.name = pda.owner + " (" + pda.ownjob + ")"
+	pda.ownjob = "pAI Messenger"
+	pda.owner = text("[]", src)
+	pda.name = pda.owner + " (" + pda.ownjob + ")"
 
 	possible_chassis = typelist(NAMEOF(src, possible_chassis), list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE,
 									"fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "borgi" = FALSE ,

@@ -13,7 +13,7 @@
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/G = loc
 	if(istype(G))
-		power = min(G.gun.power, 15)
+		power = min(G.gun?.power, 15)
 
 /obj/item/projectile/gravity/on_hit()
 	. = ..()

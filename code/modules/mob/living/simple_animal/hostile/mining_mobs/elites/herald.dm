@@ -204,7 +204,7 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/my_master = null
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Initialize(mapload)
-	..()
+	. = ..()
 	toggle_ai(AI_OFF)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Destroy()

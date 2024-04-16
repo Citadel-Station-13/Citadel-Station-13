@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
 /obj/item/bedsheet/random/Initialize(mapload)
-	..()
+	. = ..()
 	if(bedsheet_type == BEDSHEET_SINGLE)
 		var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable) + GLOB.double_bedsheets))
 		new type(loc)
@@ -454,7 +454,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/random/double/Initialize(mapload)
-	..()
+	. = ..()
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		var/type = pick(GLOB.double_bedsheets)
 		new type(loc)

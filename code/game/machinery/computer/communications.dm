@@ -1,5 +1,4 @@
 #define IMPORTANT_ACTION_COOLDOWN (60 SECONDS)
-#define MAX_STATUS_LINE_LENGTH 40
 
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
 #define STATE_CHANGING_STATUS "changing_status"
@@ -296,9 +295,8 @@
 		if ("setStatusMessage")
 			if (!authenticated(usr))
 				return
-			var/line_one = reject_bad_text(params["lineOne"] || "", MAX_STATUS_LINE_LENGTH)
-			var/line_two = reject_bad_text(params["lineTwo"] || "", MAX_STATUS_LINE_LENGTH)
-			post_status("alert", "blank")
+			var/line_one = reject_bad_text(params["upperText"] || "", MAX_STATUS_LINE_LENGTH)
+			var/line_two = reject_bad_text(params["lowerText"] || "", MAX_STATUS_LINE_LENGTH)
 			post_status("message", line_one, line_two)
 			last_status_display = list(line_one, line_two)
 			playsound(src, "terminal_type", 50, FALSE)
@@ -472,8 +470,8 @@
 				data["budget"] = bank_account.account_balance
 				data["shuttles"] = shuttles
 			if (STATE_CHANGING_STATUS)
-				data["lineOne"] = last_status_display ? last_status_display[1] : ""
-				data["lineTwo"] = last_status_display ? last_status_display[2] : ""
+				data["upperText"] = last_status_display ? last_status_display[1] : ""
+				data["lowerText"] = last_status_display ? last_status_display[2] : ""
 
 	return data
 
@@ -567,8 +565,8 @@
 	var/datum/signal/status_signal = new(list("command" = command))
 	switch(command)
 		if("message")
-			status_signal.data["msg1"] = data1
-			status_signal.data["msg2"] = data2
+			status_signal.data["top_text"] = data1
+			status_signal.data["bottom_text"] = data2
 		if("alert")
 			status_signal.data["picture_state"] = data1
 

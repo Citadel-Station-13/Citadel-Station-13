@@ -202,7 +202,7 @@
 
 /mob/living/simple_animal/cow/random/Initialize(mapload)
 	milk_reagent = get_random_reagent_id() //this has a blacklist so don't worry about romerol cows, etc
-	..()
+	. = ..()
 
 //Wisdom cow, speaks and bestows great wisdoms
 /mob/living/simple_animal/cow/wisdom

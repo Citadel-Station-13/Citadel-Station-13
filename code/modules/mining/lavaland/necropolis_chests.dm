@@ -434,6 +434,12 @@
 	var/obj/item/warp_cube/linked
 	var/teleporting = FALSE
 
+/obj/item/warp_cube/Destroy()
+	if(!QDELETED(linked))
+		linked.linked = null
+		QDEL_NULL(linked)
+	return ..()
+
 /obj/item/warp_cube/attack_self(mob/user)
 	if(!linked)
 		to_chat(user, "[src] fizzles uselessly.")
@@ -479,6 +485,12 @@
 		var/obj/item/warp_cube/blue = new(src.loc)
 		linked = blue
 		blue.linked = src
+
+/obj/item/warp_cube/red/Destroy()
+	if(!QDELETED(linked))
+		linked.linked = null
+		QDEL_NULL(linked)
+	return ..()
 
 /obj/effect/warp_cube
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

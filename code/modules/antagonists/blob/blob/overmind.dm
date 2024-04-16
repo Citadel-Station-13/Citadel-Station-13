@@ -72,19 +72,23 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	forceMove(T)
 
 /mob/camera/blob/proc/set_strain(datum/blobstrain/new_strain)
-	if (ispath(new_strain))
-		var/hadstrain = FALSE
-		if (istype(blobstrain))
-			blobstrain.on_lose()
-			qdel(blobstrain)
-			hadstrain = TRUE
-		blobstrain = new new_strain(src)
-		blobstrain.on_gain()
-		if (hadstrain)
-			to_chat(src, "Your strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-			to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.description]")
-			if(blobstrain.effectdesc)
-				to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
+	if(!ispath(new_strain))
+		return FALSE
+
+	var/had_strain = FALSE
+	if(istype(blobstrain))
+		blobstrain.on_lose()
+		qdel(blobstrain)
+		had_strain = TRUE
+
+	blobstrain = new new_strain(src)
+	blobstrain.on_gain()
+
+	if(had_strain)
+		to_chat(src, "Your strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+		to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.description]")
+		if(blobstrain.effectdesc)
+			to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)

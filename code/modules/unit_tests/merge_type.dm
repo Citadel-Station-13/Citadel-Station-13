@@ -14,4 +14,4 @@
 			continue
 		var/obj/item/stack/stack = new stackpath
 		if(!stack.merge_type)
-			Fail("([stack]) lacks set merge_type variable!")
+			TEST_FAIL("([stack]) lacks set merge_type variable!")

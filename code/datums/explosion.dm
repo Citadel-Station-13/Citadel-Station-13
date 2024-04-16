@@ -205,8 +205,8 @@ GLOBAL_LIST_EMPTY(explosions)
 	//lists are guaranteed to contain at least 1 turf at this point
 
 	var/iteration = 0
-	var/affTurfLen = affected_turfs.len
-	var/expBlockLen = cached_exp_block.len
+	var/affTurfLen = length(affected_turfs)
+	var/expBlockLen = length(cached_exp_block)
 	for(var/TI in affected_turfs)
 		var/turf/T = TI
 		++iteration
@@ -282,8 +282,8 @@ GLOBAL_LIST_EMPTY(explosions)
 				break
 
 			//update the trackers
-			affTurfLen = affected_turfs.len
-			expBlockLen = cached_exp_block.len
+			affTurfLen = length(affected_turfs)
+			expBlockLen = length(cached_exp_block)
 
 			if(break_condition)
 				if(reactionary)
@@ -299,8 +299,8 @@ GLOBAL_LIST_EMPTY(explosions)
 					break
 
 				//update the trackers
-				affTurfLen = affected_turfs.len
-				expBlockLen = cached_exp_block.len
+				affTurfLen = length(affected_turfs)
+				expBlockLen = length(cached_exp_block)
 
 			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
@@ -357,7 +357,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/processed = 0
 	while(running)
 		var/I
-		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
+		for(I in (processed + 1) to length(affected_turfs)) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]
 			var/current_exp_block = T.density ? T.explosion_block : 0
 

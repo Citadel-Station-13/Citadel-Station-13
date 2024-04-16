@@ -18,4 +18,4 @@
 		var/list/unreachables = all_possible_knowledge - list_to_check
 		for(var/X in unreachables)
 			var/datum/eldritch_knowledge/eldritch_knowledge = X
-			Fail("[initial(eldritch_knowledge.name)] is unreachable by players! Add it to the blacklist in /code/modules/unit_tests/heretic_knowledge.dm if it is purposeful!")
+			TEST_FAIL("[initial(eldritch_knowledge.name)] is unreachable by players! Add it to the blacklist in /code/modules/unit_tests/heretic_knowledge.dm if it is purposeful!")

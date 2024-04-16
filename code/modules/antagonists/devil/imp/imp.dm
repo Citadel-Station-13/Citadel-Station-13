@@ -45,7 +45,7 @@
 							of intentionally harming a fellow devil.</B>"
 
 /mob/living/simple_animal/imp/Initialize(mapload)
-	..()
+	. = ..()
 	boost = world.time + 30
 
 /mob/living/simple_animal/imp/BiologicalLife(delta_time, times_fired)

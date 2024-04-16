@@ -27,6 +27,10 @@
 	. = ..()
 	judgementcut = new(src)
 
+/obj/item/gun/magic/staff/motivation/Destroy()
+	QDEL_NULL(judgementcut)
+	. = ..()
+
 //lets the user know that their judgement cuts are recharging
 /obj/item/gun/magic/staff/motivation/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>Judgement Cut is recharging.</span>")

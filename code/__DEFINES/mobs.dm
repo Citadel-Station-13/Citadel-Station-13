@@ -366,6 +366,8 @@
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
 
+/// Icon state to use for ai displays that just turns them off
+#define AI_DISPLAY_DONT_GLOW "ai_off"
 // / Breathing types. Lungs can access either by these or by a string, which will be considered a gas ID.
 #define BREATH_OXY		/datum/breathing_class/oxygen
 #define BREATH_PLASMA	/datum/breathing_class/plasma

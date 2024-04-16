@@ -62,6 +62,10 @@ Difficulty: Medium
 	internal = new/obj/item/gps/internal/miner(src)
 	miner_saw = new(src)
 
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
+	QDEL_NULL(miner_saw)
+	return ..()
+
 /datum/action/innate/megafauna_attack/dash
 	name = "Dash To Target"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'

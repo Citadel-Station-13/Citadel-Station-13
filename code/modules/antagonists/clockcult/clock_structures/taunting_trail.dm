@@ -16,7 +16,7 @@
 
 /obj/structure/destructible/clockwork/taunting_trail/Initialize(mapload)
 	. = ..()
-	timerid = QDEL_IN(src, 15)
+	timerid = QDEL_IN_STOPPABLE(src, 15)
 	var/obj/structure/destructible/clockwork/taunting_trail/Tt = locate(/obj/structure/destructible/clockwork/taunting_trail) in loc
 	if(Tt && Tt != src)
 		if(!step(src, pick(GLOB.alldirs)))

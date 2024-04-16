@@ -92,6 +92,8 @@
 
 /obj/item/paper/contract/infernal/New(atom/loc, mob/living/nTarget, datum/mind/nOwner)
 	..()
+	if(!nOwner || !nTarget)
+		return
 	owner = nOwner
 	devil_datum = owner.has_antag_datum(/datum/antagonist/devil)
 	target = nTarget

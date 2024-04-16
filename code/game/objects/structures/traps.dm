@@ -169,6 +169,12 @@
 	. = ..()
 	time_between_triggers = 10
 
+/obj/structure/trap/stun/hunter/Destroy()
+	if(!QDELETED(stored_item))
+		qdel(stored_item)
+	stored_item = null
+	return ..()
+
 /obj/structure/trap/stun/hunter/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/L = AM
@@ -179,6 +185,11 @@
 
 /obj/structure/trap/stun/hunter/flare()
 	..()
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return
+	if(!stored_item)
+		return
 	stored_item.forceMove(get_turf(src))
 	forceMove(stored_item)
 	if(caught)
@@ -208,6 +219,12 @@
 	stored_trap.name = name
 	stored_trap.stored_item = src
 
+/obj/item/bountytrap/Destroy()
+	QDEL_NULL(stored_trap)
+	QDEL_NULL(radio)
+	QDEL_NULL(spark_system)
+	. = ..()
+
 /obj/item/bountytrap/proc/announce_fugitive()
 	spark_system.start()
 	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
@@ -220,9 +237,3 @@
 	to_chat(user, "<span class=notice>You set up [src]. Examine while close to disarm it.</span>")
 	stored_trap.forceMove(T)//moves trap to ground
 	forceMove(stored_trap)//moves item into trap
-
-/obj/item/bountytrap/Destroy()
-	qdel(stored_trap)
-	QDEL_NULL(radio)
-	QDEL_NULL(spark_system)
-	. = ..()

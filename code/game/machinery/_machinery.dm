@@ -178,6 +178,8 @@ Class Procs:
 		for(var/atom/A in component_parts)
 			qdel(A)
 		component_parts.Cut()
+	if(circuit)
+		QDEL_NULL(circuit)
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
@@ -457,6 +459,7 @@ Class Procs:
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 			LAZYCLEARLIST(component_parts)
+			circuit = null
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)

@@ -278,7 +278,7 @@
 	visible_message("[src] finishes cooking!")
 	new /obj/item/reagent_containers/food/snacks/meat/steak/goliath(loc)
 	qdel(src)
-	
+
 /obj/item/reagent_containers/food/snacks/meat/slab/dragon
 	name = "ash drake meat"
 	desc = "Meat from an ash drake. It's probably not a good idea to eat this raw."
@@ -408,7 +408,7 @@
 	trash = null
 	tastes = list("meat" = 1, "rock" = 1)
 	foodtype = MEAT
-	
+
 /obj/item/reagent_containers/food/snacks/meat/steak/dragon
 	name = "dragon steak"
 	desc = "Spicy."
