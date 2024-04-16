@@ -122,6 +122,7 @@
 	icon_state = "mini-uzi"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
+	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
@@ -277,6 +278,7 @@
 	actions_types = list()
 	spread = 7
 	pin = /obj/item/firing_pin/implant/pindicate
+	automatic_burst_overlay = FALSE
 	var/cover_open = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/Initialize()

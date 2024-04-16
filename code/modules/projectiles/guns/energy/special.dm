@@ -187,6 +187,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
+	automatic_charge_overlays = FALSE
 	var/power = 4
 	var/firing_core = FALSE
 
