@@ -17,7 +17,7 @@
 		return
 	new_lift_platform.lift_master_datum = src
 	LAZYADD(lift_platforms, new_lift_platform)
-	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
+	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, PROC_REF(remove_lift_platforms))
 
 /datum/lift_master/proc/remove_lift_platforms(obj/structure/industrial_lift/old_lift_platform)
 	if(!(old_lift_platform in lift_platforms))
@@ -119,9 +119,9 @@
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
 
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
-	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
-	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/RemoveItemFromLift)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, PROC_REF(AddItemOnLift))
+	RegisterSignal(loc, COMSIG_ATOM_CREATED, PROC_REF(AddItemOnLift))//For atoms created on platform
+	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, PROC_REF(RemoveItemFromLift))
 
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
@@ -129,7 +129,7 @@
 /obj/structure/industrial_lift/Move(atom/newloc, direct)
 	UnregisterSignal(loc, COMSIG_ATOM_CREATED)
 	. = ..()
-	RegisterSignal(newloc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
+	RegisterSignal(newloc, COMSIG_ATOM_CREATED, PROC_REF(AddItemOnLift))//For atoms created on platform
 
 /obj/structure/industrial_lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
 	if(!(AM in lift_load))
@@ -141,7 +141,7 @@
 	if(AM in lift_load)
 		return
 	LAZYADD(lift_load, AM)
-	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
+	RegisterSignal(AM, COMSIG_PARENT_QDELETING, PROC_REF(RemoveItemFromLift))
 
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/lift_master_datum)
 	. = list()
@@ -180,7 +180,7 @@
 		add_fingerprint(user)
 		return
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if (!is_ghost && !in_range(src, user))
 		return  // nice try
 	switch(result)
@@ -210,11 +210,8 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/industrial_lift/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	use(user)
+/obj/structure/industrial_lift/on_attack_hand(mob/user)
+	return use(user)
 
 /obj/structure/industrial_lift/attack_paw(mob/user)
 	return use(user)
@@ -260,7 +257,7 @@
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST)
 		)
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = FALSE)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = FALSE)
 	if (!in_range(src, user))
 		return  // nice try
 
