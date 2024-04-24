@@ -20,9 +20,9 @@
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
 	if(id && show_id)
-		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+		. += span_notice("Its channel ID is '[id]'.")
 	if(can_change_id)
-		. += "<span class='notice'>Use in hand to change ID.</span>"
+		. += span_notice("Use in hand to change ID.")
 
 /obj/item/assembly/control/attack_self(mob/living/user)
 	. = ..()
@@ -165,3 +165,44 @@
 /obj/item/assembly/control/electrochromatic/activate()
 	on = !on
 	do_electrochromatic_toggle(on, id)
+
+//how long it spends on each floor when moving somewhere, so it'd take 4 seconds to reach you if it had to travel up 2 floors
+#define FLOOR_TRAVEL_TIME 2 SECONDS
+/obj/item/assembly/control/elevator
+	name = "elevator controller"
+	desc = "A small device used to call elevators to the current floor."
+
+/obj/item/assembly/control/elevator/activate()
+	if(cooldown)
+		return
+	cooldown = TRUE
+	var/obj/structure/industrial_lift/lift
+	for(var/l in GLOB.lifts)
+		var/obj/structure/industrial_lift/possible_lift = l
+		if(possible_lift.id != id || possible_lift.z == z || possible_lift.controls_locked)
+			continue
+		lift = possible_lift
+		break
+	if(!lift)
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
+		return
+	lift.visible_message(span_notice("[src] clinks and whirrs into automated motion, locking controls."))
+	lift.lift_master_datum.set_controls(LOCKED)
+	///The z level to which the elevator should travel
+	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
+	///The amount of z levels between the our and targetZ
+	var/difference = abs(targetZ - lift.z)
+	///Direction (up/down) needed to go to reach targetZ
+	var/direction = lift.z < targetZ ? UP : DOWN
+	///How long it will/should take us to reach the target Z level
+	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
+	for(var/i in 1 to difference)
+		sleep(FLOOR_TRAVEL_TIME)//hey this should be alright... right?
+		if(QDELETED(lift) || QDELETED(src))//elevator control or button gone = don't go up anymore
+			return
+		lift.lift_master_datum.MoveLift(direction, null)
+	lift.visible_message(span_notice("[src] clicks, ready to be manually operated again."))
+	lift.lift_master_datum.set_controls(UNLOCKED)
+
+#undef FLOOR_TRAVEL_TIME
