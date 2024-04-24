@@ -1,14 +1,10 @@
 {
-   "map_name":"Snow Taxi",
-   "map_path":"map_files/Snaxi",
-   "map_file":[
-      "IcemoonUnderground_Below.dmm",
-      "IcemoonUnderground_Above.dmm",
-      "Snaxi.dmm"
-   ],
-   "station_ruin_budget":0,
-   "space_ruin_levels":0,
-   "space_empty_levels":0,
+   "map_name": "Snow Taxi",
+   "map_path": "map_files/Snaxi",
+   "map_file": "Snaxi.dmm",
+   "station_ruin_budget": 0,
+   "space_ruin_levels": 0,
+   "space_empty_levels": 0,
    "shuttles":{
       "cargo":"cargo_box",
       "ferry":"ferry_fancy",

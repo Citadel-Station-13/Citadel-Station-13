@@ -130,6 +130,13 @@ if grep -P --exclude='__byond_version_compat.dm' '\.proc/' code/**/*.dm; then
     st=1
 fi;
 
+# I'm not even sure we're meant to be setting this variable on dmms anyways, make sure it's at least an area please.
+if grep -P 'areastring = "\/[^area]' _maps/**/*.dmm; then
+    echo
+    echo -e "${RED}ERROR: Bad areastring path variable for this APC, please set the areastring correctly.${NC}"
+    st=1
+fi;
+
 if [ $st = 0 ]; then
     echo
     echo -e "${GREEN}No errors found using grep!${NC}"
