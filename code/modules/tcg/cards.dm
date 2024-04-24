@@ -377,13 +377,9 @@
 	var/static/radial_shuffle = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle")
 	var/static/radial_pickup = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup")
 
-/obj/item/tcgcard_deck/Initialize(mapload)
-	. = ..()
-	LoadComponent(/datum/component/storage/concrete/tcg)
-
 /obj/item/tcgcard_deck/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/tcg)
+	var/datum/component/storage/STR = LoadComponent(/datum/component/storage/concrete/tcg)
 	STR.storage_flags = STORAGE_FLAGS_LEGACY_DEFAULT
 	STR.max_volume = DEFAULT_VOLUME_TINY * 30
 	STR.max_w_class = DEFAULT_VOLUME_TINY
