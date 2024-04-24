@@ -94,7 +94,11 @@
 /datum/lift_master/proc/Check_lift_move(check_dir)
 	for(var/lift_platform in lift_platforms)
 		var/turf/T = get_step_multiz(lift_platform, check_dir)
-		if(!T)// || !isopenturf(T))
+		if(!T)
+			return FALSE
+		if(check_dir == UP && !istype(T, /turf/open/openspace)) // We don't want to go through the ceiling!
+			return FALSE
+		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/openspace)) // No going through the floor!
 			return FALSE
 	return TRUE
 
