@@ -221,6 +221,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	id = "[idnum][id]"
 
 /obj/structure/bodycontainer/crematorium/update_icon()
+	. = ..()
 	if(!connected || connected.loc != src)
 		icon_state = "crema0"
 	else

@@ -365,6 +365,7 @@
 	var/list/viewing_ui = list()
 
 /obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later
+	. = ..()
 	var/icon/I
 	if(open)
 		I = icon('icons/obj/stationobjs.dmi',"laserboxb0")
@@ -379,7 +380,6 @@
 		S.Scale(17,17)
 		I.Blend(S,ICON_UNDERLAY,8,12)
 	src.icon = I
-	return
 
 /obj/structure/displaycase/forsale/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

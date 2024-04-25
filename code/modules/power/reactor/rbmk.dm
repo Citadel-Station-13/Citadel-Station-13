@@ -486,6 +486,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 				WS.fire()
 
 /obj/machinery/atmospherics/components/trinary/nuclear_reactor/update_icon()
+	. = ..()
 	icon_state = "reactor_off"
 	switch(temperature)
 		if(0 to 200)

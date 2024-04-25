@@ -57,6 +57,7 @@
 	reagents.handle_reactions()
 
 /obj/machinery/plumbing/acclimator/update_icon()
+	. = ..()
 	icon_state = initial(icon_state)
 	switch(acclimate_state)
 		if(COOLING)

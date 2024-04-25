@@ -186,9 +186,6 @@
 /obj/machinery/stasis/survival_pod/play_power_sound()
 	return
 
-/obj/machinery/stasis/survival_pod/update_icon()
-	return
-
 //NanoMed
 /obj/machinery/vending/wallmed/survival_pod
 	name = "survival pod medical supply"

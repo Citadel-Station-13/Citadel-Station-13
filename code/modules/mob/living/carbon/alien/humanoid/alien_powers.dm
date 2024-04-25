@@ -199,6 +199,7 @@ Doesn't work on other aliens/AI.*/
 		add_ranged_ability(user, message, TRUE)
 
 /obj/effect/proc_holder/alien/neurotoxin/update_icon()
+	. = ..()
 	action.button_icon_state = "alien_neurotoxin_[active]"
 	action.UpdateButtons()
 

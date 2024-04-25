@@ -404,6 +404,7 @@
 		throw_at(thrown_by, throw_range+2, throw_speed, null, TRUE)
 
 /obj/item/melee/baton/boomerang/update_icon()
+	. = ..()
 	if(turned_on)
 		icon_state = "[initial(icon_state)]_active"
 	else if(!cell)
