@@ -4434,6 +4434,11 @@
 	dir = 8;
 	network = list("mine")
 	},
+/obj/item/radio/intercom{
+	dir = 8;
+	name = "Station Intercom (General)";
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "cfD" = (
@@ -9881,15 +9886,9 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/shaft_miner,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	areastring = "/area/cargo/miningdock";
-	dir = 1;
-	name = "Mining APC";
-	pixel_x = 1;
-	pixel_y = 23
+/obj/machinery/button/elevator{
+	pixel_y = 28;
+	id = 100
 	},
 /turf/open/floor/plasteel/dark,
 /area/cargo/miningdock)
@@ -10983,6 +10982,11 @@
 	},
 /obj/structure/closet/secure_closet/miner,
 /obj/item/clothing/shoes/winterboots/ice_boots,
+/obj/machinery/requests_console{
+	department = "Mining";
+	pixel_x = 0;
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel/dark,
 /area/cargo/miningdock)
 "flS" = (
@@ -13296,10 +13300,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "gqX" = (
-/obj/structure/cable{
-	icon_state = "1-8"
+/obj/structure/industrial_lift{
+	id = 100
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/openspace,
 /area/cargo/miningdock)
 "gqZ" = (
 /obj/effect/turf_decal/stripes,
@@ -42768,10 +42772,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/railing,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
 /turf/open/floor/plasteel/dark,
 /area/cargo/miningdock)
 "uLf" = (
@@ -46134,10 +46138,15 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/requests_console{
-	department = "Mining";
-	pixel_x = 0;
-	pixel_y = 30
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/cargo/miningdock";
+	dir = 1;
+	name = "Mining APC";
+	pixel_x = 1;
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
 /area/cargo/miningdock)
@@ -49647,10 +49656,9 @@
 	icon_state = "warningline"
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = 28
+/obj/machinery/button/elevator{
+	pixel_x = 24;
+	id = 100
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
@@ -229377,9 +229385,9 @@ bcF
 lRV
 faN
 eNj
+qZM
+ryo
 gqX
-ryo
-ryo
 ryo
 hxL
 uMf

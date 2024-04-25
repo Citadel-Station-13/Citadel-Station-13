@@ -87,6 +87,12 @@
 	if(AM)
 		user.start_pulling(AM)
 
+	//reopening ladder radial menu ahead
+	T = get_turf(user)
+	var/obj/structure/ladder/ladder_structure = locate() in T
+	if (ladder_structure && (up && down))
+		ladder_structure.use(user)
+
 /obj/structure/ladder/proc/use(mob/user, is_ghost=FALSE)
 	if (!is_ghost && !in_range(src, user))
 		return
