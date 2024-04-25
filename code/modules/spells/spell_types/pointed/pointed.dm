@@ -57,6 +57,7 @@
 	return
 
 /obj/effect/proc_holder/spell/pointed/update_icon()
+	. = ..()
 	if(!action)
 		return
 	if(active)

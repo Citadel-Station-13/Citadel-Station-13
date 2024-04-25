@@ -151,6 +151,7 @@
 // if BROKEN, display blue screen of death icon AI uses
 // if timing=true, run update display function
 /obj/machinery/door_timer/update_icon()
+	. = ..()
 	if(stat & (NOPOWER))
 		icon_state = "frame"
 		return
@@ -169,7 +170,6 @@
 	else
 		if(maptext)
 			maptext = ""
-	return
 
 
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm

@@ -47,7 +47,7 @@
 
 
 /obj/machinery/button/update_icon()
-	cut_overlays()
+	. = ..()
 	if(panel_open)
 		icon_state = "button-open"
 	else if(stat & (NOPOWER|BROKEN))

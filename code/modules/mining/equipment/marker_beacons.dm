@@ -104,6 +104,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	. += "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/structure/marker_beacon/update_icon()
+	. = ..()
 	while(!picked_color || !GLOB.marker_beacon_colors[picked_color])
 		picked_color = pick(GLOB.marker_beacon_colors)
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]-on"

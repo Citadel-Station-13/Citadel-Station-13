@@ -88,6 +88,7 @@
 	list_reagents = list(/datum/reagent/medicine/adminordrazine/quantum_heal = 80, /datum/reagent/medicine/synaptizine = 20)
 
 /obj/item/reagent_containers/hypospray/combat/nanites/update_icon()
+	. = ..()
 	if(reagents.total_volume > 0)
 		icon_state = initial(icon_state)
 	else
@@ -266,6 +267,7 @@
 	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/salbutamol = 20, /datum/reagent/medicine/spaceacillin = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon()
+	. = ..()
 	if(reagents.total_volume > 30)
 		icon_state = initial(icon_state)
 	else if (reagents.total_volume > 0)

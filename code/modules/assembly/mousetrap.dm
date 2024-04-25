@@ -25,6 +25,7 @@
 		playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
 /obj/item/assembly/mousetrap/update_icon()
+	. = ..()
 	if(armed)
 		icon_state = "mousetraparmed"
 	else

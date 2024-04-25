@@ -380,6 +380,7 @@
 	target = null
 
 /mob/living/simple_animal/bot/floorbot/update_icon()
+	. = ..()
 	icon_state = "floorbot[on]"
 
 
