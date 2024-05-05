@@ -58,15 +58,15 @@
 	var/ascended = FALSE // if we have all the top titles, grant achievements to living mobs that gaze upon our cleanbot god
 
 
-/mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
+/mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/stab_tool, mob/user)
 	if(in_range(src, user))
-		to_chat(user, "<span class='notice'>You attach \the [W] to \the [src].</span>")
-		user.transferItemToLoc(W, src)
-		weapon = W
+		to_chat(user, "<span class='notice'>You attach \the [stab_tool] to \the [src].</span>")
+		user.transferItemToLoc(stab_tool, src)
+		weapon = stab_tool
 		weapon_orig_force = weapon.force
 		if(!emagged)
 			weapon.force = weapon.force / 2
-		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.item_state))
+	add_overlay(weapon.build_worn_icon(default_layer = layer + 1, default_icon_file = weapon.lefthand_file, isinhands = TRUE))
 
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
