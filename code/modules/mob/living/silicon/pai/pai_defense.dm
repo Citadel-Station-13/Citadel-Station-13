@@ -82,12 +82,12 @@
 /mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	. = take_holo_damage(amount)
 	if(.)
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), ., BRUTE)
+		throw_damage_indicator(., BRUTE)
 
 /mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	. = take_holo_damage(amount)
 	if(.)
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), ., BURN)
+		throw_damage_indicator(., BURN)
 
 /mob/living/silicon/pai/adjustStaminaLoss(amount, updating_health, forced = FALSE)
 	if(forced)
@@ -95,7 +95,7 @@
 	else
 		. = take_holo_damage(amount * 0.25)
 	if(.)
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), ., STAMINA)
+		throw_damage_indicator(., STAMINA)
 
 /mob/living/silicon/pai/adjustOrganLoss(slot, amount, maximum = 500) //I kept this in, unlike tg
 	DefaultCombatKnockdown(amount * 0.2)

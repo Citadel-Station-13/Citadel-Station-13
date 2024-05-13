@@ -5,7 +5,7 @@
 	bruteloss = round(clamp(bruteloss + amount, 0, maxHealth),DAMAGE_PRECISION)
 	if(updating_health)
 		updatehealth()
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, damage_type)
+	throw_damage_indicator(amount, damage_type)
 	return amount
 
 /mob/living/simple_animal/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)

@@ -531,12 +531,17 @@
 
 GLOBAL_LIST_EMPTY(tracked_damage_indicators)
 
-/atom/proc/throw_damage_indicator(damage_amount, damage_type)
-	new /obj/effect/dummy/damage_indicator(get_turf(src), damage_amount, damage_type, WEAKREF(src))
+/// Throws a damage indicator! This proc is non-blocking.
+/mob/proc/throw_damage_indicator(damage_amount, damage_type)
+	set waitfor = FALSE
+
+	if(isturf(loc))
+		new /obj/effect/dummy/damage_indicator(loc, damage_amount, damage_type, WEAKREF(src))
 
 /obj/effect/dummy/damage_indicator
 	hud_possible = list(DAMAGE_INDICATOR_HUD)
 	pixel_y = 16
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/damage_amount
 	var/damage_type
 	var/datum/weakref/damaged_atom
@@ -600,52 +605,3 @@ GLOBAL_LIST_EMPTY(tracked_damage_indicators)
 	LAZYREMOVE(GLOB.tracked_damage_indicators, src)
 	remove_from_all_data_huds(src)
 	return ..()
-
-/obj/item/clothing/glasses/hud/sunglasses/dam_indicator_test
-	name = "Special glasses"
-	icon_state = "sunhudsec"
-	actions_types = list(/datum/action/item_action/damage_indicator)
-	var/mode = 0
-	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED)
-
-/obj/item/clothing/glasses/hud/sunglasses/dam_indicator_test/ui_action_click(mob/user, actiontype)
-	. = ..()
-	switch(mode)
-		if(0)
-			mode = 1
-			hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DAMAGE_INDICATOR)
-			update_hud(user)
-			user.balloon_alert(user, "showing damage")
-		if(1)
-			mode = 0
-			hudlist = list(DATA_HUD_MEDICAL_ADVANCED)
-			update_hud(user)
-			user.balloon_alert(user, "disabled damage sight")
-
-/obj/item/clothing/glasses/hud/sunglasses/dam_indicator_test/equipped(mob/user, slot)
-	. = ..()
-	if(slot != ITEM_SLOT_EYES)
-		return
-	if(ishuman(user))
-		for(var/hud in hudlist)
-			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.add_hud_to(user)
-
-/obj/item/clothing/glasses/hud/sunglasses/dam_indicator_test/dropped(mob/user)
-	. = ..()
-	if(ishuman(user))
-		for(var/hud in hudlist)
-			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.remove_hud_from(user)
-
-/obj/item/clothing/glasses/hud/sunglasses/dam_indicator_test/proc/update_hud(mob/user)
-	for(var/hud in hudlist)
-		var/datum/atom_hud/H = GLOB.huds[hud]
-		H.remove_hud_from(user)
-
-	for(var/hud in hudlist)
-		var/datum/atom_hud/H = GLOB.huds[hud]
-		H.add_hud_to(user)
-
-/datum/action/item_action/damage_indicator
-	name = "Switch mode"

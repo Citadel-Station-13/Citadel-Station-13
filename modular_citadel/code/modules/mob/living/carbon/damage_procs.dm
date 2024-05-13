@@ -9,5 +9,5 @@
 	update_stamina()
 	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && amount > 20)
 		incomingstammult = max(0.01, incomingstammult/(amount*0.05))
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, STAMINA)
+	throw_damage_indicator(amount, STAMINA)
 	return amount
