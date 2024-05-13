@@ -25,8 +25,9 @@
 #define DIAG_NANITE_FULL_HUD "21"
 #define RAD_HUD			"22"	//radation alerts for medical huds
 #define DIAG_LAUNCHPAD_HUD "23" //Displays launchpads' targeting reticle
+#define DAMAGE_INDICATOR_HUD "24"
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"24"
+#define ANTAG_HUD		"25"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -41,28 +42,29 @@
 #define DATA_HUD_DIAGNOSTIC_BASIC		5
 #define DATA_HUD_DIAGNOSTIC_ADVANCED	6
 #define DATA_HUD_ABDUCTOR				7
-#define DATA_HUD_SENTIENT_DISEASE		8
-#define DATA_HUD_AI_DETECT				9
+#define DATA_HUD_DAMAGE_INDICATOR		8
+#define DATA_HUD_SENTIENT_DISEASE		9
+#define DATA_HUD_AI_DETECT				10
 
 //antag HUD defines
-#define ANTAG_HUD_CULT			10
-#define ANTAG_HUD_REV			11
-#define ANTAG_HUD_OPS			12
-#define ANTAG_HUD_WIZ			13
-#define ANTAG_HUD_SHADOW    	14
-#define ANTAG_HUD_TRAITOR 		15
-#define ANTAG_HUD_NINJA 		16
-#define ANTAG_HUD_CHANGELING 	17
-#define ANTAG_HUD_ABDUCTOR 		18
-#define ANTAG_HUD_DEVIL			19
-#define ANTAG_HUD_SINTOUCHED	20
-#define ANTAG_HUD_SOULLESS		21
-#define ANTAG_HUD_CLOCKWORK		22
-#define ANTAG_HUD_BROTHER		23
-#define ANTAG_HUD_BLOODSUCKER   24
-#define ANTAG_HUD_FUGITIVE		25
-#define ANTAG_HUD_HERETIC	    26
-#define ANTAG_HUD_SPACECOP		27
-#define ANTAG_HUD_GANGSTER		28
+#define ANTAG_HUD_CULT			11
+#define ANTAG_HUD_REV			12
+#define ANTAG_HUD_OPS			13
+#define ANTAG_HUD_WIZ			14
+#define ANTAG_HUD_SHADOW    	15
+#define ANTAG_HUD_TRAITOR 		16
+#define ANTAG_HUD_NINJA 		17
+#define ANTAG_HUD_CHANGELING 	18
+#define ANTAG_HUD_ABDUCTOR 		19
+#define ANTAG_HUD_DEVIL			20
+#define ANTAG_HUD_SINTOUCHED	21
+#define ANTAG_HUD_SOULLESS		22
+#define ANTAG_HUD_CLOCKWORK		23
+#define ANTAG_HUD_BROTHER		24
+#define ANTAG_HUD_BLOODSUCKER   25
+#define ANTAG_HUD_FUGITIVE		26
+#define ANTAG_HUD_HERETIC	    27
+#define ANTAG_HUD_SPACECOP		28
+#define ANTAG_HUD_GANGSTER		29
 
 #define ADD_HUD_TO_COOLDOWN 20 //cooldown for being shown the images for any particular data hud

@@ -148,6 +148,7 @@
 	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, BRUTE)
 	return amount
 
 /mob/living/proc/getOxyLoss()
@@ -159,6 +160,7 @@
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, OXY)
 	return amount
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -167,6 +169,7 @@
 	oxyloss = amount
 	if(updating_health)
 		updatehealth()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, OXY)
 	return amount
 
 //By default, returns toxins damage no matter what kind of tox damage the target is using.
@@ -190,11 +193,13 @@
 	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 		affected_by = TOX_SYSCORRUPT
 	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), "IMMUNE", TOX)
 		return FALSE
 
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, TOX)
 	return amount
 
 //Defaults to omni here because setToxLoss is used by very few things that usually want to set all types
@@ -206,11 +211,13 @@
 	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 		affected_by = TOX_SYSCORRUPT
 	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), "IMMUNE", TOX)
 		return FALSE
 
 	toxloss = amount
 	if(updating_health)
 		updatehealth()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, TOX)
 	return amount
 
 /mob/living/proc/getFireLoss()
@@ -223,6 +230,7 @@
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, BURN)
 	return amount
 
 /mob/living/proc/getCloneLoss()
@@ -234,6 +242,7 @@
 	cloneloss = clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, CLONE)
 	return amount
 
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -242,6 +251,7 @@
 	cloneloss = amount
 	if(updating_health)
 		updatehealth()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, throw_damage_indicator), amount, CLONE)
 	return amount
 
 /mob/living/proc/adjustOrganLoss(slot, amount, maximum)
