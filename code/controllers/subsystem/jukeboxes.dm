@@ -20,7 +20,7 @@
 #define TRACK_LENGTH 2
 /// BPM of the track (in deciseconds)
 #define TRACK_BEAT 3
-/// Unique identifier for this track (IT DOES NOTHING AND LACKING THIS WILL BREAK THE ENTIRE THING)
+/// Unique code-facing identifier for this track
 #define TRACK_ID 4
 
 
