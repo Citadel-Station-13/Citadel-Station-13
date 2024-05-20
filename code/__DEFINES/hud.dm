@@ -145,6 +145,7 @@
 #define ui_borg_language_menu "CENTER+4:21,SOUTH+1:5"
 #define ui_borg_pda_send "CENTER+5:21,SOUTH:5" // To the right of the alert panel
 #define ui_borg_pda_log "CENTER+6:21,SOUTH:5"
+#define ui_borg_movi "CENTER+7:21,SOUTH:5"
 #define ui_borg_sensor "CENTER-6:16, SOUTH:5"		//LEGACY
 #define ui_borg_thrusters "CENTER-5:16, SOUTH:5"	//LEGACY
 

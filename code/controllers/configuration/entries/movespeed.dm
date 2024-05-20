@@ -68,6 +68,8 @@
 	. = ..()
 	for(var/datum/hud/human/H)
 		H.assert_move_intent_ui()
+	for(var/datum/hud/robot/robot)
+		robot.assert_move_intent_ui()
 	if(!config_entry_value)		// disabled
 		for(var/mob/living/L in world)
 			L.disable_intentional_sprint_mode()

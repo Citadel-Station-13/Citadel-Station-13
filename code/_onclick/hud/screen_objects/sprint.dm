@@ -9,9 +9,9 @@
 	var/mutable_appearance/flashy
 
 /atom/movable/screen/sprintbutton/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.default_toggle_sprint()
+	if(isliving(usr))
+		var/mob/living/owner = usr
+		owner.default_toggle_sprint()
 
 /atom/movable/screen/sprintbutton/update_icon_state()
 	var/mob/living/user = hud?.mymob
