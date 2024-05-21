@@ -34,9 +34,13 @@
 		ui = new(user, src, "AIAnnouncement")
 		ui.open()
 
-/datum/ai_announcement/ui_static_data(mob/user)
+/datum/ai_announcement/ui_data(mob/user)
 	var/list/data = ..()
 	data["last_announcement"] = owner.last_announcement
+	return data
+
+/datum/ai_announcement/ui_static_data(mob/user)
+	var/list/data = ..()
 	data["vox_types"] = GLOB.vox_types
 	return data
 
