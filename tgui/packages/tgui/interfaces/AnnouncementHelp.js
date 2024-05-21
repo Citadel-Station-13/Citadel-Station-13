@@ -2,7 +2,7 @@ import { filter } from 'common/collections';
 import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, Icon, Input, Section, Stack, Tabs } from '../components';
+import { Button, Collapsible, Icon, Input, Section, Stack, Tabs } from '../components';
 import { useLocalState } from '../backend';
 import { Window } from '../layouts';
 
@@ -32,6 +32,18 @@ export const AnnouncementHelp = (props, context) => {
       <Window.Content>
         <Section fill overflow="auto">
           <Stack vertical>
+            <Stack.Item>
+              <Collapsible title="Help" textAlign="center">
+                <font color="red">WARNING:</font> Misuse of the announcement system will get you job banned.<br /><br />
+                Here is a list of words you can type into the &apos;Announcement&apos; button to create sentences to vocally announce to everyone on the same level at you.<br />
+                <ul><li>You can also click on the word to PREVIEW it.</li>
+                  <li>You can only say 30 words for every announcement.</li>
+                  <li>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: &apos;Alpha . Test , Bravo&apos;.</li>
+                  <li>Numbers are in word format, e.g. eight, sixty, etc </li>
+                  <li>Sound effects begin with an &apos;s&apos; before the actual word, e.g. scensor</li>
+                </ul><hr />
+              </Collapsible>
+            </Stack.Item>
             <Stack.Item>
               <Tabs fluid textAlign="center">
                 {
