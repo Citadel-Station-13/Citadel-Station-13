@@ -24,6 +24,9 @@
 
 	/// the last health before updating - to check net change in health
 	var/previous_health
+	///Alarm listener datum, handes caring about alarm events and such
+	var/datum/alarm_listener/listener
+
 //Hud stuff
 
 	var/atom/movable/screen/inv1 = null
@@ -57,8 +60,6 @@
 	var/ident = 0
 	var/locked = TRUE
 	var/list/req_access = list(ACCESS_ROBOTICS)
-
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
 	var/vtec = 0 // VTEC speed boost.
 	/// vtec shorted out

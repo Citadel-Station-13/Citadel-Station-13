@@ -36,6 +36,10 @@
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+/// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
+#define COMSIG_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
+/// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
+#define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
 
 /// called by auxgm add_gas: (gas_id)
 #define COMSIG_GLOB_NEW_GAS "!new_gas"
@@ -698,3 +702,9 @@
 
 ///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
 #define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
+
+// Alarm listener datum signals
+///Sent when an alarm is fired (alarm, area/source_area)
+#define COMSIG_ALARM_TRIGGERED "comsig_alarm_triggered"
+///Send when an alarm source is cleared (alarm_type, area/source_area)
+#define COMSIG_ALARM_CLEARED "comsig_alarm_clear"
