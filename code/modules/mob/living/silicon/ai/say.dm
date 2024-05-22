@@ -79,59 +79,23 @@
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
-#define VOX_DELAY 600
-/mob/living/silicon/ai/verb/announcement_help()
-
-	set name = "Announcement Help"
-	set desc = "Display a list of vocal words to announce to the crew."
-	set category = "AI Commands"
-
-	if(incapacitated())
-		return
-
-	var/dat = {"
-	<font class='bad'>WARNING:</font> Misuse of the announcement system will get you job banned.<BR><BR>
-	Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR>
-	<UL><LI>You can also click on the word to PREVIEW it.</LI>
-	<LI>You can only say 30 words for every announcement.</LI>
-	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI>
-	<LI>Numbers are in word format, e.g. eight, sixty, etc </LI>
-	<LI>Sound effects begin with an 's' before the actual word, e.g. scensor</LI>
-	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
-	"}
-
-	var/index = 0
-	for(var/word in GLOB.vox_sounds)
-		index++
-		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
-		if(index != GLOB.vox_sounds.len)
-			dat += " / "
-
-	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
-	popup.set_content(dat)
-	popup.open()
-
-
-/mob/living/silicon/ai/proc/announcement()
+#define VOX_DELAY 1 MINUTES
+/mob/living/silicon/ai/proc/announcement(voxType = "Female", message)
 	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
-		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
+		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
 		return
-
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
 
 	last_announcement = message
 
-	var/voxType = input(src, "Male or female VOX?", "VOX-gender") in list("male", "female")
-
-	if(!message || announcing_vox > world.time)
+	if(!message || !GLOB.vox_types[voxType])
 		return
 
 	if(incapacitated())
 		return
 
 	if(control_disabled)
-		to_chat(src, "<span class='warning'>Wireless interface disabled, unable to interact with announcement PA.</span>")
+		to_chat(src, span_warning("Wireless interface disabled, unable to interact with announcement PA."))
 		return
 
 	var/list/words = splittext(trim(message), " ")
@@ -145,13 +109,11 @@
 		if(!word)
 			words -= word
 			continue
-		if(!GLOB.vox_sounds[word] && voxType == "female")
-			incorrect_words += word
-		if(!GLOB.vox_sounds_male[word] && voxType == "male")
+		if(!GLOB.vox_types[voxType][word])
 			incorrect_words += word
 
 	if(incorrect_words.len)
-		to_chat(src, "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>")
+		to_chat(src, span_notice("These words are not available on the announcement system: [english_list(incorrect_words)]."))
 		return
 
 	announcing_vox = world.time + VOX_DELAY
@@ -162,18 +124,12 @@
 		play_vox_word(word, src.z, null, voxType)
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener, voxType = "female")
+/proc/play_vox_word(word, z_level, mob/only_listener, voxType = "Female")
 
 	word = lowertext(word)
 
-	if( (GLOB.vox_sounds[word] && voxType == "female") || (GLOB.vox_sounds_male[word] && voxType == "male") )
-
-		var/sound_file
-
-		if(voxType == "female")
-			sound_file = GLOB.vox_sounds[word]
-		else
-			sound_file = GLOB.vox_sounds_male[word]
+	var/sound_file = LAZYACCESSASSOC(GLOB.vox_types, voxType, word)
+	if(sound_file)
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
