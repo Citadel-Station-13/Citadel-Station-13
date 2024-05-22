@@ -974,10 +974,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			addtimer(CALLBACK(SSassets.transport, TYPE_PROC_REF(/datum/asset_transport, send_assets_slow), src, SSassets.transport.preload), 5 SECONDS)
 
 		#if (PRELOAD_RSC == 0)
-		for (var/name in GLOB.vox_sounds)
-			var/file = GLOB.vox_sounds[name]
-			Export("##action=load_rsc", file)
-			stoplag()
+		for (var/type in GLOB.vox_types)
+			for(var/word in GLOB.vox_types[type])
+				var/file = GLOB.vox_types[type][word]
+				Export("##action=load_rsc", file)
+				stoplag()
 		#endif
 
 

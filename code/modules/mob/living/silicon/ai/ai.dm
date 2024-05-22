@@ -104,6 +104,10 @@
 	// TODO: Currently unused, needs port from TG.
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
+	/// Announcement UI
+	var/datum/ai_announcement/ai_announcement
+	/// Lists possible spoken words for announcements
+	var/datum/announcement_help/announcement_help
 	///remember AI's last location
 	var/atom/lastloc
 	interaction_range = INFINITY
@@ -204,6 +208,8 @@
 	QDEL_NULL(doomsday_device)
 	QDEL_NULL(robot_control)
 	// QDEL_NULL(alert_control)
+	QDEL_NULL(ai_announcement)
+	QDEL_NULL(announcement_help)
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(aiPDA)
 	malfhack = null

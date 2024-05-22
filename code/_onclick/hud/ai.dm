@@ -84,7 +84,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	AI.announcement()
+	AI.ai_announcement()
 
 /atom/movable/screen/ai/call_shuttle
 	name = "Call Emergency Shuttle"
