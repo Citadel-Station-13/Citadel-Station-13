@@ -18,6 +18,7 @@
 	considered_combat_role = TRUE
 
 	outfit = /datum/outfit/job/cmo
+	departments = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_COMMAND
 	plasma_outfit = /datum/outfit/plasmaman/cmo
 
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,

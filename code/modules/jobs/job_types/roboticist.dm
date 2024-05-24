@@ -12,6 +12,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/roboticist
+	departments = DEPARTMENT_BITFLAG_SCIENCE
 	plasma_outfit = /datum/outfit/plasmaman/robotics
 
 	access = list(ACCESS_ROBOTICS, ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM, ACCESS_XENOBIOLOGY, ACCESS_GENETICS)

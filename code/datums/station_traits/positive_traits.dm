@@ -149,7 +149,7 @@
 	trait_flags = STATION_TRAIT_ABSTRACT
 	blacklist = list(/datum/station_trait/deathrattle_all)
 
-	var/department_head
+	var/department_to_apply_to
 	var/department_name = "department"
 	var/datum/deathrattle_group/deathrattle_group
 
@@ -157,72 +157,65 @@
 	. = ..()
 	deathrattle_group = new("[department_name] group")
 	blacklist += subtypesof(/datum/station_trait/deathrattle_department) - type //All but ourselves
+	name = "deathrattled [department_name]"
 	report_message = "All members of [department_name] have received an implant to notify each other if one of them dies. This should help improve job-safety!"
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-
-/datum/station_trait/deathrattle_department/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+/datum/station_trait/deathrattle_department/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
 	SIGNAL_HANDLER
 
-	if(department_head != job.title && !(src.department_head in job.department_head))
+	if(!(job.departments & department_to_apply_to))
 		return
 
 	var/obj/item/implant/deathrattle/implant_to_give = new()
 	deathrattle_group.register(implant_to_give)
-	implant_to_give.implant(spawned, spawned, TRUE, TRUE)
+	implant_to_give.implant(living_mob, living_mob, TRUE, TRUE)
 
 
 /datum/station_trait/deathrattle_department/service
-	name = "Deathrattled Service"
 	trait_flags = NONE
 	weight = 1
-	department_head = "Head of Personnel"
+	department_to_apply_to = DEPARTMENT_BITFLAG_SERVICE
 	department_name = "Service"
 
 /datum/station_trait/deathrattle_department/cargo
-	name = "Deathrattled Cargo"
 	trait_flags = NONE
-	weight = 2
-	department_head = "Quartermaster"
+	weight = 1
+	department_to_apply_to = DEPARTMENT_BITFLAG_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
-	name = "Deathrattled Engineering"
 	trait_flags = NONE
-	weight = 2
-	department_head = "Chief Engineer"
+	weight = 1
+	department_to_apply_to = DEPARTMENT_BITFLAG_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
-	name = "Deathrattled Command"
 	trait_flags = NONE
 	weight = 1
-	department_head = "Captain"
+	department_to_apply_to = DEPARTMENT_BITFLAG_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
-	name = "Deathrattled Science"
 	trait_flags = NONE
 	weight = 1
-	department_head = "Research Director"
+	department_to_apply_to = DEPARTMENT_BITFLAG_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
-	name = "Deathrattled Security"
 	trait_flags = NONE
 	weight = 1
-	department_head = "Head of Security"
+	department_to_apply_to = DEPARTMENT_BITFLAG_SECURITY
 	department_name = "Security"
 
 /datum/station_trait/deathrattle_department/medical
-	name = "Deathrattled Medical"
 	trait_flags = NONE
 	weight = 1
-	department_head = "Chief Medical Officer"
+	department_to_apply_to = DEPARTMENT_BITFLAG_MEDICAL
 	department_name = "Medical"
 
 /datum/station_trait/deathrattle_all
-	name = "Deathrattled Station"
+	name = "deathrattled station"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
 	weight = 1
@@ -236,14 +229,12 @@
 	blacklist = subtypesof(/datum/station_trait/deathrattle_department)
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-
-/datum/station_trait/deathrattle_all/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+/datum/station_trait/deathrattle_all/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
 	SIGNAL_HANDLER
 
 	var/obj/item/implant/deathrattle/implant_to_give = new()
 	deathrattle_group.register(implant_to_give)
-	implant_to_give.implant(spawned, spawned, TRUE, TRUE)
-
+	implant_to_give.implant(living_mob, living_mob, TRUE, TRUE)
 
 /datum/station_trait/wallets
 	name = "Wallets!"

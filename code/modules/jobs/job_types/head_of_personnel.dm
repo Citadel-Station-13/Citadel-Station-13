@@ -17,6 +17,7 @@
 	exp_type_department = EXP_TYPE_SERVICE
 	considered_combat_role = TRUE
 	outfit = /datum/outfit/job/hop
+	departments = DEPARTMENT_BITFLAG_COMMAND | DEPARTMENT_BITFLAG_SERVICE
 	plasma_outfit = /datum/outfit/plasmaman/hop
 
 	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_WEAPONS,

@@ -23,6 +23,7 @@
 	paycheck = PAYCHECK_HARD
 	paycheck_department = ACCOUNT_SEC
 	bounty_types = CIV_JOB_SEC
+	departments = DEPARTMENT_BITFLAG_SECURITY
 
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 

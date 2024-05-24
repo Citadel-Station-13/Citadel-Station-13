@@ -413,13 +413,10 @@
 		return
 	client.crew_manifest_delay = world.time + (1 SECONDS)
 
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
+	if(!GLOB.crew_manifest_tgui)
+		GLOB.crew_manifest_tgui = new /datum/crew_manifest(src)
 
-	dat += GLOB.data_core.get_manifest()
-	dat += "</body></html>"
-
-	src << browse(dat, "window=airoster")
-	onclose(src, "airoster")
+	GLOB.crew_manifest_tgui.ui_interact(src)
 
 /mob/living/silicon/update_transform(do_animate)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

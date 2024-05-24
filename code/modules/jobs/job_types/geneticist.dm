@@ -12,6 +12,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/geneticist
+	departments = DEPARTMENT_BITFLAG_MEDICAL
 	plasma_outfit = /datum/outfit/plasmaman/genetics
 
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_ROBOTICS, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE)

@@ -17,6 +17,7 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 	bounty_types = CIV_JOB_MED
+	departments = DEPARTMENT_BITFLAG_MEDICAL
 
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
 

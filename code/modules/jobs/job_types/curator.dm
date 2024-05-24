@@ -18,8 +18,9 @@
 	paycheck_department = ACCOUNT_CIV
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
+	departments = DEPARTMENT_BITFLAG_SERVICE
 	threat = 0.3
-	
+
 	family_heirlooms = list(
 		/obj/item/pen/fountain,
 		/obj/item/storage/dice

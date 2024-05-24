@@ -10,6 +10,7 @@
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/clown
+	departments = DEPARTMENT_BITFLAG_SERVICE
 	plasma_outfit = /datum/outfit/plasmaman/clown
 
 	access = list(ACCESS_THEATRE)
