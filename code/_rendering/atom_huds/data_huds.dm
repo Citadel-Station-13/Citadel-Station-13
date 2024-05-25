@@ -60,6 +60,9 @@
 /datum/atom_hud/data/bot_path
 	hud_icons = list(DIAG_PATH_HUD)
 
+/datum/atom_hud/data/damage_indicator
+	hud_icons = list(DAMAGE_INDICATOR_HUD)
+
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
 
@@ -521,3 +524,84 @@
 		holder.icon_state = "electrified"
 	else
 		holder.icon_state = ""
+
+/*
+	Damage indicator handlers
+*/
+
+GLOBAL_LIST_EMPTY(tracked_damage_indicators)
+
+/// Throws a damage indicator! This proc is non-blocking.
+/mob/proc/throw_damage_indicator(damage_amount, damage_type)
+	set waitfor = FALSE
+
+	if(isturf(loc))
+		new /obj/effect/dummy/damage_indicator(loc, damage_amount, damage_type, WEAKREF(src))
+
+/obj/effect/dummy/damage_indicator
+	hud_possible = list(DAMAGE_INDICATOR_HUD)
+	pixel_y = 16
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/damage_amount
+	var/damage_type
+	var/datum/weakref/damaged_atom
+
+/obj/effect/dummy/damage_indicator/Initialize(mapload, amount, type, source)
+	. = ..()
+	if(!amount)
+		return INITIALIZE_HINT_QDEL
+
+	if(type && source)
+		LAZYADD(GLOB.tracked_damage_indicators, src)
+
+	prepare_huds()
+	var/datum/atom_hud/data/damage_indicator/dam_hud = GLOB.huds[DATA_HUD_DAMAGE_INDICATOR]
+	dam_hud.add_to_hud(src)
+
+	damage_amount = amount
+	damage_type = type
+	damaged_atom = source
+
+	for(var/obj/effect/dummy/damage_indicator/different_damage_indicator as anything in GLOB.tracked_damage_indicators)
+		if(different_damage_indicator == src)
+			continue
+		if(damage_type != different_damage_indicator.damage_type)
+			continue
+		var/datum/weakref/check_this = damaged_atom.resolve()
+		var/datum/weakref/check_other = different_damage_indicator.damaged_atom.resolve()
+		if(isnull(check_this) || isnull(check_other))
+			continue
+		if(check_this != check_other)
+			continue
+		if(!isnum(damage_amount) || !isnum(different_damage_indicator.damage_amount))
+			continue
+
+		damage_amount += different_damage_indicator.damage_amount
+		qdel(different_damage_indicator)
+
+	var/text_color = "<font "
+	switch(damage_type)
+		if(BRUTE)
+			text_color += "color = 'red'>"
+		if(BURN)
+			text_color += "color = '#FFA500'>"
+		if(TOX)
+			text_color += "color = 'green'>"
+		if(OXY)
+			text_color += "color = 'blue'>"
+		else
+			text_color += ">"
+
+	var/image/holder = hud_list[DAMAGE_INDICATOR_HUD]
+	holder.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	holder.maptext = "<span class='damage_indicator'>[text_color][isnum(damage_amount) ? FLOOR(damage_amount, 0.01) : damage_amount]</font></span>"
+
+	animate(holder, pixel_x = rand(-16, 16), pixel_y = 16, time = 0.2 SECONDS, easing = SINE_EASING)
+	animate(pixel_y = -16, time = 0.5 SECONDS, easing = BOUNCE_EASING)
+	animate(alpha = 0, time = 1 SECONDS)
+	QDEL_IN(src, 1.7 SECONDS)
+
+/obj/effect/dummy/damage_indicator/Destroy(force)
+	LAZYREMOVE(GLOB.tracked_damage_indicators, src)
+	remove_from_all_data_huds(src)
+	return ..()

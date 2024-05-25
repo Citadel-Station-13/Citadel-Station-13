@@ -9,4 +9,5 @@
 	update_stamina()
 	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && amount > 20)
 		incomingstammult = max(0.01, incomingstammult/(amount*0.05))
+	throw_damage_indicator(amount, STAMINA)
 	return amount
