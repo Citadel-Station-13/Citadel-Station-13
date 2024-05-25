@@ -90,6 +90,9 @@
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
+	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
+	var/datum/alarm_handler/alarm_manager
+
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
@@ -231,6 +234,7 @@
 	if(name == initial(name))
 		name = "[get_area_name(src, get_base_area = TRUE)] Air Alarm"
 
+	alarm_manager = new(src)
 	power_change()
 	set_frequency(frequency)
 	register_context()
@@ -242,10 +246,8 @@
 
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
-	qdel(wires)
-	wires = null
-	var/area/ourarea = get_area(src)
-	ourarea.atmosalert(FALSE, src)
+	QDEL_NULL(wires)
+	QDEL_NULL(alarm_manager)
 	return ..()
 
 /obj/machinery/airalarm/examine(mob/user)
@@ -289,7 +291,7 @@
 	)
 
 	var/area/A = get_base_area(src)
-	data["atmos_alarm"] = A.atmosalm
+	data["atmos_alarm"] = !!A.active_alarms[ALARM_ATMOS]
 	data["fire_alarm"] = A.fire
 
 	var/turf/T = get_turf(src)
@@ -464,13 +466,11 @@
 			apply_mode()
 			. = TRUE
 		if("alarm")
-			var/area/A = get_base_area(src)
-			if(A.atmosalert(2, src))
+			if(alarm_manager.send_alarm(ALARM_ATMOS))
 				post_alert(2)
 			. = TRUE
 		if("reset")
-			var/area/A = get_base_area(src)
-			if(A.atmosalert(0, src))
+			if(alarm_manager.clear_alarm(ALARM_ATMOS))
 				post_alert(0)
 			. = TRUE
 	update_icon()
@@ -706,8 +706,8 @@
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/overlay_state = AALARM_OVERLAY_OFF
-	var/area/A = get_base_area(src)
-	switch(max(danger_level, A.atmosalm))
+	var/area/our_area = get_base_area(src)
+	switch(max(danger_level, !!our_area.active_alarms[ALARM_ATMOS]))
 		if(0)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
@@ -788,12 +788,17 @@
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 	var/area/A = get_base_area(src)
-
 	var/new_area_danger_level = 0
 	for(var/obj/machinery/airalarm/AA in A)
 		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
-			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
-	if(A.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
+			new_area_danger_level = clamp(max(new_area_danger_level, AA.danger_level), 0, 1)
+
+	var/did_anything_happen
+	if(new_area_danger_level)
+		did_anything_happen = alarm_manager.send_alarm(ALARM_ATMOS)
+	else
+		did_anything_happen = alarm_manager.clear_alarm(ALARM_ATMOS)
+	if(did_anything_happen) //if something actually changed
 		post_alert(new_area_danger_level)
 
 	update_icon()

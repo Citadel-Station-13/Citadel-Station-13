@@ -170,6 +170,9 @@
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
 	var/obj/machinery/computer/apc_control/remote_control = null
+	///Represents a signel source of power alarms for this apc
+	var/datum/alarm_handler/alarm_manager
+
 	var/mob/living/carbon/hijacker
 	var/hijackerlast = TRUE
 	var/being_hijacked = FALSE
@@ -222,6 +225,7 @@
 
 /obj/machinery/power/apc/Initialize(mapload, ndir, building = FALSE)
 	. = ..()
+	alarm_manager = new(src)
 	tdir = ndir || dir
 	var/area/A = get_base_area(src)
 	if(!building)
@@ -307,7 +311,7 @@
 	area.power_equip = FALSE
 	area.power_environ = FALSE
 	area.power_change()
-	area.poweralert(FALSE, src)
+	QDEL_NULL(alarm_manager)
 	if(occupier)
 		malfvacate(1)
 	qdel(wires)
@@ -1435,22 +1439,23 @@
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 			environ = autoset(environ, AUTOSET_FORCE_OFF)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else if(cell.percent() < 15 && longtermpower < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else if(cell.percent() < 30 && longtermpower < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(TRUE, src)
+			alarm_manager.send_alarm(ALARM_POWER)
 		else // otherwise all can be on
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			area.poweralert(FALSE, src)
+			if(cell.percent() > 75)
+				alarm_manager.clear_alarm(ALARM_POWER)
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)
@@ -1492,7 +1497,7 @@
 		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 		lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 		environ = autoset(environ, AUTOSET_FORCE_OFF)
-		area.poweralert(TRUE, src)
+		alarm_manager.send_alarm(ALARM_POWER)
 
 	// update icon & area power if anything changed
 

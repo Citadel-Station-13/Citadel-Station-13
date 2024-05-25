@@ -179,10 +179,10 @@
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)
+/mob/living/simple_animal/drone/cogscarab/alarm_triggered(datum/source, alarm_type, area/source_area)
 	return
 
-/mob/living/simple_animal/drone/cogscarab/cancelAlarm(class, area/A, obj/origin)
+/mob/living/simple_animal/drone/cogscarab/alarm_cleared(datum/source, alarm_type, area/source_area)
 	return
 
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
