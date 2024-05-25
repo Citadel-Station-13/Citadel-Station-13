@@ -16,6 +16,7 @@ Assistant
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 	paycheck_department = ACCOUNT_CIV
+	departments = DEPARTMENT_BITFLAG_SERVICE
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 	dresscodecompliant = FALSE
 	always_can_respawn_as = TRUE

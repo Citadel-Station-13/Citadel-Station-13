@@ -10,6 +10,7 @@
 	selection_color = "#74b5e0"
 
 	outfit = /datum/outfit/job/doctor
+	departments = DEPARTMENT_BITFLAG_MEDICAL
 	plasma_outfit = /datum/outfit/plasmaman/medical
 
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_VIROLOGY, ACCESS_MINERAL_STOREROOM)

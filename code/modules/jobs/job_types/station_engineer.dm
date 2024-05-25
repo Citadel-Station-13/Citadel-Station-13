@@ -21,6 +21,7 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
 	bounty_types = CIV_JOB_ENG
+	departments = DEPARTMENT_BITFLAG_ENGINEERING
 
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/affinity/wiring)
 

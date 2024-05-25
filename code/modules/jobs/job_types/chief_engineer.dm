@@ -18,6 +18,7 @@
 	considered_combat_role = TRUE
 
 	outfit = /datum/outfit/job/ce
+	departments = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_COMMAND
 	plasma_outfit = /datum/outfit/plasmaman/ce
 
 	access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS,

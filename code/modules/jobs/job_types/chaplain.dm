@@ -18,6 +18,7 @@
 	paycheck_department = ACCOUNT_CIV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
+	departments = DEPARTMENT_BITFLAG_SERVICE
 	threat = 0.5
 
 	family_heirlooms = list(

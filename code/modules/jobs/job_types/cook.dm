@@ -18,6 +18,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	bounty_types = CIV_JOB_CHEF
+	departments = DEPARTMENT_BITFLAG_SERVICE
 
 	display_order = JOB_DISPLAY_ORDER_COOK
 	threat = 0.2

@@ -18,6 +18,7 @@
 	considered_combat_role = TRUE
 
 	outfit = /datum/outfit/job/rd
+	departments = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_COMMAND
 	plasma_outfit = /datum/outfit/plasmaman/rd
 
 	access = list(ACCESS_RD, ACCESS_HEADS, ACCESS_TOX, ACCESS_GENETICS, ACCESS_MORGUE,

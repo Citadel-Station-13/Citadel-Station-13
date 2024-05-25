@@ -14,6 +14,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/detective
+	departments = DEPARTMENT_BITFLAG_SECURITY
 	plasma_outfit = /datum/outfit/plasmaman/detective
 	considered_combat_role = TRUE
 

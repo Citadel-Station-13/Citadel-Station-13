@@ -13,6 +13,7 @@
 	plasma_outfit = /datum/outfit/plasmaman/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
+	departments = DEPARTMENT_BITFLAG_SECURITY
 
 	family_heirlooms = list(
 		/obj/item/pen/blue

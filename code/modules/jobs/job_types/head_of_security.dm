@@ -18,6 +18,7 @@
 	exp_type_department = EXP_TYPE_SECURITY
 
 	outfit = /datum/outfit/job/hos
+	departments = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_COMMAND
 	plasma_outfit = /datum/outfit/plasmaman/hos
 
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
