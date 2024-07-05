@@ -685,6 +685,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_MAKE_ALIEN, "Make Alien")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 	VV_DROPDOWN_OPTION(VV_HK_PURRBATION, "Toggle Purrbation")
+	VV_DROPDOWN_OPTION(VV_HK_APPLY_PREFS, "Apply preferences")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -765,6 +766,34 @@
 			var/msg = "<span class='notice'>[key_name_admin(usr)] has removed [key_name(src)] from purrbation.</span>"
 			message_admins(msg)
 			admin_ticket_log(src, msg)
+	if(href_list[VV_HK_APPLY_PREFS])
+		if(!check_rights(R_SPAWN))
+			return
+		if(!client)
+			var/bigtext = {"This action requires a client, if you need to do anything special, follow this short guide:
+<blockquote class="info">
+Mark this mob, then navigate to the preferences of the client you desire and call copy_to() with one argument, when it asks for the argument, browse to the bottom of the list and select marked datum, if you've followed this guide correctly, the mob will be turned into the character from the preferences you used.
+</blockquote>
+			"}
+			to_chat(usr, bigtext)
+			return
+
+		var/datum/preferences/copying_this_one = client.prefs // turns out that prefs always exist if the client leaves, i'm not checking for client again
+		var/is_this_guy_trolling_the_admin = copying_this_one.default_slot
+
+		if(alert(usr, "Confirm reapply preferences?", "", "I'm sure", "Cancel") != "I'm sure")
+			return
+
+		if(is_this_guy_trolling_the_admin != copying_this_one.default_slot) // why would you do this, broooo
+			if(alert(usr, "The user changed their character slot while you were deciding, are you sure you want to do this? They might change their mind again and i will not protect again this time", "Uh oh", "I'm sure", "They did what?") != "I'm sure")
+				return
+
+		copying_this_one.copy_to(src)
+		var/change_text = "reapplied [key_name(src, TRUE)]'s preferences, [(is_this_guy_trolling_the_admin != copying_this_one.default_slot) ? "changing their character" : "resetting their character"]."
+		to_chat(usr, capitalize(change_text))
+		log_admin("[key_name(usr)] has [change_text]")
+		message_admins(span_notice("[key_name_admin(usr)] has [change_text]"))
+		admin_ticket_log(src, span_notice("[key_name_admin(usr, FALSE)] has [change_text]")) // In case they complained in an ahelp, we'll let them know anything happened
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	var/GS_needed = istype(target, /mob/living/silicon/pai)? GRAB_PASSIVE : GRAB_AGGRESSIVE
