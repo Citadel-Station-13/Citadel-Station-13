@@ -172,6 +172,15 @@
 /obj/item/integrated_circuit/logic/binary/or/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
 	return A.data || B.data
 
+/obj/item/integrated_circuit/logic/binary/xor
+	name = "xor gate"
+	desc = "This gate will output TRUE if only one of the inputs evaluate to true."
+	icon_state = "xor"
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/logic/binary/xor/do_compare(datum/integrated_io/A, datum/integrated_io/B)
+	return (!!A.data + !!B.data) == 1
+
 /obj/item/integrated_circuit/logic/binary/less_than
 	name = "less than gate"
 	desc = "This will output TRUE if the first input is less than the second input."
