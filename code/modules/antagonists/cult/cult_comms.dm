@@ -363,8 +363,8 @@
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_action_buttons_icon)), base_cooldown)
 	C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
 	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
-	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
-	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
+	C.cult_team.blood_target_image.pixel_x = -C.cult_team.blood_target.pixel_x
+	C.cult_team.blood_target_image.pixel_y = -C.cult_team.blood_target.pixel_y
 	SEND_SOUND(owner, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 	owner.client.images += C.cult_team.blood_target_image
 	for(var/datum/mind/B in SSticker.mode.cult)

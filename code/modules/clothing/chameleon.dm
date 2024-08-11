@@ -212,13 +212,15 @@
 	UpdateButtons()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
-	target.name = initial(picked_item.name)
-	target.desc = initial(picked_item.desc)
-	target.icon_state = initial(picked_item.icon_state)
-	if(isitem(target))
-		var/obj/item/I = target
+	var/obj/item/chameleon_item = target
+
+	chameleon_item.name = initial(picked_item.name)
+	chameleon_item.desc = initial(picked_item.desc)
+	chameleon_item.icon_state = initial(picked_item.icon_state)
+	if(isitem(chameleon_item))
+		var/obj/item/I = chameleon_item
 		I.item_state = initial(picked_item.item_state)
-	var/obj/item/clothing/CL = target
+	var/obj/item/clothing/CL = chameleon_item
 	var/obj/item/clothing/PCL = new picked_item
 	if(istype(CL) && istype(PCL))
 		CL.flags_cover = PCL.flags_cover
@@ -226,7 +228,7 @@
 		CL.mutantrace_variation = PCL.mutantrace_variation
 		CL.mob_overlay_icon = PCL.mob_overlay_icon
 		qdel(PCL)
-	target.icon = initial(picked_item.icon)
+	chameleon_item.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/pda/picked_item)
 	if(!istype(target, /obj/item/pda))

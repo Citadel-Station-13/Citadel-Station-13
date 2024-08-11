@@ -5,32 +5,50 @@
 #define AB_CHECK_ALIVE 16
 
 /datum/action
+	/// The name of the action
 	var/name = "Generic Action"
+	/// The description of what the action does, shown in button tooltips
 	var/desc = null
-	var/atom/target = null
-	var/check_flags = 0
-	var/required_mobility_flags = MOBILITY_USE
-	var/processing = FALSE
-	var/buttontooltipstyle = ""
-	var/transparent_when_unavailable = TRUE
+	/// The target the action is attached to. If the target datum is deleted, the action is as well.
+	/// Set in New() via the proc link_to(). PLEASE set a target if you're making an action
+	var/datum/target = null
 	/// Where any buttons we create should be by default. Accepts screen_loc and location defines
 	var/default_button_position = SCRN_OBJ_IN_LIST
-
-	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
-	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
-
-	var/icon_icon = 'icons/mob/actions.dmi' //This is the file for the ACTION icon
-	var/button_icon_state = "default" //And this is the state for the action icon
+	/// This is who currently owns the action, and most often, this is who is using the action if it is triggered
+	/// This can be the same as "target" but is not ALWAYS the same - this is set and unset with Grant() and Remove()
 	var/mob/owner
+	/// Flags that will determine of the owner / user of the action can... use the action
+	var/check_flags = NONE
+	var/required_mobility_flags = MOBILITY_USE
+	var/processing = FALSE
+	/// Whether the button becomes transparent when it can't be used, or just reddened
+	var/transparent_when_unavailable = TRUE
 	///List of all mobs that are viewing our action button -> A unique movable for them to view.
 	var/list/viewers = list()
+
+	/// The style the button's tooltips appear to be
+	var/buttontooltipstyle = ""
+
+	/// This is the file for the BACKGROUND underlay icon of the button
+	var/button_icon = 'icons/mob/actions/backgrounds.dmi'
+	/// This is the icon state state for the BACKGROUND underlay icon of the button
+	/// (If set to ACTION_BUTTON_DEFAULT_BACKGROUND, uses the hud's default background)
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+
+	/// This is the file for the icon that appears on the button
+	var/icon_icon = 'icons/mob/actions.dmi'
+	/// This is the icon state for the icon that appears on the button
+	var/button_icon_state = "default"
 
 /datum/action/New(Target)
 	link_to(Target)
 
 /datum/action/proc/link_to(Target)
 	target = Target
-	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, PROC_REF(OnUpdatedIcon))
+	RegisterSignal(Target, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref), override = TRUE)
+
+	if(isatom(Target))
+		RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, PROC_REF(OnUpdatedIcon))
 
 /datum/action/Destroy()
 	if(owner)
@@ -39,23 +57,8 @@
 	QDEL_LIST_ASSOC_VAL(viewers) // Qdel the buttons in the viewers list **NOT THE HUDS**
 	return ..()
 
-/datum/action/proc/Grant(mob/M)
-	if(!M)
-		Remove(owner)
-		return
-	if(owner)
-		if(owner == M)
-			return
-		Remove(owner)
-	owner = M
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref), override = TRUE)
-	// Register some signals based on our check_flags
-	// so that our button icon updates when relevant
-	if(check_flags & AB_CHECK_CONSCIOUS)
-		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
-
-	GiveAction(M)
-
+/// Signal proc that clears any references based on the owner or target deleting
+/// If the owner's deleted, we will simply remove from them, but if the target's deleted, we will self-delete
 /datum/action/proc/clear_ref(datum/ref)
 	SIGNAL_HANDLER
 	if(ref == owner)
@@ -63,23 +66,51 @@
 	if(ref == target)
 		qdel(src)
 
-/datum/action/proc/Remove(mob/M)
+/datum/action/proc/Grant(mob/grant_to)
+	if(isnull(grant_to))
+		Remove(owner)
+		return
+	if(grant_to == owner)
+		return // We already have it
+	var/mob/previous_owner = owner
+	owner = grant_to
+	if(!isnull(previous_owner))
+		Remove(previous_owner)
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref), override = TRUE)
+
+	// Register some signals based on our check_flags
+	// so that our button icon updates when relevant
+	if(check_flags & AB_CHECK_CONSCIOUS)
+		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
+
+	GiveAction(grant_to)
+
+/datum/action/proc/Remove(mob/remove_from)
+	SHOULD_CALL_PARENT(TRUE)
+
 	for(var/datum/hud/hud in viewers)
 		if(!hud.mymob)
 			continue
 		HideFrom(hud.mymob)
-	LAZYREMOVE(M.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
+	LAZYREMOVE(remove_from.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
 	viewers = list()
 
-	if(owner)
-		UnregisterSignal(owner, list(
-			COMSIG_PARENT_QDELETING,
-			COMSIG_MOB_STATCHANGE
-		))
-		if(target == owner)
-			RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref))
+	if(isnull(owner))
+		return
+	UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+
+	// Clean up our check_flag signals
+	UnregisterSignal(owner, list(
+		COMSIG_MOB_STATCHANGE
+	))
+
+	if(target == owner)
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref))
+	if(owner == remove_from)
 		owner = null
 
+/// Actually triggers the effects of the action.
+/// Called when the on-screen button is clicked, for example.
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
 		return FALSE
@@ -90,6 +121,10 @@
 /datum/action/proc/Process()
 	return
 
+/**
+ * Whether our action is currently available to use or not
+ * * silent - If false this is being called to check if we have any messages to show to the owner
+ */
 /datum/action/proc/IsAvailable(silent = FALSE)
 	if(!owner)
 		return FALSE
@@ -104,9 +139,13 @@
 			return FALSE
 	if(check_flags & AB_CHECK_LYING)
 		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_STAND))
+			if (!silent)
+				owner.balloon_alert(owner, "must stand up!")
 			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
+			if (!silent)
+				owner.balloon_alert(owner, "unconscious!")
 			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
 		if(owner.stat == DEAD)
@@ -166,7 +205,8 @@
 	SIGNAL_HANDLER
 	UpdateButtons(force = TRUE)
 
-//Give our action button to the player
+/// Gives our action to the passed viewer.
+/// Puts our action in their actions list and shows them the button.
 /datum/action/proc/GiveAction(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
 	if(viewers[our_hud]) // Already have a copy of us? go away
@@ -175,7 +215,7 @@
 	LAZYOR(viewer.actions, src) // Move this in
 	ShowTo(viewer)
 
-//Adds our action button to the screen of a player
+/// Adds our action button to the screen of the passed viewer.
 /datum/action/proc/ShowTo(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
 	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
@@ -192,7 +232,7 @@
 	button.load_position(viewer)
 	viewer.update_action_buttons()
 
-//Removes our action button from the screen of a player
+/// Removes our action from the passed viewer.
 /datum/action/proc/HideFrom(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
 	var/atom/movable/screen/movable/action_button/button = viewers[our_hud]
@@ -445,7 +485,8 @@
 
 /datum/action/item_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	var/obj/item/item_target = target
+	name = "Toggle [item_target.name]"
 
 /datum/action/item_action/halt
 	name = "HALT!"
@@ -473,7 +514,9 @@
 
 /datum/action/item_action/adjust/New(Target)
 	..()
-	name = "Adjust [target.name]"
+	var/obj/item/item_target = target
+	name = "Adjust [item_target.name]"
+
 
 /datum/action/item_action/switch_hud
 	name = "Switch HUD"
@@ -548,21 +591,31 @@
 	return ..()
 
 /datum/action/item_action/organ_action
+	name = "Organ Action"
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/item_action/organ_action/IsAvailable(silent = FALSE)
-	var/obj/item/organ/I = target
-	if(!I.owner)
+	var/obj/item/organ/attached_organ = target
+	if(!attached_organ.owner)
 		return FALSE
 	return ..()
 
+/datum/action/item_action/organ_action/toggle
+	name = "Toggle Organ"
+
 /datum/action/item_action/organ_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	var/obj/item/organ/organ_target = target
+	name = "Toggle [organ_target.name]"
+
+/datum/action/item_action/organ_action/use
+	name = "Use Organ"
 
 /datum/action/item_action/organ_action/use/New(Target)
 	..()
-	name = "Use [target.name]"
+	var/obj/item/organ/organ_target = target
+	name = "Use [organ_target.name]"
+
 
 /datum/action/item_action/cult_dagger
 	name = "Draw Blood Rune"
@@ -956,20 +1009,8 @@
 /datum/action/item_action/storage_gather_mode
 	name = "Switch gathering mode"
 	desc = "Switches the gathering mode of a storage object."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "storage_gather_switch"
-
-/datum/action/item_action/storage_gather_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button)
-	. = ..()
-	var/old_layer = target.layer
-	var/old_plane = target.plane
-	target.layer = FLOAT_LAYER //AAAH
-	target.plane = FLOAT_PLANE //^ what that guy said
-	current_button.cut_overlays()
-	current_button.add_overlay(target)
-	target.layer = old_layer
-	target.plane = old_plane
-	current_button.appearance_cache = target.appearance
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	background_icon_state = "storage_gather_switch"
 
 /proc/get_action_of_type(mob/M, action_type)
 	if(!M.actions || !ispath(action_type, /datum/action))

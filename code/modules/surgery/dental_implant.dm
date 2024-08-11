@@ -33,10 +33,11 @@
 /datum/action/item_action/hands_free/activate_pill/Trigger()
 	if(!..())
 		return FALSE
-	to_chat(owner, "<span class='caution'>You grit your teeth and burst the implanted [target.name]!</span>")
+	var/obj/item/item_target = target
+	to_chat(owner, span_notice("You grit your teeth and burst the implanted [item_target.name]!"))
 	log_combat(owner, null, "swallowed an implanted pill", target)
-	if(target.reagents.total_volume)
-		target.reagents.reaction(owner, INGEST)
-		target.reagents.trans_to(owner, target.reagents.total_volume, log = "dental pill swallow")
+	if(item_target.reagents.total_volume)
+		item_target.reagents.reaction(owner, INGEST)
+		item_target.reagents.trans_to(owner, item_target.reagents.total_volume, log = "dental pill swallow")
 	qdel(target)
 	return TRUE
