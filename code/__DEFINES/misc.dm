@@ -211,10 +211,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define POLLTYPE_IRV		"IRV"
 
 
-
-//subtypesof(), typesof() without the parent path
-#define subtypesof(typepath) ( typesof(typepath) - typepath )
-
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
 
@@ -549,8 +545,6 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 #define NIGHTSHIFT_AREA_RECREATION			2		//dorms common areas, etc
 #define NIGHTSHIFT_AREA_DEPARTMENT_HALLS	3		//interior hallways, etc
 #define NIGHTSHIFT_AREA_NONE				4		//default/highest.
-
-#define UNTIL(X) while(!(X)) stoplag()
 
 
 //Scavenging element defines for special loot "events".
