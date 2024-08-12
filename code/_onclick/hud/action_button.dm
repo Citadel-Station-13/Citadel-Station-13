@@ -59,7 +59,7 @@
 
 // Entered and Exited won't fire while you're dragging something, because you're still "holding" it
 // Very much byond logic, but I want nice behavior, so we fake it with drag
-/atom/movable/screen/movable/action_button/MouseDrag(atom/over_object, src_location, over_location, src_control, over_control, params)
+/atom/movable/screen/movable/action_button/MouseDrag(atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
 	. = ..()
 	if(!can_use(usr))
 		return
@@ -76,6 +76,9 @@
 	if(old_object)
 		old_object.MouseExited(over_location, over_control, params)
 
+	if(QDELETED(over_location))
+		last_hovored_ref = null
+		return
 	last_hovored_ref = WEAKREF(over_object)
 	over_object.MouseEntered(over_location, over_control, params)
 
@@ -113,6 +116,7 @@
 		our_hud.position_action_relative(src, button)
 		save_position()
 		return
+	. = ..()
 	our_hud.position_action(src, screen_loc)
 	save_position()
 
