@@ -22,13 +22,13 @@
 	desc = "A computer used for remotely handling slimes."
 	networks = list("ss13")
 	circuit = /obj/item/circuitboard/computer/xenobiology
-	var/datum/action/innate/slime_place/slime_place_action
-	var/datum/action/innate/slime_pick_up/slime_up_action
-	var/datum/action/innate/feed_slime/feed_slime_action
-	var/datum/action/innate/monkey_recycle/monkey_recycle_action
-	var/datum/action/innate/slime_scan/scan_action
-	var/datum/action/innate/feed_potion/potion_action
-	var/datum/action/innate/hotkey_help/hotkey_help
+	var/datum/action/innate/slime_place/slime_place_action = /datum/action/innate/slime_place
+	var/datum/action/innate/slime_pick_up/slime_up_action = /datum/action/innate/slime_pick_up
+	var/datum/action/innate/feed_slime/feed_slime_action = /datum/action/innate/feed_slime
+	var/datum/action/innate/monkey_recycle/monkey_recycle_action = /datum/action/innate/monkey_recycle
+	var/datum/action/innate/slime_scan/scan_action = /datum/action/innate/slime_scan
+	var/datum/action/innate/feed_potion/potion_action = /datum/action/innate/feed_potion
+	var/datum/action/innate/hotkey_help/hotkey_help = /datum/action/innate/hotkey_help
 
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
@@ -43,15 +43,15 @@
 
 /obj/machinery/computer/camera_advanced/xenobio/Initialize(mapload)
 	. = ..()
-	slime_place_action = new
-	slime_up_action = new
-	feed_slime_action = new
-	monkey_recycle_action = new
-	scan_action = new
-	potion_action = new
-	hotkey_help = new
+
+	generate_actions()
+
 	stored_slimes = list()
 	RegisterSignal(src, COMSIG_ATOM_CONTENTS_DEL, PROC_REF(on_contents_del))
+
+/obj/machinery/computer/camera_advanced/xenobio/proc/generate_actions()
+	actions += new scan_action(src)
+	actions += new hotkey_help(src)
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null
@@ -71,41 +71,6 @@
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
-
-	if(slime_up_action && (upgradetier & XENOBIO_UPGRADE_SLIMEBASIC)) //CIT CHANGE - makes slime-related actions require XENOBIO_UPGRADE_SLIMEBASIC
-		slime_up_action.target = src
-		slime_up_action.Grant(user)
-		actions += slime_up_action
-
-	if(slime_place_action && (upgradetier & XENOBIO_UPGRADE_SLIMEBASIC)) //CIT CHANGE - makes slime-related actions require XENOBIO_UPGRADE_SLIMEBASIC
-		slime_place_action.target = src
-		slime_place_action.Grant(user)
-		actions += slime_place_action
-
-	if(feed_slime_action && (upgradetier & XENOBIO_UPGRADE_MONKEYS)) //CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
-		feed_slime_action.target = src
-		feed_slime_action.Grant(user)
-		actions += feed_slime_action
-
-	if(monkey_recycle_action && (upgradetier & XENOBIO_UPGRADE_MONKEYS)) //CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
-		monkey_recycle_action.target = src
-		monkey_recycle_action.Grant(user)
-		actions += monkey_recycle_action
-
-	if(scan_action)
-		scan_action.target = src
-		scan_action.Grant(user)
-		actions += scan_action
-
-	if(potion_action && (upgradetier & XENOBIO_UPGRADE_SLIMEADV)) // CIT CHANGE - makes giving slimes potions via console require XENOBIO_UPGRADE_SLIMEADV
-		potion_action.target = src
-		potion_action.Grant(user)
-		actions += potion_action
-
-	if(hotkey_help)
-		hotkey_help.target = src
-		hotkey_help.Grant(user)
-		actions += hotkey_help
 
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, PROC_REF(XenoSlimeClickCtrl))
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, PROC_REF(XenoSlimeClickAlt))
@@ -139,10 +104,21 @@
 			else
 				upgradetier |= I
 				successfulupgrade = TRUE
+			if(I == XENOBIO_UPGRADE_SLIMEBASIC)
+				actions += new slime_up_action(src)
+				actions += new slime_place_action(src)
 			if(I == XENOBIO_UPGRADE_SLIMEADV)
+				actions += new potion_action(src)
 				max_slimes = 10
+			if(I == XENOBIO_UPGRADE_MONKEYS)
+				actions += new feed_slime_action(src)
+				actions += new monkey_recycle_action(src)
 		if(successfulupgrade)
 			to_chat(user, "<span class='notice'>You have successfully upgraded [src] with [O].</span>")
+
+			for(var/datum/action/actions_removed as anything in actions)
+				actions_removed.Remove(current_user)
+			GrantActions(current_user)
 		else
 			to_chat(user, "<span class='warning'>[src] already has the contents of [O] installed!</span>")
 		return

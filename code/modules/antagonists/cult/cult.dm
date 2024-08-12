@@ -254,7 +254,7 @@
 /datum/team/cult
 	name = "Cult"
 
-	var/blood_target
+	var/atom/blood_target
 	var/image/blood_target_image
 	var/blood_target_reset_timer
 

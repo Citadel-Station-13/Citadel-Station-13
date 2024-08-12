@@ -39,15 +39,15 @@
 	networks = list("ss13")
 	var/obj/item/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	circuit = /obj/item/circuitboard/computer/base_construction
-	off_action = new/datum/action/innate/camera_off/base_construction
+	off_action = /datum/action/innate/camera_off/base_construction
 	jump_action = null
-	var/datum/action/innate/aux_base/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
-	var/datum/action/innate/aux_base/build/build_action = new //Action for using the RCD
-	var/datum/action/innate/aux_base/airlock_type/airlock_mode_action = new //Action for setting the airlock type
-	var/datum/action/innate/aux_base/window_type/window_action = new //Action for setting the window type
-	var/datum/action/innate/aux_base/place_fan/fan_action = new //Action for spawning fans
+	var/datum/action/innate/aux_base/switch_mode/switch_mode_action = /datum/action/innate/aux_base/switch_mode //Action for switching the RCD's build modes
+	var/datum/action/innate/aux_base/build/build_action = /datum/action/innate/aux_base/build //Action for using the RCD
+	var/datum/action/innate/aux_base/airlock_type/airlock_mode_action = /datum/action/innate/aux_base/airlock_type //Action for setting the airlock type
+	var/datum/action/innate/aux_base/window_type/window_action = /datum/action/innate/aux_base/window_type //Action for setting the window type
+	var/datum/action/innate/aux_base/place_fan/fan_action = /datum/action/innate/aux_base/place_fan //Action for spawning fans
 	var/fans_remaining = 0 //Number of fans in stock.
-	var/datum/action/innate/aux_base/install_turret/turret_action = new //Action for spawning turrets
+	var/datum/action/innate/aux_base/install_turret/turret_action = /datum/action/innate/aux_base/install_turret //Action for spawning turrets
 	var/turret_stock = 0 //Turrets in stock
 	var/obj/machinery/computer/auxillary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
 
@@ -58,12 +58,29 @@
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	. = ..()
+
+	populate_actions_list()
+
 	RCD = new(src)
 	RCD.console = src
 	if(mapload) //Map spawned consoles have a filled RCD and stocked special structures
 		RCD.matter = RCD.max_matter
 		fans_remaining = 4
 		turret_stock = 4
+
+/**
+ * Fill the construction_actios list with actions
+ *
+ * Instantiate each action object that we'll be giving to users of
+ * this console, and put it in the actions list
+ */
+/obj/machinery/computer/camera_advanced/base_construction/proc/populate_actions_list()
+	actions += new switch_mode_action(src)
+	actions += new build_action(src)
+	actions += new airlock_mode_action(src)
+	actions += new window_action(src)
+	actions += new fan_action(src)
+	actions += new turret_action(src)
 
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
 
@@ -94,43 +111,12 @@
 	return ..()
 
 /obj/machinery/computer/camera_advanced/base_construction/GrantActions(mob/living/user)
-	..()
-
-	if(switch_mode_action)
-		switch_mode_action.target = src
-		switch_mode_action.Grant(user)
-		actions += switch_mode_action
-
-	if(build_action)
-		build_action.target = src
-		build_action.Grant(user)
-		actions += build_action
-
-	if(airlock_mode_action)
-		airlock_mode_action.target = src
-		airlock_mode_action.Grant(user)
-		actions += airlock_mode_action
-
-	if(window_action)
-		window_action.target = src
-		window_action.Grant(user)
-		actions += window_action
-
-	if(fan_action)
-		fan_action.target = src
-		fan_action.Grant(user)
-		actions += fan_action
-
-	if(turret_action)
-		turret_action.target = src
-		turret_action.Grant(user)
-		actions += turret_action
-
 	eyeobj.invisibility = 0 //When the eye is in use, make it visible to players so they know when someone is building.
+	return ..()
 
 /obj/machinery/computer/camera_advanced/base_construction/remove_eye_control(mob/living/user)
-	..()
 	eyeobj.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
+	return ..()
 
 /datum/action/innate/aux_base //Parent aux base action
 	icon_icon = 'icons/mob/actions/actions_construction.dmi'

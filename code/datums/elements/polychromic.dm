@@ -204,7 +204,9 @@
 	check_flags = NONE
 
 /datum/action/item_action/polychromic/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
-	var/matrix/save_matrix = target.transform
-	target.transform = matrix(0.8, 0, 0, 0, 0.8, 0)
+	var/atom/polychromic_thing = target
+
+	var/matrix/save_matrix = polychromic_thing.transform
+	polychromic_thing.transform = matrix(0.8, 0, 0, 0, 0.8, 0)
 	. = ..()
-	target.transform = save_matrix
+	polychromic_thing.transform = save_matrix
