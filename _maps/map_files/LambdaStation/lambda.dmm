@@ -57435,16 +57435,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "cBY" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = 30
-	},
-/turf/open/floor/plasteel,
+/obj/machinery/door/firedoor,
+/turf/open/floor/wood,
 /area/hallway/primary/fore)
 "cBZ" = (
 /obj/structure/table/glass,
@@ -91473,6 +91465,10 @@
 "wiD" = (
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
+"wiH" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/grimy,
+/area/hallway/primary/fore)
 "wjn" = (
 /obj/structure/lattice,
 /obj/structure/lattice,
@@ -129617,7 +129613,7 @@ aXd
 aYt
 bll
 bln
-cBY
+dEp
 aPg
 aPj
 gVP
@@ -130391,8 +130387,8 @@ cBp
 cBp
 cBp
 cBp
-cBp
-aHY
+wiH
+cBY
 apk
 bPB
 cXU
