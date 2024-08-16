@@ -471,6 +471,19 @@ DEFINE_BITFIELD(vis_flags, list(
 	"VIS_UNDERLAY" = VIS_UNDERLAY,
 ))
 
+// I am so sorry. Required because vis_flags is both undefinable and unreadable on mutable_appearance
+// But we need to display them anyway. See /mutable_appearance/appearance_mirror
+DEFINE_BITFIELD(_vis_flags, list(
+	"VIS_HIDE" = VIS_HIDE,
+	"VIS_INHERIT_DIR" = VIS_INHERIT_DIR,
+	"VIS_INHERIT_ICON" = VIS_INHERIT_ICON,
+	"VIS_INHERIT_ICON_STATE" = VIS_INHERIT_ICON_STATE,
+	"VIS_INHERIT_ID" = VIS_INHERIT_ID,
+	"VIS_INHERIT_LAYER" = VIS_INHERIT_LAYER,
+	"VIS_INHERIT_PLANE" = VIS_INHERIT_PLANE,
+	"VIS_UNDERLAY" = VIS_UNDERLAY,
+))
+
 DEFINE_BITFIELD(visor_flags, list(
 	"ALLOWINTERNALS" = ALLOWINTERNALS,
 	"BLOCK_GAS_SMOKE_EFFECT" = BLOCK_GAS_SMOKE_EFFECT,
