@@ -30,6 +30,18 @@
 	actions += new /datum/action/innate/shuttledocker_rotate(src)
 	actions += new /datum/action/innate/shuttledocker_place(src)
 
+	set_init_ports()
+
+	if(connect_to_shuttle(SSshuttle.get_containing_shuttle(src)))
+		for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary)
+			if(port.shuttle_id == shuttleId)
+				add_jumpable_port(port.shuttle_id)
+
+	for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary)
+		if(!port)
+			continue
+		if(jump_to_ports[port.shuttle_id])
+			z_lock |= port.z
 	GLOB.navigation_computers += src
 	whitelist_turfs = typecacheof(whitelist_turfs)
 
