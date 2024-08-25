@@ -4,6 +4,11 @@
 /obj/item/clothing/head/collectable
 	name = "collectable hat"
 	desc = "A rare collectable hat."
+	icon_state = null
+
+/obj/item/clothing/head/collectable/Initialize()
+	. = ..()
+	AddElement(/datum/element/series, /obj/item/clothing/head/collectable, "Super duper collectable hats")
 
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare Pete's hat!"
