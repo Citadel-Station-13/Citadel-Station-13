@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
-	id = "supply"
+	shuttle_id = "supply"
 	callTime = 600
 
 	dir = WEST

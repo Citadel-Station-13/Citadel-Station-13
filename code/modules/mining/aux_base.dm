@@ -40,12 +40,12 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	if(M)
 		var/destination_found
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-			if(!options.Find(S.id))
+			if(!options.Find(S.shuttle_id))
 				continue
 			if(!M.check_dock(S, silent=TRUE))
 				continue
 			destination_found = 1
-			dat += "<A href='?src=[REF(src)];move=[S.id]'>Send to [S.name]</A><br>"
+			dat += "<A href='?src=[REF(src)];move=[S.shuttle_id]'>Send to [S.name]</A><br>"
 		if(!destination_found && is_station_level(z)) //Only available if miners are lazy and did not set an LZ using the remote.
 			dat += "<A href='?src=[REF(src)];random=1'>Prepare for blind drop? (Dangerous)</A><br>"
 	if(LAZYLEN(turrets))
@@ -56,7 +56,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			var/obj/machinery/porta_turret/aux_base/T = PDT
 			var/integrity = max((T.obj_integrity-T.integrity_failure * T.max_integrity)/(T.max_integrity-T.integrity_failure * max_integrity)*100, 0)
 			var/status
-			if(T.stat & BROKEN)
+			if(T.machine_stat & BROKEN)
 				status = "<span class='bad'>ERROR</span>"
 			else if(!T.on)
 				status = "Disabled"
@@ -167,7 +167,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/area/A = get_area(T)
 
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.id = "colony_drop([REF(src)])"
+	landing_zone.shuttle_id = "colony_drop([REF(src)])"
 	landing_zone.name = "Landing Zone ([T.x], [T.y])"
 	landing_zone.dwidth = base_dock.dwidth
 	landing_zone.dheight = base_dock.dheight
@@ -176,7 +176,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	landing_zone.setDir(base_dock.dir)
 	landing_zone.area_type = A.type
 
-	possible_destinations += "[landing_zone.id];"
+	possible_destinations += "[landing_zone.shuttle_id];"
 
 //Serves as a nice mechanic to people get ready for the launch.
 	minor_announce("Auxiliary base landing zone coordinates locked in for [A]. Launch command now available!")
@@ -238,7 +238,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 /obj/docking_port/mobile/auxillary_base
 	name = "auxillary base"
-	id = "colony_drop"
+	shuttle_id = "colony_drop"
 	//Reminder to map-makers to set these values equal to the size of your base.
 	dheight = 4
 	dwidth = 4
@@ -254,7 +254,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 /obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
-	id = "disabled" //The Aux Base has to leave before this can be used as a dock.
+	shuttle_id = "disabled" //The Aux Base has to leave before this can be used as a dock.
 	//Should be checked on the map to ensure it matchs the mining shuttle dimensions.
 	dwidth = 3
 	width = 7
@@ -303,12 +303,12 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 //Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
 	for(var/S in SSshuttle.stationary)
 		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
-		if(SM.id == "mining_home" || SM.id == "mining_away")
+		if(SM.shuttle_id == "mining_home" || SM.shuttle_id == "mining_away")
 
 			var/area/A = get_area(landing_spot)
 
 			Mport = new(landing_spot)
-			Mport.id = "landing_zone_dock"
+			Mport.shuttle_id = "landing_zone_dock"
 			Mport.name = "auxillary base landing site"
 			Mport.dwidth = SM.dwidth
 			Mport.dheight = SM.dheight
@@ -326,7 +326,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/list/landing_turfs = list() //List of turfs where the mining shuttle may land.
 	for(var/S in SSshuttle.mobile)
 		var/obj/docking_port/mobile/MS = S
-		if(MS.id != "mining")
+		if(MS.shuttle_id != "mining")
 			continue
 		mining_shuttle = MS
 		landing_turfs = mining_shuttle.return_ordered_turfs(x,y,z,dir)

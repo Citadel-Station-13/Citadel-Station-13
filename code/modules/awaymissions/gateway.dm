@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	portal_visuals.reset_visuals()
 
 /obj/machinery/gateway/process()
-	if((stat & (NOPOWER)) && use_power)
+	if((machine_stat & (NOPOWER)) && use_power)
 		if(target)
 			deactivate()
 		return

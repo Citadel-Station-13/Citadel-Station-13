@@ -16117,7 +16117,7 @@
 	dir = 4;
 	dwidth = 8;
 	height = 7;
-	id = "supply_home";
+	shuttle_id = "supply_home";
 	name = "Cargo Bay";
 	width = 20
 	},
@@ -16600,7 +16600,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	shuttle_id = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/delta;
 	width = 7

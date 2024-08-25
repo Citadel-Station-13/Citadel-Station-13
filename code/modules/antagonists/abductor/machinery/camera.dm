@@ -2,12 +2,12 @@
 	name = "Human Observation Console"
 	var/team_number = 0
 	networks = list("ss13", "abductor")
-	var/datum/action/innate/teleport_in/tele_in_action = new
-	var/datum/action/innate/teleport_out/tele_out_action = new
-	var/datum/action/innate/teleport_self/tele_self_action = new
-	var/datum/action/innate/vest_mode_swap/vest_mode_action = new
-	var/datum/action/innate/vest_disguise_swap/vest_disguise_action = new
-	var/datum/action/innate/set_droppoint/set_droppoint_action = new
+	var/datum/action/innate/teleport_in/tele_in_action = /datum/action/innate/teleport_in
+	var/datum/action/innate/teleport_out/tele_out_action = /datum/action/innate/teleport_out
+	var/datum/action/innate/teleport_self/tele_self_action = /datum/action/innate/teleport_self
+	var/datum/action/innate/vest_mode_swap/vest_mode_action = /datum/action/innate/vest_mode_swap
+	var/datum/action/innate/vest_disguise_swap/vest_disguise_action = /datum/action/innate/vest_disguise_swap
+	var/datum/action/innate/set_droppoint/set_droppoint_action = /datum/action/innate/set_droppoint
 	var/obj/machinery/abductor/console/console
 	lock_override = TRUE
 
@@ -22,38 +22,21 @@
 	eyeobj.icon = 'icons/mob/cameramob.dmi'
 	eyeobj.icon_state = "generic_camera"
 
-/obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
-	..()
-
+/obj/machinery/computer/camera_advanced/abductor/Initialize(mapload)
+	. = ..()
+	
 	if(tele_in_action)
-		tele_in_action.target = console.pad
-		tele_in_action.Grant(user)
-		actions += tele_in_action
-
+		actions += new tele_in_action(src)
 	if(tele_out_action)
-		tele_out_action.target = console
-		tele_out_action.Grant(user)
-		actions += tele_out_action
-
+		actions += new tele_out_action(src)
 	if(tele_self_action)
-		tele_self_action.target = console.pad
-		tele_self_action.Grant(user)
-		actions += tele_self_action
-
+		actions += new tele_self_action(src)
 	if(vest_mode_action)
-		vest_mode_action.target = console
-		vest_mode_action.Grant(user)
-		actions += vest_mode_action
-
+		actions += new vest_mode_action(src)
 	if(vest_disguise_action)
-		vest_disguise_action.target = console
-		vest_disguise_action.Grant(user)
-		actions += vest_disguise_action
-
+		actions += new vest_disguise_action(src)
 	if(set_droppoint_action)
-		set_droppoint_action.target = console
-		set_droppoint_action.Grant(user)
-		actions += set_droppoint_action
+		actions += new set_droppoint_action(src)
 
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	return HAS_TRAIT(H, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
@@ -64,10 +47,9 @@
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_in/Activate()
-	if(!target || !iscarbon(owner))
+	if(QDELETED(owner) || !iscarbon(owner))
 		return
-	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/aiEye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
@@ -79,7 +61,7 @@
 	button_icon_state = "beam_up"
 
 /datum/action/innate/teleport_out/Activate()
-	if(!target || !iscarbon(owner))
+	if(QDELETED(owner) || !iscarbon(owner))
 		return
 	var/obj/machinery/abductor/console/console = target
 
@@ -91,14 +73,13 @@
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_self/Activate()
-	if(!target || !iscarbon(owner))
+	if(QDELETED(owner) || !iscarbon(owner))
 		return
-	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/aiEye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		P.MobToLoc(remote_eye.loc,C)
+		P.MobToLoc(remote_eye.loc, owner)
 
 /datum/action/innate/vest_mode_swap
 	name = "Switch Vest Mode"
@@ -106,7 +87,7 @@
 	button_icon_state = "vest_mode"
 
 /datum/action/innate/vest_mode_swap/Activate()
-	if(!target || !iscarbon(owner))
+	if(QDELETED(owner) || !iscarbon(owner))
 		return
 	var/obj/machinery/abductor/console/console = target
 	console.FlipVest()
@@ -118,7 +99,7 @@
 	button_icon_state = "vest_disguise"
 
 /datum/action/innate/vest_disguise_swap/Activate()
-	if(!target || !iscarbon(owner))
+	if(QDELETED(owner) || !iscarbon(owner))
 		return
 	var/obj/machinery/abductor/console/console = target
 	console.SelectDisguise(remote=1)
@@ -129,11 +110,10 @@
 	button_icon_state = "set_drop"
 
 /datum/action/innate/set_droppoint/Activate()
-	if(!target || !iscarbon(owner))
+	if(QDELETED(owner) || !iscarbon(owner))
 		return
 
-	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/aiEye/remote/remote_eye = owner.remote_control
 
 	var/obj/machinery/abductor/console/console = target
 	console.SetDroppoint(remote_eye.loc,owner)

@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/proc/update_power()
 	if(toggled)
 		// if powered, on. if not powered, off. if too damaged, off
-		if(stat &(BROKEN | NOPOWER | EMPED))
+		if(machine_stat &(BROKEN | NOPOWER | EMPED))
 			on = FALSE
 		else
 			on = TRUE
@@ -140,8 +140,8 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if((. & EMP_PROTECT_SELF))
 		return
 	if(prob(severity))
-		if(!(stat & EMPED))
-			stat |= EMPED
+		if(!(machine_stat & EMPED))
+			machine_stat |= EMPED
 			var/duration = severity * 35
 			spawn(rand(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
-				stat &= ~(EMPED)
+				machine_stat &= ~(EMPED)

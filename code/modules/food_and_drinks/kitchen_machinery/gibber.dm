@@ -45,7 +45,7 @@
 	. = ..()
 	if (dirty)
 		. += "grbloody"
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
 		. += "grjam"
@@ -64,7 +64,7 @@
 	go_out()
 
 /obj/machinery/gibber/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
 		to_chat(user, "<span class='danger'>It's locked and running.</span>")

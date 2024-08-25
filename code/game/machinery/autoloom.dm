@@ -43,7 +43,7 @@
 	return ..()
 
 /obj/machinery/autoloom/update_icon_state()
-	var/is_powered = !(stat & (BROKEN|NOPOWER))
+	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
 	icon_state = icon_name + "[is_powered]" // add the blood tag at the end
 
 /obj/machinery/autoloom/CanPass(atom/movable/AM)
@@ -60,7 +60,7 @@
 	. = ..()
 
 /obj/machinery/autoloom/proc/eat(atom/movable/AM0, sound=TRUE)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(!isturf(AM0.loc))
 		return //I don't know how you called Crossed() but stop it.

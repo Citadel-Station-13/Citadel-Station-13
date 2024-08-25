@@ -34,7 +34,7 @@
 
 /obj/machinery/power/generator/update_overlays()
 	. = ..()
-	if(!(stat & (NOPOWER|BROKEN)))
+	if(!(machine_stat & (NOPOWER|BROKEN)))
 		var/L = min(round(lastgenlev/100000),11)
 		if(L != 0)
 			. += image('icons/obj/power.dmi', "teg-op[L]")

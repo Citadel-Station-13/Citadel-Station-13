@@ -113,7 +113,7 @@
 	return newKey
 
 /obj/machinery/telecomms/message_server/process()
-	if(toggled && (stat & (BROKEN|NOPOWER)))
+	if(toggled && (machine_stat & (BROKEN|NOPOWER)))
 		toggled = FALSE
 	update_icon()
 
@@ -132,7 +132,7 @@
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 /obj/machinery/telecomms/message_server/update_icon_state()
-	if((stat & (BROKEN|NOPOWER)))
+	if((machine_stat & (BROKEN|NOPOWER)))
 		icon_state = "server-nopower"
 	else if (!toggled)
 		icon_state = "server-off"

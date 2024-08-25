@@ -34,7 +34,7 @@
 	heat_gen = initial(src.heat_gen) / max(1, tot_rating)
 
 /obj/machinery/rnd/server/proc/refresh_working()
-	if(stat & EMPED)
+	if(machine_stat & EMPED)
 		working = FALSE
 	else
 		working = TRUE
@@ -43,12 +43,12 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	stat |= EMPED
+	machine_stat |= EMPED
 	addtimer(CALLBACK(src, PROC_REF(unemp)), severity*9)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()
-	stat &= ~EMPED
+	machine_stat &= ~EMPED
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/mine()
@@ -62,7 +62,7 @@
 	return environment.return_temperature()
 
 /obj/machinery/rnd/server/proc/produce_heat(perc)
-	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
+	if(!(machine_stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 		var/turf/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()

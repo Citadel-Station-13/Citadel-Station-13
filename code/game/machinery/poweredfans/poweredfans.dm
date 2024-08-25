@@ -19,7 +19,7 @@
 		if(!assembly)
 			assembly = new()
 		assembly.forceMove(drop_location())
-		assembly.stat = 2
+		assembly.machine_stat = 2
 		assembly.setAnchored(TRUE)
 		assembly.setDir(dir)
 		assembly = null
@@ -39,7 +39,7 @@
 		assembly = FA
 	else
 		assembly = new(src)
-		assembly.stat = 3
+		assembly.machine_stat = 3
 	air_update_turf(1)
 
 /obj/machinery/poweredfans/power_change()

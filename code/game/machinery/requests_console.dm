@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	update_icon()
 
 /obj/machinery/requests_console/update_icon_state()
-	if((stat & NOPOWER))
+	if((machine_stat & NOPOWER))
 		set_light(0)
 	else
 		set_light(1.4, 0.7, "#34D352")//green light
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			icon_state="req_comp_open"
 		else
 			icon_state="req_comp_rewired"
-	else if((stat & NOPOWER))
+	else if((machine_stat & NOPOWER))
 		if(icon_state != "req_comp_off")
 			icon_state = "req_comp_off"
 	else

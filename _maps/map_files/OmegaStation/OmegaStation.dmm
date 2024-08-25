@@ -2620,7 +2620,7 @@
 	dir = 4;
 	dwidth = 9;
 	height = 7;
-	id = "supply_home";
+	shuttle_id = "supply_home";
 	name = "Cargo Bay";
 	width = 20
 	},
@@ -8408,7 +8408,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	shuttle_id = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/delta;
 	width = 7
@@ -15922,7 +15922,7 @@
 	dir = 4;
 	dwidth = 11;
 	height = 18;
-	id = "emergency_home";
+	shuttle_id = "emergency_home";
 	name = "OmegaStation emergency evac bay";
 	width = 30
 	},
@@ -34312,7 +34312,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	shuttle_id = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -35489,7 +35489,7 @@
 	dir = 2;
 	dwidth = 2;
 	height = 16;
-	id = "arrivals_stationary";
+	shuttle_id = "arrivals_stationary";
 	name = "omega arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/omega;
 	width = 5
@@ -38527,7 +38527,7 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	id = "syndicate_sw";
+	shuttle_id = "syndicate_sw";
 	name = "southwest of station";
 	width = 23
 	},

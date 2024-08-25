@@ -45,7 +45,7 @@
 	ferment(AM)
 
 /obj/machinery/plumbing/fermenter/proc/ferment(atom/AM)
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(reagents.holder_full())
 		return

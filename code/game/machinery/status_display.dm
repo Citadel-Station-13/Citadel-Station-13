@@ -65,7 +65,7 @@
 		return TRUE
 	balloon_alert(user, "repaired")
 	obj_integrity = max_integrity
-	set_machine_stat(stat & ~BROKEN)
+	set_machine_stat(machine_stat & ~BROKEN)
 	update_appearance()
 	return TRUE
 
@@ -138,7 +138,7 @@
 /obj/machinery/status_display/update_appearance(updates=ALL)
 	. = ..()
 	if( \
-		(stat & (NOPOWER|BROKEN)) || \
+		(machine_stat & (NOPOWER|BROKEN)) || \
 		(current_mode == SD_BLANK) || \
 		(current_mode != SD_PICTURE && message1 == "" && message2 == "") \
 	)
@@ -149,7 +149,7 @@
 /obj/machinery/status_display/update_overlays()
 	. = ..()
 
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		remove_messages()
 		return
 
@@ -181,7 +181,7 @@
 
 // Timed process - performs nothing in the base class
 /obj/machinery/status_display/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		// No power, no processing.
 		update_appearance()
 
@@ -198,7 +198,7 @@
 
 /obj/machinery/status_display/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	current_mode = SD_PICTURE
 	set_picture("ai_bsod")
@@ -323,7 +323,7 @@
 	return ..()
 
 /obj/machinery/status_display/evac/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		// No power, no processing.
 		update_appearance()
 		return PROCESS_KILL
@@ -380,7 +380,7 @@
 	current_mode = SD_MESSAGE
 
 /obj/machinery/status_display/supply/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		// No power, no processing.
 		update_appearance()
 		return PROCESS_KILL
@@ -428,7 +428,7 @@
 	var/shuttle_id
 
 /obj/machinery/status_display/shuttle/process()
-	if(!shuttle_id || (stat & NOPOWER))
+	if(!shuttle_id || (machine_stat & NOPOWER))
 		// No power, no processing.
 		update_appearance()
 		return PROCESS_KILL
@@ -452,7 +452,7 @@
 
 /obj/machinery/status_display/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override)
 	if(port && (shuttle_id == initial(shuttle_id) || override))
-		shuttle_id = port.id
+		shuttle_id = port.shuttle_id
 	update()
 
 
@@ -547,7 +547,7 @@
 		master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 /obj/machinery/status_display/ai/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		update_appearance()
 		return PROCESS_KILL
 

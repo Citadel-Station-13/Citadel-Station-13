@@ -1,15 +1,13 @@
 //============ Actions ============
 /datum/action/innate/shuttle_creator
 	icon_icon = 'icons/mob/actions/actions_shuttle.dmi'
-	var/mob/living/C
 	var/mob/camera/aiEye/remote/shuttle_creation/remote_eye
 	var/obj/item/shuttle_creator/shuttle_creator
 
 /datum/action/innate/shuttle_creator/Activate()
-	if(!target)
-		return TRUE
-	C = owner
-	remote_eye = C.remote_control
+	if(QDELETED(owner) || !isliving(owner))
+		return
+	remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_creator/internal_console = target
 	shuttle_creator = internal_console.owner_rsd
 
@@ -77,23 +75,23 @@
 	var/turf/T = get_turf(remote_eye)
 	for(var/obj/machinery/door/airlock/A in T)
 		if(get_area(A) != shuttle_creator.loggedOldArea)
-			to_chat(C, "<span class='warning'>Caution, airlock must be on the shuttle to function as a dock.</span>")
+			to_chat(owner, "<span class='warning'>Caution, airlock must be on the shuttle to function as a dock.</span>")
 			return
 		if(shuttle_creator.linkedShuttleId)
 			return
 		if(GLOB.custom_shuttle_count > CUSTOM_SHUTTLE_LIMIT)
-			to_chat(C, "<span class='warning'>Shuttle limit reached, sorry.</span>")
+			to_chat(owner, "<span class='warning'>Shuttle limit reached, sorry.</span>")
 			return
 		if(shuttle_creator.loggedTurfs.len > SHUTTLE_CREATOR_MAX_SIZE)
-			to_chat(C, "<span class='warning'>This shuttle is too large!</span>")
+			to_chat(owner, "<span class='warning'>This shuttle is too large!</span>")
 			return
 		if(!shuttle_creator.getNonShuttleDirection(T))
-			to_chat(C, "<span class='warning'>Docking port must be on an external wall, with only 1 side exposed to space.</span>")
+			to_chat(owner, "<span class='warning'>Docking port must be on an external wall, with only 1 side exposed to space.</span>")
 			return
-		if(!shuttle_creator.create_shuttle_area(C))
+		if(!shuttle_creator.create_shuttle_area(owner))
 			return
-		if(shuttle_creator.shuttle_create_docking_port(A, C))
-			to_chat(C, "<span class='notice'>Shuttle created!</span>")
+		if(shuttle_creator.shuttle_create_docking_port(A, owner))
+			to_chat(owner, "<span class='notice'>Shuttle created!</span>")
 		//Remove eye control
 		var/obj/machinery/computer/camera_advanced/shuttle_creator/internal_console = target
 		internal_console.remove_eye_control()

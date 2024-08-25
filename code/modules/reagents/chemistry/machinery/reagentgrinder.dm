@@ -151,7 +151,7 @@
 		options["eject"] = radial_eject
 
 	if(isAI(user))
-		if(stat & NOPOWER)
+		if(machine_stat & NOPOWER)
 			return
 		options["examine"] = radial_examine
 
@@ -173,7 +173,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !hasSiliconAccessInArea(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
+	if(operating || (isAI(user) && machine_stat & NOPOWER) || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 
 	switch(choice)
@@ -206,7 +206,7 @@
 			var/obj/item/O = i
 			. += "<span class='notice'>- \A [O.name].</span>"
 
-	if(!(stat & (NOPOWER|BROKEN)))
+	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>"
 		. += "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>"
 		if(beaker)
@@ -255,7 +255,7 @@
 
 /obj/machinery/reagentgrinder/proc/juice()
 	power_change()
-	if(!beaker || stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
 	operate_for(50, juicing = TRUE)
 	for(var/obj/item/i in holdingitems)
@@ -274,7 +274,7 @@
 
 /obj/machinery/reagentgrinder/proc/grind()
 	power_change()
-	if(!beaker || stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
 	operate_for(60)
 	for(var/i in holdingitems)
@@ -296,7 +296,7 @@
 /obj/machinery/reagentgrinder/proc/mix(mob/user)
 	//For butter and other things that would change upon shaking or mixing
 	power_change()
-	if(!beaker || stat & (NOPOWER|BROKEN))
+	if(!beaker || machine_stat & (NOPOWER|BROKEN))
 		return
 	operate_for(50, juicing = TRUE)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/reagentgrinder, mix_complete)), 50)

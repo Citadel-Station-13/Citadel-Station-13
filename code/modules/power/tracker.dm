@@ -67,7 +67,7 @@
 	return TRUE
 
 /obj/machinery/power/tracker/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		unset_control()
 
@@ -76,7 +76,7 @@
 		if(disassembled)
 			if(assembly)
 				assembly.forceMove(loc)
-				assembly.give_glass(stat & BROKEN)
+				assembly.give_glass(machine_stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, TRUE)
 			var/shard = assembly?.glass_type ? assembly.glass_type.shard_type : /obj/item/shard

@@ -226,7 +226,7 @@
 	air_contents.set_moles(GAS_N2, (N2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "[icon_state]-1"
 
 /obj/machinery/portable_atmospherics/canister/update_overlays()
@@ -252,7 +252,7 @@
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			canister_break()
 		if(disassembled)
 			new /obj/item/stack/sheet/metal (loc, 10)
@@ -280,9 +280,9 @@
 	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
-	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
+	if((machine_stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
 		return
-	stat |= BROKEN
+	machine_stat |= BROKEN
 	canister_break()
 
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
@@ -313,7 +313,7 @@
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return PROCESS_KILL
 	if(timing && valve_timer < world.time)
 		valve_open = !valve_open

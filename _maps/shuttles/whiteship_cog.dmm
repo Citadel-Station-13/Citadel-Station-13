@@ -270,7 +270,7 @@
 	dir = 2;
 	dwidth = 7;
 	height = 9;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Prisoner Transport";
 	port_direction = 8;
