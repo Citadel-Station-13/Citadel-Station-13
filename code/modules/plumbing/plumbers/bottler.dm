@@ -56,7 +56,7 @@
 	to_chat(user, "<span class='notice'> The [src] will now fill for [wanted_amount]u.</span>")
 
 /obj/machinery/plumbing/bottler/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	///see if machine has enough to fill
 	if(reagents.total_volume >= wanted_amount && anchored)

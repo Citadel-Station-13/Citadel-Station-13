@@ -246,14 +246,14 @@
 
 /obj/machinery/vending/update_appearance(updates=ALL)
 	. = ..()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		set_light(0)
 		return
 	set_light(powered() ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
 
 
 /obj/machinery/vending/update_icon_state()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return ..()
 	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
@@ -264,7 +264,7 @@
 	. = ..()
 	if(!light_mask)
 		return
-	if(!(stat & BROKEN) && powered())
+	if(!(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask)
 
 /obj/machinery/vending/obj_break(damage_flag)
@@ -421,7 +421,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
 			to_chat(user, span_warning("You should probably unscrew the service panel first!"))
-		else if (stat & (BROKEN|NOPOWER))
+		else if (machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, span_notice("[src] does not respond."))
 		else
 			//if the panel is open we attempt to refill the machine
@@ -689,7 +689,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	to_chat(user, span_notice("You short out the product lock on [src]."))
 
 /obj/machinery/vending/_try_interact(mob/user)
-	if(seconds_electrified && !(stat & NOPOWER))
+	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
 
@@ -918,7 +918,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	vend_ready = TRUE
 
 /obj/machinery/vending/process(delta_time)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return PROCESS_KILL
 	if(!active)
 		return
@@ -943,7 +943,7 @@ GLOBAL_LIST_EMPTY(vending_products)
  * * message - the message to speak
  */
 /obj/machinery/vending/proc/speak(message)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(!message)
 		return
@@ -1007,7 +1007,7 @@ GLOBAL_LIST_EMPTY(vending_products)
  * * prb - probability the shock happens
  */
 /obj/machinery/vending/proc/shock(mob/living/user, prb)
-	if(!istype(user) || stat & (BROKEN|NOPOWER)) // unpowered, no shock
+	if(!istype(user) || machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

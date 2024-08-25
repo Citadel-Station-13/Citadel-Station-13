@@ -46,7 +46,7 @@
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.</span>"
-	. += {"The power light is [(stat & NOPOWER) ? "off" : "on"].
+	. += {"The power light is [(machine_stat & NOPOWER) ? "off" : "on"].
 	The safety-mode light is [safety_mode ? "on" : "off"].
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
@@ -82,7 +82,7 @@
 	return TRUE
 
 /obj/machinery/recycler/update_icon_state()
-	var/is_powered = !(stat & (BROKEN|NOPOWER))
+	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
@@ -101,7 +101,7 @@
 	. = ..()
 
 /obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return

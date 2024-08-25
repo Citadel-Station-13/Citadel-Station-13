@@ -56,7 +56,7 @@
 				targets += C
 
 	if(!targets.len)
-		stat |= BROKEN
+		machine_stat |= BROKEN
 	update_icon()
 
 
@@ -64,7 +64,7 @@
 // if it's less than 0, open door, reset timer
 // update the door_timer window and the icon
 /obj/machinery/door_timer/process()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
 	if(timing)
@@ -80,7 +80,7 @@
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
 /obj/machinery/door_timer/proc/timer_start()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 
 	activation_time = REALTIMEOFDAY
@@ -102,7 +102,7 @@
 
 /obj/machinery/door_timer/proc/timer_end(forced = FALSE)
 
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 
 	if(!forced)
@@ -152,11 +152,11 @@
 // if timing=true, run update display function
 /obj/machinery/door_timer/update_icon()
 	. = ..()
-	if(stat & (NOPOWER))
+	if(machine_stat & (NOPOWER))
 		icon_state = "frame"
 		return
 
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		set_picture("ai_bsod")
 		return
 

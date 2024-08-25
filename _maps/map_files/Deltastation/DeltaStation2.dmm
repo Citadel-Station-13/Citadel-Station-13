@@ -27,14 +27,14 @@
 /area/hallway/primary/central)
 "aas" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	shuttle_id = "pod_lavaland1";
 	name = "lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
 "aat" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland2";
+	shuttle_id = "pod_lavaland2";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -585,7 +585,7 @@
 	dir = 2;
 	dwidth = 4;
 	height = 17;
-	id = "arrivals_stationary";
+	shuttle_id = "arrivals_stationary";
 	name = "delta arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/delta;
 	width = 9
@@ -1698,7 +1698,7 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	id = "syndicate_ne";
+	shuttle_id = "syndicate_ne";
 	name = "northeast of station";
 	width = 23
 	},
@@ -1709,7 +1709,7 @@
 	dir = 8;
 	dwidth = 11;
 	height = 15;
-	id = "whiteship_home";
+	shuttle_id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
 	width = 32
 	},
@@ -2034,7 +2034,7 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	shuttle_id = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -8402,7 +8402,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	id = "supply_home";
+	shuttle_id = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -14066,7 +14066,7 @@
 "bbz" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland4";
+	shuttle_id = "pod_lavaland4";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -15017,7 +15017,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	shuttle_id = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/delta;
 	width = 7
@@ -19263,7 +19263,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_home";
+	shuttle_id = "laborcamp_home";
 	name = "fore bay 1";
 	roundstart_template = /datum/map_template/shuttle/labour/delta;
 	width = 9
@@ -68930,7 +68930,7 @@
 	dir = 4;
 	dwidth = 11;
 	height = 18;
-	id = "emergency_home";
+	shuttle_id = "emergency_home";
 	name = "DeltaStation emergency evac bay";
 	width = 30
 	},
@@ -93972,7 +93972,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 9;
-	id = "aux_base_zone";
+	shuttle_id = "aux_base_zone";
 	name = "aux base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9
@@ -97343,7 +97343,7 @@
 /obj/docking_port/stationary{
 	dwidth = 3;
 	height = 5;
-	id = "commonmining_home";
+	shuttle_id = "commonmining_home";
 	name = "SS13: Common Mining Dock";
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 7

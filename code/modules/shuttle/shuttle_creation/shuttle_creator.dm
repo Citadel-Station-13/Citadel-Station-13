@@ -184,8 +184,8 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	var/obj/docking_port/stationary/stationary_port = new /obj/docking_port/stationary(get_turf(target))
 	port.callTime = 50
 	port.dir = NORTH	//Point away from space.
-	port.id = "custom_[GLOB.custom_shuttle_count]"
-	linkedShuttleId = port.id
+	port.shuttle_id = "custom_[GLOB.custom_shuttle_count]"
+	linkedShuttleId = port.shuttle_id
 	port.ignitionTime = 25
 	port.name = "Custom Shuttle"
 	port.port_direction = 2

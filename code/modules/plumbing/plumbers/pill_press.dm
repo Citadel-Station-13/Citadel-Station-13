@@ -47,7 +47,7 @@
 
 
 /obj/machinery/plumbing/pill_press/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(reagents.total_volume >= current_volume)
 		if (product == "pill")

@@ -539,7 +539,7 @@
 
 /obj/machinery/computer/med_data/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(severity/10))
 				switch(rand(1,6))

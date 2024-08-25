@@ -81,7 +81,7 @@
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/overlay_state = icon_screen
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		. |= "[icon_keyboard]_off"
 		return
 	. |= icon_keyboard

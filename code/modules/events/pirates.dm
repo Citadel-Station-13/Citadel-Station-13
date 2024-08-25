@@ -160,7 +160,7 @@
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
 	for(var/obj/machinery/rnd/server/S in GLOB.machines)
-		if(S.stat & (NOPOWER|BROKEN))
+		if(S.machine_stat & (NOPOWER|BROKEN))
 			continue
 		S.emp_act(80)
 		new /obj/effect/temp_visual/emp(get_turf(S))
@@ -210,7 +210,7 @@
 
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"
-	id = "pirateship"
+	shuttle_id = "pirateship"
 	rechargeTime = 3 MINUTES
 
 /obj/machinery/suit_storage_unit/pirate

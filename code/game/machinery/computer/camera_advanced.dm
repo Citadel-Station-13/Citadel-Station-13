@@ -83,7 +83,7 @@
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if( (stat & (NOPOWER|BROKEN)) || (!Adjacent(user) && hasSiliconAccessInArea(user)) || user.eye_blind || user.incapacitated() )
+	if( (machine_stat & (NOPOWER|BROKEN)) || (!Adjacent(user) && hasSiliconAccessInArea(user)) || user.eye_blind || user.incapacitated() )
 		user.unset_machine()
 
 /obj/machinery/computer/camera_advanced/Destroy()
@@ -91,6 +91,7 @@
 		current_user.unset_machine()
 	QDEL_NULL(eyeobj)
 	QDEL_LIST(actions)
+	current_user = null
 	return ..()
 
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)

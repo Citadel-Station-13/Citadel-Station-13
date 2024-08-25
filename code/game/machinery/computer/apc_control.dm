@@ -18,7 +18,7 @@
 	logs = list()
 
 /obj/machinery/computer/apc_control/process()
-	if(operator && (!operator.Adjacent(src) || stat))
+	if(operator && (!operator.Adjacent(src) || machine_stat))
 		operator = null
 		if(active_apc)
 			if(!active_apc.locked)
@@ -37,7 +37,7 @@
 	..()
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
-	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
+	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
 
 /obj/machinery/computer/apc_control/ui_interact(mob/user, datum/tgui/ui)
 	operator = user
@@ -201,6 +201,6 @@
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))
-		if(A.operator && A.operator == src && !A.stat)
+		if(A.operator && A.operator == src && !A.machine_stat)
 			return TRUE
 	return

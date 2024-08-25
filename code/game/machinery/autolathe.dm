@@ -67,7 +67,7 @@
 		ui = new(user, src, "Autolathe", capitalize(src.name))
 		ui.open()
 
-	if(shocked && !(stat & NOPOWER))
+	if(shocked && !(machine_stat & NOPOWER))
 		if(shock(user,50))
 			ui.close() //close the window if they got zapped successfully as to prevent them from getting zapped infinitely.
 
@@ -242,7 +242,7 @@
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
-	if(stat)
+	if(machine_stat)
 		return TRUE
 
 	if(istype(O, /obj/item/disk/design_disk))
@@ -404,7 +404,7 @@
 				disabled = FALSE
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER)) // unpowered, no shock
+	if(machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

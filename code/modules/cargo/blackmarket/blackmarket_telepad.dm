@@ -54,7 +54,7 @@
 	queue += purchase
 
 /obj/machinery/ltsrbt/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(recharge_cooldown)
 		recharge_cooldown--

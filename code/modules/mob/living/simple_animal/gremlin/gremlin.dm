@@ -136,7 +136,7 @@ GLOBAL_LIST(bad_gremlin_items)
 		return FALSE
 	if(istype(new_target, /obj/machinery))
 		var/obj/machinery/M = new_target
-		if(M.stat) //Unpowered or broken
+		if(M.machine_stat) //Unpowered or broken
 			return FALSE
 		else if(istype(new_target, /obj/machinery/door/firedoor))
 			var/obj/machinery/door/firedoor/F = new_target

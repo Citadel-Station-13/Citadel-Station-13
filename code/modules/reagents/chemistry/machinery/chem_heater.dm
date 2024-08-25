@@ -58,7 +58,7 @@
 
 /obj/machinery/chem_heater/process()
 	..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(on)
 		if(beaker && beaker.reagents.total_volume)

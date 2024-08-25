@@ -15,7 +15,7 @@
 	/// This will be used in numerous other places like the console,
 	/// stationary ports and whatnot to tell them your ship's mobile
 	/// port can be used in these places, or the docking port is compatible, etc.
-	var/id
+	var/shuttle_id
 	/// Possible destinations
 	var/port_destinations
 	///Common standard is for this to point -away- from the dockingport door, ie towards the ship
@@ -171,7 +171,7 @@
 /obj/docking_port/proc/getDockedId()
 	var/obj/docking_port/P = get_docked()
 	if(P)
-		return P.id
+		return P.shuttle_id
 
 // Say that A in the absolute (rectangular) bounds of this shuttle or no.
 /obj/docking_port/proc/is_in_shuttle_bounds(atom/A)
@@ -199,28 +199,28 @@
 
 /obj/docking_port/stationary/register(replace = FALSE)
 	. = ..()
-	if(!id)
-		id = "dock"
+	if(!shuttle_id)
+		shuttle_id = "dock"
 	else
-		port_destinations = id
+		port_destinations = shuttle_id
 
 	if(!name)
 		name = "dock"
 	// how?
 	// It registers the initial shuttle (no changes)
 	// and if another one comes in with the same name (id) it adds the count on it
-	var/counter = SSshuttle.assoc_stationary[id]
+	var/counter = SSshuttle.assoc_stationary[shuttle_id]
 	if(!replace || !counter)
 		if(counter)
 			counter++
-			SSshuttle.assoc_stationary[id] = counter
-			id = "[id]_[counter]"
+			SSshuttle.assoc_stationary[shuttle_id] = counter
+			shuttle_id = "[shuttle_id]_[counter]"
 			name = "[name] [counter]"
 		else
-			SSshuttle.assoc_stationary[id] = 1
+			SSshuttle.assoc_stationary[shuttle_id] = 1
 
 	if(!port_destinations)
-		port_destinations = id
+		port_destinations = shuttle_id
 
 	SSshuttle.stationary += src
 
@@ -301,7 +301,7 @@
 
 /obj/docking_port/stationary/picked/whiteship
 	name = "Deep Space"
-	id = "whiteship_away"
+	shuttle_id = "whiteship_away"
 	dheight = 0
 	dir = 2
 	dwidth = 11
@@ -316,14 +316,14 @@
 /obj/docking_port/stationary/picked/Initialize(mapload)
 	. = ..()
 	if(!LAZYLEN(shuttlekeys))
-		WARNING("Random docking port [id] loaded with no shuttle keys")
+		WARNING("Random docking port [shuttle_id] loaded with no shuttle keys")
 		return
 	var/selectedid = pick(shuttlekeys)
 	roundstart_template = SSmapping.shuttle_templates[selectedid]
 
 /obj/docking_port/stationary/picked/whiteship
 	name = "Deep Space"
-	id = "whiteship_away"
+	shuttle_id = "whiteship_away"
 	dheight = 0
 	dir = 2
 	dwidth = 11
@@ -382,23 +382,23 @@
 
 /obj/docking_port/mobile/register(replace = FALSE)
 	. = ..()
-	if(!id)
-		id = "shuttle"
+	if(!shuttle_id)
+		shuttle_id = "shuttle"
 
 	if(!name)
 		name = "shuttle"
 
-	var/counter = SSshuttle.assoc_mobile[id]
+	var/counter = SSshuttle.assoc_mobile[shuttle_id]
 	if(!replace || !counter)
 		if(counter)
 			counter++
-			SSshuttle.assoc_mobile[id] = counter
-			id = "[id]_[counter]"
+			SSshuttle.assoc_mobile[shuttle_id] = counter
+			shuttle_id = "[shuttle_id]_[counter]"
 			name = "[name] [counter]"
 			//Re link machinery to new shuttle id
 			linkup()
 		else
-			SSshuttle.assoc_mobile[id] = 1
+			SSshuttle.assoc_mobile[shuttle_id] = 1
 
 	SSshuttle.mobile += src
 
@@ -419,16 +419,16 @@
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
 
-	if(!id)
-		id = "shuttle"
+	if(!shuttle_id)
+		shuttle_id = "shuttle"
 	if(!name)
 		name = "shuttle"
 	var/counter = 1
-	var/tmp_id = id
+	var/tmp_id = shuttle_id
 	var/tmp_name = name
-	while(Check_id(id))
+	while(Check_id(shuttle_id))
 		counter++
-		id = "[tmp_id]_[counter]"
+		shuttle_id = "[tmp_id]_[counter]"
 		name = "[tmp_name] [counter]"
 
 	shuttle_areas = list()
@@ -559,14 +559,14 @@
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
 		if(initiate_docking(S1) != DOCKING_SUCCESS)
-			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
+			WARNING("shuttle \"[shuttle_id]\" could not enter transit space. Docked at [S0 ? S0.shuttle_id : "null"]. Transit dock [S1 ? S1.shuttle_id : "null"].")
 		else if(S0)
 			if(S0.delete_after)
 				qdel(S0, TRUE)
 			else
 				previous = S0
 	else
-		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
+		WARNING("shuttle \"[shuttle_id]\" could not enter transit space. S0=[S0 ? S0.shuttle_id : "null"] S1=[S1 ? S1.shuttle_id : "null"]")
 
 
 /obj/docking_port/mobile/proc/jumpToNullSpace()
@@ -866,11 +866,11 @@
 		else
 			dst = destination
 		if(dst)
-			. = "(transit to) [dst.name || dst.id]"
+			. = "(transit to) [dst.name || dst.shuttle_id]"
 		else
 			. = "(transit to) nowhere"
 	else if(dockedAt)
-		. = dockedAt.name || dockedAt.id
+		. = dockedAt.name || dockedAt.shuttle_id
 	else
 		. = "unknown"
 
@@ -880,7 +880,7 @@
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		for(var/obj/machinery/computer/shuttle/S in shuttle_area)
-			if(S.shuttleId == id)
+			if(S.shuttleId == shuttle_id)
 				return S
 	return null
 
@@ -1011,7 +1011,7 @@
 
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
-		initiate_docking(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
+		initiate_docking(SSshuttle.getDock("[shuttle_id]_away")) //Escape pods dock at centcom
 		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()

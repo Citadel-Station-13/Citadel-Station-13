@@ -42,12 +42,12 @@
 	else
 		data["status"] = M.mode == SHUTTLE_IGNITING ? "Igniting" : M.mode != SHUTTLE_IDLE ? "In Transit" : "Idle"
 	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-		if(!options.Find(S.id))
+		if(!options.Find(S.shuttle_id))
 			continue
 		if(!M.check_dock(S, silent = TRUE))
 			continue
 		var/list/location_data = list(
-			id = S.id,
+			id = S.shuttle_id,
 			name = S.name
 		)
 		data["locations"] += list(location_data)
@@ -120,4 +120,4 @@
 
 /obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
-		shuttleId = port.id
+		shuttleId = port.shuttle_id
