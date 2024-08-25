@@ -103,7 +103,7 @@
 	data.network_id = src
 	log_data_transfer(data)
 	var/list/datum/component/ntnet_interface/receiving = list()
-	if((length(data.recipient_ids == 1) && data.recipient_ids[1] == NETWORK_BROADCAST_ID) || data.recipient_ids == NETWORK_BROADCAST_ID)
+	if((length(data.recipient_ids) == 1 && data.recipient_ids[1] == NETWORK_BROADCAST_ID) || data.recipient_ids == NETWORK_BROADCAST_ID)
 		data.broadcast = TRUE
 		for(var/i in connected_interfaces_by_id)
 			receiving |= connected_interfaces_by_id[i]
