@@ -253,11 +253,12 @@
 	..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(!shuttleId)
+	// This may look ugly (it does), but nowadays this docker already gains an id, so we forbid interactions until correctly linked.
+	if(shuttlePortId != "shuttle[shuttleId]_custom")
 		to_chat(user, "<span class='warning'>You must link the console to a shuttle first.</span>")
 		return
 	return ..()
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/linkShuttle(var/new_id)
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/linkShuttle(new_id)
 	shuttleId = new_id
 	shuttlePortId = "shuttle[new_id]_custom"
