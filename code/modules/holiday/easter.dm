@@ -118,7 +118,7 @@
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
 /obj/item/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
-	var/won = pick(/obj/item/clothing/head/bunnyhead,
+	var/prize_list = list(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
 	/obj/item/reagent_containers/food/snacks/grown/carrot,
 	/obj/item/reagent_containers/food/snacks/chocolateegg,
@@ -126,13 +126,12 @@
 	/obj/item/toy/gun,
 	/obj/item/toy/sword,
 	/obj/item/toy/foamblade,
-	/obj/item/toy/prize/ripley,
-	/obj/item/toy/prize/honk,
 	/obj/item/toy/plush/carpplushie,
 	/obj/item/toy/redbutton,
-	/obj/item/clothing/head/collectable/rabbitears)
+	/obj/item/clothing/head/collectable/rabbitears) + subtypesof(/obj/item/toy/mecha)
+	var/won = pick(prize_list)
 	new won(where)
-	new/obj/item/reagent_containers/food/snacks/chocolateegg(where)
+	new /obj/item/reagent_containers/food/snacks/chocolateegg(where)
 
 /obj/item/reagent_containers/food/snacks/egg/attack_self(mob/user)
 	..()

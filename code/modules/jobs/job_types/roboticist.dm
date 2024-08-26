@@ -27,7 +27,7 @@
 	threat = 1
 
 	family_heirlooms = list(
-		/obj/item/toy/figure/borg
+		/obj/item/toy/figure/borg,
 	)
 
 	mail_goodies = list(
@@ -35,6 +35,10 @@
 		/obj/item/stack/sheet/metal/twenty = 15,
 		/obj/item/modular_computer/tablet/preset/advanced = 5
 	)
+
+/datum/job/roboticist/New()
+	. = ..()
+	family_heirlooms += subtypesof(/obj/item/toy/mecha)
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

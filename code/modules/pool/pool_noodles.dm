@@ -1,7 +1,7 @@
 //Pool noodles
 
 /obj/item/toy/poolnoodle
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "noodle"
 	name = "pool noodle"
 	desc = "A strange, bulky, bendable toy that can annoy people."
