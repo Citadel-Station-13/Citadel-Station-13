@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///loadout stuff
 	var/gear_points = 10
 	var/list/gear_categories
-	var/list/loadout_data = list()
+	var/list/loadout_data[MAXIMUM_LOADOUT_SAVES]
 	var/list/unlockable_loadout_data = list()
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
@@ -367,7 +367,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				//calculate your gear points from the chosen item
 				gear_points = CONFIG_GET(number/initial_gear_points)
 				var/list/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
-				if(chosen_gear)
+				if(islist(chosen_gear))
 					loadout_errors = 0
 					for(var/loadout_item in chosen_gear)
 						var/loadout_item_path = loadout_item[LOADOUT_ITEM]
@@ -910,6 +910,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</tr></table>"
 				if(LOADOUT_CHAR_TAB)
 					dat += "<table align='center' width='100%'>"
+					dat += "<tr><td colspan=4><center><b>Loadout slot</b></center></td></tr>"
+					dat += "<tr><td colspan=4><center>"
+					for(var/iteration in 1 to MAXIMUM_LOADOUT_SAVES)
+						dat += "<a [loadout_slot == iteration ? "class='linkOn'" : "href='?_src_=prefs;preference=gear;select_slot=[iteration]'"]>[iteration]</a>"
+					dat += "</center></td></tr>"
 					dat += "<tr><td colspan=4><center><i style=\"color: grey;\">You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
 					dat += "<tr><td colspan=4><center><b>"
 
@@ -3240,6 +3245,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						preferences_tab = text2num(href_list["tab"])
 
 	if(href_list["preference"] == "gear")
+		if(href_list["select_slot"])
+			var/chosen = text2num(href_list["select_slot"])
+			if(!chosen)
+				return
+			chosen = floor(chosen)
+			if(chosen > MAXIMUM_LOADOUT_SAVES || chosen < 1)
+				return
+			loadout_slot = chosen
 		if(href_list["clear_loadout"])
 			loadout_data["SAVE_[loadout_slot]"] = list()
 			save_preferences()
