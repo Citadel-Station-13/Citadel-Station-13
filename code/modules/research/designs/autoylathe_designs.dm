@@ -81,76 +81,129 @@
 	category = list("initial", "Toys")
 
 /datum/design/autoylathe/mech/model1
-	name = "Toy Ripley"
+	name = "Toy Ripley MK-I"
 	id = "toymech1"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/ripley
+	build_path = /obj/item/toy/mecha/ripley
+	category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model2
-	name = "Toy Firefighter Ripley"
+	name = "Toy Ripley MK-II"
 	id = "toymech2"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/fireripley
+	build_path = /obj/item/toy/mecha/ripleymkii
+	category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/contraband/model3
-	name = "Toy Deathsquad fireripley "
+/datum/design/autoylathe/mech/model3
+	name = "Toy Hauler"
 	id = "toymech3"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/deathripley
+	build_path = /obj/item/toy/mecha/hauler
+	category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model4
-	name = "Toy Gygax"
+	name = "Toy Clarke"
 	id = "toymech4"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/gygax
+	build_path = /obj/item/toy/mecha/clarke
+	category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model5
-	name = "Toy Durand"
+	name = "Toy Odysseus"
 	id = "toymech5"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/durand
+	build_path = /obj/item/toy/mecha/odysseus
+	category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/contraband/model6
-	name = "Toy H.O.N.K."
+/datum/design/autoylathe/mech/model6
+	name = "Toy Gygax"
 	id = "toymech6"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/honk
+	build_path = /obj/item/toy/mecha/gygax
+	category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/contraband/model7
-	name = "Toy Marauder"
+/datum/design/autoylathe/mech/model7
+	name = "Toy Durand"
 	id = "toymech7"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/marauder
+	build_path = /obj/item/toy/mecha/durand
+	category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/contraband/model8
-	name = "Toy Seraph"
+/datum/design/autoylathe/mech/model8
+	name = "Toy Savannah-Ivanov"
 	id = "toymech8"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/seraph
+	build_path = /obj/item/toy/mecha/savannahivanov
+	category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/contraband/model9
-	name = "Toy Mauler"
+/datum/design/autoylathe/mech/model9
+	name = "Toy Phazon"
 	id = "toymech9"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/mauler
+	build_path = /obj/item/toy/mecha/phazon
+	category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/model10
-	name = "Toy Odysseus"
+/datum/design/autoylathe/mech/contraband/model10
+	name = "Toy H.O.N.K"
 	id = "toymech10"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/odysseus
+	build_path = /obj/item/toy/mecha/honk
+	category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/model11
-	name = "Toy Phazon"
+/datum/design/autoylathe/mech/contraband/model11
+	name = "Toy Dark Gygax"
 	id = "toymech11"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/phazon
+	build_path = /obj/item/toy/mecha/darkgygax
+	category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/contraband/model12
-	name = "Toy Reticence"
+	name = "Toy Mauler"
 	id = "toymech12"
 	materials = list(/datum/material/plastic = 250)
-	build_path = /obj/item/toy/prize/reticence
+	build_path = /obj/item/toy/mecha/mauler
+	category = list("hacked", "Figurines")
+
+/datum/design/autoylathe/mech/contraband/model13
+	name = "Toy Dark H.O.N.K"
+	id = "toymech13"
+	materials = list(/datum/material/plastic = 250)
+	build_path = /obj/item/toy/mecha/darkhonk
+	category = list("hacked", "Figurines")
+
+/datum/design/autoylathe/mech/contraband/model14
+	name = "Toy Death-Ripley"
+	id = "toymech14"
+	materials = list(/datum/material/plastic = 250)
+	build_path = /obj/item/toy/mecha/deathripley
+	category = list("hacked", "Figurines")
+
+/datum/design/autoylathe/mech/contraband/model15
+	name = "Toy Reticence"
+	id = "toymech15"
+	materials = list(/datum/material/plastic = 250)
+	build_path = /obj/item/toy/mecha/reticence
+	category = list("hacked", "Figurines")
+
+/datum/design/autoylathe/mech/contraband/model16
+	name = "Toy Marauder"
+	id = "toymech16"
+	materials = list(/datum/material/plastic = 250)
+	build_path = /obj/item/toy/mecha/marauder
+	category = list("hacked", "Figurines")
+
+/datum/design/autoylathe/mech/contraband/model17
+	name = "Toy Seraph"
+	id = "toymech17"
+	materials = list(/datum/material/plastic = 250)
+	build_path = /obj/item/toy/mecha/seraph
+	category = list("hacked", "Figurines")
+
+/datum/design/autoylathe/mech/model18
+	name = "Toy Firefighter"
+	id = "toymech18"
+	materials = list(/datum/material/plastic = 250)
+	build_path = /obj/item/toy/mecha/firefighter
 	category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/talking/AI

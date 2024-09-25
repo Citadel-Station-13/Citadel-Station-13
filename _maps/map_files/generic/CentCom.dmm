@@ -17971,7 +17971,7 @@
 /area/syndicate_mothership)
 "Sb" = (
 /obj/structure/table/wood,
-/obj/item/toy/prize/mauler{
+/obj/item/toy/mecha/mauler{
 	pixel_y = 12
 	},
 /turf/open/floor/plasteel/dark,
