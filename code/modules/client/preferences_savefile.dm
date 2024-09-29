@@ -914,8 +914,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(istext(S["loadout"]))
 		loadout_data = safe_json_decode(S["loadout"])
 	else
-		var/list/make_new[MAXIMUM_LOADOUT_SAVES]
-		loadout_data = make_new
+		loadout_data = list()
 	//let's remember their last used slot, i'm sure "oops i brought the wrong stuff" will be an issue now
 	S["loadout_slot"] >> loadout_slot
 
@@ -1286,8 +1285,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(islist(loadout_data))
 		S["loadout"] << safe_json_encode(loadout_data)
 	else
-		var/list/make_new[MAXIMUM_LOADOUT_SAVES]
-		S["loadout"] << safe_json_encode(make_new)
+		S["loadout"] << safe_json_encode(list())
 	WRITE_FILE(S["loadout_slot"], loadout_slot)
 
 	if(length(tcg_cards))

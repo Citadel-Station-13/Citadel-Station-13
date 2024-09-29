@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///loadout stuff
 	var/gear_points = 10
 	var/list/gear_categories
-	var/list/loadout_data[MAXIMUM_LOADOUT_SAVES]
+	var/list/loadout_data
 	var/list/unlockable_loadout_data = list()
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
