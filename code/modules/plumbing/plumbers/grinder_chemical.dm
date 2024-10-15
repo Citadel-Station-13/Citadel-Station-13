@@ -25,7 +25,7 @@
 
 	return TRUE
 
-rinder_chemical/Crossed(atom/movable/AM)
+/obj/machinery/plumbing/grinder_chemical/Crossed(atom/movable/AM)
 	. = ..()
 	grind(AM)
 
