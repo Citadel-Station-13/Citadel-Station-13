@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;atom&#x2F;movable&#x2F;screen&#x2F;alert&#x2F;give - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="atom/movable/screen/alert/give.html#proc">Proc Details</a></header>
+<main>
+<h1>give <aside>/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/<a href="atom/movable/screen.html">screen</a>/<a href="atom/movable/screen/alert.html">alert</a>/<a href="atom/movable/screen/alert/give.html">give</a></aside>
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/77c1554bf7d138030d8b00755af9477612e64165/code/_onclick/hud/alert.dm#L311">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;alert.dm 311"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="atom/movable/screen/alert/give.html#proc/check_in_range">check_in_range</a></th><td>Simply checks if the other person is still in range</td></tr>
+            <tr><th><a href="atom/movable/screen/alert/give.html#proc/handle_transfer">handle_transfer</a></th><td>An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred</td></tr>
+            <tr><th><a href="atom/movable/screen/alert/give.html#proc/setup">setup</a></th><td>Handles assigning most of the variables for the alert that pops up when an item is offered</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/check_in_range"><aside class="declaration">proc </aside>check_in_range<aside>(/<a href="atom.html">atom</a>/taker) 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/77c1554bf7d138030d8b00755af9477612e64165/code/_onclick/hud/alert.dm#L350">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;alert.dm 350"/></a></aside>
+        </h3>
+        <p>Simply checks if the other person is still in range</p><h3 id="proc/handle_transfer"><aside class="declaration">proc </aside>handle_transfer<aside>() 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/77c1554bf7d138030d8b00755af9477612e64165/code/_onclick/hud/alert.dm#L345">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;alert.dm 345"/></a></aside>
+        </h3>
+        <p>An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred</p><h3 id="proc/setup"><aside class="declaration">proc </aside>setup<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/taker, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/offerer, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/receiving) 
+        
+    
+            <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/blob/77c1554bf7d138030d8b00755af9477612e64165/code/_onclick/hud/alert.dm#L326">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;alert.dm 326"/></a></aside>
+        </h3>
+        <p>Handles assigning most of the variables for the alert that pops up when an item is offered</p>
+<p>Handles setting the name, description and icon of the alert and tracking the person giving
+and the item being offered, also registers a signal that removes the alert from anyone who moves away from the offerer
+Arguments:</p>
+<ul>
+<li>taker - The person receiving the alert</li>
+<li>offerer - The person giving the alert and item</li>
+<li>receiving - The item being given by the offerer</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/Citadel-Station-13/Citadel-Station-13/tree/77c1554bf7d138030d8b00755af9477612e64165">77c1554</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
