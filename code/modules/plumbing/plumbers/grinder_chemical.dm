@@ -17,29 +17,15 @@
 	if(anchored)
 		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
 		return FALSE
-	switch(eat_dir)
-		if(WEST)
-			eat_dir = NORTH
-			return TRUE
-		if(EAST)
-			eat_dir = SOUTH
-			return TRUE
-		if(NORTH)
-			eat_dir = EAST
-			return TRUE
-		if(SOUTH)
-			eat_dir = WEST
-			return TRUE
 
 /obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
 	. = ..()
 	if(!anchored)
 		return
-	var/move_dir = get_dir(loc, AM.loc)
-	if(move_dir == eat_dir)
-		return TRUE
 
-/obj/machinery/plumbing/grinder_chemical/Crossed(atom/movable/AM)
+	return TRUE
+
+rinder_chemical/Crossed(atom/movable/AM)
 	. = ..()
 	grind(AM)
 
@@ -61,4 +47,8 @@
 			return
 		I.on_grind()
 		reagents.add_reagent_list(I.grind_results)
+
+		if(I.reagents) //If the thing has any reagents inside of it, grind them up.
+			I.reagents.trans_to(reagents, I.reagents.total_volume)
+
 		qdel(I)
