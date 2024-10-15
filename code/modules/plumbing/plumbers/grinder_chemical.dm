@@ -7,7 +7,6 @@
 	rcd_cost = 30
 	rcd_delay = 30
 	buffer = 400
-	var/eat_dir = NORTH
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt)
 	. = ..()
