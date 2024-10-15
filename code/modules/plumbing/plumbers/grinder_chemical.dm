@@ -7,15 +7,38 @@
 	rcd_cost = 30
 	rcd_delay = 30
 	buffer = 400
+	var/eat_dir = NORTH
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
-/obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user,rotation_type)
+/obj/machinery/plumbing/grinder_chemical/examine(mob/user)
+	. = ..()
+	. += span_notice("The input direction for this item can be rotated by using CTRL+SHIFT+CLICK")
+
+/obj/machinery/plumbing/grinder_chemical/CtrlShiftClick(mob/user)
 	if(anchored)
 		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
 		return FALSE
+
+	switch(eat_dir)
+		if(WEST)
+			balloon_alert(user, "set to north")
+			eat_dir = NORTH
+			return TRUE
+		if(EAST)
+			balloon_alert(user, "set to south")
+			eat_dir = SOUTH
+			return TRUE
+		if(NORTH)
+			balloon_alert(user, "set to east")
+			eat_dir = EAST
+			return TRUE
+		if(SOUTH)
+			balloon_alert(user, "set to west")
+			eat_dir = WEST
+			return TRUE
 
 	return TRUE
 
@@ -24,7 +47,9 @@
 	if(!anchored)
 		return
 
-	return TRUE
+	var/move_dir = get_dir(loc, AM.loc)
+	if(move_dir == eat_dir)
+		return TRUE
 
 /obj/machinery/plumbing/grinder_chemical/Crossed(atom/movable/AM)
 	. = ..()
