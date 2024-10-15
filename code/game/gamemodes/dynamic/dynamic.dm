@@ -257,13 +257,23 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return rule.round_result()
 	return ..()
 
+/datum/game_mode/dynamic/generate_station_goals()
+	if(round(shown_threat) < 30)
+		if(length(current_players[CURRENT_LIVING_ANTAGS]))
+			station_goal_budget = 2
+		else if(round(shown_threat < 20))
+			station_goal_budget = INFINITY
+	return ..()
+
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
+	var/green_shift = FALSE
 	switch(round(shown_threat))
 		if(0 to 19)
 			if(!current_players[CURRENT_LIVING_ANTAGS].len)
 				. += "<b>Peaceful Waypoint</b></center><BR>"
 				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
+				green_shift = TRUE
 			else
 				. += "<b>Core Territory</b></center><BR>"
 				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
@@ -291,9 +301,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			. += G.get_report()
 
 	print_command_report(., "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", "intercept")
-	if(GLOB.security_level < SEC_LEVEL_BLUE)
-		set_security_level(SEC_LEVEL_BLUE)
+	if(green_shift)
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", "commandreport")
+	else
+		priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", "intercept")
+
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
