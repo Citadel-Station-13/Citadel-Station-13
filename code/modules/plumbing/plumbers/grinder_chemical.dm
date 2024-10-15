@@ -18,6 +18,8 @@
 		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
 		return FALSE
 
+	return TRUE
+
 /obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
 	. = ..()
 	if(!anchored)
