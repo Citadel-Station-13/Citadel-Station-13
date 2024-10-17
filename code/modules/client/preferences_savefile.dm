@@ -911,10 +911,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			belly_prefs = json_from_file["belly_prefs"]
 
 	//gear loadout
-	if(S["loadout"])
+	if(istext(S["loadout"]))
 		loadout_data = safe_json_decode(S["loadout"])
 	else
 		loadout_data = list()
+	//let's remember their last used slot, i'm sure "oops i brought the wrong stuff" will be an issue now
+	S["loadout_slot"] >> loadout_slot
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
@@ -1093,6 +1095,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vore_taste = copytext(vore_taste, 1, MAX_TASTE_LEN)
 	vore_smell = copytext(vore_smell, 1, MAX_TASTE_LEN)
 	belly_prefs = SANITIZE_LIST(belly_prefs)
+
+	loadout_slot = sanitize_num_clamp(loadout_slot, 1, MAXIMUM_LOADOUT_SAVES, 1, TRUE)
 
 	cit_character_pref_load(S)
 
@@ -1278,10 +1282,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 	//gear loadout
-	if(length(loadout_data))
+	if(islist(loadout_data))
 		S["loadout"] << safe_json_encode(loadout_data)
 	else
 		S["loadout"] << safe_json_encode(list())
+	WRITE_FILE(S["loadout_slot"], loadout_slot)
 
 	if(length(tcg_cards))
 		S["tcg_cards"] << safe_json_encode(tcg_cards)
