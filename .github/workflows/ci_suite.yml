@@ -8,7 +8,7 @@ on:
     - master
 jobs:
   run_linters:
-    if: !contains(github.event.head_commit.message, '[ci skip]')
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Run Linters
     runs-on: ubuntu-22.04
     steps:
@@ -51,7 +51,7 @@ jobs:
           outputFile: output-annotations.txt
 
   compile_all_maps:
-    if: !contains(github.event.head_commit.message, '[ci skip]')
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Compile Maps
     runs-on: ubuntu-22.04
     steps:
@@ -67,7 +67,7 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
   run_all_tests:
-    if: !contains(github.event.head_commit.message, '[ci skip]')
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Integration Tests
     runs-on: ubuntu-22.04
     services:
@@ -118,7 +118,7 @@ jobs:
           tools/build/build --ci -DCIBUILDING
           bash tools/ci/run_server.sh
   test_windows:
-    if: !contains(github.event.head_commit.message, '[ci skip]')
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Windows Build
     runs-on: windows-latest
     steps:
@@ -141,7 +141,7 @@ jobs:
           md deploy
           bash tools/deploy.sh ./deploy
       - name: Deploy artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: deploy
           path: deploy
