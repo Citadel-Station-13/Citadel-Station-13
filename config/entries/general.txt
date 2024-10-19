@@ -515,3 +515,7 @@ RANDOMIZING_STATION_NAME_MESSAGE %NEW_STATION_NAME%? %NEW_STATION_NAME%! %NEW_ST
 RANDOMIZING_STATION_NAME_MESSAGE A popular social network application had already claimed the trademark of %CURRENT_STATION_NAME%, the station has been renamed to %NEW_STATION_NAME%.
 RANDOMIZING_STATION_NAME_MESSAGE We're pulling a prank on %RANDOM_CREWMEMBER%, so we've changed the station's name to %NEW_STATION_NAME%.
 RANDOMIZING_STATION_NAME_MESSAGE %RANDOM_NAME% made us change the station name, which is now %NEW_STATION_NAME%.
+
+## Comment to disable sending a toast notification on the host server when initializations complete.
+## Even if this is enabled, a notification will only be sent if there are no clients connected.
+TOAST_NOTIFICATION_ON_INIT
