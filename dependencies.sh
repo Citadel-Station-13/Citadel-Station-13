@@ -13,12 +13,13 @@ export RUST_G_VERSION=0.4.10
 #node version
 export NODE_VERSION=16
 export NODE_VERSION_PRECISE=16.13.1
+export NODE_VERSION_LTS=20.12.0
 
 # SpacemanDMM git tag
-export SPACEMAN_DMM_VERSION=suite-1.8
+export SPACEMAN_DMM_VERSION=suite-1.9
 
 # Python version for mapmerge and other tools
-export PYTHON_VERSION=3.7.9
+export PYTHON_VERSION=3.9.0
 
 # Auxmos git tag
 export AUXMOS_VERSION=v2.5.1
