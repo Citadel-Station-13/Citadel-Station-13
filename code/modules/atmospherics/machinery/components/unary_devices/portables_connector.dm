@@ -24,10 +24,12 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/portables_connector/update_icon_nopipes()
-	icon_state = "connector"
+	cut_overlays()
 	if(showpipe)
 		var/image/cap = getpipeimage(icon, "connector_cap", initialize_directions, piping_layer = piping_layer)
 		add_overlay(cap)
+
+	icon_state = "connector"
 
 /obj/machinery/atmospherics/components/unary/portables_connector/process_atmos()
 	if(!connected_device)
@@ -37,7 +39,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
 	. = ..()
 	if(. && connected_device)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], detach [connected_device] first!"))
 		return FALSE
 
 /obj/machinery/atmospherics/components/unary/portables_connector/portableConnectorReturnAir()
