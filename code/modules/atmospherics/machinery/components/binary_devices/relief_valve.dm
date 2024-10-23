@@ -6,10 +6,12 @@
 	can_unwrench = TRUE
 	construction_type = /obj/item/pipe/binary
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	pipe_state = "relief_valve-t"
+	shift_underlay_only = FALSE
+
 	var/opened = FALSE
 	var/open_pressure = ONE_ATMOSPHERE * 3
 	var/close_pressure = ONE_ATMOSPHERE
-	pipe_state = "relief_valve-t"
 
 /obj/machinery/atmospherics/components/binary/relief_valve/layer1
 	piping_layer = PIPING_LAYER_MIN
