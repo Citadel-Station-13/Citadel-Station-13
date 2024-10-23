@@ -3,6 +3,7 @@
 	name = "large cardboard box"
 	desc = "Just a box..."
 	icon_state = "cardboard"
+	has_door_icon = FALSE
 	mob_storage_capacity = 1
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -26,7 +27,7 @@
 	step(src, direction)
 	user.setDir(direction)
 	if(oldloc != loc)
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), (use_mob_movespeed ? user.movement_delay() : CONFIG_GET(number/movedelay/walk_delay)) * move_speed_multiplier)
+		addtimer(CALLBACK(src, PROC_REF(ResetMoveDelay)), (use_mob_movespeed ? user.movement_delay() : CONFIG_GET(number/movedelay/walk_delay)) * move_speed_multiplier)
 	else
 		ResetMoveDelay()
 
@@ -35,7 +36,7 @@
 
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
-		return 0
+		return FALSE
 	var/list/alerted = null
 	if(egged < world.time)
 		var/mob/living/Snake = null

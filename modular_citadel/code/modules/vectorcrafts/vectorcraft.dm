@@ -133,10 +133,10 @@
 	check_boost()
 	if(driver.m_intent == MOVE_INTENT_WALK)
 		var/deceleration = max_deceleration
-		if(driver.in_throw_mode)
+		if(driver.throw_mode)
 			deceleration *= 1.5
 		friction(deceleration, TRUE)
-	else if(driver.in_throw_mode)
+	else if(driver.throw_mode)
 		friction(max_deceleration*1.2, TRUE)
 	friction(max_deceleration/4)
 
@@ -467,15 +467,15 @@ if(driver.sprinting && !(boost_cooldown))
 				return WEST
 	else
 		switch(angle)
-			if(0 to -22)
+			if(-22 to 0)
 				return EAST
-			if(-22 to -67)
+			if(-67 to -22)
 				return SOUTHEAST
-			if(-67 to -112)
+			if(-112 to -67)
 				return SOUTH
-			if(-112 to -157)
+			if(-157 to -112)
 				return SOUTHWEST
-			if(-157 to -180)
+			if(-180 to -157)
 				return WEST
 
 

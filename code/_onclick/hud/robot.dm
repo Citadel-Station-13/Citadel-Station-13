@@ -7,7 +7,7 @@
 
 /atom/movable/screen/robot/Click()
 	if(isobserver(usr))
-		return 1
+		return TRUE
 
 /atom/movable/screen/robot/module/Click()
 	if(..())
@@ -15,7 +15,7 @@
 	var/mob/living/silicon/robot/R = usr
 	if(R.module.type != /obj/item/robot_module)
 		R.hud_used.toggle_show_robot_modules()
-		return 1
+		return TRUE
 	R.pick_module()
 
 /atom/movable/screen/robot/module1
@@ -155,11 +155,25 @@
 	static_inventory += using
 	robit.thruster_button = using
 
+//PDA message
+	using = new /atom/movable/screen/robot/pda_msg_send
+	using.screen_loc = ui_borg_pda_send
+	using.hud = src
+	static_inventory += using
+
+//PDA log
+	using = new /atom/movable/screen/robot/pda_msg_show
+	using.screen_loc = ui_borg_pda_log
+	using.hud = src
+	static_inventory += using
+
 //Intent
 	action_intent = new /atom/movable/screen/act_intent/robot()
 	action_intent.icon_state = mymob.a_intent
 	action_intent.hud = src
 	static_inventory += action_intent
+
+	assert_move_intent_ui(owner, TRUE)
 
 //Health
 	healths = new /atom/movable/screen/healths/robot()
@@ -190,6 +204,41 @@
 	zone_select.update_icon()
 	static_inventory += zone_select
 
+/datum/hud/robot/proc/assert_move_intent_ui(mob/living/silicon/robot/owner = mymob, on_new = FALSE)
+	var/atom/movable/screen/using
+	// delete old ones
+	var/list/atom/movable/screen/victims = list()
+	victims += locate(/atom/movable/screen/mov_intent) in static_inventory
+	victims += locate(/atom/movable/screen/sprintbutton) in static_inventory
+	if(victims)
+		static_inventory -= victims
+		if(mymob?.client)
+			mymob.client.screen -= victims
+		QDEL_LIST(victims)
+
+	// make new ones
+	// walk/run
+	using = new /atom/movable/screen/mov_intent
+	using.icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+	using.screen_loc = ui_borg_movi
+	using.hud = src
+	using.update_icon()
+	static_inventory += using
+	if(!on_new)
+		owner?.client?.screen += using
+
+	if(!CONFIG_GET(flag/sprint_enabled))
+		return
+
+	// sprint button
+	using = new /atom/movable/screen/sprintbutton
+	using.icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+	using.icon_state = owner.cansprint ? ((owner.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) ? "act_sprint_on" : "act_sprint") : "act_sprint_locked"
+	using.screen_loc = ui_borg_movi
+	using.hud = src
+	static_inventory += using
+	if(!on_new)
+		owner?.client?.screen += using
 
 /datum/hud/proc/toggle_show_robot_modules()
 	if(!iscyborg(mymob))
@@ -296,6 +345,7 @@
 	update_icon()
 
 /atom/movable/screen/robot/lamp/update_icon()
+	. = ..()
 	if(robot?.lamp_enabled)
 		icon_state = "lamp_on"
 	else
@@ -311,7 +361,7 @@
 	if(.)
 		return
 	var/mob/living/silicon/robot/borgo = usr
-	borgo.robot_alerts()
+	borgo.alert_control.ui_interact(borgo)
 
 /atom/movable/screen/robot/thrusters
 	name = "ion thrusters"
@@ -342,24 +392,6 @@
 	if(.)
 		return
 	robot.modularInterface?.interact(robot)
-
-//borg pda
-/datum/hud/robot/New(mob/owner)
-	. = ..()
-
-	var/atom/movable/screen/using
-
-	//PDA message
-	using = new /atom/movable/screen/robot/pda_msg_send
-	using.screen_loc = ui_borg_pda_send
-	using.hud = src
-	static_inventory += using
-
-	//PDA log
-	using = new /atom/movable/screen/robot/pda_msg_show
-	using.screen_loc = ui_borg_pda_log
-	using.hud = src
-	static_inventory += using
 
 /atom/movable/screen/robot/pda_msg_send
 	name = "PDA - Send Message"

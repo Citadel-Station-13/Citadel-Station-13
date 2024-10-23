@@ -52,7 +52,14 @@ Buildable meters
 	update()
 	pixel_x += rand(-5, 5)
 	pixel_y += rand(-5, 5)
+	register_context()
 	return ..()
+
+/obj/item/pipe/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Fasten")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
 	setDir(make_from.dir)

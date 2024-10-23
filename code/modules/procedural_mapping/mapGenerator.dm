@@ -37,7 +37,7 @@
 //Returns the map
 /datum/mapGenerator/proc/defineRegion(turf/Start, turf/End, replace = 0)
 	if(!checkRegion(Start, End))
-		return 0
+		return FALSE
 
 	if(replace)
 		undefineRegion()
@@ -49,7 +49,7 @@
 //Returns the map
 /datum/mapGenerator/proc/defineCircularRegion(turf/Start, turf/End, replace = 0)
 	if(!checkRegion(Start, End))
-		return 0
+		return FALSE
 
 	var/centerX = max(abs((End.x+Start.x)/2),1)
 	var/centerY = max(abs((End.y+Start.y)/2),1)
@@ -92,7 +92,7 @@
 	. = 1
 
 	if(!Start || !End)
-		return 0 //Just bail
+		return FALSE //Just bail
 
 	if(Start.x > world.maxx || End.x > world.maxx)
 		. = 0
@@ -108,7 +108,7 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/mapGeneratorModule/mod in modules)
-		INVOKE_ASYNC(mod, /datum/mapGeneratorModule.proc/generate)
+		INVOKE_ASYNC(mod, TYPE_PROC_REF(/datum/mapGeneratorModule, generate))
 
 
 //Requests the mapGeneratorModule(s) to (re)generate this one turf
@@ -119,7 +119,7 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/mapGeneratorModule/mod in modules)
-		INVOKE_ASYNC(mod, /datum/mapGeneratorModule.proc/place, T)
+		INVOKE_ASYNC(mod, TYPE_PROC_REF(/datum/mapGeneratorModule, place), T)
 
 
 //Replaces all paths in the module list with actual module datums
@@ -153,10 +153,10 @@
 		return
 
 	var/endInput = input(usr,"End turf of Map (X;Y;Z)", "Map Gen Settings", "[world.maxx];[world.maxy];[mob ? mob.z : 1]") as text|null
-	
+
 	if (isnull(endInput))
 		return
-	
+
 	//maxx maxy and current z so that if you fuck up, you only fuck up one entire z level instead of the entire universe
 	if(!startInput || !endInput)
 		to_chat(src, "Missing Input")

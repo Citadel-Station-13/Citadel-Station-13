@@ -77,6 +77,7 @@
 		. = . || (caller.pass_flags & PASSBLOB)
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
+	. = ..()
 	if(overmind)
 		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
 	else
@@ -123,8 +124,8 @@
 			heal_timestamp = world.time + 20
 		update_icon()
 		pulse_timestamp = world.time + 10
-		return 1 //we did it, we were pulsed!
-	return 0 //oh no we failed
+		return TRUE //we did it, we were pulsed!
+	return FALSE //oh no we failed
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
@@ -157,7 +158,7 @@
 			else
 				T = null
 	if(!T)
-		return 0
+		return FALSE
 	var/make_blob = TRUE //can we make a blob?
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
@@ -271,7 +272,7 @@
 			damage_amount *= fire_resist
 		if(CLONE)
 		else
-			return 0
+			return FALSE
 	var/armor_protection = 0
 	if(damage_flag)
 		armor_protection = armor.getRating(damage_flag)

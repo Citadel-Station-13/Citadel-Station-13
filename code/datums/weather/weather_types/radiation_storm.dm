@@ -21,7 +21,7 @@
 	/area/ai_monitored/turret_protected/ai, /area/commons/storage/emergency/starboard, /area/commons/storage/emergency/port, /area/shuttle, /area/ruin/lavaland)
 	target_trait = ZTRAIT_STATION
 
-	immunity_type = "rad"
+	immunity_type = TRAIT_RADSTORM_IMMUNE
 
 	var/radiation_intensity = 100
 

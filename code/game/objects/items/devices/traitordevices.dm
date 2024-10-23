@@ -97,7 +97,7 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		if(knowledge)
 			to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
+		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), M, intensity), (wavelength+(intensity*4))*5)
 	else
 		if(knowledge)
 			to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
@@ -217,7 +217,7 @@ effective or pretty fucking useless.
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_BELT)
-		return 1
+		return TRUE
 
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)

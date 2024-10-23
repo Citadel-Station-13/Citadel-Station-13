@@ -41,7 +41,8 @@
 		return FALSE
 	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
 		aroused_state = new_state
-	owner.log_message("[src]'s arousal was [new_state ? "enabled" : "disabled"] due to [cause]", LOG_EMOTE)
+	if(cause)
+		owner.log_message("[src]'s arousal was [new_state ? "enabled" : "disabled"] due to [cause]", LOG_EMOTE)
 	return aroused_state
 
 /obj/item/organ/genital/proc/update()
@@ -199,7 +200,7 @@
 	. = ..()
 	if(.)
 		update()
-		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance_genitals)
+		RegisterSignal(owner, COMSIG_MOB_DEATH, PROC_REF(update_appearance_genitals))
 		if(genital_flags & GENITAL_THROUGH_CLOTHES)
 			owner.exposed_genitals += src
 

@@ -3,43 +3,43 @@
 /datum/config_entry/flag/no_storyteller_threat_removal
 
 /datum/config_entry/number/dynamic_high_pop_limit
-	config_entry_value = 55
+	default = 55
 	min_val = 1
 
 /datum/config_entry/number/dynamic_pop_per_requirement
-	config_entry_value = 6
+	default = 6
 	min_val = 1
 
 /datum/config_entry/number/dynamic_midround_delay_min
-	config_entry_value = 15
+	default = 15
 	min_val = 1
 
 /datum/config_entry/number/dynamic_midround_delay_max
-	config_entry_value = 35
+	default = 35
 	min_val = 1
 
 /datum/config_entry/number/dynamic_latejoin_delay_min
-	config_entry_value = 5
+	default = 5
 	min_val = 1
 
 /datum/config_entry/number/dynamic_latejoin_delay_max
-	config_entry_value = 25
+	default = 25
 	min_val = 1
 
 /datum/config_entry/number/dynamic_first_midround_delay_min
-	config_entry_value = 20
+	default = 20
 	min_val = 1
 
 /datum/config_entry/number/dynamic_first_midround_delay_max
-	config_entry_value = 40
+	default = 40
 	min_val = 1
 
 /datum/config_entry/number/dynamic_first_latejoin_delay_min
-	config_entry_value = 10
+	default = 10
 	min_val = 1
 
 /datum/config_entry/number/dynamic_first_latejoin_delay_max
-	config_entry_value = 30
+	default = 30
 	min_val = 1
 
 
@@ -64,34 +64,34 @@
 /datum/config_entry/number_list/dynamic_third_rule_requirements
 
 /datum/config_entry/number/dynamic_second_rule_high_pop_requirement
-	config_entry_value = 50
+	default = 50
 
 /datum/config_entry/number/dynamic_third_rule_high_pop_requirement
-	config_entry_value = 70
+	default = 70
 
 /datum/config_entry/number/dynamic_threat_baseline
-	config_entry_value = 50
+	default = 50
 
 /datum/config_entry/number_list/dynamic_hijack_requirements
 
 /datum/config_entry/number/dynamic_hijack_high_population_requirement
-	config_entry_value = 25
+	default = 25
 
 /datum/config_entry/number/dynamic_hijack_cost
-	config_entry_value = 5
+	default = 5
 
 /datum/config_entry/number/dynamic_glorious_death_cost
-	config_entry_value = 5
+	default = 5
 
 /datum/config_entry/number/dynamic_assassinate_cost
-	config_entry_value = 2
+	default = 2
 
 /datum/config_entry/number/dynamic_warops_requirement
-	config_entry_value = 60
+	default = 60
 	min_val = 0
 
 /datum/config_entry/number/dynamic_warops_cost
-	config_entry_value = 10
+	default = 10
 	min_val = 0
 
 /datum/config_entry/keyed_list/dynamic_mode_days

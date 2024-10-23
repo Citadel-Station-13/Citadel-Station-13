@@ -28,7 +28,7 @@
 
 /obj/machinery/nanite_program_hub/update_overlays()
 	. = ..()
-	if((stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
 		return
 	. += mutable_appearance(icon, "nanite_program_hub_on")
 	. += emissive_appearance(icon, "nanite_program_hub_on")

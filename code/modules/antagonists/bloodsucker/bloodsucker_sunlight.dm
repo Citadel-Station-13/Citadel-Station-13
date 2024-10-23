@@ -55,8 +55,8 @@
 			bloodsuckerdatum.warn_sun_locker = FALSE
 			bloodsuckerdatum.warn_sun_burn = FALSE
 			// Remove Dawn Powers
-			for(var/datum/action/bloodsucker/P in bloodsuckerdatum.powers)
-				if(istype(P, /datum/action/bloodsucker/gohome))
+			for(var/datum/action/cooldown/bloodsucker/P in bloodsuckerdatum.powers)
+				if(istype(P, /datum/action/cooldown/bloodsucker/gohome))
 					bloodsuckerdatum.powers -= P
 					P.Remove(M.current)
 		nighttime_duration += 100 //Each day makes the night a minute longer.
@@ -149,5 +149,5 @@
 		if(!istype(M) || !istype(M.current))
 			continue
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = M.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if(istype(bloodsuckerdatum) && bloodsuckerdatum.lair && !(locate(/datum/action/bloodsucker/gohome) in bloodsuckerdatum.powers))
-			bloodsuckerdatum.BuyPower(new /datum/action/bloodsucker/gohome)
+		if(istype(bloodsuckerdatum) && bloodsuckerdatum.lair && !(locate(/datum/action/cooldown/bloodsucker/gohome) in bloodsuckerdatum.powers))
+			bloodsuckerdatum.BuyPower(new /datum/action/cooldown/bloodsucker/gohome)

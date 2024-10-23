@@ -28,14 +28,19 @@
 	paycheck = PAYCHECK_HARD //They can already buy stuff using cargo budget, don't give em a command-level paycheck.	//alright i'll agree to that -qweq
 	paycheck_department = ACCOUNT_CAR
 	bounty_types = CIV_JOB_RANDOM
+	departments = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_COMMAND
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 	threat = 0.5
-	
+
 	family_heirlooms = list(
 		/obj/item/stamp,
 		/obj/item/stamp/denied
+	)
+
+	mail_goodies = list(
+		/obj/item/circuitboard/machine/emitter = 3
 	)
 
 /datum/outfit/job/quartermaster

@@ -47,14 +47,14 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	return ..()
 
 /obj/machinery/computer/cryopod/update_icon_state()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state = "cellconsole"
 		return ..()
 	icon_state = "cellconsole_1"
 	return ..()
 
 /obj/machinery/computer/cryopod/ui_interact(mob/user, datum/tgui/ui)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
 	add_fingerprint(user)
@@ -346,8 +346,10 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	else
 		if(ishuman(mob_occupant))
 			var/mob/living/carbon/human/H = mob_occupant
-			if(H.mind && H.client && H.client.prefs && H == H.mind.original_character)
-				H.SaveTCGCards()
+			if(H.mind && H.client && H.client.prefs)
+				var/mob/living/carbon/human/H_original_character = H.mind.original_character?.resolve()
+				if(H_original_character && H == H_original_character)
+					H.SaveTCGCards()
 
 		var/list/gear = list()
 		if(iscarbon(mob_occupant))		// sorry simp-le-mobs deserve no mercy

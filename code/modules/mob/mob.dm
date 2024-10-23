@@ -20,27 +20,38 @@
 	hook_vr("mob_new",list(src))
 
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+	// if(client)
+	// 	stack_trace("Mob with client has been deleted.")
+	// else if(ckey)
+	// 	stack_trace("Mob without client but with associated ckey, [ckey], has been deleted.")
+	unset_machine()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
+	QDEL_LIST(mob_spell_list)
+	QDEL_LIST(actions)
 	GLOB.all_clockwork_mobs -= src
+	// remove_from_mob_suicide_list()
 	focus = null
 	LAssailant = null
 	movespeed_modification = null
+	if(length(progressbars))
+		stack_trace("[src] destroyed with elements in its progressbars list.")
+		progressbars = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
-	if(observers && observers.len)
-		for(var/M in observers)
-			var/mob/dead/observe = M
+	if(observers?.len)
+		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 	dispose_rendering()
 	qdel(hud_used)
-	for(var/cc in client_colours)
-		qdel(cc)
-	client_colours = null
-	ghostize()
-	..()
-	return QDEL_HINT_HARDDEL
+	QDEL_LIST(client_colours)
+	ghostize(can_reenter_corpse = FALSE) //False, since we're deleting it currently
+	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
+		mind.set_current(null)
+	// if(mock_client)
+	//	mock_client.mob = null
+	return ..()
 
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
@@ -62,7 +73,7 @@
 	set hidden = 1
 
 	if(!loc)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -322,8 +333,8 @@
 		if(isnull(client.recent_examines[A]) || client.recent_examines[A] < world.time)
 			result = A.examine(src)
 			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME // set the value to when the examine cooldown ends
-			RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/clear_from_recent_examines, override=TRUE) // to flush the value if deleted early
-			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
+			RegisterSignal(A, COMSIG_PARENT_QDELETING, PROC_REF(clear_from_recent_examines), override=TRUE) // to flush the value if deleted early
+			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), A), EXAMINE_MORE_TIME)
 			handle_eye_contact(A)
 		else
 			result = A.examine_more(src)
@@ -361,34 +372,13 @@
 	if(!istype(examined_carbon) || (!(examined_carbon.wear_mask && examined_carbon.wear_mask.flags_inv & HIDEFACE) && !(examined_carbon.head && examined_carbon.head.flags_inv & HIDEFACE)))
 		if(SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 			var/msg = "<span class='smallnotice'>You make eye contact with [examined_mob].</span>"
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, src, msg), 3) // so the examine signal has time to fire and this will print after
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 3) // so the examine signal has time to fire and this will print after
 
 	var/mob/living/carbon/us_as_carbon = src // i know >casting as subtype, but this isn't really an inheritable check
 	if(!istype(us_as_carbon) || (!(us_as_carbon.wear_mask && us_as_carbon.wear_mask.flags_inv & HIDEFACE) && !(us_as_carbon.head && us_as_carbon.head.flags_inv & HIDEFACE)))
 		if(SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 			var/msg = "<span class='smallnotice'>[src] makes eye contact with you.</span>"
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, examined_mob, msg), 3)
-
-//same as above
-//note: ghosts can point, this is intended
-//visible_message will handle invisibility properly
-//overridden here and in /mob/dead/observer for different point span classes and sanity checks
-/mob/verb/pointed(atom/A as mob|obj|turf in fov_view())
-	set name = "Point To"
-	set category = "Object"
-
-	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
-		return FALSE
-	if(istype(A, /obj/effect/temp_visual/point))
-		return FALSE
-
-	var/tile = get_turf(A)
-	if (!tile)
-		return FALSE
-
-	new /obj/effect/temp_visual/point(A,invisibility)
-	SEND_SIGNAL(src, COMSIG_MOB_POINTED, A)
-	return TRUE
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 3)
 
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
@@ -580,11 +570,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
 	return L
 
-/mob/proc/add_stings_to_statpanel(list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
-
 #define MOB_FACE_DIRECTION_DELAY 1
 
 // facing verbs
@@ -682,7 +667,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	return
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
-	return 0
+	return FALSE
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
@@ -722,7 +707,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 			return pick(protection_sources)
 		else
 			return src
-	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
+	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (!self && magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
 		return src
 
 //You can buckle on mobs if you're next to them since most are dense
@@ -755,7 +740,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	if(isliving(seat))
 		var/mob/living/L = seat
 		if(L.mob_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
-			return 0
+			return FALSE
 	return 9
 
 //can the mob be buckled to something by default?
@@ -809,7 +794,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/proc/fully_replace_character_name(oldname,newname)
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
-		return 0
+		return FALSE
 	real_name = newname
 	name = newname
 	if(mind)
@@ -827,7 +812,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
-	return 1
+	return TRUE
 
 //Updates GLOB.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
@@ -886,7 +871,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		client.mouse_pointer_icon = client.mouse_override_icon
 
 /mob/proc/is_literate()
-	return 0
+	return FALSE
 
 /mob/proc/can_hold_items()
 	return FALSE
@@ -1024,3 +1009,15 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
   */
 /mob/proc/on_item_dropped(obj/item/I)
 	return
+
+/**
+ * Used to wrap stat setting to trigger on-stat-change functionality.
+ * Must be used instead of directly setting a mob's stat var,
+ * so that the signal is sent properly.
+ */
+/mob/proc/set_stat(new_stat)
+	if(new_stat == stat)
+		return
+	. = stat
+	stat = new_stat
+	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)

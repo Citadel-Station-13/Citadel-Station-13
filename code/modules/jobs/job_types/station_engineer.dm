@@ -21,13 +21,14 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
 	bounty_types = CIV_JOB_ENG
+	departments = DEPARTMENT_BITFLAG_ENGINEERING
 
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/affinity/wiring)
 
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 
 	threat = 1
-	
+
 	family_heirlooms = list(
 		/obj/item/clothing/head/hardhat,
 		/obj/item/screwdriver/brass/family,
@@ -35,6 +36,13 @@
 		/obj/item/weldingtool/mini, // No brass family variant
 		/obj/item/crowbar/brass/family,
 		/obj/item/wirecutters/brass/family
+	)
+
+	mail_goodies = list(
+		/obj/item/storage/box/lights/mixed = 20,
+		/obj/item/lightreplacer = 10,
+		/obj/item/holosign_creator/engineering = 8,
+		/obj/item/clothing/head/hardhat/red/upgraded = 1
 	)
 
 /datum/outfit/job/engineer

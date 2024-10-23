@@ -13,7 +13,7 @@
 
 /obj/machinery/nanite_programmer/update_overlays()
 	. = ..()
-	if((stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
 		return
 	. += mutable_appearance(icon, "nanite_programmer_on")
 	. += emissive_appearance(icon, "nanite_programmer_on")

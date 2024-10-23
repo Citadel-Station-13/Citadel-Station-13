@@ -47,7 +47,7 @@
 		qdel(src)
 		return
 	limb = BP
-	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, PROC_REF(limb_gone))
 
 	severity = W.severity
 	if(limb.owner)
@@ -88,7 +88,7 @@
 		return
 
 	limb = BP
-	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, PROC_REF(limb_gone))
 	src.severity = severity
 	LAZYADD(limb.scars, src)
 	if(BP.owner)

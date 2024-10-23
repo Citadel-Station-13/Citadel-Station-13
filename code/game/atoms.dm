@@ -613,7 +613,10 @@
 			cut_overlay(managed_overlays)
 			managed_overlays = null
 		if(length(new_overlays))
-			managed_overlays = new_overlays
+			if (length(new_overlays) == 1)
+				managed_overlays = new_overlays[1]
+			else
+				managed_overlays = new_overlays
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
@@ -667,7 +670,7 @@
 	if((explosion_flags & EXPLOSION_FLAG_DENSITY_DEPENDENT) && !density)
 		return power	// no block
 	else if((explosion_flags & EXPLOSION_FLAG_HARD_OBSTACLE) && !QDELETED(src))
-		return 0		// fully blocked
+		return FALSE		// fully blocked
 
 /**
   * Called when a wave explosion hits this atom.
@@ -686,13 +689,29 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
-/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
-		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
+/**
+ * React to being hit by a thrown object
+ *
+ * Default behaviour is to call [hitby_react][/atom/proc/hitby_react] on ourselves after 2 seconds if we are dense
+ * and under normal gravity.
+ *
+ * Im not sure why this the case, maybe to prevent lots of hitby's if the thrown object is
+ * deleted shortly after hitting something (during explosions or other massive events that
+ * throw lots of items around - singularity being a notable example)
+ */
+/atom/proc/hitby(atom/movable/hitting_atom, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	SEND_SIGNAL(src, COMSIG_ATOM_HITBY, hitting_atom, skipcatch, hitpush, blocked, throwingdatum)
+	if(density && !has_gravity(hitting_atom)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
+		addtimer(CALLBACK(src, PROC_REF(hitby_react), hitting_atom), 2)
 
-/atom/proc/hitby_react(atom/movable/AM)
-	if(AM && isturf(AM.loc))
-		step(AM, turn(AM.dir, 180))
+/**
+ * We have have actually hit the passed in atom
+ *
+ * Default behaviour is to move back from the item that hit us
+ */
+/atom/proc/hitby_react(atom/movable/harmed_atom)
+	if(harmed_atom && isturf(harmed_atom.loc))
+		step(harmed_atom, turn(harmed_atom.dir, 180))
 
 /atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	return
@@ -903,7 +922,7 @@
 	if(STR == src_object)
 		progress.end_progress()
 		return
-	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
+	while(do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(STR, TYPE_PROC_REF(/datum/component/storage, handle_mass_item_insertion), things, src_object, user, progress)))
 		stoplag(1)
 	progress.end_progress()
 	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents into [STR.insert_preposition]to [src] as you can.</span>")
@@ -1302,7 +1321,7 @@
 
 /atom/proc/update_filters()
 	filters = null
-	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
+	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
@@ -1339,6 +1358,11 @@
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
+
+/// Returns the indice in filters of the given filter name.
+/// If it is not found, returns null.
+/atom/proc/get_filter_index(name)
+	return filter_data?.Find(name)
 
 /atom/proc/remove_filter(name_or_names)
 	if(!filter_data)
@@ -1395,7 +1419,7 @@
 		T = get_turf(src)
 
 	if(!T)
-		return 0
+		return FALSE
 
 	var/list/forced_gravity = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
@@ -1408,7 +1432,7 @@
 		return max_grav
 
 	if(isspaceturf(T)) // Turf never has gravity
-		return 0
+		return FALSE
 
 	var/area/A = get_area(T)
 	if(A.has_gravity) // Areas which always has gravity
@@ -1449,99 +1473,98 @@
 //Update the screentip to reflect what we're hoverin over
 /atom/MouseEntered(location, control, params)
 	. = ..()
-	// Screentips
+
 	var/mob/user = usr
-	if(isnull(user) && !user.client)
+	if(isnull(user))
+		return
+	if(!GET_CLIENT(user))
 		return
 
+	// Screentips
 	var/datum/hud/active_hud = user.hud_used
-	if(active_hud)
-		var/screentips_enabled = user.client.prefs.screentip_pref
-		if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
-			active_hud.screentip_text.maptext = ""
-		else
-			active_hud.screentip_text.maptext_y = 0
-			var/lmb_rmb_line = ""
-			var/ctrl_lmb_ctrl_rmb_line = ""
-			var/alt_lmb_alt_rmb_line = ""
-			var/shift_lmb_ctrl_shift_lmb_line = ""
-			var/extra_lines = 0
-			var/extra_context = ""
+	if(!active_hud)
+		return
 
-			if ((isliving(user) || isovermind(user) || isaicamera(user)) && (user.client.prefs.screentip_pref != SCREENTIP_PREFERENCE_NO_CONTEXT))
-				var/obj/item/held_item = user.get_active_held_item()
-				var/allow_images = user.client.prefs.screentip_allow_images
+	var/screentips_enabled = user.client.prefs.screentip_pref
+	if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
+		active_hud.screentip_text.maptext = ""
+		return
 
-				if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
-					var/list/context = list()
+	active_hud.screentip_text.maptext_y = 10 // 10px lines us up with the action buttons top left corner
+	var/lmb_rmb_line = ""
+	var/ctrl_lmb_ctrl_rmb_line = ""
+	var/alt_lmb_alt_rmb_line = ""
+	var/shift_lmb_ctrl_shift_lmb_line = ""
+	var/extra_lines = 0
+	var/extra_context = ""
 
-					var/contextual_screentip_returns = \
-						SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \
-						| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
+	if ((isliving(user) || isovermind(user) || isaicamera(user)) && (user.client.prefs.screentip_pref != SCREENTIP_PREFERENCE_NO_CONTEXT))
+		var/obj/item/held_item = user.get_active_held_item()
 
-					if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
-						// LMB and RMB on one line...
-						var/lmb_text = ""
-						if((SCREENTIP_CONTEXT_LMB in context) && (length(context[SCREENTIP_CONTEXT_LMB]) > 0))
-							lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, allow_images)
-						var/rmb_text = ""
-						if((SCREENTIP_CONTEXT_RMB in context) && (length(context[SCREENTIP_CONTEXT_RMB]) > 0))
-							rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, allow_images)
+		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
+			var/list/context = list()
 
-						if (lmb_text)
-							lmb_rmb_line = lmb_text
-							if (rmb_text)
-								lmb_rmb_line += " | [allow_images ? " " : ""][rmb_text]"
-						else if (rmb_text)
-							lmb_rmb_line = rmb_text
+			var/contextual_screentip_returns = \
+				SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \
+				| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
 
-						// Ctrl-LMB, Ctrl-RMB on one line...
-						if (lmb_rmb_line != "")
-							lmb_rmb_line += "<br>"
-							extra_lines++
-						if((SCREENTIP_CONTEXT_CTRL_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_LMB]) > 0))
-							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_LMB, allow_images)
+			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+				var/screentip_images = user.client.prefs.screentip_images
+				// LMB and RMB on one line...
+				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
+				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)
 
-						if((SCREENTIP_CONTEXT_CTRL_RMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_RMB]) > 0))
-							if (ctrl_lmb_ctrl_rmb_line != "")
-								ctrl_lmb_ctrl_rmb_line += " | [allow_images ? " " : ""]"
-							ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
-							ctrl_lmb_ctrl_rmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, allow_images)
+				if (lmb_text != "")
+					lmb_rmb_line = lmb_text
+					if (rmb_text != "")
+						lmb_rmb_line += " | [rmb_text]"
+				else if (rmb_text != "")
+					lmb_rmb_line = rmb_text
 
-						// Alt-LMB, Alt-RMB on one line...
-						if (ctrl_lmb_ctrl_rmb_line != "")
-							ctrl_lmb_ctrl_rmb_line += "<br>"
-							extra_lines++
-						if((SCREENTIP_CONTEXT_ALT_LMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_LMB]) > 0))
-							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_LMB, allow_images)
-						if((SCREENTIP_CONTEXT_ALT_RMB in context) && (length(context[SCREENTIP_CONTEXT_ALT_RMB]) > 0))
-							if (alt_lmb_alt_rmb_line != "")
-								alt_lmb_alt_rmb_line += " | [allow_images ? " " : ""]"
-							alt_lmb_alt_rmb_line = build_context(context, SCREENTIP_CONTEXT_ALT_RMB, allow_images)
+				// Ctrl-LMB, Ctrl-RMB on one line...
+				if (lmb_rmb_line != "")
+					lmb_rmb_line += "<br>"
+					extra_lines++
+				if (SCREENTIP_CONTEXT_CTRL_LMB in context)
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_LMB, screentip_images)
 
-						// Shift-LMB, Ctrl-Shift-LMB on one line...
-						if (alt_lmb_alt_rmb_line != "")
-							alt_lmb_alt_rmb_line += "<br>"
-							extra_lines++
-						if((SCREENTIP_CONTEXT_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_SHIFT_LMB]) > 0))
-							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB, allow_images)
+				if (SCREENTIP_CONTEXT_CTRL_RMB in context)
+					if (ctrl_lmb_ctrl_rmb_line != "")
+						ctrl_lmb_ctrl_rmb_line += " | "
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, screentip_images)
 
-						if((SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context) && (length(context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]) > 0))
-							if (shift_lmb_ctrl_shift_lmb_line != "")
-								shift_lmb_ctrl_shift_lmb_line += " | [allow_images ? " " : ""]"
-							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
-							shift_lmb_ctrl_shift_lmb_line = build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, allow_images)
+				// Alt-LMB, Alt-RMB on one line...
+				if (ctrl_lmb_ctrl_rmb_line != "")
+					ctrl_lmb_ctrl_rmb_line += "<br>"
+					extra_lines++
+				if (SCREENTIP_CONTEXT_ALT_LMB in context)
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_LMB, screentip_images)
+				if (SCREENTIP_CONTEXT_ALT_RMB in context)
+					if (alt_lmb_alt_rmb_line != "")
+						alt_lmb_alt_rmb_line += " | "
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_RMB, screentip_images)
 
-						if (shift_lmb_ctrl_shift_lmb_line != "")
-							extra_lines++
+				// Shift-LMB, Ctrl-Shift-LMB on one line...
+				if (alt_lmb_alt_rmb_line != "")
+					alt_lmb_alt_rmb_line += "<br>"
+					extra_lines++
+				if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB, screentip_images)
+				if (SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context)
+					if (shift_lmb_ctrl_shift_lmb_line != "")
+						shift_lmb_ctrl_shift_lmb_line += " | "
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, screentip_images)
 
-						if(extra_lines)
-							extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
-							//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
-							active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
+				if (shift_lmb_ctrl_shift_lmb_line != "")
+					extra_lines++
 
-			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
-				active_hud.screentip_text.maptext = ""
-			else
-				//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-				active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [user.client.prefs.screentip_color]'>[name][extra_context]</span>"
+				if(extra_lines)
+					extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
+					active_hud.screentip_text.maptext_y = -1 + (extra_lines - 1) * -9
+
+	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
+		active_hud.screentip_text.maptext = ""
+	else
+		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
+		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [user.client.prefs.screentip_color]'>[name][extra_context]</span>"

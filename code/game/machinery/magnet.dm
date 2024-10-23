@@ -129,12 +129,12 @@
 				on = !on
 
 				if(on)
-					INVOKE_ASYNC(src, .proc/magnetic_process)
+					INVOKE_ASYNC(src, PROC_REF(magnetic_process))
 
 
 
 /obj/machinery/magnetic_module/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		on = FALSE
 
 	// Sanity checks:
@@ -316,7 +316,7 @@
 			if("togglemoving")
 				moving = !moving
 				if(moving)
-					INVOKE_ASYNC(src, .proc/MagnetMove)
+					INVOKE_ASYNC(src, PROC_REF(MagnetMove))
 
 
 	updateUsrDialog()
@@ -327,7 +327,7 @@
 
 	while(moving && length(rpath) >= 1)
 
-		if(stat & (BROKEN|NOPOWER))
+		if(machine_stat & (BROKEN|NOPOWER))
 			break
 
 		looping = 1

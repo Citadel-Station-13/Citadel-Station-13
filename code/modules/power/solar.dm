@@ -35,7 +35,7 @@
 	panel.layer = FLY_LAYER
 	Make(S)
 	connect_to_network()
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(queue_update_solar_exposure))
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
@@ -78,7 +78,7 @@
 /obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(stat & BROKEN)
+			if(machine_stat & BROKEN)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, TRUE)
 			else
 				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
@@ -97,7 +97,7 @@
 		if(disassembled)
 			if(assembly)
 				assembly.forceMove(loc)
-				assembly.give_glass(stat & BROKEN)
+				assembly.give_glass(machine_stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, TRUE)
 			var/shard = assembly?.glass_type ? assembly.glass_type.shard_type : /obj/item/shard
@@ -110,7 +110,7 @@
 	var/matrix/turner = matrix()
 	turner.Turn(azimuth_current)
 	panel.transform = turner
-	panel.icon_state = "solar_panel[(stat & BROKEN) ? "-b" : null]"
+	panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -155,7 +155,7 @@
 		total_flux += cur_pow
 
 /obj/machinery/power/solar/process()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	if(control && (!powernet || control.powernet != powernet))
 		unset_control()
@@ -264,7 +264,7 @@
 			tracker = TRUE
 			qdel(W)
 			user.visible_message("[user] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
-			return 1
+			return TRUE
 	else
 		if(W.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
@@ -303,7 +303,7 @@
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(timed_track))
 	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)
@@ -331,12 +331,12 @@
 
 /obj/machinery/power/solar_control/update_overlays()
 	. = ..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[icon_keyboard]_off")
 		return
 
 	. += mutable_appearance(icon, icon_keyboard)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		. += mutable_appearance(icon, "[icon_state]_broken")
 		return
 	. += mutable_appearance(icon, icon_screen)
@@ -398,7 +398,7 @@
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(I.use_tool(src, user, 20, volume=50))
-			if (src.stat & BROKEN)
+			if (src.machine_stat & BROKEN)
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/shard( src.loc )
@@ -429,7 +429,7 @@
 /obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(stat & BROKEN)
+			if(machine_stat & BROKEN)
 				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
 				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)

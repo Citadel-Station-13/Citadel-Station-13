@@ -45,7 +45,7 @@
 	. = ..()
 	if (dirty)
 		. += "grbloody"
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
 		. += "grjam"
@@ -64,7 +64,7 @@
 	go_out()
 
 /obj/machinery/gibber/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
 		to_chat(user, "<span class='danger'>It's locked and running.</span>")
@@ -197,7 +197,7 @@
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
 	qdel(src.occupant)
-	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
+	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/reagent_containers/food/snacks/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)

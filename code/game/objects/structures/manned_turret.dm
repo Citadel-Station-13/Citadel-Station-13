@@ -43,7 +43,7 @@
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user)
+/obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user, check_loc)
 	if(user.incapacitated() || !istype(user))
 		return
 	M.forceMove(get_turf(src))
@@ -80,7 +80,7 @@
 		return FALSE
 	var/client/C = controller.client
 	if(C)
-		var/atom/A = C.mouseObject
+		var/atom/A = C.mouse_object_ref?.resolve()
 		var/turf/T = get_turf(A)
 		if(istype(T))	//They're hovering over something in the map.
 			direction_track(controller, T)
@@ -142,7 +142,7 @@
 /obj/machinery/manned_turret/proc/volley(mob/user)
 	target_turf = get_turf(target)
 	for(var/i in 1 to number_of_shots)
-		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/manned_turret, fire_helper), user), i*rate_of_fire)
 
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
 	if(user.incapacitated() || !(user in buckled_mobs))

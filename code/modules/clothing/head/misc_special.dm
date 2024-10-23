@@ -149,14 +149,16 @@
 	beepsky_fashion = /datum/beepsky_fashion/cat
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
-		update_icon(user)
-		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
+		update_icon()
+		user.update_inv_head() //Color might have been changed by update_icon.
 
-/obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
-	if(ishuman(user))
-		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
+/obj/item/clothing/head/kitty/update_icon()
+	. = ..()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		add_atom_colour("#[wearer.hair_color]", FIXED_COLOUR_PRIORITY)
 
 /obj/item/clothing/head/kitty/genuine
 	desc = "A pair of kitty ears. A tag on the inside says \"Hand made from real cats.\""
@@ -261,7 +263,7 @@
 /obj/item/clothing/head/foilhat/Initialize(mapload)
 	. = ..()
 	if(!warped)
-		AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD, 6, TRUE, null, CALLBACK(src, .proc/warp_up))
+		AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD, 6, TRUE, null, CALLBACK(src, PROC_REF(warp_up)))
 	else
 		warp_up()
 

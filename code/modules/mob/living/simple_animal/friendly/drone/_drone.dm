@@ -62,7 +62,8 @@
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
-	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
+	///Alarm listener datum, handes caring about alarm events and such
+	var/datum/alarm_listener/listener
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
 	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone //If this exists, it will spawn in internal storage
@@ -102,11 +103,17 @@
 
 	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
+	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
+	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, PROC_REF(alarm_triggered))
+	RegisterSignal(listener, COMSIG_ALARM_CLEARED, PROC_REF(alarm_cleared))
+	listener.RegisterSignal(src, COMSIG_LIVING_PREDEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
+
 /mob/living/simple_animal/drone/ComponentInitialize()
 	. = ..()
 	if(can_be_held)
 		//icon/item state is defined in mob_holder/drone_worn_icon()
-		AddElement(/datum/element/mob_holder, null, 'icons/mob/clothing/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', ITEM_SLOT_HEAD, /datum/element/mob_holder.proc/drone_worn_icon)
+		AddElement(/datum/element/mob_holder, null, 'icons/mob/clothing/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', ITEM_SLOT_HEAD, TYPE_PROC_REF(/datum/element/mob_holder, drone_worn_icon))
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -127,7 +134,8 @@
 
 /mob/living/simple_animal/drone/Destroy()
 	GLOB.drones_list -= src
-	qdel(access_card) //Otherwise it ends up on the floor!
+	QDEL_NULL(access_card) //Otherwise it ends up on the floor!
+	QDEL_NULL(listener)
 	return ..()
 
 /mob/living/simple_animal/drone/Login()
@@ -231,42 +239,13 @@
 		adjustBruteLoss(heavy_emp_damage)
 		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
 
-/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/home, cameras, obj/source)
-	if(source.z != z)
-		return
-	if(stat == DEAD)
-		return
-	var/list/our_sort = alarms[class]
-	for(var/areaname in our_sort)
-		if (areaname == home.name)
-			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[3]
-			if (!(source in sources))
-				sources += source
-			return TRUE
+/mob/living/simple_animal/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	to_chat(src, "--- [alarm_type] alarm detected in [source_area.name]!")
 
-	our_sort[home.name] = list(home, list(source))
-	to_chat(src, "--- [class] alarm detected in [home.name]!")
-
-///This isn't currently needed since drones do jack shit with cameras. I hate this code so much
-/mob/living/simple_animal/drone/proc/freeCamera(area/home, obj/machinery/camera/cam)
-	return
-
-/mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
-	if(stat != DEAD)
-		var/list/L = alarms[class]
-		var/cleared = 0
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/srcs  = alarm[2]
-				if (origin in srcs)
-					srcs -= origin
-				if (srcs.len == 0)
-					cleared = 1
-					L -= I
-		if(cleared)
-			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
+/mob/living/simple_animal/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
@@ -276,7 +255,7 @@
 		return ..()
 
 /mob/living/simple_animal/drone/mob_negates_gravity()
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/drone/mob_has_gravity()
 	return ..() || mob_negates_gravity()
@@ -286,10 +265,10 @@
 
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	return 0 //So they don't die trying to fix wiring
+	return FALSE //So they don't die trying to fix wiring
 
 /mob/living/simple_animal/drone/can_see_reagents()
 	. = ..()

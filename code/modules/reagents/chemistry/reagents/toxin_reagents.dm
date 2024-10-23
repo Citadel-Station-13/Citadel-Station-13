@@ -86,7 +86,7 @@
 
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
-		return 0
+		return FALSE
 	var/temp = holder ? holder.chem_temp : T20C
 	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 

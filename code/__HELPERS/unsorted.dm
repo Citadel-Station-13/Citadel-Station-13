@@ -394,7 +394,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/get_edge_target_turf(atom/A, direction)
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
-		return 0
+		return FALSE
 		//since NORTHEAST == NORTH|EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
 
@@ -512,35 +512,35 @@ Turf and target are separate in case you want to teleport some distance from a t
 		current = get_step_towards(current, target_turf)
 		while(current != target_turf)
 			if(steps > length)
-				return 0
+				return FALSE
 			if(current.opacity)
-				return 0
+				return FALSE
 			for(var/thing in current)
 				var/atom/A = thing
 				if(A.opacity)
-					return 0
+					return FALSE
 			current = get_step_towards(current, target_turf)
 			steps++
 
-	return 1
+	return TRUE
 
 /proc/is_blocked_turf(turf/T, exclude_mobs)
 	if(T.density)
-		return 1
+		return TRUE
 	for(var/i in T)
 		var/atom/A = i
 		if(A.density && (!exclude_mobs || !ismob(A)))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
 	if(T.density)
-		return 1
+		return TRUE
 	for(var/i in T)
 		var/atom/movable/A = i
 		if(A.density && A.anchored)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /proc/get_step_towards2(atom/ref , atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
@@ -577,9 +577,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns: 1 if found, 0 if not.
 /proc/hasvar(datum/A, varname)
 	if(A.vars.Find(lowertext(varname)))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
@@ -700,7 +700,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //of course mathematically this is just adding world.icon_size on again
 /proc/getPixelDistance(atom/A, atom/B, centered = TRUE)
 	if(!istype(A)||!istype(B))
-		return 0
+		return FALSE
 	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
 	if(centered)
 		. += world.icon_size
@@ -741,31 +741,28 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 			//Direction works sometimes
 			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
-					return 1
+					return TRUE
 			else if(O.dir == dir)
-				return 1
+				return TRUE
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
 			//That's exactly what get_turf_pixel() does
 			if(get_turf_pixel(O) == locdir)
-				return 1
+				return TRUE
 
 		if(is_type_in_typecache(O, GLOB.WALLITEMS_EXTERNAL) && check_external)
 			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
-					return 1
+					return TRUE
 			else if(O.dir == dir)
-				return 1
+				return TRUE
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
 		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
-				return 1
-	return 0
-
-/proc/format_text(text)
-	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
+				return TRUE
+	return FALSE
 
 /proc/check_target_facings(mob/living/initator, mob/living/target)
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
@@ -838,25 +835,25 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/IsValidSrc(datum/D)
 	if(istype(D))
 		return !QDELETED(D)
-	return 0
+	return FALSE
 
 //Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
 //To the opposite dir of the dir returned by get_dir(B,A)
 //If one of them is a match, then A is facing B
 /proc/is_A_facing_B(atom/A,atom/B)
 	if(!istype(A) || !istype(B))
-		return 0
+		return FALSE
 	if(isliving(A))
 		var/mob/living/LA = A
 		if(LA.lying)
-			return 0
+			return FALSE
 	var/goal_dir = get_dir(A,B)
 	var/clockwise_A_dir = turn(A.dir, -45)
 	var/anticlockwise_A_dir = turn(A.dir, 45)
 
 	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /*
@@ -1049,10 +1046,10 @@ B --><-- A
 
 /atom/proc/contains(var/atom/A)
 	if(!A)
-		return 0
+		return FALSE
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
-			return 1
+			return TRUE
 
 /proc/flick_overlay_static(O, atom/A, duration)
 	set waitfor = 0
@@ -1152,7 +1149,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 /proc/stoplag(initial_delay)
 	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
 		sleep(world.tick_lag)
-		return 1
+		return TRUE
 	if (!initial_delay)
 		initial_delay = world.tick_lag
 	. = 0
@@ -1340,7 +1337,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return temp
 
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
-/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
+/proc/do_atom(atom/movable/user, atom/movable/target, time = 3 SECONDS, timed_action_flags = NONE, datum/callback/extra_checks)
 	if(!user || !target)
 		return TRUE
 	var/user_loc = user.loc
@@ -1359,11 +1356,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
+
 		if(QDELETED(user) || QDELETED(target))
-			. = 0
+			. = FALSE
 			break
-		if(uninterruptible)
-			continue
 
 		if(drifting && !user.inertia_dir)
 			drifting = FALSE
@@ -1373,7 +1369,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			target_drifting = FALSE
 			target_loc = target.loc
 
-		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
+		if(
+			(!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
+			|| (!(timed_action_flags& IGNORE_TARGET_LOC_CHANGE) && !target_drifting && target.loc != target_loc) \
+			|| (extra_checks && !extra_checks.Invoke()) \
+			)
 			. = FALSE
 			break
 
@@ -1427,12 +1427,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(is_servant_of_ratvar(V) || isobserver(V))
 			. += V
 
-//datum may be null, but it does need to be a typed var
-#define NAMEOF(datum, X) (#X || ##datum.##X)
-
-#define VARSET_LIST_CALLBACK(target, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##target, ##var_name, ##var_value)
+#define VARSET_LIST_CALLBACK(target, var_name, var_value) CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(___callbackvarset), ##target, ##var_name, ##var_value)
 //dupe code because dm can't handle 3 level deep macros
-#define VARSET_CALLBACK(datum, var, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##datum, NAMEOF(##datum, ##var), ##var_value)
+#define VARSET_CALLBACK(datum, var, var_value) CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(___callbackvarset), ##datum, NAMEOF(##datum, ##var), ##var_value)
 
 /proc/___callbackvarset(list_or_datum, var_name, var_value)
 	if(length(list_or_datum))
@@ -1444,8 +1441,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		D.vars[var_name] = var_value
 
-#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
-#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
+#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(___TraitAdd), ##target, ##trait, ##source)
+#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(___TraitRemove), ##target, ##trait, ##source)
 
 ///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
 /proc/___TraitAdd(target,trait,source)
@@ -1568,11 +1565,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /proc/num2sign(numeric)
 	if(numeric > 0)
-		return 1
+		return TRUE
 	else if(numeric < 0)
 		return -1
 	else
-		return 0
+		return FALSE
 
 // Converts browser keycodes to BYOND keycodes.
 /proc/browser_keycode_to_byond(keycode)

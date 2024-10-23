@@ -1,6 +1,6 @@
 /obj/machinery/recharge_station
-	name = "cyborg recharging station"
-	desc = "This device recharges cyborgs and resupplies them with materials."
+	name = "recharging station"
+	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
@@ -10,7 +10,7 @@
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/cyborgrecharger
-	occupant_typecache = list(/mob/living/silicon/robot)
+	occupant_typecache = list(/mob/living/silicon/robot, /mob/living/carbon/human)
 	var/recharge_speed
 	var/repairs
 
@@ -63,7 +63,7 @@
 
 	if(occupant)
 		process_occupant()
-	return 1
+	return TRUE
 
 /obj/machinery/recharge_station/relaymove(mob/user)
 	if(user.stat)
@@ -72,7 +72,7 @@
 
 /obj/machinery/recharge_station/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)))
+	if(!(machine_stat & (BROKEN|NOPOWER)))
 		if(occupant && !(. & EMP_PROTECT_CONTENTS))
 			occupant.emp_act(severity)
 		if (!(. & EMP_PROTECT_SELF))

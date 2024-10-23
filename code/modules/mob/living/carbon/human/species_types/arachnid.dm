@@ -43,7 +43,7 @@
 /datum/species/arachnid/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 9 //flyswatters deal 10x damage to arachnids
-	return 0
+	return FALSE
 
 /datum/species/arachnid/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
@@ -92,7 +92,7 @@
 	var/nutrition_threshold = NUTRITION_LEVEL_FED
 	if (H.nutrition >= nutrition_threshold)
 		to_chat(H, "<i>You begin spinning some web...</i>")
-		if(!do_after(H, 10 SECONDS, 1, T))
+		if(!do_after(H, 10 SECONDS, T))
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return
 		H.adjust_nutrition(-E.spinner_rate)
@@ -125,7 +125,7 @@
 		 (Press ALT+CLICK on the target to start wrapping.)</span>")
 		H.adjust_nutrition(E.spinner_rate * -0.5)
 		addtimer(VARSET_CALLBACK(E, web_ready, TRUE), E.web_cooldown)
-		RegisterSignal(H, list(COMSIG_MOB_ALTCLICKON), .proc/cocoonAtom)
+		RegisterSignal(H, list(COMSIG_MOB_ALTCLICKON), PROC_REF(cocoonAtom))
 		return
 	else
 		to_chat(H, "<span class='warning'>You're too hungry to spin web right now, eat something first!</span>")
@@ -152,7 +152,7 @@
 			to_chat(H, "<span class='warning'>You cannot wrap this.</span>")
 			return
 		H.visible_message("<span class='danger'>[H] starts to wrap [A] into a cocoon!</span>","<span class='warning'>You start to wrap [A] into a cocoon.</span>")
-		if(!do_after(H, 10 SECONDS, 1, A))
+		if(!do_after(H, 10 SECONDS, A))
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return
 		H.adjust_nutrition(E.spinner_rate * -3)

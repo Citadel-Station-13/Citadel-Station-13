@@ -181,8 +181,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	apply_innate_effects()
 	give_antag_moodies()
 	remove_blacklisted_quirks()
-	// RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, .proc/pre_mindshield)
-	// RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, .proc/on_mindshield)
+	// RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, PROC_REF(pre_mindshield))
+	// RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, PROC_REF(on_mindshield))
 	if(is_banned(owner.current) && replace_banned)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.deadmin & DEADMIN_ANTAGONIST))
@@ -391,7 +391,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
 	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
-	COMPILE_OVERLAYS(dummy)
 	var/icon = getFlatIcon(dummy)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
@@ -449,7 +448,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	antag_memory = new_memo
 
 /**
- * Gets how fast we can hijack the shuttle, return 0 for can not hijack.
+ * Gets how fast we can hijack the shuttle, return FALSE for can not hijack.
  * Defaults to hijack_speed var, override for custom stuff like buffing hijack speed for hijack objectives or something.
  */
 /datum/antagonist/proc/hijack_speed()
@@ -547,7 +546,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!ispath(request_target))
 		request_target = locate(request_target) in objectives
 		if(istype(request_target))
-			RegisterSignal(request_target, COMSIG_PARENT_QDELETING, .proc/clean_request_from_del_objective)
+			RegisterSignal(request_target, COMSIG_PARENT_QDELETING, PROC_REF(clean_request_from_del_objective))
 	requested_objective_changes[uid] = additions
 
 

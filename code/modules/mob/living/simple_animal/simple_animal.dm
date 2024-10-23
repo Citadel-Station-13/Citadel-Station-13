@@ -56,6 +56,9 @@
 	var/minbodytemp = 250
 	var/maxbodytemp = 350
 
+	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
+	var/list/weather_immunities
+
 	///Healable by medical stacks? Defaults to yes.
 	var/healable = 1
 
@@ -165,6 +168,8 @@
 		AddComponent(/datum/component/personal_crafting)
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
+	for(var/trait in weather_immunities)
+		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -192,7 +197,7 @@
 		if(health <= 0)
 			death()
 		else
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 	med_hud_set_status()
 
 /mob/living/simple_animal/proc/handle_automated_action()
@@ -210,7 +215,7 @@
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
-			return 1
+			return TRUE
 
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	set waitfor = FALSE
@@ -582,7 +587,7 @@
 
 //ANIMAL RIDING
 
-/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user, check_loc)
 	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(riding_datum)
 		if(user.incapacitated())

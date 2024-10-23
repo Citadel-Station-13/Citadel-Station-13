@@ -17,7 +17,7 @@
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	// AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
-	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
+	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -28,11 +28,13 @@
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
 
+	ident = rand(1, 999)
+
 	if(!shell)
 		aiPDA = new/obj/item/pda/ai(src)
 		aiPDA.owner = real_name
 		aiPDA.ownjob = "Cyborg"
-		aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
+		aiPDA.name = real_name + " ([aiPDA.ownjob])"
 
 	previous_health = health
 
@@ -60,29 +62,38 @@
 	. = ..()
 
 	//If this body is meant to be a borg controlled by the AI player
+	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
-		make_shell()
+		var/obj/item/borg/upgrade/ai/board = new(src)
+		make_shell(board)
+		add_to_upgrades(board)
+	else
+		//MMI stuff. Held togheter by magic. ~Miauw
+		if(!mmi?.brainmob)
+			mmi = new (src)
+			mmi.brain = new /obj/item/organ/brain(mmi)
+			mmi.brain.organ_flags |= ORGAN_FROZEN
+			mmi.brain.name = "[real_name]'s brain"
+			mmi.icon_state = "mmi_full"
+			mmi.name = "[initial(mmi.name)]: [real_name]"
+			mmi.brainmob = new(mmi)
+			mmi.brainmob.name = src.real_name
+			mmi.brainmob.real_name = src.real_name
+			mmi.brainmob.container = mmi
+			mmi.update_appearance()
 
-	//MMI stuff. Held togheter by magic. ~Miauw
-	else if(!mmi || !mmi.brainmob)
-		mmi = new (src)
-		mmi.brain = new /obj/item/organ/brain(mmi)
-		mmi.brain.organ_flags |= ORGAN_FROZEN
-		mmi.brain.name = "[real_name]'s brain"
-		mmi.icon_state = "mmi_full"
-		mmi.name = "Man-Machine Interface: [real_name]"
-		mmi.brainmob = new(mmi)
-		mmi.brainmob.name = src.real_name
-		mmi.brainmob.real_name = src.real_name
-		mmi.brainmob.container = mmi
+	INVOKE_ASYNC(src, PROC_REF(updatename))
 
-	INVOKE_ASYNC(src, .proc/updatename)
-
-	playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
 	toner = tonermax
 	diag_hud_set_borgcell()
 	logevent("System brought online.")
+
+	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_TRIGGERED, PROC_REF(alarm_triggered))
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_CLEARED, PROC_REF(alarm_cleared))
+	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_PREDEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
+	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
 	add_verb(src, /mob/living/proc/lay_down) //CITADEL EDIT gimmie rest verb kthx
 	add_verb(src, /mob/living/silicon/robot/proc/rest_style)
@@ -101,7 +112,7 @@
 			mmi.forceMove(T)
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
-				mmi.brainmob.stat = CONSCIOUS
+				mmi.brainmob.set_stat(CONSCIOUS)
 				mmi.brainmob.remove_from_dead_mob_list()
 				mmi.brainmob.add_to_alive_mob_list()
 			mind.transfer_to(mmi.brainmob)
@@ -111,8 +122,7 @@
 			ghostize()
 			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
-	if(modularInterface)
-		QDEL_NULL(modularInterface)
+	QDEL_NULL(modularInterface)
 	if(connected_ai)
 		set_connected_ai(null)
 	if(shell) //??? why would you give an ai radio keys?
@@ -127,14 +137,16 @@
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
+	QDEL_NULL(spark_system)
+	QDEL_NULL(alert_control)
 	cell = null
 	return ..()
 
-// /mob/living/silicon/robot/Topic(href, href_list)
-// 	. = ..()
-// 	//Show alerts window if user clicked on "Show alerts" in chat
-// 	if (href_list["showalerts"])
-// 		robot_alerts()
+/mob/living/silicon/robot/Topic(href, href_list)
+	. = ..()
+	//Show alerts window if user clicked on "Show alerts" in chat
+	if(href_list["showalerts"])
+		alert_control.ui_interact(src)
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/robot_module)
@@ -157,7 +169,7 @@
 	if(BORG_SEC_AVAILABLE)
 		modulelist["Security"] = /obj/item/robot_module/security
 
-	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in sortList(modulelist)
+	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in sort_list(modulelist)
 	if(!input_module || module.type != /obj/item/robot_module)
 		return
 
@@ -194,27 +206,7 @@
 	if(usr.stat == DEAD)
 		to_chat(src, "<span class='userdanger'>Alert: You are dead.</span>")
 		return //won't work if dead
-	robot_alerts()
-
-/mob/living/silicon/robot/proc/robot_alerts()
-	var/dat = ""
-	for (var/cat in alarms)
-		dat += text("<B>[cat]</B><BR>\n")
-		var/list/L = alarms[cat]
-		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
-				var/area/A = alm[1]
-				dat += "<NOBR>"
-				dat += text("-- [A.name]")
-				dat += "</NOBR><BR>\n"
-		else
-			dat += "-- All Systems Nominal<BR>\n"
-		dat += "<BR>\n"
-
-	var/datum/browser/alerts = new(usr, "robotalerts", "Current Station Alerts", 400, 410)
-	alerts.set_content(dat)
-	alerts.open()
+	alert_control.ui_interact(src)
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
@@ -262,62 +254,13 @@
 /mob/living/silicon/robot/restrained(ignore_grab)
 	. = 0
 
-/mob/living/silicon/robot/triggerAlarm(class, area/home, cameras, obj/source)
-	if(source.z != z)
-		return
-	if(stat == DEAD)
-		return 1
-	var/list/our_sort = alarms[class]
-	for(var/areaname in our_sort)
-		if (areaname == home.name)
-			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[3]
-			if (!(source in sources))
-				sources += source
-			return 1
+/mob/living/silicon/robot/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	queueAlarm("--- [alarm_type] alarm detected in [source_area.name]!", alarm_type)
 
-	var/obj/machinery/camera/cam = null
-	var/list/our_cams = null
-	if(cameras && islist(cameras))
-		our_cams = cameras
-		if (our_cams.len == 1)
-			cam = our_cams[1]
-	else if(cameras && istype(cameras, /obj/machinery/camera))
-		cam = cameras
-	our_sort[home.name] = list(home, (cam ? cam : cameras), list(source))
-	queueAlarm(text("--- [class] alarm detected in [home.name]!"), class)
-	return TRUE
-
-/mob/living/silicon/robot/freeCamera(area/home, obj/machinery/camera/cam)
-	for(var/class in alarms)
-		var/our_area = alarms[class][home.name]
-		if(!our_area)
-			continue
-		var/cams = our_area[2] //Get the cameras
-		if(!cams)
-			continue
-		if(islist(cams))
-			cams -= cam
-			if(length(cams) == 1)
-				our_area[2] = cams[1]
-		else
-			our_area[2] = null
-
-/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
-	var/list/L = alarms[class]
-	var/cleared = 0
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (srcs.len == 0)
-				cleared = 1
-				L -= I
-	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-	return !cleared
+/mob/living/silicon/robot/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, FALSE)
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
 	if (A == modularInterface)
@@ -330,194 +273,145 @@
 		return FALSE
 	return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
 
-/mob/living/silicon/robot/proc/attempt_welder_repair(obj/item/W, mob/user)
-	if(!W.tool_behaviour == TOOL_WELDER)
-		return
-	if(!getBruteLoss())
-		to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
-		return
-	if(!W.tool_start_check(user, amount=0)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
-		return
-	user.DelayNextAction(CLICK_CD_MELEE)
-	if(src == user)
-		to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
-		if(!W.use_tool(src, user, 50))
-			return
-		adjustBruteLoss(-10)
-	else
-		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-		if(!do_after(user, 30, target = src))
-			return
-		adjustBruteLoss(-30)
-	updatehealth()
-	add_fingerprint(user)
-	visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
-
-/mob/living/silicon/robot/proc/attempt_cable_repair(obj/item/stack/cable_coil/W, mob/user)
-	if (getFireLoss() > 0 || getToxLoss() > 0)
-		user.DelayNextAction(CLICK_CD_MELEE)
-		if(src == user)
-			to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
-			if(!W.use_tool(src, user, 50, 1, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
-				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
-				return
-			adjustFireLoss(-10)
-			adjustToxLoss(-10)
-		else
-			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-			if(!W.use_tool(src, user, 30, 1))
-				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
-				return
-			adjustFireLoss(-30)
-			adjustToxLoss(-30)
-			updatehealth()
-			user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
-	else
-		to_chat(user, "The wires seem fine, there's no need to fix them.")
-
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && (user.a_intent != INTENT_HARM || user == src))
-		INVOKE_ASYNC(src, .proc/attempt_welder_repair, W, user)
-		return
-
-	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
-		INVOKE_ASYNC(src, .proc/attempt_cable_repair, W, user)
-		return
-
-	else if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
-		if(opened)
-			to_chat(user, "<span class='notice'>You close the cover.</span>")
-			opened = 0
-			update_icons()
-		else
-			if(locked)
-				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened!</span>")
+	if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		user.DelayNextAction(CLICK_CD_MELEE)
+		if (getFireLoss() > 0 || getToxLoss() > 0)
+			if(src == user)
+				to_chat(user, span_notice("You start fixing yourself..."))
+				if(!W.use_tool(src, user, 5 SECONDS, 1, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
+					to_chat(user, span_warning("You need more cable to repair [src]!"))
+					return
+				adjustFireLoss(-10)
+				adjustToxLoss(-10)
 			else
-				to_chat(user, "<span class='notice'>You open the cover.</span>")
-				opened = 1
-				update_icons()
+				to_chat(user, span_notice("You start fixing [src]..."))
+				if(!W.use_tool(src, user, 3 SECONDS, 1))
+					to_chat(user, span_warning("You need more cable to repair [src]!"))
+				adjustFireLoss(-30)
+				adjustToxLoss(-30)
+				updatehealth()
+				user.visible_message(span_notice("[user] has fixed some of the burnt wires on [src]."), span_notice("You fix some of the burnt wires on [src]."))
+		else
+			to_chat(user, span_warning("The wires seem fine, there's no need to fix them."))
+		return
 
-	else if(istype(W, /obj/item/stock_parts/cell) && opened)	// trying to put a cell inside
+	if(istype(W, /obj/item/stock_parts/cell) && opened) // trying to put a cell inside
 		if(wiresexposed)
-			to_chat(user, "<span class='warning'>Close the cover first!</span>")
+			to_chat(user, span_warning("Close the cover first!"))
 		else if(cell)
-			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
+			to_chat(user, span_warning("There is a power cell already installed!"))
 		else
 			if(!user.transferItemToLoc(W, src))
 				return
 			cell = W
-			to_chat(user, "<span class='notice'>You insert the power cell.</span>")
+			to_chat(user, span_notice("You insert the power cell."))
 		update_icons()
 		diag_hud_set_borgcell()
+		return
 
-	else if(is_wire_tool(W))
+	if(is_wire_tool(W))
 		if (wiresexposed)
 			wires.interact(user)
 		else
-			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
+			to_chat(user, span_warning("You can't reach the wiring!"))
+		return
 
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && !cell)	// haxing
-		wiresexposed = !wiresexposed
-		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
-		update_icons()
-
-	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && opened && cell)	// radio
-		if(shell)
-			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
-		else if(radio)
-			radio.attackby(W,user)//Push it to the radio to let it handle everything
-		else
-			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
-		update_icons()
-
-	else if(W.tool_behaviour == TOOL_WRENCH && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
-		if(!locked_down)
-			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
-			spark_system.start()
-			return
-		else
-			to_chat(user, "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>")
-			if(W.use_tool(src, user, 50, volume=50) && !cell)
-				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
-				deconstruct()
-
-	else if(istype(W, /obj/item/aiModule))
-		var/obj/item/aiModule/MOD = W
+	if(istype(W, /obj/item/ai_module))
+		var/obj/item/ai_module/MOD = W
 		if(!opened)
-			to_chat(user, "<span class='warning'>You need access to the robot's insides to do that!</span>")
+			to_chat(user, span_warning("You need access to the robot's insides to do that!"))
 			return
 		if(wiresexposed)
-			to_chat(user, "<span class='warning'>You need to close the wire panel to do that!</span>")
+			to_chat(user, span_warning("You need to close the wire panel to do that!"))
 			return
 		if(!cell)
-			to_chat(user, "<span class='warning'>You need to install a power cell to do that!</span>")
+			to_chat(user, span_warning("You need to install a power cell to do that!"))
 			return
 		if(shell) //AI shells always have the laws of the AI
-			to_chat(user, "<span class='warning'>[src] is controlled remotely! You cannot upload new laws this way!</span>")
+			to_chat(user, span_warning("[src] is controlled remotely! You cannot upload new laws this way!"))
 			return
-		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
-			emote("buzz-[user.name]")
+		if(connected_ai && lawupdate)
+			to_chat(user, span_warning("[src] is receiving laws remotely from a synced AI!"))
+			return
+		if(emagged)
+			to_chat(user, span_warning("The law interface glitches out!"))
+			emote("buzz")
 			return
 		if(!mind) //A player mind is required for law procs to run antag checks.
-			to_chat(user, "<span class='warning'>[src] is entirely unresponsive!</span>")
+			to_chat(user, span_warning("[src] is entirely unresponsive!"))
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
-	else if(istype(W, /obj/item/encryptionkey/) && opened)
+	if(istype(W, /obj/item/encryptionkey) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
-			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
+			to_chat(user, span_warning("Unable to locate a radio!"))
+		return
 
-	else if (istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))			// trying to unlock the interface with an ID card
-		if(emagged)//still allow them to open the cover
-			to_chat(user, "<span class='notice'>The interface seems slightly damaged.</span>")
+	if (W.GetID()) // trying to unlock the interface with an ID card
 		if(opened)
-			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
+			to_chat(user, span_warning("You must close the cover to swipe an ID card!"))
 		else
 			if(allowed(usr))
 				locked = !locked
-				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] [src]'s cover.</span>")
+				to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] [src]'s cover."))
 				update_icons()
+				if(emagged)
+					to_chat(user, span_notice("The cover interface glitches out for a split second."))
+					logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
+				else
+					logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
 			else
-				to_chat(user, "<span class='danger'>Access denied.</span>")
+				to_chat(user, span_danger("Access denied."))
+		return
 
-	else if(istype(W, /obj/item/borg/upgrade/))
+	if(istype(W, /obj/item/borg/upgrade))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			to_chat(user, "<span class='warning'>You must access the borg's internals!</span>")
-		else if(!src.module && U.require_module)
-			to_chat(user, "<span class='warning'>The borg must choose a module before it can be upgraded!</span>")
-		else if(U.locked)
-			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
-		else
-			if(!user.temporarilyRemoveItemFromInventory(U))
-				return
-			if(U.action(src))
-				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
-				if(U.one_use)
-					U.afterInstall(src)
-					qdel(U)
-				else
-					U.forceMove(src)
-					upgrades += U
-					U.afterInstall(src)
-			else
-				to_chat(user, "<span class='danger'>Upgrade error.</span>")
-				U.forceMove(drop_location())
+			to_chat(user, span_warning("You must access the cyborg's internals!"))
+			return
+		if(!module && U.require_module)
+			to_chat(user, span_warning("The cyborg must choose a model before it can be upgraded!"))
+			return
+		if(U.locked)
+			to_chat(user, span_warning("The upgrade is locked and cannot be used yet!"))
+			return
+		if(!user.canUnEquip(U))
+			to_chat(user, span_warning("The upgrade is stuck to you and you can't seem to let go of it!"))
+			return
+		apply_upgrade(U, user)
+		return
 
-	else if(istype(W, /obj/item/toner))
+	if(istype(W, /obj/item/toner))
 		if(toner >= tonermax)
-			to_chat(user, "<span class='warning'>The toner level of [src] is at its highest level possible!</span>")
-		else
-			if(!user.temporarilyRemoveItemFromInventory(W))
-				return
-			toner = tonermax
-			qdel(W)
-			to_chat(user, "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>")
-	else
-		return ..()
+			to_chat(user, span_warning("The toner level of [src] is at its highest level possible!"))
+			return
+		if(!user.temporarilyRemoveItemFromInventory(W))
+			return
+		toner = tonermax
+		qdel(W)
+		to_chat(user, span_notice("You fill the toner level of [src] to its max capacity."))
+		return
+
+	if(istype(W, /obj/item/flashlight))
+		if(!opened)
+			to_chat(user, span_warning("You need to open the panel to repair the headlamp!"))
+			return
+		if(lamp_functional)
+			to_chat(user, span_warning("The headlamp is already functional!"))
+			return
+		if(!user.temporarilyRemoveItemFromInventory(W))
+			to_chat(user, span_warning("[W] seems to be stuck to your hand. You'll have to find a different light."))
+			return
+		lamp_functional = TRUE
+		qdel(W)
+		to_chat(user, span_notice("You replace the headlamp bulbs."))
+		return
+
+	return ..()
 
 /mob/living/silicon/robot/crowbar_act(mob/living/user, obj/item/I) //TODO: make fucking everything up there in that attackby() proc use the proper tool_act() procs. But honestly, who has time for that? 'cause I know for sure that you, the person reading this, sure as hell doesn't.
 	var/validbreakout = FALSE
@@ -799,7 +693,7 @@
 	. = ..()
 	radio = new /obj/item/radio/borg/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
-	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
+	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 5)
 
 /mob/living/silicon/robot/modules/syndicate/create_modularInterface()
 	if(!modularInterface)
@@ -966,9 +860,9 @@
 			toggle_headlamp(1)
 			return
 		if(IsUnconscious() || IsStun() || IsKnockdown() || IsParalyzed() || getOxyLoss() > maxHealth * 0.5)
-			stat = UNCONSCIOUS
+			set_stat(UNCONSCIOUS)
 		else
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 		update_mobility()
 	diag_hud_set_status()
 	diag_hud_set_health()
@@ -1023,7 +917,7 @@
 	ionpulse = FALSE
 	revert_shell()
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/proc/has_module()
 	if(!module || module.type == /obj/item/robot_module)
@@ -1050,7 +944,7 @@
 	hat_offset = module.hat_offset
 
 	magpulse = module.magpulsing
-	INVOKE_ASYNC(src, .proc/updatename)
+	INVOKE_ASYNC(src, PROC_REF(updatename))
 
 
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
@@ -1064,33 +958,49 @@
 	*Checking Exited() to detect if a hat gets up and walks off.
 	*Drones and pAIs might do this, after all.
 */
-/mob/living/silicon/robot/Exited(atom/A)
-	if(hat && hat == A)
+/mob/living/silicon/robot/Exited(atom/movable/gone)
+	. = ..()
+	if(hat == gone)
 		hat = null
 		if(!QDELETED(src)) //Don't update icons if we are deleted.
 			update_icons()
-	return ..()
 
-///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
-/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
+	if(gone == cell)
+		cell = null
+
+	if(gone == mmi)
+		mmi = null
+
+///Called when a mob uses an upgrade on an open borg. Checks to make sure the upgrade can be applied
+/mob/living/silicon/robot/proc/apply_upgrade(obj/item/borg/upgrade/new_upgrade, mob/user, admin_added)
+	if(!admin_added && isnull(user))
+		return FALSE
 	if(new_upgrade in upgrades)
 		return FALSE
-	if(!user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
+	if(!admin_added && !user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
 		return FALSE
 	if(!new_upgrade.action(src, user))
-		to_chat(user, "<span class='danger'>Upgrade error.</span>")
-		new_upgrade.forceMove(loc) //gets lost otherwise
+		to_chat(user, span_danger("Upgrade error."))
+		if(admin_added)
+			qdel(new_upgrade)
+		else
+			new_upgrade.forceMove(loc) //gets lost otherwise
 		return FALSE
-	to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
+	to_chat(user, span_notice("You apply the upgrade to [src]."))
+	add_to_upgrades(new_upgrade)
+	return TRUE
+
+///Moves the upgrade inside the robot and registers relevant signals.
+/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade)
 	to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[new_upgrade]</b>\"...Setup complete.\n----------------")
 	if(new_upgrade.one_use)
 		logevent("Firmware [new_upgrade] run successfully.")
 		qdel(new_upgrade)
-		return FALSE
+		return
 	upgrades += new_upgrade
 	new_upgrade.forceMove(src)
-	RegisterSignal(new_upgrade, COMSIG_MOVABLE_MOVED, .proc/remove_from_upgrades)
-	RegisterSignal(new_upgrade, COMSIG_PARENT_QDELETING, .proc/on_upgrade_deleted)
+	RegisterSignal(new_upgrade, COMSIG_MOVABLE_MOVED, PROC_REF(remove_from_upgrades))
+	RegisterSignal(new_upgrade, COMSIG_PARENT_QDELETING, PROC_REF(on_upgrade_deleted))
 	logevent("Hardware [new_upgrade] installed successfully.")
 
 ///Called when an upgrade is moved outside the robot. So don't call this directly, use forceMove etc.
@@ -1117,15 +1027,17 @@
  * * board - B.O.R.I.S. module board used for transforming the cyborg into AI shell
  */
 /mob/living/silicon/robot/proc/make_shell(obj/item/borg/upgrade/ai/board)
-	if(!board)
-		upgrades |= new /obj/item/borg/upgrade/ai(src)
+	if(isnull(board))
+		stack_trace("make_shell was called without a board argument! This is never supposed to happen!")
+		return FALSE
+
 	shell = TRUE
 	braintype = "AI Shell"
 	name = "Empty AI Shell-[ident]"
 	real_name = name
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
-		builtInCamera.c_tag = real_name	//update the camera name too
+		builtInCamera.c_tag = real_name //update the camera name too
 	diag_hud_set_aishell()
 	notify_ai(AI_SHELL)
 
@@ -1328,7 +1240,7 @@
 	switch(choice)
 		if("Resting")
 			update_icons()
-			return 0
+			return FALSE
 		if("Sitting")
 			sitting = 1
 		if("Belly up")

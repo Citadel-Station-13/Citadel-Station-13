@@ -72,7 +72,7 @@
 /datum/computer_file/program/proc/generate_network_log(text)
 	if(computer)
 		return computer.add_log(text)
-	return 0
+	return FALSE
 
 /**
  *Runs when the device is used to attack an atom in non-combat mode.
@@ -99,7 +99,7 @@
 /datum/computer_file/program/proc/get_signal(specific_action = 0)
 	if(computer)
 		return computer.get_ntnet_status(specific_action)
-	return 0
+	return FALSE
 
 // Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick(delta_time)
@@ -161,7 +161,7 @@
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. return TRUE on success, 0 on failure.
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
@@ -198,7 +198,7 @@
 		if(card_holder)
 			ID = card_holder.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
-	return 1
+	return TRUE
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

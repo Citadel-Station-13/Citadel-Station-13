@@ -25,7 +25,7 @@
 	else
 		add_control_flags(M, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 
-/obj/vehicle/sealed/mecha/combat/neovgre/mob_exit(mob/M, silent, forced)
+/obj/vehicle/sealed/mecha/combat/neovgre/mob_exit(mob/M, silent, randomstep, forced)
 	if(forced)
 		..()
 
@@ -49,11 +49,12 @@
 		M.dust()
 	playsound(src, 'sound/effects/neovgre_exploding.ogg', 100, 0)
 	src.visible_message("<span class = 'userdanger'>The reactor has gone critical, its going to blow!</span>")
-	addtimer(CALLBACK(src,.proc/go_critical),breach_time)
+	addtimer(CALLBACK(src,PROC_REF(go_critical)),breach_time)
 
 /obj/vehicle/sealed/mecha/combat/neovgre/proc/go_critical()
 	explosion(get_turf(loc), 3, 5, 10, 20, 30)
-	Destroy(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/vehicle/sealed/mecha/combat/neovgre/container_resist(mob/living/user)
 	to_chat(user, "<span class='brass'>Neovgre requires a lifetime commitment friend, no backing out now!</span>")
@@ -98,5 +99,5 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre/can_attach(obj/vehicle/sealed/mecha/combat/neovgre/M)
 	if(istype(M))
-		return 1
-	return 0
+		return TRUE
+	return FALSE

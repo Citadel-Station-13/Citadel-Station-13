@@ -333,7 +333,7 @@
 /obj/item/spellpacket/lightningbolt
 	name = "\improper Lightning bolt Spell Packet"
 	desc = "Some birdseed wrapped in cloth that somehow crackles with electricity."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
 

@@ -25,7 +25,7 @@
 			return
 	if(isitem(M))
 		var/obj/item/I = M
-		if(is_servant_of_ratvar(I.thrownby)) //nice try!
+		if(is_servant_of_ratvar(I.thrownby?.resolve())) //nice try!
 			return
 	return TRUE
 

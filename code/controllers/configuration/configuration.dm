@@ -147,6 +147,16 @@
 				++.
 			continue
 
+		// Reset directive, used for setting a config value back to defaults. Useful for string list config types
+		if (entry == "$reset")
+			var/datum/config_entry/resetee = _entries[lowertext(value)]
+			if (!value || !resetee)
+				log_config("Warning: invalid $reset directive: [value]")
+				continue
+			resetee.set_default()
+			log_config("Reset configured value for [value] to original defaults")
+			continue
+
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("LINE [linenumber]: Unknown setting in configuration: '[entry]'")
@@ -455,4 +465,4 @@ Example config:
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(message_admins), text), 0)

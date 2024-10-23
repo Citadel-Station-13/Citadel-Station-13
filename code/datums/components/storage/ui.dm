@@ -11,7 +11,7 @@
 		else
 			var/datum/numbered_display/ND = .[I.type]
 			ND.number++
-	. = sortTim(., /proc/cmp_numbered_displays_name_asc, associative = TRUE)
+	. = sortTim(., GLOBAL_PROC_REF(cmp_numbered_displays_name_asc), associative = TRUE)
 
 /**
   * Orients all objects in legacy mode, and returns the objects to show to the user.
@@ -48,7 +48,7 @@
 			var/datum/numbered_display/ND = numbered_contents[type]
 			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			ND.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
+			ND.sample_object.maptext = MAPTEXT("<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>")
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			ND.sample_object.plane = ABOVE_HUD_PLANE
 			. += ND.sample_object
@@ -194,8 +194,8 @@
 	// in tiles
 	var/maxallowedscreensize = cview[1]-8
 	// we got screen size, register signal
-	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout, override = TRUE)
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/on_logout, override = TRUE)
+	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, PROC_REF(on_logout), override = TRUE)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, PROC_REF(on_logout), override = TRUE)
 	if(M.active_storage != src)
 		if(M.active_storage)
 			M.active_storage.ui_hide(M)

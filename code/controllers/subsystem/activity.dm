@@ -9,8 +9,8 @@ SUBSYSTEM_DEF(activity)
 	var/list/threats = list()
 
 /datum/controller/subsystem/activity/Initialize(timeofday)
-	RegisterSignal(SSdcs,COMSIG_GLOB_EXPLOSION,.proc/on_explosion)
-	RegisterSignal(SSdcs,COMSIG_GLOB_MOB_DEATH,.proc/on_death)
+	RegisterSignal(SSdcs,COMSIG_GLOB_EXPLOSION, PROC_REF(on_explosion))
+	RegisterSignal(SSdcs,COMSIG_GLOB_MOB_DEATH, PROC_REF(on_death))
 	return ..()
 
 /datum/controller/subsystem/activity/fire(resumed = 0)
@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(activity)
 
 /datum/controller/subsystem/activity/proc/get_average_threat()
 	if(!length(threat_history))
-		return 0
+		return FALSE
 	var/total_weight = 0
 	var/total_amt = 0
 	for(var/i in 1 to threat_history.len-1)

@@ -74,7 +74,7 @@
 
 /obj/machinery/chem_master/update_overlays()
 	. = ..()
-	if (stat & BROKEN)
+	if (machine_stat & BROKEN)
 		. += "waitlight"
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
@@ -440,7 +440,7 @@
 			num = round(num)
 		return num
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/chem_master/adjust_item_drop_location(atom/movable/AM) // Special version for chemmasters and condimasters

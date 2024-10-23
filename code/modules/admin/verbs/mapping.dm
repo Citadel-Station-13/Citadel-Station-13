@@ -65,7 +65,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 	icon_state = "yellow"
 
 /obj/effect/debugging/marker/Move()
-	return 0
+	return FALSE
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -83,7 +83,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 			for(var/turf/T in C.can_see())
 				seen[T]++
 		for(var/turf/T in seen)
-			T.maptext = "[seen[T]]"
+			T.maptext = MAPTEXT("[seen[T]]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
 
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+		return FALSE
 
 	var/list/obj/machinery/camera/CL = list()
 
@@ -307,7 +307,6 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 					qdel(I)
 				randomize_human(D)
 				JB.equip(D, TRUE, FALSE)
-				COMPILE_OVERLAYS(D)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)
 				final.Insert(I, JB.title)
 	qdel(D)

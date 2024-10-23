@@ -41,7 +41,7 @@
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
-	AddComponent(/datum/component/simple_rotation, ROTATION_WRENCH | ROTATION_CLOCKWISE, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_WRENCH | ROTATION_CLOCKWISE, null, CALLBACK(src, PROC_REF(can_be_rotated)))
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -210,7 +210,7 @@
 			flick("limbgrower_fill",src)
 			icon_state = "limbgrower_idleon"
 			selected_category = params["active_tab"]
-			addtimer(CALLBACK(src, .proc/build_item, consumed_reagents_list), production_speed * production_coefficient)
+			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
 			. = TRUE
 
 	return
@@ -369,7 +369,7 @@
 		C.set_species(selected)
 	C.set_resting(TRUE, TRUE)
 	// Don't want to cause it to deathgasp..
-	C.stat = DEAD
+	C.set_stat(DEAD)
 	C.adjustOxyLoss(200)
 	// Limb replacement causes toxloss, which can cause too much suffering for the doctor that I don't want
 	C.adjustCloneLoss(45)

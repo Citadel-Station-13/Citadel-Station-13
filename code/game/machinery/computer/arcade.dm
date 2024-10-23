@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
 	var/list/prize_override
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(prize_override)
 		override = TRUE
 
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 
 	var/empprize = null

@@ -184,8 +184,8 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	var/obj/docking_port/stationary/stationary_port = new /obj/docking_port/stationary(get_turf(target))
 	port.callTime = 50
 	port.dir = NORTH	//Point away from space.
-	port.id = "custom_[GLOB.custom_shuttle_count]"
-	linkedShuttleId = port.id
+	port.shuttle_id = "custom_[GLOB.custom_shuttle_count]"
+	linkedShuttleId = port.shuttle_id
 	port.ignitionTime = 25
 	port.name = "Custom Shuttle"
 	port.port_direction = 2
@@ -198,8 +198,8 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	var/invertedDir = invertDir(portDirection)
 	if(!portDirection || !invertedDir)
 		to_chat(usr, "<span class='warning'>Shuttle creation aborted, docking airlock must be on an external wall. Please select a new airlock.</span>")
-		port.Destroy()
-		stationary_port.Destroy()
+		QDEL_NULL(port)
+		QDEL_NULL(stationary_port)
 		linkedShuttleId = null
 		return FALSE
 	port.dir = invertedDir
@@ -207,8 +207,8 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 
 	if(!calculate_bounds(port))
 		to_chat(usr, "<span class='warning'>Bluespace calculations failed, please select a new airlock.</span>")
-		port.Destroy()
-		stationary_port.Destroy()
+		QDEL_NULL(port)
+		QDEL_NULL(stationary_port)
 		linkedShuttleId = null
 		return FALSE
 

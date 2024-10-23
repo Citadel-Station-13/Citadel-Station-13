@@ -200,6 +200,9 @@
 		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!</span>")
 		log_admin("Non-admin [key_name(usr)] attempted to execute a SDQL query!")
 		return FALSE
+	var/prompt = tgui_alert(usr, "Run SDQL2 Query?", "SDQL2", list("Yes", "Cancel"))
+	if (prompt != "Yes")
+		return
 	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
 	if(length(results) == 3)
 		for(var/I in 1 to 3)
@@ -457,7 +460,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 					options |= SDQL2_OPTION_DO_NOT_AUTOGC
 
 /datum/SDQL2_query/proc/ARun()
-	INVOKE_ASYNC(src, .proc/Run)
+	INVOKE_ASYNC(src, PROC_REF(Run))
 
 /datum/SDQL2_query/proc/Run()
 	if(SDQL2_IS_RUNNING)

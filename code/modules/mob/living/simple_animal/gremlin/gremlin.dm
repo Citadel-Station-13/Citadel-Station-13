@@ -136,7 +136,7 @@ GLOBAL_LIST(bad_gremlin_items)
 		return FALSE
 	if(istype(new_target, /obj/machinery))
 		var/obj/machinery/M = new_target
-		if(M.stat) //Unpowered or broken
+		if(M.machine_stat) //Unpowered or broken
 			return FALSE
 		else if(istype(new_target, /obj/machinery/door/firedoor))
 			var/obj/machinery/door/firedoor/F = new_target
@@ -173,7 +173,7 @@ GLOBAL_LIST(bad_gremlin_items)
 
 			loc = exit_vent
 			var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-			addtimer(CALLBACK(src, .proc/exit_vents), travel_time) //come out at exit vent in 2 to 20 seconds
+			addtimer(CALLBACK(src, PROC_REF(exit_vents)), travel_time) //come out at exit vent in 2 to 20 seconds
 
 
 		if(world.time > min_next_vent && !entry_vent && !in_vent && prob(GREMLIN_VENT_CHANCE)) //small chance to go into a vent
@@ -228,7 +228,7 @@ GLOBAL_LIST(bad_gremlin_items)
 	return ..()
 
 /mob/living/simple_animal/hostile/gremlin/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/gremlin/proc/divide()
 	//Health is halved and then reduced by 2. A new gremlin is spawned with the same health as the parent

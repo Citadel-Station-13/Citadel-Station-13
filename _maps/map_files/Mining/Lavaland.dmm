@@ -2367,7 +2367,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_lavaland";
+	shuttle_id = "whiteship_lavaland";
 	name = "lavaland wastes";
 	width = 35
 	},

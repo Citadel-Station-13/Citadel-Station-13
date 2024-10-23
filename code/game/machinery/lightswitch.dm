@@ -40,10 +40,10 @@
 
 /obj/machinery/light_switch/update_appearance(updates=ALL)
 	. = ..()
-	luminosity = (stat & NOPOWER) ? 0 : 1
+	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 
 /obj/machinery/light_switch/update_icon_state()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]-p"
 		return ..()
 	icon_state = "[base_icon_state][area.lightswitch ? 1 : 0]"
@@ -51,7 +51,7 @@
 
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
-	if(!(stat & NOPOWER))
+	if(!(machine_stat & NOPOWER))
 		. += emissive_appearance(icon, "[base_icon_state]-glow", alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
@@ -72,9 +72,9 @@
 
 	if(!otherarea)
 		if(powered(LIGHT))
-			stat &= ~NOPOWER
+			machine_stat &= ~NOPOWER
 		else
-			stat |= NOPOWER
+			machine_stat |= NOPOWER
 
 	update_appearance()
 
@@ -82,5 +82,5 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(!(stat & (BROKEN|NOPOWER)))
+	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()

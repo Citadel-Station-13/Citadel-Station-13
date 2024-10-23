@@ -15,6 +15,7 @@
 	fire_delay = 1
 	spread = 30	//should be 40 for XCOM memes, but since its adminspawn only, might as well make it useable
 	recoil = 1
+	automatic_burst_overlay = FALSE
 
 ///toy memes///
 
@@ -98,7 +99,7 @@
 	wound_bonus = 15
 	sharpness = SHARP_EDGED
 	wound_falloff_tile = 0
-	
+
 ///ammo casings (CASELESS AMMO CASINGS WOOOOOOOO)///
 
 /obj/item/ammo_casing/caseless/flechetteap
@@ -271,3 +272,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	burst_size = 4	//Shh.
 	fire_delay = 1
+	automatic_burst_overlay = FALSE

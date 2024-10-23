@@ -358,7 +358,7 @@ SUBSYSTEM_DEF(research)
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
 	var/amt = servers.len
 	if(!amt)
-		return 0
+		return FALSE
 	var/coeff = 100
 	coeff = sqrt(coeff / amt)
 	return coeff

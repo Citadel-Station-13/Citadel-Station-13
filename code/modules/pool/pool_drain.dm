@@ -140,7 +140,7 @@
 		obj_flags |= EMAGGED
 		do_sparks(5, TRUE, src)
 		icon_state = "filter_b"
-		addtimer(CALLBACK(src, /obj/machinery/pool/filter/proc/spawn_shark), 50)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/pool/filter, spawn_shark)), 50)
 		var/msg = "[key_name(user)] emagged the pool filter and spawned a shark"
 		log_game(msg)
 		message_admins(msg)

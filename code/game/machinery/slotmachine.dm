@@ -19,6 +19,7 @@
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "slots1"
+	icon_keyboard = null
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
@@ -40,13 +41,13 @@
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
-	INVOKE_ASYNC(src, .proc/toggle_reel_spin, TRUE)//The reels won't spin unless we activate them
+	INVOKE_ASYNC(src, PROC_REF(toggle_reel_spin), TRUE)//The reels won't spin unless we activate them
 
 	var/list/reel = reels[1]
 	for(var/i = 0, i < reel.len, i++) //Populate the reels.
 		randomize_reels()
 
-	INVOKE_ASYNC(src, .proc/toggle_reel_spin, FALSE)
+	INVOKE_ASYNC(src, PROC_REF(toggle_reel_spin), FALSE)
 
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
@@ -61,10 +62,10 @@
 	money += round(delta_time / 2) //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon_state()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		icon_state = "slots0"
 
-	else if(stat & BROKEN)
+	else if(machine_stat & BROKEN)
 		icon_state = "slotsb"
 
 	else if(working)
@@ -172,7 +173,7 @@
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	if(prob(15 * severity))
 		return
@@ -204,9 +205,9 @@
 	update_icon()
 	updateDialog()
 
-	var/spin_loop = addtimer(CALLBACK(src, .proc/do_spin), 2, TIMER_LOOP|TIMER_STOPPABLE)
+	var/spin_loop = addtimer(CALLBACK(src, PROC_REF(do_spin)), 2, TIMER_LOOP|TIMER_STOPPABLE)
 
-	addtimer(CALLBACK(src, .proc/finish_spinning, spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
+	addtimer(CALLBACK(src, PROC_REF(finish_spinning), spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
 	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
 
 /obj/machinery/computer/slot_machine/proc/do_spin()
@@ -222,10 +223,10 @@
 	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		to_chat(user, "<span class='warning'>The slot machine has no power!</span>")
 		return FALSE
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		to_chat(user, "<span class='warning'>The slot machine is broken!</span>")
 		return FALSE
 	if(working)

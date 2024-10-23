@@ -58,12 +58,12 @@
 		data["calculated_cooldown"] = calculated_cooldown
 		data["locations"] = list()
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-			if(!options.Find(S.id))
+			if(!options.Find(S.shuttle_id))
 				continue
 			if(!M.check_dock(S, silent = TRUE))
 				continue
 			var/list/location_data = list(
-				id = S.id,
+				id = S.shuttle_id,
 				name = S.name,
 				dist = round(calculateDistance(S))
 			)
@@ -217,7 +217,7 @@
 
 /obj/machinery/computer/custom_shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
-		linkShuttle(port.id)
+		linkShuttle(port.shuttle_id)
 
 //Custom shuttle docker locations
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom
@@ -230,7 +230,7 @@
 		/turf/open/floor/plating/ashplanet,
 		/turf/open/floor/plating/asteroid,
 		/turf/open/floor/plating/lavaland_baseturf)
-	jumpto_ports = list("whiteship_home" = 1)
+	jump_to_ports = list("whiteship_home" = 1)
 	view_range = 12
 	designate_time = 100
 	circuit = /obj/item/circuitboard/computer/shuttle/docker
@@ -253,11 +253,12 @@
 	..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(!shuttleId)
+	// This may look ugly (it does), but nowadays this docker already gains an id, so we forbid interactions until correctly linked.
+	if(shuttlePortId != "shuttle[shuttleId]_custom")
 		to_chat(user, "<span class='warning'>You must link the console to a shuttle first.</span>")
 		return
 	return ..()
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/linkShuttle(var/new_id)
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/linkShuttle(new_id)
 	shuttleId = new_id
 	shuttlePortId = "shuttle[new_id]_custom"

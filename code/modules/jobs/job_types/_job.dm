@@ -76,6 +76,17 @@
 
 	var/bounty_types = CIV_JOB_BASIC
 
+	///Bitfield of departments this job belongs wit
+	var/departments = NONE
+
+	/// Goodies that can be received via the mail system.
+	// this is a weighted list.
+	/// Keep the _job definition for this empty and use /obj/item/mail to define general gifts.
+	var/list/mail_goodies = list()
+
+	/// If this job's mail goodies compete with generic goodies.
+	var/exclusive_mail_goodies = FALSE
+
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
 	var/dresscodecompliant = TRUE
 	// How much threat this job is worth in dynamic. Is subtracted if the player's not an antag, added if they are.
@@ -200,7 +211,7 @@
 /datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)
 		//timer because these should come after the captain announcement
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/_addtimer, CALLBACK(pick(GLOB.announcement_systems), /obj/machinery/announcement_system/proc/announce, "NEWHEAD", H.real_name, H.job, channels), 1))
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(pick(GLOB.announcement_systems), TYPE_PROC_REF(/obj/machinery/announcement_system, announce), "NEWHEAD", H.real_name, H.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
@@ -210,15 +221,15 @@
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
-		return 0
+		return FALSE
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
-		return 0
+		return FALSE
 	if(!SSdbcore.Connect())
-		return 0 //Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
+		return FALSE //Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
 	if(C.prefs.db_flags & DB_FLAG_EXEMPT)
-		return 0
+		return FALSE
 	if(!isnum(minimal_player_age))
-		return 0
+		return FALSE
 
 	return max(0, minimal_player_age - C.player_age)
 
@@ -396,3 +407,7 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+
+/// An overridable getter for more dynamic goodies.
+/datum/job/proc/get_mail_goodies(mob/recipient)
+	return mail_goodies

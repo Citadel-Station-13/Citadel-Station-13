@@ -5,12 +5,12 @@
 //		FOLLOW:		Target follows you, spouting random phrases from their history (or maybe Polly's or NPC's vocab?)
 //		ATTACK:		Target finds a nearby non-Bloodsucker victim to attack.
 
-/datum/action/bloodsucker/targeted/mesmerize
+/datum/action/cooldown/bloodsucker/targeted/mesmerize
 	name = "Mesmerize"
 	desc = "Dominate the mind of a mortal who can see your eyes."
 	button_icon_state = "power_mez"
 	bloodcost = 30
-	cooldown = 300
+	cooldown_time = 300
 	target_range = 2
 	power_activates_immediately = TRUE
 	message_Trigger = "Whom will you subvert to your will?"
@@ -18,7 +18,7 @@
 	bloodsucker_can_buy = TRUE
 	var/success
 
-/datum/action/bloodsucker/targeted/mesmerize/CheckCanUse(display_error)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
@@ -34,10 +34,10 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/mesmerize/CheckValidTarget(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/CheckValidTarget(atom/A)
 	return iscarbon(A)
 
-/datum/action/bloodsucker/targeted/mesmerize/CheckCanTarget(atom/A,display_error)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/CheckCanTarget(atom/A,display_error)
 	// Check: Self
 	if(A == owner)
 		return FALSE
@@ -88,7 +88,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/mesmerize/proc/ContinueTarget(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/ContinueTarget(atom/A)
 	var/mob/living/carbon/target = A
 	var/mob/living/L = owner
 
@@ -103,7 +103,7 @@
 		to_chat(L, "<span class='warning'>[target] has escaped your gaze!</span>")
 		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
-/datum/action/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/A)
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
 	var/mob/living/carbon/target = A
 	var/mob/living/L = owner
@@ -114,11 +114,11 @@
 	var/power_time = 138 + level_current * 12
 	target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
 	L.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/ContinueTarget)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(ContinueTarget))
 	// 5 second windup
-	addtimer(CALLBACK(src, .proc/apply_effects, L, target, power_time), 6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_effects), L, target, power_time), 6 SECONDS)
 
-/datum/action/bloodsucker/targeted/mesmerize/proc/apply_effects(aggressor, victim, power_time)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/apply_effects(aggressor, victim, power_time)
 	var/mob/living/carbon/target = victim
 	var/mob/living/L = aggressor
 	if(!success)
@@ -135,5 +135,5 @@
 			to_chat(L, "<span class='warning'>[target] has snapped out of their trance.</span>")
 
 
-/datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)
 	return ..() && CheckCanUse() && CheckCanTarget(target)

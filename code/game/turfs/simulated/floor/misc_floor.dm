@@ -28,6 +28,7 @@
 	return ..()
 
 /turf/open/floor/circuit/update_icon()
+	. = ..()
 	if(on)
 		if(LAZYLEN(SSmapping.nuke_threats))
 			icon_state = "rcircuitanim"
@@ -230,7 +231,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
 
 /turf/open/floor/clockwork/reebe
 	name = "cogplate"

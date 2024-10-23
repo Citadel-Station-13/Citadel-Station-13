@@ -274,7 +274,7 @@ Code:
 
 			var/turf/pda_turf = get_turf(src)
 			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
-				if(pMon.stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
+				if(pMon.machine_stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
 					continue
 				if(pda_turf.z != pMon.z) //and that we're on the same zlevel as the computer (lore: limited signal strength)
 					continue
@@ -600,7 +600,7 @@ Code:
 			if(!emoji_table)
 				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/list/collate = list("<br><table>")
-				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
+				for(var/emoji in sort_list(icon_states(icon('icons/emoji.dmi'))))
 					var/tag = sheet.icon_tag("emoji-[emoji]")
 					collate += "<tr><td>[emoji]</td><td>[tag]</td></tr>"
 				collate += "</table><br>"
@@ -642,7 +642,7 @@ Code:
 			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Send Signal")
-			INVOKE_ASYNC(radio, /obj/item/integrated_signaler.proc/send_activation)
+			INVOKE_ASYNC(radio, TYPE_PROC_REF(/obj/item/integrated_signaler, send_activation))
 			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Signal Frequency")

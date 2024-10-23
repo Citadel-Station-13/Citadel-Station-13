@@ -2,7 +2,7 @@
 /obj/item/toy/cards/deck/unum
 	name = "\improper UNUM deck"
 	desc = "A deck of unum cards. House rules to argue over not included."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "deck_unum_full"
 	deckstyle = "unum"
 	original_size = 108

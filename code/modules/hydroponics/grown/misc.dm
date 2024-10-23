@@ -230,7 +230,7 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
-	addtimer(CALLBACK(src, /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/detonate), rand(50, 100))
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/reagent_containers/food/snacks/grown/cherry_bomb, detonate)), rand(50, 100))
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/detonate()
 	reagents.chem_temp = 1000 //Sets off the black powder
@@ -330,7 +330,7 @@
 			playsound(src, 'sound/effects/fuse.ogg', 100, 0)
 			message_admins("[ADMIN_LOOKUPFLW(user)] ignited a coconut bomb for detonation at [ADMIN_VERBOSEJMP(user)] [pretty_string_from_reagent_list(reagents.reagent_list)]")
 			log_game("[key_name(user)] primed a coconut grenade for detonation at [AREACOORD(user)].")
-			addtimer(CALLBACK(src, .proc/prime), 5 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(prime)), 5 SECONDS)
 			icon_state = "coconut_grenade_active"
 			desc = "RUN!"
 			if(!seed.get_gene(/datum/plant_gene/trait/glow))
@@ -425,9 +425,10 @@
 			for(var/datum/reagent/A in reagents.reagent_list)
 				R += A.type + " ("
 				R += num2text(A.volume) + "),"
-		if(isturf(target) && reagents.reagent_list.len && thrownby)
-			log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
-			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
+		var/mob/thrown_by = thrownby?.resolve()
+		if(isturf(target) && reagents.reagent_list.len && thrown_by)
+			log_combat(thrown_by, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
+			message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 		reagents.reaction(M, TOUCH)
 		log_combat(user, M, "splashed", R)
 		reagents.clear_reagents()
@@ -445,7 +446,7 @@
 			to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 		var/fraction = min(5/reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction)
-		addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5), 5)
+		addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, 5), 5)
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/item/reagent_containers/food/snacks/grown/coconut/afterattack(obj/target, mob/user, proximity)

@@ -341,7 +341,7 @@
 	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
 	log_attack("[assembly] [REF(assembly)] has thrown [A] with non-lethal force.")
 	A.forceMove(drop_location())
-	A.throw_at(locate(x_abs, y_abs, T.z), range, 3, null, null, null, CALLBACK(src, .proc/post_throw, A))
+	A.throw_at(locate(x_abs, y_abs, T.z), range, 3, null, null, null, CALLBACK(src, PROC_REF(post_throw), A))
 
 	// If the item came from a grabber now we can update the outputs since we've thrown it.
 	if(istype(G))
@@ -419,7 +419,7 @@
 		)
 
 /obj/item/integrated_circuit/manipulation/matman/ComponentInitialize()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, mtypes, 100000, FALSE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, mtypes, 100000, FALSE, /obj/item/stack, CALLBACK(src, PROC_REF(is_insertion_ready)), CALLBACK(src, PROC_REF(AfterMaterialInsert)))
 	materials.precise_insertion = TRUE
 	.=..()
 

@@ -13,8 +13,6 @@
 	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
-	interacts_with_air = TRUE
-
 	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
@@ -36,7 +34,7 @@
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 	generate_clean_filter_types()
-	RegisterSignal(SSdcs,COMSIG_GLOB_NEW_GAS,.proc/generate_clean_filter_types)
+	RegisterSignal(SSdcs,COMSIG_GLOB_NEW_GAS, PROC_REF(generate_clean_filter_types))
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/generate_clean_filter_types()
 	clean_filter_types = list()
@@ -196,7 +194,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational() || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return 0
+		return FALSE
 
 	var/mob/signal_sender = signal.data["user"]
 

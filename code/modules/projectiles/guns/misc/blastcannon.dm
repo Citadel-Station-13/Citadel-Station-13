@@ -72,20 +72,20 @@
 //returns the third value of a bomb blast
 /obj/item/gun/blastcannon/proc/calculate_bomb()
 	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
-		return 0
+		return FALSE
 	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, 0))
 	bomb.merge_gases(temp)
 	if(prereaction)
 		temp.react(src)
 		var/prereaction_pressure = temp.return_pressure()
 		if(prereaction_pressure < TANK_FRAGMENT_PRESSURE)
-			return 0
+			return FALSE
 	for(var/i in 1 to reaction_cycles)
 		temp.react(src)
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
-		return 0
+		return FALSE
 	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)

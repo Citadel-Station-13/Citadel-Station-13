@@ -53,7 +53,7 @@
 		check_shield_icons()
 		update_shield_icons = 0
 
-	if(stat & (NOPOWER|BROKEN) || !active)//can update the icons even without power
+	if(machine_stat & (NOPOWER|BROKEN) || !active)//can update the icons even without power
 		return
 
 	if(!fueljar)//No fuel but we are on, shutdown
@@ -127,13 +127,13 @@
 
 /obj/machinery/power/am_control_unit/power_change()
 	..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		if(active)
 			toggle_power(1)
 		else
 			use_power = NO_POWER_USE
 
-	else if(!stat && anchored)
+	else if(!machine_stat && anchored)
 		use_power = IDLE_POWER_USE
 
 	return
@@ -197,23 +197,23 @@
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS))
-		return 0
+		return FALSE
 	if(!anchored)
-		return 0
+		return FALSE
 	if(!AMS_linking && !AMS.link_control(src))
-		return 0
+		return FALSE
 	linked_shielding.Add(AMS)
 	update_shield_icons = 1
-	return 1
+	return TRUE
 
 /obj/machinery/power/am_control_unit/proc/remove_shielding(obj/machinery/am_shielding/AMS)
 	if(!istype(AMS))
-		return 0
+		return FALSE
 	linked_shielding.Remove(AMS)
 	update_shield_icons = 2
 	if(active)
 		toggle_power()
-	return 1
+	return TRUE
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
 	if(stability <= 0)
@@ -240,12 +240,12 @@
 			if(AMS.processing)
 				AMS.shutdown_core()
 			AMS.control_unit = null
-			addtimer(CALLBACK(AMS, /obj/machinery/am_shielding.proc/controllerscan), 10)
+			addtimer(CALLBACK(AMS, TYPE_PROC_REF(/obj/machinery/am_shielding, controllerscan)), 10)
 		linked_shielding = list()
 	else
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			AMS.update_icon()
-	addtimer(CALLBACK(src, .proc/reset_shield_icon_delay), 20)
+	addtimer(CALLBACK(src, PROC_REF(reset_shield_icon_delay)), 20)
 
 /obj/machinery/power/am_control_unit/proc/reset_shield_icon_delay()
 	shield_icon_delay = 0
@@ -258,14 +258,14 @@
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
 		stored_core_stability += AMS.stability
 	stored_core_stability/=linked_cores.len
-	addtimer(CALLBACK(src, .proc/reset_stored_core_stability_delay), 40)
+	addtimer(CALLBACK(src, PROC_REF(reset_stored_core_stability_delay)), 40)
 
 /obj/machinery/power/am_control_unit/proc/reset_stored_core_stability_delay()
 	stored_core_stability_delay = 0
 
 /obj/machinery/power/am_control_unit/ui_interact(mob/user)
 	. = ..()
-	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
+	if((get_dist(src, user) > 1) || (machine_stat & (BROKEN|NOPOWER)))
 		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")

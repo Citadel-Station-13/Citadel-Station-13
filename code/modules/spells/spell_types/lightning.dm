@@ -18,7 +18,7 @@
 /obj/effect/proc_holder/spell/targeted/tesla/Trigger(mob/user, skip_can_cast = TRUE)
 	if(!ready && cast_check(FALSE, user, skip_can_cast))
 		StartChargeup(user)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/StartChargeup(mob/user = usr)
 	ready = 1
@@ -27,7 +27,7 @@
 	halo = halo || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
 	user.add_overlay(halo)
 	playsound(get_turf(user), Snd, 50, 0)
-	if(do_mob(user,user,100,1))
+	if(do_mob(user, user, 10 SECONDS))
 		if(ready && cast_check(skipcharge=1))
 			choose_targets()
 		else

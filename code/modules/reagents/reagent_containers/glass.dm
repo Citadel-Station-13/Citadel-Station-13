@@ -10,7 +10,7 @@
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	// WARNING: This entire section is shitcode and prone to breaking at any time.
-	INVOKE_ASYNC(src, .proc/attempt_feed, M, user, target)		// for example, the arguments in this proc are wrong
+	INVOKE_ASYNC(src, PROC_REF(attempt_feed), M, user, target)		// for example, the arguments in this proc are wrong
 	// but i don't have time to properly fix it right now.
 
 /obj/item/reagent_containers/glass/proc/attempt_feed(mob/M, mob/user, obj/target)
@@ -29,9 +29,10 @@
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
 			var/R = reagents?.log_list()
-			if(isturf(target) && reagents.reagent_list.len && thrownby)
-				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
-				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
+			var/mob/thrown_by = thrownby?.resolve()
+			if(isturf(target) && reagents.reagent_list.len && thrown_by)
+				log_combat(thrown_by, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
+				message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 			reagents.reaction(M, TOUCH)
 			log_combat(user, M, "splashed", R)
 			var/turf/UT = get_turf(user)
@@ -60,7 +61,7 @@
 				log_reagent("INGESTION: SELF: [key_name(user)] (loc [user.loc] at [AREACOORD(T)]) - [reagents.log_list()]")
 			var/fraction = min(5/reagents.total_volume, 1)
 			reagents.reaction(M, INGEST, fraction)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, null, null, null, self_fed? "self swallowed" : "fed by [user]"), 5)
+			addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, 5, null, null, null, self_fed? "self swallowed" : "fed by [user]"), 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)

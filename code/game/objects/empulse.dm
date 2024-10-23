@@ -22,7 +22,7 @@
 		if(distance != 0) //please dont divide by 0
 			severity = min(max((max_distance / distance^0.3) * (100/max_distance), 1),100) //if it goes below 1 or above 100 stuff gets bad
 		T.emp_act(severity)
-	return 1
+	return TRUE
 
 /proc/empulse_using_range(turf/epicenter, range, log=0) //make an emp using range instead of power
 	var/power_from_range = (7*(range^(1/0.7)))

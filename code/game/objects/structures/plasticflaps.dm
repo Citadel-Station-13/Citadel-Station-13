@@ -30,7 +30,7 @@
 	var/action = anchored ? "unscrews [src] from" : "screws [src] to"
 	var/uraction = anchored ? "unscrew [src] from " : "screw [src] to"
 	user.visible_message("<span class='warning'>[user] [action] the floor.</span>", "<span class='notice'>You start to [uraction] the floor...</span>", "You hear rustling noises.")
-	if(W.use_tool(src, user, 100, volume=100, extra_checks = CALLBACK(src, .proc/check_anchored_state, anchored)))
+	if(W.use_tool(src, user, 100, volume=100, extra_checks = CALLBACK(src, PROC_REF(check_anchored_state), anchored)))
 		setAnchored(!anchored)
 		to_chat(user, "<span class='notice'> You [anchored ? "unscrew" : "screw"] [src] from the floor.</span>")
 		return TRUE
@@ -77,24 +77,24 @@
 
 	var/obj/structure/bed/B = A
 	if(istype(A, /obj/structure/bed) && (B.has_buckled_mobs() || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
-		return 0
+		return FALSE
 
 	if(istype(A, /obj/structure/closet/cardboard))
 		var/obj/structure/closet/cardboard/C = A
 		if(C.move_delay)
-			return 0
+			return FALSE
 
 	if(ismecha(A))
-		return 0
+		return FALSE
 
 	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(isbot(A)) //Bots understand the secrets
-			return 1
+			return TRUE
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
-			return 1
+			return TRUE
 		if(!M.lying && !(SEND_SIGNAL(M, COMSIG_CHECK_VENTCRAWL)) && M.mob_size != MOB_SIZE_TINY) //If your not laying down, or a ventcrawler or a small creature, no pass.
-			return 0
+			return FALSE
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

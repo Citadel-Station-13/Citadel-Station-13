@@ -90,7 +90,7 @@
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
 			power_station.update_icon()
-			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			. = TRUE
 
 /obj/machinery/computer/teleporter/proc/finish_calibration()
@@ -150,7 +150,7 @@
 			var/mob/living/M = target
 			var/obj/item/implant/tracking/I = locate() in M.implants
 			if(I)
-				RegisterSignal(I, COMSIG_IMPLANT_REMOVING, .proc/untarget_implant)
+				RegisterSignal(I, COMSIG_IMPLANT_REMOVING, PROC_REF(untarget_implant))
 				imp_t = I
 			else
 				target = null
@@ -177,12 +177,12 @@
 		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(T)]")
 		target = target_station.teleporter_hub
 		target_station.linked_stations |= power_station
-		target_station.stat &= ~NOPOWER
+		target_station.machine_stat &= ~NOPOWER
 		if(target_station.teleporter_hub)
-			target_station.teleporter_hub.stat &= ~NOPOWER
+			target_station.teleporter_hub.machine_stat &= ~NOPOWER
 			target_station.teleporter_hub.update_icon()
 		if(target_station.teleporter_console)
-			target_station.teleporter_console.stat &= ~NOPOWER
+			target_station.teleporter_console.machine_stat &= ~NOPOWER
 			target_station.teleporter_console.update_icon()
 
 /obj/machinery/computer/teleporter/proc/untarget_implant() //untargets from mob the racker was once implanted in to prevent issues.

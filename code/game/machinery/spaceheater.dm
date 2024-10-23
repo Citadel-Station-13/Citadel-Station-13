@@ -144,7 +144,7 @@
 
 /obj/machinery/space_heater/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
 		return
 	if(cell)
 		cell.emp_act(severity)
@@ -222,7 +222,7 @@
 			usr.visible_message("<span class='notice'>[usr] switches [on ? "on" : "off"] \the [src].</span>", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
 			if (on)
-				SSair.atmos_air_machinery += src
+				SSair.start_processing_machine(src)
 			. = TRUE
 		if("mode")
 			setMode = params["mode"]

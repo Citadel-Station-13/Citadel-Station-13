@@ -211,10 +211,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define POLLTYPE_IRV		"IRV"
 
 
-
-//subtypesof(), typesof() without the parent path
-#define subtypesof(typepath) ( typesof(typepath) - typepath )
-
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
 
@@ -303,10 +299,6 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
 */
-
-// Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
-#define APPEARANCE_UI						(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -525,7 +517,8 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 #define VARSET_TO_LIST(L, V) if(L) L[#V] = V
 #define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
 
-#define PREF_SAVELOAD_COOLDOWN 5
+#define PREF_LOAD_COOLDOWN 5
+#define PREF_SAVE_COOLDOWN 2 SECONDS
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
@@ -535,9 +528,6 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 #define FALL_INTERCEPTED		(1<<0) //Stops the movable from falling further and crashing on the ground
 #define FALL_NO_MESSAGE			(1<<1) //Used to suppress the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
 #define FALL_STOP_INTERCEPTING	(1<<2) //Used in situations where halting the whole "intercept" loop would be better, like supermatter dusting (and thus deleting) the atom.
-
-//Misc text define. Does 4 spaces. Used as a makeshift tabulator.
-#define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
 
 #define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
 
@@ -555,8 +545,6 @@ GLOBAL_LIST_INIT(pda_reskins, list(
 #define NIGHTSHIFT_AREA_RECREATION			2		//dorms common areas, etc
 #define NIGHTSHIFT_AREA_DEPARTMENT_HALLS	3		//interior hallways, etc
 #define NIGHTSHIFT_AREA_NONE				4		//default/highest.
-
-#define UNTIL(X) while(!(X)) stoplag()
 
 
 //Scavenging element defines for special loot "events".

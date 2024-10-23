@@ -23,17 +23,29 @@
 	src.proctype = proctype
 	src.escape_on_find = escape_on_find
 
-	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+	RegisterSignal(target, COMSIG_CLICK_ALT, PROC_REF(mob_try_pickup))
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/mob_holder/Detach(datum/source, force)
 	. = ..()
-	UnregisterSignal(source, COMSIG_CLICK_ALT)
-	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(source, list(COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE))
 
 /datum/element/mob_holder/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	if(ishuman(user) && !istype(source.loc, /obj/item/clothing/head/mob_holder))
 		examine_list += "<span class='notice'>Looks like [source.p_they(TRUE)] can be picked up with <b>Alt+Click</b>!</span>"
+
+/datum/element/mob_holder/proc/on_requesting_context_from_item(
+	obj/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	SIGNAL_HANDLER
+
+	if(ishuman(user))
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Pick up")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /datum/element/mob_holder/proc/mob_try_pickup(mob/living/source, mob/user)
 	if(!ishuman(user) || !user.Adjacent(source) || user.incapacitated())
@@ -49,7 +61,7 @@
 		return FALSE
 	source.visible_message("<span class='warning'>[user] starts picking up [source].</span>", \
 					"<span class='userdanger'>[user] starts picking you up!</span>")
-	if(!do_after(user, 20, target = source) || source.buckled)
+	if(!do_after(user, 2 SECONDS, target = source) || source.buckled)
 		return FALSE
 
 	source.visible_message("<span class='warning'>[user] picks up [source]!</span>", \
@@ -83,6 +95,7 @@
 	dynamic_hair_suffix = ""
 	var/mob/living/held_mob
 	var/escape_on_find
+	var/destroying = FALSE
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, slots = NONE)
 	. = ..()
@@ -122,51 +135,65 @@
 			w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/clothing/head/mob_holder/Destroy()
+	destroying = TRUE
 	if(held_mob)
-		release()
+		release(FALSE)
 	return ..()
 
 /obj/item/clothing/head/mob_holder/examine(mob/user)
 	return held_mob?.examine(user) || ..()
 
-/obj/item/clothing/head/mob_holder/Exited(atom/movable/AM, atom/newloc)
-	. = ..()
-	if(AM == held_mob)
-		held_mob.reset_perspective()
-		held_mob = null
-		QDEL_IN(src, 1) //To avoid a qdel loop.
+/obj/item/clothing/head/mob_holder/on_thrown(mob/living/carbon/user, atom/target)
+	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_notice("You set [src] down gently on the ground."))
+		release()
+		return
 
-/obj/item/clothing/head/mob_holder/Entered(atom/movable/AM, atom/newloc)
-	. = ..()
-	if(AM != held_mob)
-		var/destination = loc
-		if(isliving(loc)) //the mob is held or worn, drop things on the floor
-			destination = get_turf(loc)
-		AM.forceMove(destination)
+	var/mob/living/throw_mob = held_mob
+	release()
+	return throw_mob
 
 /obj/item/clothing/head/mob_holder/dropped(mob/user)
 	. = ..()
-	if(held_mob && !ismob(loc) && !istype(loc,/obj/item/storage))//don't release on soft-drops
+	if(held_mob && isturf(loc))
 		release()
 
-/obj/item/clothing/head/mob_holder/proc/release()
-	if(held_mob)
-		var/mob/living/L = held_mob
-		held_mob = null
-		L.forceMove(get_turf(L))
-		L.reset_perspective()
-		L.setDir(SOUTH)
-	if(!QDELETED(src))
+/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE, display_messages = TRUE)
+	if(!held_mob)
+		if(del_on_release && !destroying)
+			qdel(src)
+		return FALSE
+	var/mob/living/released_mob = held_mob
+	held_mob = null // stops the held mob from being release()'d twice.
+	if(isliving(loc))
+		var/mob/living/L = loc
+		if(display_messages)
+			to_chat(L, span_warning("[released_mob] wriggles free!"))
+		L.dropItemToGround(src)
+	released_mob.forceMove(drop_location())
+	released_mob.reset_perspective()
+	released_mob.setDir(SOUTH)
+	if(display_messages)
+		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
+	if(del_on_release && !destroying)
 		qdel(src)
+	return TRUE
 
-/obj/item/clothing/head/mob_holder/relaymove(mob/user)
-	return
+/obj/item/clothing/head/mob_holder/relaymove(mob/living/user, direction)
+	container_resist()
 
 /obj/item/clothing/head/mob_holder/container_resist()
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L.visible_message("<span class='warning'>[held_mob] escapes from [L]!</span>", "<span class='warning'>[held_mob] escapes your grip!</span>")
 	release()
+
+/obj/item/clothing/head/mob_holder/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(held_mob && held_mob == gone)
+		release()
 
 /obj/item/clothing/head/mob_holder/mob_can_equip(M, equipper, slot, disable_warning, bypass_equip_delay_self)
 	if(M == held_mob || !ishuman(M)) //monkeys holding monkeys holding monkeys...
@@ -220,7 +247,9 @@
 	return location.transfer_air(taker, ratio)
 
 // escape when found if applicable
-/obj/item/clothing/head/mob_holder/on_found(mob/living/finder)
+/obj/item/clothing/head/mob_holder/on_found(mob/finder)
 	if(escape_on_find)
-		finder.visible_message("[finder] accidentally releases the [held_mob]!")
-		release()
+		to_chat(finder, span_warning("\A [held_mob.name] pops out! "))
+		finder.visible_message(span_warning("\A [held_mob.name] pops out of the container [finder] is opening!"), ignored_mobs = finder)
+		release(TRUE, FALSE)
+		return

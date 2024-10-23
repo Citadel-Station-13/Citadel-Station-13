@@ -1,22 +1,26 @@
-/datum/action/bloodsucker
+/datum/action/cooldown/bloodsucker
 	name = "Vampiric Gift"
 	desc = "A vampiric gift."
 	button_icon = 'icons/mob/actions/bloodsucker.dmi'	//This is the file for the BACKGROUND icon
 	background_icon_state = "vamp_power_off"		//And this is the state for the background icon
-	var/background_icon_state_on = "vamp_power_on"		// FULP: Our "ON" icon alternative.
-	var/background_icon_state_off = "vamp_power_off"	// FULP: Our "OFF" icon alternative.
 	icon_icon = 'icons/mob/actions/bloodsucker.dmi'		//This is the file for the ACTION icon
 	button_icon_state = "power_feed" 				//And this is the state for the action icon
 	buttontooltipstyle = "cult"
+	transparent_when_unavailable = TRUE
+
+	/// Cooldown you'll have to wait between each use, decreases depending on level.
+	cooldown_time = 2 SECONDS
+
+	///Background icon when the Power is active.
+	var/background_icon_state_on = "vamp_power_on"
+	///Background icon when the Power is NOT active.
+	var/background_icon_state_off = "vamp_power_off"
 
 	// Action-Related
-	//var/amPassive = FALSE		// REMOVED: Just made it its own kind. // Am I just "on" at all times? (aka NO ICON)
 	var/amTargetted = FALSE		// Am I asked to choose a target when enabled? (Shows as toggled ON when armed)
 	var/amToggle = FALSE		// Can I be actively turned on and off?
 	var/amSingleUse = FALSE		// Am I removed after a single use?
 	var/active = FALSE
-	var/cooldown = 20 		// 10 ticks, 1 second.
-	var/cooldownUntil = 0 //  From action.dm:  	next_use_time = world.time + cooldown_time
 	// Power-Related
 	var/level_current = 0		// Can increase to yield new abilities. Each power goes up in strength each Rank.
 	//var/level_max = 1			//
@@ -32,7 +36,7 @@
 	//var/not_bloodsucker = FALSE		// This goes to Vassals or Hunters, but NOT bloodsuckers.
 	var/must_be_concious = TRUE			//Can't use this ability while unconcious.
 
-/datum/action/bloodsucker/New()
+/datum/action/cooldown/bloodsucker/New()
 	if(bloodcost > 0)
 		desc += "<br><br><b>COST:</b> [bloodcost] Blood"	// Modify description to add cost.
 	if(warn_constant_cost)
@@ -46,7 +50,8 @@
 // 	click.dm <--- Where we can take over mouse clicks
 //	spells.dm  /add_ranged_ability()  <--- How we take over the mouse click to use a power on a target.
 
-/datum/action/bloodsucker/Trigger()
+// TODO: Refactor this to use /Activate().
+/datum/action/cooldown/bloodsucker/Trigger()
 	// Active? DEACTIVATE AND END!
 	if(active && CheckCanDeactivate(TRUE))
 		DeactivatePower()
@@ -56,7 +61,7 @@
 	PayCost()
 	if(amToggle)
 		active = !active
-		UpdateButtonIcon()
+		UpdateButtons()
 	if(!amToggle || !active)
 		StartCooldown() // Must come AFTER UpdateButton(), otherwise icon will revert.
 	ActivatePower()  // NOTE: ActivatePower() freezes this power in place until it ends.
@@ -65,13 +70,13 @@
 	if(amSingleUse)
 		RemoveAfterUse()
 
-/datum/action/bloodsucker/proc/CheckCanPayCost(display_error)
+/datum/action/cooldown/bloodsucker/proc/CheckCanPayCost(display_error)
 	if(!owner || !owner.mind)
 		return FALSE
 	// Cooldown?
-	if(cooldownUntil > world.time)
+	if(next_use_time > world.time)
 		if(display_error)
-			to_chat(owner, "[src] is unavailable. Wait [(cooldownUntil - world.time) / 10] seconds.")
+			to_chat(owner, "[src] is unavailable. Wait [(next_use_time - world.time) / 10] seconds.")
 		return FALSE
 	// Have enough blood?
 	var/mob/living/L = owner
@@ -81,7 +86,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/proc/CheckCanUse(display_error)	// These checks can be scanned every frame while a ranged power is on.
+/datum/action/cooldown/bloodsucker/proc/CheckCanUse(display_error)	// These checks can be scanned every frame while a ranged power is on.
 	if(!owner || !owner.mind)
 		return FALSE
 	// Torpor?
@@ -123,79 +128,43 @@
 			return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/proc/StartCooldown()
-	set waitfor = FALSE
-	// Alpha Out
-	button.color = rgb(128,0,0,128)
-	button.alpha = 100
-	// Calculate Cooldown (by power's level)
-	var/this_cooldown = (cooldown_static || amSingleUse) ? cooldown : max(cooldown / 2, cooldown - (cooldown / 16 * (level_current-1)))
-	// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
-
-	// Wait for cooldown
-	cooldownUntil = world.time + this_cooldown
-	spawn(this_cooldown)
-		// Alpha In
-		button.color = rgb(255,255,255,255)
-		button.alpha = 255
-
-/datum/action/bloodsucker/proc/CheckCanDeactivate(display_error)
+/datum/action/cooldown/bloodsucker/proc/CheckCanDeactivate(display_error)
 	return TRUE
 
-/datum/action/bloodsucker/UpdateButtonIcon(force = FALSE)
+/datum/action/cooldown/bloodsucker/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
 	background_icon_state = active? background_icon_state_on : background_icon_state_off
-	..()//UpdateButtonIcon()
+	..()//UpdateButton()
 
-
-/datum/action/bloodsucker/proc/PayCost()
+/datum/action/cooldown/bloodsucker/proc/PayCost()
 	// owner for actions is the mob, not mind.
 	var/mob/living/L = owner
 	L.blood_volume -= bloodcost
 
 
-/datum/action/bloodsucker/proc/ActivatePower()
+/datum/action/cooldown/bloodsucker/proc/ActivatePower()
 
 
-/datum/action/bloodsucker/proc/DeactivatePower(mob/living/user = owner, mob/living/target)
+/datum/action/cooldown/bloodsucker/proc/DeactivatePower(mob/living/user = owner, mob/living/target)
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 	StartCooldown()
 
-/datum/action/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
+/datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
 	return active && user && (!warn_constant_cost || user.blood_volume > 0)
 
-/datum/action/bloodsucker/proc/RemoveAfterUse()
+/datum/action/cooldown/bloodsucker/proc/RemoveAfterUse()
 	// Un-Learn Me! (GO HOME
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	if (istype(bloodsuckerdatum))
 		bloodsuckerdatum.powers -= src
 	Remove(owner)
 
-/datum/action/bloodsucker/proc/Upgrade()
+/datum/action/cooldown/bloodsucker/proc/Upgrade()
 	level_current ++
-
-///////////////////////////////////  PASSIVE POWERS	///////////////////////////////////
-
-// New Type: Passive (Always on, no button)
-/datum/action/bloodsucker/passive
-
-/datum/action/bloodsucker/passive/New()
-	// REMOVED: DO NOTHBING!
-	..()
-	// Don't Display Button! (it doesn't do anything anyhow)
-	button.screen_loc = DEFAULT_BLOODSPELLS
-	button.moved = DEFAULT_BLOODSPELLS
-	button.ordered = FALSE
-
-/datum/action/bloodsucker/passive/Destroy()
-	if(owner)
-		Remove(owner)
-	target = null
-	return ..()
 
 ///////////////////////////////////  TARGETTED POWERS	///////////////////////////////////
 
-/datum/action/bloodsucker/targeted
+/datum/action/cooldown/bloodsucker/targeted
 	// NOTE: All Targeted spells are Toggles! We just don't bother checking here.
 	var/target_range = 99
 	var/message_Trigger = "Select a target."
@@ -204,15 +173,16 @@
 
 	var/power_in_use = FALSE // Is this power LOCKED due to being used?
 
-/datum/action/bloodsucker/targeted/New(Target)
+/datum/action/cooldown/bloodsucker/targeted/New(Target)
 	desc += "<br>\[<i>Targeted Power</i>\]"	// Modify description to add notice that this is aimed.
 	..()
 	// Create Proc Holder for intercepting clicks
 	bs_proc_holder = new ()
 	bs_proc_holder.linked_power = src
 
+// TODO: Refactor this to use /Activate() and click_to_activate = TRUE.
 // Click power: Begin Aim
-/datum/action/bloodsucker/targeted/Trigger()
+/datum/action/cooldown/bloodsucker/targeted/Trigger()
 	if(active && CheckCanDeactivate(TRUE))
 		DeactivateRangedAbility()
 		DeactivatePower()
@@ -220,7 +190,7 @@
 	if(!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
 		return
 	active = !active
-	UpdateButtonIcon()
+	UpdateButtons()
 	// Create & Link Targeting Proc
 	var/mob/living/L = owner
 	if(L.ranged_ability)
@@ -230,7 +200,7 @@
 	if(message_Trigger != "")
 		to_chat(owner, "<span class='announce'>[message_Trigger]</span>")
 
-/datum/action/bloodsucker/targeted/CheckCanUse(display_error)
+/datum/action/cooldown/bloodsucker/targeted/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
@@ -238,21 +208,21 @@
 		return FALSE	//		doesn't let you remove powers if you're not there. So, let's just cancel the power entirely.
 	return TRUE
 
-/datum/action/bloodsucker/targeted/DeactivatePower(mob/living/user = owner, mob/living/target)
+/datum/action/cooldown/bloodsucker/targeted/DeactivatePower(mob/living/user = owner, mob/living/target)
 	// Don't run ..(), we don't want to engage the cooldown until we USE this power!
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 
-/datum/action/bloodsucker/targeted/proc/DeactivateRangedAbility()
+/datum/action/cooldown/bloodsucker/targeted/proc/DeactivateRangedAbility()
 	// Only Turned off when CLICK is disabled...aka, when you successfully clicked (or
 	bs_proc_holder.remove_ranged_ability()
 
 // Check if target is VALID (wall, turf, or character?)
-/datum/action/bloodsucker/targeted/proc/CheckValidTarget(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/proc/CheckValidTarget(atom/A)
 	return FALSE // FALSE targets nothing.
 
 // Check if valid target meets conditions
-/datum/action/bloodsucker/targeted/proc/CheckCanTarget(atom/A, display_error)
+/datum/action/cooldown/bloodsucker/targeted/proc/CheckCanTarget(atom/A, display_error)
 	// Out of Range
 	if(!(A in view(target_range, owner)))
 		if(display_error && target_range > 1) // Only warn for range if it's greater than 1. Brawn doesn't need to announce itself.
@@ -261,7 +231,7 @@
 	return istype(A)
 
 // Click Target
-/datum/action/bloodsucker/targeted/proc/ClickWithPower(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/proc/ClickWithPower(atom/A)
 	// CANCEL RANGED TARGET check
 	if(power_in_use || !CheckValidTarget(A))
 		return FALSE
@@ -276,21 +246,21 @@
 	power_in_use = FALSE
 	return TRUE
 
-/datum/action/bloodsucker/targeted/proc/FireTargetedPower(atom/A)
+/datum/action/cooldown/bloodsucker/targeted/proc/FireTargetedPower(atom/A)
 	// Like ActivatePower, but specific to Targeted (and takes an atom input). We don't use ActivatePower for targeted.
 
-/datum/action/bloodsucker/targeted/proc/PowerActivatedSuccessfully()
+/datum/action/cooldown/bloodsucker/targeted/proc/PowerActivatedSuccessfully()
 	// The power went off! We now pay the cost of the power.
 	PayCost()
 	DeactivateRangedAbility()
 	DeactivatePower()
 	StartCooldown()	// Do AFTER UpdateIcon() inside of DeactivatePower. Otherwise icon just gets wiped.
 
-/datum/action/bloodsucker/targeted/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
+/datum/action/cooldown/bloodsucker/targeted/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
 	return ..()
 // Target Proc Holder
 /obj/effect/proc_holder/bloodsucker
-	var/datum/action/bloodsucker/targeted/linked_power
+	var/datum/action/cooldown/bloodsucker/targeted/linked_power
 
 /obj/effect/proc_holder/bloodsucker/remove_ranged_ability(msg)
 	..()

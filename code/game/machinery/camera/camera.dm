@@ -41,6 +41,8 @@
 	var/upgrades = 0
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
+	///Represents a signel source of camera alarms about movement or camera tampering
+	var/datum/alarm_handler/alarm_manager
 
 /obj/machinery/camera/preset/toxins //Bomb test site in space
 	name = "Hardened Bomb-Test Camera"
@@ -72,6 +74,8 @@
 	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
 
+	alarm_manager = new(src)
+
 /obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	for(var/i in network)
 		network -= i
@@ -83,7 +87,8 @@
 	GLOB.cameranet.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
-		myarea.clear_camera(src)
+		LAZYREMOVE(myarea.cameras, src)
+	QDEL_NULL(alarm_manager)
 	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= c_tag
@@ -102,7 +107,7 @@
 			var/list/previous_network = network
 			network = list()
 			GLOB.cameranet.removeCamera(src)
-			stat |= EMPED
+			machine_stat |= EMPED
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
@@ -112,12 +117,12 @@
 					triggerCameraAlarm() //camera alarm triggers even if multiple EMPs are in effect.
 					if(emped == thisemp) //Only fix it if the camera hasn't been EMP'd again
 						network = previous_network
-						stat &= ~EMPED
+						machine_stat &= ~EMPED
 						update_icon()
 						if(can_use())
 							GLOB.cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
-						addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+						addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client.eye == src)
@@ -273,8 +278,8 @@
 	return ..()
 
 /obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == MELEE && damage_amount < 12 && !(stat & BROKEN))
-		return 0
+	if(damage_flag == MELEE && damage_amount < 12 && !(machine_stat & BROKEN))
+		return FALSE
 	. = ..()
 
 /obj/machinery/camera/obj_break(damage_flag)
@@ -300,7 +305,7 @@
 /obj/machinery/camera/update_icon_state()
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
-	else if (stat & EMPED)
+	else if (machine_stat & EMPED)
 		icon_state = "[initial(icon_state)]emp"
 	else
 		icon_state = "[initial(icon_state)][in_use_lights ? "_in_use" : ""]"
@@ -325,7 +330,7 @@
 		change_msg = "reactivates"
 		triggerCameraAlarm()
 		if(!QDELETED(src)) //We'll be doing it anyway in destroy
-			addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
@@ -347,18 +352,16 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = TRUE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.triggerAlarm("Camera", get_area(src), list(src), src)
+	alarm_manager.send_alarm(ALARM_CAMERA, src, src)
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = FALSE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.cancelAlarm("Camera", get_area(src), src)
+	alarm_manager.clear_alarm(ALARM_CAMERA)
 
 /obj/machinery/camera/proc/can_use()
 	if(!status)
 		return FALSE
-	if(stat & EMPED)
+	if(machine_stat & EMPED)
 		return FALSE
 	return TRUE
 
@@ -417,4 +420,4 @@
 	else
 		user.sight = 0
 		user.see_in_dark = 2
-	return 1
+	return TRUE

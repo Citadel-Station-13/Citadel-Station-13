@@ -16,14 +16,23 @@ Assistant
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 	paycheck_department = ACCOUNT_CIV
+	departments = DEPARTMENT_BITFLAG_SERVICE
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 	dresscodecompliant = FALSE
 	always_can_respawn_as = TRUE
 	threat = 0.2
-	
+
 	family_heirlooms = list(
-		/obj/item/storage/toolbox/mechanical/old/heirloom,
 		/obj/item/clothing/gloves/cut/family
+	)
+
+	mail_goodies = list(
+		/obj/item/storage/box/donkpockets = 10,
+		/obj/item/clothing/mask/gas = 10,
+		/obj/item/clothing/gloves/color/fyellow = 7,
+		/obj/item/choice_beacon/music = 5,
+		/obj/item/toy/sprayoncan = 3,
+		/obj/item/crowbar/large = 1
 	)
 
 /datum/job/assistant/get_access()

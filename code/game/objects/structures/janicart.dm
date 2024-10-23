@@ -22,12 +22,12 @@
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/mop, mob/user)
 	if(reagents.total_volume < 1)
 		to_chat(user, "<span class='warning'>[src] is out of water!</span>")
-		return 0
+		return FALSE
 	else
 		reagents.trans_to(mop, 5)
 		to_chat(user, "<span class='notice'>You wet [mop] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-		return 1
+		return TRUE
 
 /obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
 	if(!user.transferItemToLoc(I, src))
@@ -110,8 +110,8 @@
 
 	if(!length(items))
 		return
-	items = sortList(items)
-	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
+	items = sort_list(items)
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 38, require_near = TRUE)
 	if(!pick)
 		return
 	switch(pick)

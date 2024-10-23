@@ -37,7 +37,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
 
 /obj/structure/destructible/clockwork/examine(mob/user)
 	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
@@ -93,7 +93,7 @@
 	if(is_servant_of_ratvar(user) && I.tool_behaviour == TOOL_WRENCH && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
 			update_anchored(user)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)

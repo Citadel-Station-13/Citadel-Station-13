@@ -84,7 +84,7 @@
 
 /obj/machinery/computer/holodeck/power_change()
 	. = ..()
-	toggle_power(!stat)
+	toggle_power(!machine_stat)
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -230,7 +230,7 @@
 
 	if(toggleOn)
 		if(last_program && last_program != offline_program)
-			addtimer(CALLBACK(src, .proc/load_program, last_program, TRUE), 25)
+			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
@@ -290,7 +290,7 @@
 		S.flags_1 |= NODECONSTRUCT_1
 	effects = list()
 
-	addtimer(CALLBACK(src, .proc/finish_spawn), 30)
+	addtimer(CALLBACK(src, PROC_REF(finish_spawn)), 30)
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()
 	var/list/added = list()
@@ -308,9 +308,9 @@
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
 	// Emagging a machine creates an anomaly in the derez systems.
-	if(O && (obj_flags & EMAGGED) && !stat && !forced)
+	if(O && (obj_flags & EMAGGED) && !machine_stat && !forced)
 		if((ismob(O) || ismob(O.loc)) && prob(50))
-			addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
+			addtimer(CALLBACK(src, PROC_REF(derez), O, silent), 50) // may last a disturbingly long time
 			return
 
 	spawned -= O

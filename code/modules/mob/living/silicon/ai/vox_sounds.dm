@@ -5,9 +5,11 @@
 // Regex for collecting a list of ogg files
 // (([a-zA-Z,.]+)\.ogg)
 
-// For vim
-// :%s/\(\(.*\)\.ogg\)/"\2" = 'sound\/vox_fem\/\1',/g
-GLOBAL_LIST_INIT(vox_sounds, list("abduction" = 'sound/vox_fem/abduction.ogg',
+GLOBAL_LIST_INIT(vox_types, list(
+	// For vim
+	// :%s/\(\(.*\)\.ogg\)/"\2" = 'sound\/vox_fem\/\1',/g
+	"Female" = list(
+"abduction" = 'sound/vox_fem/abduction.ogg',
 "abortions" = 'sound/vox_fem/abortions.ogg',
 "above" = 'sound/vox_fem/above.ogg',
 "abstain" = 'sound/vox_fem/abstain.ogg',
@@ -974,11 +976,11 @@ GLOBAL_LIST_INIT(vox_sounds, list("abduction" = 'sound/vox_fem/abduction.ogg',
 "z" = 'sound/vox_fem/z.ogg',
 "zombie" = 'sound/vox_fem/zombie.ogg',
 "zone" = 'sound/vox_fem/zone.ogg',
-"zulu" = 'sound/vox_fem/zulu.ogg'))
-
-//for vim
-// :%s/\(\(.*\)\.ogg\)/"\2" = 'sound\/vox\/\1',/g
-GLOBAL_LIST_INIT(vox_sounds_male, list("," = 'sound/vox/_comma.ogg',
+"zulu" = 'sound/vox_fem/zulu.ogg'),
+	//for vim
+	// :%s/\(\(.*\)\.ogg\)/"\2" = 'sound\/vox\/\1',/g
+	"Male" = list(
+"," = 'sound/vox/_comma.ogg',
 "." = 'sound/vox/_period.ogg',
 "a" = 'sound/vox/a.ogg',
 "accelerating" = 'sound/vox/accelerating.ogg',
@@ -1605,5 +1607,6 @@ GLOBAL_LIST_INIT(vox_sounds_male, list("," = 'sound/vox/_comma.ogg',
 "yourself" = 'sound/vox/yourself.ogg',
 "zero" = 'sound/vox/zero.ogg',
 "zone" = 'sound/vox/zone.ogg',
-"zulu" = 'sound/vox/zulu.ogg',))
+"zulu" = 'sound/vox/zulu.ogg',
+)))
 #endif

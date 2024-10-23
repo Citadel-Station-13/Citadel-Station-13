@@ -151,8 +151,9 @@
 			slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
 			slipper.Slip(src, hit_atom)
 			slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
-		if(thrownby && !caught)
-			throw_at(thrownby, throw_range+2, throw_speed, null, 1)
+		var/mob/thrown_by = thrownby?.resolve()
+		if(thrown_by && !caught)
+			throw_at(thrown_by, throw_range+2, throw_speed, null, 1)
 	else
 		return ..()
 

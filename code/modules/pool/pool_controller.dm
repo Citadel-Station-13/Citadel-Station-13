@@ -129,9 +129,9 @@
 	return TRUE
 
 /obj/machinery/pool/controller/attackby(obj/item/W, mob/user)
-	if(shocked && !(stat & NOPOWER))
+	if(shocked && !(machine_stat & NOPOWER))
 		shock(user,50)
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		return
 	if(istype(W,/obj/item/reagent_containers))
 		if(W.reagents.total_volume) //check if there's reagent
@@ -188,7 +188,7 @@
 
 //procs
 /obj/machinery/pool/controller/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE
@@ -220,7 +220,7 @@
 
 /obj/machinery/pool/controller/process()
 	updateUsrDialog()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(drained)
 		return
@@ -372,11 +372,11 @@
 	. = ..()
 	if(.)
 		return
-	if(shocked && !(stat & NOPOWER))
+	if(shocked && !(machine_stat & NOPOWER))
 		shock(user,50)
 	if(panel_open && !isAI(user))
 		return wires.interact(user)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	var/datum/browser/popup = new(user, "Pool Controller", name, 300, 450)
 	var/dat = ""

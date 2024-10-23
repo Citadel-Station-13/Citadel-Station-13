@@ -28,7 +28,7 @@
 		synthesizing = TRUE
 		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
 		owner.adjust_nutrition(50)
-		addtimer(CALLBACK(src, .proc/synth_cool), 50)
+		addtimer(CALLBACK(src, PROC_REF(synth_cool)), 50)
 
 /obj/item/organ/cyberimp/chest/nutriment/proc/synth_cool()
 	synthesizing = FALSE
@@ -73,7 +73,7 @@
 		else if(!do_heal)
 			convalescence_time = world.time + DEF_CONVALESCENCE_TIME
 		if(. && (do_heal || world.time < convalescence_time))
-			addtimer(CALLBACK(src, .proc/heal), 3 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
@@ -121,7 +121,7 @@
 		if(H.stat != DEAD && prob(severity/2) && H.can_heartattack())
 			H.set_heartattack(TRUE)
 			to_chat(H, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
-			addtimer(CALLBACK(src, .proc/undo_heart_attack), (60 * severity/100) SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(undo_heart_attack)), (60 * severity/100) SECONDS)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
 	var/mob/living/carbon/human/H = owner
@@ -166,11 +166,11 @@
 		if(crit_fail || (organ_flags & ORGAN_FAILING))
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
-			return 0
+			return FALSE
 		on = TRUE
 		if(allow_thrust(0.01))
 			ion_trail.start()
-			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/move_react)
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
 			owner.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 			if(!silent)
 				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
@@ -195,28 +195,28 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
 	if(!on || !owner)
-		return 0
+		return FALSE
 
 	var/turf/T = get_turf(owner)
 	if(!T) // No more runtimes from being stuck in nullspace.
-		return 0
+		return FALSE
 
 	// Priority 1: use air from environment.
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && environment.return_pressure() > 30)
-		return 1
+		return TRUE
 
 	// Priority 2: use plasma from internal plasma storage.
 	// (just in case someone would ever use this implant system to make cyber-alien ops with jetpacks and taser arms)
 	if(owner.getPlasma() >= num*100)
 		owner.adjustPlasma(-num*100)
-		return 1
+		return TRUE
 
 	// Priority 3: use internals tank.
 	var/obj/item/tank/I = owner.internal
 	if(I && I.air_contents && I.air_contents.total_moles() >= num)
 		T.assume_air_moles(I.air_contents, num)
-		return 1
+		return TRUE
 
 	toggle(silent = TRUE)
-	return 0
+	return FALSE

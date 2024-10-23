@@ -91,7 +91,7 @@
 		if(camera)
 			camera.remove_target_ui()
 			camera.forceMove(user)
-		teleport_now.UpdateButtonIcon()
+		teleport_now.UpdateButtons()
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
 	var/mob/living/carbon/human/user = src.loc
@@ -105,7 +105,7 @@
 		if(camera)
 			camera.remove_target_ui()
 
-		teleport_now.UpdateButtonIcon()
+		teleport_now.UpdateButtons()
 
 		var/list/nonsafe_slots = list(ITEM_SLOT_BELT, ITEM_SLOT_BACK)
 		var/list/exposed = list()
@@ -129,12 +129,12 @@
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
-		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_2, user, to_turf, phase_in_ds), 3, TIMER_STOPPABLE)
+		phase_timer_id = addtimer(CALLBACK(src, PROC_REF(phase_2), user, to_turf, phase_in_ds), 3, TIMER_STOPPABLE)
 
 /obj/item/clothing/suit/space/chronos/proc/phase_2(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
 	if(teleporting && activated && user)
 		animate(user, alpha = 0, time = 2)
-		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_3, user, to_turf, phase_in_ds), 2, TIMER_STOPPABLE)
+		phase_timer_id = addtimer(CALLBACK(src, PROC_REF(phase_3), user, to_turf, phase_in_ds), 2, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
 
@@ -142,14 +142,14 @@
 	if(teleporting && activated && user)
 		user.forceMove(to_turf)
 		animate(user, alpha = 255, time = phase_in_ds)
-		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_4, user, to_turf), phase_in_ds, TIMER_STOPPABLE)
+		phase_timer_id = addtimer(CALLBACK(src, PROC_REF(phase_4), user, to_turf), phase_in_ds, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
 
 /obj/item/clothing/suit/space/chronos/proc/phase_4(mob/living/carbon/human/user, turf/to_turf)
 	if(teleporting && activated && user)
 		animate(user, color = "#ffffff", time = 3)
-		phase_timer_id = addtimer(CALLBACK(src, .proc/finish_chronowalk, user, to_turf), 3, TIMER_STOPPABLE)
+		phase_timer_id = addtimer(CALLBACK(src, PROC_REF(finish_chronowalk), user, to_turf), 3, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
 

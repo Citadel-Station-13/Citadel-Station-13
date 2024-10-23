@@ -30,7 +30,7 @@
 	var/activate_cooldown = 3 SECONDS
 
 /obj/item/assembly/get_part_rating()
-	return 1
+	return TRUE
 
 /obj/item/assembly/proc/on_attach()
 
@@ -58,9 +58,9 @@
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/assembly/proc/pulsed(radio = FALSE)
 	if(wire_type & WIRE_RECEIVE)
-		INVOKE_ASYNC(src, .proc/activate)
+		INVOKE_ASYNC(src, PROC_REF(activate))
 	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
-		INVOKE_ASYNC(src, .proc/activate)
+		INVOKE_ASYNC(src, PROC_REF(activate))
 	return TRUE
 
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct

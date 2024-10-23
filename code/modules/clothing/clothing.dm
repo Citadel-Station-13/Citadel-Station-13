@@ -110,10 +110,10 @@
 					to_chat(user, "<span class='warning'>You require 3 [S.name] to repair [src].</span>")
 					return
 				to_chat(user, "<span class='notice'>You begin fixing the damage to [src] with [S]...</span>")
-				if(do_after(user, 6 SECONDS, TRUE, src))
+				if(do_after(user, 6 SECONDS, src))
 					if(S.use(3))
 						repair(user, params)
-		return 1
+		return TRUE
 	return ..()
 
 // Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
@@ -178,7 +178,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.visible_message("<span class='danger'>The [zone_name] on [C]'s [src.name] is [break_verb] away!</span>", "<span class='userdanger'>The [zone_name] on your [src.name] is [break_verb] away!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
-		RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/bristle)
+		RegisterSignal(C, COMSIG_MOVABLE_MOVED, PROC_REF(bristle))
 
 	zones_disabled++
 	for(var/i in zone2body_parts_covered(def_zone))
@@ -221,7 +221,7 @@
 		return
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
-			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle)
+			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle))
 		if(LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
@@ -402,7 +402,7 @@ BLIND     // can't see anything
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.UpdateButtons()
 	return TRUE
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
@@ -420,8 +420,8 @@ BLIND     // can't see anything
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/item/clothing/obj_destruction(damage_flag)

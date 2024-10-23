@@ -27,12 +27,12 @@
 
 	if(!num_decals_per_atom[A])
 		if(first_dir)
-			RegisterSignal(A, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react)
+			RegisterSignal(A, COMSIG_ATOM_DIR_CHANGE, PROC_REF(rotate_react))
 		if(cleanable)
-			RegisterSignal(A, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
+			RegisterSignal(A, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react))
 		if(description)
-			RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/examine)
-		RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlay, TRUE)
+			RegisterSignal(A, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+		RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlay), TRUE)
 
 	num_decals_per_atom[A]++
 	apply(A)
@@ -51,9 +51,9 @@
 	if(target.flags_1 & INITIALIZED_1)
 		target.update_icon() //could use some queuing here now maybe.
 	else if(!QDELETED(target) && num_decals_per_atom[target] == 1)
-		RegisterSignal(target, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE, .proc/late_update_icon)
+		RegisterSignal(target, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE, PROC_REF(late_update_icon))
 	if(isitem(target))
-		addtimer(CALLBACK(target, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/obj/item, update_slot_icon)), 0, TIMER_UNIQUE)
 
 /datum/element/decal/proc/late_update_icon(atom/source)
 	source.update_icon()

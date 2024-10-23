@@ -56,7 +56,7 @@
 	return ..(NORTH)
 
 /obj/structure/reflector/proc/dir_map_to_angle(dir)
-	return 0
+	return FALSE
 
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
 	var/pdir = P.dir
@@ -263,3 +263,7 @@
 		return
 	else
 		return ..()
+
+/obj/structure/reflector/shuttleRotate(rotation, params)
+	. = ..()
+	setAngle(SIMPLIFY_DEGREES(rotation_angle + rotation))

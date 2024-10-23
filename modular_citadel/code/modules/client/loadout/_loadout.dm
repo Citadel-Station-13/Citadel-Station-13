@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 	var/handle_post_equip = FALSE
 
 	//NEW DONATOR SYTSEM STUFF
-	var/donoritem				//autoset on new if null
+	var/donoritem				//autoset on new if null	
 	var/donator_group_id		//New donator group ID system.
 	//END
 

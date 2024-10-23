@@ -8,18 +8,18 @@ on:
     - master
 jobs:
   run_linters:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Run Linters
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Restore SpacemanDMM cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
       - name: Restore Yarn cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
@@ -29,7 +29,7 @@ jobs:
             ${{ runner.os }}-
       - name: Install Tools
         run: |
-          pip3 install setuptools
+          pip3 install setuptools --upgrade
           bash tools/ci/install_node.sh
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
@@ -51,13 +51,13 @@ jobs:
           outputFile: output-annotations.txt
 
   compile_all_maps:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Compile Maps
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Restore BYOND cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
@@ -66,11 +66,10 @@ jobs:
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
-
   run_all_tests:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Integration Tests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     services:
       mysql:
         image: mysql:latest
@@ -80,14 +79,14 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Restore BYOND cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
       - name: Restore Yarn cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
@@ -104,9 +103,6 @@ jobs:
           mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
       - name: Install rust-g
         run: |
-          sudo dpkg --add-architecture i386
-          sudo apt update || true
-          sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
           bash tools/ci/install_rust_g.sh
       - name: Install auxmos
         run: |
@@ -118,15 +114,14 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci -DCIBUILDING
           bash tools/ci/run_server.sh
-
   test_windows:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Windows Build
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Restore Yarn cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
@@ -143,7 +138,7 @@ jobs:
           md deploy
           bash tools/deploy.sh ./deploy
       - name: Deploy artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: deploy
           path: deploy

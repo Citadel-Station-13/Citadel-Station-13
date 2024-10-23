@@ -127,15 +127,15 @@
 	if(A.y > B.y)
 		return -1
 	if(A.y < B.y)
-		return 1
+		return TRUE
 	if(A.x > B.x)
-		return 1
+		return TRUE
 	if(A.x < B.x)
 		return -1
-	return 0
+	return FALSE
 
 /obj/effect/sliding_puzzle/proc/elements_in_order()
-	return sortTim(elements,cmp=/proc/cmp_xy_desc)
+	return sortTim(elements,cmp=GLOBAL_PROC_REF(cmp_xy_desc))
 
 /obj/effect/sliding_puzzle/proc/get_base_icon()
 	var/icon/I = new('icons/obj/puzzle.dmi')
@@ -207,7 +207,7 @@
 
 /obj/structure/puzzle_element/Move(nloc, dir)
 	if(!isturf(nloc) ||  moving_diagonally || get_dist(get_step(src,dir),get_turf(source)) > 1)
-		return 0
+		return FALSE
 	else
 		return ..()
 

@@ -530,7 +530,7 @@
 /obj/item/shield/riot/implant/Moved()
 	. = ..()
 	if(istype(loc, /obj/item/organ/cyberimp/arm/shield))
-		recharge_timerid = addtimer(CALLBACK(src, .proc/recharge), recharge_delay, flags = TIMER_STOPPABLE)
+		recharge_timerid = addtimer(CALLBACK(src, PROC_REF(recharge)), recharge_delay, flags = TIMER_STOPPABLE)
 	else		//extending
 		if(recharge_timerid)
 			deltimer(recharge_timerid)

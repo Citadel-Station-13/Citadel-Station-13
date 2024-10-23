@@ -62,7 +62,7 @@
 	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
 	var/obj/structure/closet/supplypod/extractionpod/empty_pod = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 
-	RegisterSignal(empty_pod, COMSIG_ATOM_ENTERED, .proc/enter_check)
+	RegisterSignal(empty_pod, COMSIG_ATOM_ENTERED, PROC_REF(enter_check))
 
 	empty_pod.stay_after_drop = TRUE
 	empty_pod.reversing = TRUE
@@ -143,7 +143,7 @@
 					[C.registered_account.account_balance] cr.", TRUE)
 
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)	// They're off to holding - handle the return timer and give some text about what's going on.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), 4 MINUTES)	// Ship 'em back - dead or alive... 4 minutes wait.
+	addtimer(CALLBACK(src, PROC_REF(returnVictim), M), 4 MINUTES)	// Ship 'em back - dead or alive... 4 minutes wait.
 	if(M.stat != DEAD)	//Even if they weren't the target, we're still treating them the same.
 		M.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 20)	// Heal them up - gets them out of crit/soft crit. -- now 100% toxinlover friendly!!
 		M.flash_act()

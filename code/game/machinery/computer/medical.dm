@@ -539,7 +539,7 @@
 
 /obj/machinery/computer/med_data/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(severity/10))
 				switch(rand(1,6))
@@ -571,8 +571,8 @@
 				if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
-							return 1
-	return 0
+							return TRUE
+	return FALSE
 
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"

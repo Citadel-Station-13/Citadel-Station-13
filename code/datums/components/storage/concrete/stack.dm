@@ -63,7 +63,7 @@
 		if(!istype(I) || QDELETED(I))				//We're specialized stack storage, just ignore non stacks.
 			continue
 		if(!.[I.merge_type])
-			.[I.merge_type] = new /datum/numbered_display(I, I.amount)
+			.[I.merge_type] = new /datum/numbered_display(I, I.amount, src)
 		else
 			var/datum/numbered_display/ND = .[I.merge_type]
 			ND.number += I.amount

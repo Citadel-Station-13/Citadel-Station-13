@@ -177,7 +177,7 @@
 
 // monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	flush = !flush
 	update_icon()
@@ -210,7 +210,7 @@
 	flush = FALSE
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
-	for(var/obj/item/smallDelivery/O in src)
+	for(var/obj/item/small_delivery/O in src)
 		H.tomail = TRUE
 		return
 
@@ -303,7 +303,7 @@
 	return GLOB.notcontained_state
 
 /obj/machinery/disposal/bin/ui_interact(mob/user, datum/tgui/ui)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -359,10 +359,10 @@
 	if(isitem(AM) && AM.CanEnterDisposals())
 		if(prob(75))
 			AM.forceMove(src)
-			visible_message("<span class='notice'>[AM] lands in [src].</span>")
-			update_icon()
+			visible_message(span_notice("[AM] lands in [src]."))
+			update_appearance()
 		else
-			visible_message("<span class='notice'>[AM] bounces off of [src]'s rim!</span>")
+			visible_message(span_notice("[AM] bounces off of [src]'s rim!"))
 			return ..()
 	else
 		return ..()
@@ -385,7 +385,7 @@
 
 /obj/machinery/disposal/bin/update_overlays()
 	. = ..()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		pressure_charging = FALSE
 		flush = FALSE
 		return
@@ -395,7 +395,7 @@
 		. += "dispover-handle"
 
 	//only handle is shown if no power
-	if(stat & NOPOWER || panel_open)
+	if(machine_stat & NOPOWER || panel_open)
 		return
 
 	//check for items in disposal - occupied light
@@ -418,7 +418,7 @@
 //timed process
 //charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/bin/process()
-	if(stat & BROKEN) //nothing can happen if broken
+	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
 	flush_count++
@@ -431,7 +431,7 @@
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
 		do_flush()
 
-	if(stat & NOPOWER) // won't charge if no power
+	if(machine_stat & NOPOWER) // won't charge if no power
 		return
 
 	use_power(100) // base power usage

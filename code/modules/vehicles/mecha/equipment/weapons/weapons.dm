@@ -21,7 +21,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/weapon/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return FALSE
 	var/newtonian_target = turn(chassis.dir,180)
@@ -36,20 +36,23 @@
 			else
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
-		var/obj/item/projectile/A = new projectile(get_turf(src))
-		A.preparePixelProjectile(target, source, params, spread)
+		var/obj/item/projectile/projectile_obj = new projectile(get_turf(src))
+		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
+		projectile_obj.firer = chassis
+		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
 
-		A.fire()
-		if(!A.suppressed && firing_effect_type)
+		projectile_obj.fire()
+		if(!projectile_obj.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
+
+		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
 
 		sleep(max(0, projectile_delay))
 
 		if(kickback)
 			chassis.newtonian_move(newtonian_target)
-	chassis.log_message("Fired from [src.name], targeting [target].", LOG_MECHA)
-	return ..()
+	chassis.log_message("[key_name(source)] fired [src], targeting [target].", LOG_ATTACK)
 
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
@@ -395,7 +398,7 @@
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(user)] fired a [F] in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(user)] fired a [F] in [AREACOORD(T)]")
-	addtimer(CALLBACK(F, /obj/item/grenade/flashbang.proc/prime), det_time)
+	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/flashbang, prime)), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"
@@ -423,8 +426,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -441,8 +444,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
@@ -472,8 +475,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/get_equip_info()
 	if(!chassis)

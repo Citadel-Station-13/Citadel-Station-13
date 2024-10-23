@@ -17,6 +17,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	bounty_types = CIV_JOB_GROW
+	departments = DEPARTMENT_BITFLAG_SERVICE
 	display_order = JOB_DISPLAY_ORDER_BOTANIST
 	threat = 1.5 // lol powergame
 
@@ -24,6 +25,15 @@
 		/obj/item/cultivator,
 		/obj/item/reagent_containers/glass/bucket, // Watering cans don't exist yet
 		/obj/item/toy/plush/beeplushie,
+	)
+
+	mail_goodies = list(
+		/datum/reagent/toxin/mutagen = 20,
+		/datum/reagent/saltpetre = 20,
+		/datum/reagent/diethylamine = 20,
+		/obj/item/gun/energy/floragun = 10,
+		/obj/effect/spawner/lootdrop/seed_vault = 5,// These are strong, rare seeds, so use sparingly.
+		/obj/item/reagent_containers/food/snacks/cube/bee = 2
 	)
 
 /datum/outfit/job/botanist

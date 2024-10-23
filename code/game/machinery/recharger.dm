@@ -39,7 +39,7 @@
 		. += {"<span class='notice'>\The [src] contains:</span>
 		<span class='notice'>- \A [charging].</span>"}
 
-	if(!(stat & (NOPOWER|BROKEN)))
+	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>"
 		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.</span>"
 		if(charging)
@@ -80,27 +80,27 @@
 	if(allowed)
 		if(anchored)
 			if(charging || panel_open)
-				return 1
+				return TRUE
 
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
 			if(!a || !a.powered(EQUIP))
 				to_chat(user, "<span class='notice'>[src] blinks red as you try to insert [G].</span>")
-				return 1
+				return TRUE
 
 			if (istype(G, /obj/item/gun/energy))
 				var/obj/item/gun/energy/E = G
 				if(!E.can_charge)
 					to_chat(user, "<span class='notice'>Your gun has no external power connector.</span>")
-					return 1
+					return TRUE
 
 			if(!user.transferItemToLoc(G, src))
-				return 1
+				return TRUE
 			setCharging(G)
 
 		else
 			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
-		return 1
+		return TRUE
 
 	if(anchored && !charging)
 		if(default_deconstruction_screwdriver(user, "recharger", "recharger", G))
@@ -126,7 +126,7 @@
 		charging.forceMove(drop_location())
 
 /obj/machinery/recharger/process()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return PROCESS_KILL
 
 	using_power = FALSE
@@ -186,7 +186,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_CONTENTS)
 		return
-	if(!(stat & (NOPOWER|BROKEN)) && anchored)
+	if(!(machine_stat & (NOPOWER|BROKEN)) && anchored)
 		if(istype(charging,  /obj/item/gun/energy))
 			var/obj/item/gun/energy/E = charging
 			if(E.cell)
@@ -199,14 +199,14 @@
 
 /obj/machinery/recharger/update_appearance(updates)
 	. = ..()
-	if((stat & (NOPOWER|BROKEN)) || panel_open || !anchored)
+	if((machine_stat & (NOPOWER|BROKEN)) || panel_open || !anchored)
 		luminosity = 0
 		return
 	luminosity = 1
 
 /obj/machinery/recharger/update_overlays()
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return
 	if(panel_open)
 		. += mutable_appearance(icon, "[base_icon_state]-open", alpha = src.alpha)

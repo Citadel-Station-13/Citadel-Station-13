@@ -85,6 +85,6 @@
 	description = "Immediately examine anything you're hovering your mouse over."
 
 /datum/keybinding/mob/examine_immediate/down(client/user)
-	var/atom/A = user.mouseObject
+	var/atom/A = user.mouse_object_ref?.resolve()
 	if(A)
 		A.attempt_examinate(user.mob)

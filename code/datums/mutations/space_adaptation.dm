@@ -15,7 +15,7 @@
 	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "cold_resistance")
 	ADD_TRAIT(owner, TRAIT_LOWPRESSURECOOLING, "cold_resistance")
 	owner.add_filter("space_glow", 2, list("type" = "outline", "color" = "#ffe46bd8", "size" = 1))
-	addtimer(CALLBACK(src, .proc/glow_loop, owner), rand(1,19))
+	addtimer(CALLBACK(src, PROC_REF(glow_loop), owner), rand(1,19))
 
 /datum/mutation/human/space_adaptation/proc/glow_loop(mob/living/carbon/human/owner)
 	var/filter = owner.get_filter("space_glow")

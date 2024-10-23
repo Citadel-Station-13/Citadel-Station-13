@@ -14,7 +14,7 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 	anchored = FALSE
 	density = TRUE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
-	stat = 0
+	machine_stat = 0
 	verb_say = "states"
 	var/cooldown = 0
 	var/active = FALSE

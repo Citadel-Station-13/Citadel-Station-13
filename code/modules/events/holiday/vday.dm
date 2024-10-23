@@ -40,7 +40,7 @@
 /obj/item/valentine
 	name = "valentine"
 	desc = "A Valentine's card! Wonder what it says..."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "sc_Ace of Hearts_syndicate" // shut up
 	var/message = "A generic message of love or whatever."
 	resistance_flags = FLAMMABLE

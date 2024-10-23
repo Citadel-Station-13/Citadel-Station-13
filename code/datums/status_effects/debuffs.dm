@@ -154,7 +154,7 @@
 	. = ..()
 	if(!.)
 		return
-	RegisterSignal(owner, COMSIG_LIVING_LIFE, .proc/InterruptBiologicalLife)
+	RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(InterruptBiologicalLife))
 	owner.mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_PULL | MOBILITY_HOLD)
 	owner.update_mobility()
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
@@ -492,7 +492,7 @@
 /datum/status_effect/eldritch/on_apply()
 	. = ..()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
+		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_underlay))
 		owner.update_icon()
 		return TRUE
 	return FALSE
@@ -977,7 +977,7 @@
 	if(usr != owner)
 		return
 	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
-	if(do_after(owner, 35, null, owner))
+	if(do_after(owner, 3.5 SECONDS, owner))
 		if(isliving(owner))
 			var/mob/living/L = owner
 			to_chat(owner, "<span class='notice'>You successfully remove the durathread strand.</span>")
@@ -1027,7 +1027,7 @@
 	. = ..()
 	if(!iscarbon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
 	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
@@ -1059,8 +1059,8 @@
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
 	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hypnomsg]'", LOG_ATTACK)
 	C.log_message("has been hypnotised by the phrase '[hypnomsg]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, log_globally = FALSE)
-	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hypnomsg), 10)
-	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hypnomsg), 10)
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living, Stun), 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
 
 /datum/status_effect/spasms

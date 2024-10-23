@@ -24,10 +24,10 @@
 			to_chat(M, "<span class='binarysay'>[link] [rendered]</span>")
 
 /mob/living/silicon/binarycheck()
-	return 1
+	return TRUE
 
 /mob/living/silicon/lingcheck()
-	return 0 //Borged or AI'd lings can't speak on the ling channel.
+	return FALSE //Borged or AI'd lings can't speak on the ling channel.
 
 /mob/living/silicon/radio(message, message_mode, list/spans, language)
 	. = ..()
@@ -44,7 +44,7 @@
 			radio.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return FALSE
 
 /mob/living/silicon/get_message_mode(message)
 	. = ..()

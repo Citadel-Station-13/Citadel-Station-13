@@ -127,7 +127,7 @@
 		return BULLET_ACT_HIT
 	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
 		return BULLET_ACT_HIT
-	if(A.in_throw_mode)
+	if(A.throw_mode)
 		A.visible_message("<span class='danger'>[A] effortlessly swats the projectile aside! They can deflect projectile with their bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
@@ -226,8 +226,8 @@
 
 /obj/item/staff/bostaff/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
 
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()

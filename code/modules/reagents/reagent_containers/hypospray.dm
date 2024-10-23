@@ -15,6 +15,16 @@
 	var/ignore_flags = 0
 	var/infinite = FALSE
 
+/obj/item/reagent_containers/hypospray/Initialize(mapload, vol)
+	. = ..()
+	register_item_context()
+
+/obj/item/reagent_containers/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Inject")
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -78,6 +88,7 @@
 	list_reagents = list(/datum/reagent/medicine/adminordrazine/quantum_heal = 80, /datum/reagent/medicine/synaptizine = 20)
 
 /obj/item/reagent_containers/hypospray/combat/nanites/update_icon()
+	. = ..()
 	if(reagents.total_volume > 0)
 		icon_state = initial(icon_state)
 	else
@@ -122,7 +133,7 @@
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		reagent_flags = NONE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/cyborg_recharge, user), 80)
+	addtimer(CALLBACK(src, PROC_REF(cyborg_recharge), user), 80)
 
 /obj/item/reagent_containers/hypospray/medipen/proc/cyborg_recharge(mob/living/silicon/robot/user)
 	if(!reagents.total_volume && iscyborg(user))
@@ -256,6 +267,7 @@
 	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/salbutamol = 20, /datum/reagent/medicine/spaceacillin = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon()
+	. = ..()
 	if(reagents.total_volume > 30)
 		icon_state = initial(icon_state)
 	else if (reagents.total_volume > 0)
@@ -378,6 +390,23 @@
 	if(start_vial)
 		vial = new start_vial
 	update_icon()
+	register_context()
+	register_item_context()
+
+/obj/item/hypospray/mkii/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	// Did you know that clicking something while you're holding it is the same as attack_self()?
+	if(vial && (held_item == src))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Remove [vial]")
+	LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Set to [mode ? "spray" : "inject"]")
+	LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Set transfer amount")
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/hypospray/mkii/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, mode ? "Inject" : "Spray")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/hypospray/mkii/ComponentInitialize()
 	. = ..()
@@ -458,7 +487,7 @@
 
 /obj/item/hypospray/mkii/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/attempt_inject, target, user, proximity)
+	INVOKE_ASYNC(src, PROC_REF(attempt_inject), target, user, proximity)
 
 /obj/item/hypospray/mkii/proc/attempt_inject(atom/target, mob/user, proximity)
 	if(!vial || !proximity || !isliving(target))
@@ -496,7 +525,7 @@
 	if(L != user)
 		L.visible_message("<span class='danger'>[user] is trying to [fp_verb] [L] with [src]!</span>", \
 						"<span class='userdanger'>[user] is trying to [fp_verb] you with [src]!</span>")
-	if(!do_mob(user, L, inject_wait, extra_checks = CALLBACK(L, /mob/living/proc/can_inject, user, FALSE, user.zone_selected, penetrates)))
+	if(!do_mob(user, L, inject_wait, extra_checks = CALLBACK(L, TYPE_PROC_REF(/mob/living, can_inject), user, FALSE, user.zone_selected, penetrates)))
 		return
 	if(!vial.reagents.total_volume)
 		return

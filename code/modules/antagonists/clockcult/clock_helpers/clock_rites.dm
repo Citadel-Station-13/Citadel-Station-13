@@ -201,7 +201,7 @@
 	name = "Rite of the Vessel" //The name of the rite
 	desc = "This rite is used to summon a soul vessel, a special posibrain that makes whoever has their brain put into it loyal to the Justiciar.,\
 	 When put into a cyborg shell, the created cyborg will automatically be a servant of Ratvar."
-	required_ingredients = list(/obj/item/stack/cable_coil, /obj/item/stock_parts/cell/, /obj/item/organ/cyberimp)
+	required_ingredients = list(/obj/item/stack/cable_coil, /obj/item/stock_parts/cell, /obj/item/organ/cyberimp)
 	power_cost = 2500 //These things are pretty strong, I won't lie
 	requires_full_power = TRUE
 	cast_time = 50

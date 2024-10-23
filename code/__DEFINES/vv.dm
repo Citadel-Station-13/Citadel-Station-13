@@ -18,11 +18,13 @@
 #define VV_NULL "NULL"
 #define VV_RESTORE_DEFAULT "Restore to Default"
 #define VV_MARKED_DATUM "Marked Datum"
+#define VV_TAGGED_DATUM "Tagged Datum"
 #define VV_BITFIELD "Bitfield"
 #define VV_TEXT_LOCATE "Custom Reference Locate"
 #define VV_PROCCALL_RETVAL "Return Value of Proccall"
 
 #define VV_MSG_MARKED "<br><font size='1' color='red'><b>Marked Object</b></font>"
+#define VV_MSG_TAGGED(num) "<br><font size='1' color='red'><b>Tagged Datum #[num]</b></font>"
 #define VV_MSG_EDITED "<br><font size='1' color='red'><b>Var Edited</b></font>"
 #define VV_MSG_DELETED "<br><font size='1' color='red'><b>Deleted</b></font>"
 
@@ -73,6 +75,7 @@
 #define VV_HK_EXPOSE "expose"
 #define VV_HK_CALLPROC "proc_call"
 #define VV_HK_MARK "mark"
+#define VV_HK_TAG "tag"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
 #define VV_HK_VIEW_REFERENCES "viewreferences"
@@ -130,6 +133,7 @@
 #define VV_HK_MAKE_ALIEN "human_alienify"
 #define VV_HK_SET_SPECIES "setspecies"
 #define VV_HK_PURRBATION "purrbation"
+#define VV_HK_APPLY_PREFS "applyprefs"
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"

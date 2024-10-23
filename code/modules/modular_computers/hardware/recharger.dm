@@ -95,5 +95,5 @@
 	charge_rate = 100000
 
 /obj/item/computer_hardware/recharger/lambda/use_power(amount, charging=0)
-	return 1
+	return TRUE
 

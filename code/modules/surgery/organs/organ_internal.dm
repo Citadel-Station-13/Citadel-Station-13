@@ -34,7 +34,7 @@
 /obj/item/organ/Initialize(mapload)
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
-		AddComponent(/datum/component/edible, food_reagents, null, RAW | MEAT | GROSS, null, 10, null, null, null, CALLBACK(src, .proc/OnEatFrom))
+		AddComponent(/datum/component/edible, food_reagents, null, RAW | MEAT | GROSS, null, 10, null, null, null, CALLBACK(src, PROC_REF(OnEatFrom)))
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()
@@ -245,7 +245,7 @@
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
 /mob/living/proc/regenerate_organs()
-	return 0
+	return FALSE
 
 /mob/living/carbon/regenerate_organs(only_one = FALSE)
 	var/breathes = TRUE

@@ -37,14 +37,14 @@
 	if((sensordamage || (has_sensor < HAS_SENSORS && has_sensor != NO_SENSORS)) && istype(I, /obj/item/stack/cable_coil))
 		if(damaged_clothes == CLOTHING_SHREDDED)
 			to_chat(user,"<span class='warning'>[src] is too damaged to have its suit sensors repaired! Repair it first.</span>")
-			return 0
+			return FALSE
 		var/obj/item/stack/cable_coil/C = I
 		I.use_tool(src, user, 0, 1)
 		has_sensor = HAS_SENSORS
 		sensordamage = 0
 		sensor_mode = sensor_mode_intended
 		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
-		return 1
+		return TRUE
 
 	if(!attach_accessory(I, user))
 		return ..()
@@ -105,6 +105,10 @@
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 	sensor_mode_intended = sensor_mode
 	..()
+
+/obj/item/clothing/under/Initialize(mapload)
+	. = ..()
+	register_context()
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -229,13 +233,13 @@
 		return
 	if(src.has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
-		return 0
+		return FALSE
 	if(src.sensor_flags & SENSOR_LOCKED)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return FALSE
 	if(src.has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
-		return 0
+		return FALSE
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
@@ -288,10 +292,10 @@
 
 	if(src.has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
-		return 0
+		return FALSE
 	if(src.sensor_flags & SENSOR_LOCKED)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return FALSE
 	if(has_sensor <= NO_SENSORS)
 		to_chat(user, "This suit does not have any sensors.")
 		return
@@ -359,6 +363,21 @@
 				mutantrace_variation |= USE_TAUR_CLIP_MASK
 
 	return TRUE
+
+/obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if (!(item_flags & IN_INVENTORY))
+		return
+
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+
+	LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Set to highest sensor")
+	if(attached_accessory)
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Remove [attached_accessory]")
+	else
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Adjust [src]")
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

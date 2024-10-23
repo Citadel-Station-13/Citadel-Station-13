@@ -36,6 +36,17 @@
 			inserted_item = new inserted_item(src)
 		else
 			inserted_item =	new /obj/item/pen(src)
+	register_context()
+
+/obj/item/modular_computer/tablet/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(can_have_pen)
+		if(inserted_item)
+			LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, "Remove [inserted_item]")
+			. = CONTEXTUAL_SCREENTIP_SET
+		else if(is_type_in_list(held_item, contained_item))
+			LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Insert [held_item]")
+			. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/modular_computer/tablet/proc/insert_pen(obj/item/pen)
 	if(!usr.transferItemToLoc(pen, src))

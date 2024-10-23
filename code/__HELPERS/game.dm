@@ -97,8 +97,8 @@
 		if(C == must_be_alone)
 			continue
 		if(our_area == get_area(C))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
 //And lo and behold, it is, and it's more accurate to boot.
@@ -310,14 +310,14 @@
 	var/turf/T
 	if(X1==X2)
 		if(Y1==Y2)
-			return 1 //Light cannot be blocked on same tile
+			return TRUE //Light cannot be blocked on same tile
 		else
 			var/s = SIGN(Y2-Y1)
 			Y1+=s
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
-					return 0
+					return FALSE
 				Y1+=s
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
@@ -333,8 +333,8 @@
 				X1+=signX //Line exits tile horizontally
 			T=locate(X1,Y1,Z)
 			if(T.opacity)
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 #undef SIGNV
 
 
@@ -343,13 +343,13 @@
 	var/turf/Bturf = get_turf(B)
 
 	if(!Aturf || !Bturf)
-		return 0
+		return FALSE
 
 	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
-		return 1
+		return TRUE
 
 	else
-		return 0
+		return FALSE
 
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
@@ -416,7 +416,7 @@
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_images_from_clients), I, show_to), duration, TIMER_CLIENT_TIME)
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()

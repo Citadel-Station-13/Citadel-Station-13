@@ -72,7 +72,7 @@
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
-		INVOKE_ASYNC(src, .proc/create)
+		INVOKE_ASYNC(src, PROC_REF(create))
 	else if(ghost_usable)
 		GLOB.poi_list |= src
 		LAZYADD(GLOB.mob_spawners[job_description ? job_description : name], src)
@@ -272,16 +272,26 @@
 
 //Non-human spawners
 
-/obj/effect/mob_spawn/AICorpse/create(ckey, name) //Creates a corrupted AI
-	var/A = locate(/mob/living/silicon/ai) in loc
-	if(A)
+/obj/effect/mob_spawn/AICorpse //Creates a corrupted AI
+	mob_type = /mob/living/silicon/ai/spawned
+
+/obj/effect/mob_spawn/AICorpse/create(ckey, name)
+	var/ai_already_present = locate(/mob/living/silicon/ai) in loc
+	if(ai_already_present)
+		qdel(src)
 		return
-	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
-	M.name = src.name
-	M.real_name = src.name
-	M.aiPDA.toff = TRUE //turns the AI's PDA messenger off, stopping it showing up on player PDAs
-	M.death() //call the AI's death proc
-	qdel(src)
+	. = ..()
+
+// TODO: Port the upstream tgstation rewrite of this.
+/obj/effect/mob_spawn/AICorpse/equip(mob/living/silicon/ai/ai)
+	. = ..()
+	if(!isAI(ai)) // This should never happen.
+		stack_trace("[type] spawned a mob of type [ai?.type || "NULL"] that was not an AI!")
+		return
+	ai.name = name
+	ai.real_name = name
+	ai.aiPDA.toff = TRUE //turns the AI's PDA messenger off, stopping it showing up on player PDAs
+	ai.death() //call the AI's death proc
 
 /obj/effect/mob_spawn/slime
 	mob_type = 	/mob/living/simple_animal/slime

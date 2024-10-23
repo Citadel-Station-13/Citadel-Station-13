@@ -6,11 +6,11 @@
 
 /datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
-	return 1
+	return TRUE
 
 /datum/martial_art/boxing/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't grab while boxing!</span>")
-	return 1
+	return TRUE
 
 /datum/martial_art/boxing/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 
@@ -46,7 +46,7 @@
 			log_combat(A, D, "knocked out (boxing) ")
 		else if(D.lying)
 			D.forcesay(GLOB.hit_appends)
-	return 1
+	return TRUE
 
 /datum/martial_art/boxing/teach(mob/living/carbon/human/H, make_temporary = TRUE)
 	. = ..()

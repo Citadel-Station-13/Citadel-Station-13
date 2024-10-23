@@ -178,7 +178,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/gold/do_effect(mob/user)
 	user.visible_message("<span class='warning'>[src] starts shuddering violently!</span>")
-	addtimer(CALLBACK(src, .proc/startTimer), 50)
+	addtimer(CALLBACK(src, PROC_REF(startTimer)), 50)
 
 /obj/item/slimecross/charged/gold/proc/startTimer()
 	START_PROCESSING(SSobj, src)
@@ -202,7 +202,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
-	addtimer(CALLBACK(src, .proc/boom), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
 
 /obj/item/slimecross/charged/oil/proc/boom()
 	explosion(get_turf(src), 3, 2, 1) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
@@ -271,7 +271,7 @@ Charged extracts:
 	if(M.maxHealth <= 0)
 		to_chat(user, "<span class='warning'>The slime is too unstable to return!</span>")
 	M.revive(full_heal = 1)
-	M.stat = CONSCIOUS
+	M.set_stat(CONSCIOUS)
 	M.visible_message("<span class='notice'>[M] is filled with renewed vigor and blinks awake!</span>")
 	M.maxHealth -= 10 //Revival isn't healthy.
 	M.health -= 10

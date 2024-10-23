@@ -125,7 +125,7 @@
 			return
 
 	victim = L.owner
-	RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/null_victim)
+	RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(null_victim))
 	limb = L
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)

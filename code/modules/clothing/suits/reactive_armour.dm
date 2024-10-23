@@ -213,7 +213,7 @@
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The repulse generator is still recharging!</span>")
-			return 0
+			return FALSE
 		playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, 1)
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], converting the attack into a wave of force!</span>")
 		var/turf/T = get_turf(owner)

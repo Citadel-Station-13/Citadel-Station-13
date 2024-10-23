@@ -829,7 +829,7 @@ world
 						break
 				layers[current] = current_layer
 
-		//sortTim(layers, /proc/cmp_image_layer_asc)
+		//sortTim(layers, GLOBAL_PROC_REF(cmp_image_layer_asc))
 
 		var/icon/add // Icon of overlay being added
 
@@ -992,7 +992,7 @@ world
 			letter = lowertext(letter)
 
 	var/image/text_image = new(loc = A)
-	text_image.maptext = MAPTEXT("<font size = 4>[letter]</font>")
+	text_image.maptext = MAPTEXT("<span style='font-size: 24pt'>[letter]</span>")
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
 	qdel(atom_icon)
@@ -1027,15 +1027,15 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 //Returns the same icon specifed in the argument, but with the pixel drawn
 /proc/DrawPixel(icon/I,colour,drawX,drawY)
 	if(!I)
-		return 0
+		return FALSE
 
 	var/Iwidth = I.Width()
 	var/Iheight = I.Height()
 
 	if(drawX > Iwidth || drawX <= 0)
-		return 0
+		return FALSE
 	if(drawY > Iheight || drawY <= 0)
-		return 0
+		return FALSE
 
 	I.DrawBox(colour,drawX, drawY)
 	return I
@@ -1048,7 +1048,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
 		icon = J
 		return J
-	return 0
+	return FALSE
 
 //For creating consistent icons for human looking simple animals
 /proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null, no_anim = FALSE)
@@ -1065,7 +1065,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-		COMPILE_OVERLAYS(body)
 		for(var/D in showDirs)
 			var/icon/partial = getFlatIcon(body, defdir = D, no_anim = no_anim)
 			out_icon.Insert(partial,dir=D)

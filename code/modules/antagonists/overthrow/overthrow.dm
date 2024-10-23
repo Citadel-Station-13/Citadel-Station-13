@@ -83,8 +83,8 @@
 
 /datum/antagonist/overthrow/get_admin_commands()
 	. = ..()
-	.["Give storage with random item"] = CALLBACK(src,.proc/equip_overthrow)
-	.["Give overthrow boss equip"] = CALLBACK(src,.proc/equip_initial_overthrow_agent)
+	.["Give storage with random item"] = CALLBACK(src,PROC_REF(equip_overthrow))
+	.["Give overthrow boss equip"] = CALLBACK(src,PROC_REF(equip_initial_overthrow_agent))
 
 // Dynamically creates the HUD for the team if it doesn't exist already, inserting it into the global huds list, and assigns it to the user. The index is saved into a var owned by the team datum.
 /datum/antagonist/overthrow/proc/update_overthrow_icons_added(datum/mind/traitor_mind)
@@ -125,7 +125,7 @@
 	var/datum/component/uplink/uplink = uplink_holder.GetComponent(/datum/component/uplink)
 	uplink.telecrystals = INITIAL_CRYSTALS
 	// Give AI hacking board
-	var/obj/item/aiModule/core/full/overthrow/O = new(H)
+	var/obj/item/ai_module/core/full/overthrow/O = new(H)
 	var/list/slots = list (
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"left pocket" = ITEM_SLOT_LPOCKET,

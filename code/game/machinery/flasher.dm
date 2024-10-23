@@ -45,13 +45,13 @@
 
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
-		stat &= ~NOPOWER
+		machine_stat &= ~NOPOWER
 		if(bulb.crit_fail)
 			icon_state = "[base_state]1-p"
 		else
 			icon_state = "[base_state]1"
 	else
-		stat |= NOPOWER
+		machine_stat |= NOPOWER
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
@@ -94,7 +94,7 @@
 
 /obj/machinery/flasher/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE && damage_amount < 10) //any melee attack below 10 dmg does nothing
-		return 0
+		return FALSE
 	. = ..()
 
 /obj/machinery/flasher/proc/flash()
@@ -126,12 +126,12 @@
 	if(flashed)
 		bulb.times_used++
 
-	return 1
+	return TRUE
 
 
 /obj/machinery/flasher/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		if(bulb && prob(75/severity))
 			flash()
 			bulb.burn_out()
@@ -139,8 +139,8 @@
 
 /obj/machinery/flasher/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			stat |= BROKEN
+		if(!(machine_stat & BROKEN))
+			machine_stat |= BROKEN
 			if(bulb)
 				bulb.burn_out()
 				power_change()

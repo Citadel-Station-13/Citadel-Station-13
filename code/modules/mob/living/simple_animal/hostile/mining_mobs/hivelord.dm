@@ -96,7 +96,7 @@
 	. = ..()
 	if(swarming)
 		AddComponent(/datum/component/swarming) //oh god not the bees
-	addtimer(CALLBACK(src, .proc/death), 100)
+	addtimer(CALLBACK(src, PROC_REF(death)), 100)
 
 //Legion
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion
@@ -272,7 +272,7 @@
 	aggro_vision_range = 9
 	speed = 3
 	faction = list("mining")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	see_in_dark = 8
@@ -321,7 +321,7 @@
 			gloves = /obj/item/clothing/gloves/color/black
 			mask = /obj/item/clothing/mask/gas/explorer
 			if(prob(20))
-				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer/standard = 6, /obj/item/clothing/suit/hooded/cloak/goliath = 2, /obj/item/clothing/suit/hooded/explorer/exo = 6, /obj/item/clothing/suit/hooded/explorer/seva = 6))
+				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer/standard = 6, /obj/item/clothing/suit/hooded/cloak/goliath = 2, /obj/item/clothing/suit/hooded/explorer/exo = 6, /obj/item/clothing/suit/hooded/explorer/heva = 6))
 			if(prob(30))
 				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
 			if(prob(10))

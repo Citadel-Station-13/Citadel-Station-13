@@ -45,7 +45,7 @@
 	return ..()
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)
-	if(M == user && (occupants[M] & VEHICLE_CONTROL_KIDNAPPED))
+	if(M == user && (LAZYACCESS(occupants, M) & VEHICLE_CONTROL_KIDNAPPED))
 		to_chat(user, "<span class='notice'>You push against the back of [src] trunk to try and get out.</span>")
 		if(!do_after(user, escape_time, target = src))
 			return FALSE
@@ -73,7 +73,7 @@
 	if(do_after(user, 30))
 		if(return_amount_of_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 			to_chat(user, "<span class='notice'>The people stuck in [src]'s trunk all come tumbling out.</span>")
-			DumpSpecificMobs(VEHICLE_CONTROL_KIDNAPPED)
+			dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 		else
 			to_chat(user, "<span class='notice'>It seems [src]'s trunk was empty.</span>")
 
@@ -83,7 +83,7 @@
 	if(occupant_amount() >= max_occupants)
 		return FALSE
 	var/atom/old_loc = loc
-	if(do_mob(forcer, M, get_enter_delay(M), extra_checks=CALLBACK(src, /obj/vehicle/sealed/car/proc/is_car_stationary, old_loc)))
+	if(do_mob(forcer, M, get_enter_delay(M), extra_checks=CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/car, is_car_stationary), old_loc)))
 		mob_forced_enter(M, silent)
 		return TRUE
 	return FALSE

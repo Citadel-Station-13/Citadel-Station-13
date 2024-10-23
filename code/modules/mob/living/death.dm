@@ -57,7 +57,7 @@
 /mob/living/death(gibbed)
 	SEND_SIGNAL(src, COMSIG_LIVING_PREDEATH, gibbed)
 
-	stat = DEAD
+	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
 	tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
@@ -86,7 +86,7 @@
 	med_hud_set_status()
 	clear_typing_indicator()
 	if(!gibbed && !QDELETED(src))
-		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
+		addtimer(CALLBACK(src, PROC_REF(med_hud_set_status)), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
 
 	var/signal = SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed) | SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)

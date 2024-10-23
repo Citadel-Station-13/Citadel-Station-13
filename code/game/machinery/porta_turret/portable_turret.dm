@@ -127,7 +127,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		base.layer = NOT_HIGH_OBJ_LAYER
 		underlays += base
 	if(!has_cover)
-		INVOKE_ASYNC(src, .proc/popUp)
+		INVOKE_ASYNC(src, PROC_REF(popUp))
 
 /obj/machinery/porta_turret/proc/toggle_on(var/set_to)
 	var/current = on
@@ -142,11 +142,11 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
-		if (!on || !anchored || (stat & BROKEN) || !powered())
+		if (!on || !anchored || (machine_stat & BROKEN) || !powered())
 			//end_processing()
 			STOP_PROCESSING(SSmachines, src)
 	else
-		if (on && anchored && !(stat & BROKEN) && powered())
+		if (on && anchored && !(machine_stat & BROKEN) && powered())
 			START_PROCESSING(SSmachines, src)
 			//begin_processing()
 
@@ -154,7 +154,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!anchored)
 		icon_state = "turretCover"
 		return
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "[base_icon_state]_broken"
 	else
 		if(powered())
@@ -287,13 +287,13 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/power_change()
 	. = ..()
-	if(!anchored || (stat & BROKEN) || !powered())
+	if(!anchored || (machine_stat & BROKEN) || !powered())
 		update_icon()
 		remove_control()
 	check_should_process()
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		if(I.tool_behaviour == TOOL_CROWBAR)
 			//If the turret is destroyed, you can remove it with something
 			//that acts like a crowbar to try and salvage its components
@@ -358,7 +358,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	toggle_on(FALSE) //turns off the turret temporarily
 	update_icon()
 	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-	addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 6 SECONDS)
 	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -378,7 +378,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		toggle_on(FALSE)
 		remove_control()
 
-		addtimer(CALLBACK(src, .proc/toggle_on, TRUE), rand(60,600))
+		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), rand(60,600))
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
@@ -387,7 +387,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			spark_system.start()
 		if(on && !(turret_flags & TURRET_FLAG_SHOOT_ALL_REACT) && !(obj_flags & EMAGGED))
 			turret_flags |= TURRET_FLAG_SHOOT_ALL_REACT
-			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
+			addtimer(CALLBACK(src, PROC_REF(reset_attacked)), 60)
 
 /obj/machinery/porta_turret/proc/reset_attacked()
 	turret_flags &= ~TURRET_FLAG_SHOOT_ALL_REACT
@@ -427,14 +427,14 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 	if(cover == null && anchored)	//if it has no cover and is anchored
-		if(stat & BROKEN)	//if the turret is borked
+		if(machine_stat & BROKEN)	//if the turret is borked
 			qdel(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug
 		else
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
-	if(!on || (stat & (NOPOWER|BROKEN)) || manual_control)
+	if(!on || (machine_stat & (NOPOWER|BROKEN)) || manual_control)
 		return PROCESS_KILL
 
 	var/list/targets = list()
@@ -513,7 +513,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		var/atom/movable/M = pick(targets)
 		targets -= M
 		if(target(M))
-			return 1
+			return TRUE
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
 	set waitfor = FALSE
@@ -521,7 +521,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		return
 	if(raising || raised)
 		return
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	invisibility = 0
 	raising = 1
@@ -538,7 +538,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	set waitfor = FALSE
 	if(raising || !raised)
 		return
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	layer = OBJ_LAYER
 	raising = 1
@@ -566,8 +566,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS)	//check for weapon authorization
 		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/syndicate))
 
-			if(allowed(perp)) //if the perp has security access, return 0
-				return 0
+			if(allowed(perp)) //if the perp has security access, return FALSE
+				return FALSE
 			if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
 				threatcount += 4
 
@@ -585,7 +585,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	// If we aren't shooting heads then return a threatcount of 0
 	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS) && (perp.get_assignment() in GLOB.command_positions))
-		return 0
+		return FALSE
 
 	return threatcount
 
@@ -599,8 +599,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(target)
 		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		INVOKE_ASYNC(src, .proc/shootAt, target)
-		return 1
+		INVOKE_ASYNC(src, PROC_REF(shootAt), target)
+		return TRUE
 	return
 
 /obj/machinery/porta_turret/proc/shootAt(atom/movable/target, stagger_enabled = FALSE)
@@ -816,9 +816,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(target)
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		shootAt(target)
-		addtimer(CALLBACK(src, .proc/shootAt, target), 5)
-		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
-		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 5)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 10)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 15)
 		return TRUE
 
 /obj/machinery/porta_turret/ai
@@ -840,7 +840,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	faction = list("neutral","silicon","turret") //Minebots, medibots, etc that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
-	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
+	return FALSE //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
 
 /obj/machinery/porta_turret/aux_base/setup()
 	return
@@ -874,7 +874,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
-	return 0
+	return FALSE
 
 /obj/machinery/porta_turret/centcom_shuttle/setup()
 	return
@@ -930,6 +930,14 @@ DEFINE_BITFIELD(turret_flags, list(
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
+	register_context()
+
+/obj/machinery/turretid/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(issilicon(user) && !(machine_stat & BROKEN))
+		LAZYSET(context[SCREENTIP_CONTEXT_CTRL_LMB], INTENT_ANY, enabled ? "Disable" : "Enable")
+		LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, lethal ? "Set to stun" : "Set to kill")
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()
@@ -954,12 +962,12 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
-	if(issilicon(user) && !(stat & BROKEN))
+	if(issilicon(user) && !(machine_stat & BROKEN))
 		. += {"<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>
 					<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>"}
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 
 	if(I.tool_behaviour == TOOL_MULTITOOL)
@@ -1021,7 +1029,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		if("lock")
 			if(!hasSiliconAccessInArea(usr) || IsAdminGhost(usr))
 				return
-			if((obj_flags & EMAGGED) || (stat & BROKEN))
+			if((obj_flags & EMAGGED) || (machine_stat & BROKEN))
 				to_chat(usr, "<span class='warning'>The turret control is unresponsive!</span>")
 				return
 			locked = !locked
@@ -1060,7 +1068,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	update_icon()
 
 /obj/machinery/turretid/update_icon_state()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		icon_state = "control_off"
 	else if (enabled)
 		if (lethal)
@@ -1186,8 +1194,8 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(team_color == "blue")
 			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
 				toggle_on(FALSE)
-				addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 10 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
 		else if(team_color == "red")
 			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
 				toggle_on(FALSE)
-				addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 10 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)

@@ -20,7 +20,7 @@
 
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
 	selected.transfer_ckey(virus, FALSE)
-	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
+	INVOKE_ASYNC(virus, TYPE_PROC_REF(/mob/camera/disease, pick_name))
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by an event.")
 	log_game("[key_name(virus)] was spawned as a sentient disease by an event.")
 	spawned_mobs += virus

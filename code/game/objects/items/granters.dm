@@ -11,7 +11,7 @@
 
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
-	if(do_after(user,50, TRUE, user))
+	if(do_after(user, 5 SECONDS, src))
 		if(remarks.len)
 			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		else
@@ -53,7 +53,7 @@
 				on_reading_stopped()
 				reading = FALSE
 				return
-		if(do_after(user,50, TRUE, user))
+		if(do_after(user, 5 SECONDS, src))
 			on_reading_finished(user)
 		reading = FALSE
 	return TRUE
@@ -129,12 +129,12 @@
 /datum/action/innate/drink_fling/Activate()
 	button_icon_state = "drinkfling_on"
 	active = TRUE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/drink_fling/Deactivate()
 	button_icon_state = "drinkfling_off"
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /obj/item/book/granter/action/origami
 	granted_action = /datum/action/innate/origami
@@ -155,13 +155,13 @@
 	to_chat(owner, "<span class='notice'>You will now fold origami planes.</span>")
 	button_icon_state = "origami_on"
 	active = TRUE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/origami/Deactivate()
 	to_chat(owner, "<span class='notice'>You will no longer fold origami planes.</span>")
 	button_icon_state = "origami_off"
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 ///SPELLS///
 

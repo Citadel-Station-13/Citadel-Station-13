@@ -52,7 +52,7 @@
 				chamber_round()
 				A.update_icon()
 				update_icon()
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 
@@ -122,6 +122,7 @@
 	icon_state = "mini-uzi"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
+	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
@@ -220,6 +221,7 @@
 	can_suppress = FALSE
 	burst_size = 3
 	burst_shot_delay = 1
+	automatic_burst_overlay = FALSE
 
 // Bulldog shotgun //
 
@@ -276,6 +278,7 @@
 	actions_types = list()
 	spread = 7
 	pin = /obj/item/firing_pin/implant/pindicate
+	automatic_burst_overlay = FALSE
 	var/cover_open = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/Initialize()

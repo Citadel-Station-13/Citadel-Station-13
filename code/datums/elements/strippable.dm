@@ -19,7 +19,7 @@
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/mouse_drop_onto)
+	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, PROC_REF(mouse_drop_onto))
 
 	src.items = items
 	src.should_strip_proc_path = should_strip_proc_path
@@ -57,7 +57,7 @@
 		strip_menu = new(source, src)
 		LAZYSET(strip_menus, source, strip_menu)
 
-	INVOKE_ASYNC(strip_menu, /datum/.proc/ui_interact, user)
+	INVOKE_ASYNC(strip_menu, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /// A representation of an item that can be stripped down
 /datum/strippable_item
@@ -295,7 +295,7 @@
 	if(istype(gloves))
 		strip_mod = gloves.strip_mod
 
-	if (!do_mob(user, source, (strip_delay || item.strip_delay) / strip_mod, ignorehelditem = TRUE))
+	if (!do_mob(user, source, (strip_delay || item.strip_delay) / strip_mod, timed_action_flags = IGNORE_HELD_ITEM))
 		return FALSE
 
 	return TRUE

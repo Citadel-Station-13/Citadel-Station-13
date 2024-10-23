@@ -23,6 +23,7 @@
 	paycheck = PAYCHECK_HARD
 	paycheck_department = ACCOUNT_SEC
 	bounty_types = CIV_JOB_SEC
+	departments = DEPARTMENT_BITFLAG_SECURITY
 
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
@@ -32,6 +33,15 @@
 
 	family_heirlooms = list(
 		/obj/item/book/manual/wiki/security_space_law
+	)
+
+	mail_goodies = list(
+		/obj/item/storage/fancy/cigarettes = 15,
+		/obj/item/storage/box/handcuffs = 10,
+		/obj/item/storage/box/teargas = 10,
+		/obj/item/storage/box/flashbangs = 10,
+		/obj/item/storage/box/rubbershot = 10,
+		/obj/item/storage/box/lethalshot = 5
 	)
 
 /datum/job/warden/get_access()

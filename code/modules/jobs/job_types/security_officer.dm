@@ -22,6 +22,7 @@
 	paycheck = PAYCHECK_HARD
 	paycheck_department = ACCOUNT_SEC
 	bounty_types = CIV_JOB_SEC
+	departments = DEPARTMENT_BITFLAG_SECURITY
 
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
@@ -32,6 +33,14 @@
 	family_heirlooms = list(
 		/obj/item/book/manual/wiki/security_space_law,
 		/obj/item/clothing/head/beret/sec
+	)
+
+	mail_goodies = list(
+		/obj/item/reagent_containers/food/snacks/donut/caramel = 10,
+		/obj/item/reagent_containers/food/snacks/donut/matcha = 10,
+		/obj/item/reagent_containers/food/snacks/donut/blumpkin = 5,
+//		/obj/item/clothing/mask/whistle = 5,
+		/obj/item/melee/baton/boomerang/loaded = 1
 	)
 
 /datum/job/officer/get_access()

@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_SILICON
 	display_order = JOB_DISPLAY_ORDER_AI
 	allow_bureaucratic_error = FALSE
+	departments = DEPARTMENT_BITFLAG_SILICON
 	random_spawns_possible = FALSE
 	var/do_special_check = TRUE
 	threat = 5
@@ -30,8 +31,8 @@
 /datum/job/ai/after_spawn(mob/H, client/C, latejoin)
 	. = ..()
 	if(latejoin)
-		var/obj/structure/AIcore/latejoin_inactive/lateJoinCore
-		for(var/obj/structure/AIcore/latejoin_inactive/P in GLOB.latejoin_ai_cores)
+		var/obj/structure/ai_core/latejoin_inactive/lateJoinCore
+		for(var/obj/structure/ai_core/latejoin_inactive/P in GLOB.latejoin_ai_cores)
 			if(P.is_available())
 				lateJoinCore = P
 				GLOB.latejoin_ai_cores -= P
@@ -60,7 +61,7 @@
 	if(!do_special_check)
 		return TRUE
 	for(var/i in GLOB.latejoin_ai_cores)
-		var/obj/structure/AIcore/latejoin_inactive/LAI = i
+		var/obj/structure/ai_core/latejoin_inactive/LAI = i
 		if(istype(LAI))
 			if(LAI.is_available())
 				return TRUE
@@ -68,7 +69,7 @@
 
 /datum/job/ai/announce(mob/living/silicon/ai/AI)
 	. = ..()
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "[AI] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(AI)]."))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), "[AI] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(AI)]."))
 
 /datum/job/ai/config_check()
 	return CONFIG_GET(flag/allow_ai)

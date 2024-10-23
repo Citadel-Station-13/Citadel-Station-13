@@ -198,12 +198,12 @@ By design, d1 is the smallest direction and d2 is the highest
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
 	if(!prob(prb))
-		return 0
+		return FALSE
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
 		do_sparks(5, TRUE, src)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/structure/cable/singularity_pull(S, current_size)
 	..()
@@ -235,13 +235,13 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
-		return 0
+		return FALSE
 
 /obj/structure/cable/proc/avail(amount)
 	if(powernet)
 		return amount ? powernet.avail >= amount : powernet.avail
 	else
-		return 0
+		return FALSE
 
 /obj/structure/cable/proc/add_delayedload(amount)
 	if(powernet)
@@ -251,13 +251,13 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
-		return 0
+		return FALSE
 
 /obj/structure/cable/proc/newavail()
 	if(powernet)
 		return powernet.newavail
 	else
-		return 0
+		return FALSE
 
 /////////////////////////////////////////////////
 // Cable laying helpers
@@ -468,7 +468,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		moveToNullspace()
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
+	addtimer(CALLBACK(O, PROC_REF(auto_propogate_cut_cable), O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 	// Disconnect machines connected to nodes
 	if(d1 == 0) // if we cut a node (O-X) cable
@@ -515,8 +515,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	used_skills = list(/datum/skill/level/job/wiring)
 
 /obj/item/stack/cable_coil/cyborg
-	is_cyborg = 1
+	is_cyborg = TRUE
 	custom_materials = null
+	source = /datum/robot_energy_storage/wire
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
@@ -572,7 +573,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return ..()
 
 
-/obj/item/stack/cable_coil/update_icon()
+/obj/item/stack/cable_coil/update_icon_state()
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
 
@@ -587,7 +588,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		to_chat(user, "<span class='notice'>You don't have enough cable coil to make restraints out of them</span>")
 		return
 	to_chat(user, "<span class='notice'>You start making some cable restraints.</span>")
-	if(!do_after(user, 30, TRUE, user, TRUE) || !use(15))
+	if(!do_after(user, 3 SECONDS, user) || !use(15))
 		to_chat(user, "<span class='notice'>You fail to make cable restraints, you need to be standing still to do it</span>")
 		return
 	var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))

@@ -349,6 +349,16 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("slapped")
 
+/obj/item/surgical_drapes/Initialize(mapload)
+	. = ..()
+	register_item_context()
+
+/obj/item/surgical_drapes/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		LAZYSET(context[SCREENTIP_CONTEXT_LMB], INTENT_ANY, "Prepare Surgery")
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
 		..()

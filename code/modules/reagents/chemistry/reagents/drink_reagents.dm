@@ -1146,3 +1146,14 @@
 	taste_description = "bitter powder"
 	glass_name = "glass of banana peel powder"
 	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
+
+/datum/reagent/consumable/eggnog
+	name = "Eggnog"
+	description = "A creamy, rich beverage made out of whisked eggs, milk and sugar, for when you feel like celebrating the winter holidays."
+	color = "#fcfdc6" // rgb: 252, 253, 198
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	quality = DRINK_VERYGOOD
+	taste_description = "custard"
+	glass_icon_state = "nog3"
+	glass_name = "eggnog"
+	glass_desc = "You can't egg-nore the holiday cheer all around you"

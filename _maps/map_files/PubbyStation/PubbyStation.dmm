@@ -3618,7 +3618,7 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	id = "syndicate_ne";
+	shuttle_id = "syndicate_ne";
 	name = "northeast of station";
 	width = 23
 	},
@@ -6452,7 +6452,7 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 6;
-	id = "monastery_shuttle_station";
+	shuttle_id = "monastery_shuttle_station";
 	name = "Station";
 	roundstart_template = /datum/map_template/shuttle/escape_pod/large;
 	width = 5
@@ -11360,13 +11360,13 @@
 /area/command/bridge)
 "aCG" = (
 /obj/structure/table,
-/obj/item/aiModule/supplied/quarantine,
+/obj/item/ai_module/supplied/quarantine,
 /obj/machinery/camera/motion{
 	c_tag = "AI Upload Port";
 	dir = 4;
 	network = list("aiupload")
 	},
-/obj/item/aiModule/reset,
+/obj/item/ai_module/reset,
 /obj/machinery/flasher{
 	id = "brigentry";
 	pixel_x = -28
@@ -11417,7 +11417,7 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aCM" = (
 /obj/structure/table,
-/obj/item/aiModule/supplied/freeform,
+/obj/item/ai_module/supplied/freeform,
 /obj/machinery/camera/motion{
 	c_tag = "AI Upload Starboard";
 	dir = 8;
@@ -12278,9 +12278,9 @@
 /area/command/bridge)
 "aED" = (
 /obj/structure/table,
-/obj/item/aiModule/core/full/asimov,
+/obj/item/ai_module/core/full/asimov,
 /obj/effect/spawner/lootdrop/aimodule_harmless,
-/obj/item/aiModule/core/freeformcore,
+/obj/item/ai_module/core/freeformcore,
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -12289,7 +12289,7 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/lootdrop/aimodule_neutral,
-/obj/item/aiModule/core/full/custom,
+/obj/item/ai_module/core/full/custom,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
@@ -12336,16 +12336,16 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aEI" = (
 /obj/structure/table,
-/obj/item/aiModule/supplied/oxygen,
-/obj/item/aiModule/zeroth/oneHuman,
+/obj/item/ai_module/supplied/oxygen,
+/obj/item/ai_module/zeroth/oneHuman,
 /obj/machinery/door/window{
 	dir = 8;
 	name = "High-Risk Modules";
 	req_access_txt = "20"
 	},
-/obj/item/aiModule/reset/purge,
+/obj/item/ai_module/reset/purge,
 /obj/effect/spawner/lootdrop/aimodule_harmful,
-/obj/item/aiModule/supplied/protectStation,
+/obj/item/ai_module/supplied/protectStation,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
@@ -15992,7 +15992,7 @@
 /area/cargo/sorting)
 "aNK" = (
 /obj/structure/table,
-/obj/item/destTagger,
+/obj/item/dest_tagger,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -18428,7 +18428,7 @@
 	dir = 8;
 	dwidth = 4;
 	height = 15;
-	id = "emergency_home";
+	shuttle_id = "emergency_home";
 	name = "PubbyStation emergency evac bay";
 	width = 20
 	},
@@ -18776,7 +18776,7 @@
 	dir = 4;
 	dwidth = 5;
 	height = 7;
-	id = "supply_home";
+	shuttle_id = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -23920,7 +23920,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	shuttle_id = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/delta;
 	width = 7
@@ -24298,7 +24298,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 13;
-	id = "arrivals_stationary";
+	shuttle_id = "arrivals_stationary";
 	name = "pubby arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/pubby;
 	width = 6
@@ -29918,7 +29918,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	shuttle_id = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -36275,7 +36275,7 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 6;
-	id = "monastery_shuttle_asteroid";
+	shuttle_id = "monastery_shuttle_asteroid";
 	name = "monastery";
 	width = 5
 	},
@@ -40417,7 +40417,7 @@
 	pixel_x = -26
 	},
 /obj/item/aicard,
-/obj/item/aiModule/reset,
+/obj/item/ai_module/reset,
 /obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -47185,7 +47185,7 @@
 	dir = 8;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_home";
+	shuttle_id = "whiteship_home";
 	name = "monastery";
 	width = 35
 	},
@@ -56490,7 +56490,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_home";
+	shuttle_id = "laborcamp_home";
 	name = "fore bay 1";
 	roundstart_template = /datum/map_template/shuttle/labour/box;
 	width = 9
@@ -58660,7 +58660,7 @@
 	dir = 8;
 	dwidth = 3;
 	height = 5;
-	id = "commonmining_home";
+	shuttle_id = "commonmining_home";
 	name = "SS13: Common Mining Dock";
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 7
@@ -60382,7 +60382,7 @@
 	dheight = 4;
 	dwidth = 4;
 	height = 9;
-	id = "aux_base_zone";
+	shuttle_id = "aux_base_zone";
 	name = "aux base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/small;
 	width = 9

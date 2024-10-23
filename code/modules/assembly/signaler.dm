@@ -57,9 +57,9 @@
 	return TRUE
 
 /obj/item/assembly/signaler/update_icon()
+	. = ..()
 	if(holder)
 		holder.update_icon()
-	return
 
 /obj/item/assembly/signaler/ui_status(mob/user)
 	if(is_secured(user))
@@ -86,7 +86,7 @@
 
 	switch(action)
 		if("signal")
-			INVOKE_ASYNC(src, .proc/signal)
+			INVOKE_ASYNC(src, PROC_REF(signal))
 			. = TRUE
 		if("freq")
 			frequency = unformat_frequency(params["freq"])

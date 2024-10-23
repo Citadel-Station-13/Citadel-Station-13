@@ -5,7 +5,6 @@
 	icon_state = "relief_valve-e-map"
 	can_unwrench = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
-	interacts_with_air = TRUE
 	var/opened = FALSE
 	var/open_pressure = ONE_ATMOSPHERE * 3
 	var/close_pressure = ONE_ATMOSPHERE

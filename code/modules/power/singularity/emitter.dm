@@ -95,7 +95,7 @@
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, PROC_REF(can_be_rotated)))
 
 /obj/machinery/power/emitter/proc/can_be_rotated(mob/user,rotation_type)
 	if (anchored)
@@ -158,7 +158,7 @@
 		step(src, get_dir(M, src))
 
 /obj/machinery/power/emitter/process()
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		return
 	if(state != EMITTER_WELDED || (!powernet && active_power_usage))
 		active = FALSE
@@ -383,7 +383,7 @@
 	auto.Remove(buckled_mob)
 	. = ..()
 
-/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/M, mob/living/carbon/user)
+/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/M, mob/living/carbon/user, check_loc)
 	if(user.incapacitated() || !istype(user))
 		return
 	for(var/atom/movable/A in get_turf(src))
@@ -426,7 +426,7 @@
 		for(var/obj/item/I in U.held_items)
 			if(istype(I, /obj/item/turret_control))
 				qdel(I)
-		UpdateButtonIcon()
+		UpdateButtons()
 		return
 	else
 		playsound(PE,'sound/mecha/mechmove01.ogg', 50, TRUE)
@@ -443,7 +443,7 @@
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				var/obj/item/turret_control/TC = new /obj/item/turret_control()
 				U.put_in_hands(TC)
-		UpdateButtonIcon()
+		UpdateButtons()
 
 
 /obj/item/turret_control

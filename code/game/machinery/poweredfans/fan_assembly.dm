@@ -12,7 +12,7 @@
 	anchored = FALSE
 	density = FALSE
 	CanAtmosPass = ATMOS_PASS_YES
-	stat = 1
+	machine_stat = 1
 	var/buildstacktype = /obj/item/stack/sheet/plasteel
 	var/buildstackamount = 5
 	/*
@@ -22,14 +22,14 @@
 	*/
 
 /obj/machinery/fan_assembly/attackby(obj/item/W, mob/living/user, params)
-	switch(stat)
+	switch(machine_stat)
 		if(1)
 			// Stat 1
 			if(W.tool_behaviour == TOOL_WELDER)
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You weld the fan assembly securely into place.</span>")
 					setAnchored(TRUE)
-					stat = 2
+					machine_stat = 2
 					update_icon_state()
 				return
 		if(2)
@@ -41,7 +41,7 @@
 				to_chat(user, "<span class='notice'>You start to add wires to the assembly...</span>")
 				if(W.use_tool(src, user, 30, volume=50, amount=2))
 					to_chat(user, "<span class='notice'>You add wires to the fan assembly.</span>")
-					stat = 3
+					machine_stat = 3
 					var/obj/machinery/poweredfans/F = new(loc, src)
 					forceMove(F)
 					F.setDir(src.dir)
@@ -49,14 +49,14 @@
 			else if(W.tool_behaviour == TOOL_WELDER)
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You unweld the fan assembly from its place.</span>")
-					stat = 1
+					machine_stat = 1
 					update_icon_state()
 					setAnchored(FALSE)
 				return
 	return ..()
 
 /obj/machinery/fan_assembly/wrench_act(mob/user, obj/item/I)
-	if(stat != 1)
+	if(machine_stat != 1)
 		return FALSE
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
 		"<span class='notice'>You start to disassemble [src]...</span>", "You hear wrenching noises.")
@@ -69,7 +69,7 @@
 		return
 	if(!W.tool_start_check(user, amount=0))
 		return FALSE
-	switch(stat)
+	switch(machine_stat)
 		if(1)
 			to_chat(user, "<span class='notice'>You start to weld \the [src]...</span>")
 		if(2)
@@ -85,7 +85,7 @@
 
 /obj/machinery/fan_assembly/examine(mob/user)
 	. = ..()
-	switch(stat)
+	switch(machine_stat)
 		if(1)
 			to_chat(user, "<span class='notice'>The fan assembly seems to be <b>unwelded</b> and loose.</span>")
 		if(2)
@@ -95,7 +95,7 @@
 
 /obj/machinery/fan_assembly/update_icon_state()
 	. = ..()
-	switch(stat)
+	switch(machine_stat)
 		if(1)
 			icon_state = "mfan_assembly"
 		if(2)

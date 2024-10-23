@@ -171,8 +171,8 @@ GLOBAL_LIST_INIT(strippable_monkey_items, create_strippable_list(list(
 
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot(ORGAN_SLOT_LUNGS))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/monkey/can_use_guns(obj/item/G)
 	return TRUE
@@ -185,4 +185,4 @@ GLOBAL_LIST_INIT(strippable_monkey_items, create_strippable_list(list(
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
 		equip_to_slot_or_del(helmet,ITEM_SLOT_HEAD)
-		INVOKE_ASYNC(helmet, /obj/item.proc/attack_self, src) // todo encapsulate toggle
+		INVOKE_ASYNC(helmet, TYPE_PROC_REF(/obj/item, attack_self), src) // todo encapsulate toggle

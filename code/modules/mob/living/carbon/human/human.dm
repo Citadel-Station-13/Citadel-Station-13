@@ -30,7 +30,7 @@
 	if(CONFIG_GET(flag/disable_stambuffer))
 		enable_intentional_sprint_mode()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, TYPE_PROC_REF(/atom, clean_blood))
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -47,7 +47,7 @@
 	AddElement(/datum/element/flavor_text/carbon, _name = "Flavor Text", _save_key = "flavor_text")
 	AddElement(/datum/element/flavor_text/carbon/temporary, "", "Set Pose (Temporary Flavor Text)", "This should be used only for things pertaining to the current round!", _save_key = null)
 	AddElement(/datum/element/flavor_text, _name = "OOC Notes", _addendum = "Put information on ERP/vore/lewd-related preferences here. THIS SHOULD NOT CONTAIN REGULAR FLAVORTEXT!!", _always_show = TRUE, _save_key = "ooc_notes", _examine_no_preview = TRUE)
-	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
+	AddElement(/datum/element/strippable, GLOB.strippable_human_items, TYPE_PROC_REF(/mob/living/carbon/human, should_strip))
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
@@ -478,17 +478,17 @@
 		return
 	if(is_mouth_covered())
 		to_chat(src, "<span class='warning'>Remove your mask first!</span>")
-		return 0
+		return FALSE
 	if(C.is_mouth_covered())
 		to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
-		return 0
+		return FALSE
 
 	if(C.cpr_time < world.time + 30)
 		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
 						"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
 		if(!do_mob(src, C))
 			to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
-			return 0
+			return FALSE
 
 		var/they_breathe = !HAS_TRAIT(C, TRAIT_NOBREATH)
 		var/they_lung = C.getorganslot(ORGAN_SLOT_LUNGS)
@@ -549,7 +549,7 @@
 			electrocution_skeleton_anim = mutable_appearance(icon, "electrocuted_base")
 			electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(electrocution_skeleton_anim)
-		addtimer(CALLBACK(src, .proc/end_electrocution_animation, electrocution_skeleton_anim), anim_duration)
+		addtimer(CALLBACK(src, PROC_REF(end_electrocution_animation), electrocution_skeleton_anim), anim_duration)
 
 	else //or just do a generic animation
 		flick_overlay_view(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), src, anim_duration)
@@ -671,7 +671,7 @@
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			DefaultCombatKnockdown(200)
-		return 1
+		return TRUE
 	..()
 
 /mob/living/carbon/human/vv_get_dropdown()
@@ -685,6 +685,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_MAKE_ALIEN, "Make Alien")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 	VV_DROPDOWN_OPTION(VV_HK_PURRBATION, "Toggle Purrbation")
+	VV_DROPDOWN_OPTION(VV_HK_APPLY_PREFS, "Apply preferences")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -765,6 +766,34 @@
 			var/msg = "<span class='notice'>[key_name_admin(usr)] has removed [key_name(src)] from purrbation.</span>"
 			message_admins(msg)
 			admin_ticket_log(src, msg)
+	if(href_list[VV_HK_APPLY_PREFS])
+		if(!check_rights(R_SPAWN))
+			return
+		if(!client)
+			var/bigtext = {"This action requires a client, if you need to do anything special, follow this short guide:
+<blockquote class="info">
+Mark this mob, then navigate to the preferences of the client you desire and call copy_to() with one argument, when it asks for the argument, browse to the bottom of the list and select marked datum, if you've followed this guide correctly, the mob will be turned into the character from the preferences you used.
+</blockquote>
+			"}
+			to_chat(usr, bigtext)
+			return
+
+		var/datum/preferences/copying_this_one = client.prefs // turns out that prefs always exist if the client leaves, i'm not checking for client again
+		var/is_this_guy_trolling_the_admin = copying_this_one.default_slot
+
+		if(alert(usr, "Confirm reapply preferences?", "", "I'm sure", "Cancel") != "I'm sure")
+			return
+
+		if(is_this_guy_trolling_the_admin != copying_this_one.default_slot) // why would you do this, broooo
+			if(alert(usr, "The user changed their character slot while you were deciding, are you sure you want to do this? They might change their mind again and i will not protect again this time", "Uh oh", "I'm sure", "They did what?") != "I'm sure")
+				return
+
+		copying_this_one.copy_to(src)
+		var/change_text = "reapplied [key_name(src, TRUE)]'s preferences, [(is_this_guy_trolling_the_admin != copying_this_one.default_slot) ? "changing their character" : "resetting their character"]."
+		to_chat(usr, capitalize(change_text))
+		log_admin("[key_name(usr)] has [change_text]")
+		message_admins(span_notice("[key_name_admin(usr)] has [change_text]"))
+		admin_ticket_log(src, span_notice("[key_name_admin(usr, FALSE)] has [change_text]")) // In case they complained in an ahelp, we'll let them know anything happened
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	var/GS_needed = istype(target, /mob/living/silicon/pai)? GRAB_PASSIVE : GRAB_AGGRESSIVE
@@ -782,7 +811,7 @@
 
 //src is the user that will be carrying, target is the mob to be carried
 /mob/living/carbon/human/proc/can_piggyback(mob/living/target)
-	return (iscarbon(target) || ispAI(target)) && target.stat == CONSCIOUS
+	return (iscarbon(target) || ispAI(target)) && target.stat == CONSCIOUS && CHECK_MOBILITY(src, MOBILITY_STAND)
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
 	return (ishuman(target) && !CHECK_MOBILITY(target, MOBILITY_STAND)) || ispAI(target)
@@ -801,7 +830,7 @@
 		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
 		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space]start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
 		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
-		if(do_after(src, carrydelay, TRUE, target))
+		if(do_after(src, carrydelay, target, extra_checks = CALLBACK(src, PROC_REF(can_be_firemanned), target)))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
 				buckle_mob(target, TRUE, TRUE, 90, 1, 0, TRUE)
@@ -816,7 +845,7 @@
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(can_piggyback(target))
 		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
-		if(do_after(target, 15, target = src, required_mobility_flags = MOBILITY_STAND))
+		if(do_after(target, 1.5 SECONDS, src, IGNORE_INCAPACITATED, extra_checks = CALLBACK(src, PROC_REF(can_piggyback), target)))
 			if(can_piggyback(target))
 				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")

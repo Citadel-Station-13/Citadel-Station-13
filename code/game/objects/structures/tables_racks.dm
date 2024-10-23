@@ -124,11 +124,11 @@
 		. = . || (caller.pass_flags & PASSTABLE)
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
-	pushed_mob.set_resting(TRUE, FALSE)
-	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
-								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
-	log_combat(user, pushed_mob, "placed")
+	pushed_mob.forceMove(loc)
+	pushed_mob.set_resting(TRUE, TRUE)
+	pushed_mob.visible_message(span_notice("[user] places [pushed_mob] onto [src]."), \
+								span_notice("[user] places [pushed_mob] onto [src]."))
+	log_combat(user, pushed_mob, "places", null, "onto [src]")
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -204,6 +204,30 @@
 			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
+
+	if(istype(I, /obj/item/riding_offhand))
+		var/obj/item/riding_offhand/riding_item = I
+		var/mob/living/carried_mob = riding_item.rider
+		if(carried_mob == user) //Piggyback user.
+			return
+		if(user.a_intent == INTENT_HARM)
+			user.unbuckle_mob(carried_mob)
+			tablelimbsmash(user, carried_mob)
+		else
+			var/tableplace_delay = 3.5 SECONDS
+			var/skills_space = ""
+			if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+				tableplace_delay = 2 SECONDS
+				skills_space = " expertly"
+			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+				tableplace_delay = 2.75 SECONDS
+				skills_space = " quickly"
+			carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
+				span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
+			if(do_after(user, tableplace_delay, target = carried_mob))
+				user.unbuckle_mob(carried_mob)
+				tableplace(user, carried_mob)
+		return TRUE
 
 	if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location()))
@@ -297,7 +321,7 @@
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
 	attached_items += I
-	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	RegisterSignal(I, COMSIG_MOVABLE_MOVED, PROC_REF(RemoveItemFromTable)) //Listen for the pickup event, unregister on pick-up so we aren't moved
 
 /obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
 	if(newloc != loc) //Did we not move with the table? because that shit's ok
@@ -346,7 +370,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
+		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 5)
 	else
 		check_break(AM)
 
@@ -636,7 +660,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity
@@ -717,11 +741,11 @@
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
-		return 1
+		return TRUE
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/structure/rack/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
 	. = !density
@@ -745,7 +769,7 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(user.transferItemToLoc(W, drop_location()))
-		return 1
+		return TRUE
 
 /obj/structure/rack/attack_paw(mob/living/user)
 	attack_hand(user)

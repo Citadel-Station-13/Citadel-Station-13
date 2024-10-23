@@ -13,9 +13,15 @@
 	plasma_outfit = /datum/outfit/plasmaman/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
-	
+	departments = DEPARTMENT_BITFLAG_SECURITY
+
 	family_heirlooms = list(
 		/obj/item/pen/blue
+	)
+
+	exclusive_mail_goodies = TRUE
+	mail_goodies = list(
+		/obj/effect/spawner/lootdrop/prison_contraband = 1
 	)
 
 /datum/job/prisoner/get_latejoin_spawn_point()

@@ -165,7 +165,7 @@ SUBSYSTEM_DEF(vote)
 		var/list/pretty_vote = list()
 		for(var/choice in choices)
 			if(("[choice]" in this_vote) && ("[choice]" in scores_by_choice))
-				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],/proc/cmp_numeric_asc)
+				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],GLOBAL_PROC_REF(cmp_numeric_asc))
 				// START BALLOT GATHERING
 				pretty_vote += "[choice]"
 				if(this_vote["[choice]"] in GLOB.vote_score_options)
@@ -373,7 +373,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/submit_vote(vote, score = 0)
 	if(mode)
 		if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
-			return 0
+			return FALSE
 		if(vote && ISINRANGE(vote, 1, choices.len))
 			switch(vote_system)
 				if(PLURALITY_VOTING)
@@ -415,7 +415,7 @@ SUBSYSTEM_DEF(vote)
 						voted[usr.ckey] = list()
 					voted[usr.ckey][choices[vote]] = score
 					saved -= usr.ckey
-	return 0
+	return FALSE
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, display = display_votes, votesystem = PLURALITY_VOTING, forced = FALSE,vote_time = -1)//CIT CHANGE - adds display argument to votes to allow for obfuscated votes
 	vote_system = votesystem
@@ -424,7 +424,7 @@ SUBSYSTEM_DEF(vote)
 			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
 			if(mode)
 				to_chat(usr, "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
-				return 0
+				return FALSE
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
@@ -433,7 +433,7 @@ SUBSYSTEM_DEF(vote)
 
 			if(next_allowed_time > world.time && !admin)
 				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!</span>")
-				return 0
+				return FALSE
 
 		SEND_SOUND(world, sound('sound/misc/notice2.ogg'))
 		reset()
@@ -464,7 +464,7 @@ SUBSYSTEM_DEF(vote)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
-					return 0
+					return FALSE
 				var/system_string = input(usr,"Which voting type?",GLOB.vote_type_names[1]) in GLOB.vote_type_names
 				vote_system = GLOB.vote_type_names[system_string]
 				for(var/i=1,i<=10,i++)
@@ -488,7 +488,7 @@ SUBSYSTEM_DEF(vote)
 						toggles ^= choices[chosen]
 				display_votes = toggles
 			else
-				return 0
+				return FALSE
 		mode = vote_type
 		initiator = initiator_key ? initiator_key : "the Server" // austation -- Crew autotransfer vote
 		started_time = world.time
@@ -521,8 +521,8 @@ SUBSYSTEM_DEF(vote)
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
@@ -736,7 +736,7 @@ SUBSYSTEM_DEF(vote)
 		Remove(owner)
 
 /datum/action/vote/IsAvailable(silent = FALSE)
-	return 1
+	return TRUE
 
 /datum/action/vote/proc/remove_from_client()
 	if(!owner)

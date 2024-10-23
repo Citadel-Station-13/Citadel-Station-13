@@ -271,7 +271,7 @@
 	. = !density
 
 /obj/proc/check_uplink_validity()
-	return 1
+	return TRUE
 
 /obj/vv_get_dropdown()
 	. = ..()

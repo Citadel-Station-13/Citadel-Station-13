@@ -122,7 +122,7 @@
 					var/mob/M = A
 					if(M.mob_negates_gravity())
 						continue
-				INVOKE_ASYNC(src, .proc/do_scatter, A, target)
+				INVOKE_ASYNC(src, PROC_REF(do_scatter), A, target)
 
 			var/turf/T = get_turf(target)
 			log_game("[key_name(source)] used a Gravitational Catapult repulse wave on [AREACOORD(T)]")
@@ -410,7 +410,7 @@
 			return units
 		else
 			to_chat(user, "[icon2html(src, user)]<span class='notice'>Unit is full.</span>")
-			return 0
+			return FALSE
 	else
 		to_chat(user, "[icon2html(src, user)]<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
 		return

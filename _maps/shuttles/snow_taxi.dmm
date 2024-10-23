@@ -42,7 +42,7 @@
 	callTime = 5;
 	dwidth = 3;
 	height = 4;
-	id = "snow_taxi";
+	shuttle_id = "snow_taxi";
 	name = "snow taxi";
 	port_direction = 8;
 	width = 6

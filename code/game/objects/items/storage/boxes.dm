@@ -73,7 +73,7 @@
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
-		return 0
+		return FALSE
 	return ..()
 
 //Disk boxes
@@ -621,8 +621,9 @@
 /obj/item/storage/box/snappops
 	name = "snap pop box"
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "spbox"
+	illustration = null
 
 /obj/item/storage/box/snappops/ComponentInitialize()
 	. = ..()
@@ -639,6 +640,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	item_state = "zippo"
+	illustration = null
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_price = PRICE_REALLY_CHEAP
@@ -868,7 +870,7 @@
 
 /obj/item/storage/box/mechfigures/PopulateContents()
 	for(var/i in 1 to 4)
-		var/randomFigure = pick(subtypesof(/obj/item/toy/prize/))
+		var/randomFigure = pick(subtypesof(/obj/item/toy/mecha))
 		new randomFigure(src)
 
 
@@ -886,7 +888,7 @@
 
 /obj/item/storage/box/papersack/Initialize(mapload)
 	. = ..()
-	papersack_designs = sortList(list(
+	papersack_designs = sort_list(list(
 		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
 		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
 		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),
@@ -903,7 +905,7 @@
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
-		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, .proc/check_menu, user, W), radius = 36, require_near = TRUE)
+		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, W), radius = 36, require_near = TRUE)
 		if(!choice)
 			return FALSE
 		if(icon_state == "paperbag_[choice]")
@@ -1464,7 +1466,7 @@
 
 /obj/item/storage/box/shipping/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/destTagger=1,\
+		/obj/item/dest_tagger=1,\
 		/obj/item/sales_tagger=1,\
 		/obj/item/export_scanner=1,\
 		/obj/item/stack/packageWrap/small=2,\

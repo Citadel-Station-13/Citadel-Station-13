@@ -767,7 +767,7 @@ What a mess.*/
 /obj/machinery/computer/secure_data/emp_act(severity)
 	. = ..()
 
-	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
@@ -805,9 +805,9 @@ What a mess.*/
 		if(authenticated)
 			if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 				if(!trim(message1))
-					return 0
+					return FALSE
 				if(!record1 || record1 == active1)
 					if(!record2 || record2 == active2)
-						return 1
-	return 0
+						return TRUE
+	return FALSE
 

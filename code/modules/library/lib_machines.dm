@@ -574,12 +574,12 @@
 	if(istype(O, /obj/item/paper))
 		bind_book(user, O)
 	else if(default_unfasten_wrench(user, O))
-		return 1
+		return TRUE
 	else
 		return ..()
 
 /obj/machinery/bookbinder/proc/bind_book(mob/user, obj/item/paper/P)
-	if(stat)
+	if(machine_stat)
 		return
 	if(busy)
 		to_chat(user, "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>")
@@ -592,7 +592,7 @@
 	sleep(rand(200,400))
 	busy = FALSE
 	if(P)
-		if(!stat)
+		if(!machine_stat)
 			visible_message("<span class='notice'>[src] whirs as it prints and binds a new book.</span>")
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info

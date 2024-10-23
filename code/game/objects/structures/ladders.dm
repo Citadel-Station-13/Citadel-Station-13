@@ -87,6 +87,12 @@
 	if(AM)
 		user.start_pulling(AM)
 
+	//reopening ladder radial menu ahead
+	T = get_turf(user)
+	var/obj/structure/ladder/ladder_structure = locate() in T
+	if (ladder_structure && (up && down))
+		ladder_structure.use(user)
+
 /obj/structure/ladder/proc/use(mob/user, is_ghost=FALSE)
 	if (!is_ghost && !in_range(src, user))
 		return
@@ -97,7 +103,7 @@
 		)
 
 	if (up && down)
-		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 		if (!is_ghost && !in_range(src, user))
 			return  // nice try
 		switch(result)

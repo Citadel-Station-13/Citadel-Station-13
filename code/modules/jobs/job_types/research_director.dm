@@ -18,6 +18,7 @@
 	considered_combat_role = TRUE
 
 	outfit = /datum/outfit/job/rd
+	departments = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_COMMAND
 	plasma_outfit = /datum/outfit/plasmaman/rd
 
 	access = list(ACCESS_RD, ACCESS_HEADS, ACCESS_TOX, ACCESS_GENETICS, ACCESS_MORGUE,
@@ -38,9 +39,15 @@
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring)
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
 	threat = 5
-	
+
 	family_heirlooms = list(
 		/obj/item/toy/plush/slimeplushie
+	)
+
+	mail_goodies = list(
+		/obj/item/storage/box/monkeycubes = 30,
+		/obj/item/circuitboard/machine/sleeper/party = 3,
+		/obj/item/borg/upgrade/ai = 2
 	)
 
 /datum/outfit/job/rd

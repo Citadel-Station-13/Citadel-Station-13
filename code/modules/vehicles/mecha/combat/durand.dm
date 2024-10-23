@@ -16,8 +16,8 @@
 /obj/vehicle/sealed/mecha/combat/durand/Initialize(mapload)
 	. = ..()
 	shield = new /obj/durand_shield(loc, src, layer, dir)
-	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)
-	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
+	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(relay))
+	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, PROC_REF(prehit))
 
 
 /obj/vehicle/sealed/mecha/combat/durand/Destroy()
@@ -37,7 +37,7 @@
 			var/mob/living/occupant = O
 			var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
 			if(action)
-				INVOKE_ASYNC(action, /datum/action.proc/Trigger)
+				INVOKE_ASYNC(action, TYPE_PROC_REF(/datum/action, Trigger))
 				break
 
 /obj/vehicle/sealed/mecha/combat/durand/Move(direction)
@@ -54,7 +54,7 @@
 	if(defense_mode)
 		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, M, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
 		if(action)
-			INVOKE_ASYNC(action, /datum/action.proc/Trigger, FALSE)
+			INVOKE_ASYNC(action, TYPE_PROC_REF(/datum/action, Trigger), FALSE)
 	return ..()
 
 ///Relays the signal from the action button to the shield, and creates a new shield if the old one is MIA.
@@ -156,7 +156,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	chassis = _chassis
 	layer = _layer
 	setDir(_dir)
-	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/activate)
+	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(activate))
 
 
 /obj/durand_shield/Destroy()
@@ -177,7 +177,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/proc/activate(datum/source, mob/owner, list/signal_args)
 	SIGNAL_HANDLER
 	currentuser = owner
-	if(!chassis?.occupants)
+	if(!LAZYLEN(chassis?.occupants))
 		return
 	if(switching && !signal_args[1])
 		return
@@ -194,7 +194,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	for(var/occupant in chassis.occupants)
 		var/datum/action/button = chassis.occupant_actions[occupant][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
 		button.button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]"
-		button.UpdateButtonIcon()
+		button.UpdateButtons()
 
 	set_light(light_range, light_power, light_color)
 
@@ -204,7 +204,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE	, l_power = 5, l_color = "#00FFFF")
 		icon_state = "shield"
-		RegisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE, .proc/resetdir)
+		RegisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE, PROC_REF(resetdir))
 	else
 		flick("shield_drop", src)
 		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)

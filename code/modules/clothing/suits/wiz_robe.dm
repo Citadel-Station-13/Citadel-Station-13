@@ -187,7 +187,7 @@
 /datum/action/item_action/stickmen/New(Target)
 	..()
 	if(isitem(Target))
-		RegisterSignal(Target, COMSIG_PARENT_EXAMINE, .proc/give_infos)
+		RegisterSignal(Target, COMSIG_PARENT_EXAMINE, PROC_REF(give_infos))
 
 /datum/action/item_action/stickmen/Destroy()
 	for(var/A in summoned_stickmen)
@@ -209,7 +209,7 @@
 /datum/action/item_action/stickmen/Grant(mob/M)
 	. = ..()
 	if(owner)
-		RegisterSignal(M, COMSIG_MOB_POINTED, .proc/rally)
+		RegisterSignal(M, COMSIG_MOB_POINTED, PROC_REF(rally))
 	if(book_of_grudges[M]) //Stop attacking your new master.
 		book_of_grudges -= M
 		for(var/A in summoned_stickmen)
@@ -246,9 +246,9 @@
 		var/mob/living/simple_animal/hostile/S = new summoned_mob_path (get_turf(usr))
 		S.faction = owner.faction
 		S.foes = book_of_grudges
-		RegisterSignal(S, COMSIG_PARENT_QDELETING, .proc/remove_from_list)
+		RegisterSignal(S, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_list))
 	ready = FALSE
-	addtimer(CALLBACK(src, .proc/ready_again), cooldown)
+	addtimer(CALLBACK(src, PROC_REF(ready_again)), cooldown)
 
 /datum/action/item_action/stickmen/proc/remove_from_list(datum/source, forced)
 	summoned_stickmen -= source
@@ -277,9 +277,9 @@
 			var/obj/vehicle/sealed/mecha/M = A
 			L = pick(M.occupants)
 		if(L && L.stat != DEAD && !HAS_TRAIT(L, TRAIT_DEATHCOMA)) //Taking revenge on the deads would be proposterous.
-			addtimer(CALLBACK(src, .proc/clear_grudge, L), 2 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
+			addtimer(CALLBACK(src, PROC_REF(clear_grudge), L), 2 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
 			if(!book_of_grudges[L])
-				RegisterSignal(L, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/grudge_settled)
+				RegisterSignal(L, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), PROC_REF(grudge_settled))
 				book_of_grudges[L] = TRUE
 	for(var/k in summoned_stickmen) //Shamelessly copied from the blob rally power
 		var/mob/living/simple_animal/hostile/S = k
@@ -315,7 +315,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/wizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
@@ -330,7 +330,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
 	return

@@ -56,10 +56,10 @@
 	mind.announce_objectives()
 
 /mob/living/carbon/true_devil/death(gibbed)
-	stat = DEAD
+	set_stat(DEAD)
 	..(gibbed)
 	drop_all_held_items()
-	INVOKE_ASYNC(mind.has_antag_datum(/datum/antagonist/devil), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
+	INVOKE_ASYNC(mind.has_antag_datum(/datum/antagonist/devil), TYPE_PROC_REF(/datum/antagonist/devil, beginResurrectionCheck), src)
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
@@ -84,7 +84,7 @@
 	. += "</span>"
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/resist_buckle()
 	if(buckled)
@@ -110,7 +110,7 @@
 		return ..() //flashes don't stop devils UNLESS it's their bane.
 
 /mob/living/carbon/true_devil/soundbang_act()
-	return 0
+	return FALSE
 
 /mob/living/carbon/true_devil/get_ear_protection()
 	return 2
@@ -124,7 +124,7 @@
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
-		return 0
+		return FALSE
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
@@ -138,7 +138,7 @@
 		return ..()
 
 /mob/living/carbon/true_devil/can_be_revived()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/resist_fire()
 	//They're immune to fire.
@@ -177,7 +177,7 @@
 	// devils do not need to breathe
 
 /mob/living/carbon/true_devil/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/ex_act(severity, target, origin)
 	if(!ascended)

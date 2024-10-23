@@ -16,10 +16,10 @@
 	if(min2 != -1 && val <= min2)
 		return 2
 	if(max1 != -1 && val >= max1)
-		return 1
+		return TRUE
 	if(min1 != -1 && val <= min1)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/tlv/no_checks
 	min2 = -1
@@ -90,6 +90,9 @@
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
+	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
+	var/datum/alarm_handler/alarm_manager
+
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
@@ -216,7 +219,7 @@
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	regenerate_TLV()
-	RegisterSignal(SSdcs,COMSIG_GLOB_NEW_GAS,.proc/regenerate_TLV)
+	RegisterSignal(SSdcs,COMSIG_GLOB_NEW_GAS, PROC_REF(regenerate_TLV))
 	wires = new /datum/wires/airalarm(src)
 
 	if(ndir)
@@ -231,15 +234,20 @@
 	if(name == initial(name))
 		name = "[get_area_name(src, get_base_area = TRUE)] Air Alarm"
 
+	alarm_manager = new(src)
 	power_change()
 	set_frequency(frequency)
+	register_context()
+
+/obj/machinery/airalarm/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, locked ? "Unlock" : "Lock")
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
-	qdel(wires)
-	wires = null
-	var/area/ourarea = get_area(src)
-	ourarea.atmosalert(FALSE, src)
+	QDEL_NULL(wires)
+	QDEL_NULL(alarm_manager)
 	return ..()
 
 /obj/machinery/airalarm/examine(mob/user)
@@ -283,7 +291,7 @@
 	)
 
 	var/area/A = get_base_area(src)
-	data["atmos_alarm"] = A.atmosalm
+	data["atmos_alarm"] = !!A.active_alarms[ALARM_ATMOS]
 	data["fire_alarm"] = A.fire
 
 	var/turf/T = get_turf(src)
@@ -458,13 +466,11 @@
 			apply_mode()
 			. = TRUE
 		if("alarm")
-			var/area/A = get_base_area(src)
-			if(A.atmosalert(2, src))
+			if(alarm_manager.send_alarm(ALARM_ATMOS))
 				post_alert(2)
 			. = TRUE
 		if("reset")
-			var/area/A = get_base_area(src)
-			if(A.atmosalert(0, src))
+			if(alarm_manager.clear_alarm(ALARM_ATMOS))
 				post_alert(0)
 			. = TRUE
 	update_icon()
@@ -481,17 +487,17 @@
 
 
 /obj/machinery/airalarm/proc/shock(mob/user, prb)
-	if((stat & (NOPOWER)))		// unpowered, no shock
-		return 0
+	if((machine_stat & (NOPOWER)))		// unpowered, no shock
+		return FALSE
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return FALSE //you lucked out, no shock for you
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/airalarm/proc/refresh_all()
 	var/area/A = get_base_area(src)
@@ -513,7 +519,7 @@
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command, mob/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
@@ -521,7 +527,7 @@
 	signal.data["user"] = user
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
-	return 1
+	return TRUE
 
 /obj/machinery/airalarm/proc/get_mode_name(mode_value)
 	switch(mode_value)
@@ -676,11 +682,11 @@
 				))
 
 /obj/machinery/airalarm/update_icon_state()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		icon_state = "alarm0"
 		return
 
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "alarmx"
 		return
 
@@ -700,8 +706,8 @@
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/overlay_state = AALARM_OVERLAY_OFF
-	var/area/A = get_base_area(src)
-	switch(max(danger_level, A.atmosalm))
+	var/area/our_area = get_base_area(src)
+	switch(max(danger_level, !!our_area.active_alarms[ALARM_ATMOS]))
 		if(0)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
@@ -723,7 +729,7 @@
 	update_light()
 
 /obj/machinery/airalarm/process()
-	if((stat & (NOPOWER|BROKEN)) || shorted)
+	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
 	var/turf/location = get_turf(src)
@@ -782,12 +788,17 @@
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 	var/area/A = get_base_area(src)
-
 	var/new_area_danger_level = 0
 	for(var/obj/machinery/airalarm/AA in A)
-		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
-			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
-	if(A.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
+		if (!(AA.machine_stat & (NOPOWER|BROKEN)) && !AA.shorted)
+			new_area_danger_level = clamp(max(new_area_danger_level, AA.danger_level), 0, 1)
+
+	var/did_anything_happen
+	if(new_area_danger_level)
+		did_anything_happen = alarm_manager.send_alarm(ALARM_ATMOS)
+	else
+		did_anything_happen = alarm_manager.clear_alarm(ALARM_ATMOS)
+	if(did_anything_happen) //if something actually changed
 		post_alert(new_area_danger_level)
 
 	update_icon()
@@ -897,7 +908,7 @@
 	return TRUE
 
 /obj/machinery/airalarm/proc/togglelock(mob/living/user)
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		to_chat(user, "<span class='warning'>It does nothing!</span>")
 	else
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
@@ -910,7 +921,7 @@
 
 /obj/machinery/airalarm/power_change()
 	..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		set_light(0)
 	update_icon()
 

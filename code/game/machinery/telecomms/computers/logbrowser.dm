@@ -36,7 +36,7 @@
 			ref = REF(T)
 		)
 		data_out["servers"] += list(data)
-	data_out["servers"] = sortList(data_out["servers"]) //a-z sort
+	data_out["servers"] = sort_list(data_out["servers"]) //a-z sort
 
 	if(!SelectedMachine) //null is bad.
 		data_out["selected"] = null //but in js, null is good.

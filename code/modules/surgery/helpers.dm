@@ -97,7 +97,7 @@
 	else if(!current_surgery.step_in_progress)
 		attempt_cancel_surgery(current_surgery, I, M, user)
 
-	return 1
+	return TRUE
 
 /proc/attempt_cancel_surgery(datum/surgery/S, obj/item/I, mob/living/M, mob/user)
 	var/selected_zone = user.zone_selected
@@ -128,7 +128,7 @@
 /proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)
 	if(locate(/obj/structure/table/optable, T))
-		return 1
+		return TRUE
 	else if(locate(/obj/structure/table, T))
 		return 0.8
 	else if(locate(/obj/structure/bed, T))
@@ -157,42 +157,42 @@
 	switch(location)
 		if(BODY_ZONE_HEAD)
 			if(covered_locations & HEAD)
-				return 0
+				return FALSE
 		if(BODY_ZONE_PRECISE_EYES)
 			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
-				return 0
+				return FALSE
 		if(BODY_ZONE_PRECISE_MOUTH)
 			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
-				return 0
+				return FALSE
 		if(BODY_ZONE_CHEST)
 			if(covered_locations & CHEST)
-				return 0
+				return FALSE
 		if(BODY_ZONE_PRECISE_GROIN)
 			if(covered_locations & GROIN)
-				return 0
+				return FALSE
 		if(BODY_ZONE_L_ARM)
 			if(covered_locations & ARM_LEFT)
-				return 0
+				return FALSE
 		if(BODY_ZONE_R_ARM)
 			if(covered_locations & ARM_RIGHT)
-				return 0
+				return FALSE
 		if(BODY_ZONE_L_LEG)
 			if(covered_locations & LEG_LEFT)
-				return 0
+				return FALSE
 		if(BODY_ZONE_R_LEG)
 			if(covered_locations & LEG_RIGHT)
-				return 0
+				return FALSE
 		if(BODY_ZONE_PRECISE_L_HAND)
 			if(covered_locations & HAND_LEFT)
-				return 0
+				return FALSE
 		if(BODY_ZONE_PRECISE_R_HAND)
 			if(covered_locations & HAND_RIGHT)
-				return 0
+				return FALSE
 		if(BODY_ZONE_PRECISE_L_FOOT)
 			if(covered_locations & FOOT_LEFT)
-				return 0
+				return FALSE
 		if(BODY_ZONE_PRECISE_R_FOOT)
 			if(covered_locations & FOOT_RIGHT)
-				return 0
+				return FALSE
 
-	return 1
+	return TRUE

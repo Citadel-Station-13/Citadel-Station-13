@@ -94,10 +94,10 @@
 
 //sometimes we want to ignore that we don't have the required amount of arms.
 /mob/proc/get_arm_ignore()
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/larva/get_arm_ignore()
-	return 1 //so we can still handcuff larvas.
+	return TRUE //so we can still handcuff larvas.
 
 
 /mob/proc/get_num_legs(check_disabled = TRUE)

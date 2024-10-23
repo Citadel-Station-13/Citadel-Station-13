@@ -84,7 +84,7 @@
 		update_parents()
 	else
 		active_power_usage = idle_power_usage
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/power_change()
 	..()

@@ -68,7 +68,7 @@
 	var/icon/bluespace
 
 /datum/status_effect/slimerecall/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resistField))
 	to_chat(owner, "<span class='danger'>You feel a sudden tug from an unknown force, and feel a pull to bluespace!</span>")
 	to_chat(owner, "<span class='notice'>Resist if you wish avoid the force!</span>")
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -102,7 +102,7 @@
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(breakCube))
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -554,7 +554,7 @@
 
 		if(sheets.len > 0)
 			var/obj/item/stack/sheet/S = pick(sheets)
-			S.amount++
+			S.add(1) // Dare var edit directly again and i'll strangle you.
 			to_chat(owner, "<span class='notice'>[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!</span>")
 	return ..()
 

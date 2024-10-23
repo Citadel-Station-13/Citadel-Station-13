@@ -209,7 +209,7 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/DefaultCombatKnockdown, 20))
+			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, TYPE_PROC_REF(/mob/living/carbon/human, DefaultCombatKnockdown), 20))
 	log_combat(A, D, "has thrown with wrestling")
 	return FALSE
 
@@ -350,7 +350,7 @@
 			A.setDir(turn(A.dir, 90))
 
 		A.forceMove(D.loc)
-		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
+		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), A, T), 4)
 
 		A.visible_message("<span class = 'danger'><b>[A] headbutts [D]!</b></span>")
 		D.apply_damage(damage + 15, BRUTE)

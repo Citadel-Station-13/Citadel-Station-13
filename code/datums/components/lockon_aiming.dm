@@ -26,7 +26,7 @@
 	if(target_callback)
 		can_target_callback = target_callback
 	else
-		can_target_callback = CALLBACK(src, .proc/can_target)
+		can_target_callback = CALLBACK(src, PROC_REF(can_target))
 	if(range)
 		lock_cursor_range = range
 	if(typecache)
@@ -47,7 +47,7 @@
 	if(icon_state)
 		lock_icon_state = icon_state
 	generate_lock_visuals()
-	RegisterSignal(parent, COMSIG_MOB_CLIENT_MOUSEMOVE, .proc/onMouseMove)
+	RegisterSignal(parent, COMSIG_MOB_CLIENT_MOUSEMOVE, PROC_REF(onMouseMove))
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/component/lockon_aiming/Destroy()

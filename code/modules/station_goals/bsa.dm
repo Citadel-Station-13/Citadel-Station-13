@@ -21,7 +21,7 @@
 	if(..())
 		return TRUE
 	var/obj/machinery/bsa/full/B = locate()
-	if(B && !B.stat)
+	if(B && !B.machine_stat)
 		return TRUE
 	return FALSE
 
@@ -235,6 +235,7 @@
 	circuit = /obj/item/circuitboard/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
+	icon_keyboard = null
 
 	var/obj/machinery/bsa/full/cannon
 	var/notice
@@ -305,7 +306,7 @@
 		return get_turf(G.parent)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)
-	if(cannon.stat)
+	if(cannon.machine_stat)
 		notice = "Cannon unpowered!"
 		return
 	notice = null

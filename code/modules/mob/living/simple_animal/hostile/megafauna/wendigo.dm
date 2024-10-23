@@ -14,7 +14,7 @@ Difficulty: Hard
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	weather_immunities = list("snow")
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -114,7 +114,7 @@ Difficulty: Hard
 	. = ..()
 	stored_move_dirs &= ~direct
 	if(!stored_move_dirs)
-		INVOKE_ASYNC(src, .proc/ground_slam, stomp_range, 1)
+		INVOKE_ASYNC(src, PROC_REF(ground_slam), stomp_range, 1)
 
 /// Slams the ground around the wendigo throwing back enemies caught nearby
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/ground_slam(range, delay)

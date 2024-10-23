@@ -69,7 +69,7 @@
 /obj/item/gun/ballistic/shotgun/toy/crossbow
 	name = "foam force crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "foamcrossbow"
 	item_state = "crossbow"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/crossbow
@@ -128,6 +128,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	dualwield_spread_mult = 1.4
 	w_class = WEIGHT_CLASS_BULKY
+	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/shotgun/toy/mag
 	name = "foam force magpistol"

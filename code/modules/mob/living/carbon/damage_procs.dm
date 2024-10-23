@@ -4,7 +4,7 @@
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!forced && hit_percent <= 0)
-		return 0
+		return FALSE
 
 	var/obj/item/bodypart/BP = null
 	if(!spread_damage)

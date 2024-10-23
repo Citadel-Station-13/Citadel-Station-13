@@ -36,6 +36,10 @@
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+/// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
+#define COMSIG_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
+/// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
+#define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
 
 /// called by auxgm add_gas: (gas_id)
 #define COMSIG_GLOB_NEW_GAS "!new_gas"
@@ -196,18 +200,6 @@
 #define COMSIG_ENTER_AREA "enter_area" 						//from base of area/Entered(): (/area)
 #define COMSIG_EXIT_AREA "exit_area" 							//from base of area/Exited(): (/area)
 
-#define COMSIG_CLICK "atom_click"								//from base of atom/Click(): (location, control, params, mob/user)
-#define COMSIG_CLICK_SHIFT "shift_click"						//from base of atom/ShiftClick(): (/mob), return flags also used by other signals.
-	#define COMPONENT_ALLOW_EXAMINATE 1
-	#define COMPONENT_DENY_EXAMINATE 2 //Higher priority compared to the above one
-
-#define COMSIG_CLICK_CTRL "ctrl_click"							//from base of atom/CtrlClickOn(): (/mob)
-#define COMSIG_CLICK_ALT "alt_click"							//from base of atom/AltClick(): (/mob)
-#define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"				//from base of atom/CtrlShiftClick(/mob)
-#define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"					//from base of atom/MouseDrop(): (/atom/over, /mob/user)
-	#define COMPONENT_NO_MOUSEDROP 1
-#define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"			//from base of atom/MouseDrop_T: (/atom/from, /mob/user)
-
 // /area signals
 #define COMSIG_AREA_ENTERED "area_entered" 						//from base of area/Entered(): (atom/movable/M)
 #define COMSIG_AREA_EXITED "area_exited" 							//from base of area/Exited(): (atom/movable/M)
@@ -272,6 +264,7 @@
 	#define COMPONENT_EXAMINATE_BLIND 3 //outputs the "something is there but you can't see it" message.
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 	#define COMPONENT_BLOCK_DEATH_BROADCAST 1					//stops the death from being broadcasted in deadchat.
+#define COMSIG_MOB_STATCHANGE "mob_statchange"					//!from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_CLICKON "mob_clickon"						//from base of mob/clickon(): (atom/A, params)
 	#define COMSIG_MOB_CANCEL_CLICKON 1
 #define COMSIG_MOB_GHOSTIZE "mob_ghostize"						//from base of mob/Ghostize(): (can_reenter_corpse, special, penalize)
@@ -358,6 +351,7 @@
 #define COMSIG_MOB_CLIENT_MOVE "mob_client_move"					//sent when client/Move() finishes with no early returns: (client, direction, n, oldloc)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"		//from base of /client/change_view(): (client, old_view, view)
 #define COMSIG_MOB_CLIENT_MOUSEMOVE "mob_client_mousemove"			//from base of /client/MouseMove(): (object, location, control, params)
+#define COMSIG_MOB_CLIENT_JOINED_FROM_LOBBY "mob_client_joined_from_lobby" //sent when a player joins/latejoins the game: (new_character, client, late_transfer)
 
 ///sent when a mob/login() finishes: (client)
 #define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"
@@ -474,6 +468,8 @@
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"				//from base of obj/item/afterattack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ALT_AFTERATTACK "item_alt_afterattack"		//from base of obj/item/altafterattack(): (atom/target, mob/user, proximity, params)
 #define COMSIG_ITEM_EQUIPPED "item_equip"						//from base of obj/item/equipped(): (/mob/equipper, slot)
+/// A mob has just unequipped an item.
+#define COMSIG_MOB_UNEQUIPPED_ITEM "mob_unequipped_item"
 	// Do not grant actions on equip.
 	#define COMPONENT_NO_GRANT_ACTIONS		1
 #define COMSIG_ITEM_DROPPED "item_drop"							//from base of obj/item/dropped(): (mob/user)
@@ -706,3 +702,9 @@
 
 ///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
 #define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
+
+// Alarm listener datum signals
+///Sent when an alarm is fired (alarm, area/source_area)
+#define COMSIG_ALARM_TRIGGERED "comsig_alarm_triggered"
+///Send when an alarm source is cleared (alarm_type, area/source_area)
+#define COMSIG_ALARM_CLEARED "comsig_alarm_clear"

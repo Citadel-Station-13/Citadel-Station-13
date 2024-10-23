@@ -169,7 +169,7 @@
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/M = target
-			if((M.stat & (NOPOWER|BROKEN)) || !M.anchored)
+			if((M.machine_stat & (NOPOWER|BROKEN)) || !M.anchored)
 				to_chat(user, "<span class='warning'>[M] is unpowered!</span>")
 				return
 
@@ -178,7 +178,7 @@
 				if(!user || !user.cell || mode != "draw")
 					return
 
-				if((M.stat & (NOPOWER|BROKEN)) || !M.anchored)
+				if((M.machine_stat & (NOPOWER|BROKEN)) || !M.anchored)
 					break
 
 				if(!user.cell.give(150))
@@ -366,7 +366,7 @@
 	if(charging)
 		return
 	if(candy < candymax)
-		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
+		addtimer(CALLBACK(src, PROC_REF(charge_lollipops)), charge_delay)
 		charging = TRUE
 
 /obj/item/borg/lollipop/proc/charge_lollipops()

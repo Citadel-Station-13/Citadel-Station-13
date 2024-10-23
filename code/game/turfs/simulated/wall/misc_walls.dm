@@ -33,7 +33,7 @@
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
 
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
@@ -92,7 +92,7 @@
 	if(!istype(I, /obj/item/pickaxe/drill/jackhammer))
 		return FALSE
 	to_chat(user, "<span class='notice'>You begin to smash though [src]...</span>")
-	if(!do_after(user, 70, TRUE, src))
+	if(!do_after(user, 7 SECONDS, src))
 		return FALSE
 	I.play_tool_sound(src)
 	visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
@@ -110,7 +110,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
 
 /turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)

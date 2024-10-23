@@ -10,6 +10,7 @@
 
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
+	var/has_door_icon = TRUE // Set to false to skip trying to draw a door icon.
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/opened = FALSE
 	var/welded = FALSE
@@ -42,7 +43,7 @@
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, .proc/take_contents), 0)
+		addtimer(CALLBACK(src, PROC_REF(take_contents)), 0)
 	. = ..()
 	update_icon()
 	if(should_populate_contents)
@@ -76,7 +77,8 @@
 		. += "[icon_door_override ? icon_door : icon_state]_open"
 		return
 
-	. += "[icon_door || icon_state]_door"
+	if(has_door_icon)
+		. += "[icon_door || icon_state]_door"
 	if(welded)
 		. += icon_welded
 
@@ -269,7 +271,7 @@
 	if(user in src)
 		return
 	if(src.tool_interact(W,user))
-		return 1 // No afterattack
+		return TRUE // No afterattack
 	else
 		return ..()
 
@@ -396,7 +398,7 @@
 				close()
 	else
 		O.forceMove(T)
-	return 1
+	return TRUE
 
 /obj/structure/closet/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
@@ -468,7 +470,7 @@
 	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='hear'>You hear banging from [src].</span>")
-	if(do_after(user,(breakout_time), target = src, required_mobility_flags = MOBILITY_RESIST))
+	if(do_after(user, breakout_time, src, IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting

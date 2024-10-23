@@ -50,7 +50,7 @@
 	)
 	if(!Q.Execute(async = TRUE))
 		qdel(Q)
-		return 0
+		return FALSE
 	var/result = 0
 	if(Q.NextRow())
 		result = text2num(Q.item[1])

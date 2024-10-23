@@ -92,11 +92,11 @@
 	. = 1
 
 //Please don't roast me too hard
-/client/MouseMove(object,location,control,params)
+/client/MouseMove(object, location, control, params)
 	mouseParams = params
-	mouseLocation = location
-	mouseObject = object
-	mouseControlObject = control
+	mouse_location_ref = WEAKREF(location)
+	mouse_object_ref = WEAKREF(object)
+	mouse_control_object = control
 	if(mob)
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOUSEMOVE, object, location, control, params)
 		// god forgive me for i have sinned - used for autoparry. currently at 5 objects.
@@ -107,15 +107,16 @@
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	mouseParams = params
-	mouseLocation = over_location
-	mouseObject = over_object
-	mouseControlObject = over_control
-	if(selected_target[1] && over_object && over_object.IsAutoclickable())
+	mouse_location_ref = WEAKREF(over_location)
+	mouse_object_ref = WEAKREF(over_object)
+	mouse_control_object = over_control
+	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
+	return ..()
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return
