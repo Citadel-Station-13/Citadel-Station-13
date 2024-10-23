@@ -386,7 +386,7 @@ GLOBAL_LIST(topic_status_cache)
 		else
 			CRASH("Unsupported platform: [system_type]")
 
-	var/init_result = call(library, "init")()
+	var/init_result = call_ext(library, "init")("block")
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
