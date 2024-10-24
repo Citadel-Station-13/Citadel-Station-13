@@ -189,3 +189,7 @@
 
 	/// AFK tracking
 	var/last_activity = 0
+
+	/// The next point in time at which the client is allowed to send a mousemove() or mousedrag()
+	COOLDOWN_DECLARE(next_mousemove)
+	COOLDOWN_DECLARE(next_mousedrag)

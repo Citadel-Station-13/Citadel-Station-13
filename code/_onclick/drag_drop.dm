@@ -92,7 +92,11 @@
 	. = 1
 
 //Please don't roast me too hard
+//Oh don't worry, We Will.
 /client/MouseMove(object, location, control, params)
+	if(!COOLDOWN_FINISHED(src, next_mousemove))
+		return
+	COOLDOWN_START(src, next_mousemove, 0) //COOLDOWN_FINISHED() sees the world tick and cooldown timer being equal as a state wherein the cooldown has not finished. So the cooldown timer here is 0 to throttle only for the rest of the tick.
 	mouseParams = params
 	mouse_location_ref = WEAKREF(location)
 	mouse_object_ref = WEAKREF(object)
@@ -106,6 +110,9 @@
 	..()
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	if(!COOLDOWN_FINISHED(src, next_mousedrag))
+		return
+	COOLDOWN_START(src, next_mousedrag, 0) //See comment in MouseMove() for why this is 0.
 	mouseParams = params
 	mouse_location_ref = WEAKREF(over_location)
 	mouse_object_ref = WEAKREF(over_object)
