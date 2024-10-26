@@ -57,12 +57,13 @@
 	user.log_message(msg, LOG_EMOTE)
 	msg = "<span class='emote'><b>[user]</b> [msg]</span>"
 
-	for(var/mob/M in GLOB.dead_mob_list)
-		if(!M.client || isnewplayer(M))
-			continue
-		var/T = get_turf(user)
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(msg)
+	if(user.client)
+		for(var/mob/M in GLOB.dead_mob_list)
+			if(!M.client || isnewplayer(M))
+				continue
+			var/T = get_turf(user)
+			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
+				M.show_message(msg)
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(msg)
