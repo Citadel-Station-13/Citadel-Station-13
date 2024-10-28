@@ -45,6 +45,31 @@
 			},
 			"dependsOn": "dm: reparse",
 			"args": [
+				"-DUSE_BYOND_TRACY"
+			],
+			"label": "Build All (TRACY)"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build",
+			"windows": {
+				"command": ".\\tools\\build\\build.bat"
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": [
+				"$dreammaker",
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"args": [
 				"-DTESTING"
 			],
 			"label": "Build All (TESTING)"
@@ -73,6 +98,32 @@
 				"-DLOWMEMORYMODE"
 			],
 			"label": "Build All (LOWMEMORYMODE)"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build",
+			"windows": {
+				"command": ".\\tools\\build\\build.bat"
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": [
+				"$dreammaker",
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"args": [
+				"-DLOWMEMORYMODE",
+				"-DUSE_BYOND_TRACY"
+			],
+			"label": "Build All (LOWMEMORYMODE TRACY)"
 		},
 		{
 			"type": "dreammaker",

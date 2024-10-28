@@ -8,6 +8,13 @@
       "preLaunchTask": "Build All",
       "dmb": "${workspaceFolder}/${command:CurrentDMB}"
     },
+		{
+      "type": "byond",
+      "request": "launch",
+      "name": "Launch DreamSeeker (TRACY)",
+      "preLaunchTask": "Build All (TRACY)",
+      "dmb": "${workspaceFolder}/${command:CurrentDMB}"
+    },
     {
       "type": "byond",
       "request": "launch",
@@ -45,6 +52,13 @@
       "preLaunchTask": "Build All (LOWMEMORYMODE)",
       "dmb": "${workspaceFolder}/${command:CurrentDMB}",
       "dreamDaemon": true
+    },
+		{
+      "type": "byond",
+      "request": "launch",
+      "name": "Launch DreamSeeker (LOWMEMORYMODE + TRACY)",
+      "preLaunchTask": "Build All (LOWMEMORYMODE TRACY)",
+      "dmb": "${workspaceFolder}/${command:CurrentDMB}"
     }
   ]
 }

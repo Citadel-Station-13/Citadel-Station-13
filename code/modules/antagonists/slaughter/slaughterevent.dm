@@ -8,6 +8,7 @@
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a slaughter demon, to hunt by travelling through pools of blood."
 
+/*
 /datum/round_event_control/slaughter/canSpawnEvent()
 	weight = initial(src.weight)
 	var/list/allowed_turf_typecache = typecacheof(/turf/open) - typecacheof(/turf/open/space)
@@ -24,6 +25,7 @@
 		weight += 0.03
 		CHECK_TICK
 	return ..()
+*/
 
 /datum/round_event/ghost_role/slaughter
 	minimum_required = 1
