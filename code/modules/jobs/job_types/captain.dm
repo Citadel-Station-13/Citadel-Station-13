@@ -50,7 +50,10 @@
 
 /datum/job/captain/announce(mob/living/carbon/human/H)
 	..()
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), "Captain [H.nameless ? "" : "[H.real_name] "]on deck!"))
+	var/displayed_rank = H.client?.prefs?.alt_titles_preferences[title]
+	if(!displayed_rank)	//Default to Captain
+		displayed_rank = "Captain"
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), "[displayed_rank] [H.nameless ? "" : "[H.real_name] "]on deck!"))
 
 /datum/outfit/job/captain
 	name = "Captain"

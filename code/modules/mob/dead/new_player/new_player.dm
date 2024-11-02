@@ -606,6 +606,9 @@
 					dept_dat += "<a class='job[command_bold]' style='display:block;width:170px'  href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([num_positions_current]/[num_positions_total])</span></a>"
 				else
 					dept_dat += "<a class='job[command_bold]' style='display:block;width:170px' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([num_positions_current]/[num_positions_total])</a>"
+				if(client && client.prefs && client?.prefs?.alt_titles_preferences[job_datum.title])
+					dept_dat += "<br><span style='color:#BBBBBB; font-style: italic;'>(as [client?.prefs?.alt_titles_preferences[job_datum.title]])</span>"
+
 		if(!dept_dat.len)
 			dept_dat += "<span class='nopositions'>No positions open.</span>"
 		dat += jointext(dept_dat, "")
