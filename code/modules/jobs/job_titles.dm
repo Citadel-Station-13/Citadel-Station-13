@@ -10,8 +10,6 @@
 /datum/job/atmos
 	alt_titles = list("Firefighter", "Life Support Specialist", "Disposals Technician")
 
-/datum/job/junior_engineer
-
 //Service
 /datum/job/assistant
 	alt_titles = list("Civilian", "Morale Officer", "Off-Duty", "Visitor", "Businessman", "Trader", "Entertainer", "Tourist")
@@ -53,14 +51,12 @@
 /datum/job/roboticist
 	alt_titles = list("Biomechanical Engineer", "Mechatronic Engineer", "Mechanic")
 
-/datum/job/junior_scientist
-
 //Medical
 /datum/job/cmo
 	alt_titles = list("Medical Director", "Medical Administrator")
 
 /datum/job/doctor
-	alt_titles = list("Nurse", "Surgeon", "Physician", "Paramedic", "Trophologist", "Nutritionist")
+	alt_titles = list("Nurse", "Surgeon", "Physician", "Paramedic", "Trophologist", "Nutritionist", "Therapist", "Psychiatrist")
 
 /datum/job/chemist
 	alt_titles = list("Pharmacist", "Pharmacologist")
@@ -70,11 +66,6 @@
 
 /datum/job/geneticist
 	alt_titles = list("Gene Therapist", "Genetics Researcher")
-
-/datum/job/psychologist
-	alt_titles = list("Therapist", "Psychiatrist")
-
-/datum/job/junior_doctor
 
 //Security
 /datum/job/hos
@@ -89,7 +80,6 @@
 /datum/job/detective
 	alt_titles = list("Forensics Technician", "Private Investigator", "Gumshoe")
 
-/datum/job/junior_officer
 
 //Supply
 /datum/job/qm
