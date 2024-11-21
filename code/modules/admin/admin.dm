@@ -1001,7 +1001,7 @@
 	log_admin("[key_name(usr)] stuffed [frommob.key] into [tomob.name].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Ghost Drag Control")
 
-	tomob.ckey = frommob.ckey
+	tomob.key = frommob.key
 	qdel(frommob)
 
 	return TRUE
