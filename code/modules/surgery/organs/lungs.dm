@@ -128,7 +128,7 @@
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 //TODO: add lung damage = less oxygen gains
-	var/breathModifier = (5-(5*(damage/maxHealth)/2)) //range 2.5 - 5
+	var/breathModifier = clamp(-H.getOxyLoss(), -(5-(5*(damage/maxHealth)/2)), 0) //range 2.5 - 5
 	if((H.status_flags & GODMODE))
 		return
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
@@ -212,8 +212,8 @@
 				H.throw_alert(alert_category, alert_type)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-breathModifier)
+			if((H.health >= H.crit_threshold) && breathModifier)
+				H.adjustOxyLoss(breathModifier)
 			if(alert_category)
 				H.clear_alert(alert_category)
 	var/list/danger_reagents = GLOB.gas_data.breath_reagents_dangerous
