@@ -50,7 +50,7 @@
 	build_path = /obj/item/flamethrower/full
 	category = list("hacked", "Security")
 
-/datum/design/rcd
+/datum/design/rcd_autolathe
 	name = "Rapid Construction Device (RCD)"
 	id = "rcd"
 	build_type = AUTOLATHE | NO_PUBLIC_LATHE
@@ -58,7 +58,7 @@
 	build_path = /obj/item/construction/rcd
 	category = list("hacked", "Construction")
 
-/datum/design/rpd
+/datum/design/rpd_autolathe
 	name = "Rapid Pipe Dispenser (RPD)"
 	id = "rpd"
 	build_type = AUTOLATHE | NO_PUBLIC_LATHE
