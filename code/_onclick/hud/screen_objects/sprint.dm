@@ -5,7 +5,7 @@
 	name = "toggle sprint"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
 	icon_state = "act_sprint"
-	layer = ABOVE_HUD_LAYER - 0.1
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/mutable_appearance/flashy
 
 /atom/movable/screen/sprintbutton/Click()
@@ -44,6 +44,7 @@
 	name = "sprint buffer"
 	icon = 'icons/effects/progessbar.dmi'
 	icon_state = "prog_bar_100"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/sprint_buffer/Click()
 	if(isliving(usr))

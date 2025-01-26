@@ -94,11 +94,12 @@
 #define ui_palette_scroll_offset(north_offset) ("WEST+1:8,NORTH-[6+north_offset]:28")
 
 //Middle right (status indicators)
-#define ui_healthdoll "EAST-1:28,CENTER-2:13"
-#define ui_health "EAST-1:28,CENTER-1:15"
-#define ui_internal "EAST-1:28,CENTER+1:19"//CIT CHANGE - moves internal icon up a little bit to accommodate for the stamina meter
-#define ui_mood "EAST-1:28,CENTER-3:10"
-// #define ui_spacesuit "EAST-1:28,CENTER-4:10"
+#define ui_healthdoll "EAST-1:28,CENTER-2:17"
+#define ui_health "EAST-1:28,CENTER-1:19"
+#define ui_internal "EAST-1:28,CENTER+1:21" // RIP, although nobody will remember this, unsmart coders have used this for other stuff. DO NOT REMOVE UNLESS RENAMING OR REPLACING.
+#define ui_mood "EAST-1:28,CENTER:21"
+#define ui_stamina "EAST-1:28,CENTER-3:14"
+// #define ui_spacesuit "EAST-1:28,CENTER-4:14"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"
@@ -208,7 +209,6 @@
 #define ui_ghost_spawners "SOUTH: 6, CENTER+1:24" // LEGACY. SAME LOC AS PAI
 
 //UI position overrides for 1:1 screen layout. (default is 7:5)
-#define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
 #define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
 #define ui_clickdelay "CENTER,SOUTH+1:-31"
 #define ui_resistdelay "EAST-3:24,SOUTH+1:4"
@@ -231,6 +231,8 @@
 #define SCRN_OBJ_IN_LIST "list"
 /// In the collapseable palette
 #define SCRN_OBJ_IN_PALETTE "palette"
+///Inserted first in the list
+#define SCRN_OBJ_INSERT_FIRST "first"
 
 /// The filter name for the hover outline
 #define HOVER_OUTLINE_FILTER "hover_outline"

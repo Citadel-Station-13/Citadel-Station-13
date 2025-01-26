@@ -5,6 +5,7 @@
 	icon_state = "light1"
 	base_icon_state = "light"
 	desc = "Make dark."
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/area/area = null
 	var/otherarea = null
 

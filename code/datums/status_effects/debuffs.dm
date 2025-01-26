@@ -971,6 +971,7 @@
 	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()

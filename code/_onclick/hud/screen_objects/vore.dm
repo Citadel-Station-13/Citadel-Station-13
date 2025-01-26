@@ -2,6 +2,7 @@
 	name = "toggle vore mode"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
 	icon_state = "nom_off"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/voretoggle/Click()
 	if(usr != hud.mymob)

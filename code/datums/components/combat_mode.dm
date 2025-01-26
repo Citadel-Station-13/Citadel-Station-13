@@ -182,6 +182,7 @@
 	name = "toggle combat mode"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
 	icon_state = "combat_off"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/mutable_appearance/flashy
 	var/combat_on = FALSE ///Wheter combat mode is enabled or not, so we don't have to store a reference.
 

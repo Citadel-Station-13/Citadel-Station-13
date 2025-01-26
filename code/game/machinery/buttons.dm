@@ -14,6 +14,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	if(istext(id) && mapload && id[1] == "!")
