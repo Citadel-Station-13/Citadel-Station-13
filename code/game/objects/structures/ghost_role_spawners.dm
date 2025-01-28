@@ -878,7 +878,6 @@
 
 /datum/outfit/ghostcafe/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	H.internal = H.get_item_for_held_index(1)
-	H.update_internals_hud_icon(1)
 
 /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 	name = "ghost cafe costuming kit"

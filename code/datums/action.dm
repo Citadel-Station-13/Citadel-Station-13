@@ -39,6 +39,7 @@
 	var/icon_icon = 'icons/mob/actions.dmi'
 	/// This is the icon state for the icon that appears on the button
 	var/button_icon_state = "default"
+	var/button_overlay_state
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -176,6 +177,11 @@
 				button.icon_state = background_icon_state
 
 		ApplyIcon(button, force)
+
+	if(button_overlay_state)
+		button.cut_overlay(button.button_overlay)
+		button.button_overlay = mutable_appearance(icon = 'icons/mob/actions.dmi', icon_state = button_overlay_state)
+		button.add_overlay(button.button_overlay)
 
 	if(!IsAvailable(TRUE))
 		button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
@@ -362,6 +368,8 @@
 
 /datum/action/item_action/set_internals
 	name = "Set Internals"
+	default_button_position = SCRN_OBJ_INSERT_FIRST
+	button_overlay_state = "ab_goldborder"
 
 /datum/action/item_action/set_internals/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
 	if(!..()) // no button available
