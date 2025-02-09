@@ -298,10 +298,10 @@
 /datum/component/mood/proc/modify_hud(datum/source)
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
-	screen_obj = new
+	screen_obj = new(null, hud)
 	hud.infodisplay += screen_obj
 	RegisterSignal(hud, COMSIG_PARENT_QDELETING, PROC_REF(unmodify_hud))
-	RegisterSignal(screen_obj, COMSIG_CLICK, PROC_REF(hud_click))
+	RegisterSignal(screen_obj, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(hud_click))
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
 	if(!screen_obj || !parent)

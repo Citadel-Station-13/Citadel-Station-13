@@ -154,12 +154,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/list/atom/movable/lift_load //things to move
 	var/datum/lift_master/lift_master_datum    //control from
 
-/obj/structure/industrial_lift/New()
-	GLOB.lifts.Add(src)
-	..()
-
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
+	GLOB.lifts.Add(src)
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, PROC_REF(AddItemOnLift))
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, PROC_REF(AddItemOnLift))//For atoms created on platform
 	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, PROC_REF(RemoveItemFromLift))

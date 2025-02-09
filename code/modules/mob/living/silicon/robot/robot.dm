@@ -24,9 +24,9 @@
 	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 
-	inv1 = new /atom/movable/screen/robot/module1()
-	inv2 = new /atom/movable/screen/robot/module2()
-	inv3 = new /atom/movable/screen/robot/module3()
+	inv1 = new /atom/movable/screen/robot/module1(null, src)
+	inv2 = new /atom/movable/screen/robot/module2(null, src)
+	inv3 = new /atom/movable/screen/robot/module3(null, src)
 
 	ident = rand(1, 999)
 

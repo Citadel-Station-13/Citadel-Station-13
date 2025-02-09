@@ -67,6 +67,7 @@
 // #include "holidays.dm"
 // #include "hydroponics_harvest.dm"
 // #include "keybinding_init.dm"
+// #include "language_transfer.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"

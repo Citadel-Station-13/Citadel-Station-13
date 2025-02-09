@@ -32,7 +32,7 @@
 	new_spawn.undershirt = "Nude" //changing underwear/shirt/socks doesn't seem to function correctly right now because of some bug elsewhere?
 	new_spawn.socks = "Nude"
 	new_spawn.update_body(TRUE)
-	new_spawn.language_holder.selected_language = /datum/language/sylvan
+	new_spawn.set_active_language(/datum/language/sylvan)
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 

@@ -4,11 +4,11 @@
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user)
 	var/datum/hud/H = user.hud_used
-	var/atom/movable/screen/craft/C = new()
+	var/atom/movable/screen/craft/C = new(null, H)
 	C.icon = H.ui_style
 	H.static_inventory += C
 	user.client.screen += C
-	RegisterSignal(C, COMSIG_CLICK, PROC_REF(component_ui_interact))
+	RegisterSignal(C, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
 
 /datum/component/personal_crafting
 	var/busy

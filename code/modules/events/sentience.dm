@@ -55,7 +55,7 @@
 
 		SG.transfer_ckey(SA, FALSE)
 
-		SA.grant_all_languages(TRUE, FALSE, FALSE)
+		SA.grant_all_languages(UNDERSTOOD_LANGUAGE, grant_omnitongue = FALSE, source = LANGUAGE_ATOM)
 
 		SA.sentience_act()
 

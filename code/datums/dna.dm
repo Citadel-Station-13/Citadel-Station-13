@@ -409,9 +409,7 @@
 			if(H.additional_language && H.additional_language != "None")
 				var/language_entry = GLOB.roundstart_languages[H.additional_language]
 				if(language_entry)
-					grant_language(language_entry, TRUE, TRUE)
-
-		update_atom_languages()
+					grant_language(language_entry)
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()

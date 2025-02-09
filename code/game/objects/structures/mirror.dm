@@ -118,23 +118,23 @@
 	var/list/races_blacklist = list("skeleton", "agent", "military_synth", "memezombies", "clockwork golem servant", "android", "synth", "mush", "zombie", "memezombie")
 	var/list/choosable_races = list()
 
-/obj/structure/mirror/magic/New()
+/obj/structure/mirror/magic/Initialize(mapload)
+	. = ..()
 	if(!choosable_races.len)
 		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!(S.id in races_blacklist))
 				choosable_races += S.id
-	..()
 
-/obj/structure/mirror/magic/lesser/New()
+/obj/structure/mirror/magic/lesser/Initialize(mapload)
 	choosable_races = GLOB.roundstart_races.Copy()
-	..()
+	return ..()
 
-/obj/structure/mirror/magic/badmin/New()
+/obj/structure/mirror/magic/badmin/Initialize(mapload)
 	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = new speciestype()
 		choosable_races += S.id
-	..()
+	return ..()
 
 /obj/structure/mirror/magic/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!ishuman(user))

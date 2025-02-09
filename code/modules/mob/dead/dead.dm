@@ -89,20 +89,20 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(alert(src, "Jump to server [pick] ([addr])?", "Server Hop", "Yes", "No") != "Yes")
 		return
 
-	var/client/C = client
-	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
-	new /atom/movable/screen/splash(C)
+	var/client/hopper = client
+	to_chat(hopper, "<span class='notice'>Sending you to [pick].</span>")
+	new /atom/movable/screen/splash(null, src, hopper, FALSE)
 
 	mob_transforming = TRUE
-	sleep(29)	//let the animation play
+	sleep(2.9 SECONDS)	//let the animation play
 	mob_transforming = FALSE
 
-	if(!C)
+	if(!hopper)
 		return
 
 	winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 
-	C << link("[addr]")
+	hopper << link("[addr]")
 
 /mob/dead/proc/update_z(new_z) // 1+ to register, null to unregister
 	if (registered_z != new_z)

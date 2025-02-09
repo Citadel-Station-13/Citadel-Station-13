@@ -522,7 +522,6 @@
 		S.ckey = C.ckey
 		S.status_flags |= GODMODE
 		S.copy_languages(user, LANGUAGE_MASTER)	//Make sure the sword can understand and communicate with the user.
-		S.update_atom_languages()
 		grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
 		S.AddElement(/datum/element/ghost_role_eligibility,penalize_on_ghost = TRUE)
 		START_PROCESSING(SSprocessing,src)

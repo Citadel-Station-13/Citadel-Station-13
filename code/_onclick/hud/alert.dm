@@ -259,10 +259,10 @@ or something covering your eyes."
 	var/command
 
 /atom/movable/screen/alert/mind_control/Click()
-	var/mob/living/L = usr
-	if(L != owner)
+	. = ..()
+	if(!.)
 		return
-	to_chat(L, "<span class='mind_control'>[command]</span>")
+	to_chat(usr, "<span class='mind_control'>[command]</span>")
 
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
@@ -283,9 +283,13 @@ If you're feeling frisky, examine yourself and click the underlined item to pull
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/embeddedobject/Click()
-	if(isliving(usr) && usr == owner)
-		var/mob/living/carbon/M = usr
-		return M.help_shake_act(M)
+	. = ..()
+	if(!.)
+		return
+	if(!isliving(usr))
+		return
+	var/mob/living/carbon/M = usr
+	return M.help_shake_act(M)
 
 /atom/movable/screen/alert/weightless
 	name = "Weightless"
@@ -312,8 +316,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/fire/Click()
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist() || L != owner)
+	if(!istype(L) || !L.can_resist())
 		return
 	L.MarkResistTime()
 	if(CHECK_MOBILITY(L, MOBILITY_MOVE))
@@ -721,14 +728,16 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /atom/movable/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client || usr != owner)
+	. = ..()
+	if(!.)
 		return
 	if(!target)
 		return
 	var/mob/living/silicon/ai/AI = usr
 	var/turf/T = get_turf(target)
-	if(T)
-		AI.eyeobj.setLoc(T)
+	if(!T)
+		return
+	AI.eyeobj.setLoc(T)
 
 //MECHS
 
@@ -748,10 +757,11 @@ so as to remain in compliance with the most up-to-date laws."
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client || usr != owner)
+	. = ..()
+	if(!.)
 		return
-	var/mob/dead/observer/G = usr
-	G.reenter_corpse()
+	var/mob/dead/observer/dead_owner = usr
+	dead_owner.reenter_corpse()
 
 /atom/movable/screen/alert/notify_action
 	name = "Body created"
@@ -763,8 +773,10 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /atom/movable/screen/alert/notify_action/Click()
-	if(!usr || !usr.client || usr != owner)
+	. = ..()
+	if(!.)
 		return
+
 	if(!target)
 		return
 	var/mob/dead/observer/G = usr
@@ -782,32 +794,43 @@ so as to remain in compliance with the most up-to-date laws."
 
 //OBJECT-BASED
 
-/atom/movable/screen/alert/restrained
-	clickable_glow = TRUE
-
-/atom/movable/screen/alert/restrained/buckled
+/atom/movable/screen/alert/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
 	icon_state = "buckled"
+	clickable_glow = TRUE
+
+/atom/movable/screen/alert/restrained
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
+	click_master = FALSE
 
 /atom/movable/screen/alert/restrained/legcuffed
 	name = "Legcuffed"
 	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
+	click_master = FALSE
 
 /atom/movable/screen/alert/restrained/Click()
+	. = ..()
+	if(!.)
+		return
+
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist() || L != owner)
+	if(!istype(L) || !L.can_resist())
 		return
 	L.MarkResistTime()
 	return L.resist_restraints()
 
-/atom/movable/screen/alert/restrained/buckled/Click()
+/atom/movable/screen/alert/buckled/Click()
+	. = ..()
+	if(!.)
+		return
+
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist() || L != owner)
+	if(!istype(L) || !L.can_resist())
 		return
 	L.MarkResistTime()
 	return L.resist_buckle()
@@ -824,8 +847,11 @@ so as to remain in compliance with the most up-to-date laws."
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/shoes/Click()
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/carbon/C = usr
-	if(!istype(C) || !C.can_resist() || C != owner || !C.shoes)
+	if(!istype(C) || !C.can_resist() || !C.shoes)
 		return
 	C.MarkResistTime()
 	C.shoes.handle_tying(C)

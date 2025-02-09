@@ -4,13 +4,11 @@
 /datum/hud/lavaland_elite/New(mob/living/simple_animal/hostile/asteroid/elite)
 	..()
 
-	pull_icon = new /atom/movable/screen/pull()
+	pull_icon = new /atom/movable/screen/pull(null, src)
 	pull_icon.icon = ui_style
-	pull_icon.hud = src
 	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_living_pull
 	static_inventory += pull_icon
 
-	healths = new /atom/movable/screen/healths/lavaland_elite()
-	healths.hud = src
+	healths = new /atom/movable/screen/healths/lavaland_elite(null, src)
 	infodisplay += healths
