@@ -82,6 +82,7 @@
 
 /// Returns the mob this is being displayed to, if any
 /atom/movable/screen/proc/get_mob()
+	RETURN_TYPE(/mob)
 	return hud?.mymob
 
 /atom/movable/screen/proc/on_hud_delete(datum/source)

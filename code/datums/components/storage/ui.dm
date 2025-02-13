@@ -33,11 +33,11 @@
 	var/rows = clamp(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
 
 	// First, boxes.
-	ui_boxes = get_ui_boxes()
+	ui_boxes = get_ui_boxes(user.hud_used)
 	ui_boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+columns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_boxes
 	// Then, closer.
-	ui_close = get_ui_close()
+	ui_close = get_ui_close(user.hud_used)
 	ui_close.screen_loc = "[screen_start_x + columns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 	. += ui_close
 	// Then orient the actual items.
@@ -62,7 +62,7 @@
 		for(var/obj/O in accessible_items())
 			if(QDELETED(O))
 				continue
-			var/atom/movable/screen/storage/item_holder/D = new(null, src, O)
+			var/atom/movable/screen/storage/item_holder/D = new(null, user.hud_used, src, O)
 			// SNOWFLAKE: make O opaque too, pending storage rewrite
 			O.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			D.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
@@ -139,7 +139,7 @@
 	for(var/i in percentage_by_item)
 		I = i
 		var/percent = percentage_by_item[I]
-		var/atom/movable/screen/storage/volumetric_box/center/B = new /atom/movable/screen/storage/volumetric_box/center(null, src, I)
+		var/atom/movable/screen/storage/volumetric_box/center/B = new /atom/movable/screen/storage/volumetric_box/center(null, user.hud_used, src, I)
 		// SNOWFLAKE: force it to icon until we unfuck storage/click passing
 		I.mouse_opacity = MOUSE_OPACITY_ICON
 		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(using_horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM)
@@ -168,15 +168,15 @@
 			current_pixel = VOLUMETRIC_STORAGE_EDGE_PADDING
 
 	// Then, continuous section.
-	ui_continuous = get_ui_continuous()
+	ui_continuous = get_ui_continuous(user.hud_used)
 	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_continuous
 	// Then, left.
-	ui_left = get_ui_left()
+	ui_left = get_ui_left(user.hud_used)
 	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x]:[screen_pixel_x - 2],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_left
 	// Then, closer, which is also our right element.
-	ui_close = get_ui_close()
+	ui_close = get_ui_close(user.hud_used)
 	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_close
 
@@ -258,23 +258,23 @@
 /**
   * Gets our ui_boxes, making it if it doesn't exist.
   */
-/datum/component/storage/proc/get_ui_boxes()
-	return new /atom/movable/screen/storage/boxes(null, src)
+/datum/component/storage/proc/get_ui_boxes(datum/hud/hud)
+	return new /atom/movable/screen/storage/boxes(null, hud, src)
 
 /**
   * Gets our ui_left, making it if it doesn't exist.
   */
-/datum/component/storage/proc/get_ui_left()
-	return new /atom/movable/screen/storage/left(null, src)
+/datum/component/storage/proc/get_ui_left(datum/hud/hud)
+	return new /atom/movable/screen/storage/left(null, hud, src)
 
 /**
   * Gets our ui_close, making it if it doesn't exist.
   */
-/datum/component/storage/proc/get_ui_close()
-	return new /atom/movable/screen/storage/close(null, src)
+/datum/component/storage/proc/get_ui_close(datum/hud/hud)
+	return new /atom/movable/screen/storage/close(null, hud, src)
 
 /**
   * Gets our ui_continuous, making it if it doesn't exist.
   */
-/datum/component/storage/proc/get_ui_continuous()
-	return new /atom/movable/screen/storage/continuous(null, src)
+/datum/component/storage/proc/get_ui_continuous(datum/hud/hud)
+	return new /atom/movable/screen/storage/continuous(null, hud, src)
