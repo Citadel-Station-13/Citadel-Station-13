@@ -7,14 +7,14 @@
 	..()
 	var/atom/movable/screen/using
 
-	healths = new /atom/movable/screen/healths/clock()
+	healths = new /atom/movable/screen/healths/clock(null, src)
 	infodisplay += healths
 
-	hosthealth = new /atom/movable/screen/healths/clock()
+	hosthealth = new /atom/movable/screen/healths/clock(null, src)
 	hosthealth.screen_loc = ui_internal
 	infodisplay += hosthealth
 
-	using = new /atom/movable/screen/marauder/emerge()
+	using = new /atom/movable/screen/marauder/emerge(null, src)
 	using.screen_loc = ui_zonesel
 	static_inventory += using
 

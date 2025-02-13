@@ -743,6 +743,13 @@
 		else
 			L1[key] = other_value
 
+/// Turns an associative list into a flat list of keys
+/proc/assoc_to_keys(list/input)
+	var/list/keys = list()
+	for(var/key in input)
+		UNTYPED_LIST_ADD(keys, key)
+	return keys
+
 /proc/assoc_list_strip_value(list/input)
 	var/list/ret = list()
 	for(var/key in input)

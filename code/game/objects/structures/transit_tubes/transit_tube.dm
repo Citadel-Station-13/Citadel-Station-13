@@ -15,8 +15,8 @@
 	var/enter_delay = 0
 	var/const/time_to_unwrench = 2 SECONDS
 
-/obj/structure/transit_tube/New(loc, newdirection)
-	..(loc)
+/obj/structure/transit_tube/Initialize(mapload, newdirection)
+	. = ..()
 	if(newdirection)
 		setDir(newdirection)
 	init_tube_dirs()

@@ -399,8 +399,8 @@
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
 
-/obj/item/flashlight/emp/New()
-	..()
+/obj/item/flashlight/emp/Initialize(mapload)
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/emp/Destroy()

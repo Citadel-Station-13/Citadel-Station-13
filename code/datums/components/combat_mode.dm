@@ -40,8 +40,7 @@
 
 /// Creates the hud screen object.
 /datum/component/combat_mode/proc/on_mob_hud_created(mob/source)
-	hud_icon = new
-	hud_icon.hud = source.hud_used
+	hud_icon = new(null, source.hud_used)
 	hud_icon.icon = tg_ui_icon_to_cit_ui(source.hud_used.ui_style)
 	hud_icon.screen_loc = hud_loc
 	source.hud_used.static_inventory += hud_icon

@@ -220,8 +220,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "department_sec"
 	icon_state = "Security Officer"
 
-/obj/effect/landmark/start/depsec/New()
-	..()
+/obj/effect/landmark/start/depsec/Initialize(mapload)
+	. = ..()
 	GLOB.department_security_spawns += src
 
 /obj/effect/landmark/start/depsec/Destroy()
@@ -246,7 +246,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "wiznerd_spawn"
 
 /obj/effect/landmark/start/wizard/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.wizardstart += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -256,7 +256,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "snukeop_spawn"
 
 /obj/effect/landmark/start/nukeop/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.nukeop_start += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -266,7 +266,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "snukeop_leader_spawn"
 
 /obj/effect/landmark/start/nukeop_leader/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -278,7 +278,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "New Player"
 
 /obj/effect/landmark/start/new_player/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.newplayer_start += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -308,7 +308,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "JoinLate"
 
 /obj/effect/landmark/latejoin/Initialize(mapload)
-	..()
+	. = ..()
 	SSjob.latejoin_trackers += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -333,7 +333,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "xeno_spawn"
 
 /obj/effect/landmark/xeno_spawn/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.xeno_spawn += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -343,7 +343,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "blob_start"
 
 /obj/effect/landmark/blobstart/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.blobstart += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -352,7 +352,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "secequipment"
 
 /obj/effect/landmark/secequipment/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.secequipment += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -361,7 +361,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "prisonwarp"
 
 /obj/effect/landmark/prisonwarp/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.prisonwarp += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -370,7 +370,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "ert_spawn"
 
 /obj/effect/landmark/ert_spawn/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.emergencyresponseteamspawn += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -379,7 +379,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "holding_facility"
 
 /obj/effect/landmark/holding_facility/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.holdingfacility += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -388,7 +388,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "tdome_observer"
 
 /obj/effect/landmark/thunderdome/observe/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.tdomeobserve += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -397,7 +397,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "tdome_t1"
 
 /obj/effect/landmark/thunderdome/one/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.tdome1	+= loc
 	return INITIALIZE_HINT_QDEL
 
@@ -406,7 +406,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "tdome_t2"
 
 /obj/effect/landmark/thunderdome/two/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.tdome2 += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -415,7 +415,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "tdome_admin"
 
 /obj/effect/landmark/thunderdome/admin/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.tdomeadmin += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -426,7 +426,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	layer = MOB_LAYER
 
 /obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.servant_spawns += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -436,7 +436,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "city_of_cogs"
 
 /obj/effect/landmark/city_of_cogs/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.city_of_cogs_spawns += loc
 	return INITIALIZE_HINT_QDEL
 
@@ -448,7 +448,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 
 /obj/effect/landmark/event_spawn/New()
-	..()
+	. = ..()
 	GLOB.generic_event_spawns += src
 
 /obj/effect/landmark/event_spawn/Destroy()
@@ -458,9 +458,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/ruin
 	var/datum/map_template/ruin/ruin_template
 
-/obj/effect/landmark/ruin/New(loc, my_ruin_template)
+/obj/effect/landmark/ruin/Initialize(mapload, my_ruin_template)
+	. = ..()
 	name = "ruin_[GLOB.ruin_landmarks.len + 1]"
-	..(loc)
 	ruin_template = my_ruin_template
 	GLOB.ruin_landmarks |= src
 
@@ -475,8 +475,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	layer = BULLET_HOLE_LAYER
 	plane = ABOVE_WALL_PLANE
 
-/obj/effect/landmark/stationroom/New()
-	..()
+/obj/effect/landmark/stationroom/Initialize(mapload)
+	. = ..()
 	GLOB.stationroom_landmarks += src
 
 /obj/effect/landmark/stationroom/Destroy()
@@ -514,7 +514,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	templates = list("Engine SM" = 3, "Engine Singulo" = 3, "Engine Tesla" = 3)
 	icon = 'icons/rooms/box/engine.dmi'
 
-/obj/effect/landmark/stationroom/box/engine/New()
+/obj/effect/landmark/stationroom/box/engine/Initialize(mapload)
 	. = ..()
 	templates = CONFIG_GET(keyed_list/box_random_engine)
 

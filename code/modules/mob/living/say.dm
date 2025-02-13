@@ -486,8 +486,3 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced)
-
-/mob/living/get_language_holder(get_minds = TRUE)
-	if(get_minds && mind)
-		return mind.get_language_holder()
-	. = ..()

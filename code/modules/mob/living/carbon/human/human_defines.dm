@@ -6,6 +6,7 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	initial_language_holder = /datum/language_holder/empty // We get stuff from our species
 	/// Enable stamina combat
 	combat_flags = COMBAT_FLAGS_STAMINA_COMBAT | COMBAT_FLAG_UNARMED_PARRY
 	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER

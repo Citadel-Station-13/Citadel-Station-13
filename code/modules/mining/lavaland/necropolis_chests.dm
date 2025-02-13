@@ -666,6 +666,7 @@
 /obj/item/book_of_babel/attack_self(mob/user)
 	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
 	user.grant_all_languages()
+	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 

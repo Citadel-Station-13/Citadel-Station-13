@@ -3,33 +3,27 @@
 	..()
 	var/atom/movable/screen/using
 
-	healths = new /atom/movable/screen/healths/guardian()
-	healths.hud = src
+	healths = new /atom/movable/screen/healths/guardian(null, src)
 	infodisplay += healths
 
-	using = new /atom/movable/screen/guardian/Manifest()
+	using = new /atom/movable/screen/guardian/Manifest(null, src)
 	using.screen_loc = ui_hand_position(2)
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/guardian/Recall()
+	using = new /atom/movable/screen/guardian/Recall(null, src)
 	using.screen_loc = ui_hand_position(1)
-	using.hud = src
 	static_inventory += using
 
-	using = new owner.toggle_button_type()
+	using = new owner.toggle_button_type(null, src)
 	using.screen_loc = ui_storage1
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/guardian/ToggleLight()
+	using = new /atom/movable/screen/guardian/ToggleLight(null, src)
 	using.screen_loc = ui_inventory
-	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/guardian/Communicate()
+	using = new /atom/movable/screen/guardian/Communicate(null, src)
 	using.screen_loc = ui_back
-	using.hud = src
 	static_inventory += using
 
 /datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner) //for a dextrous guardian
@@ -38,7 +32,7 @@
 	if(istype(owner, /mob/living/simple_animal/hostile/guardian/dextrous))
 		var/atom/movable/screen/inventory/inv_box
 
-		inv_box = new /atom/movable/screen/inventory()
+		inv_box = new /atom/movable/screen/inventory(null, src)
 		inv_box.name = "internal storage"
 		inv_box.icon = ui_style
 		inv_box.icon_state = "suit_storage"
@@ -46,32 +40,32 @@
 		inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
 		static_inventory += inv_box
 
-		using = new /atom/movable/screen/guardian/Communicate()
+		using = new /atom/movable/screen/guardian/Communicate(null, src)
 		using.screen_loc = ui_sstore1
 		static_inventory += using
 
 	else
 
-		using = new /atom/movable/screen/guardian/Communicate()
+		using = new /atom/movable/screen/guardian/Communicate(null, src)
 		using.screen_loc = ui_id
 		static_inventory += using
 
-	healths = new /atom/movable/screen/healths/guardian()
+	healths = new /atom/movable/screen/healths/guardian(null, src)
 	infodisplay += healths
 
-	using = new /atom/movable/screen/guardian/Manifest()
+	using = new /atom/movable/screen/guardian/Manifest(null, src)
 	using.screen_loc = ui_belt
 	static_inventory += using
 
-	using = new /atom/movable/screen/guardian/Recall()
+	using = new /atom/movable/screen/guardian/Recall(null, src)
 	using.screen_loc = ui_back
 	static_inventory += using
 
-	using = new owner.toggle_button_type()
+	using = new owner.toggle_button_type(null, src)
 	using.screen_loc = ui_storage2
 	static_inventory += using
 
-	using = new /atom/movable/screen/guardian/ToggleLight()
+	using = new /atom/movable/screen/guardian/ToggleLight(null, src)
 	using.screen_loc = ui_inventory
 	static_inventory += using
 

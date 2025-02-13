@@ -161,7 +161,7 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+			to_chat(world, span_boldnotice("Welcome to [station_name()]!"))
 			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
@@ -424,7 +424,7 @@ SUBSYSTEM_DEF(ticker)
 				if (living.client.prefs && living.client.prefs.auto_ooc)
 					if (living.client.prefs.chat_toggles & CHAT_OOC)
 						living.client.prefs.chat_toggles ^= CHAT_OOC
-				var/atom/movable/screen/splash/S = new(living.client, TRUE)
+				var/atom/movable/screen/splash/S = new(null, living.client, TRUE)
 				S.Fade(TRUE)
 				living.client.init_verbs()
 			livings += living

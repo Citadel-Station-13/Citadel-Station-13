@@ -186,6 +186,6 @@ GLOBAL_DATUM_INIT(gas_data, /datum/auxgm, new)
 	appearance_flags = TILE_BOUND
 	vis_flags = NONE
 
-/obj/effect/overlay/gas/New(state)
+/obj/effect/overlay/gas/Initialize(mapload, state)
 	. = ..()
 	icon_state = state
