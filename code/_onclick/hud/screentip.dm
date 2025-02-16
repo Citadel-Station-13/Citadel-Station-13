@@ -8,9 +8,8 @@
 	maptext = ""
 	layer = SCREENTIP_LAYER
 
-/atom/movable/screen/screentip/Initialize(mapload, _hud)
+/atom/movable/screen/screentip/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	hud = _hud
 	update_view()
 
 /atom/movable/screen/screentip/proc/update_view(datum/source)

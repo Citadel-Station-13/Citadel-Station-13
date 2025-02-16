@@ -2,7 +2,7 @@
 	name = "storage"
 	var/insertion_click = FALSE
 
-/atom/movable/screen/storage/Initialize(mapload, datum/hud/hud, new_master)
+/atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
 	master = new_master
 
@@ -55,7 +55,7 @@
 	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 	var/obj/item/our_item
 
-/atom/movable/screen/storage/volumetric_box/Initialize(mapload, datum/hud/hud, new_master, obj/item/our_item)
+/atom/movable/screen/storage/volumetric_box/Initialize(mapload, datum/hud/hud_owner, new_master, obj/item/our_item)
 	src.our_item = our_item
 	RegisterSignal(our_item, COMSIG_ITEM_MOUSE_ENTER, PROC_REF(on_item_mouse_enter))
 	RegisterSignal(our_item, COMSIG_ITEM_MOUSE_EXIT, PROC_REF(on_item_mouse_exit))
@@ -97,9 +97,9 @@
 	var/atom/movable/screen/storage/item_holder/holder
 	var/pixel_size
 
-/atom/movable/screen/storage/volumetric_box/center/Initialize(mapload, datum/hud/hud, new_master, our_item)
-	left = new(null, hud, src, our_item)
-	right = new(null, hud, src, our_item)
+/atom/movable/screen/storage/volumetric_box/center/Initialize(mapload, datum/hud/hud_owner, new_master, our_item)
+	left = new(null, hud_owner, src, our_item)
+	right = new(null, hud_owner, src, our_item)
 	return ..()
 
 /atom/movable/screen/storage/volumetric_box/center/Destroy()
@@ -155,7 +155,7 @@
 	layer = VOLUMETRIC_STORAGE_BOX_LAYER
 	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 
-/atom/movable/screen/storage/volumetric_edge/Initialize(mapload, datum/hud/hud, master, our_item)
+/atom/movable/screen/storage/volumetric_edge/Initialize(mapload, datum/hud/hud_owner, master, our_item)
 	src.master = master
 	return ..()
 
@@ -183,7 +183,7 @@
 	var/obj/item/our_item
 	vis_flags = NONE
 
-/atom/movable/screen/storage/item_holder/Initialize(mapload, datum/hud/hud, new_master, obj/item/I)
+/atom/movable/screen/storage/item_holder/Initialize(mapload, datum/hud/hud_owner, new_master, obj/item/I)
 	. = ..()
 	our_item = I
 	vis_contents += I

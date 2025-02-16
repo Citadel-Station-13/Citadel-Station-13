@@ -25,7 +25,7 @@
 	icon_state = "prog_bar_100"
 	layer = 20		// under hand buttons
 
-/atom/movable/screen/action_bar/clickdelay/Initialize(mapload)
+/atom/movable/screen/action_bar/clickdelay/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	var/matrix/M = new
 	M.Scale(2, 1)

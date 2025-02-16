@@ -221,7 +221,7 @@
 	///Whether we are readied up for the round or not
 	var/ready = FALSE
 
-/atom/movable/screen/lobby/button/ready/Initialize(mapload)
+/atom/movable/screen/lobby/button/ready/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
@@ -268,7 +268,7 @@
 	base_icon_state = "join_game"
 	enabled = null // set in init
 
-/atom/movable/screen/lobby/button/join/Initialize(mapload)
+/atom/movable/screen/lobby/button/join/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
@@ -333,7 +333,7 @@
 	base_icon_state = "observe"
 	enabled = null // set in init
 
-/atom/movable/screen/lobby/button/observe/Initialize(mapload)
+/atom/movable/screen/lobby/button/observe/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(SSticker.current_state > GAME_STATE_STARTUP)
 		set_button_status(TRUE)

@@ -39,7 +39,7 @@
 	var/client/parent
 	var/matrix/target
 
-/atom/movable/screen/credit/Initialize(mapload, credited, client/P, icon/I)
+/atom/movable/screen/credit/Initialize(mapload, datum/hud/hud_owner, credited, client/P, icon/I)
 	. = ..()
 	icon = I
 	parent = P
@@ -55,14 +55,15 @@
 	animate(src, alpha = 255, time = CREDIT_EASE_DURATION, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, PROC_REF(FadeOut)), CREDIT_ROLL_SPEED - CREDIT_EASE_DURATION)
 	QDEL_IN(src, CREDIT_ROLL_SPEED)
-	P.screen += src
+	if(parent)
+		parent.screen += src
 
 /atom/movable/screen/credit/Destroy()
-	var/client/P = parent
-	P.screen -= src
 	icon = null
-	LAZYREMOVE(P.credits, src)
-	parent = null
+	if(parent)
+		parent.screen -= src
+		LAZYREMOVE(parent.credits, src)
+		parent = null
 	return ..()
 
 /atom/movable/screen/credit/proc/FadeOut()
