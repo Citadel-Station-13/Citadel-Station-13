@@ -11,7 +11,7 @@
 /obj/item/clothing/head/helmet/space/chronos/dropped(mob/user)
 	if(suit)
 		suit.deactivate(1, 1)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/space/chronos
 	name = "Chronosuit"
@@ -23,23 +23,22 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mutantrace_variation = STYLE_DIGITIGRADE
 	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
-	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
-	var/obj/effect/chronos_cam/camera = null
-	var/datum/action/innate/chrono_teleport/teleport_now = new
+	var/obj/item/clothing/head/helmet/space/chronos/helmet
+	var/obj/effect/chronos_cam/camera
+	var/datum/action/innate/chrono_teleport/teleport_now
 	var/activating = 0
 	var/activated = 0
-	var/cooldowntime = 50 //deciseconds
+	var/cooldowntime = 5 SECONDS
 	var/teleporting = 0
 	var/phase_timer_id
 
-/obj/item/clothing/suit/space/chronos/New()
-	..()
+/obj/item/clothing/suit/space/chronos/Initialize(mapload)
+	. = ..()
+	teleport_now = new(src)
 	teleport_now.chronosuit = src
-	teleport_now.target = src
 
 /obj/item/clothing/suit/space/chronos/proc/new_camera(mob/user)
-	if(camera)
-		qdel(camera)
+	QDEL_NULL(camera)
 	camera = new /obj/effect/chronos_cam(user)
 	camera.holder = user
 	camera.chronosuit = src
@@ -55,7 +54,7 @@
 /obj/item/clothing/suit/space/chronos/dropped(mob/user)
 	if(activated)
 		deactivate()
-	..()
+	return ..()
 
 /obj/item/clothing/suit/space/chronos/emp_act(severity)
 	. = ..()
@@ -64,8 +63,8 @@
 	var/mob/living/carbon/human/user = src.loc
 	if(severity >= 70)
 		if(activated && user && ishuman(user) && (user.wear_suit == src))
-			to_chat(user, "<span class='danger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>")
-			to_chat(user, "<span class='userdanger'>An electromagnetic pulse disrupts your [name] and violently tears you out of time-bluespace!</span>")
+			to_chat(user, span_danger("E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD"))
+			to_chat(user, span_userdanger("An electromagnetic pulse disrupts your [name] and violently tears you out of time-bluespace!"))
 			user.emote("scream")
 		deactivate(1, 1)
 
@@ -75,23 +74,24 @@
 	if(phase_timer_id)
 		deltimer(phase_timer_id)
 		phase_timer_id = 0
-	if(istype(user))
-		if(to_turf)
-			user.forceMove(to_turf)
-		user.SetStun(0)
-		user.SetNextAction(0, considered_action = FALSE, immediate = FALSE)
-		user.alpha = 255
-		user.update_atom_colour()
-		user.animate_movement = FORWARD_STEPS
-		user.mob_transforming = 0
-		user.anchored = FALSE
-		teleporting = 0
-		for(var/obj/item/I in user.held_items)
-			REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
-		if(camera)
-			camera.remove_target_ui()
-			camera.forceMove(user)
-		teleport_now.UpdateButtons()
+	if(!istype(user))
+		return
+	if(to_turf)
+		user.forceMove(to_turf)
+	user.SetStun(0)
+	user.SetNextAction(0, considered_action = FALSE, immediate = FALSE)
+	user.alpha = 255
+	user.update_atom_colour()
+	user.animate_movement = FORWARD_STEPS
+	user.mob_transforming = 0
+	user.anchored = FALSE
+	teleporting = 0
+	for(var/obj/item/I in user.held_items)
+		REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
+	if(camera)
+		camera.remove_target_ui()
+		camera.forceMove(user)
+	teleport_now.UpdateButtons()
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
 	var/mob/living/carbon/human/user = src.loc
@@ -238,7 +238,7 @@
 	var/mob/holder = null
 	var/phase_time = 0
 	var/phase_time_length = 3
-	var/atom/movable/screen/chronos_target/target_ui = null
+	var/atom/movable/screen/chronos_target/target_ui
 	var/obj/item/clothing/suit/space/chronos/chronosuit
 
 /obj/effect/chronos_cam/singularity_act()
@@ -249,17 +249,14 @@
 
 /obj/effect/chronos_cam/proc/create_target_ui()
 	if(holder && holder.client && chronosuit)
-		if(target_ui)
-			remove_target_ui()
-		target_ui = new(null, holder)
+		remove_target_ui()
+		target_ui = new(null, holder.hud_used, holder)
 		holder.client.screen += target_ui
 
 /obj/effect/chronos_cam/proc/remove_target_ui()
-	if(target_ui)
-		qdel(target_ui)
-		target_ui = null
+	QDEL_NULL(target_ui)
 
-/obj/effect/chronos_cam/relaymove(var/mob/user, direction)
+/obj/effect/chronos_cam/relaymove(mob/user, direction)
 	if(!holder)
 		qdel(src)
 		return
@@ -305,13 +302,13 @@
 	color = "#ff3311"
 	blend_mode = BLEND_SUBTRACT
 
-/atom/movable/screen/chronos_target/New(loc, var/mob/living/carbon/human/user)
-	if(user)
-		var/icon/user_icon = getFlatIcon(user)
-		icon = user_icon
-		transform = user.transform
-	else
-		qdel(src)
+/atom/movable/screen/chronos_target/Initialize(mapload, datum/hud/hud_owner, mob/living/carbon/human/user)
+	. = ..()
+	if(!user)
+		return INITIALIZE_HINT_QDEL
+	var/icon/user_icon = getFlatIcon(user)
+	icon = user_icon
+	transform = user.transform
 
 /datum/action/innate/chrono_teleport
 	name = "Teleport Now"
@@ -324,6 +321,7 @@
 	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)
 
 /datum/action/innate/chrono_teleport/Activate()
-	if(IsAvailable())
-		if(chronosuit.camera)
-			chronosuit.chronowalk(chronosuit.camera)
+	if(!IsAvailable())
+		return
+	if(chronosuit.camera)
+		chronosuit.chronowalk(chronosuit.camera)
