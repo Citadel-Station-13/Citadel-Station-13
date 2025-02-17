@@ -24,7 +24,7 @@
 	blend_mode = BLEND_MULTIPLY
 	alpha = 255
 
-/atom/movable/screen/plane_master/openspace/Initialize(mapload)
+/atom/movable/screen/plane_master/openspace/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	filters += filter(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE)
 
@@ -61,7 +61,7 @@
 	plane = ABOVE_WALL_PLANE
 	appearance_flags = PLANE_MASTER
 
-/atom/movable/screen/plane_master/above_wall/Initialize(mapload)
+/atom/movable/screen/plane_master/above_wall/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("vision_cone", 100, list(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE))
 
@@ -78,7 +78,7 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
-/atom/movable/screen/plane_master/game_world/Initialize(mapload)
+/atom/movable/screen/plane_master/game_world/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("vision_cone", 100, list(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE))
 
@@ -95,7 +95,7 @@
 	render_target = FIELD_OF_VISION_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/plane_master/field_of_vision/Initialize(mapload)
+/atom/movable/screen/plane_master/field_of_vision/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	filters += filter(type="alpha", render_source=FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags=MASK_INVERSE)
 
@@ -112,7 +112,7 @@
 	plane = FIELD_OF_VISION_VISUAL_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/plane_master/field_of_vision_visual/Initialize(mapload)
+/atom/movable/screen/plane_master/field_of_vision_visual/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	filters += filter(type="alpha", render_source=FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags=MASK_INVERSE)
 
@@ -138,7 +138,7 @@
  * This is then used to alpha mask the lighting plane.
  */
 
-/atom/movable/screen/plane_master/lighting/Initialize(mapload)
+/atom/movable/screen/plane_master/lighting/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE))
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
@@ -152,7 +152,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_RENDER_TARGET
 
-/atom/movable/screen/plane_master/emissive/Initialize(mapload)
+/atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("em_block_masking", 1, color_matrix_filter(GLOB.em_mask_matrix))
 

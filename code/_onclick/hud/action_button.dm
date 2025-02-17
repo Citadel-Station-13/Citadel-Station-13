@@ -213,7 +213,7 @@
 		our_hud = null
 	return ..()
 
-/atom/movable/screen/button_palette/Initialize(mapload)
+/atom/movable/screen/button_palette/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance()
 

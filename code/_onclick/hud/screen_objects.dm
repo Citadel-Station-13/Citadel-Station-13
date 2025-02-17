@@ -279,7 +279,7 @@
 // 	plane = ABOVE_HUD_PLANE
 // 	icon_state = "backpack_close"
 
-// /atom/movable/screen/close/Initialize(mapload, new_master)
+// /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 // 	. = ..()
 // 	master = new_master
 
@@ -341,7 +341,7 @@
 	icon_state = "running"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
-/atom/movable/screen/mov_intent/Initialize(mapload)
+/atom/movable/screen/mov_intent/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_icon()
 
@@ -701,7 +701,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/atom/movable/screen/parent
 
-/atom/movable/screen/component_button/Initialize(mapload, atom/movable/screen/parent)
+/atom/movable/screen/component_button/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/parent)
 	. = ..()
 	src.parent = parent
 
