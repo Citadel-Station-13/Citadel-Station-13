@@ -720,9 +720,9 @@ Nothing else in the console has ID requirements.
 			l += "<BR><span class='linkOff bad'>[node.price_display(stored_research)]</span>"  // red - missing prereqs
 		if(ui_mode == RDCONSOLE_UI_MODE_NORMAL)
 			l += "[node.description]"
-			for(var/i in node.design_ids)
-				var/datum/design/D = SSresearch.techweb_design_by_id(i)
-				l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[D.icon_html(usr)]</span>[RDSCREEN_NOBREAK]"
+			//for(var/i in node.design_ids)
+				//var/datum/design/D = SSresearch.techweb_design_by_id(i)
+				//l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[D.icon_html(usr)]</span>[RDSCREEN_NOBREAK]"
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
