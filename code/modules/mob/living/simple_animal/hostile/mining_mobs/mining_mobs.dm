@@ -44,13 +44,13 @@
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)//No floor tiling them to death, wiseguy
-	if(istype(AM, /obj/item))
-		var/obj/item/T = AM
+/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)//No floor tiling them to death, wiseguy
+	if(isitem(hitting_atom))
+		var/obj/item/item_hitby = hitting_atom
 		if(!stat)
 			Aggro()
-		if(T.throwforce <= 20)
-			visible_message(span_notice("The [T.name] [throw_message] [src.name]!"))
+		if(item_hitby.throwforce <= 20)
+			visible_message(span_notice("\The [item_hitby] [throw_message] [src]!"))
 			return
 	..()
 

@@ -352,7 +352,7 @@
 
 
 /mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(hitting_atom, /obj/item))
+	if(isitem(hitting_atom))
 		var/obj/item/item_hitby = hitting_atom
 		var/mob/thrown_by = item_hitby.thrownby?.resolve()
 		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))

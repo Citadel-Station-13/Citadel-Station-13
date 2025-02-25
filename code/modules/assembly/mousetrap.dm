@@ -130,10 +130,10 @@
 	return FALSE
 
 
-/obj/item/assembly/mousetrap/hitby(atom/hit_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+/obj/item/assembly/mousetrap/hitby(atom/movable/hit_atom, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(!armed)
 		return ..()
-	visible_message("<span class='warning'>[src] is triggered by [hit_atom].</span>")
+	visible_message(span_warning("[src] is triggered by [hit_atom]."))
 	triggered(null)
 
 

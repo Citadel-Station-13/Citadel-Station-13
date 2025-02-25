@@ -107,37 +107,42 @@
 				return FALSE
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 	if(!isitem(AM))
 		// Filled with made up numbers for non-items.
-		if(mob_run_block(AM, 30, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum.thrower, throwingdatum.thrower.zone_selected, list()))
+		if(mob_run_block(AM, 30, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum.thrower, zone, list()) & BLOCK_SUCCESS)
 			hitpush = FALSE
 			skipcatch = TRUE
 			blocked = TRUE
+			return TRUE
 		else
 			playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
+		log_combat(AM, src, "hit ")
 		return ..()
 
 	var/obj/item/thrown_item = AM
 	if(thrown_item.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
 		return ..()
 
-	if(mob_run_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", ATTACK_TYPE_THROWN, 0, throwingdatum.thrower, throwingdatum.thrower.zone_selected, list()))
+	if(mob_run_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", ATTACK_TYPE_THROWN, 0, throwingdatum.thrower, zone, list()))
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
 
-	var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
+	// zone moved up because things need it early while checking it from the thrower is unnecessary
 	var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum, blocked, FALSE)
 	if(nosell_hit)
 		skipcatch = TRUE
 		hitpush = FALSE
 
 	if(blocked)
-		return TRUE
+		return BLOCK_SUCCESS
 
 	var/mob/thrown_by = thrown_item.thrownby?.resolve()
 	if(thrown_by)
 		log_combat(thrown_by, src, "threw and hit", thrown_item)
+	else
+		log_combat(thrown_item, src, "hit ")
 	if(nosell_hit)
 		return ..()
 	visible_message(span_danger("[src] is hit by [thrown_item]!"), \
