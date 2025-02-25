@@ -139,7 +139,7 @@
 
 
 /mob/living/simple_animal/bot/honkbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(hitting_atom, /obj/item))
+	if(isitem(hitting_atom))
 		playsound(src, honksound, 50, TRUE, -1)
 		var/obj/item/item_hitby = hitting_atom
 		var/mob/thrown_by = item_hitby.thrownby?.resolve()

@@ -47,14 +47,14 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
-/obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+/obj/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..()
-	var/throwdamage = AM.throwforce
-	if(isobj(AM))
-		var/obj/O = AM
-		if(O.damtype == STAMINA)
+	var/throwdamage = hit_by.throwforce
+	if(isobj(hit_by))
+		var/obj/as_obj = hit_by
+		if(as_obj.damtype == STAMINA)
 			throwdamage = 0
-	take_damage(throwdamage, BRUTE, MELEE, 1, get_dir(src, AM))
+	take_damage(throwdamage, BRUTE, MELEE, 1, get_dir(src, hit_by))
 
 /obj/ex_act(severity, target, origin)
 	if(resistance_flags & INDESTRUCTIBLE)

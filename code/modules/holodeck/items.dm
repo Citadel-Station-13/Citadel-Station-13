@@ -122,10 +122,10 @@
 	if (isitem(AM) && !istype(AM,/obj/item/projectile))
 		if(prob(50))
 			AM.forceMove(get_turf(src))
-			visible_message("<span class='warning'>Swish! [AM] lands in [src].</span>")
+			visible_message(span_warning("Swish! [AM] lands in [src]."))
 			return
 		else
-			visible_message("<span class='danger'>[AM] bounces off of [src]'s rim!</span>")
+			visible_message(span_danger("[AM] bounces off of [src]'s rim!"))
 			return ..()
 	else
 		return ..()
