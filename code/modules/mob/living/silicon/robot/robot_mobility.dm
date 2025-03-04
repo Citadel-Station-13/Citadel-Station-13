@@ -10,6 +10,6 @@
 			newflags |= MOBILITY_FLAGS_ANY_INTERACTION
 	mobility_flags = newflags
 	update_transform()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	update_icons()
 	return mobility_flags

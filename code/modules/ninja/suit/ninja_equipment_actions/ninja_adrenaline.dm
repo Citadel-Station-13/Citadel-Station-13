@@ -6,7 +6,7 @@
 	name = "Adrenaline Boost"
 	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
 	button_icon_state = "adrenal"
-	icon_icon = 'icons/obj/implants.dmi'
+	button_icon = 'icons/obj/implants.dmi'
 	required_mobility_flags = NONE
 
 /**

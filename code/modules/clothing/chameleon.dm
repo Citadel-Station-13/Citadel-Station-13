@@ -2,13 +2,10 @@
 
 /datum/action/item_action/chameleon/drone/randomise
 	name = "Randomise Headgear"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "random"
 
-/datum/action/item_action/chameleon/drone/randomise/Trigger()
-	if(!IsAvailable())
-		return
-
+/datum/action/item_action/chameleon/drone/randomise/do_effect(trigger_flags)
 	// Damn our lack of abstract interfeces
 	if (istype(target, /obj/item/clothing/head/chameleon/drone))
 		var/obj/item/clothing/head/chameleon/drone/X = target
@@ -22,7 +19,7 @@
 
 /datum/action/item_action/chameleon/drone/togglehatmask
 	name = "Toggle Headgear Mode"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 
 /datum/action/item_action/chameleon/drone/togglehatmask/New()
 	..()
@@ -32,19 +29,14 @@
 	if (istype(target, /obj/item/clothing/mask/chameleon/drone))
 		button_icon_state = "drone_camogear_mask"
 
-/datum/action/item_action/chameleon/drone/togglehatmask/Trigger()
-	if(!IsAvailable())
-		return
-
+/datum/action/item_action/chameleon/drone/togglehatmask/do_effect(trigger_flags)
 	// No point making the code more complicated if no non-drone
 	// is ever going to use one of these
 
-	var/mob/living/simple_animal/drone/D
+	var/mob/living/simple_animal/drone/D = owner
 
-	if(istype(owner, /mob/living/simple_animal/drone))
-		D = owner
-	else
-		return
+	if(!istype(owner, /mob/living/simple_animal/drone))
+		return FALSE
 
 	// The drone unEquip() proc sets head to null after dropping
 	// an item, so we need to keep a reference to our old headgear
@@ -58,13 +50,13 @@
 		new_headgear = new /obj/item/clothing/head/chameleon/drone()
 	else
 		to_chat(owner, "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>")
-	if(new_headgear)
-		// Force drop the item in the headslot, even though
-		// it's TRAIT_NODROP
-		D.dropItemToGround(target, TRUE)
-		qdel(old_headgear)
-		// where is `ITEM_SLOT_HEAD` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, ITEM_SLOT_HEAD)
+		return FALSE
+	// Force drop the item in the headslot, even though
+	// it's TRAIT_NODROP
+	D.dropItemToGround(target, TRUE)
+	qdel(old_headgear)
+	// where is `ITEM_SLOT_HEAD` defined? WHO KNOWS
+	D.equip_to_slot(new_headgear, ITEM_SLOT_HEAD)
 	return TRUE
 
 
@@ -87,7 +79,10 @@
 		sortTim(standard_outfit_options, GLOBAL_PROC_REF(cmp_text_asc))
 	outfit_options = standard_outfit_options
 
-/datum/action/chameleon_outfit/Trigger()
+/datum/action/chameleon_outfit/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	return select_outfit(owner)
 
 /datum/action/chameleon_outfit/proc/select_outfit(mob/user)
@@ -163,7 +158,7 @@
 
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
 	name = "Change [chameleon_name] Appearance"
-	UpdateButtons()
+	build_all_button_icons()
 
 	chameleon_blacklist |= typecacheof(target.type)
 	for(var/V in typesof(chameleon_type))
@@ -180,11 +175,11 @@
 	var/picked_name
 	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) as null|anything in chameleon_list
 	if(!picked_name)
-		return
+		return FALSE
 	picked_item = chameleon_list[picked_name]
 	if(!picked_item)
-		return
-	update_look(user, picked_item)
+		return FALSE
+	return update_look(user, picked_item)
 
 /datum/action/item_action/chameleon/change/proc/random_look(mob/user)
 	var/picked_name = pick(chameleon_list)
@@ -201,15 +196,17 @@
 		update_item(chameleon_list[picked_name])
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
-	if(isliving(user))
-		var/mob/living/C = user
-		if(C.stat != CONSCIOUS)
-			return
+	if(!isliving(user))
+		return FALSE
+	var/mob/living/C = user
+	if(C.stat != CONSCIOUS)
+		return FALSE
 
-		update_item(picked_item)
-		var/obj/item/thing = target
-		thing.update_slot_icon()
-	UpdateButtons()
+	update_item(picked_item)
+	var/obj/item/thing = target
+	thing.update_slot_icon()
+	build_all_button_icons()
+	return TRUE
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
 	var/obj/item/chameleon_item = target
@@ -242,10 +239,7 @@
 	P.set_new_overlays()
 	P.update_icon()
 
-/datum/action/item_action/chameleon/change/Trigger()
-	if(!IsAvailable())
-		return
-
+/datum/action/item_action/chameleon/change/do_effect(trigger_flags)
 	select_look(owner)
 	return TRUE
 
@@ -293,7 +287,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/under/chameleon)
 
 /obj/item/clothing/under/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/clothing/under
 	chameleon_action.chameleon_name = "Jumpsuit"
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/under, /obj/item/clothing/under/color, /obj/item/clothing/under/rank, /obj/item/clothing/under/changeling), only_root_path = TRUE)
@@ -322,7 +316,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/suit/chameleon)
 
 /obj/item/clothing/suit/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
 	chameleon_action.chameleon_name = "Suit"
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
@@ -350,7 +344,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/glasses/chameleon)
 
 /obj/item/clothing/glasses/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
@@ -382,7 +376,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/gloves/chameleon/insulated)
 
 /obj/item/clothing/gloves/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/clothing/gloves
 	chameleon_action.chameleon_name = "Gloves"
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/gloves, /obj/item/clothing/gloves/color, /obj/item/clothing/gloves/changeling), only_root_path = TRUE)
@@ -410,7 +404,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/head/chameleon)
 
 /obj/item/clothing/head/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/clothing/head
 	chameleon_action.chameleon_name = "Hat"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/head/changeling, only_root_path = TRUE)
@@ -436,10 +430,10 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/head/chameleon)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
-	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.UpdateButtons()
-	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.UpdateButtons()
+	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = add_item_action(/datum/action/item_action/chameleon/drone/togglehatmask)
+	togglehatmask_action.build_all_button_icons()
+	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = add_item_action(/datum/action/item_action/chameleon/drone/randomise)
+	randomise_action.build_all_button_icons()
 
 CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/mask/chameleon)
 	name = "gas mask"
@@ -460,7 +454,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/mask/chameleon)
 
 /obj/item/clothing/mask/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/clothing/mask
 	chameleon_action.chameleon_name = "Mask"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
@@ -490,10 +484,10 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/mask/chameleon)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
-	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.UpdateButtons()
-	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.UpdateButtons()
+	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = add_item_action(/datum/action/item_action/chameleon/drone/togglehatmask)
+	togglehatmask_action.build_all_button_icons()
+	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = add_item_action(/datum/action/item_action/chameleon/drone/randomise)
+	randomise_action.build_all_button_icons()
 
 /obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>[src] does not have a voice changer.</span>")
@@ -511,7 +505,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/shoes/chameleon)
 
 /obj/item/clothing/shoes/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/clothing/shoes
 	chameleon_action.chameleon_name = "Shoes"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/shoes/changeling, only_root_path = TRUE)
@@ -539,7 +533,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/storage/backpack/chameleon)
 
 /obj/item/storage/backpack/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/storage/backpack
 	chameleon_action.chameleon_name = "Backpack"
 	chameleon_action.initialize_disguises()
@@ -562,7 +556,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/storage/belt/chameleon)
 /obj/item/storage/belt/chameleon/Initialize(mapload)
 	. = ..()
 
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/storage/belt
 	chameleon_action.chameleon_name = "Belt"
 	chameleon_action.initialize_disguises()
@@ -588,7 +582,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/radio/headset/chameleon)
 
 /obj/item/radio/headset/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/radio/headset
 	chameleon_action.chameleon_name = "Headset"
 	chameleon_action.initialize_disguises()
@@ -609,7 +603,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/pda/chameleon)
 
 /obj/item/pda/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/pda
 	chameleon_action.chameleon_name = "PDA"
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/pda/heads, /obj/item/pda/ai, /obj/item/pda/ai/pai), only_root_path = TRUE)
@@ -630,7 +624,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/stamp/chameleon)
 
 /obj/item/stamp/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/stamp
 	chameleon_action.chameleon_name = "Stamp"
 	chameleon_action.initialize_disguises()
@@ -652,7 +646,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/neck/cloak/chameleon)
 
 /obj/item/clothing/neck/cloak/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/clothing/neck
 	chameleon_action.chameleon_name = "Cloak"
 	chameleon_action.initialize_disguises()

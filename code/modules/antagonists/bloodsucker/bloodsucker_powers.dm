@@ -3,7 +3,7 @@
 	desc = "A vampiric gift."
 	button_icon = 'icons/mob/actions/bloodsucker.dmi'	//This is the file for the BACKGROUND icon
 	background_icon_state = "vamp_power_off"		//And this is the state for the background icon
-	icon_icon = 'icons/mob/actions/bloodsucker.dmi'		//This is the file for the ACTION icon
+	button_icon = 'icons/mob/actions/bloodsucker.dmi'		//This is the file for the ACTION icon
 	button_icon_state = "power_feed" 				//And this is the state for the action icon
 	buttontooltipstyle = "cult"
 	transparent_when_unavailable = TRUE
@@ -51,17 +51,17 @@
 //	spells.dm  /add_ranged_ability()  <--- How we take over the mouse click to use a power on a target.
 
 // TODO: Refactor this to use /Activate().
-/datum/action/cooldown/bloodsucker/Trigger()
+/datum/action/cooldown/bloodsucker/Trigger(trigger_flags)
 	// Active? DEACTIVATE AND END!
 	if(active && CheckCanDeactivate(TRUE))
 		DeactivatePower()
-		return
+		return FALSE
 	if(!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
-		return
+		return FALSE
 	PayCost()
 	if(amToggle)
 		active = !active
-		UpdateButtons()
+		build_all_button_icons()
 	if(!amToggle || !active)
 		StartCooldown() // Must come AFTER UpdateButton(), otherwise icon will revert.
 	ActivatePower()  // NOTE: ActivatePower() freezes this power in place until it ends.
@@ -69,6 +69,7 @@
 		DeactivatePower()
 	if(amSingleUse)
 		RemoveAfterUse()
+	return TRUE
 
 /datum/action/cooldown/bloodsucker/proc/CheckCanPayCost(display_error)
 	if(!owner || !owner.mind)
@@ -82,7 +83,7 @@
 	var/mob/living/L = owner
 	if(L.blood_volume < bloodcost)
 		if(display_error)
-			to_chat(owner, "<span class='warning'>You need at least [bloodcost] blood to activate [name]</span>")
+			to_chat(owner, span_warning("You need at least [bloodcost] blood to activate [name]"))
 		return FALSE
 	return TRUE
 
@@ -92,12 +93,12 @@
 	// Torpor?
 	if(!can_use_in_torpor && HAS_TRAIT(owner, TRAIT_DEATHCOMA))
 		if(display_error)
-			to_chat(owner, "<span class='warning'>Not while you're in Torpor.</span>")
+			to_chat(owner, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Stake?
 	if(!can_be_staked && owner.AmStaked())
 		if(display_error)
-			to_chat(owner, "<span class='warning'>You have a stake in your chest! Your powers are useless.</span>")
+			to_chat(owner, span_warning("You have a stake in your chest! Your powers are useless."))
 		return FALSE
 	if(istype(owner.get_item_by_slot(ITEM_SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
 		if(display_error)
@@ -105,35 +106,36 @@
 		return FALSE
 	if(owner.reagents?.has_reagent(/datum/reagent/consumable/garlic))
 		if(display_error)
-			to_chat(owner, "<span class='warning'>Garlic in your blood is interfering with your powers!</span>")
+			to_chat(owner, span_warning("Garlic in your blood is interfering with your powers!"))
 		return FALSE
 	if(must_be_concious)
 		if(owner.stat != CONSCIOUS)
 			if(display_error)
-				to_chat(owner, "<span class='warning'>You can't do this while you are unconcious!</span>")
+				to_chat(owner, span_warning("You can't do this while you are unconcious!"))
 			return FALSE
 	// Incap?
 	if(must_be_capacitated)
 		var/mob/living/L = owner
 		if (L.incapacitated(TRUE, TRUE) || !CHECK_MOBILITY(L, MOBILITY_STAND) && !can_be_immobilized)
 			if(display_error)
-				to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
+				to_chat(owner, span_warning("Not while you're incapacitated!"))
 			return FALSE
 	// Constant Cost (out of blood)
 	if(warn_constant_cost)
 		var/mob/living/L = owner
 		if(L.blood_volume <= 0)
 			if(display_error)
-				to_chat(owner, "<span class='warning'>You don't have the blood to upkeep [src].</span>")
+				to_chat(owner, span_warning("You don't have the blood to upkeep [src]."))
 			return FALSE
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/proc/CheckCanDeactivate(display_error)
 	return TRUE
 
-/datum/action/cooldown/bloodsucker/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
-	background_icon_state = active? background_icon_state_on : background_icon_state_off
-	..()//UpdateButton()
+/datum/action/cooldown/bloodsucker/apply_button_background(atom/movable/screen/movable/action_button/current_button, force)
+	if(active_background_icon_state)
+		background_icon_state = is_action_active(current_button) ? active_background_icon_state : base_background_icon_state
+	return ..()
 
 /datum/action/cooldown/bloodsucker/proc/PayCost()
 	// owner for actions is the mob, not mind.
@@ -146,7 +148,7 @@
 
 /datum/action/cooldown/bloodsucker/proc/DeactivatePower(mob/living/user = owner, mob/living/target)
 	active = FALSE
-	UpdateButtons()
+	build_all_button_icons()
 	StartCooldown()
 
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target) // Used by loops to make sure this power can stay active.
@@ -182,15 +184,15 @@
 
 // TODO: Refactor this to use /Activate() and click_to_activate = TRUE.
 // Click power: Begin Aim
-/datum/action/cooldown/bloodsucker/targeted/Trigger()
+/datum/action/cooldown/bloodsucker/targeted/Trigger(trigger_flags)
 	if(active && CheckCanDeactivate(TRUE))
 		DeactivateRangedAbility()
 		DeactivatePower()
-		return
+		return FALSE
 	if(!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
-		return
+		return FALSE
 	active = !active
-	UpdateButtons()
+	build_all_button_icons()
 	// Create & Link Targeting Proc
 	var/mob/living/L = owner
 	if(L.ranged_ability)
@@ -198,7 +200,8 @@
 	bs_proc_holder.add_ranged_ability(L)
 
 	if(message_Trigger != "")
-		to_chat(owner, "<span class='announce'>[message_Trigger]</span>")
+		to_chat(owner, span_announce("[message_Trigger]"))
+	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/CheckCanUse(display_error)
 	. = ..()
@@ -211,7 +214,7 @@
 /datum/action/cooldown/bloodsucker/targeted/DeactivatePower(mob/living/user = owner, mob/living/target)
 	// Don't run ..(), we don't want to engage the cooldown until we USE this power!
 	active = FALSE
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/cooldown/bloodsucker/targeted/proc/DeactivateRangedAbility()
 	// Only Turned off when CLICK is disabled...aka, when you successfully clicked (or
@@ -226,7 +229,7 @@
 	// Out of Range
 	if(!(A in view(target_range, owner)))
 		if(display_error && target_range > 1) // Only warn for range if it's greater than 1. Brawn doesn't need to announce itself.
-			to_chat(owner, "<span class='warning'>Your target is out of range.</span>")
+			to_chat(owner, span_warning("Your target is out of range."))
 		return FALSE
 	return istype(A)
 

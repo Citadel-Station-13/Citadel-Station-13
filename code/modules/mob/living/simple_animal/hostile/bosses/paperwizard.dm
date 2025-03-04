@@ -30,7 +30,7 @@
 //Lets the wizard summon his art to fight for him
 /datum/action/boss/wizard_summon_minions
 	name = "Summon Minions"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 	usage_probability = 20
 	boss_cost = 30
@@ -42,10 +42,10 @@
 	var/maximum_stickmen = 6
 	var/stickmen_to_summon = 3
 
-/datum/action/boss/wizard_summon_minions/Trigger()
+/datum/action/boss/wizard_summon_minions/Trigger(trigger_flags)
 	. =..()
 	if(!.)
-		return
+		return FALSE
 	var/to_summon = stickmen_to_summon
 	var/current_len = length(summoned_minions)
 	if(current_len > maximum_stickmen - stickmen_to_summon)
@@ -71,6 +71,7 @@
 		S.faction = boss.faction
 		RegisterSignal(S, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_list))
 		summoned_minions += S
+	return TRUE
 
 /datum/action/boss/wizard_summon_minions/proc/remove_from_list(datum/source, forced)
 	summoned_minions -= source
@@ -81,7 +82,7 @@
 //Hitting the wizard himself destroys all decoys
 /datum/action/boss/wizard_mimic
 	name = "Craft Mimicry"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "mimic_summon"
 	usage_probability = 30
 	boss_cost = 40
@@ -89,10 +90,10 @@
 	req_statuses = list(AI_ON)
 	say_when_triggered = ""
 
-/datum/action/boss/wizard_mimic/Trigger()
+/datum/action/boss/wizard_mimic/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 	var/mob/living/target
 	if(!boss.client) //AI's target
 		target = boss.target
@@ -102,6 +103,7 @@
 			target = pick(threats)
 		else
 			to_chat(owner, "<span class='warning'>There is no potential foe of different faction around to attack</span>")
+			return FALSE
 	if(target)
 		var/mob/living/simple_animal/hostile/boss/paper_wizard/wiz = boss
 		var/directions = GLOB.cardinals.Copy()
@@ -114,8 +116,10 @@
 		wiz.forceMove(get_step(target,pick_n_take(directions)))
 		wiz.minimum_distance = 1 //so he doesn't run away and ruin everything
 		wiz.retreat_distance = 0
+		return TRUE
 	else
 		boss.atb.refund(boss_cost)
+	return FALSE
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy
 	desc = "'Tis a ruse!"

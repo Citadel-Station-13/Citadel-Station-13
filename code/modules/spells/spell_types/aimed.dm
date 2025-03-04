@@ -44,7 +44,7 @@
 	if(!action)
 		return
 	action.button_icon_state = "[base_icon_state][active]"
-	action.UpdateButtons()
+	action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())

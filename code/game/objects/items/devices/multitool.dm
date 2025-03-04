@@ -136,7 +136,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	eye = new /mob/camera/aiEye/remote/ai_detector()
-	toggle_action = new /datum/action/item_action/toggle_multitool(src)
+	toggle_action = add_item_action(/datum/action/item_action/toggle_multitool)
 
 /obj/item/multitool/ai_detect/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -236,12 +236,11 @@
 	name = "Toggle AI detector HUD"
 	check_flags = NONE
 
-/datum/action/item_action/toggle_multitool/Trigger()
-	if(!..())
+/datum/action/item_action/toggle_multitool/do_effect(trigger_flags)
+	if(!istype(target, /obj/item/multitool/ai_detect))
 		return FALSE
-	if(target)
-		var/obj/item/multitool/ai_detect/M = target
-		M.toggle_hud(owner)
+	var/obj/item/multitool/ai_detect/M = target
+	M.toggle_hud(owner)
 	return TRUE
 
 /obj/item/multitool/cyborg

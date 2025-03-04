@@ -317,12 +317,15 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	desc = "Stop looking through the bluespace peephole."
 	button_icon_state = "cancel_peephole"
 
-/datum/action/peepholeCancel/Trigger()
+/datum/action/peepholeCancel/Trigger(trigger_flags)
 	. = ..()
+	if(!.)
+		return FALSE
 	to_chat(owner, "<span class='warning'>You move away from the peephole.</span>")
 	owner.reset_perspective()
 	owner.clear_fullscreen("remote_view", 0)
 	qdel(src)
+	return TRUE
 
 /area/hilbertshotel
 	name = "Hilbert's Hotel Room"

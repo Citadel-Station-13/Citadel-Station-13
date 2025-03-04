@@ -113,7 +113,7 @@
 		to_chat(new_spawn, "<b>You can expand the weather proof area provided by your shelters by using the 'New Area' key near the bottom right of your HUD.</b>")
 		to_chat(new_spawn, "<b>Dragging injured ashwalkers to the tentacle or using the sleep verb next to it youself causes the body to remade whole after a short delay!</b>")
 	else
-		to_chat(new_spawn, "<span class='userdanger'>You have been born outside of your natural home! Whether you decide to return home, or make due with your new home is your own decision.</span>")
+		to_chat(new_spawn, span_userdanger("You have been born outside of your natural home! Whether you decide to return home, or make due with your new home is your own decision."))
 
 //Ash walkers on birth understand how to make bone bows, bone arrows and ashen arrows
 
@@ -247,7 +247,7 @@
 		if(transfer_choice != "Yes" || QDELETED(src) || uses <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))
 			return
 		log_game("[key_name(user)] golem-swapped into [src]")
-		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
+		user.visible_message(span_notice("A faint light leaves [user], moving to [src] and animating it!"),span_notice("You leave your old body behind, and transfer into [src]!"))
 		show_flavour = FALSE
 		create(ckey = user.ckey,name = user.real_name)
 		user.death()
@@ -477,7 +477,7 @@
 		id.registered_name = L.real_name
 		id.update_label()
 	else
-		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>")
+		to_chat(L, span_userdanger("Your owner is already dead!  You will soon perish."))
 		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, dust), 150)) //Give em a few seconds as a mercy.
 
 /datum/outfit/demonic_friend
@@ -666,24 +666,24 @@
 	if(.)
 		return
 	if(user.mind.has_antag_datum(/datum/antagonist/pirate))
-		to_chat(user, "<span class='notice'>Your shipmate sails within their dreams for now. Perhaps they may wake up eventually.</span>")
+		to_chat(user, span_notice("Your shipmate sails within their dreams for now. Perhaps they may wake up eventually."))
 	else
-		to_chat(user, "<span class='notice'>If you want to kill the pirate off, something to pry open the sleeper might be the best way to do it.</span>")
+		to_chat(user, span_notice("If you want to kill the pirate off, something to pry open the sleeper might be the best way to do it."))
 
 
 /obj/effect/mob_spawn/human/pirate/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_CROWBAR && user.a_intent != INTENT_HARM)
 		if(user.mind.has_antag_datum(/datum/antagonist/pirate))
-			to_chat(user,"<span class='warning'>Why would you want to do that to your shipmate? That'd kill them.</span>")
+			to_chat(user,span_warning("Why would you want to do that to your shipmate? That'd kill them."))
 			return
-		user.visible_message("<span class='warning'>[user] start to pry open [src]...</span>",
-				"<span class='notice'>You start to pry open [src]...</span>",
-				"<span class='italics'>You hear prying...</span>")
+		user.visible_message(span_warning("[user] start to pry open [src]..."),
+				span_notice("You start to pry open [src]..."),
+				span_italics("You hear prying..."))
 		W.play_tool_sound(src)
 		if(do_after(user, 100*W.toolspeed, target = src))
-			user.visible_message("<span class='warning'>[user] pries open [src], disrupting the sleep of the pirate within and killing them.</span>",
-				"<span class='notice'>You pry open [src], disrupting the sleep of the pirate within and killing them.</span>",
-				"<span class='italics'>You hear prying, followed by the death rattling of bones.</span>")
+			user.visible_message(span_warning("[user] pries open [src], disrupting the sleep of the pirate within and killing them."),
+				span_notice("You pry open [src], disrupting the sleep of the pirate within and killing them."),
+				span_italics("You hear prying, followed by the death rattling of bones."))
 			log_game("[key_name(user)] has successfully pried open [src] and disabled a space pirate spawner.")
 			W.play_tool_sound(src)
 			playsound(src.loc, 'modular_citadel/sound/voice/scream_skeleton.ogg', 50, 1, 4, 1.2)
@@ -746,27 +746,28 @@
 	banType = ROLE_GHOSTCAFE
 
 /datum/action/toggle_dead_chat_mob
-	icon_icon = 'icons/mob/mob.dmi'
+	button_icon = 'icons/mob/mob.dmi'
 	button_icon_state = "ghost"
 	name = "Toggle deadchat"
 	desc = "Turn off or on your ability to hear ghosts."
 
-/datum/action/toggle_dead_chat_mob/Trigger()
-	if(!..())
+/datum/action/toggle_dead_chat_mob/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
 		return FALSE
 	var/mob/M = target
 	if(HAS_TRAIT_FROM(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT))
 		REMOVE_TRAIT(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT)
-		to_chat(M,"<span class='notice'>You're no longer hearing deadchat.</span>")
+		to_chat(M,span_notice("You're no longer hearing deadchat."))
 	else
 		ADD_TRAIT(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT)
-		to_chat(M,"<span class='notice'>You're once again longer hearing deadchat.</span>")
-
+		to_chat(M,span_notice("You're once again longer hearing deadchat."))
+	return TRUE
 
 /datum/action/disguise
 	name = "Disguise"
 	button_icon_state = "ling_transform"
-	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	button_icon = 'icons/mob/actions/actions_changeling.dmi'
 	background_icon_state = "bg_mime"
 	var/currently_disguised = FALSE
 	var/static/list/mob_blacklist = typecacheof(list(
@@ -798,36 +799,44 @@
 	))
 
 
-/datum/action/disguise/Trigger()
+/datum/action/disguise/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/mob/living/carbon/human/H = owner
-	if(!currently_disguised)
-		var/user_object_type = input(H, "Disguising as OBJECT or MOB?") as null|anything in list("OBJECT", "MOB")
-		if(user_object_type)
-			var/search_term = stripped_input(H, "Enter the search term")
-			if(search_term)
-				var/list_to_search
-				if(user_object_type == "MOB")
-					list_to_search = subtypesof(/mob) - mob_blacklist
-				else
-					list_to_search = subtypesof(/obj)
-				var/list/filtered_results = list()
-				for(var/some_search_item in list_to_search)
-					if(findtext("[some_search_item]", search_term))
-						filtered_results += some_search_item
-				if(!length(filtered_results))
-					to_chat(H, "Nothing matched your search query!")
-				else
-					var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
-					if(disguise_selection)
-						var/atom/disguise_item = disguise_selection
-						var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)
-						I.override = TRUE
-						I.layer = ABOVE_MOB_LAYER
-						H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "ghost_cafe_disguise", I)
-						currently_disguised = TRUE
-	else
+	if(currently_disguised)
 		H.remove_alt_appearance("ghost_cafe_disguise")
 		currently_disguised = FALSE
+		return TRUE
+	else
+		var/user_object_type = input(H, "Disguising as OBJECT or MOB?") as null|anything in list("OBJECT", "MOB")
+		if(!user_object_type)
+			return FALSE
+		var/search_term = stripped_input(H, "Enter the search term")
+		if(!search_term)
+			return FALSE
+		var/list_to_search
+		if(user_object_type == "MOB")
+			list_to_search = subtypesof(/mob) - mob_blacklist
+		else
+			list_to_search = subtypesof(/obj)
+		var/list/filtered_results = list()
+		for(var/some_search_item in list_to_search)
+			if(findtext("[some_search_item]", search_term))
+				filtered_results += some_search_item
+		if(!length(filtered_results))
+			to_chat(H, "Nothing matched your search query!")
+			return FALSE
+		var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
+		if(!disguise_selection)
+			return FALSE
+		var/atom/disguise_item = disguise_selection
+		var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)
+		I.override = TRUE
+		I.layer = ABOVE_MOB_LAYER
+		H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "ghost_cafe_disguise", I)
+		currently_disguised = TRUE
+		return TRUE
 
 /obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
 	if(new_spawn.client)
@@ -844,7 +853,7 @@
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn, TRAIT_EXEMPT_HEALTH_EVENTS, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn, TRAIT_NO_MIDROUND_ANTAG, GHOSTROLE_TRAIT) //The mob can't be made into a random antag, they are still eligible for ghost roles popups.
-		to_chat(new_spawn,"<span class='boldwarning'>Ghosting is free!</span>")
+		to_chat(new_spawn,span_boldwarning("Ghosting is free!"))
 		var/datum/action/toggle_dead_chat_mob/D = new(new_spawn)
 		D.Grant(new_spawn)
 		var/datum/action/disguise/disguise_action = new(new_spawn)

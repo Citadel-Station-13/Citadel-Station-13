@@ -3,7 +3,7 @@
 	name = "Coil Grabbed Mob"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "coil_icon"
-	icon_icon = 'icons/mob/actions/actions_snake.dmi'
+	button_icon = 'icons/mob/actions/actions_snake.dmi'
 	background_icon_state = "bg_alien"
 	required_mobility_flags = MOBILITY_STAND
 	var/currently_coiling = FALSE

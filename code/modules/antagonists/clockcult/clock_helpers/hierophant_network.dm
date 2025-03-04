@@ -26,7 +26,7 @@
 /datum/action/innate/hierophant
 	name = "Hierophant Network"
 	desc = "Allows you to communicate with other Servants."
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
+	button_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	button_icon_state = "hierophant"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
@@ -35,7 +35,7 @@
 	var/span_for_name = "heavy_brass"
 	var/span_for_message = "brass"
 
-/datum/action/innate/hierophant/IsAvailable(silent = FALSE)
+/datum/action/innate/hierophant/IsAvailable(feedback = TRUE)
 	if(!is_servant_of_ratvar(owner))
 		return FALSE
 	return ..()

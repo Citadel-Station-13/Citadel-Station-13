@@ -59,7 +59,7 @@
 	. = ..()
 	boss = null
 
-/datum/action/boss/IsAvailable(silent = FALSE)
+/datum/action/boss/IsAvailable(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -72,14 +72,16 @@
 	if(!boss.client && needs_target && !boss.target)
 		return FALSE
 
-/datum/action/boss/Trigger()
+/datum/action/boss/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 	if(!boss.atb.spend(boss_cost))
 		return FALSE
-	if(say_when_triggered)
-		boss.say(say_when_triggered, forced = "boss action")
+	if(!say_when_triggered)
+		return FALSE
+	boss.say(say_when_triggered, forced = "boss action")
+	return TRUE
 
 //Example:
 /*
@@ -143,7 +145,7 @@
 		var/datum/action/boss/AB = ab
 		if(!boss.client && (!AB.req_statuses || (boss.AIStatus in AB.req_statuses)) && prob(AB.usage_probability) && AB.Trigger())
 			break
-		AB.UpdateButtons(TRUE)
+		AB.build_all_button_icons()
 
 
 /datum/boss_active_timed_battle/Destroy()

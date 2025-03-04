@@ -151,8 +151,7 @@
 	name = "Toggle Perspective"
 	desc = "Switch between seeing normally from your head, or blindly from your body."
 
-/datum/action/item_action/organ_action/dullahan/Trigger()
-	. = ..()
+/datum/action/item_action/organ_action/dullahan/do_effect(trigger_flags)
 	var/mob/living/carbon/human/H = owner
 	var/obj/item/organ/eyes/E = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
@@ -162,13 +161,14 @@
 			E.tint = INFINITY
 
 	var/datum/component/dullahan/D = H.GetComponent(/datum/component/dullahan)
-	if(D)
-		D.update_vision_perspective()
+	if(!D)
+		return FALSE
+	return D.update_vision_perspective()
 
 /datum/component/dullahan/proc/update_vision_perspective()
 	var/mob/living/carbon/human/H = parent
 	if(!H)
-		return .
+		return FALSE
 	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		H.update_tint()
@@ -176,6 +176,7 @@
 			H.reset_perspective(H)
 		else
 			H.reset_perspective(dullahan_head)
+	return TRUE
 
 /datum/component/dullahan/Destroy()
 	UnregisterSignal(parent, COMSIG_LIVING_REGENERATE_LIMBS)

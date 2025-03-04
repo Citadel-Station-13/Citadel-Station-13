@@ -39,7 +39,7 @@
 	MA.plane = 0
 	holder.appearance = MA
 	update_indicator()
-	
+
 /obj/machinery/launchpad/Destroy()
 	qdel(hud_list[DIAG_LAUNCHPAD_HUD])
 	return ..()

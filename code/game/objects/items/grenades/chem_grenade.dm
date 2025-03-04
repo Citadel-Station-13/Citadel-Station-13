@@ -220,7 +220,7 @@
 		return FALSE
 
 	for(var/obj/item/slime_extract/S in beakers)
-		if(S.Uses)
+		if(S.extract_uses)
 			for(var/obj/item/reagent_containers/glass/G in beakers)
 				G.reagents.trans_to(S, G.reagents.total_volume)
 

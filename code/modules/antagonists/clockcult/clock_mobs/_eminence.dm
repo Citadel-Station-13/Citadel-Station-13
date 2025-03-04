@@ -231,11 +231,11 @@
 /datum/action/innate/eminence
 	name = "Eminence Action"
 	desc = "You shouldn't see this. File a bug report!"
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
+	button_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
-/datum/action/innate/eminence/IsAvailable(silent = FALSE)
+/datum/action/innate/eminence/IsAvailable(feedback = TRUE)
 	if(!iseminence(owner))
 		qdel(src)
 		return
@@ -323,7 +323,7 @@
 	desc = "Initiates a mass recall, warping all servants to the Ark after a short delay. This can only be used once."
 	button_icon_state = "Spatial Gateway"
 
-/datum/action/innate/eminence/mass_recall/IsAvailable(silent = FALSE)
+/datum/action/innate/eminence/mass_recall/IsAvailable(feedback = TRUE)
 	. = ..()
 	if(.)
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar

@@ -176,7 +176,7 @@
 	user.reveal(reveal)
 	user.stun(stun)
 	if(action)
-		action.UpdateButtons()
+		action.build_all_button_icons()
 	return TRUE
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.

@@ -78,7 +78,7 @@
 	blind_eyes(1)
 	reset_perspective(null)
 	reload_fullscreen()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	update_damage_hud()
 	update_health_hud()
 	update_mobility()

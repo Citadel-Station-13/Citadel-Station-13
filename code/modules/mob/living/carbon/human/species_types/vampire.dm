@@ -62,7 +62,7 @@
 
 	var/area/A = get_area(C)
 	if(istype(A, /area/service/chapel) && C.mind?.assigned_role != "Chaplain")
-		to_chat(C, "<span class='danger'>You don't belong here!</span>")
+		to_chat(C, span_danger("You don't belong here!"))
 		C.adjustFireLoss(5)
 		C.adjust_fire_stacks(6)
 		C.IgniteMob()
@@ -79,47 +79,48 @@
 	name = "Drain Victim"
 	desc = "Leech blood from any carbon victim you are passively grabbing."
 
-/datum/action/item_action/organ_action/vampire/Trigger()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/H = owner
-		var/obj/item/organ/tongue/vampire/V = target
-		if(V.drain_cooldown >= world.time)
-			to_chat(H, "<span class='notice'>You just drained blood, wait a few seconds.</span>")
-			return
-		if(H.pulling && iscarbon(H.pulling))
-			var/mob/living/carbon/victim = H.pulling
-			if(H.blood_volume >= BLOOD_VOLUME_MAXIMUM)
-				to_chat(H, "<span class='notice'>You're already full!</span>")
-				return
-			//This checks whether or not they are wearing a garlic clove on their neck
-			if(!blood_sucking_checks(victim, TRUE, FALSE))
-				return
-			if(victim.stat == DEAD)
-				to_chat(H, "<span class='notice'>You need a living victim!</span>")
-				return
-			if(!victim.blood_volume || (victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_blood)))
-				to_chat(H, "<span class='notice'>[victim] doesn't have blood!</span>")
-				return
-			V.drain_cooldown = world.time + 30
-			if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
-				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
-				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
-				return
-			//Here we check now for both the garlic cloves on the neck and for blood in the victims bloodstream.
-			if(!blood_sucking_checks(victim, TRUE, TRUE))
-				return
-			if(!do_after(H, 30, target = victim))
-				return
-			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
-			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
-			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
-			to_chat(H, "<span class='notice'>You drain some blood!</span>")
-			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
-			victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			if(!victim.blood_volume)
-				to_chat(H, "<span class='warning'>You finish off [victim]'s blood supply!</span>")
+/datum/action/item_action/organ_action/vampire/do_effect(trigger_flags)
+	if(!iscarbon(owner))
+		return FALSE
+	var/mob/living/carbon/H = owner
+	var/obj/item/organ/tongue/vampire/V = target
+	if(V.drain_cooldown >= world.time)
+		to_chat(H, span_notice("You just drained blood, wait a few seconds."))
+		return FALSE
+	if(H.pulling && iscarbon(H.pulling))
+		var/mob/living/carbon/victim = H.pulling
+		if(H.blood_volume >= BLOOD_VOLUME_MAXIMUM)
+			to_chat(H, span_notice("You're already full!"))
+			return FALSE
+		//This checks whether or not they are wearing a garlic clove on their neck
+		if(!blood_sucking_checks(victim, TRUE, FALSE))
+			return FALSE
+		if(victim.stat == DEAD)
+			to_chat(H, span_notice("You need a living victim!"))
+			return FALSE
+		if(!victim.blood_volume || (victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_blood)))
+			to_chat(H, span_notice("[victim] doesn't have blood!"))
+			return FALSE
+		V.drain_cooldown = world.time + 30
+		if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
+			to_chat(victim, span_warning("[H] tries to bite you, but stops before touching you!"))
+			to_chat(H, span_warning("[victim] is blessed! You stop just in time to avoid catching fire."))
+			return FALSE
+		//Here we check now for both the garlic cloves on the neck and for blood in the victims bloodstream.
+		if(!blood_sucking_checks(victim, TRUE, TRUE))
+			return FALSE
+		if(!do_after(H, 30, target = victim))
+			return FALSE
+		var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
+		var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
+		to_chat(victim, span_danger("[H] is draining your blood!"))
+		to_chat(H, span_notice("You drain some blood!"))
+		playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
+		victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+		H.blood_volume = clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+		if(!victim.blood_volume)
+			to_chat(H, span_warning("You finish off [victim]'s blood supply!"))
+		return TRUE
 
 #undef VAMP_DRAIN_AMOUNT
 
@@ -140,11 +141,12 @@
 	name = "Check Blood Level"
 	desc = "Check how much blood you have remaining."
 
-/datum/action/item_action/organ_action/vampire_heart/Trigger()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/H = owner
-		to_chat(H, "<span class='notice'>Current blood level: [H.blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>")
+/datum/action/item_action/organ_action/vampire_heart/do_effect(trigger_flags)
+	if(!iscarbon(owner))
+		return FALSE
+	var/mob/living/carbon/H = owner
+	to_chat(H, span_notice("Current blood level: [H.blood_volume]/[BLOOD_VOLUME_MAXIMUM]."))
+	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat
 	name = "Bat Form"
@@ -159,11 +161,11 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat/Shapeshift(mob/living/caster)			//cit change
 	var/obj/shapeshift_holder/H = locate() in caster
 	if(H)
-		to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
+		to_chat(caster, span_warning("You're already shapeshifted!"))
 		return
 
 	if(!ishuman(caster))
-		to_chat(caster, "<span class='warning'>You need to be humanoid to be able to do this!</span>")
+		to_chat(caster, span_warning("You need to be humanoid to be able to do this!"))
 		return
 
 	var/mob/living/carbon/human/human_caster = caster
@@ -184,11 +186,11 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat/cast(list/targets, mob/user = usr)
 	if(!(locate(/obj/shapeshift_holder) in targets[1]))
 		if(!ishuman(user))
-			to_chat(user, "<span class='warning'>You need to be humanoid to be able to do this!</span>")
+			to_chat(user, span_warning("You need to be humanoid to be able to do this!"))
 			return
 
 		var/mob/living/carbon/human/human_user = user
 		if(!(human_user.dna?.species?.id == SPECIES_VAMPIRE))
-			to_chat(user, "<span class='warning'>You don't seem to be able to shapeshift..</span>")
+			to_chat(user, span_warning("You don't seem to be able to shapeshift.."))
 			return
 	return ..()

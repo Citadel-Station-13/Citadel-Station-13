@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
-		action.UpdateButtons()
+		action.build_all_button_icons()
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
 		charge_counter += 2	//processes 5 times per second instead of 10.
 		if(charge_counter >= charge_max)
-			action.UpdateButtons()
+			action.build_all_button_icons()
 			charge_counter = charge_max
 			recharging = FALSE
 
@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	cast(targets,user=user)
 	after_cast(targets)
 	if(action)
-		action.UpdateButtons()
+		action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
 	if(overlay)
@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
 	if(action)
-		action.UpdateButtons()
+		action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	if (!istype(target))
@@ -439,7 +439,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	perform(targets,user=user)
 
 /obj/effect/proc_holder/spell/proc/UpdateButton(atom/movable/screen/movable/action_button/button, status_only, force)
-	action.UpdateButtons(status_only, force)
+	action.build_all_button_icons(status_only, force)
 
 /obj/effect/proc_holder/spell/targeted/proc/los_check(mob/A,mob/B)
 	//Checks for obstacles from A to B

@@ -201,7 +201,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin/update_icon()
 	. = ..()
 	action.button_icon_state = "alien_neurotoxin_[active]"
-	action.UpdateButtons()
+	action.build_all_button_icons()
 
 /obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
@@ -334,7 +334,7 @@ Doesn't work on other aliens/AI.*/
 	for(var/X in abilities)
 		var/obj/effect/proc_holder/alien/APH = X
 		if(APH.has_action)
-			APH.action.UpdateButtons()
+			APH.action.build_all_button_icons()
 	return TRUE
 
 /mob/living/carbon/alien/adjustPlasma(amount)

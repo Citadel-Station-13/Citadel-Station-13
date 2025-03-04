@@ -175,7 +175,7 @@
 /datum/action/item_action/stickmen
 	name = "Summon Stick Minions"
 	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 	var/ready = TRUE
 	var/list/summoned_stickmen = list()
@@ -222,10 +222,7 @@
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_POINTED)
 
-/datum/action/item_action/stickmen/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/item_action/stickmen/do_effect(trigger_flags)
 	if(!ready)
 		to_chat(owner, "<span class='warning'>[src]'s internal magic supply is still recharging!</span>")
 		return FALSE
@@ -249,6 +246,7 @@
 		RegisterSignal(S, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_list))
 	ready = FALSE
 	addtimer(CALLBACK(src, PROC_REF(ready_again)), cooldown)
+	return TRUE
 
 /datum/action/item_action/stickmen/proc/remove_from_list(datum/source, forced)
 	summoned_stickmen -= source

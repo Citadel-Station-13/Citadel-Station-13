@@ -82,7 +82,7 @@
 /datum/action/cooldown/slam
 	name = "Slaughter Slam"
 	desc = "Launch enemies and break bones in one strike."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	background_icon_state = "bg_demon"
 	button_icon_state = "slam"
 	cooldown_time = 45 SECONDS

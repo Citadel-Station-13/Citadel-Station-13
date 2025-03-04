@@ -19,6 +19,8 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 	attack_speed = CLICK_CD_RANGE
+	action_slots = ALL
+
 	var/ranged_attack_speed = CLICK_CD_RANGE
 	var/melee_attack_speed = CLICK_CD_MELEE
 
@@ -142,7 +144,7 @@
 	if(fire_select_modes.len > 1)
 		firemode_action = new(src)
 		firemode_action.button_icon_state = "fireselect_[fire_select]"
-		firemode_action.UpdateButtons()
+		firemode_action.build_all_button_icons()
 
 /obj/item/gun/ComponentInitialize()
 	. = ..()
@@ -219,7 +221,7 @@
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 	firemode_action.button_icon_state = "fireselect_[fire_select]"
-	firemode_action.UpdateButtons()
+	firemode_action.build_all_button_icons()
 	return TRUE
 
 /obj/item/gun/equipped(mob/living/user, slot)
@@ -670,7 +672,7 @@
 	update_icon()
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtons()
+		A.build_all_button_icons()
 
 /obj/item/gun/update_overlays()
 	. = ..()
@@ -751,20 +753,21 @@
 
 /datum/action/item_action/toggle_scope_zoom
 	name = "Toggle Scope"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 
-/datum/action/item_action/toggle_scope_zoom/IsAvailable(silent = FALSE)
+/datum/action/item_action/toggle_scope_zoom/IsAvailable(feedback = TRUE)
 	. = ..()
 	if(!. && owner)
 		var/obj/item/gun/G = target
 		G.zoom(owner, owner.dir, FALSE)
 
-/datum/action/item_action/toggle_scope_zoom/Trigger()
-	. = ..()
-	if(.)
-		var/obj/item/gun/G = target
-		G.zoom(owner, owner.dir)
+/datum/action/item_action/toggle_scope_zoom/do_effect(trigger_flags)
+	var/obj/item/gun/G = target
+	if(!istype(G))
+		return FALSE
+	G.zoom(owner, owner.dir)
+	return TRUE
 
 /datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
 	var/obj/item/gun/G = target

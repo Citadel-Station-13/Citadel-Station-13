@@ -24,10 +24,12 @@
 /datum/action/item_action/displayDetectiveScanResults
 	name = "Display Forensic Scanner Results"
 
-/datum/action/item_action/displayDetectiveScanResults/Trigger()
+/datum/action/item_action/displayDetectiveScanResults/do_effect(trigger_flags)
 	var/obj/item/detective_scanner/scanner = target
-	if(istype(scanner))
-		scanner.displayDetectiveScanResults(usr)
+	if(!istype(scanner))
+		return FALSE
+	scanner.displayDetectiveScanResults(usr)
+	return TRUE
 
 /obj/item/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)

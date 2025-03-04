@@ -23,7 +23,7 @@
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
 	if(attached_light)
-		alight = new(src)
+		alight = add_item_action(/datum/action/item_action/toggle_helmet_flashlight)
 
 /obj/item/clothing/head/helmet/ComponentInitialize()
 	. = ..()
@@ -389,7 +389,7 @@
 		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtons()
+		A.build_all_button_icons()
 
 /obj/item/clothing/head/helmet/durathread
 	name = "makeshift helmet"

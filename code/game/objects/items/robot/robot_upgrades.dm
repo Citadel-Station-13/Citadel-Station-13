@@ -355,7 +355,7 @@
 			return FALSE
 
 		icon_state = "selfrepair_off"
-		toggle_action = new /datum/action/item_action/toggle(src)
+		toggle_action = add_item_action(/datum/action/item_action/toggle)
 		toggle_action.Grant(R)
 
 /obj/item/borg/upgrade/selfrepair/deactivate(mob/living/silicon/robot/R, user = usr)
@@ -705,7 +705,7 @@
 /obj/effect/proc_holder/silicon/cyborg/vtecControl
 	name = "vTec Control"
 	desc = "Allows finer-grained control of the vTec speed boost."
-	action_icon = 'icons/mob/actions.dmi'
+	action_icon = 'icons/hud/actions.dmi'
 	action_icon_state = "Chevron_State_0"
 
 	var/currentState = 0
@@ -725,6 +725,6 @@
 				user.vtec = initial(user.vtec) - maxReduction * 1
 
 	action.button_icon_state = "Chevron_State_[currentState]"
-	action.UpdateButtons()
+	action.build_all_button_icons()
 
 	return TRUE
