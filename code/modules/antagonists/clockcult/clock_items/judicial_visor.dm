@@ -73,7 +73,7 @@
 	var/mob/living/L = loc
 	active = change_to
 	icon_state = "judicial_visor_[active]"
-	L.update_action_buttons_icon()
+	L.update_mob_action_buttons()
 	L.update_inv_glasses()
 	if(!is_servant_of_ratvar(L) || L.stat)
 		return FALSE
@@ -95,7 +95,7 @@
 		active = FALSE
 	icon_state = "judicial_visor_[active]"
 	if(user)
-		user.update_action_buttons_icon()
+		user.update_mob_action_buttons()
 		user.update_inv_glasses()
 
 /obj/effect/proc_holder/judicial_visor
@@ -137,7 +137,7 @@
 		var/turf/targetturf = get_turf(target)
 		new/obj/effect/clockwork/judicial_marker(targetturf, ranged_ability_user)
 		log_combat(ranged_ability_user, targetturf, "created a judicial marker")
-		ranged_ability_user.update_action_buttons_icon()
+		ranged_ability_user.update_mob_action_buttons()
 		ranged_ability_user.update_inv_glasses()
 		addtimer(CALLBACK(visor, TYPE_PROC_REF(/obj/item/clothing/glasses/judicial_visor, recharge_visor), ranged_ability_user), GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown)//Cooldown is reduced by 10x if Ratvar is up
 		remove_ranged_ability()

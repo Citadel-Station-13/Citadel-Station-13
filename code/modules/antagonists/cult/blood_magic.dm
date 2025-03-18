@@ -12,7 +12,7 @@
 		qdel(X)
 	..()
 
-/datum/action/innate/cult/blood_magic/IsAvailable(silent = FALSE)
+/datum/action/innate/cult/blood_magic/IsAvailable(feedback = TRUE)
 	if(!iscultist(owner))
 		return FALSE
 	return ..()
@@ -119,7 +119,7 @@
 		hand_magic = null
 	..()
 
-/datum/action/innate/cult/blood_spell/IsAvailable(silent = FALSE)
+/datum/action/innate/cult/blood_spell/IsAvailable(feedback = TRUE)
 	if(!iscultist(owner) || owner.incapacitated()  || !charges)
 		return FALSE
 	return ..()
@@ -274,7 +274,7 @@
 		attached_action.charges--
 		attached_action.desc = attached_action.base_desc
 		attached_action.desc += "<br><b><u>Has [attached_action.charges] use\s remaining</u></b>."
-		attached_action.UpdateButtons()
+		attached_action.build_all_button_icons()
 		if(attached_action.charges <= 0)
 			remove_ranged_ability("<span class='cult'>You have exhausted the spell's power!</span>")
 			qdel(src)
@@ -326,7 +326,7 @@
 		qdel(src)
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/innate/cult/blood_spell/manipulation
 	name = "Blood Rites"
@@ -374,7 +374,7 @@
 			source.charges = uses
 			source.desc = source.base_desc
 			source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-			source.UpdateButtons()
+			source.build_all_button_icons()
 	..()
 
 /obj/item/melee/blood_magic/attack_self(mob/living/user)
@@ -401,7 +401,7 @@
 	else if(source)
 		source.desc = source.base_desc
 		source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-		source.UpdateButtons()
+		source.build_all_button_icons()
 
 //Stun
 /obj/item/melee/blood_magic/stun

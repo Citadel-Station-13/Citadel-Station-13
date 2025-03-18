@@ -174,7 +174,7 @@
 	fire_delay = delay
 	current_tracers = list()
 	START_PROCESSING(SSfastprocess, src)
-	zoom_lock_action = new(src)
+	zoom_lock_action = add_item_action(/datum/action/item_action/zoom_lock_action)
 
 /obj/item/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)

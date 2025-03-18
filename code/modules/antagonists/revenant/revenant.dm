@@ -132,7 +132,7 @@
 		to_chat(src, "<span class='revenboldnotice'>You can move again!</span>")
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
-		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
+		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
 
@@ -200,12 +200,12 @@
 						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>")
 		adjustBruteLoss(25) //hella effective
 		inhibited = TRUE
-		update_action_buttons_icon()
+		update_mob_action_buttons()
 		addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 30)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
@@ -314,7 +314,7 @@
 	if(essence_excess < essence_cost)
 		return FALSE
 	essence_excess -= essence_cost
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	return TRUE
 
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
@@ -327,7 +327,7 @@
 	if(essence_amt > 0)
 		essence_accumulated = max(0, essence_accumulated+essence_amt)
 		essence_excess = max(0, essence_excess+essence_amt)
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	if(!silent)
 		if(essence_amt > 0)
 			to_chat(src, "<span class='revennotice'>Gained [essence_amt]E[source ? " from [source]":""].</span>")

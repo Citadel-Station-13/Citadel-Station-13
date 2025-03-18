@@ -492,7 +492,7 @@
 	..()
 
 /datum/action/innate/send_chems
-	icon_icon = 'icons/mob/actions/actions_genetic.dmi'
+	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	background_icon_state = "bg_spell"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "spikechemswap"

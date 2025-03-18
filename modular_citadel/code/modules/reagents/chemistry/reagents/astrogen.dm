@@ -37,18 +37,22 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	var/mob/living/carbon/origin
 	var/datum/mind/originalmind
 
-/datum/action/chem/astral/Trigger()
+/datum/action/chem/astral/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(origin.mind && origin.mind != originalmind)
-		to_chat(originalmind.current, "<span class='warning'><b><i>There's a foreign presence in your body blocking your return!</b></i></span>")
-		return ..()
+		to_chat(originalmind.current, span_warning("<b><i>There's a foreign presence in your body blocking your return!</b></i>"))
+		return FALSE
 	if(origin.reagents.has_reagent(/datum/reagent/fermi/astral) )
 		var/datum/reagent/fermi/astral/As = locate(/datum/reagent/fermi/astral) in origin.reagents.reagent_list
 		if(As.current_cycle < 10)
-			to_chat(originalmind.current, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
-			return ..()
+			to_chat(originalmind.current, span_warning("<b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i>"))
+			return FALSE
 	originalmind.transfer_to(origin)
 	if(origin.mind == originalmind)
 		qdel(src)
+	return TRUE
 
 
 /datum/reagent/fermi/astral/reaction_turf(turf/T, reac_volume)
@@ -88,7 +92,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 
 	if(overdosed)
 		if(prob(50))
-			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
+			to_chat(G, span_warning("The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b>"))
 			do_teleport(G, M.loc)
 	metabolization_rate = current_cycle/10 //exponential
 	sleepytime+=5
@@ -107,12 +111,12 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(M.mind) //Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
 		var/mob/living/simple_animal/astral/G2 = new(get_turf(M))
 		M.mind.transfer_to(G2)
-		to_chat(G2, "<span class='warning'>[M]'s conciousness snaps back to them as [M.p_their()] astrogen runs out, kicking your projected mind out!'</b></span>")
+		to_chat(G2, span_warning("[M]'s conciousness snaps back to them as [M.p_their()] astrogen runs out, kicking your projected mind out!'</b>"))
 		log_reagent("FERMICHEM: [G2.mind.name] has been booted out of [M] as their original mind came back as the Astrogen reagent ran out!")
 	G.mind.transfer_to(origin)
 	qdel(G)
 	if(overdosed)
-		to_chat(M, "<span class='warning'>The high volume of astrogen you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
+		to_chat(M, span_warning("The high volume of astrogen you just took causes you to black out momentarily as your mind snaps back to your body.</b>"))
 		M.Sleeping(sleepytime, 0)
 	antiGenetics = 255
 	log_reagent("FERMICHEM: [M] has astrally returned to their body!")
@@ -130,39 +134,39 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		antiGenetics--
 	switch(antiGenetics)
 		if(245)
-			to_chat(M, "<span class='warning'>You notice your body starting to disappear, maybe you took too much Astrogen...?</b></span>")
+			to_chat(M, span_warning("You notice your body starting to disappear, maybe you took too much Astrogen...?</b>"))
 			M.alpha--
 			antiGenetics--
 			log_reagent("FERMICHEM: [M] ckey: [M.key] has become addicted to Astrogen")
 		if(220)
-			to_chat(M, "<span class='notice'>Your addiction is only getting worse as your body disappears. Maybe you should get some more, and fast?</b></span>")
+			to_chat(M, span_notice("Your addiction is only getting worse as your body disappears. Maybe you should get some more, and fast?</b>"))
 			M.alpha--
 			antiGenetics--
 		if(200)
-			to_chat(M, "<span class='notice'>You feel a substantial part of your soul flake off into the ethereal world, rendering yourself unclonable.</b></span>")
+			to_chat(M, span_notice("You feel a substantial part of your soul flake off into the ethereal world, rendering yourself unclonable.</b>"))
 			M.alpha--
 			antiGenetics--
 			ADD_TRAIT(M, TRAIT_NOCLONE, "astral") //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
 			M.hellbound = TRUE
 		if(180)
-			to_chat(M, "<span class='notice'>You feel fear build up in yourself as more and more of your body and consciousness begins to fade.</b></span>")
+			to_chat(M, span_notice("You feel fear build up in yourself as more and more of your body and consciousness begins to fade.</b>"))
 			M.alpha--
 			antiGenetics--
 		if(120)
-			to_chat(M, "<span class='notice'>As you lose more and more of yourself, you start to think that maybe shedding your mortality isn't too bad.</b></span>")
+			to_chat(M, span_notice("As you lose more and more of yourself, you start to think that maybe shedding your mortality isn't too bad.</b>"))
 			M.alpha--
 			antiGenetics--
 		if(80)
-			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates your forthcoming oblivion.</b></span>")
+			to_chat(M, span_notice("You feel a thrill shoot through your body as what's left of your mind contemplates your forthcoming oblivion.</b>"))
 			M.alpha--
 			antiGenetics--
 		if(45)
-			to_chat(M, "<span class='warning'>The last vestiges of your mind eagerly await your imminent annihilation.</b></span>")
+			to_chat(M, span_warning("The last vestiges of your mind eagerly await your imminent annihilation.</b>"))
 			M.alpha--
 			antiGenetics--
 		if(-INFINITY to 30)
-			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
-			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag, you do not remember the afterlife IC)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
+			to_chat(M, span_warning("Your body disperses from existence, as you become one with the universe.</b>"))
+			to_chat(M, span_userdanger("As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag, you do not remember the afterlife IC)"))//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
 			deadchat_broadcast(" has become one with the universe, meaning that their IC conciousness is continuous in a new life. If they find a way back to life, they are allowed to remember their previous life. Be careful what you say. If they abuse this, bwoink the FUCK outta them.</span>", "<span class='warning'>[M]", M, message_type=DEADCHAT_ANNOUNCEMENT)
 			M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
 			message_admins("[M] (ckey: [M.ckey]) has become one with the universe, and have continuous memories thoughout their lives should they find a way to come back to life (such as an inteligence potion, midround antag, ghost role).")

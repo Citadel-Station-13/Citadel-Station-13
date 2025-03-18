@@ -1,6 +1,6 @@
 /datum/action/item_action/mod
 	background_icon_state = "bg_tech_blue"
-	icon_icon = 'icons/mob/actions/actions_mod.dmi'
+	button_icon = 'icons/mob/actions/actions_mod.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 	var/obj/item/mod/control/mod
 	/// Whether this action is intended for the AI. Stuff breaks a lot if this is done differently.
@@ -42,9 +42,7 @@
 	desc = "Deploy/Conceal a part of the MODsuit."
 	button_icon_state = "deploy"
 
-/datum/action/item_action/mod/deploy/Trigger()
-	if(!IsAvailable())
-		return FALSE
+/datum/action/item_action/mod/deploy/do_effect(trigger_flags)
 	mod.choose_deploy(usr)
 	return TRUE
 
@@ -56,11 +54,8 @@
 	desc = "Activate/Deactivate the MODsuit."
 	button_icon_state = "activate"
 
-/datum/action/item_action/mod/activate/Trigger()
-	if(!IsAvailable())
-		return FALSE
-	mod.toggle_activate(usr)
-	return TRUE
+/datum/action/item_action/mod/activate/do_effect(trigger_flags)
+	return mod.toggle_activate(usr)
 
 /datum/action/item_action/mod/activate/ai
 	ai_action = TRUE
@@ -70,11 +65,8 @@
 	desc = "Toggle a MODsuit module."
 	button_icon_state = "module"
 
-/datum/action/item_action/mod/module/Trigger()
-	if(!IsAvailable())
-		return FALSE
-	mod.quick_module(usr)
-	return TRUE
+/datum/action/item_action/mod/module/do_effect(trigger_flags)
+	return mod.quick_module(usr)
 
 /datum/action/item_action/mod/module/ai
 	ai_action = TRUE
@@ -84,9 +76,7 @@
 	desc = "Open the MODsuit's panel."
 	button_icon_state = "panel"
 
-/datum/action/item_action/mod/panel/Trigger()
-	if(!IsAvailable())
-		return FALSE
+/datum/action/item_action/mod/panel/do_effect(trigger_flags)
 	mod.ui_interact(usr)
 	return TRUE
 

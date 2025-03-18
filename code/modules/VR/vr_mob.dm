@@ -35,10 +35,10 @@
 
 /datum/action/quit_vr
 	name = "Quit Virtual Reality"
-	icon_icon = 'icons/mob/actions/actions_vr.dmi'
+	button_icon = 'icons/mob/actions/actions_vr.dmi'
 	button_icon_state = "logout"
 
-/datum/action/quit_vr/Trigger() //this merely a trigger for /datum/component/virtual_reality
+/datum/action/quit_vr/Trigger(trigger_flags) //this merely a trigger for /datum/component/virtual_reality
 	. = ..()
 	if(.) //The component was not there to block the trigger.
 		Remove(owner)

@@ -134,10 +134,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_NULL(module_store_icon)
 	QDEL_LIST(static_inventory)
 
+	// all already deleted by static inventory clear
 	inv_slots.Cut()
 	action_intent = null
 	zone_select = null
 	pull_icon = null
+	rest_icon = null
+	hand_slots.Cut()
 
 	QDEL_LIST(toggleable_inventory)
 	QDEL_LIST(hotkeybuttons)
@@ -255,6 +258,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
 		viewmob.hud_used.plane_masters_update()
+		viewmob.show_other_mob_action_buttons(mymob)
 
 	screenmob.reload_rendering()
 
@@ -369,6 +373,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			floating_actions += button
 			button.screen_loc = position
 			position = SCRN_OBJ_FLOATING
+			toggle_palette.update_state()
 
 	button.location = position
 
@@ -387,6 +392,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				position_action(button, button.linked_action.default_button_position)
 				return
 			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, world.icon_size, our_client.view_size.getView()) // Asks for a location adjacent to our button that won't overflow the map
+			toggle_palette.update_state()
 
 	button.location = relative_to.location
 
@@ -396,6 +402,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		if(SCRN_OBJ_DEFAULT) // Invalid
 			CRASH("We just tried to hide an action buttion that somehow has the default position as its location, you done fucked up")
 		if(SCRN_OBJ_FLOATING)
+			toggle_palette.update_state()
 			floating_actions -= button
 		if(SCRN_OBJ_IN_LIST)
 			listed_actions.remove_action(button)
@@ -407,11 +414,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/generate_landings(atom/movable/screen/movable/action_button/button)
 	listed_actions.generate_landing()
 	palette_actions.generate_landing()
+	toggle_palette.activate_landing()
 
 /// Clears all currently visible landings
 /datum/hud/proc/hide_landings()
 	listed_actions.clear_landing()
 	palette_actions.clear_landing()
+	toggle_palette.disable_landing()
 
 // Updates any existing "owned" visuals, ensures they continue to be visible
 /datum/hud/proc/update_our_owner()
@@ -429,7 +438,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	listed_actions.check_against_view()
 	palette_actions.check_against_view()
 	for(var/atom/movable/screen/movable/action_button/floating_button as anything in floating_actions)
-		var/list/current_offsets = screen_loc_to_offset(floating_button.screen_loc)
+		var/list/current_offsets = screen_loc_to_offset(floating_button.screen_loc, our_view)
 		// We set the view arg here, so the output will be properly hemm'd in by our new view
 		floating_button.screen_loc = offset_to_screen_loc(current_offsets[1], current_offsets[2], view = our_view)
 
@@ -442,7 +451,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/atom/movable/screen/movable/action_button/button = action.viewers[src]
 		if(!button)
 			action.ShowTo(mymob)
-			button = action.viewers[src]
 		else
 			position_action(button, button.location)
 
@@ -655,4 +663,4 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/action_group/listed/refresh_actions()
 	. = ..()
-	owner?.palette_actions.refresh_actions() // We effect them, so we gotta refresh em
+	owner.palette_actions.refresh_actions() // We effect them, so we gotta refresh em

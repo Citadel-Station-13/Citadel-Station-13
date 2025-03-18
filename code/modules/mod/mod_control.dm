@@ -431,7 +431,7 @@
 
 /obj/item/mod/control/proc/quick_module(mob/user)
 	if(!length(modules))
-		return
+		return FALSE
 	var/list/display_names = list()
 	var/list/items = list()
 	for(var/obj/item/mod/module/module as anything in modules)
@@ -441,15 +441,16 @@
 		var/image/module_image = image(icon = module.icon, icon_state = module.icon_state)
 		items += list(module.name = module_image)
 	if(!length(items))
-		return
+		return FALSE
 	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE)
 	if(!pick)
-		return
+		return FALSE
 	var/module_reference = display_names[pick]
 	var/obj/item/mod/module/selected_module = locate(module_reference) in modules
 	if(!istype(selected_module) || user.incapacitated())
-		return
+		return FALSE
 	selected_module.on_select()
+	return TRUE
 
 /obj/item/mod/control/proc/set_mod_color(new_color)
 	var/list/all_parts = mod_parts + src

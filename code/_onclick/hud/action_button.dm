@@ -1,5 +1,3 @@
-#define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
-
 /atom/movable/screen/movable/action_button
 	var/datum/action/linked_action
 	var/datum/hud/our_hud
@@ -7,9 +5,13 @@
 	screen_loc = null
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
-	var/button_icon_state
-	var/appearance_cache
+	/// The icon state of our active overlay, used to prevent re-applying identical overlays
+	var/active_overlay_icon_state
+	/// The icon state of our active underlay, used to prevent re-applying identical underlays
+	var/active_underlay_icon_state
+	/// The overlay we have overtop our button
 	var/mutable_appearance/button_overlay
+
 	/// Where we are currently placed on the hud. SCRN_OBJ_DEFAULT asks the linked action what it thinks
 	var/location = SCRN_OBJ_DEFAULT
 	/// A unique bitflag, combined with the name of our linked action this lets us persistently remember any user changes to our position
@@ -17,6 +19,8 @@
 	/// A weakref of the last thing we hovered over
 	/// God I hate how dragging works
 	var/datum/weakref/last_hovored_ref
+	/// overlay for keybind maptext
+	var/mutable_appearance/keybind_maptext
 
 /atom/movable/screen/movable/action_button/Destroy()
 	if(our_hud)
@@ -44,19 +48,32 @@
 
 /atom/movable/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))
-		return
+		return FALSE
 
 	var/list/modifiers = params2list(params)
+	/* if(LAZYACCESS(modifiers, ALT_CLICK))
+		begin_creating_bind(usr)
+		return TRUE */
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		var/datum/hud/our_hud = usr.hud_used
 		our_hud.position_action(src, SCRN_OBJ_DEFAULT)
 		return TRUE
-	var/mob/clicker = usr
-	if(!clicker.CheckActionCooldown())
+	if(!usr.CheckActionCooldown())
 		return
-	clicker.DelayNextAction(1)
-	linked_action.Trigger()
+	usr.DelayNextAction(1)
+	var/trigger_flags
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		trigger_flags |= TRIGGER_SECONDARY_ACTION
+	linked_action.Trigger(trigger_flags = trigger_flags)
 	return TRUE
+
+/* /atom/movable/screen/movable/action_button/proc/begin_creating_bind(mob/user)
+	if(!isnull(linked_action.full_key))
+		linked_action.full_key = null
+		linked_action.update_button_status(src)
+		return
+	linked_action.full_key = tgui_input_keycombo(user, "Please bind a key for this action.")
+	linked_action.update_button_status(src) */
 
 // Entered and Exited won't fire while you're dragging something, because you're still "holding" it
 // Very much byond logic, but I want nice behavior, so we fake it with drag
@@ -77,11 +94,8 @@
 	if(old_object)
 		old_object.MouseExited(over_location, over_control, params)
 
-	if(QDELETED(over_location))
-		last_hovored_ref = null
-		return
 	last_hovored_ref = WEAKREF(over_object)
-	over_object.MouseEntered(over_location, over_control, params)
+	over_object?.MouseEntered(over_location, over_control, params)
 
 /atom/movable/screen/movable/action_button/MouseEntered(location, control, params)
 	. = ..()
@@ -96,30 +110,37 @@
 	last_hovored_ref = null
 	if(!can_use(usr))
 		return
+
 	var/datum/hud/our_hud = usr.hud_used
 	if(over_object == src)
 		our_hud.hide_landings()
 		return
+
 	if(istype(over_object, /atom/movable/screen/action_landing))
 		var/atom/movable/screen/action_landing/reserve = over_object
 		reserve.hit_by(src)
-		our_hud.hide_landings()
 		save_position()
+		our_hud.hide_landings()
 		return
 
-	our_hud.hide_landings()
 	if(istype(over_object, /atom/movable/screen/button_palette) || istype(over_object, /atom/movable/screen/palette_scroll))
 		our_hud.position_action(src, SCRN_OBJ_IN_PALETTE)
 		save_position()
+		our_hud.hide_landings()
 		return
+
 	if(istype(over_object, /atom/movable/screen/movable/action_button))
 		var/atom/movable/screen/movable/action_button/button = over_object
 		our_hud.position_action_relative(src, button)
 		save_position()
+		our_hud.hide_landings()
 		return
+
 	. = ..()
+
 	our_hud.position_action(src, screen_loc)
 	save_position()
+	our_hud.hide_landings()
 
 /atom/movable/screen/movable/action_button/proc/save_position()
 	var/mob/user = our_hud.mymob
@@ -151,6 +172,15 @@
 	user.client.prefs.action_buttons_screen_locs -= "[name]_[id]"
 	user.client.prefs.queue_save_pref(1 SECONDS, TRUE)
 
+/atom/movable/screen/movable/action_button/proc/update_keybind_maptext(key)
+	cut_overlay(keybind_maptext)
+	if(!key)
+		return
+	keybind_maptext = new
+	keybind_maptext.maptext = MAPTEXT("<span style='text-align: right'>[key]</span>")
+	keybind_maptext.transform = keybind_maptext.transform.Translate(-4, length(key) > 1 ? -6 : 2) //with modifiers, its placed lower so cooldown is visible
+	add_overlay(keybind_maptext)
+
 /**
  * This is a silly proc used in hud code code to determine what icon and icon state we should be using
  * for hud elements (such as action buttons) that don't have their own icon and icon state set.
@@ -161,13 +191,18 @@
 	. = list()
 	.["bg_icon"] = ui_style
 	.["bg_state"] = "template"
+	.["bg_state_active"] = "template_active"
 
-//see human and alien hud for specific implementations.
-
-/mob/proc/update_action_buttons_icon(status_only = FALSE)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtons(status_only)
+/**
+ * Updates all action buttons this mob has.
+ *
+ * Arguments:
+ * * update_flags - Which flags of the action should we update
+ * * force - Force buttons update even if the given button icon state has not changed
+ */
+/mob/proc/update_mob_action_buttons(update_flags = ALL, force = FALSE)
+	for(var/datum/action/current_action as anything in actions)
+		current_action.build_all_button_icons(update_flags, force)
 
 /**
  * This proc handles adding all of the mob's actions to their screen
@@ -186,7 +221,7 @@
 
 	for(var/datum/action/action as anything in actions)
 		var/atom/movable/screen/movable/action_button/button = action.viewers[hud_used]
-		action.UpdateButtons()
+		action.build_all_button_icons()
 		if(reload_screen)
 			client.screen += button
 
@@ -194,6 +229,48 @@
 		hud_used.update_our_owner()
 	// This holds the logic for the palette buttons
 	hud_used.palette_actions.refresh_actions()
+
+/**
+ * Show (most) of the another mob's action buttons to this mob
+ *
+ * Used for observers viewing another mob's screen
+ */
+/mob/proc/show_other_mob_action_buttons(mob/take_from)
+	if(!hud_used || !client)
+		return
+
+	for(var/datum/action/action as anything in take_from.actions)
+		if(!action.show_to_observers || !action.owner_has_control)
+			continue
+		action.GiveAction(src)
+	RegisterSignal(take_from, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted))
+	RegisterSignal(take_from, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_observing_action_removed))
+
+/**
+ * Hide another mob's action buttons from this mob
+ *
+ * Used for observers viewing another mob's screen
+ */
+/mob/proc/hide_other_mob_action_buttons(mob/take_from)
+	for(var/datum/action/action as anything in take_from.actions)
+		action.HideFrom(src)
+	UnregisterSignal(take_from, list(COMSIG_MOB_GRANTED_ACTION, COMSIG_MOB_REMOVED_ACTION))
+
+/// Signal proc for [COMSIG_MOB_GRANTED_ACTION] - If we're viewing another mob's action buttons,
+/// we need to update with any newly added buttons granted to the mob.
+/mob/proc/on_observing_action_granted(mob/living/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	if(!action.show_to_observers || !action.owner_has_control)
+		return
+	action.GiveAction(src)
+
+/// Signal proc for [COMSIG_MOB_REMOVED_ACTION] - If we're viewing another mob's action buttons,
+/// we need to update with any removed buttons from the mob.
+/mob/proc/on_observing_action_removed(mob/living/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	action.HideFrom(src)
 
 /atom/movable/screen/button_palette
 	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click</b> this to reset all buttons"
@@ -220,6 +297,7 @@
 /atom/movable/screen/button_palette/proc/set_hud(datum/hud/our_hud)
 	src.our_hud = our_hud
 	refresh_owner()
+	disable_landing() // If our hud already has elements, don't force hide us
 
 /atom/movable/screen/button_palette/update_name(updates)
 	. = ..()
@@ -240,6 +318,21 @@
 	var/ui_name = ui_paths[length(ui_paths)]
 
 	icon_state = "[ui_name]_palette"
+
+/atom/movable/screen/button_palette/proc/activate_landing()
+	// Reveal ourselves to the user
+	invisibility = INVISIBILITY_NONE
+
+/atom/movable/screen/button_palette/proc/disable_landing()
+	// If we have no elements in the palette, hide your ugly self please
+	if (!length(our_hud.palette_actions?.actions) && !length(our_hud.floating_actions))
+		invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/button_palette/proc/update_state()
+	if (length(our_hud.floating_actions))
+		activate_landing()
+	else
+		disable_landing()
 
 /atom/movable/screen/button_palette/MouseEntered(location, control, params)
 	. = ..()

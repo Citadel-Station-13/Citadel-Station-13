@@ -15,6 +15,7 @@
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
+	action_slots = ALL
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
@@ -59,7 +60,7 @@
 		else
 			to_chat(H, "<span class='notice'>You open [src] valve.</span>")
 		H.internal = src
-	H.update_action_buttons_icon()
+	H.update_mob_action_buttons()
 
 
 /obj/item/tank/Initialize(mapload)
