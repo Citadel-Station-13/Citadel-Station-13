@@ -47,76 +47,120 @@
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
 	button_icon_state = "wrassle_slam"
 
-/datum/action/slam/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
-		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
-		return
-	owner.visible_message("<span class='danger'>[owner] prepares to BODY SLAM!</span>", "<b><i>Your next attack will be a BODY SLAM.</i></b>")
+/datum/action/slam/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	owner.visible_message(span_danger("[owner] prepares to BODY SLAM!"), "<b><i>Your next attack will be a BODY SLAM.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "slam"
+	return TRUE
+
+/datum/action/slam/IsAvailable(feedback)
+	if(owner.incapacitated())
+		if(feedback)
+			to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		if(feedback)
+			to_chat(owner, span_warning("You are too HIPPIE to WRESTLE other living beings!"))
+		return FALSE
+	return ..()
 
 /datum/action/throw_wrassle
 	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
 	button_icon_state = "wrassle_throw"
 
-/datum/action/throw_wrassle/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
-		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
-		return
-	owner.visible_message("<span class='danger'>[owner] prepares to THROW!</span>", "<b><i>Your next attack will be a THROW.</i></b>")
+/datum/action/throw_wrassle/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	owner.visible_message(span_danger("[owner] prepares to THROW!"), "<b><i>Your next attack will be a THROW.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "throw"
+	return TRUE
+
+/datum/action/throw_wrassle/IsAvailable(feedback)
+	if(owner.incapacitated())
+		if(feedback)
+			to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		if(feedback)
+			to_chat(owner, span_warning("You are too HIPPIE to WRESTLE other living beings!"))
+		return FALSE
+	return ..()
 
 /datum/action/kick
 	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	button_icon_state = "wrassle_kick"
 
-/datum/action/kick/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
-		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
-		return
-	owner.visible_message("<span class='danger'>[owner] prepares to KICK!</span>", "<b><i>Your next attack will be a KICK.</i></b>")
+/datum/action/kick/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	owner.visible_message(span_danger("[owner] prepares to KICK!"), "<b><i>Your next attack will be a KICK.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "kick"
+	return TRUE
+
+/datum/action/kick/IsAvailable(feedback)
+	if(owner.incapacitated())
+		if(feedback)
+			to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		if(feedback)
+			to_chat(owner, span_warning("You are too HIPPIE to WRESTLE other living beings!"))
+		return FALSE
+	return ..()
 
 /datum/action/strike
 	name = "Strike - Hit a neaby opponent with a quick attack."
 	button_icon_state = "wrassle_strike"
 
-/datum/action/strike/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
-		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
-		return
-	owner.visible_message("<span class='danger'>[owner] prepares to STRIKE!</span>", "<b><i>Your next attack will be a STRIKE.</i></b>")
+/datum/action/strike/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	owner.visible_message(span_danger("[owner] prepares to STRIKE!"), "<b><i>Your next attack will be a STRIKE.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "strike"
+	return TRUE
+
+/datum/action/strike/IsAvailable(feedback)
+	if(owner.incapacitated())
+		if(feedback)
+			to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		if(feedback)
+			to_chat(owner, span_warning("You are too HIPPIE to WRESTLE other living beings!"))
+		return FALSE
+	return ..()
 
 /datum/action/drop
 	name = "Drop - Smash down onto an opponent."
 	button_icon_state = "wrassle_drop"
 
-/datum/action/drop/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
-		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
-		return
-	owner.visible_message("<span class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
+/datum/action/drop/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	owner.visible_message(span_danger("[owner] prepares to LEG DROP!"), "<b><i>Your next attack will be a LEG DROP.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "drop"
+
+/datum/action/drop/IsAvailable(feedback)
+	if(owner.incapacitated())
+		if(feedback)
+			to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		if(feedback)
+			to_chat(owner, span_warning("You are too HIPPIE to WRESTLE other living beings!"))
+		return FALSE
+	return ..()
 
 /datum/martial_art/wrestling/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(..())
@@ -473,8 +517,8 @@
 	if(A.pulling == D || A == D) // don't stun grab yoursel
 		return FALSE
 	A.start_pulling(D)
-	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
-								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
+	D.visible_message(span_danger("[A] gets [D] in a cinch!"), \
+								span_userdanger("[A] gets [D] in a cinch!"))
 	D.Stun(rand(60,100))
 	log_combat(A, D, "cinched")
 	return TRUE

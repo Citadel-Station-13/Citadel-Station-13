@@ -662,12 +662,18 @@
 /datum/action/report
 	name = "Show roundend report"
 	button_icon_state = "round_end"
+	check_flags = NONE
+	required_mobility_flags = NONE
 
-/datum/action/report/Trigger()
+/datum/action/report/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
+		return TRUE
 
-/datum/action/report/IsAvailable()
+/datum/action/report/IsAvailable(feedback)
 	return TRUE
 
 /datum/action/report/Topic(href,href_list)

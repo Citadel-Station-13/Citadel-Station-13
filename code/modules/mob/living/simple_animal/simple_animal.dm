@@ -484,7 +484,7 @@
 	if(!CHECK_MOBILITY(src, MOBILITY_MOVE)) // !(mobility_flags & MOBILITY_MOVE)
 		walk(src, 0) //stop mid walk
 	update_transform()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	return mobility_flags
 
 /mob/living/simple_animal/update_transform(do_animate)

@@ -337,7 +337,7 @@
 
 /datum/action/innate/nanite_button
 	name = "Button"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 	button_icon_state = "nanite_power"
 	var/datum/nanite_program/dermal_button/program

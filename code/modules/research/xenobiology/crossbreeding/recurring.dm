@@ -29,10 +29,10 @@ Recurring extracts:
 /obj/item/slimecross/recurring/process()
 	if(cooldown > 0)
 		cooldown--
-	else if(extract.Uses < 10 && extract.Uses > 0)
-		extract.Uses++
+	else if(extract.extract_uses < 10 && extract.extract_uses > 0)
+		extract.extract_uses++
 		cooldown = max_cooldown
-	else if(extract.Uses <= 0)
+	else if(extract.extract_uses <= 0)
 		extract.visible_message("<span class='warning'>The light inside [extract] flickers and dies out.</span>")
 		extract.desc = "A tiny, inert core, bleeding dark, cerulean-colored goo."
 		extract.icon_state = "prismatic"

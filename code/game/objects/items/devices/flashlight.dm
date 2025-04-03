@@ -12,6 +12,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
 	var/on = FALSE
 	var/brightness_on = 4 //range of light when on
 	var/flashlight_power = 0.8 //strength of the light when on
@@ -40,7 +41,7 @@
 	playsound(src, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtons()
+		A.build_all_button_icons()
 	return TRUE
 
 /obj/item/flashlight/DoRevenantThrowEffects(atom/target)
@@ -514,6 +515,10 @@
 /obj/item/flashlight/glowstick/proc/activate()
 	if(!on)
 		on = TRUE
+		var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
+		// No sense having a toggle light action that we don't use eh?
+		if(toggle)
+			remove_item_action(toggle)
 		START_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/glowstick/red

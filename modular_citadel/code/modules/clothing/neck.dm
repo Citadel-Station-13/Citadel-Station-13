@@ -13,11 +13,14 @@
 	var/toggled = FALSE
 	var/obj/effect/heart/heart
 
-/datum/action/item_action/zanderlocket/Trigger()
+/datum/action/item_action/zanderlocket/do_effect(trigger_flags)
+	if(!target)
+		return FALSE
 	new/obj/effect/temp_visual/souldeath(owner.loc, owner)
 	playsound(owner, 'sound/misc/souldeath.ogg', 100, FALSE)
+	return TRUE
 
 
 /obj/item/clothing/neck/undertale/Initialize(mapload)
-	..()
+	. = ..()
 	AddComponent(/datum/component/souldeath/neck)

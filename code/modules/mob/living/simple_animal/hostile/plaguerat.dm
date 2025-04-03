@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(plague_rats)
 /datum/action/cooldown/scavenge
 	name = "Scavenge"
 	desc = "Spread the plague, scavenge for trash and fresh meat to reproduce."
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
 	cooldown_time = 50

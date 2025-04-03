@@ -34,14 +34,18 @@
 //action button to toggle judgement cuts on/off
 /datum/action/judgement_cut
 	name = "Judgement Cut - Allows Motivation to slash at a longer distance."
-	icon_icon = 'icons/obj/projectiles.dmi'
+	button_icon = 'icons/obj/projectiles.dmi'
 	button_icon_state = "judgement_fire"
 	var/judgement_toggled = TRUE
 
 //lets the user know that you toggled them on/off
-/datum/action/judgement_cut/Trigger()
+/datum/action/judgement_cut/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	judgement_toggled = !judgement_toggled
 	to_chat(owner, "<span class='notice'>You [judgement_toggled ? "enable" : "disable"] Judgement Cuts with Motivation.</span>")
+	return TRUE
 
 //Prevents "firing" the judgement cuts if toggled off and lets the user know
 /obj/item/gun/magic/staff/motivation/can_trigger_gun(mob/living/user)

@@ -3,7 +3,7 @@
 	name = "Puddle Transformation"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimepuddle"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	required_mobility_flags = MOBILITY_STAND
 	var/is_puddle = FALSE
@@ -18,10 +18,12 @@
 	var/transforming = FALSE
 	var/last_use
 
-/datum/action/innate/ability/slime_blobform/IsAvailable()
+/datum/action/innate/ability/slime_blobform/IsAvailable(feedback)
 	if(!transforming)
 		return ..()
 	else
+		if(feedback)
+			owner.balloon_alert(owner, "busy!")
 		return FALSE
 
 /datum/action/innate/ability/slime_blobform/Remove(mob/M)
@@ -36,8 +38,8 @@
 		if(HAS_TRAIT(I, TRAIT_NODROP))
 			to_chat(owner, "There's something stuck to your hand, stopping you from transforming!")
 			return
-	if(IsAvailable())
-		UpdateButtons()
+	if(IsAvailable(TRUE))
+		build_all_button_icons()
 		var/mutcolor = owner.get_ability_property(INNATE_ABILITY_SLIME_BLOBFORM, PROPERTY_BLOBFORM_COLOR) || ("#" + H.dna.features["mcolor"])
 		if(!is_puddle)
 			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
@@ -78,7 +80,7 @@
 				owner.update_antag_overlays()
 
 				transforming = FALSE
-				UpdateButtons()
+				build_all_button_icons()
 		else
 			detransform()
 	else
@@ -109,4 +111,4 @@
 		squeak.RemoveComponent()
 	H.regenerate_icons()
 	transforming = FALSE
-	UpdateButtons()
+	build_all_button_icons()

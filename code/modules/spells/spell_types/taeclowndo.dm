@@ -55,7 +55,7 @@
 	else
 		action.button_icon_state = action_icon_state
 
-	action.UpdateButtons()
+	action.build_all_button_icons()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/targeted/touch/megahonk
