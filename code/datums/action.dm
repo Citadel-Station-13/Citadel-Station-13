@@ -694,8 +694,8 @@
 /datum/action/item_action/instrument/do_effect(trigger_flags)
 	if(!istype(target, /obj/item/instrument))
 		return FALSE
-	var/obj/item/instrument/I = target
-	I.interact(usr)
+	var/obj/item/instrument/instrument = target
+	instrument.interact(usr)
 	return TRUE
 
 /datum/action/item_action/organ_action
@@ -985,7 +985,7 @@
 /datum/action/item_action/storage_gather_mode
 	name = "Switch gathering mode"
 	desc = "Switches the gathering mode of a storage object."
-	button_icon = 'icons/mob/actions/actions_items.dmi'
+	background_icon = 'icons/mob/actions/actions_items.dmi'
 	background_icon_state = "storage_gather_switch"
 
 /proc/get_action_of_type(mob/M, action_type)
