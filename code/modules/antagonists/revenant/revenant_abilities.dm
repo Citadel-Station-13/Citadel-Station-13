@@ -138,7 +138,7 @@
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr, skipcharge = FALSE, silent = FALSE)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr, skipcharge = FALSE, feedback = TRUE)
 	if(charge_counter < charge_max)
 		return FALSE
 	if(!istype(user)) //Badmins, no. Badmins, don't do it.

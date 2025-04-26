@@ -14,8 +14,9 @@
 	var/obj/effect/heart/heart
 
 /datum/action/item_action/zanderlocket/do_effect(trigger_flags)
-	if(!target)
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	new/obj/effect/temp_visual/souldeath(owner.loc, owner)
 	playsound(owner, 'sound/misc/souldeath.ogg', 100, FALSE)
 	return TRUE

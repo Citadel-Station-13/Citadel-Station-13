@@ -347,6 +347,9 @@
 	desc = "Bind your life to the pendant."
 
 /datum/action/item_action/hands_free/memento_mori/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/clothing/neck/necklace/memento_mori/MM = target
 	if(!istype(MM))
 		return FALSE

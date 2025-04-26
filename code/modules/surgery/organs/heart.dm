@@ -168,6 +168,9 @@
 
 //You are now brea- pumping blood manually
 /datum/action/item_action/organ_action/cursed_heart/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/organ/heart/cursed/cursed_heart = target
 	if(!istype(cursed_heart))
 		return FALSE

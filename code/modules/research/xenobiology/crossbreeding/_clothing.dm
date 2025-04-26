@@ -67,6 +67,9 @@ Slimecrossing Armor
 	button_icon_state = "prismcolor"
 
 /datum/action/item_action/change_prism_colour/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	if(!istype(glasses))
 		return FALSE
@@ -82,6 +85,9 @@ Slimecrossing Armor
 	button_icon_state = "lightprism"
 
 /datum/action/item_action/place_light_prism/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	if(locate(/obj/structure/light_prism) in get_turf(owner))
 		to_chat(owner, span_warning("There isn't enough ambient energy to fabricate another light prism here."))

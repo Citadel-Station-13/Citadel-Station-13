@@ -27,7 +27,7 @@
 	dashing_item.attack_self(owner) //Used to toggle dash behavior in the dashing item
 
 /datum/action/innate/dash/proc/Teleport(mob/user, atom/target)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 	var/turf/T = get_turf(target)
 	if(target in view(user.client.view, user))

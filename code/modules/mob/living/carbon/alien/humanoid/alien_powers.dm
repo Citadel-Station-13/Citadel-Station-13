@@ -39,18 +39,18 @@ Doesn't work on other aliens/AI.*/
 	if(plasma_cost > 0)
 		return "[plasma_cost]"
 
-/obj/effect/proc_holder/alien/proc/cost_check(check_turf = FALSE, mob/living/carbon/user, silent = FALSE)
+/obj/effect/proc_holder/alien/proc/cost_check(check_turf = FALSE, mob/living/carbon/user, feedback = TRUE)
 	if(user.stat)
-		if(!silent)
-			to_chat(user, "<span class='noticealien'>You must be conscious to do this.</span>")
+		if(feedback)
+			to_chat(user, span_noticealien("You must be conscious to do this."))
 		return FALSE
 	if(user.getPlasma() < plasma_cost)
-		if(!silent)
-			to_chat(user, "<span class='noticealien'>Not enough plasma stored.</span>")
+		if(feedback)
+			to_chat(user, span_noticealien("Not enough plasma stored."))
 		return FALSE
 	if(check_turf && (!isturf(user.loc) || isspaceturf(user.loc)))
-		if(!silent)
-			to_chat(user, "<span class='noticealien'>Bad place for a garden!</span>")
+		if(feedback)
+			to_chat(user, span_noticealien("Bad place for a garden!"))
 		return FALSE
 	return TRUE
 
@@ -73,7 +73,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		to_chat(user, "There's already a weed node here.")
 		return FALSE
-	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
+	user.visible_message(span_noticealien("[user] has planted some alien weeds!"))
 	new/obj/structure/alien/weeds/node(user.loc)
 	return TRUE
 

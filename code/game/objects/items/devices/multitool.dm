@@ -237,6 +237,9 @@
 	check_flags = NONE
 
 /datum/action/item_action/toggle_multitool/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	if(!istype(target, /obj/item/multitool/ai_detect))
 		return FALSE
 	var/obj/item/multitool/ai_detect/M = target

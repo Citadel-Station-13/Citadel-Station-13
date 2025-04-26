@@ -223,6 +223,9 @@
 	UnregisterSignal(M, COMSIG_MOB_POINTED)
 
 /datum/action/item_action/stickmen/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	if(!ready)
 		to_chat(owner, "<span class='warning'>[src]'s internal magic supply is still recharging!</span>")
 		return FALSE

@@ -671,7 +671,7 @@
 	var/active = FALSE
 
 /datum/action/item_action/toggle_research_scanner/do_effect(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	active = !active
 	if(active)
@@ -907,7 +907,7 @@
 		return FALSE
 	var/obj/effect/proc_holder/spell/S = target
 	if(owner)
-		return S.can_cast(owner, FALSE, !feedback)
+		return S.can_cast(owner, FALSE, feedback)
 	return FALSE
 
 /datum/action/spell_action/alien
@@ -917,7 +917,7 @@
 		return FALSE
 	var/obj/effect/proc_holder/alien/ab = target
 	if(owner)
-		return ab.cost_check(ab.check_turf,owner, !feedback)
+		return ab.cost_check(ab.check_turf,owner, feedback)
 	return FALSE
 
 //surf_ss13

@@ -6,6 +6,9 @@
 	button_icon_state = "random"
 
 /datum/action/item_action/chameleon/drone/randomise/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	// Damn our lack of abstract interfeces
 	if (istype(target, /obj/item/clothing/head/chameleon/drone))
 		var/obj/item/clothing/head/chameleon/drone/X = target
@@ -30,6 +33,9 @@
 		button_icon_state = "drone_camogear_mask"
 
 /datum/action/item_action/chameleon/drone/togglehatmask/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	// No point making the code more complicated if no non-drone
 	// is ever going to use one of these
 
@@ -86,10 +92,10 @@
 	return select_outfit(owner)
 
 /datum/action/chameleon_outfit/proc/select_outfit(mob/user)
-	if(!user || !IsAvailable())
+	if(!user || !IsAvailable(feedback = TRUE))
 		return FALSE
 	var/selected = input("Select outfit to change into", "Chameleon Outfit") as null|anything in outfit_options
-	if(!IsAvailable() || QDELETED(src) || QDELETED(user))
+	if(!IsAvailable(feedback = TRUE) || QDELETED(src) || QDELETED(user))
 		return FALSE
 	var/outfit_type = outfit_options[selected]
 	if(!outfit_type)
@@ -228,8 +234,11 @@
 	chameleon_item.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/pda/picked_item)
+	. = ..()
+	if(!.)
+		return
 	if(!istype(target, /obj/item/pda))
-		return ..()
+		return
 	var/obj/item/pda/P = target
 	P.name = initial(picked_item.name)
 	P.desc = initial(picked_item.desc)

@@ -12,7 +12,7 @@
 
 /datum/action/innate/ability/coiling/Activate()
 	// make sure they meet the mobility/check flags
-	if(IsAvailable())
+	if(IsAvailable(feedback = TRUE))
 		// check that the user has grabbed someone and they are not currently coiling someone
 		if(ishuman(owner.pulling) && !currently_coiling)
 			coil_mob(owner.pulling)

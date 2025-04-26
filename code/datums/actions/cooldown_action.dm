@@ -119,7 +119,7 @@
 
 /// Intercepts client owner clicks to activate the ability
 /datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	if(!target)
 		return FALSE

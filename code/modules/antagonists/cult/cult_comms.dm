@@ -18,7 +18,7 @@
 
 /datum/action/innate/cult/comm/Activate()
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
-	if(!input || !IsAvailable())
+	if(!input || !IsAvailable(feedback = TRUE))
 		return
 
 	cultist_commune(usr, input)
@@ -80,10 +80,10 @@
 
 /datum/action/innate/cult/mastervote/Activate()
 	var/choice = alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
-	if(choice == "Yes" && IsAvailable())
+	if(choice == "Yes" && IsAvailable(feedback = TRUE))
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		if(!C.cult_team)
-			to_chat(owner, "<span class='cult bold'>Do you not already lead yourself?</span>")
+			to_chat(owner, span_cultbold("Do you not already lead yourself?"))
 			return
 		pollCultists(owner,C.cult_team)
 

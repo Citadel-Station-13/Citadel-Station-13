@@ -31,6 +31,9 @@
 	name = "Activate Pill"
 
 /datum/action/item_action/hands_free/activate_pill/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/item_target = target
 	if(!istype(item_target))
 		return FALSE

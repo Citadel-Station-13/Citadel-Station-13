@@ -152,6 +152,9 @@
 	desc = "Switch between seeing normally from your head, or blindly from your body."
 
 /datum/action/item_action/organ_action/dullahan/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/carbon/human/H = owner
 	var/obj/item/organ/eyes/E = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(E)

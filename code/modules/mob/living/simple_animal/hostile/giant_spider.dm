@@ -522,7 +522,7 @@
 	if(!.)
 		return FALSE
 	var/input = stripped_input(owner, "Input a command for your legions to follow.", "Command", "")
-	if(QDELETED(src) || !input || !IsAvailable())
+	if(QDELETED(src) || !input || !IsAvailable(feedback = TRUE))
 		return FALSE
 	spider_command(owner, input)
 	return TRUE

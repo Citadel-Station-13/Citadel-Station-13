@@ -80,6 +80,9 @@
 	desc = "Leech blood from any carbon victim you are passively grabbing."
 
 /datum/action/item_action/organ_action/vampire/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	if(!iscarbon(owner))
 		return FALSE
 	var/mob/living/carbon/H = owner
@@ -142,6 +145,9 @@
 	desc = "Check how much blood you have remaining."
 
 /datum/action/item_action/organ_action/vampire_heart/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	if(!iscarbon(owner))
 		return FALSE
 	var/mob/living/carbon/H = owner

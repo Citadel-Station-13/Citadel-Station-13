@@ -44,6 +44,9 @@
 	decay_factor = 0
 
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/message = input(owner, "Resonate a message to all nearby golems.", "Resonate")
 	if(QDELETED(src) || QDELETED(owner) || !message)
 		return FALSE
@@ -96,6 +99,9 @@
 	return TRUE
 
 /datum/action/item_action/organ_action/colossus/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/command = input(owner, "Speak with the Voice of God", "Command")
 	if(QDELETED(src) || QDELETED(owner))
 		return FALSE
@@ -640,6 +646,9 @@
 	return TRUE
 
 /datum/action/item_action/organ_action/velvet/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/command = input(owner, "Speak in a sultry tone", "Command")
 	if(QDELETED(src) || QDELETED(owner))
 		return FALSE

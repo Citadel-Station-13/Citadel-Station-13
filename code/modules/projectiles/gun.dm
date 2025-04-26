@@ -763,6 +763,9 @@
 		G.zoom(owner, owner.dir, FALSE)
 
 /datum/action/item_action/toggle_scope_zoom/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/gun/G = target
 	if(!istype(G))
 		return FALSE

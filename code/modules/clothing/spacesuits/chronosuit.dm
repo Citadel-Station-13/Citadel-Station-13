@@ -321,7 +321,7 @@
 	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)
 
 /datum/action/innate/chrono_teleport/Activate()
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 	if(chronosuit.camera)
 		chronosuit.chronowalk(chronosuit.camera)

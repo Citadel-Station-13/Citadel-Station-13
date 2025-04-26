@@ -25,6 +25,9 @@
 	name = "Display Forensic Scanner Results"
 
 /datum/action/item_action/displayDetectiveScanResults/do_effect(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/detective_scanner/scanner = target
 	if(!istype(scanner))
 		return FALSE
