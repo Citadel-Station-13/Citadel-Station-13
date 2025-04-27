@@ -381,12 +381,14 @@
 	var/list/defend_phrases = list("Defend me", "Come forth", "Assist me", "Protect me", "Give aid", "Help me")
 	var/list/return_phrases = list("Return", "Return to me", "Your job is done", "You have served", "Come back", "Retreat")
 
-/datum/action/innate/summon_guardian/IsAvailable()
+/datum/action/innate/summon_guardian/IsAvailable(feedback)
 	if(!linked_guardian)
 		return FALSE
 	if(isliving(owner))
 		var/mob/living/L = owner
 		if(!L.can_speak_vocal() || L.stat)
+			if(feedback)
+				L.balloon_alert(L, "can't speak!")
 			return FALSE
 	return ..()
 
@@ -409,7 +411,7 @@
 	buttontooltipstyle = "clockcult"
 	var/mob/living/simple_animal/hostile/clockwork/guardian/linked_guardian
 
-/datum/action/innate/linked_minds/IsAvailable()
+/datum/action/innate/linked_minds/IsAvailable(feedback)
 	if(!linked_guardian)
 		return FALSE
 	return ..()

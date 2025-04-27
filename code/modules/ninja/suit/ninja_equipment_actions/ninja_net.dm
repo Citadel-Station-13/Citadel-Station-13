@@ -2,7 +2,7 @@
 	name = "Energy Net (40E)"
 	desc = "Captures a fallen opponent in a net of energy."
 	button_icon_state = "energynet"
-	icon_icon = 'icons/effects/effects.dmi'
+	button_icon = 'icons/effects/effects.dmi'
 
 /**
  * Proc called to ensnare a person in a energy net.

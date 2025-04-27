@@ -728,14 +728,21 @@ SUBSYSTEM_DEF(vote)
 /datum/action/vote
 	name = "Vote!"
 	button_icon_state = "vote"
+	check_flags = NONE
+	required_mobility_flags = NONE
 
-/datum/action/vote/Trigger()
-	if(owner)
-		owner.vote()
-		remove_from_client()
-		Remove(owner)
+/datum/action/vote/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!owner)
+		return FALSE
+	owner.vote()
+	remove_from_client()
+	Remove(owner)
+	return TRUE
 
-/datum/action/vote/IsAvailable(silent = FALSE)
+/datum/action/vote/IsAvailable(feedback = TRUE)
 	return TRUE
 
 /datum/action/vote/proc/remove_from_client()

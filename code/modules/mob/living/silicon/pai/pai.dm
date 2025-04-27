@@ -215,7 +215,7 @@
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(be_close && !in_range(M, src))
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
+		to_chat(src, span_warning("You are too far away!"))
 		return FALSE
 	return TRUE
 
@@ -230,62 +230,79 @@
 
 /datum/action/innate/pai
 	name = "PAI Action"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	var/mob/living/silicon/pai/P
 
-/datum/action/innate/pai/Trigger()
+/datum/action/innate/pai/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!ispAI(owner))
 		return FALSE
 	P = owner
+	return TRUE
 
 /datum/action/innate/pai/software
 	name = "Software Interface"
 	button_icon_state = "pai"
 	background_icon_state = "bg_tech"
 
-/datum/action/innate/pai/software/Trigger()
-	..()
+/datum/action/innate/pai/software/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	P.paiInterface()
+	return TRUE
 
 /datum/action/innate/pai/shell
 	name = "Toggle Holoform"
 	button_icon_state = "pai_holoform"
 	background_icon_state = "bg_tech"
 
-/datum/action/innate/pai/shell/Trigger()
-	..()
+/datum/action/innate/pai/shell/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(P.holoform)
-		P.fold_in(FALSE)
+		. = P.fold_in(FALSE)
 	else
-		P.fold_out()
+		. = P.fold_out()
 
 /datum/action/innate/pai/chassis
 	name = "Holochassis Appearance Composite"
 	button_icon_state = "pai_chassis"
 	background_icon_state = "bg_tech"
 
-/datum/action/innate/pai/chassis/Trigger()
-	..()
-	P.choose_chassis()
+/datum/action/innate/pai/chassis/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	return P.choose_chassis()
 
 /datum/action/innate/pai/rest
 	name = "Rest"
 	button_icon_state = "pai_rest"
 	background_icon_state = "bg_tech"
 
-/datum/action/innate/pai/rest/Trigger()
-	..()
+/datum/action/innate/pai/rest/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	P.lay_down()
+	return TRUE
 
 /datum/action/innate/pai/light
 	name = "Toggle Integrated Lights"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "emp"
 	background_icon_state = "bg_tech"
 
-/datum/action/innate/pai/light/Trigger()
-	..()
+/datum/action/innate/pai/light/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	P.toggle_integrated_light()
+	return TRUE
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
 	. = ..()
@@ -304,7 +321,7 @@
 	if(cable)
 		if(get_dist(src, cable) > 1)
 			var/turf/T = get_turf(src.loc)
-			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			T.visible_message(span_warning("[src.cable] rapidly retracts back into its spool."), span_italics("You hear a click and the sound of wire spooling rapidly."))
 			qdel(src.cable)
 			cable = null
 
@@ -335,17 +352,17 @@
 
 /obj/item/paicard/attack_ghost(mob/dead/observer/user)
 	if(pai)
-		to_chat(user, "<span class='warning'>This pAI is already in use!</span>")
+		to_chat(user, span_warning("This pAI is already in use!"))
 		return
 
 	var/area/A = get_area(get_turf(src))
 	if(A.type in SSpai.restricted_areas) // set in subsystem/pai.dm on initialize of the subsystem
-		to_chat(user, "<span class='warning'>You can't download yourself into a restricted area!</span>")
+		to_chat(user, span_warning("You can't download yourself into a restricted area!"))
 		return
 
 	var/pai_name = reject_bad_name(stripped_input(usr, "Enter a name for your pAI", "pAI Name", user.name, MAX_NAME_LEN), TRUE)
 	if(!pai_name)
-		to_chat(user, "<span class='warning'>Entered name is not valid.</span>")
+		to_chat(user, span_warning("Entered name is not valid."))
 		return
 
 	var/mob/living/silicon/pai/new_pai = new(src)
@@ -361,8 +378,8 @@
 	. = ..()
 	if(!pai)
 		return
-	to_chat(user, "<span class='notice'>You override [pai]'s directive system, clearing its master string and supplied directive.</span>")
-	to_chat(pai, "<span class='danger'>Warning: System override detected, check directive sub-system for any changes.'</span>")
+	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
+	to_chat(pai, span_danger("Warning: System override detected, check directive sub-system for any changes.'"))
 	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
 	pai.master = null
 	pai.master_dna = null
@@ -372,12 +389,12 @@
 	if(radio_short_timerid)
 		deltimer(radio_short_timerid)
 	radio_short = TRUE
-	to_chat(src, "<span class='danger'>Your radio shorts out!</span>")
+	to_chat(src, span_danger("Your radio shorts out!"))
 	radio_short_timerid = addtimer(CALLBACK(src, PROC_REF(unshort_radio)), radio_short_cooldown, flags = TIMER_STOPPABLE)
 
 /mob/living/silicon/pai/proc/unshort_radio()
 	radio_short = FALSE
-	to_chat(src, "<span class='danger'>You feel your radio is operational once more.</span>")
+	to_chat(src, span_danger("You feel your radio is operational once more."))
 	if(radio_short_timerid)
 		deltimer(radio_short_timerid)
 

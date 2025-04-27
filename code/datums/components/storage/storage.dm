@@ -133,7 +133,7 @@
 	if(!isitem(parent) || !allow_quick_gather)
 		return
 	var/obj/item/I = parent
-	modeswitch_action = new(I)
+	modeswitch_action = I.add_item_action(/datum/action/item_action/storage_gather_mode)
 	RegisterSignal(modeswitch_action, COMSIG_ACTION_TRIGGER, PROC_REF(action_trigger))
 	if(I.obj_flags & IN_INVENTORY)
 		var/mob/M = I.loc

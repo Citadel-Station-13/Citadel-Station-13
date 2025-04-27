@@ -515,7 +515,7 @@
 					else if(istype(cached_my_atom, /obj/item/slime_extract))//if the object is a slime_extract.
 						var/obj/item/slime_extract/M = cached_my_atom
 
-						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+						if(M.extract_uses > 0) // added a limit to slime cores -- Muskets requested this
 							matching_other = 1
 				else
 					if(!C.required_container)
@@ -608,8 +608,8 @@
 
 					if(istype(cached_my_atom, /obj/item/slime_extract))//if there's an extract and it's used up.
 						var/obj/item/slime_extract/ME2 = my_atom
-						ME2.Uses--
-						if(ME2.Uses <= 0) // give the notification that the slime core is dead
+						ME2.extract_uses--
+						if(ME2.extract_uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
 								to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
 								ME2.name = "used slime extract"

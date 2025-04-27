@@ -59,7 +59,7 @@
 		H.update_inv_wear_suit()
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtons()
+		A.build_all_button_icons()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
@@ -441,6 +441,7 @@
 	force = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
+	action_slots = ALL
 
 /obj/item/abductor/baton/ComponentInitialize()
 	. = ..()

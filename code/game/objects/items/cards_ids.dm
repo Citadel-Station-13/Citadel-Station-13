@@ -450,12 +450,13 @@
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
+	action_slots = ALL
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 	var/forged = FALSE //have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 
 /obj/item/card/id/syndicate/Initialize(mapload)
 	. = ..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	var/datum/action/item_action/chameleon/change/chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/card/id
 	chameleon_action.chameleon_name = "ID Card"
 	chameleon_action.initialize_disguises()

@@ -371,7 +371,7 @@
 	desc = "Destroys all runes that were drawn by this blade."
 	background_icon_state = "bg_ecult"
 	button_icon_state = "rune_break"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 	///Reference to the rune knife it is inside of
 	var/obj/item/melee/rune_knife/sword

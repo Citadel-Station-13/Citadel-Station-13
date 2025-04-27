@@ -3,7 +3,7 @@
 	name = "Coil Grabbed Mob"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "coil_icon"
-	icon_icon = 'icons/mob/actions/actions_snake.dmi'
+	button_icon = 'icons/mob/actions/actions_snake.dmi'
 	background_icon_state = "bg_alien"
 	required_mobility_flags = MOBILITY_STAND
 	var/currently_coiling = FALSE
@@ -12,7 +12,7 @@
 
 /datum/action/innate/ability/coiling/Activate()
 	// make sure they meet the mobility/check flags
-	if(IsAvailable())
+	if(IsAvailable(feedback = TRUE))
 		// check that the user has grabbed someone and they are not currently coiling someone
 		if(ishuman(owner.pulling) && !currently_coiling)
 			coil_mob(owner.pulling)

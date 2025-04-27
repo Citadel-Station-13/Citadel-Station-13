@@ -3,7 +3,7 @@
 /datum/action/innate/call_weapon
 	name = "Call Weapon"
 	desc = "This definitely shouldn't exist."
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
+	button_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
@@ -12,7 +12,7 @@
 	var/obj/item/clockwork/weapon/weapon_type //The type of weapon to create
 	var/obj/item/clockwork/weapon/weapon
 
-/datum/action/innate/call_weapon/IsAvailable(silent = FALSE)
+/datum/action/innate/call_weapon/IsAvailable(feedback = TRUE)
 	if(!is_servant_of_ratvar(owner))
 		qdel(src)
 		return
@@ -39,11 +39,11 @@
 		owner.visible_message("<span class='warning'>A [weapon.name] materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your [weapon.name]!</span>")
 	weapon.forceMove(get_turf(owner))
 	owner.put_in_hands(weapon)
-	owner.update_action_buttons_icon()
+	owner.update_mob_action_buttons()
 	return TRUE
 
 /datum/action/innate/call_weapon/proc/weapon_reset(cooldown_time)
 	cooldown = world.time + cooldown_time
-	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_action_buttons_icon)), cooldown_time)
-	owner.update_action_buttons_icon()
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_mob_action_buttons)), cooldown_time)
+	owner.update_mob_action_buttons()
 	QDEL_NULL(weapon)

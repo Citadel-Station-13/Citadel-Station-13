@@ -3,11 +3,11 @@
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeheal"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	required_mobility_flags = NONE
 
-/datum/action/innate/ability/limb_regrowth/IsAvailable(silent = FALSE)
+/datum/action/innate/ability/limb_regrowth/IsAvailable(feedback = TRUE)
 	if(..())
 		var/mob/living/carbon/human/H = owner
 		var/list/limbs_to_heal = H.get_missing_limbs()

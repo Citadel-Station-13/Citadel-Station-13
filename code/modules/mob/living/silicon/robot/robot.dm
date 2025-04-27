@@ -118,7 +118,7 @@
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
-			to_chat(src, "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>")
+			to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug."))
 			ghostize()
 			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
@@ -153,11 +153,11 @@
 		return
 
 	if(wires.is_cut(WIRE_RESET_MODULE))
-		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
+		to_chat(src,span_userdanger("ERROR: Module installer reply timeout. Please check internal connections."))
 		return
 
 	if(!CONFIG_GET(flag/disable_secborg) && GLOB.security_level < CONFIG_GET(number/minimum_secborg_alert))
-		to_chat(src, "<span class='notice'>NOTICE: Due to local station regulations, the security cyborg module and its variants are only available during [NUM2SECLEVEL(CONFIG_GET(number/minimum_secborg_alert))] alert and greater.</span>")
+		to_chat(src, span_notice("NOTICE: Due to local station regulations, the security cyborg module and its variants are only available during [NUM2SECLEVEL(CONFIG_GET(number/minimum_secborg_alert))] alert and greater."))
 
 	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
 	"Engineering" = /obj/item/robot_module/engineering, \
@@ -204,7 +204,7 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	if(usr.stat == DEAD)
-		to_chat(src, "<span class='userdanger'>Alert: You are dead.</span>")
+		to_chat(src, span_userdanger("Alert: You are dead."))
 		return //won't work if dead
 	alert_control.ui_interact(src)
 
@@ -221,7 +221,7 @@
 
 /mob/living/silicon/robot/proc/toggle_ionpulse()
 	if(!ionpulse)
-		to_chat(src, "<span class='notice'>No thrusters are installed!</span>")
+		to_chat(src, span_notice("No thrusters are installed!"))
 		return
 
 	if(!ion_trail)
@@ -229,7 +229,7 @@
 		ion_trail.set_up(src)
 
 	ionpulse_on = !ionpulse_on
-	to_chat(src, "<span class='notice'>You [ionpulse_on ? null :"de"]activate your ion thrusters.</span>")
+	to_chat(src, span_notice("You [ionpulse_on ? null :"de"]activate your ion thrusters."))
 	if(ionpulse_on)
 		ion_trail.start()
 	else
@@ -419,7 +419,7 @@
 		if(!LAZYLEN(S.contents))
 			continue
 		if(!validbreakout)
-			visible_message("<span class='notice'>[user] wedges [I] into the crevice separating [S] from [src]'s chassis, and begins to pry...</span>", "<span class='notice'>You wedge [I] into the crevice separating [S] from [src]'s chassis, and begin to pry...</span>")
+			visible_message(span_notice("[user] wedges [I] into the crevice separating [S] from [src]'s chassis, and begins to pry..."), span_notice("You wedge [I] into the crevice separating [S] from [src]'s chassis, and begin to pry..."))
 		validbreakout = TRUE
 		S.go_out()
 	if(validbreakout)
@@ -437,7 +437,7 @@
 			if("Yes")
 				locked = FALSE
 				update_icons()
-				to_chat(usr, "<span class='notice'>You unlock your cover.</span>")
+				to_chat(usr, span_notice("You unlock your cover."))
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
@@ -545,7 +545,7 @@
 	lamp_functional = FALSE
 	playsound(src, 'sound/effects/glass_step.ogg', 50)
 	toggle_headlamp(TRUE)
-	to_chat(src, "<span class='danger'>Your headlamp is broken! You'll need a human to help replace it.</span>")
+	to_chat(src, span_danger("Your headlamp is broken! You'll need a human to help replace it."))
 
 
 /mob/living/silicon/robot/verb/outputlaws()
@@ -771,10 +771,10 @@
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(stat || locked_down || low_power_mode)
-		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
+		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
 	if(be_close && !in_range(M, src))
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
+		to_chat(src, span_warning("You are too far away!"))
 		return FALSE
 	return TRUE
 
@@ -1090,12 +1090,13 @@
 /datum/action/innate/undeployment
 	name = "Disconnect from shell"
 	desc = "Stop controlling your shell and resume normal core operations."
-	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 	required_mobility_flags = NONE
 
-/datum/action/innate/undeployment/Trigger()
-	if(!..())
+/datum/action/innate/undeployment/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
 		return FALSE
 	var/mob/living/silicon/robot/R = owner
 
@@ -1105,26 +1106,27 @@
 /datum/action/innate/custom_holoform
 	name = "Select Custom Holoform"
 	desc = "Select one of your existing avatars to use as a holoform."
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "custom_holoform"
 	required_mobility_flags = NONE
 
-/datum/action/innate/custom_holoform/Trigger()
+/datum/action/innate/custom_holoform/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
 	var/mob/living/silicon/S = owner
 
 	//if setting the holoform succeeds, attempt to set it as the current holoform for the pAI or AI
-	if(S.attempt_set_custom_holoform())
-		if(istype(S, /mob/living/silicon/pai))
-			var/mob/living/silicon/pai/P = S
-			P.chassis = "custom"
-		else if(istype(S, /mob/living/silicon/ai))
-			var/mob/living/silicon/ai/A = S
-			if(A.client?.prefs?.custom_holoform_icon)
-				A.holo_icon = A.client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
-			else
-				A.holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
+	if(!S.attempt_set_custom_holoform())
+		return FALSE
+	if(istype(S, /mob/living/silicon/pai))
+		var/mob/living/silicon/pai/P = S
+		P.chassis = "custom"
+	else if(istype(S, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/A = S
+		if(A.client?.prefs?.custom_holoform_icon)
+			A.holo_icon = A.client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
+		else
+			A.holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
 
 	return TRUE
 
@@ -1167,7 +1169,7 @@
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
+		M.visible_message(span_warning("[M] really can't seem to mount [src]..."))
 		return
 
 	var/datum/component/riding/riding_datum = LoadComponent(/datum/component/riding/cyborg)
@@ -1180,13 +1182,13 @@
 	if(stat || incapacitated())
 		return
 	if(module && !module.allow_riding)
-		M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
+		M.visible_message(span_boldwarning("Unfortunately, [M] just can't seem to hold onto [src]!"))
 		return
 	if(iscarbon(M) && !M.incapacitated() && !riding_datum.equip_buckle_inhands(M, 1))
 		if(M.get_num_arms() <= 0)
-			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
+			M.visible_message(span_boldwarning("[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!"))
 		else
-			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
+			M.visible_message(span_boldwarning("[M] can't climb onto [src] because [M.p_their()] hands are full!"))
 		return
 	. = ..(M, force, check_loc)
 
