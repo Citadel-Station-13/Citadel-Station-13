@@ -68,13 +68,13 @@ echo Compiling for the first time.
 
 echo Compiling change log.
 cd gamecode\a
-call python tools\ss13_genchangelog.py html/changelog.html html/changelogs
+call python tools\ss13_genchangelog.py html/changelogs
 cd ..\..
 echo Compiling game.
 call bin\build.bat
 if %DM_EXIT% neq 0 echo DM compile failed.
 
-echo Done. You may start the server using the start server program or change the game config in gamedata\config 
+echo Done. You may start the server using the start server program or change the game config in gamedata\config
 pause
 
 :ABORT
