@@ -93,7 +93,7 @@
 
 /datum/action/vehicle
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_vehicle.dmi'
+	button_icon = 'icons/mob/actions/actions_vehicle.dmi'
 	button_icon_state = "vehicle_eject"
 	var/obj/vehicle/vehicle_target
 
@@ -105,9 +105,14 @@
 	desc = "Climb out of your vehicle!"
 	button_icon_state = "car_eject"
 
-/datum/action/vehicle/sealed/climb_out/Trigger()
-	if(..() && istype(vehicle_entered_target))
-		vehicle_entered_target.mob_try_exit(owner, owner)
+/datum/action/vehicle/sealed/climb_out/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(vehicle_entered_target))
+		return FALSE
+	vehicle_entered_target.mob_try_exit(owner, owner)
+	return TRUE
 
 /datum/action/vehicle/ridden
 	var/obj/vehicle/ridden/vehicle_ridden_target
@@ -117,8 +122,12 @@
 	desc = "Take your key out of the vehicle's ignition"
 	button_icon_state = "car_removekey"
 
-/datum/action/vehicle/sealed/remove_key/Trigger()
+/datum/action/vehicle/sealed/remove_key/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	vehicle_entered_target.remove_key(owner)
+	return TRUE
 
 //CLOWN CAR ACTION DATUMS
 /datum/action/vehicle/sealed/horn
@@ -127,48 +136,63 @@
 	button_icon_state = "car_horn"
 	var/hornsound = 'sound/items/carhorn.ogg'
 
-/datum/action/vehicle/sealed/horn/Trigger()
+/datum/action/vehicle/sealed/horn/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
-		return
+		return FALSE
 	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
 	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] loudly honks!"))
 	to_chat(owner, span_notice("You press [vehicle_entered_target]'s horn."))
 	if(istype(vehicle_target.inserted_key, /obj/item/bikehorn))
 		vehicle_target.inserted_key.attack_self(owner) //The bikehorn plays a sound instead
-		return
+		return FALSE
 	playsound(vehicle_entered_target, hornsound, 75)
+	return TRUE
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
 	desc = "Dump all objects and people in your car on the floor."
 	button_icon_state = "car_dump"
 
-/datum/action/vehicle/sealed/dump_kidnapped_mobs/Trigger()
+/datum/action/vehicle/sealed/dump_kidnapped_mobs/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] starts dumping the people inside of it."))
 	vehicle_entered_target.dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
+	return TRUE
 
 /datum/action/vehicle/sealed/roll_the_dice
 	name = "Press Colorful Button"
 	desc = "Press one of those colorful buttons on your display panel!"
 	button_icon_state = "car_rtd"
 
-/datum/action/vehicle/sealed/roll_the_dice/Trigger()
+/datum/action/vehicle/sealed/roll_the_dice/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
-		return
+		return FALSE
 	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
 	C.roll_the_dice(owner)
+	return TRUE
 
 /datum/action/vehicle/sealed/cannon
 	name = "Toggle Siege Mode"
 	desc = "Destroy them with their own fodder!"
 	button_icon_state = "car_cannon"
 
-/datum/action/vehicle/sealed/cannon/Trigger()
+/datum/action/vehicle/sealed/cannon/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
-		return
+		return FALSE
 	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
 	C.toggle_cannon(owner)
-
+	return TRUE
 
 /datum/action/vehicle/sealed/thank
 	name = "Thank the Clown Car Driver"
@@ -177,55 +201,63 @@
 	COOLDOWN_DECLARE(thank_time_cooldown)
 
 
-/datum/action/vehicle/sealed/thank/Trigger()
+/datum/action/vehicle/sealed/thank/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
-		return
+		return FALSE
 	if(!COOLDOWN_FINISHED(src, thank_time_cooldown))
-		return
+		return FALSE
 	COOLDOWN_START(src, thank_time_cooldown, 6 SECONDS)
 	var/obj/vehicle/sealed/car/clowncar/clown_car = vehicle_entered_target
 	var/mob/living/carbon/human/clown = pick(clown_car.return_drivers())
 	if(!clown)
-		return
+		return FALSE
 	owner.say("Thank you for the fun ride, [clown.name]!")
 	clown_car.increment_thanks_counter()
-
+	return TRUE
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie
 	name = "Ollie"
 	desc = "Get some air! Land on a table to do a gnarly grind."
 	button_icon_state = "skateboard_ollie"
 	///Cooldown to next jump
-	var/next_ollie
+	COOLDOWN_DECLARE(next_ollie)
 
-/datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger()
-	if(world.time > next_ollie)
-		var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
-		if (V.grinding)
-			return
-		var/mob/living/L = owner
-		var/turf/landing_turf = get_step(V.loc, V.dir)
-		L.adjustStaminaLoss(V.instability*2)
-		if (L.getStaminaLoss() >= 100)
-			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
-			V.unbuckle_mob(L)
-			L.throw_at(landing_turf, 2, 2)
-			L.Knockdown(40)
-			V.visible_message("<span class='danger'>[L] misses the landing and falls on [L.p_their()] face!</span>")
-		else
-			L.spin(4, 1)
-			animate(L, pixel_y = -6, time = 4)
-			animate(V, pixel_y = -6, time = 3)
-			playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
-			passtable_on(L, VEHICLE_TRAIT)
-			V.pass_flags |= PASSTABLE
-			L.Move(landing_turf, vehicle_target.dir)
-			passtable_off(L, VEHICLE_TRAIT)
-			V.pass_flags &= ~PASSTABLE
-		if((locate(/obj/structure/table) in V.loc.contents) || (locate(/obj/structure/fluff/railing) in V.loc.contents))
-			if(locate(/obj/structure/fluff/railing) in V.loc.contents)
-				L.client.give_award(/datum/award/achievement/misc/tram_surfer, L)
-			V.grinding = TRUE
-			V.icon_state = "[V.board_icon]-grind"
-			addtimer(CALLBACK(V, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, grind)), 2)
-		next_ollie = world.time + 5
+/datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, next_ollie))
+		return FALSE
+	var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
+	if (V.grinding)
+		return FALSE
+	var/mob/living/L = owner
+	var/turf/landing_turf = get_step(V.loc, V.dir)
+	L.adjustStaminaLoss(V.instability*2)
+	if (L.getStaminaLoss() >= 100)
+		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+		V.unbuckle_mob(L)
+		L.throw_at(landing_turf, 2, 2)
+		L.Knockdown(40)
+		V.visible_message("<span class='danger'>[L] misses the landing and falls on [L.p_their()] face!</span>")
+	else
+		L.spin(4, 1)
+		animate(L, pixel_y = -6, time = 4)
+		animate(V, pixel_y = -6, time = 3)
+		playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
+		passtable_on(L, VEHICLE_TRAIT)
+		V.pass_flags |= PASSTABLE
+		L.Move(landing_turf, vehicle_target.dir)
+		passtable_off(L, VEHICLE_TRAIT)
+		V.pass_flags &= ~PASSTABLE
+	if((locate(/obj/structure/table) in V.loc.contents) || (locate(/obj/structure/fluff/railing) in V.loc.contents))
+		if(locate(/obj/structure/fluff/railing) in V.loc.contents)
+			L.client.give_award(/datum/award/achievement/misc/tram_surfer, L)
+		V.grinding = TRUE
+		V.icon_state = "[V.board_icon]-grind"
+		addtimer(CALLBACK(V, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, grind)), 2)
+	COOLDOWN_START(src, next_ollie, 0.5 SECONDS)
+	return TRUE

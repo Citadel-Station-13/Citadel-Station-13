@@ -16,6 +16,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	action_slots = ALL
 	force = 14
 	throwforce = 10
 	wound_bonus = 15

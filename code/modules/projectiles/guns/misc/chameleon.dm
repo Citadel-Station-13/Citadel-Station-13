@@ -27,7 +27,7 @@
 
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change/gun)
 	chameleon_action.chameleon_type = /obj/item/gun
 	chameleon_action.chameleon_name = "Gun"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/gun/magic, ignore_root_path = FALSE)

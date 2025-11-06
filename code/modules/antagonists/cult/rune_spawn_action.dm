@@ -14,7 +14,7 @@
 	var/obj/effect/temp_visual/cult/rune_spawn/rune_center_type
 	var/rune_color
 
-/datum/action/innate/cult/create_rune/IsAvailable(silent = FALSE)
+/datum/action/innate/cult/create_rune/IsAvailable(feedback = TRUE)
 	if(!rune_type || cooldown > world.time)
 		return FALSE
 	return ..()
@@ -56,8 +56,8 @@
 			R4 = new rune_center_type(T, scribe_time, rune_color)
 
 		cooldown = base_cooldown + world.time
-		owner.update_action_buttons_icon()
-		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_action_buttons_icon)), base_cooldown)
+		owner.update_mob_action_buttons()
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_mob_action_buttons)), base_cooldown)
 		var/list/health
 		if(damage_interrupt && isliving(owner))
 			var/mob/living/L = owner
@@ -78,7 +78,7 @@
 			if(R4)
 				qdel(R4)
 			cooldown = 0
-			owner.update_action_buttons_icon()
+			owner.update_mob_action_buttons()
 
 //teleport rune
 /datum/action/innate/cult/create_rune/tele

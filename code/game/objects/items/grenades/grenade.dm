@@ -11,6 +11,7 @@
 	throw_range = 7
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	action_slots = ALL
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	var/active = 0

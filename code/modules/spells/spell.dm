@@ -165,19 +165,19 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
-		action.UpdateButtons()
+		action.build_all_button_icons()
 	return TRUE
 
-/obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
+/obj/effect/proc_holder/spell/proc/charge_check(mob/user, feedback = TRUE)
 	switch(charge_type)
 		if("recharge")
 			if(charge_counter < charge_max)
-				if(!silent)
+				if(feedback)
 					to_chat(user, still_recharging_msg)
 				return FALSE
 		if("charges")
 			if(!charge_counter)
-				if(!silent)
+				if(feedback)
 					to_chat(user, "<span class='notice'>[name] has no charges left.</span>")
 				return FALSE
 	return TRUE
@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
 		charge_counter += 2	//processes 5 times per second instead of 10.
 		if(charge_counter >= charge_max)
-			action.UpdateButtons()
+			action.build_all_button_icons()
 			charge_counter = charge_max
 			recharging = FALSE
 
@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	cast(targets,user=user)
 	after_cast(targets)
 	if(action)
-		action.UpdateButtons()
+		action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
 	if(overlay)
@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
 	if(action)
-		action.UpdateButtons()
+		action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	if (!istype(target))
@@ -439,7 +439,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	perform(targets,user=user)
 
 /obj/effect/proc_holder/spell/proc/UpdateButton(atom/movable/screen/movable/action_button/button, status_only, force)
-	action.UpdateButtons(status_only, force)
+	action.build_all_button_icons(status_only, force)
 
 /obj/effect/proc_holder/spell/targeted/proc/los_check(mob/A,mob/B)
 	//Checks for obstacles from A to B
@@ -453,40 +453,40 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	qdel(dummy)
 	return TRUE
 
-/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr, skipcharge = FALSE, silent = FALSE)
+/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr, skipcharge = FALSE, feedback = TRUE)
 	var/magic_flags = SEND_SIGNAL(user, COMSIG_MOB_SPELL_CAN_CAST, src)
 	if(magic_flags & SPELL_SKIP_ALL_REQS)
 		return TRUE
 
 	if(player_lock ? (!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list)) : !(src in user.mob_spell_list))
-		if(!silent)
+		if(feedback)
 			to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
 		return FALSE
 
 	if(!centcom_cancast && !(magic_flags & SPELL_SKIP_CENTCOM)) //Certain spells are not allowed on the centcom zlevel
 		var/turf/T = get_turf(user)
 		if(is_centcom_level(T.z))
-			if(!silent)
+			if(feedback)
 				to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
 			return FALSE
 
-	if(!skipcharge && !charge_check(user, silent))
+	if(!skipcharge && !charge_check(user, feedback))
 		return FALSE
 
 	if(user.stat && !stat_allowed && !(magic_flags & SPELL_SKIP_STAT))
-		if(!silent)
+		if(feedback)
 			to_chat(user, "<span class='notice'>Not when you're incapacitated.</span>")
 		return FALSE
 
 	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
-		if(!silent)
+		if(feedback)
 			to_chat(user, "<span class='notice'>[name] cannot be cast unless you are completely manifested in the material plane.</span>")
 		return FALSE
 
 	if(clothes_req && !(magic_flags & SPELL_SKIP_CLOTHES))
 		var/met_requirements = magic_flags & (clothes_req)
 		if(met_requirements != clothes_req)
-			if(!silent)
+			if(feedback)
 				var/the_many_hats = met_requirements & (clothes_req & (SPELL_WIZARD_HAT|SPELL_CULT_HELMET))
 				var/the_many_suits = met_requirements & (clothes_req & (SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR))
 				var/without_hat_robe = the_many_suits ? "a proper headwear" : the_many_hats ? "a proper suit" : "proper garments"
@@ -500,12 +500,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(!(magic_flags & SPELL_SKIP_VOCAL) && (invocation_type in list("whisper", "shout")) && isliving(user))
 		var/mob/living/L = user
 		if(!L.can_speak_vocal())
-			if(!silent)
+			if(feedback)
 				to_chat(L, "<span class='notice'>You can't get the words out!</span>")
 			return FALSE
 
 	if(!(magic_flags & SPELL_SKIP_MOBTYPE) && ((mobs_whitelist && !mobs_whitelist[user.type]) || (mobs_blacklist && mobs_blacklist[user.type])))
-		if(!silent)
+		if(feedback)
 			to_chat(user, "<span class='notice'>This spell can't be casted in this current form!</span>")
 		return FALSE
 	return TRUE

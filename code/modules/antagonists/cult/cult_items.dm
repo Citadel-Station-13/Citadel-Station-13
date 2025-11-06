@@ -222,7 +222,7 @@
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"
 	desc = "Use the sword to shear open the flimsy fabric of this reality and teleport to your target."
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "phaseshift"
 	dash_sound = 'sound/magic/enter_blood.ogg'
 	recharge_sound = 'sound/magic/exit_blood.ogg'
@@ -230,7 +230,7 @@
 	phasein = /obj/effect/temp_visual/dir_setting/cult/phase
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
-/datum/action/innate/dash/cult/IsAvailable(silent = FALSE)
+/datum/action/innate/dash/cult/IsAvailable(feedback = TRUE)
 	if(iscultist(owner) && current_charges)
 		return TRUE
 	else
@@ -250,7 +250,7 @@
 	sword = bastard
 	holder = user
 
-/datum/action/innate/cult/spin2win/IsAvailable(silent = FALSE)
+/datum/action/innate/cult/spin2win/IsAvailable(feedback = TRUE)
 	if(iscultist(holder) && cooldown <= world.time)
 		return TRUE
 	else
@@ -264,14 +264,14 @@
 	sword.block_chance = 100
 	sword.slowdown += 1.5
 	addtimer(CALLBACK(src, PROC_REF(stop_spinning)), 50)
-	holder.update_action_buttons_icon()
+	holder.update_mob_action_buttons()
 
 /datum/action/innate/cult/spin2win/proc/stop_spinning()
 	sword.spinning = FALSE
 	sword.block_chance = 50
 	sword.slowdown -= 1.5
 	sleep(sword.spin_cooldown)
-	holder.update_action_buttons_icon()
+	holder.update_mob_action_buttons()
 
 /obj/item/restraints/legcuffs/bola/cult
 	name = "\improper Nar'Sien bola"

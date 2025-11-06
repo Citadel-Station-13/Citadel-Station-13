@@ -41,8 +41,9 @@
 	RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlays))
 
 	if(_flags & POLYCHROMIC_ALTCLICK)
-		RegisterSignal(A, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(A, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 		RegisterSignal(A, COMSIG_CLICK_ALT, PROC_REF(set_color))
+		RegisterSignal(A, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 	if(!overlays_names && names) //generate
 		overlays_names = names
@@ -77,7 +78,7 @@
 	if(P)
 		actions_by_atom -= A
 		qdel(P)
-	UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_WORN_OVERLAYS, COMSIG_SUIT_MADE_HELMET))
+	UnregisterSignal(A, list(COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_WORN_OVERLAYS, COMSIG_SUIT_MADE_HELMET))
 	if(isitem(A))
 		var/obj/item/clothing/head/H = helmet_by_suit[A]
 		if(H)
@@ -161,9 +162,21 @@
 
 /datum/element/polychromic/proc/activate_action(datum/action/source, atom/target)
 	set_color(target, source.owner)
+	return COMPONENT_ACTION_BLOCK_TRIGGER
 
 /datum/element/polychromic/proc/on_examine(atom/source, mob/user, list/examine_list)
-	examine_list += "<span class='notice'>Alt-click to recolor it.</span>"
+	examine_list += span_notice("Alt-click to recolor it.")
+
+/datum/element/polychromic/proc/on_requesting_context_from_item(
+	obj/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	SIGNAL_HANDLER
+
+	LAZYSET(context[SCREENTIP_CONTEXT_ALT_LMB], INTENT_ANY, "Modify [source]'\s Colors")
+	return CONTEXTUAL_SCREENTIP_SET
 
 /datum/element/polychromic/proc/connect_helmet(atom/I, var/applycolor)
 	if(isitem(I))
@@ -203,7 +216,7 @@
 	button_icon_state = null
 	check_flags = NONE
 
-/datum/action/item_action/polychromic/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+/datum/action/item_action/polychromic/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
 	var/atom/polychromic_thing = target
 
 	var/matrix/save_matrix = polychromic_thing.transform

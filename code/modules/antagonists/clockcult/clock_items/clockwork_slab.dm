@@ -405,12 +405,12 @@
 		for(var/i in 1 to quickbound.len)
 			if(!quickbound[i])
 				continue
-			var/datum/action/item_action/clock/quickbind/Q = new /datum/action/item_action/clock/quickbind(src)
+			var/datum/action/item_action/clock/quickbind/Q = add_item_action(/datum/action/item_action/clock/quickbind)
 			Q.scripture_index = i
 			var/datum/clockwork_scripture/quickbind_slot = GLOB.all_scripture[quickbound[i]]
 			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
 			Q.desc = quickbind_slot.quickbind_desc
 			Q.button_icon_state = quickbind_slot.name
-			Q.UpdateButtons()
+			Q.build_all_button_icons()
 			if(isliving(loc))
 				Q.Grant(loc)

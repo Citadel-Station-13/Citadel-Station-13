@@ -467,7 +467,7 @@ GLOBAL_LIST_INIT(double_bedsheets, list(/obj/item/bedsheet/double,
 
 /obj/item/bedsheet/chameleon/New()
 	..()
-	chameleon_action = new(src)
+	chameleon_action = add_item_action(/datum/action/item_action/chameleon/change)
 	chameleon_action.chameleon_type = /obj/item/bedsheet
 	chameleon_action.chameleon_name = "Bedsheet"
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/bedsheet/chameleon, /obj/item/bedsheet/random, /obj/item/bedsheet/unlockable), only_root_path = FALSE)

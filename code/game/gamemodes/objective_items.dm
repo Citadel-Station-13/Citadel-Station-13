@@ -168,7 +168,7 @@
 	excludefromjob = list("Research Director","Scientist", "Roboticist")
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
-	if(E.Uses > 0)
+	if(E.extract_uses > 0)
 		return TRUE
 	return FALSE
 

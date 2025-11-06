@@ -191,7 +191,7 @@
 	update_power()
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtons()
+		A.build_all_button_icons()
 
 /obj/item/defibrillator/proc/make_paddles()
 	if(!combat)

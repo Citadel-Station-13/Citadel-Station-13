@@ -523,11 +523,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 	src.antag_datum = antag_datum
 	name += " [antag_datum.name]"
 
-/datum/action/antag_info/Trigger()
-	if(antag_datum)
-		antag_datum.ui_interact(owner)
+/datum/action/antag_info/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!antag_datum)
+		return FALSE
+	antag_datum.ui_interact(owner)
+	return TRUE
 
-/datum/action/antag_info/IsAvailable()
+/datum/action/antag_info/IsAvailable(feedback)
 	return TRUE
 
 ///Clears change requests from deleted objectives to avoid broken references.

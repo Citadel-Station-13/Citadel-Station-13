@@ -220,7 +220,7 @@
 	desc = "Teach new recruits the Secret Handshake to join."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "recruit"
-	icon_icon = 'icons/obj/gang/actions.dmi'
+	button_icon = 'icons/obj/gang/actions.dmi'
 	cooldown_time = 300
 	/// The family antagonist datum of the "owner" of this action.
 	var/datum/antagonist/gang/my_gang_datum

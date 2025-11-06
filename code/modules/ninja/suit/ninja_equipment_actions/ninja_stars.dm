@@ -2,7 +2,7 @@
 	name = "Create Throwing Stars (1E)"
 	desc = "Creates a throwing star in your hand, if possible."
 	button_icon_state = "throwingstar"
-	icon_icon = 'icons/obj/items_and_weapons.dmi'
+	button_icon = 'icons/obj/items_and_weapons.dmi'
 
 /**
  * Proc called to create a ninja star in the ninja's hands.

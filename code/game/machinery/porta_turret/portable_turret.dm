@@ -673,25 +673,33 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /datum/action/turret_toggle
 	name = "Toggle Mode"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
-/datum/action/turret_toggle/Trigger()
+/datum/action/turret_toggle/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
-		return
+		return FALSE
 	P.setState(P.on,!P.mode)
+	return TRUE
 
 /datum/action/turret_quit
 	name = "Release Control"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_eject"
 
-/datum/action/turret_quit/Trigger()
+/datum/action/turret_quit/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
-		return
+		return FALSE
 	P.remove_control(FALSE)
+	return TRUE
 
 /obj/machinery/porta_turret/proc/give_control(mob/A)
 	if(manual_control || !can_interact(A))

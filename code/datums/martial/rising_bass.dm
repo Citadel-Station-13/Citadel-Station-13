@@ -41,24 +41,33 @@
 
 /datum/action/risingbassmove
 	name = ""
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = ""
 	var/movestreak = ""
 
-/datum/action/risingbassmove/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
-		return
+/datum/action/risingbassmove/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/mob/living/carbon/human/H = owner
 	if (H.mind.martial_art.streak == "[movestreak]")
 		H.mind.martial_art.streak = ""
 		to_chat(H,"<span class='danger'>You relax your muscles and return to a neutral position.</span>")
 	else
-		if(HAS_TRAIT(H, TRAIT_PACIFISM))
-			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
-			return
 		to_chat(H,"<span class='danger'>You get ready to use the [name] maneuver!</span>")
 		H.mind.martial_art.streak = "[movestreak]"
+	return TRUE
+
+/datum/action/risingbassmove/IsAvailable(feedback)
+	if(owner.incapacitated())
+		if(feedback)
+			to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+		if(feedback)
+			to_chat(owner, "<span class='warning'>You don't want to harm other people!</span>")
+		return FALSE
+	return ..()
 
 /datum/action/risingbassmove/sidekick
 	name = "Side Kick"
