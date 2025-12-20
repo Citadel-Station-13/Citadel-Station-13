@@ -39,7 +39,6 @@ export const AntagInfoClockwork = (props) => {
             <Stack.Item>
               <Section
                 title="This is Ratvar's will"
-                vertical
                 fill>
                 <Stack.Item grow >
                   {HONOR_RATVAR ? (

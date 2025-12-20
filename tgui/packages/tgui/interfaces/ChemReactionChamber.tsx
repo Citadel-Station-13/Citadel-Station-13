@@ -35,13 +35,13 @@ export const ChemReactionChamber = (props) => {
           <LabeledList>
             <tr className="LabledList__row">
               <td
-                colSpan="2"
+                colSpan={2}
                 className="LabeledList__cell">
                 <Input
                   fluid
                   value=""
                   placeholder="Reagent Name"
-                  onInput={(e, value) => setReagentName(value)} />
+                  onChange={(value) => setReagentName(value)} />
               </td>
               <td
                 className={classes([
@@ -65,7 +65,7 @@ export const ChemReactionChamber = (props) => {
                   })} />
               </td>
             </tr>
-            {map((amount, reagent) => (
+            {reagents.map((amount, reagent) => (
               <LabeledList.Item
                 key={reagent}
                 label={reagent}
@@ -79,7 +79,7 @@ export const ChemReactionChamber = (props) => {
                 )}>
                 {amount}
               </LabeledList.Item>
-            ))(reagents)}
+            ))}
           </LabeledList>
         </Section>
       </Window.Content>

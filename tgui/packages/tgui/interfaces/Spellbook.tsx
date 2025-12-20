@@ -365,7 +365,7 @@ export const Spellbook = (props) => {
   const ScrollableCheck = TAB2NAME[tabIndex - 1].noScrollable ? false : true;
   const ScrollableNextCheck = TAB2NAME[tabIndex - 1].noScrollable !== 2;
   const TabComponent = TAB2NAME[tabIndex - 1].component
-    ? TAB2NAME[tabIndex - 1].component() : null;
+    ? (TAB2NAME[tabIndex - 1] as any).component() : (<></>);
   const TabNextComponent = TAB2NAME[tabIndex].component
     ? TAB2NAME[tabIndex].component() : null;
   const TabSpells = entries ? entries.filter(

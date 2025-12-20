@@ -92,7 +92,7 @@ const searchFilter = (search, allparts) => {
   if (!search.length) {
     return;
   }
-  const resultFilter = createSearch(search, part => (
+  const resultFilter = createSearch<any>(search, part => (
     (part.name || "")
     + (part.desc || "")
     + (part.searchMeta || "")

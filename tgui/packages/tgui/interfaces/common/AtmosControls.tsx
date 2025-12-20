@@ -1,7 +1,7 @@
 import { decodeHtmlEntities } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
-import { getGasLabel } from '../../constants';
+import { getGasLabel } from 'tgui-core/constants';
 
 export const Vent = (props) => {
   const { vent } = props;
@@ -162,12 +162,11 @@ export const Scrubber = (props) => {
               <Button key={filter.gas_id}
                 icon={filter.enabled ? 'check-square-o' : 'square-o'}
                 content={getGasLabel(filter.gas_id, filter.gas_name)}
-                title={filter.gas_name}
                 selected={filter.enabled}
                 onClick={() => act('toggle_filter', {
                   id_tag,
                   val: filter.gas_id,
-                })} />
+                })}>{filter.gas.name}</Button>
             ))
             || 'N/A'}
         </LabeledList.Item>

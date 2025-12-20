@@ -1,8 +1,8 @@
 import { useBackend } from '../backend';
 import { AnimatedNumber, Button, Flex, Input, LabeledList, ProgressBar, Section, Table, NumberInput, Box } from 'tgui-core/components';
-import { getGasColor, getGasLabel } from '../constants';
 import { toFixed } from 'tgui-core/math';
 import { Window } from '../layouts';
+import { getGasColor, getGasLabel } from 'tgui-core/constants';
 
 const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;
 
@@ -48,6 +48,7 @@ export const Crystallizer = (props) => {
                 value={parseFloat(data.gas_input)}
                 width="63px"
                 unit="moles/s"
+                step={0.1}
                 minValue={0}
                 maxValue={250}
                 onChange={(value) => act('gas_input', {

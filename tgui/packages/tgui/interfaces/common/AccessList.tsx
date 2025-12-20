@@ -2,6 +2,7 @@ import { sortBy } from 'common/collections';
 import { useLocalState } from '../../backend';
 import { Button, Flex, Section, Tabs } from 'tgui-core/components';
 import { Grid } from '../../components/Grid';
+import { Fragment } from 'react';
 
 const diffMap = {
   0: {
@@ -87,7 +88,6 @@ export const AccessList = (props) => {
               return (
                 <Tabs.Tab
                   key={access.name}
-                  altSelection
                   color={color}
                   icon={icon}
                   selected={access.name === selectedAccessName}

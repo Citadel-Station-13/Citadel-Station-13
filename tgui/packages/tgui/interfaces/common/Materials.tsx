@@ -45,7 +45,7 @@ export const MaterialIcon = (props: MaterialIconProps) => {
 const EjectMaterial = (props: {
   material: Material,
   onEject: (amount: number) => void,
-}, context) => {
+}) => {
   const {
     name,
     removable,

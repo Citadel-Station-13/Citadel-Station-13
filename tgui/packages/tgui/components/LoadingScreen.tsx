@@ -5,7 +5,7 @@
 
 import { Stack } from "tgui-core/components";
 
-export const LoadingScreen = (props: {}, context) => {
+export const LoadingScreen = (props: {}) => {
   return (
     <Stack fill>
       {/* TODO: actually good icon */}

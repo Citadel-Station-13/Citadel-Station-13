@@ -26,22 +26,22 @@ export const CrewManifest = (props) => {
             }
           >
             <Table>
-              {Object.entries(crew).map(([crewIndex, crewMember]) => (
+              {Object.entries((crew as any)).map(([crewIndex, crewMember]) => (
                 <Table.Row key={crewIndex}>
                   <Table.Cell className={"CrewManifest__Cell"}>
-                    {crewMember.name}
+                    {(crewMember as any).name}
                   </Table.Cell>
                   <Table.Cell
                     className={
                       "CrewManifest__Cell CrewManifest__Cell--"
-                      + (crewMember.rank === "Captain" ? "Captain" : "Command")
+                      + ((crewMember as any).rank === "Captain" ? "Captain" : "Command")
                     }
                     collapsing
                   >
-                    {commandJobs.includes(crewMember.rank) && (
+                    {commandJobs.includes((crewMember as any).rank) && (
                       <Icon
                         name={
-                          crewMember.rank === "Captain" ? "star" : "chevron-up"
+                          (crewMember as any).rank === "Captain" ? "star" : "chevron-up"
                         }
                       />
                     )}
@@ -51,7 +51,7 @@ export const CrewManifest = (props) => {
                     collapsing
                     color="label"
                   >
-                    {crewMember.rank}
+                    {(crewMember as any).rank}
                   </Table.Cell>
                 </Table.Row>
               ))}

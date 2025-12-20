@@ -50,7 +50,7 @@ export const BiogeneratorContent = (props) => {
     selectedCategory,
     setSelectedCategory,
   ] = useLocalState('category', categories[0]?.name);
-  const testSearch = createSearch(searchText, item => {
+  const testSearch = createSearch<any>(searchText, item => {
     return item.name;
   });
   const items = searchText.length > 0
@@ -132,7 +132,7 @@ const ItemList = (props) => {
   const [
     hoveredItem,
     setHoveredItem,
-  ] = useLocalState('hoveredItem', {});
+  ] = useLocalState<any>('hoveredItem', {});
   const hoveredCost = hoveredItem.cost || 0;
   // Append extra hover data to items
   const items = props.items.map(item => {

@@ -1,7 +1,7 @@
-import { multiline } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Button, Input, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { multiline } from 'common/string';
 
 const TOOLTIP_NAME = multiline`
   Enter a new name for this unit. Set to blank to reset to default,

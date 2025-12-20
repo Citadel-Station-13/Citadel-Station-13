@@ -933,7 +933,7 @@ const GenomeSequencer = (props) => {
   // Create gene cycler buttons
   const sequence = mutation.Sequence;
   const defaultSeq = mutation.DefaultSeq;
-  const buttons = [];
+  const buttons: any[] = [];
   for (let i = 0; i < sequence.length; i++) {
     const gene = sequence.charAt(i);
     const button = (
@@ -980,7 +980,7 @@ const GenomeSequencer = (props) => {
     buttons.push(button);
   }
   // Render genome in two rows
-  const pairs = [];
+  const pairs: any[] = [];
   for (let i = 0; i < buttons.length; i += 2) {
     const pair = (
       <Box
@@ -1138,8 +1138,8 @@ const RadiationEmitterPulseBoard = (props) => {
     subjectUNI = [],
   } = data;
   // Build blocks of buttons of unique enzymes
-  const blocks = [];
-  let buffer = [];
+  const blocks: any[] = [];
+  let buffer: any[] = [];
   for (let i = 0; i < subjectUNI.length; i++) {
     const char = subjectUNI.charAt(i);
     // Push a button into the buffer
@@ -1400,7 +1400,7 @@ const DnaConsoleAdvancedInjectors = (props) => {
           minWidth="200px"
           content="Create new injector"
           disabled={advInjectors.length >= maxAdvInjectors}
-          onCommit={(e, value) => act('new_adv_inj', {
+          onCommit={(value) => act('new_adv_inj', {
             name: value,
           })} />
       </Box>

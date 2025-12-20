@@ -15,11 +15,13 @@ import {
   KEY_RIGHT,
   KEY_SPACE,
   KEY_TAB,
-} from 'common/keycodes';
+} from 'tgui-core/keycodes';
 
-export class AlertModal extends Component {
-  constructor() {
-    super();
+export class AlertModal extends Component<any, any> {
+  buttonRefs: any;
+
+  constructor(props) {
+    super(props);
 
     this.buttonRefs = [createRef()];
     this.state = { current: 0 };
@@ -75,7 +77,6 @@ export class AlertModal extends Component {
         canClose={timeout > 0}>
         {timeout && <Loader value={timeout} />}
         <Window.Content
-          onFocus={focusCurrentButton}
           onClick={focusCurrentButton}>
           <Section fill>
             <Flex direction="column" height="100%">

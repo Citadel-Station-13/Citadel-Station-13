@@ -756,7 +756,7 @@ class PresetsPage extends Component {
     storage.set("podlauncher_preset_" + id, data);
   }
 
-  async loadDataFromPreset(id, context) {
+  async loadDataFromPreset(id) {
     const { act } = useBackend<any>();
     act("loadDataFromPreset", {
       payload: await storage.get("podlauncher_preset_" + id),

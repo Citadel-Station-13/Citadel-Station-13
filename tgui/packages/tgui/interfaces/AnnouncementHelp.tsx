@@ -27,14 +27,14 @@ export const AnnouncementHelp = (props) => {
     <Window
       width={500}
       height={500}
-      resizable
+
       title="Announcement Help">
       <Window.Content>
         <Section fill overflow="auto">
           <Stack vertical>
             <Stack.Item>
               <Collapsible title="Help" textAlign="center">
-                <font color="red">WARNING:</font> Misuse of the announcement system will get you job banned.<br /><br />
+                <span color="red">WARNING:</span> Misuse of the announcement system will get you job banned.<br /><br />
                 Here is a list of words you can type into the &apos;Announcement&apos; button to create sentences to vocally announce to everyone on the same level at you.<br />
                 <ul><li>You can also click on the word to PREVIEW it.</li>
                   <li>You can only say 30 words for every announcement.</li>
@@ -67,7 +67,7 @@ export const AnnouncementHelp = (props) => {
                   <Input
                     fluid
                     placeholder="Find a word..."
-                    onInput={(e, value) => set_search_text(value)}
+                    onChange={(value) => set_search_text(value)}
                   />
                 </Stack.Item>
               </Stack>

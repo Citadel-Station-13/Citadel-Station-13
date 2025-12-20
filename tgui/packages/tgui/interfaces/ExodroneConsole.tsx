@@ -426,11 +426,11 @@ const DroneStatus = (props) => {
         <ProgressBar
           width="200px"
           ranges={{
-            good: [0.7 * drone_max_integrity, drone_max_integrity],
-            average: [0.4 * drone_max_integrity, 0.7 * drone_max_integrity],
-            bad: [-Infinity, 0.4 * drone_max_integrity],
+            good: [0.7 * (drone_max_integrity || 0), (drone_max_integrity || 0)],
+            average: [0.4 * (drone_max_integrity || 0), 0.7 * (drone_max_integrity || 0)],
+            bad: [-Infinity, 0.4 * (drone_max_integrity || 0)],
           }}
-          value={drone_integrity}
+          value={(drone_integrity || 0)}
           maxValue={drone_max_integrity} />
       </Stack.Item>
     </Stack>
@@ -475,10 +475,10 @@ const TravelTargetSelectionScreen = (props) => {
   const travel_cost = target_site => {
     if (site) {
       return Math.max(Math.abs(site.distance - target_site.distance), 1)
-        * drone_travel_coefficent;
+        * (drone_travel_coefficent || 0);
     }
     else {
-      return target_site.distance * drone_travel_coefficent;
+      return target_site.distance * (drone_travel_coefficent || 0);
     }
   };
   const [
@@ -599,7 +599,7 @@ const TravelDimmer = (props) => {
             />
           </Stack.Item>
           <Stack.Item fontSize="18px" color="yellow">
-            Travel Time: {formatTime(travel_time_left)}
+            Travel Time: {formatTime(travel_time_left || 0)}
           </Stack.Item>
         </Stack>
       </Dimmer>
@@ -625,7 +625,7 @@ const TimeoutScreen = (props) => {
             />
           </Stack.Item>
           <Stack.Item fontSize="18px" color="green">
-            {wait_message} ({formatTime(wait_time_left)})
+            {wait_message} ({formatTime(wait_time_left || 0)})
           </Stack.Item>
         </Stack>
       </Dimmer>
@@ -659,9 +659,9 @@ const ExplorationScreen = (props) => {
       <Stack vertical fill>
         <Stack.Item grow>
           <LabeledList>
-            <LabeledList.Item label="Site">{site.name}</LabeledList.Item>
-            <LabeledList.Item label="Location">{site.coordinates}</LabeledList.Item>
-            <LabeledList.Item label="Description">{site.description}</LabeledList.Item>
+            <LabeledList.Item label="Site">{site?.name}</LabeledList.Item>
+            <LabeledList.Item label="Location">{site?.coordinates}</LabeledList.Item>
+            <LabeledList.Item label="Description">{site?.description}</LabeledList.Item>
           </LabeledList>
         </Stack.Item>
         <Stack.Item align="center" grow>
@@ -669,7 +669,7 @@ const ExplorationScreen = (props) => {
             content="Explore!"
             onClick={() => act("explore")} />
         </Stack.Item>
-        {site.events.map(e => (
+        {site?.events.map(e => (
           <Stack.Item
             align="center"
             key={site.ref}
@@ -708,16 +708,16 @@ const EventScreen = (props) => {
         <Stack.Item>
           <Stack fill>
             <Stack.Item>
-              <img src={resolveAsset(event.image)}
+              <img src={resolveAsset(event?.image || "")}
                 height="125px"
                 width="250px"
                 style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
+                  'imageRendering': 'pixelated',
                 }} />
             </Stack.Item>
             <Stack.Item >
               <BlockQuote preserveWhitespace>
-                {event.description}
+                {event?.description}
               </BlockQuote>
             </Stack.Item>
           </Stack>
@@ -728,14 +728,14 @@ const EventScreen = (props) => {
             <Stack.Item grow />
             <Stack.Item grow>
               <Button
-                content={event.action_text}
-                disabled={!event.action_enabled}
+                content={event?.action_text}
+                disabled={!event?.action_enabled}
                 onClick={() => act("start_event")} />
             </Stack.Item>
-            {!!event.skippable && (
+            {!!event?.skippable && (
               <Stack.Item mt={2}>
                 <Button
-                  content={event.ignore_text}
+                  content={event?.ignore_text}
                   onClick={() => act("skip_event")} />
               </Stack.Item>
             )}
@@ -757,8 +757,8 @@ export const AdventureScreen = (props: AdventureScreenProps) => {
   const {
     adventure_data,
   } = data;
-  const rawData = adventure_data.raw_image;
-  const imgSource = rawData ? rawData : resolveAsset(adventure_data.image);
+  const rawData = adventure_data?.raw_image || "";
+  const imgSource = rawData ? rawData : resolveAsset(adventure_data?.image || "");
   return (
     <Section
       fill
@@ -767,7 +767,7 @@ export const AdventureScreen = (props: AdventureScreenProps) => {
       <Stack>
         <Stack.Item>
           <BlockQuote preserveWhitespace>
-            {adventure_data.description}
+            {adventure_data?.description}
           </BlockQuote>
         </Stack.Item>
         <Stack.Divider />

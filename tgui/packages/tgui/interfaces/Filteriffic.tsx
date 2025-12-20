@@ -92,7 +92,7 @@ const FilterColorEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onInput={(e, value) => act('transition_filter_value', {
+        onChange={(value) => act('transition_filter_value', {
           name: filterName,
           new_data: {
             [name]: value,
