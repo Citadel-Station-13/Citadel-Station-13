@@ -19,4 +19,3 @@ export type TooltipProps = React.ComponentProps<typeof Tooltip>;
 export { Sprite } from './Sprite';
 export { VSplitTooltipList } from './VSplitTooltipList';
 export { VStaticScrollingWindower as VScrollingWindower } from './VStaticScrollingWindower';
-export { WorldTypepathDropdown } from './WorldTypepathDropdown';
