@@ -10,7 +10,7 @@ export const RbmkControlRods = (props) => {
   const desiredK = data.desiredK;
   return (
     <Window
-      resizable
+
       theme="ntos"
       width={300}
       height={300}>

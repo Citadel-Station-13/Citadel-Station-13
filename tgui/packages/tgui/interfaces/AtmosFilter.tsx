@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
-import { getGasLabel } from '../constants';
 import { Window } from '../layouts';
+import { getGasLabel } from 'tgui-core/constants';
 
 export const AtmosFilter = (props) => {
   const { act, data } = useBackend<any>();
@@ -22,6 +22,7 @@ export const AtmosFilter = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Transfer Rate">
               <NumberInput
+                step={0.1}
                 animated
                 value={parseFloat(data.rate)}
                 width="63px"

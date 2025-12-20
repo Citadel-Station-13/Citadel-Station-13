@@ -115,7 +115,7 @@ const AIR_ALARM_ROUTES = {
 };
 
 const AirAlarmControl = (props) => {
-  const [screen, setScreen] = useLocalState('screen');
+  const [screen, setScreen] = useLocalState('screen', 'home');
   const route = AIR_ALARM_ROUTES[screen] || AIR_ALARM_ROUTES.home;
   const Component = route.component();
   return (
@@ -125,7 +125,7 @@ const AirAlarmControl = (props) => {
         <Button
           icon="arrow-left"
           content="Back"
-          onClick={() => setScreen()} />
+          onClick={() => setScreen('home')} />
       )}>
       <Component />
     </Section>
@@ -138,7 +138,7 @@ const AirAlarmControl = (props) => {
 
 const AirAlarmControlHome = (props) => {
   const { act, data } = useBackend<any>();
-  const [screen, setScreen] = useLocalState('screen');
+  const [screen, setScreen] = useLocalState('screen', 'home');
   const {
     mode,
     atmos_alarm,

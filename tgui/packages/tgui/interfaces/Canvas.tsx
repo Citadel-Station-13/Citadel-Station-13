@@ -5,7 +5,10 @@ import { Window } from '../layouts';
 
 const PX_PER_UNIT = 24;
 
-class PaintCanvas extends Component {
+class PaintCanvas extends Component<any, any> {
+  canvasRef: any;
+  onCVClick: any;
+
   constructor(props) {
     super(props);
     this.canvasRef = createRef();
@@ -51,8 +54,8 @@ class PaintCanvas extends Component {
     const y_size = this.props.value[0].length;
     const x_scale = this.canvasRef.current.width / x_size;
     const y_scale = this.canvasRef.current.height / y_size;
-    const x = Math.floor(event.offsetX / x_scale)+1;
-    const y = Math.floor(event.offsetY / y_scale)+1;
+    const x = Math.floor(event.offsetX / x_scale) + 1;
+    const y = Math.floor(event.offsetY / y_scale) + 1;
     this.onCVClick(x, y);
   }
 

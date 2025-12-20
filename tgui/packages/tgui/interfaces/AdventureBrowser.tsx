@@ -27,7 +27,7 @@ type AdventureBrowserData = AdventureDataProvider & {
 const AdventureEntry = (props) => {
   const { data, act } = useBackend<AdventureBrowserData>();
   const { entry_ref, close }: { entry_ref: string, close: () => void } = props;
-  const entry = data.adventures.find(x => x.ref === entry_ref);
+  const entry: any = data.adventures.find(x => x.ref === entry_ref);
   return (
     <Section>
       <LabeledList>

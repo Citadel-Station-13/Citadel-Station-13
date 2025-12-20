@@ -86,9 +86,6 @@ export const AtmosControlConsole = (props) => {
                   minValue={0}
                   maxValue={data.maxOutputPressure}
                   step={10}
-                  // This takes an exceptionally long time to update
-                  // due to being an async signal
-                  suppressFlicker={2000}
                   onChange={(value) => act('pressure', {
                     pressure: value,
                   })} />

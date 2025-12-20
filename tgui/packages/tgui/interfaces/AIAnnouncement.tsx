@@ -32,13 +32,12 @@ export const AIAnnouncement = (props) => {
     <Window
       width={630}
       height={175}
-      resizable
       title="Vox Announcement">
       <Window.Content>
         <Section fill overflow="auto">
           <Stack vertical>
             <Stack.Item>
-              <font color="red">WARNING:</font> Misuse of this verb can result in you being job banned. More help is available in &apos;Announcement Help&apos;
+              <span color="red">WARNING:</span> Misuse of this verb can result in you being job banned. More help is available in &apos;Announcement Help&apos;
             </Stack.Item>
             <Stack.Item>
               <Tabs fluid textAlign="center">
@@ -61,8 +60,8 @@ export const AIAnnouncement = (props) => {
                     fluid
                     value={last_announcement}
                     placeholder="Announce something..."
-                    onInput={(e, value) => set_announcement_input(value)}
-                    onEnter={(e, value) => act("announce", {
+                    onChange={(value) => set_announcement_input(value)}
+                    onEnter={(value) => act("announce", {
                       "vox_type": Object.keys(vox_types)[current_page],
                       "to_speak": value,
                     })}
@@ -78,7 +77,7 @@ export const AIAnnouncement = (props) => {
             </Stack.Item>
             <Stack.Item>
               {missing_words.length
-                ? <div>These words are not available on the announcement system: <font color="red">{missing_words.join(" ")}</font></div> : null}
+                ? <div>These words are not available on the announcement system: <span color="red">{missing_words.join(" ")}</span></div> : null}
             </Stack.Item>
           </Stack>
         </Section>

@@ -752,7 +752,7 @@ type AdventureScreenProps = {
   hide_status?: boolean
 }
 
-export const AdventureScreen = (props: AdventureScreenProps, context) => {
+export const AdventureScreen = (props: AdventureScreenProps) => {
   const { act, data } = useBackend<AdventureDataProvider>();
   const {
     adventure_data,

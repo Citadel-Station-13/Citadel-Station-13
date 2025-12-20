@@ -72,7 +72,7 @@ export const AuxBaseConsoleContent = (props) => {
           No connected turrets
         </NoticeBox>
       ) : (
-        <Table cellpadding="3" textAlign="center">
+        <Table style={{ padding: "3px" }} textAlign="center">
           <Table.Row header>
             <Table.Cell>Unit</Table.Cell>
             <Table.Cell>Condition</Table.Cell>
