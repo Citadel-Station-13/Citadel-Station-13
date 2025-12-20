@@ -10,13 +10,13 @@ export const ChemMaster = (props) => {
     <Window
       width={465}
       height={550}
-      >
+    >
       <Window.Content scrollable>
         {screen === 'analyze' && (
           <AnalysisResults />
         ) || (
-          <ChemMasterContent />
-        )}
+            <ChemMasterContent />
+          )}
       </Window.Content>
     </Window>
   );
@@ -170,18 +170,16 @@ const ChemicalBufferEntry = (props) => {
           })} />
         <Button
           icon="ellipsis-h"
-          title="Custom amount"
           onClick={() => act('transfer', {
             id: chemical.id,
             amount: -1,
             to: transferTo,
-          })} />
+          })}>Custom Amount</Button>
         <Button
           icon="question"
-          title="Analyze"
           onClick={() => act('analyze', {
             id: chemical.id,
-          })} />
+          })}>Analyze</Button>
       </Table.Cell>
     </Table.Row>
   );
@@ -406,7 +404,7 @@ const AnalysisResults = (props) => {
         <LabeledList.Item label="Purity">
           {analyzeVars.purityF}
         </LabeledList.Item>
-        {!! data.fermianalyze && ( // why did you do that before? it's bad.
+        {!!data.fermianalyze && ( // why did you do that before? it's bad.
           <Fragment>
             <LabeledList.Item label="Inverse Ratio">
               {analyzeVars.inverseRatioF}

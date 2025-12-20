@@ -12,6 +12,7 @@ const FilterIntegerEntry = (props) => {
       value={value}
       minValue={-500}
       maxValue={500}
+      step={0.1}
       stepPixelSize={5}
       width="39px"
       onChange={(value) => act('modify_filter_value', {
@@ -51,6 +52,8 @@ const FilterFloatEntry = (props) => {
       </Box>
       <NumberInput
         value={step}
+        minValue={-Infinity}
+        maxValue={Infinity}
         step={0.001}
         format={value => toFixed(value, 4)}
         width="70px"
@@ -195,6 +198,9 @@ const FilterEntry = (props) => {
           <NumberInput
             value={priority}
             stepPixelSize={10}
+            minValue={-Infinity}
+            maxValue={Infinity}
+            step={0.1}
             width="60px"
             onChange={(value) => act('change_priority', {
               name: name,
@@ -203,8 +209,8 @@ const FilterEntry = (props) => {
           />
           <Button.Input
             content="Rename"
-            placeholder={name}
-            onCommit={(e, new_name) => act('rename_filter', {
+            value={name}
+            onCommit={(new_name) => act('rename_filter', {
               name: name,
               new_name: new_name,
             })}

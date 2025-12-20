@@ -20,7 +20,7 @@ export const VariableMenu = (props) => {
     ...rest
   } = props;
 
-  const [name, setName] = useLocalState("variable_name", null);
+  const [name, setName] = useLocalState<string | null>("variable_name", null);
   const [type, setType] = useLocalState("variable_type", types[1]);
 
   return (
@@ -78,6 +78,7 @@ export const VariableMenu = (props) => {
               </Stack.Item>
               <Stack.Item>
                 <Dropdown
+                  selected={type}
                   options={types}
                   width="100%"
                   onSelected={(selectedVal) => setType(selectedVal)}

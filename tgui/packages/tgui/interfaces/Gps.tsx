@@ -83,9 +83,9 @@ export const Gps = (props) => {
             <Section title="Detected Signals">
               <Table>
                 <Table.Row bold>
-                  <Table.Cell content="Name" />
-                  <Table.Cell collapsing content="Direction" />
-                  <Table.Cell collapsing content="Coordinates" />
+                  <Table.Cell>Name</Table.Cell>
+                  <Table.Cell collapsing>Direction</Table.Cell>
+                  <Table.Cell collapsing>Coordinates</Table.Cell>
                 </Table.Row>
                 {signals.map(signal => (
                   <Table.Row

@@ -3,9 +3,9 @@ import { flow } from 'common/fp';
 import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, ProgressBar, Section, Stack, Box } from 'tgui-core/components';
-import { getGasColor, getGasLabel } from '../constants';
 import { formatSiBaseTenUnit, formatSiUnit } from 'tgui-core/format';
 import { Window } from '../layouts';
+import { getGasColor, getGasLabel } from 'tgui-core/constants';
 
 export const Hypertorus = (props) => {
   const { act, data } = useBackend<any>();

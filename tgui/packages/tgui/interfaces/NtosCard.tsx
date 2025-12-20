@@ -122,7 +122,7 @@ export const NtosCardContent = (props) => {
               <Button.Input
                 fluid
                 content="Custom..."
-                onCommit={(e, value) => act('PRG_assign', {
+                onCommit={(value) => act('PRG_assign', {
                   assign_target: 'Custom',
                   custom_name: value,
                 })} />

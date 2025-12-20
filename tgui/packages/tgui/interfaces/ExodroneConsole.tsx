@@ -777,7 +777,7 @@ export const AdventureScreen = (props: AdventureScreenProps) => {
             height="100px"
             width="200px"
             style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
+              'imageRendering': 'pixelated',
             }} />
           <Stack vertical>
             <Stack.Divider />

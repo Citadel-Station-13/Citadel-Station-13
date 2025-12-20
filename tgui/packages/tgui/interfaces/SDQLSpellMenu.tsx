@@ -708,7 +708,7 @@ const SDQLSpellIcons = (props) => {
               m={0}
               src={`data:image/jpeg;base64,${action_icon}`}
               style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
+                'imageRendering': 'pixelated',
               }}
             />
           </Section>
@@ -722,7 +722,7 @@ const SDQLSpellIcons = (props) => {
               m={0}
               src={`data:image/jpeg;base64,${hand_icon}`}
               style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
+                'imageRendering': 'pixelated',
               }}
             />
           </Section>
@@ -736,7 +736,7 @@ const SDQLSpellIcons = (props) => {
               m={0}
               src={`data:image/jpeg;base64,${projectile_icon}`}
               style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
+                'imageRendering': 'pixelated',
               }}
             />
           </Section>
@@ -752,7 +752,7 @@ const SDQLSpellIcons = (props) => {
                 m={0}
                 src={`data:image/jpeg;base64,${mouse_icon}`}
                 style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
+                  'imageRendering': 'pixelated',
                 }}
               />
             </Section>
@@ -766,7 +766,7 @@ const SDQLSpellIcons = (props) => {
               m={0}
               src={`data:image/jpeg;base64,${overlay_icon}`}
               style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
+                'imageRendering': 'pixelated',
               }}
             />
           </Section>

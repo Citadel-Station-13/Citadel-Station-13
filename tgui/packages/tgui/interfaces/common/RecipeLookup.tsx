@@ -24,9 +24,9 @@ export const RecipeLookup = (props) => {
 
   return (
     <LabeledList>
-      <LabeledList.Item bold label="Recipe">
+      <LabeledList.Item label="Recipe">
         <Icon name="circle" mr={1} color={recipe.reagentCol} />
-        {recipe.name}
+        <b>{recipe.name}</b>
         <Button
           icon="arrow-left"
           ml={3}
@@ -116,7 +116,7 @@ export const RecipeLookup = (props) => {
         </LabeledList.Item>
       )}
       {recipe.reqContainer && (
-        <LabeledList.Item bold label="Container">
+        <LabeledList.Item label="Container">
           <Button
             color="transparent"
             textColor="white"
@@ -125,7 +125,7 @@ export const RecipeLookup = (props) => {
             tooltip="The required container for this reaction to occur in." />
         </LabeledList.Item>
       )}
-      <LabeledList.Item bold label="Purity">
+      <LabeledList.Item label="Purity">
         <LabeledList>
           <LabeledList.Item label="Optimal pH range">
             <Box position="relative">
@@ -157,7 +157,7 @@ export const RecipeLookup = (props) => {
           )}
         </LabeledList>
       </LabeledList.Item>
-      <LabeledList.Item bold label="Rate profile" width="10px">
+      <LabeledList.Item label="Rate profile">
         <Box
           height="50px"
           position="relative"

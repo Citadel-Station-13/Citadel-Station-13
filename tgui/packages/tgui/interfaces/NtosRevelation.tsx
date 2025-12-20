@@ -14,7 +14,7 @@ export const NtosRevelation = (props) => {
           <Button.Input
             fluid
             content="Obfuscate Name..."
-            onCommit={(e, value) => act('PRG_obfuscate', {
+            onCommit={(value) => act('PRG_obfuscate', {
               new_name: value,
             })}
             mb={1} />

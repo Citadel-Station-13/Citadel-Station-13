@@ -71,7 +71,7 @@ export const PortraitPicker = (props) => {
                     width="96px"
                     style={{
                       'verticalAlign': 'middle',
-                      '-ms-interpolation-mode': 'nearest-neighbor',
+                      'imageRendering': 'pixelated',
                     }} />
                 </Flex.Item>
                 <Flex.Item className="Section__titleText">

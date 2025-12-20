@@ -799,13 +799,13 @@ class PresetsPage extends Component {
     const [
       presetIndex,
       setSelectedPreset,
-    ] = useLocalState(this.'presetIndex', 0);
+    ] = useLocalState('presetIndex', 0);
     const [
       settingName,
       setEditingNameStatus,
-    ] = useLocalState(this.'settingName', 0);
-    const [newNameText, setText] = useLocalState(this.'newNameText', "");
-    const [hue, setHue] = useLocalState(this.'hue', 0);
+    ] = useLocalState('settingName', 0);
+    const [newNameText, setText] = useLocalState('newNameText', "");
+    const [hue, setHue] = useLocalState('hue', 0);
     return (
       <Section scrollable
         fill

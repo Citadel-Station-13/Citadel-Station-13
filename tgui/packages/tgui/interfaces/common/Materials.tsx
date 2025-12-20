@@ -31,7 +31,7 @@ interface MaterialIconProps extends BoxProps {
   material: keyof typeof MATERIAL_KEYS;
 }
 
-export const MaterialIcon = (props: MaterialIconProps) => {
+export const MaterialIcon = (props: MaterialIconProps & BoxProps) => {
   const { material, ...rest } = props;
 
   return (<Box

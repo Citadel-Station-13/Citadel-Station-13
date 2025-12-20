@@ -30,6 +30,7 @@ export const ChemAcclimator = (props) => {
             <LabeledList.Item label="Acceptable Temp. Difference">
               <NumberInput
                 value={data.allowed_temperature_difference}
+                step={0.1}
                 unit="K"
                 width="59px"
                 minValue={1}

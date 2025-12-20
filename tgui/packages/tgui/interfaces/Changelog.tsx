@@ -39,9 +39,11 @@ const icons = {
   unknown: { icon: 'info-circle', color: 'label' },
 };
 
-export class Changelog extends Component {
-  constructor() {
-    super();
+export class Changelog extends Component<any, any> {
+  dateChoices: any;
+
+  constructor(props) {
+    super(props);
     this.state = {
       data: 'Loading changelog data...',
       selectedDate: '',
@@ -290,12 +292,12 @@ export class Changelog extends Component {
       Object.entries(data).reverse().map(([date, authors]) => (
         <Section key={date} title={dateformat(date, 'd mmmm yyyy', true)}>
           <Box ml={3}>
-            {Object.entries(authors).map(([name, changes]) => (
+            {Object.entries(authors as any).map(([name, changes]) => (
               <Fragment key={name}>
                 <h4>{name} changed:</h4>
                 <Box ml={3}>
                   <Table>
-                    {changes.map(change => {
+                    {(changes as any).map(change => {
                       const changeType = Object.keys(change)[0];
                       return (
                         <Table.Row key={changeType + change[changeType]}>
