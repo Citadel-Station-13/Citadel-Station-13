@@ -1,5 +1,5 @@
 import { toFixed } from 'common/math';
-import { toTitleCase } from 'common/string';
+import { toTitleCase } from 'tgui-core/string';
 import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section, Table, NumberInput } from 'tgui-core/components';
@@ -9,9 +9,9 @@ export const ChemDispenser = (props) => {
   const { act, data } = useBackend<any>();
   const recording = !!data.recordingRecipe;
   const [hasCol, setHasCol] = useLocalState(
-    context, 'fs_title', false);
+    'fs_title', false);
   const [modeToggle, setModeToggle] = useLocalState(
-    context, 'mode_toggle', true);
+    'mode_toggle', true);
   const {
     storedContents = [],
   } = data;
@@ -36,7 +36,7 @@ export const ChemDispenser = (props) => {
     <Window
       width={565}
       height={data.canStore ? 720 : 620}
-      >
+    >
       <Window.Content scrollable>
         <Section
           title="Status"

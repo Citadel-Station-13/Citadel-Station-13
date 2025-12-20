@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { multiline } from 'common/string';
+import { multiline } from 'tgui-core/string';
 import { BlockQuote, Button, Dimmer, Section, Stack } from 'tgui-core/components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
@@ -51,11 +51,11 @@ const ObjectivePrintout = (props) => {
       </Stack.Item>
       <Stack.Item>
         {!objectives && "None!"
-        || objectives.map(objective => (
-          <Stack.Item key={objective.count}>
-            #{objective.count}: {objective.explanation}
-          </Stack.Item>
-        )) }
+          || objectives.map(objective => (
+            <Stack.Item key={objective.count}>
+              #{objective.count}: {objective.explanation}
+            </Stack.Item>
+          ))}
       </Stack.Item>
     </Stack>
   );
@@ -148,20 +148,20 @@ const UplinkSection = (props) => {
             </Stack.Item>
           </Dimmer>
         ) || (
-          <>
-            <Stack.Item bold>
-              {uplink_intro}
-              <br />
-              <span style={goalstyle}>Code: {code}</span>
-            </Stack.Item>
-            <Stack.Divider />
-            <Stack.Item mt="1%">
-              <BlockQuote>
-                {uplink_unlock_info}
-              </BlockQuote>
-            </Stack.Item>
-          </>
-        )}
+            <>
+              <Stack.Item bold>
+                {uplink_intro}
+                <br />
+                <span style={goalstyle}>Code: {code}</span>
+              </Stack.Item>
+              <Stack.Divider />
+              <Stack.Item mt="1%">
+                <BlockQuote>
+                  {uplink_unlock_info}
+                </BlockQuote>
+              </Stack.Item>
+            </>
+          )}
       </Stack>
     </Section>
   );

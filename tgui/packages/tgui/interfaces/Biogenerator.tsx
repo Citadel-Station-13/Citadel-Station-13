@@ -1,8 +1,8 @@
 import { classes } from 'common/react';
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Flex, Icon, Input, NoticeBox, NumberInput, Section, Table, Tabs } from 'tgui-core/components';
-import { formatMoney } from '../format';
+import { formatMoney } from 'tgui-core/format';
 import { Window } from '../layouts';
 
 const MAX_SEARCH_RESULTS = 25;

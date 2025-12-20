@@ -1,7 +1,7 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { multiline } from 'common/string';
+import { multiline } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack, Box } from 'tgui-core/components';
 import { getGasColor, getGasLabel } from '../constants';
@@ -122,16 +122,16 @@ export const BluespaceVendor = (props) => {
                               gas_id: gas.id,
                             })} />
                         ) || (
-                          <Button
-                            ml={1}
-                            disabled={data.selected_gas !== gas.id}
-                            icon="minus"
-                            tooltipPosition="left"
-                            tooltip={"Stop adding " + gas.name + "."}
-                            onClick={() => act('stop_pumping', {
-                              gas_id: gas.id,
-                            })} />
-                        )}
+                            <Button
+                              ml={1}
+                              disabled={data.selected_gas !== gas.id}
+                              icon="minus"
+                              tooltipPosition="left"
+                              tooltip={"Stop adding " + gas.name + "."}
+                              onClick={() => act('stop_pumping', {
+                                gas_id: gas.id,
+                              })} />
+                          )}
                       </Stack.Item>
                     </Stack>
                     <Divider />

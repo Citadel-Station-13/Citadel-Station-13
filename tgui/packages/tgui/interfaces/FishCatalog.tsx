@@ -4,7 +4,7 @@ import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
-import { capitalize } from 'common/string';
+import { capitalize } from 'tgui-core/string';
 
 export const FishCatalog = (props) => {
   const { act, data } = useBackend<any>();

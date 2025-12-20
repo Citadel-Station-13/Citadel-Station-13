@@ -2,7 +2,7 @@ import { toArray } from 'common/collections';
 import { Fragment } from 'react';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from 'tgui-core/components';
-import { formatMoney } from '../format';
+import { formatMoney } from 'tgui-core/format';
 import { Window } from '../layouts';
 
 export const Cargo = (props) => {
@@ -10,7 +10,7 @@ export const Cargo = (props) => {
     <Window
       width={780}
       height={750}
-      >
+    >
       <Window.Content scrollable>
         <CargoContent />
       </Window.Content>
@@ -98,7 +98,7 @@ const CargoStatus = (props) => {
       )}>
       <LabeledList>
         <LabeledList.Item label="Shuttle">
-          {docked && !requestonly && can_send &&(
+          {docked && !requestonly && can_send && (
             <Button
               content={location}
               onClick={() => act('send')} />
@@ -115,10 +115,10 @@ const CargoStatus = (props) => {
                 disabled={!(away && docked)}
                 onClick={() => act('loan')} />
             ) || (
-              <Box color="bad">
-                Loaned to Centcom
-              </Box>
-            )}
+                <Box color="bad">
+                  Loaned to Centcom
+                </Box>
+              )}
           </LabeledList.Item>
         )}
       </LabeledList>
@@ -261,7 +261,7 @@ const CargoRequests = (props) => {
               <Table.Cell collapsing textAlign="right">
                 {formatMoney(request.cost)} cr
               </Table.Cell>
-              {(!requestonly || can_send)&& can_approve_requests &&(
+              {(!requestonly || can_send) && can_approve_requests && (
                 <Table.Cell collapsing>
                   <Button
                     icon="check"
@@ -357,7 +357,7 @@ const CargoCart = (props) => {
                 {formatMoney(entry.cost)} cr
               </Table.Cell>
               <Table.Cell collapsing>
-                {can_send &&(
+                {can_send && (
                   <Button
                     icon="minus"
                     onClick={() => act('remove', {
@@ -381,10 +381,10 @@ const CargoCart = (props) => {
               content="Confirm the order"
               onClick={() => act('send')} />
           ) || (
-            <Box opacity={0.5}>
-              Shuttle in {location}.
-            </Box>
-          )}
+              <Box opacity={0.5}>
+                Shuttle in {location}.
+              </Box>
+            )}
         </Box>
       )}
     </Section>

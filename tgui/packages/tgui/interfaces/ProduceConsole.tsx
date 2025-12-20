@@ -1,4 +1,4 @@
-import { multiline } from 'common/string';
+import { multiline } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';

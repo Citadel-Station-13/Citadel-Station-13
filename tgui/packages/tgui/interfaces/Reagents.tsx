@@ -354,9 +354,9 @@ const RecipeLibrary = (props) => {
   } = data;
 
   const [reagentFilter, setReagentFilter] = useLocalState(
-    context, 'reagentFilter', true);
+    'reagentFilter', true);
   const [bookmarkMode, setBookmarkMode] = useLocalState(
-    context, 'bookmarkMode', false);
+    'bookmarkMode', false);
 
   const matchReagents = reaction => {
     if (!reagentFilter || currentReagents === null) {
@@ -370,7 +370,7 @@ const RecipeLibrary = (props) => {
 
   const bookmarkArray = Array.from(bookmarkedReactions);
 
-  const startIndex = 50 * (page-1);
+  const startIndex = 50 * (page - 1);
 
   const endIndex = 50 * page;
 
@@ -383,7 +383,7 @@ const RecipeLibrary = (props) => {
       && matchReagents(reaction)
     ));
 
-  const pageIndexMax = Math.ceil(visibleReactions.length/50);
+  const pageIndexMax = Math.ceil(visibleReactions.length / 50);
 
   const addBookmark = bookmark => {
     bookmarkedReactions.add(bookmark);
@@ -400,7 +400,7 @@ const RecipeLibrary = (props) => {
       title={bookmarkMode ? "Bookmarked recipes" : "Possible recipes"}
       buttons={(
         <>
-          Beaker: {linkedBeaker+"  "}
+          Beaker: {linkedBeaker + "  "}
           <Button
             content="Filter by reagents in beaker"
             icon="search"
@@ -500,11 +500,11 @@ const RecipeLibrary = (props) => {
                     act('update_ui');
                   }} />
               ) || (
-                <Button
-                  icon="trash"
-                  color="red"
-                  onClick={() => removeBookmark(reaction)} />
-              )}
+                  <Button
+                    icon="trash"
+                    color="red"
+                    onClick={() => removeBookmark(reaction)} />
+                )}
             </Table.Cell>
           </Table.Row>
         ))}

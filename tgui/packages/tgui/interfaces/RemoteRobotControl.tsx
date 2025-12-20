@@ -1,4 +1,4 @@
-import { decodeHtmlEntities } from 'common/string';
+import { decodeHtmlEntities } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Section, LabeledList } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -67,7 +67,7 @@ export const RemoteRobotControlContent = (props) => {
               <Box inline color="bad">
                 (HACKED)
               </Box>
-            ) || "" }
+            ) || ""}
           </LabeledList.Item>
           <LabeledList.Item label="Location">
             {robot.location}

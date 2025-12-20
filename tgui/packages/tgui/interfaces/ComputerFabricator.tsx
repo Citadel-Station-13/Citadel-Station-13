@@ -1,6 +1,6 @@
-import { multiline } from 'common/string';
+import { multiline } from 'tgui-core/string';
 import { useBackend } from '../backend';
-import { Box, Button,  Section, Table, Tooltip } from 'tgui-core/components';
+import { Box, Button, Section, Table, Tooltip } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { Grid } from '../components/Grid';
 

@@ -1,5 +1,5 @@
 import { sortBy } from "common/collections";
-import { capitalize } from "common/string";
+import { capitalize } from "tgui-core/string";
 import { useBackend, useLocalState } from "../backend";
 import { Blink, Box, Button, Dimmer, Flex, Icon, Input, Modal, Section, TextArea } from "tgui-core/components";
 import { Window } from "../layouts";
@@ -321,13 +321,13 @@ const PageMain = (props) => {
   } = data;
 
   const [callingShuttle, setCallingShuttle] = useLocalState(
-    context, "calling_shuttle", false);
+    "calling_shuttle", false);
   const [messagingAssociates, setMessagingAssociates] = useLocalState(
-    context, "messaging_associates", false);
+    "messaging_associates", false);
   const [messagingSector, setMessagingSector] = useLocalState(
-    context, "messaing_sector", null);
+    "messaing_sector", null);
   const [requestingNukeCodes, setRequestingNukeCodes] = useLocalState(
-    context, "requesting_nuke_codes", false);
+    "requesting_nuke_codes", false);
 
   const [
     [showAlertLevelConfirm, confirmingAlertLevelTick],

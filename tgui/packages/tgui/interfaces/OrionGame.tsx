@@ -1,4 +1,4 @@
-import { multiline } from 'common/string';
+import { multiline } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -167,21 +167,21 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="wrench"
-                content={"Hull Parts: "+hull}
+                content={"Hull Parts: " + hull}
                 color="average" />
             </Stack.Item>
             <Stack.Item>
               <Button
                 fluid
                 icon="server"
-                content={"Electronics: "+electronics}
+                content={"Electronics: " + electronics}
                 color="blue" />
             </Stack.Item>
             <Stack.Item mb={1}>
               <Button
                 fluid
                 icon="rocket"
-                content={"Engine Parts: "+engine}
+                content={"Engine Parts: " + engine}
                 color="violet" />
             </Stack.Item>
           </Stack>
@@ -373,11 +373,11 @@ const ORION_STATUS_NORMAL = (props) => {
           <Stack fill textAlign="center" vertical>
             <Stack.Item grow >
               <Box bold fontSize="15px">
-                {!!eventname && eventname || locationInfo[turns-1].title}
+                {!!eventname && eventname || locationInfo[turns - 1].title}
               </Box>
               <br />
               <Box fontSize="15px">
-                {!!eventtext && eventtext || locationInfo[turns-1].blurb}
+                {!!eventtext && eventtext || locationInfo[turns - 1].blurb}
               </Box>
             </Stack.Item>
             <Stack.Item>
@@ -394,14 +394,14 @@ const ORION_STATUS_NORMAL = (props) => {
                   </Stack.Item>
                 ))
               ) || (
-                <Button
-                  mb={1}
-                  lineHeight={3}
-                  width={16}
-                  icon="arrow-right"
-                  content="Continue"
-                  onClick={() => act('continue')} />
-              )}
+                  <Button
+                    mb={1}
+                    lineHeight={3}
+                    width={16}
+                    icon="arrow-right"
+                    content="Continue"
+                    onClick={() => act('continue')} />
+                )}
             </Stack.Item>
           </Stack>
         </Section>
@@ -483,9 +483,9 @@ const ORION_STATUS_MARKET = (props) => {
                     to dock again would be certain death.
                   </Box>
                 ) || (
-                  "Hello, Pioneer! We have supplies for you to help \
+                    "Hello, Pioneer! We have supplies for you to help \
                   you reach Orion. They aren't free, though!"
-                )}
+                  )}
               </Box>
             </Stack.Item>
             {spaceport_raided && (
@@ -497,108 +497,108 @@ const ORION_STATUS_MARKET = (props) => {
                 <Stack.Item grow />
               </>
             ) || (
-              <>
-                <Stack.Item>
-                  General Markets:
-                </Stack.Item>
-                <Stack.Item>
-                  <Stack mb={-1} fill>
-                    <Stack.Item grow basis={0}>
-                      <Stack vertical>
-                        <Stack.Item>
-                          <Button
-                            fluid
-                            icon="gas-pump"
-                            content={"5 Food -> 5 Fuel"}
-                            color="green"
-                            onClick={() => act('trade', {
-                              what: 2,
-                            })} />
-                        </Stack.Item>
-                        <Divider />
-                        <Stack.Item mt={0}>
-                          Port Hangar Bay:
-                        </Stack.Item>
-                        <Stack.Item mb={marketButtonSpacing}>
-                          <Button
-                            fluid
-                            icon="wrench"
-                            content={"5 Fuel for Hull Plates"}
-                            color="average"
-                            onClick={() => act('buyparts', {
-                              part: 2,
-                            })} />
-                        </Stack.Item>
-                        <Stack.Item mb={marketButtonSpacing}>
-                          <Button
-                            fluid
-                            icon="server"
-                            content={"5 Fuel for Electronics"}
-                            color="blue"
-                            onClick={() => act('buyparts', {
-                              part: 3,
-                            })} />
-                        </Stack.Item>
-                        <Stack.Item mb={marketButtonSpacing}>
-                          <Button
-                            fluid
-                            icon="rocket"
-                            content={"5 Fuel for Engine Parts"}
-                            color="violet"
-                            onClick={() => act('buyparts', {
-                              part: 1,
-                            })} />
-                        </Stack.Item>
-                      </Stack>
-                    </Stack.Item>
-                    <Stack.Item grow basis={0}>
-                      <Stack vertical>
-                        <Stack.Item>
-                          <Button
-                            fluid
-                            icon="hamburger"
-                            content={"5 Fuel -> 5 Food"}
-                            color="olive"
-                            onClick={() => act('trade', {
-                              what: 1,
-                            })} />
-                        </Stack.Item>
-                        <Divider />
-                        <Stack.Item mt={0}>
-                          Port Bar:
-                        </Stack.Item>
-                        <Stack.Item mb={marketButtonSpacing}>
-                          <Button
-                            fluid
-                            icon="user-plus"
-                            content={"10 Food, 10 Fuel for Crew"}
-                            color="white"
-                            onClick={() => act('buycrew')} />
-                        </Stack.Item>
-                        <Stack.Item mb={marketButtonSpacing}>
-                          <Button
-                            fluid
-                            icon="user-minus"
-                            content={"Crew for 7 Food, 7 Fuel"}
-                            color="black"
-                            onClick={() => act('sellcrew')} />
-                        </Stack.Item>
-                        <Stack.Item mb={marketButtonSpacing}>
-                          <Button
-                            fluid
-                            icon="meteor"
-                            content={"Odd Crew (Same Price)"}
-                            color="purple"
-                            onClick={() => act('buycrew', {
-                              odd: 1,
-                            })} />
-                        </Stack.Item>
-                      </Stack>
-                    </Stack.Item>
-                  </Stack>
-                </Stack.Item>
-              </>
-            )}
+                <>
+                  <Stack.Item>
+                    General Markets:
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Stack mb={-1} fill>
+                      <Stack.Item grow basis={0}>
+                        <Stack vertical>
+                          <Stack.Item>
+                            <Button
+                              fluid
+                              icon="gas-pump"
+                              content={"5 Food -> 5 Fuel"}
+                              color="green"
+                              onClick={() => act('trade', {
+                                what: 2,
+                              })} />
+                          </Stack.Item>
+                          <Divider />
+                          <Stack.Item mt={0}>
+                            Port Hangar Bay:
+                          </Stack.Item>
+                          <Stack.Item mb={marketButtonSpacing}>
+                            <Button
+                              fluid
+                              icon="wrench"
+                              content={"5 Fuel for Hull Plates"}
+                              color="average"
+                              onClick={() => act('buyparts', {
+                                part: 2,
+                              })} />
+                          </Stack.Item>
+                          <Stack.Item mb={marketButtonSpacing}>
+                            <Button
+                              fluid
+                              icon="server"
+                              content={"5 Fuel for Electronics"}
+                              color="blue"
+                              onClick={() => act('buyparts', {
+                                part: 3,
+                              })} />
+                          </Stack.Item>
+                          <Stack.Item mb={marketButtonSpacing}>
+                            <Button
+                              fluid
+                              icon="rocket"
+                              content={"5 Fuel for Engine Parts"}
+                              color="violet"
+                              onClick={() => act('buyparts', {
+                                part: 1,
+                              })} />
+                          </Stack.Item>
+                        </Stack>
+                      </Stack.Item>
+                      <Stack.Item grow basis={0}>
+                        <Stack vertical>
+                          <Stack.Item>
+                            <Button
+                              fluid
+                              icon="hamburger"
+                              content={"5 Fuel -> 5 Food"}
+                              color="olive"
+                              onClick={() => act('trade', {
+                                what: 1,
+                              })} />
+                          </Stack.Item>
+                          <Divider />
+                          <Stack.Item mt={0}>
+                            Port Bar:
+                          </Stack.Item>
+                          <Stack.Item mb={marketButtonSpacing}>
+                            <Button
+                              fluid
+                              icon="user-plus"
+                              content={"10 Food, 10 Fuel for Crew"}
+                              color="white"
+                              onClick={() => act('buycrew')} />
+                          </Stack.Item>
+                          <Stack.Item mb={marketButtonSpacing}>
+                            <Button
+                              fluid
+                              icon="user-minus"
+                              content={"Crew for 7 Food, 7 Fuel"}
+                              color="black"
+                              onClick={() => act('sellcrew')} />
+                          </Stack.Item>
+                          <Stack.Item mb={marketButtonSpacing}>
+                            <Button
+                              fluid
+                              icon="meteor"
+                              content={"Odd Crew (Same Price)"}
+                              color="purple"
+                              onClick={() => act('buycrew', {
+                                odd: 1,
+                              })} />
+                          </Stack.Item>
+                        </Stack>
+                      </Stack.Item>
+                    </Stack>
+                  </Stack.Item>
+                </>
+              )}
 
           </Stack>
         </Section>
@@ -628,8 +628,8 @@ export const OrionGame = (props) => {
         {eventname === "Space Port Raid" && (
           <MarketRaid />
         ) || (
-          <GameStatusComponent />
-        )}
+            <GameStatusComponent />
+          )}
       </Window.Content>
     </Window>
   );

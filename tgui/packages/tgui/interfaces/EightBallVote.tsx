@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
-import { Box, Button,  Section, NoticeBox } from 'tgui-core/components';
-import { toTitleCase } from 'common/string';
+import { Box, Button, Section, NoticeBox } from 'tgui-core/components';
+import { toTitleCase } from 'tgui-core/string';
 import { Window } from '../layouts';
 import { Grid } from '../components/Grid';
 
@@ -19,8 +19,8 @@ export const EightBallVote = (props) => {
             No question is currently being asked.
           </NoticeBox>
         ) || (
-          <EightBallVoteQuestion />
-        )}
+            <EightBallVoteQuestion />
+          )}
       </Window.Content>
     </Window>
   );

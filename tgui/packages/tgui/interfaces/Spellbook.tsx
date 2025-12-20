@@ -1,4 +1,4 @@
-import { multiline } from 'common/string';
+import { multiline } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Blink, Box, Button, Dimmer, Divider, Icon, Modal, NoticeBox, ProgressBar, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -362,14 +362,14 @@ export const Spellbook = (props) => {
     tabIndex,
     setTabIndex,
   ] = useLocalState('tab-index', 1);
-  const ScrollableCheck = TAB2NAME[tabIndex-1].noScrollable ? false : true;
-  const ScrollableNextCheck = TAB2NAME[tabIndex-1].noScrollable !== 2;
-  const TabComponent = TAB2NAME[tabIndex-1].component
-    ? TAB2NAME[tabIndex-1].component() : null;
+  const ScrollableCheck = TAB2NAME[tabIndex - 1].noScrollable ? false : true;
+  const ScrollableNextCheck = TAB2NAME[tabIndex - 1].noScrollable !== 2;
+  const TabComponent = TAB2NAME[tabIndex - 1].component
+    ? TAB2NAME[tabIndex - 1].component() : null;
   const TabNextComponent = TAB2NAME[tabIndex].component
     ? TAB2NAME[tabIndex].component() : null;
   const TabSpells = entries ? entries.filter(
-    entry => entry.cat === TAB2NAME[tabIndex-1].title) : null;
+    entry => entry.cat === TAB2NAME[tabIndex - 1].title) : null;
   const TabNextSpells = entries ? entries.filter(
     entry => entry.cat === TAB2NAME[tabIndex].title) : null;
   return (
@@ -389,7 +389,7 @@ export const Spellbook = (props) => {
                   width={widthSection}
                   height={heightSection}
                   fill
-                  title={TAB2NAME[tabIndex-1].title}
+                  title={TAB2NAME[tabIndex - 1].title}
                   buttons={
                     <>
                       <Button
@@ -397,118 +397,118 @@ export const Spellbook = (props) => {
                         disabled={tabIndex === 1}
                         icon="arrow-left"
                         content="Previous Page"
-                        onClick={() => setTabIndex(tabIndex-2)} />
+                        onClick={() => setTabIndex(tabIndex - 2)} />
                       <Box textAlign="right" bold mt={-3.3} mr={1}>
                         {tabIndex}
                       </Box>
                     </>
                   }>
-                  {!!TAB2NAME[tabIndex-1].locked && (
+                  {!!TAB2NAME[tabIndex - 1].locked && (
                     <LockedPage />
                   )}
                   <Stack vertical>
-                    {TAB2NAME[tabIndex-1].blurb !== null && (
+                    {TAB2NAME[tabIndex - 1].blurb !== null && (
                       <Stack.Item>
                         <Box
                           textAlign="center"
                           bold
                           height="30px">
-                          {TAB2NAME[tabIndex-1].blurb}
+                          {TAB2NAME[tabIndex - 1].blurb}
                         </Box>
                       </Stack.Item>
                     )}
-                    {!!TAB2NAME[tabIndex-1].component && (
+                    {!!TAB2NAME[tabIndex - 1].component && (
                       <Stack.Item>
                         <TabComponent />
                       </Stack.Item>
                     ) || (
-                      <Stack.Item>
-                        <Stack vertical>
-                          {TabSpells?.map(entry => (
-                            <Stack.Item key={entry}>
-                              <Divider />
-                              <Section
-                                title={entry.name}
-                                buttons={
-                                  <>
-                                    <Box mr={entry.buyword === "Learn" ? 6.5 : 2}>
-                                      {entry.cost} Points
-                                    </Box>
-                                    {entry.cat === 'Rituals' && (
-                                      !!entry.times && (
-                                        <Box ml={-104} mt={-2.2}>
-                                          Cast {entry.times} Times.
-                                        </Box>
-                                      ) || (
-                                        <Box ml={-110} mt={-2.2}>
-                                          Not Casted Yet.
-                                        </Box>
-                                      )
-                                    ) || (
-                                      entry.cooldown && (
-                                        <Box ml={-115} mt={-2.2}>
-                                          {entry.cooldown}s Cooldown
-                                        </Box>
-                                      ) || (
-                                        <Box ml={-120} mt={-2.2}>
-                                          No Cooldown!
-                                        </Box>)
-                                    )}
-                                    {entry.buyword === "Learn" && (
-                                      <Box mr={-9.5} mt={-3}>
-                                        <Button
-                                          icon="tshirt"
-                                          color={entry.clothes_req ? "bad" : "green"}
-                                          tooltipPosition="bottom-left"
-                                          tooltip={entry.clothes_req
-                                            ? "Requires wizard garb."
-                                            :"Can be cast without wizard garb."} />
+                        <Stack.Item>
+                          <Stack vertical>
+                            {TabSpells?.map(entry => (
+                              <Stack.Item key={entry}>
+                                <Divider />
+                                <Section
+                                  title={entry.name}
+                                  buttons={
+                                    <>
+                                      <Box mr={entry.buyword === "Learn" ? 6.5 : 2}>
+                                        {entry.cost} Points
                                       </Box>
-                                    )}
-                                  </>
-                                }>
-                                <Stack>
-                                  <Stack.Item grow>
-                                    {entry.desc}
-                                  </Stack.Item>
-                                  <Stack.Item>
-                                    <Divider vertical />
-                                  </Stack.Item>
-                                  <Stack.Item>
-                                    <Button
-                                      fluid
-                                      textAlign="center"
-                                      color={points >= entry.cost ? "green" : "bad"}
-                                      disabled={points < entry.cost}
-                                      width={7}
-                                      icon={BUYWORD2ICON[entry.buyword]}
-                                      content={entry.buyword}
-                                      onClick={() => act("purchase", {
-                                        spellref: entry.ref,
-                                      })} />
-                                    <br />
-                                    {!entry.refundable && (
-                                      <NoticeBox>
-                                        No refunds.
-                                      </NoticeBox>
-                                    ) || (
+                                      {entry.cat === 'Rituals' && (
+                                        !!entry.times && (
+                                          <Box ml={-104} mt={-2.2}>
+                                            Cast {entry.times} Times.
+                                          </Box>
+                                        ) || (
+                                          <Box ml={-110} mt={-2.2}>
+                                            Not Casted Yet.
+                                          </Box>
+                                        )
+                                      ) || (
+                                          entry.cooldown && (
+                                            <Box ml={-115} mt={-2.2}>
+                                              {entry.cooldown}s Cooldown
+                                            </Box>
+                                          ) || (
+                                            <Box ml={-120} mt={-2.2}>
+                                              No Cooldown!
+                                            </Box>)
+                                        )}
+                                      {entry.buyword === "Learn" && (
+                                        <Box mr={-9.5} mt={-3}>
+                                          <Button
+                                            icon="tshirt"
+                                            color={entry.clothes_req ? "bad" : "green"}
+                                            tooltipPosition="bottom-left"
+                                            tooltip={entry.clothes_req
+                                              ? "Requires wizard garb."
+                                              : "Can be cast without wizard garb."} />
+                                        </Box>
+                                      )}
+                                    </>
+                                  }>
+                                  <Stack>
+                                    <Stack.Item grow>
+                                      {entry.desc}
+                                    </Stack.Item>
+                                    <Stack.Item>
+                                      <Divider vertical />
+                                    </Stack.Item>
+                                    <Stack.Item>
                                       <Button
+                                        fluid
                                         textAlign="center"
+                                        color={points >= entry.cost ? "green" : "bad"}
+                                        disabled={points < entry.cost}
                                         width={7}
-                                        icon="arrow-left"
-                                        content="Refund"
-                                        onClick={() => act("refund", {
+                                        icon={BUYWORD2ICON[entry.buyword]}
+                                        content={entry.buyword}
+                                        onClick={() => act("purchase", {
                                           spellref: entry.ref,
                                         })} />
-                                    )}
-                                  </Stack.Item>
-                                </Stack>
-                              </Section>
-                            </Stack.Item>
-                          ))}
-                        </Stack>
-                      </Stack.Item>
-                    )}
+                                      <br />
+                                      {!entry.refundable && (
+                                        <NoticeBox>
+                                          No refunds.
+                                        </NoticeBox>
+                                      ) || (
+                                          <Button
+                                            textAlign="center"
+                                            width={7}
+                                            icon="arrow-left"
+                                            content="Refund"
+                                            onClick={() => act("refund", {
+                                              spellref: entry.ref,
+                                            })} />
+                                        )}
+                                    </Stack.Item>
+                                  </Stack>
+                                </Section>
+                              </Stack.Item>
+                            ))}
+                          </Stack>
+                        </Stack.Item>
+                      )}
                   </Stack>
                 </Section>
               </Stack.Item>
@@ -527,9 +527,9 @@ export const Spellbook = (props) => {
                         icon="arrow-right"
                         disabled={tabIndex === 9}
                         content="Next Page"
-                        onClick={() => setTabIndex(tabIndex+2)} />
+                        onClick={() => setTabIndex(tabIndex + 2)} />
                       <Box textAlign="left" bold mt={-3.3} ml={-59.8} >
-                        {tabIndex+1}
+                        {tabIndex + 1}
                       </Box>
                     </>
                   }>
@@ -552,94 +552,94 @@ export const Spellbook = (props) => {
                         <TabNextComponent />
                       </Stack.Item>
                     ) || (
-                      <Stack.Item>
-                        <Stack vertical>
-                          {TabNextSpells?.map(entry => (
-                            <Stack.Item key={entry}>
-                              <Divider />
-                              <Section
-                                title={entry.name}
-                                buttons={
-                                  <>
-                                    <Box mr={entry.buyword === "Learn" ? 6.5 : 2}>
-                                      {entry.cost} Points
-                                    </Box>
-                                    {entry.cat === 'Rituals' && (
-                                      !!entry.times && (
-                                        <Box ml={-118} mt={-2.2}>
-                                          Cast {entry.times} Time(s).
-                                        </Box>
-                                      ) || (
-                                        <Box ml={-118} mt={-2.2}>
-                                          Not Casted Yet.
-                                        </Box>
-                                      )
-                                    ) || (
-                                      entry.cooldown && (
-                                        <Box ml={-115} mt={-2.2}>
-                                          {entry.cooldown}s Cooldown
-                                        </Box>
-                                      ) || (
-                                        <Box ml={-120} mt={-2.2}>
-                                          No Cooldown!
-                                        </Box>
-                                      )
-                                    )}
-                                    {entry.buyword === "Learn" && (
-                                      <Box mr={-9.5} mt={-3}>
-                                        <Button
-                                          icon="tshirt"
-                                          color={entry.clothes_req ? "bad" : "green"}
-                                          tooltipPosition="bottom-left"
-                                          tooltip={entry.clothes_req
-                                            ? "Requires wizard garb."
-                                            :"Can be cast without wizard garb."} />
+                        <Stack.Item>
+                          <Stack vertical>
+                            {TabNextSpells?.map(entry => (
+                              <Stack.Item key={entry}>
+                                <Divider />
+                                <Section
+                                  title={entry.name}
+                                  buttons={
+                                    <>
+                                      <Box mr={entry.buyword === "Learn" ? 6.5 : 2}>
+                                        {entry.cost} Points
                                       </Box>
-                                    )}
-                                  </>
-                                }>
-                                <Stack>
-                                  <Stack.Item grow>
-                                    {entry.desc}
-                                  </Stack.Item>
-                                  <Stack.Item>
-                                    <Divider vertical />
-                                  </Stack.Item>
-                                  <Stack.Item>
-                                    <Button
-                                      fluid
-                                      textAlign="center"
-                                      color={points >= entry.cost ? "green" : "bad"}
-                                      disabled={points < entry.cost}
-                                      width={7}
-                                      icon={BUYWORD2ICON[entry.buyword]}
-                                      content={entry.buyword}
-                                      onClick={() => act("purchase", {
-                                        spellref: entry.ref,
-                                      })} />
-                                    <br />
-                                    {!entry.refundable && (
-                                      <NoticeBox>
-                                        No refunds.
-                                      </NoticeBox>
-                                    ) || (
+                                      {entry.cat === 'Rituals' && (
+                                        !!entry.times && (
+                                          <Box ml={-118} mt={-2.2}>
+                                            Cast {entry.times} Time(s).
+                                          </Box>
+                                        ) || (
+                                          <Box ml={-118} mt={-2.2}>
+                                            Not Casted Yet.
+                                          </Box>
+                                        )
+                                      ) || (
+                                          entry.cooldown && (
+                                            <Box ml={-115} mt={-2.2}>
+                                              {entry.cooldown}s Cooldown
+                                            </Box>
+                                          ) || (
+                                            <Box ml={-120} mt={-2.2}>
+                                              No Cooldown!
+                                            </Box>
+                                          )
+                                        )}
+                                      {entry.buyword === "Learn" && (
+                                        <Box mr={-9.5} mt={-3}>
+                                          <Button
+                                            icon="tshirt"
+                                            color={entry.clothes_req ? "bad" : "green"}
+                                            tooltipPosition="bottom-left"
+                                            tooltip={entry.clothes_req
+                                              ? "Requires wizard garb."
+                                              : "Can be cast without wizard garb."} />
+                                        </Box>
+                                      )}
+                                    </>
+                                  }>
+                                  <Stack>
+                                    <Stack.Item grow>
+                                      {entry.desc}
+                                    </Stack.Item>
+                                    <Stack.Item>
+                                      <Divider vertical />
+                                    </Stack.Item>
+                                    <Stack.Item>
                                       <Button
+                                        fluid
                                         textAlign="center"
+                                        color={points >= entry.cost ? "green" : "bad"}
+                                        disabled={points < entry.cost}
                                         width={7}
-                                        icon="arrow-left"
-                                        content="Refund"
-                                        onClick={() => act("refund", {
+                                        icon={BUYWORD2ICON[entry.buyword]}
+                                        content={entry.buyword}
+                                        onClick={() => act("purchase", {
                                           spellref: entry.ref,
                                         })} />
-                                    )}
-                                  </Stack.Item>
-                                </Stack>
-                              </Section>
-                            </Stack.Item>
-                          ))}
-                        </Stack>
-                      </Stack.Item>
-                    )}
+                                      <br />
+                                      {!entry.refundable && (
+                                        <NoticeBox>
+                                          No refunds.
+                                        </NoticeBox>
+                                      ) || (
+                                          <Button
+                                            textAlign="center"
+                                            width={7}
+                                            icon="arrow-left"
+                                            content="Refund"
+                                            onClick={() => act("refund", {
+                                              spellref: entry.ref,
+                                            })} />
+                                        )}
+                                    </Stack.Item>
+                                  </Stack>
+                                </Section>
+                              </Stack.Item>
+                            ))}
+                          </Stack>
+                        </Stack.Item>
+                      )}
                   </Stack>
                 </Section>
               </Stack.Item>
@@ -648,7 +648,7 @@ export const Spellbook = (props) => {
           <Stack.Item>
             <Section>
               <ProgressBar
-                value={points/10}>
+                value={points / 10}>
                 {points + ' points left to spend.'}
               </ProgressBar>
             </Section>

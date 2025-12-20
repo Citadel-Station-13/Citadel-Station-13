@@ -2,8 +2,8 @@ import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Box, Button, Dimmer, Icon, LabeledList, Modal, ProgressBar, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
-import { formatTime } from '../format';
-import { capitalize } from 'common/string';
+import { formatTime } from 'tgui-core/format';
+import { capitalize } from 'tgui-core/string';
 import nt_logo from '../assets/bg-nanotrasen.svg';
 import { Fragment } from 'react';
 
@@ -196,11 +196,11 @@ const DroneSelectionSection = (props) => {
                   {drone.controlled && (
                     "Controlled by another console."
                   ) || (
-                    <Button
-                      content="Assume Control"
-                      icon="plug"
-                      onClick={() => act("select_drone", { "drone_ref": drone.ref })} />
-                  )}
+                      <Button
+                        content="Assume Control"
+                        icon="plug"
+                        onClick={() => act("select_drone", { "drone_ref": drone.ref })} />
+                    )}
                 </Stack.Item>
               </Stack>
             </Stack.Item>
@@ -254,11 +254,11 @@ const ToolSelectionModal = (props) => {
                 </Button>
               </Stack.Item>
             )) || (
-              <Stack.Item>
-                <Button
-                  content="Back" />
-              </Stack.Item>
-            )}
+                <Stack.Item>
+                  <Button
+                    content="Back" />
+                </Stack.Item>
+              )}
           </Stack>
         </Stack.Item>
       </Stack>
@@ -495,7 +495,7 @@ const TravelTargetSelectionScreen = (props) => {
     act("start_travel", { "target_site": ref });
   };
 
-  const non_empty_bands = (dest : SiteData) => {
+  const non_empty_bands = (dest: SiteData) => {
     const band_check = (s: string) => dest.band_info[s] !== undefined
       && dest.band_info[s] !== 0;
     return Object.keys(all_bands).filter(band_check);

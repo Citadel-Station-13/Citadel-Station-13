@@ -1,4 +1,4 @@
-import { multiline } from 'common/string';
+import { multiline } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, Icon, LabeledList, ProgressBar, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';

@@ -1,7 +1,7 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Button, ByondUi, Flex, Input, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -115,8 +115,8 @@ export const CameraConsoleContent = (props) => {
           fill
           scrollable>
           {cameras.map(camera => (
-          // We're not using the component here because performance
-          // would be absolutely abysmal (50+ ms for each re-render).
+            // We're not using the component here because performance
+            // would be absolutely abysmal (50+ ms for each re-render).
             <div
               key={camera.name}
               title={camera.name}

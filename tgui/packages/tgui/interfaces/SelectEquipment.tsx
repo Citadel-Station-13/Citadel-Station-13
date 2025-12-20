@@ -1,6 +1,6 @@
 import { filter, map, sortBy, uniq } from 'common/collections';
 import { flow } from 'common/fp';
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Icon, Input, Section, Stack, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -9,7 +9,7 @@ import { Window } from '../layouts';
 // custom outfits give a ref keyword instead of path
 const getOutfitKey = outfit => outfit.path || outfit.ref;
 
-const useOutfitTabs = (context, categories) => {
+const useOutfitTabs = (categories) => {
   return useLocalState('selected-tab', categories[0]);
 };
 
@@ -38,10 +38,10 @@ export const SelectEquipment = (props) => {
     ...outfits.map(entry => entry.category),
     'Custom',
   ]);
-  const [tab] = useOutfitTabs(context, categories);
+  const [tab] = useOutfitTabs(categories);
 
   const [searchText, setSearchText] = useLocalState(
-    context, 'searchText', '');
+    'searchText', '');
   const searchFilter = createSearch(searchText, entry => (
     entry.name + entry.path
   ));
@@ -120,7 +120,7 @@ export const SelectEquipment = (props) => {
 
 const DisplayTabs = (props) => {
   const { categories } = props;
-  const [tab, setTab] = useOutfitTabs(context, categories);
+  const [tab, setTab] = useOutfitTabs(categories);
   return (
     <Tabs textAlign="center">
       {categories.map(category => (

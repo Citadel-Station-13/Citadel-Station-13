@@ -53,7 +53,7 @@ export const PersonalCrafting = (props) => {
   }
   // Sort out the tab state
   const [tab, setTab] = useLocalState(
-    context, 'tab', categories[0]?.name);
+    'tab', categories[0]?.name);
   const shownRecipes = recipes
     .filter(recipe => recipe.category === tab);
   return (

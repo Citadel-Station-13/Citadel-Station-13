@@ -2,7 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, LabeledList, Section, Box, NoticeBox, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
-import { formatTime } from '../format';
+import { formatTime } from 'tgui-core/format';
 
 type Adventure = {
   ref: string;

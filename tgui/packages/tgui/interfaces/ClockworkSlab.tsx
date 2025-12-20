@@ -7,7 +7,7 @@
  */
 
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { map } from 'common/collections';
 import { Section, Tabs, Table, Button, Box, NoticeBox, Divider, Input } from 'tgui-core/components';
 import { Window } from '../layouts';

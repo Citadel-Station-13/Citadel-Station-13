@@ -1,5 +1,5 @@
 import { sortBy } from 'common/collections';
-import { toTitleCase } from 'common/string';
+import { toTitleCase } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -76,14 +76,14 @@ export const PortableChemMixer = (props) => {
               {recording
                 && 'Virtual beaker'
                 || data.isBeakerLoaded
-                  && (
-                    <>
-                      <AnimatedNumber
-                        initial={0}
-                        value={data.beakerCurrentVolume} />
-                      /{data.beakerMaxVolume} units
-                    </>
-                  )
+                && (
+                  <>
+                    <AnimatedNumber
+                      initial={0}
+                      value={data.beakerCurrentVolume} />
+                    /{data.beakerMaxVolume} units
+                  </>
+                )
                 || 'No beaker'}
             </LabeledList.Item>
             <LabeledList.Item

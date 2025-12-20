@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Button, LabeledList, Section, ProgressBar, Flex, Box, Table, Collapsible, Input, Dimmer, Icon } from 'tgui-core/components';
 import { Window } from '../layouts';
-import { capitalize } from "common/string";
+import { capitalize } from "tgui-core/string";
 
 export const Autolathe = (props) => {
   const { act, data } = useBackend<any>();

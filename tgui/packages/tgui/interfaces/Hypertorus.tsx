@@ -4,7 +4,7 @@ import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, ProgressBar, Section, Stack, Box } from 'tgui-core/components';
 import { getGasColor, getGasLabel } from '../constants';
-import { formatSiBaseTenUnit, formatSiUnit } from '../format';
+import { formatSiBaseTenUnit, formatSiUnit } from 'tgui-core/format';
 import { Window } from '../layouts';
 
 export const Hypertorus = (props) => {

@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, Flex, Icon, Modal, Section, LabeledList, NoticeBox, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
-import { formatTime } from '../format';
+import { formatTime } from 'tgui-core/format';
 
 
 type SiteData = {
@@ -223,8 +223,8 @@ export const ExoscannerConsole = (props) => {
                         size={3} />
                     </>
                   ) || (
-                    "No properly configured scanner arrays detected."
-                  )}
+                      "No properly configured scanner arrays detected."
+                    )}
                 </Stack.Item>
               </Stack>
               <Section title="Special Scan Condtions">

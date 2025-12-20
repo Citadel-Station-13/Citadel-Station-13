@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, Section, Table } from 'tgui-core/components';
-import { formatMoney } from '../format';
+import { formatMoney } from 'tgui-core/format';
 import { NtosWindow } from '../layouts';
 
 export const NtosBountyConsole = (props) => {
@@ -12,7 +12,7 @@ export const NtosBountyConsole = (props) => {
     <NtosWindow
       width={750}
       height={600}
-      >
+    >
       <NtosWindow.Content scrollable>
         <Section
           title={<BountyHeader />}

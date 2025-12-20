@@ -1,6 +1,6 @@
 import { filter } from 'common/collections';
 import { flow } from 'common/fp';
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Button, Collapsible, Icon, Input, Section, Stack, Tabs } from 'tgui-core/components';
 import { useLocalState } from '../backend';

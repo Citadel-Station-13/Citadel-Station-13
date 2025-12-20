@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, Section, Table } from 'tgui-core/components';
-import { formatMoney } from '../format';
+import { formatMoney } from 'tgui-core/format';
 import { Window } from '../layouts';
 
 export const CargoBountyConsole = (props) => {
@@ -12,7 +12,7 @@ export const CargoBountyConsole = (props) => {
     <Window
       width={750}
       height={600}
-      >
+    >
       <Window.Content scrollable>
         <Section
           title={<BountyHeader />}

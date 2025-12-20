@@ -1,7 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { Box, Button, NumberInput, Flex } from 'tgui-core/components';
 import { classes } from 'common/react';
-import { formatMoney, formatSiUnit } from '../../format';
+import { formatMoney, formatSiUnit } from 'tgui-core/format';
 import { useSharedState } from '../../backend';
 import { BoxProps } from 'tgui-core/components/Box';
 
@@ -52,7 +52,7 @@ const EjectMaterial = (props: {
     sheets,
   } = props.material;
   const [removeMaterials, setRemoveMaterials] = useSharedState(
-    context, 'remove_mats_' + name, 1);
+    'remove_mats_' + name, 1);
   if (removeMaterials > 1 && sheets < removeMaterials) {
     setRemoveMaterials(sheets || 1);
   }

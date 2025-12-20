@@ -1,4 +1,4 @@
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { sortBy } from 'common/collections';
 import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from "tgui-core/components";
@@ -22,12 +22,12 @@ export const Stack = (props) => {
   });
 
   const items = searchText.length > 0
-   && Object.keys(recipes)
-     .filter(testSearch)
-     .reduce((obj, key) => {
-       obj[key] = recipes[key];
-       return obj;
-     }, {})
+    && Object.keys(recipes)
+      .filter(testSearch)
+      .reduce((obj, key) => {
+        obj[key] = recipes[key];
+        return obj;
+      }, {})
     || recipes;
 
   const height = Math.max(94 + Object.keys(recipes).length * 26, 250);
@@ -54,8 +54,8 @@ export const Stack = (props) => {
               No recipes found.
             </NoticeBox>
           ) || (
-            <RecipeList recipes={items} />
-          )}
+              <RecipeList recipes={items} />
+            )}
         </Section>
       </Window.Content>
     </Window>

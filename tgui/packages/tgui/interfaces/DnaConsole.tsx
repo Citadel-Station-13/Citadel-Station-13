@@ -1,7 +1,7 @@
 import { filter, uniqBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
-import { capitalize } from 'common/string';
+import { capitalize } from 'tgui-core/string';
 import { Fragment } from 'react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';

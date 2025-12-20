@@ -1,10 +1,10 @@
 import { uniqBy } from 'common/collections';
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { Fragment } from 'react';
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Icon, Input, ProgressBar, Section, Stack } from 'tgui-core/components';
 import { Materials, MaterialAmount, MaterialFormatting } from './common/Materials';
-import { formatMoney } from '../format';
+import { formatMoney } from 'tgui-core/format';
 import { Window } from '../layouts';
 
 const COLOR_NONE = 0;
@@ -119,7 +119,7 @@ export const ExosuitFabricator = (props) => {
     textColors,
   } = queueCondFormat(materialAsObj, queue);
   const [displayMatCost, setDisplayMatCost] = useSharedState(
-    context, 'display_mats', false);
+    'display_mats', false);
   return (
     <Window
       title="Exosuit Fabricator"
@@ -191,7 +191,7 @@ const PartSets = (props) => {
   const partSets = data.partSets || [];
   const buildableParts = data.buildableParts || {};
   const [selectedPartTab, setSelectedPartTab] = useSharedState(
-    context, 'part_tab', partSets.length ? buildableParts[0] : '');
+    'part_tab', partSets.length ? buildableParts[0] : '');
   return partSets
     .filter(set => buildableParts[set])
     .map(set => (

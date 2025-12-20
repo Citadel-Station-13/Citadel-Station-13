@@ -1,4 +1,4 @@
-import { multiline } from '../../common/string';
+import { multiline } from '../../tgui-core/string';
 import { useBackend } from '../backend';
 import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from 'tgui-core/components';
 import { Window } from '../layouts';

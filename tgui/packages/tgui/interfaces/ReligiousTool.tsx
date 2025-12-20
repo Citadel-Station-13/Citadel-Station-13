@@ -1,4 +1,4 @@
-import { capitalize } from 'common/string';
+import { capitalize } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, BlockQuote, Box, Button, Collapsible, Dimmer, Icon, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -80,7 +80,7 @@ const SectTab = (props) => {
           <Icon name={icon} color={ALIGNMENT2COLOR[alignment]} />
         </Stack.Item>
         <Stack.Item grow mb={2} color="grey">
-          {"\""+quote+"\""}
+          {"\"" + quote + "\""}
         </Stack.Item>
         <Stack.Item color={favor === 0 ? "white" : "green"}>
           {favordesc}
@@ -95,8 +95,8 @@ const SectTab = (props) => {
             {!wanted && (
               deity + " doesn't want any sacrifices."
             ) || (
-              deity + " wishes for " + wanted + "."
-            )}
+                deity + " wishes for " + wanted + "."
+              )}
           </Section>
         </Stack.Item>
       </Stack>
@@ -126,7 +126,7 @@ const SectSelectTab = (props) => {
                     {sect.name}
                   </Stack.Item>
                   <Stack.Item italic >
-                    {"\""+sect.quote+"\""}
+                    {"\"" + sect.quote + "\""}
                   </Stack.Item>
                 </Stack>
               )}

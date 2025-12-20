@@ -1,7 +1,7 @@
 import { toFixed } from 'common/math';
 import { classes } from 'common/react';
 import { storage } from 'common/storage';
-import { multiline } from 'common/string';
+import { multiline } from 'tgui-core/string';
 import { createUuid } from 'common/uuid';
 import { Component, Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
@@ -799,13 +799,13 @@ class PresetsPage extends Component {
     const [
       presetIndex,
       setSelectedPreset,
-    ] = useLocalState(this.context, 'presetIndex', 0);
+    ] = useLocalState(this.'presetIndex', 0);
     const [
       settingName,
       setEditingNameStatus,
-    ] = useLocalState(this.context, 'settingName', 0);
-    const [newNameText, setText] = useLocalState(this.context, 'newNameText', "");
-    const [hue, setHue] = useLocalState(this.context, 'hue', 0);
+    ] = useLocalState(this.'settingName', 0);
+    const [newNameText, setText] = useLocalState(this.'newNameText', "");
+    const [hue, setHue] = useLocalState(this.'hue', 0);
     return (
       <Section scrollable
         fill

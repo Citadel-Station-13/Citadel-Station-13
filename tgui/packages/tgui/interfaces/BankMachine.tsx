@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { AnimatedNumber, Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
-import { formatMoney } from '../format';
+import { formatMoney } from 'tgui-core/format';
 import { Window } from '../layouts';
 
 export const BankMachine = (props) => {

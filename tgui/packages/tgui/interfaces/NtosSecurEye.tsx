@@ -1,7 +1,7 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { Button, ByondUi, Input, Section } from 'tgui-core/components';

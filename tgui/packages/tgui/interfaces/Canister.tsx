@@ -1,7 +1,7 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, Knob, LabeledControls, LabeledList, RoundGauge, Section, Tooltip } from 'tgui-core/components';
-import { formatSiUnit } from '../format';
+import { formatSiUnit } from 'tgui-core/format';
 import { Window } from '../layouts';
 
 const formatPressure = value => {
