@@ -46,7 +46,7 @@ export const RbmkControlRods = (props) => {
             maxValue={3}
             step={0.1}
             stepPixelSize={5}
-            onDrag={(e, value) => act('input', {
+            onChange={(e, value) => act('input', {
               target: value,
             })} />
         </Section>

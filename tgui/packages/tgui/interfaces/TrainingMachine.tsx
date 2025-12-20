@@ -21,7 +21,7 @@ export const TrainingMachine = (props) => {
                 value={data.movespeed}
                 minValue={1}
                 maxValue={10}
-                onDrag={(e, value) => act("movespeed", { movespeed: value })}
+                onChange={(value) => act("movespeed", { movespeed: value })}
               />
             </LabeledControls.Item>
             <LabeledControls.Item label="Range">
@@ -33,7 +33,7 @@ export const TrainingMachine = (props) => {
                 value={data.range}
                 minValue={1}
                 maxValue={7}
-                onDrag={(e, value) => act("range", { range: value })}
+                onChange={(value) => act("range", { range: value })}
               />
             </LabeledControls.Item>
             <Flex.Item>

@@ -91,7 +91,7 @@ export const SolarControl = (props) => {
                   minValue={-360}
                   maxValue={+720}
                   value={azimuth_current}
-                  onDrag={(e, value) => act('azimuth', { value })} />
+                  onChange={(value) => act('azimuth', { value })} />
               )}
               {tracking_state === 1 && (
                 <NumberInput
@@ -106,7 +106,7 @@ export const SolarControl = (props) => {
                     const sign = Math.sign(rate) > 0 ? '+' : '-';
                     return sign + Math.abs(rate);
                   }}
-                  onDrag={(e, value) => act('azimuth_rate', { value })} />
+                  onChange={(value) => act('azimuth_rate', { value })} />
               )}
               {tracking_state === 2 && (
                 <Box inline color="label" mt="3px">

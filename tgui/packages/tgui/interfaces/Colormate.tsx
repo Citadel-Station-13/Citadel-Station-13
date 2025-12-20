@@ -296,7 +296,7 @@ export const ColormateHSV = (props) => {
             maxValue={360}
             step={1}
             value={buildhue}
-            onDrag={(e, value) => act('set_hue', {
+            onChange={(e, value) => act('set_hue', {
               buildhue: value,
             })} />
         </Table.Cell>
@@ -309,7 +309,7 @@ export const ColormateHSV = (props) => {
             maxValue={10}
             step={0.01}
             value={buildsat}
-            onDrag={(e, value) => act('set_sat', {
+            onChange={(e, value) => act('set_sat', {
               buildsat: value,
             })} />
         </Table.Cell>
@@ -322,7 +322,7 @@ export const ColormateHSV = (props) => {
             maxValue={10}
             step={0.01}
             value={buildval}
-            onDrag={(e, value) => act('set_val', {
+            onChange={(e, value) => act('set_val', {
               buildval: value,
             })} />
         </Table.Cell>

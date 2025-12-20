@@ -144,7 +144,7 @@ export const ChemDispenser = (props) => {
                   value={data.amount}
                   minValue={1}
                   maxValue={data.beakerMaxVolume}
-                  onDrag={(e, amount) => act('amount', {
+                  onChange={(amount) => act('amount', {
                     target: amount,
                   })} />),
             <Button       // eslint-disable-line

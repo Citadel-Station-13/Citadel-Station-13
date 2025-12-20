@@ -105,7 +105,7 @@ const Options = (props) => {
             minValue={1}
             maxValue={10}
             value={num_copies}
-            onDrag={(e, value) => act('set_copies', {
+            onChange={(value) => act('set_copies', {
               num_copies: value,
             })} />
         </Flex.Item>

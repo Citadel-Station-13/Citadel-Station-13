@@ -1098,7 +1098,7 @@ const DelayHelper = (props) => {
             maxValue={10}
             color={((reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10)
               > 10 ? "orange" : "default"}
-            onDrag={(e, value) => {
+            onChange={(value) => {
               act('editTiming', {
                 timer: ""+(i + 1),
                 value: Math.max(value, 0),
