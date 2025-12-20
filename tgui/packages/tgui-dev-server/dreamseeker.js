@@ -6,9 +6,8 @@
 
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-import { require } from './require.js';
 
-const axios = require('axios');
+import axios from 'axios';
 
 import { createLogger } from './logging.js';
 
@@ -119,6 +118,6 @@ export class DreamSeeker {
   }
 }
 
-const plural = (word, n) => {
+function plural(word, n) {
   return n !== 1 ? word + 's' : word;
-};
+}
