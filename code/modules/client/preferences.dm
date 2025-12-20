@@ -367,7 +367,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(character_settings_tab == LOADOUT_CHAR_TAB) //if loadout
 				//calculate your gear points from the chosen item
 				gear_points = CONFIG_GET(number/initial_gear_points)
-				var/list/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
+				var/list/chosen_gear = loadout_data?["SAVE_[loadout_slot]"]
 				if(islist(chosen_gear))
 					loadout_errors = 0
 					for(var/loadout_item in chosen_gear)

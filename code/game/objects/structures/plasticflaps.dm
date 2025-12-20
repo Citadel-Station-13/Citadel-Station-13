@@ -65,7 +65,7 @@
 		if(!(SEND_SIGNAL(living_caller, COMSIG_CHECK_VENTCRAWL)) && living_caller.mob_size != MOB_SIZE_TINY)
 			return FALSE
 
-	if(caller?.pulling)
+	if(caller1?.pulling)
 		return CanAStarPass(ID, to_dir, caller1.pulling)
 	return TRUE //diseases, stings, etc can pass
 

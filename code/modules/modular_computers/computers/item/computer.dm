@@ -308,7 +308,7 @@
  */
 
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller1, alerttext, sound = 'sound/machines/twobeep_high.ogg')
-	if(!caller || !caller1.alert_able || caller1.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+	if(!caller1 || !caller1.alert_able || caller1.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return
 	playsound(src, sound, 50, TRUE)
 	visible_message(span_notice("The [src] displays a [caller1.filedesc] notification: [alerttext]"))

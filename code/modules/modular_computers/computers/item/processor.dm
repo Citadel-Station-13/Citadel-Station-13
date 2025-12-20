@@ -54,7 +54,7 @@
 	ui_interact(user)
 
 /obj/item/modular_computer/processor/alert_call(datum/computer_file/program/caller1, alerttext)
-	if(!caller || !caller1.alert_able || caller1.alert_silenced || !alerttext)
+	if(!caller1 || !caller1.alert_able || caller1.alert_silenced || !alerttext)
 		return
 	playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 	machinery_computer.visible_message(span_notice("The [src] displays a [caller1.filedesc] notification: [alerttext]"))
