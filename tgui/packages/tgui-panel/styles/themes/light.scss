@@ -31,4 +31,5 @@
 
   // Chat styles
   @include meta.load-css('../tgchat/chat-light.scss');
+  @include meta.load-css('../tgchat/chat-light-citadel.scss');
 }

@@ -31,6 +31,7 @@
 
 // tgchat styles
 @include meta.load-css('./tgchat/chat-dark.scss');
+@include meta.load-css('./tgchat/chat-dark-citadel.scss');
 
 :root {
   --chat-text-color: hsl(210, 50%, 80%);
