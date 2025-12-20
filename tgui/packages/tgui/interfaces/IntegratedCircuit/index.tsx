@@ -16,9 +16,9 @@ import { Connections } from './Connections';
 import { ObjectComponent } from './ObjectComponent';
 import { VariableMenu } from './VariableMenu';
 
-export class IntegratedCircuit extends Component {
-  constructor() {
-    super();
+export class IntegratedCircuit extends Component<any, any> {
+  constructor(props) {
+    super(props);
     this.state = {
       locations: {},
       selectedPort: null,
@@ -106,7 +106,7 @@ export class IntegratedCircuit extends Component {
   // mouse up called whilst over a port. This means we can check if selectedPort
   // exists and do perform some actions if it does.
   handlePortUp(portIndex, componentId, port, isOutput, event) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend<any>();
     const {
       selectedPort,
     } = this.state;
@@ -136,7 +136,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handlePortDrag(event) {
-    const { data } = useBackend(this.context);
+    const { data } = useBackend<any>();
     const { screen_x, screen_y } = data;
     this.setState((state) => ({
       mouseX: event.clientX - (state.backgroundX || screen_x),
@@ -154,7 +154,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handlePortRightClick(portIndex, componentId, port, isOutput, event) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend<any>();
 
     event.preventDefault();
     act('remove_connection', {
@@ -193,7 +193,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handleMouseDown(event) {
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend<any>();
     const { examined_name } = data;
     if (examined_name) {
       act('remove_examined_component');
@@ -201,7 +201,7 @@ export class IntegratedCircuit extends Component {
   }
 
   handleMouseUp(event) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend<any>();
     const { backgroundX, backgroundY } = this.state;
     if (backgroundX && backgroundY) {
       act("move_screen", {
@@ -212,7 +212,7 @@ export class IntegratedCircuit extends Component {
   }
 
   render() {
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend<any>();
     const {
       components,
       display_name,

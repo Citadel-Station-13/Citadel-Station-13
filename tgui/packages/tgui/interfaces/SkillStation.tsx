@@ -1,4 +1,4 @@
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -184,10 +184,10 @@ export const ImplantedSkillchips = (props) => {
                 bold
                 color={(!!skill.active && "good"
                 ) || (
-                  (skill.complexity + complexity_used > complexity_max) && "bad"
-                ) || (
-                  "grey"
-                )}
+                    (skill.complexity + complexity_used > complexity_max) && "bad"
+                  ) || (
+                    "grey"
+                  )}
                 textAlign="center">
                 {skill.complexity}
               </Table.Cell>
@@ -225,9 +225,9 @@ export const ImplantedSkillchips = (props) => {
                   tooltip={(!!skill.active_error
                     && !skill.active
                     && skill.active_error) || (
-                    skill.active && "Deactivate") || (
-                    "Activate"
-                  )}
+                      skill.active && "Deactivate") || (
+                      "Activate"
+                    )}
                   tooltipPosition="left"
                   disabled={
                     skill.cooldown
@@ -246,9 +246,9 @@ export const ImplantedSkillchips = (props) => {
 export const TimeFormat = (props) => {
   const { value } = props;
 
-  const seconds = toFixed(Math.floor((value/10) % 60)).padStart(2, "0");
-  const minutes = toFixed(Math.floor((value/(10*60)) % 60)).padStart(2, "0");
-  const hours = toFixed(Math.floor((value/(10*60*60)) % 24)).padStart(2, "0");
+  const seconds = toFixed(Math.floor((value / 10) % 60)).padStart(2, "0");
+  const minutes = toFixed(Math.floor((value / (10 * 60)) % 60)).padStart(2, "0");
+  const hours = toFixed(Math.floor((value / (10 * 60 * 60)) % 24)).padStart(2, "0");
   const formattedValue = `${hours}:${minutes}:${seconds}`;
   return formattedValue;
 };

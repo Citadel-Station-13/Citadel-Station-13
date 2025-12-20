@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { AnimatedNumber, Button, Flex, Input, LabeledList, ProgressBar, Section, Table, NumberInput, Box } from 'tgui-core/components';
 import { getGasColor, getGasLabel } from '../constants';
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { Window } from '../layouts';
 
 const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;

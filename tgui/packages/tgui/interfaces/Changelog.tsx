@@ -63,7 +63,7 @@ export class Changelog extends Component {
   }
 
   getData = (date, attemptNumber = 1) => {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend<any>();
     const self = this;
     const maxAttempts = 6;
 
@@ -94,7 +94,7 @@ export class Changelog extends Component {
   }
 
   componentDidMount() {
-    const { data: { dates = [] } } = useBackend(this.context);
+    const { data: { dates = [] } } = useBackend<any>();
 
     if (dates) {
       dates.forEach(
@@ -107,7 +107,7 @@ export class Changelog extends Component {
 
   render() {
     const { data, selectedDate, selectedIndex } = this.state;
-    const { data: { dates } } = useBackend(this.context);
+    const { data: { dates } } = useBackend<any>();
     const { dateChoices } = this;
 
     const dateDropdown = dateChoices.length > 0 && (

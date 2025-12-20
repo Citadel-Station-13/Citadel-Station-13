@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { clamp01 } from 'common/math';
+import { clamp01 } from 'tgui-core/math';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Section, Input, Stack } from 'tgui-core/components';
 import { KEY_DOWN, KEY_UP, KEY_ENTER, KEY_SPACE } from 'common/keycodes';

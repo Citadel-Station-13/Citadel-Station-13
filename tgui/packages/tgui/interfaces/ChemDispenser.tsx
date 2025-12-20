@@ -1,4 +1,4 @@
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { toTitleCase } from 'tgui-core/string';
 import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';

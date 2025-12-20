@@ -1,4 +1,4 @@
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section } from 'tgui-core/components';
@@ -73,12 +73,12 @@ const AirAlarmStatus = (props) => {
             </LabeledList.Item>
           </>
         ) || (
-          <LabeledList.Item
-            label="Warning"
-            color="bad">
-            Cannot obtain air sample for analysis.
-          </LabeledList.Item>
-        )}
+            <LabeledList.Item
+              label="Warning"
+              color="bad">
+              Cannot obtain air sample for analysis.
+            </LabeledList.Item>
+          )}
         {!!data.emagged && (
           <LabeledList.Item
             label="Warning"

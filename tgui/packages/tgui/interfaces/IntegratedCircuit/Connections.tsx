@@ -1,13 +1,13 @@
+import { classes } from 'tgui-core/react';
 import { CSS_COLORS } from '../../constants';
 import { SVG_CURVE_INTENSITY } from './constants';
-import { classes } from '../../../common/react';
 
 export const Connections = (props) => {
   const { connections } = props;
 
   const isColorClass = (str) => {
     if (typeof str === 'string') {
-      return CSS_COLORS.includes(str);
+      return CSS_COLORS.includes(str as any);
     }
   };
 
@@ -17,7 +17,6 @@ export const Connections = (props) => {
       height="100%"
       style={{
         'position': 'absolute',
-        'pointer-events': 'none',
         'z-index': -1,
       }}>
       {connections.map((val, index) => {

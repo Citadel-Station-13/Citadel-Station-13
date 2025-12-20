@@ -1,6 +1,6 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { clamp } from 'common/math';
+import { clamp } from 'tgui-core/math';
 import { vecLength, vecSubtract } from 'common/vector';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from 'tgui-core/components';

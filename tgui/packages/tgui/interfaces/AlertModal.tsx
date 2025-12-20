@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { clamp01 } from 'common/math';
+import { clamp01 } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Component, createRef } from 'react';
 import { Box, Flex, Section } from 'tgui-core/components';
@@ -26,7 +26,7 @@ export class AlertModal extends Component {
   }
 
   componentDidMount() {
-    const { data } = useBackend(this.context);
+    const { data } = useBackend<any>();
     const { buttons, autofocus } = data;
     const { current } = this.state;
     const button = this.buttonRefs[current].current;
@@ -42,7 +42,7 @@ export class AlertModal extends Component {
   }
 
   setCurrent(current, isArrowKey) {
-    const { data } = useBackend(this.context);
+    const { data } = useBackend<any>();
     const { buttons } = data;
 
     // Mimic alert() behavior for tabs and arrow keys
@@ -62,7 +62,7 @@ export class AlertModal extends Component {
   }
 
   render() {
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend<any>();
     const { title, message, buttons, timeout } = data;
     const { current } = this.state;
     const focusCurrentButton = () => this.setCurrent(current, false);

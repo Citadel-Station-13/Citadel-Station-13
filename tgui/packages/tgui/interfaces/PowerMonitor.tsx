@@ -1,6 +1,6 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { pureComponentHooks } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Chart, ColorBox, Flex, Icon, LabeledList, ProgressBar, Section, Table } from 'tgui-core/components';
@@ -40,7 +40,7 @@ export const PowerMonitorContent = (props) => {
     PEAK_DRAW,
     ...history.supply,
     ...history.demand);
-    // Process area data
+  // Process area data
   const areas = flow([
     map((area, i) => ({
       ...area,

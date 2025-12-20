@@ -17,7 +17,7 @@ export class Thermometer extends Component {
   }
 
   render() {
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend<any>();
     return (
       <Window
         width={70}
@@ -67,7 +67,7 @@ const ThermometerIcon = props => {
             'right': 0,
             'transition': 'height 2s ease-out',
             // Temp in %
-            'height': `${((temperature / maxTemperature)*100)}%`,
+            'height': `${((temperature / maxTemperature) * 100)}%`,
             'background-color': '#bd2020',
             'border-radius': '8px',
             'border-bottom': 'none',

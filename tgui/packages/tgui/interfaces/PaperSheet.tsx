@@ -15,7 +15,7 @@ import { marked } from 'marked';
 import { useBackend } from '../backend';
 import { Box, Flex, Tabs, TextArea } from 'tgui-core/components';
 import { Window } from '../layouts';
-import { clamp } from 'common/math';
+import { clamp } from 'tgui-core/math';
 import { sanitizeText } from '../sanitize';
 import katex from 'katex';
 
@@ -49,7 +49,7 @@ const textWidth = (text, font, fontsize) => {
   return width;
 };
 
-const setFontinText = (text, font, color, bold=false) => {
+const setFontinText = (text, font, color, bold = false) => {
   return "<span style=\""
     + "color:" + color + ";"
     + "font-family:'" + font + "';"
@@ -72,17 +72,17 @@ const sign_regex = /%s(?:ign)?(?=\\s|$)?/igm;
 const createInputField = (length, width, font,
   fontsize, color, id) => {
   return "[<input "
-      + "type=\"text\" "
-      + "style=\""
-      + "font:'" + fontsize + "x " + font + "';"
-      + "color:" + color + ";"
-      + "min-width:" + width + ";"
-      + "max-width:" + width + ";"
-      + "\" "
-      + "id=\"" + id + "\" "
-      + "maxlength=" + length +" "
-      + "size=" + length + " "
-      + "/>]";
+    + "type=\"text\" "
+    + "style=\""
+    + "font:'" + fontsize + "x " + font + "';"
+    + "color:" + color + ";"
+    + "min-width:" + width + ";"
+    + "max-width:" + width + ";"
+    + "\" "
+    + "id=\"" + id + "\" "
+    + "maxlength=" + length + " "
+    + "size=" + length + " "
+    + "/>]";
 };
 
 const createFields = (txt, font, fontsize, color, counter) => {
@@ -141,7 +141,7 @@ const run_marked_default = value => {
 ** It returns any values that were saved and a corrected
 ** html code or null if nothing was updated
 */
-const checkAllFields = (txt, font, color, user_name, bold=false) => {
+const checkAllFields = (txt, font, color, user_name, bold = false) => {
   let matches;
   let values = {};
   let replace = [];
@@ -199,8 +199,8 @@ const checkAllFields = (txt, font, color, user_name, bold=false) => {
 const pauseEvent = e => {
   if (e.stopPropagation) { e.stopPropagation(); }
   if (e.preventDefault) { e.preventDefault(); }
-  e.cancelBubble=true;
-  e.returnValue=false;
+  e.cancelBubble = true;
+  e.returnValue = false;
   return false;
 };
 
@@ -288,7 +288,7 @@ class PaperSheetStamper extends Component {
     };
     this.handleMouseClick = e => {
       if (e.pageY <= 30) { return; }
-      const { act, data } = useBackend(this.context);
+      const { act, data } = useBackend<any>();
       const stamp_obj = {
         x: this.state.x, y: this.state.y, r: this.state.rotate,
         stamp_class: this.props.stamp_class,
@@ -305,14 +305,13 @@ class PaperSheetStamper extends Component {
       rotating = true;
     }
 
-    if (document.getElementById("stamp"))
-    {
+    if (document.getElementById("stamp")) {
       const stamp = document.getElementById("stamp");
       const stampHeight = stamp.clientHeight;
       const stampWidth = stamp.clientWidth;
 
       const currentHeight = rotating ? this.state.y : e.pageY
-      - windowRef.scrollTop - stampHeight;
+        - windowRef.scrollTop - stampHeight;
       const currentWidth = rotating ? this.state.x : e.pageX - (stampWidth / 2);
 
       const widthMin = 0;
@@ -440,7 +439,7 @@ class PaperSheetEdit extends Component {
   }
 
   createPreviewFromData(value, do_fields = false) {
-    const { data } = useBackend(this.context);
+    const { data } = useBackend<any>();
     return createPreview(value,
       this.state.old_text,
       do_fields,
@@ -477,16 +476,18 @@ class PaperSheetEdit extends Component {
   }
   // the final update send to byond, final upkeep
   finalUpdate(new_text) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend<any>();
     const final_processing = this.createPreviewFromData(new_text, true);
     act('save', final_processing);
-    this.setState(() => { return {
-      textarea_text: "",
-      previewSelected: "save",
-      combined_text: final_processing.text,
-      old_text: final_processing.text,
-      counter: final_processing.field_counter,
-    }; });
+    this.setState(() => {
+      return {
+        textarea_text: "",
+        previewSelected: "save",
+        combined_text: final_processing.text,
+        old_text: final_processing.text,
+        counter: final_processing.field_counter,
+      };
+    });
     // byond should switch us to readonly mode from here
   }
 
@@ -576,12 +577,12 @@ class PaperSheetEdit extends Component {
               backgroundColor={backgroundColor}
               onInput={this.onInputHandler.bind(this)} />
           ) || (
-            <PaperSheetView
-              value={this.state.combined_text}
-              stamps={stamps}
-              fontFamily={fontFamily}
-              textColor={textColor} />
-          )}
+              <PaperSheetView
+                value={this.state.combined_text}
+                stamps={stamps}
+                fontFamily={fontFamily}
+                textColor={textColor} />
+            )}
         </Flex.Item>
       </Flex>
     );

@@ -4,14 +4,14 @@ import {
   Stack, Button, Dropdown,
 } from 'tgui-core/components';
 import { Component } from 'react';
-import { shallowDiffers } from '../../../common/react';
 import { ABSOLUTE_Y_OFFSET } from './constants';
 import { Port } from "./Port";
+import { shallowDiffers } from 'tgui-core/react';
 
 
-export class ObjectComponent extends Component {
-  constructor() {
-    super();
+export class ObjectComponent extends Component<any, any> {
+  constructor(props) {
+    super(props);
     this.state = {
       isDragging: false,
       dragPos: null,
@@ -38,7 +38,7 @@ export class ObjectComponent extends Component {
   }
 
   handleStopDrag(e) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend<any>();
     const { dragPos } = this.state;
     const { index } = this.props;
     if (dragPos) {
@@ -104,7 +104,7 @@ export class ObjectComponent extends Component {
       onPortMouseUp,
       ...rest
     } = this.props;
-    const { act } = useBackend(this.context);
+    const { act } = useBackend<any>();
     const { startPos, dragPos } = this.state;
 
     let [x_pos, y_pos] = [x, y];

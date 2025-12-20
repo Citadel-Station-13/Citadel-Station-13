@@ -5,7 +5,7 @@
  */
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { RADIO_CHANNELS } from '../constants';
 import { Button, LabeledList, NumberInput, NoticeBox, Section, Input } from 'tgui-core/components';
 

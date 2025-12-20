@@ -1,4 +1,4 @@
-import { round, toFixed } from 'common/math';
+import { round, toFixed } from 'tgui-core/math';
 import { Fragment } from 'react';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
@@ -20,7 +20,7 @@ export const ChemHeater = (props) => {
     <Window
       width={300}
       height={320}
-      >
+    >
       <Window.Content scrollable>
         <Section
           title="Thermostat"

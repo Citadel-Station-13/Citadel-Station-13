@@ -1,4 +1,4 @@
-import { round } from 'common/math';
+import { round } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, LabeledList, NumberInput, ProgressBar, RoundGauge, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -60,14 +60,14 @@ export const ChemRecipeDebug = (props) => {
               {processAll && (
                 <Box>All</Box>
               ) || (
-                <Box>
-                  {queuedReactions.length && (
-                    queuedReactions.map(entry => (
-                      entry.name+", "
-                    ))
-                  )}
-                </Box>
-              )}
+                  <Box>
+                    {queuedReactions.length && (
+                      queuedReactions.map(entry => (
+                        entry.name + ", "
+                      ))
+                    )}
+                  </Box>
+                )}
             </LabeledList.Item>
             <LabeledList.Item label="Temp">
               {currentTemp}K
@@ -231,61 +231,61 @@ export const ChemRecipeDebug = (props) => {
               No active reactions.
             </Box>
           ) || (
-            <Table>
-              <Table.Row>
-                <Table.Cell bold color="label">
-                  Reaction
-                </Table.Cell>
-                <Table.Cell bold color="label">
-                  {"Reaction quality"}
-                </Table.Cell>
-                <Table.Cell bold color="label">
-                  Target
-                </Table.Cell>
-              </Table.Row>
-              {activeReactions && activeReactions.map(reaction => (
-                <Table.Row key="reactions">
-                  <Table.Cell width={'60px'} color={reaction.danger && "red"}>
-                    {reaction.name}
+              <Table>
+                <Table.Row>
+                  <Table.Cell bold color="label">
+                    Reaction
                   </Table.Cell>
-                  <Table.Cell width={'100px'} pr={'10px'}>
-                    <AnimatedNumber value={reaction.quality}>
-                      {(_, value) => (
-                        <RoundGauge
-                          size={1.30}
-                          value={value}
-                          minValue={0}
-                          maxValue={1}
-                          alertAfter={reaction.purityAlert}
-                          content={"test"}
-                          format={value => null}
-                          ml={5}
-                          ranges={{
-                            "red": [0, reaction.minPure],
-                            "orange": [reaction.minPure, reaction.inverse],
-                            "yellow": [reaction.inverse, 0.8],
-                            "green": [0.8, 1],
-                          }} />
-                      )}
-                    </AnimatedNumber>
+                  <Table.Cell bold color="label">
+                    {"Reaction quality"}
                   </Table.Cell>
-                  <Table.Cell width={'70px'}>
-                    <ProgressBar
-                      value={reaction.reactedVol}
-                      minValue={0}
-                      maxValue={reaction.targetVol}
-                      textAlign={'center'}
-                      icon={reaction.overheat && "thermometer-full"}
-                      width={7}
-                      color={reaction.overheat ? "red" : "label"}>
-                      {reaction.targetVol}u
-                    </ProgressBar>
+                  <Table.Cell bold color="label">
+                    Target
                   </Table.Cell>
                 </Table.Row>
-              ))}
-              <Table.Row />
-            </Table>
-          )}
+                {activeReactions && activeReactions.map(reaction => (
+                  <Table.Row key="reactions">
+                    <Table.Cell width={'60px'} color={reaction.danger && "red"}>
+                      {reaction.name}
+                    </Table.Cell>
+                    <Table.Cell width={'100px'} pr={'10px'}>
+                      <AnimatedNumber value={reaction.quality}>
+                        {(_, value) => (
+                          <RoundGauge
+                            size={1.30}
+                            value={value}
+                            minValue={0}
+                            maxValue={1}
+                            alertAfter={reaction.purityAlert}
+                            content={"test"}
+                            format={value => null}
+                            ml={5}
+                            ranges={{
+                              "red": [0, reaction.minPure],
+                              "orange": [reaction.minPure, reaction.inverse],
+                              "yellow": [reaction.inverse, 0.8],
+                              "green": [0.8, 1],
+                            }} />
+                        )}
+                      </AnimatedNumber>
+                    </Table.Cell>
+                    <Table.Cell width={'70px'}>
+                      <ProgressBar
+                        value={reaction.reactedVol}
+                        minValue={0}
+                        maxValue={reaction.targetVol}
+                        textAlign={'center'}
+                        icon={reaction.overheat && "thermometer-full"}
+                        width={7}
+                        color={reaction.overheat ? "red" : "label"}>
+                        {reaction.targetVol}u
+                      </ProgressBar>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+                <Table.Row />
+              </Table>
+            )}
         </Section>
         <Section
           title="Chamber"
@@ -294,15 +294,15 @@ export const ChemRecipeDebug = (props) => {
               {isActive ? "Reacting" : "Waiting"}
             </Box>
           )} >
-          {chamberContents.length &&(
+          {chamberContents.length && (
             <BeakerContents
               beakerLoaded
               beakerContents={chamberContents} />
           ) || (
-            <Box>
-              Nothing
-            </Box>
-          )}
+              <Box>
+                Nothing
+              </Box>
+            )}
         </Section>
       </Window.Content>
     </Window>

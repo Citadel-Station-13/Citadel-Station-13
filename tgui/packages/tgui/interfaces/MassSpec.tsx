@@ -1,4 +1,4 @@
-import { round } from 'common/math';
+import { round } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Icon, Section, Slider, Table } from 'tgui-core/components';
 import { Window } from '../layouts';

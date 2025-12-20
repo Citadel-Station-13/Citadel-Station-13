@@ -1,4 +1,4 @@
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Flex, LabeledControls, NoticeBox, RoundGauge, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -551,7 +551,7 @@ export const Secrets = (props) => {
     tabIndex,
     setTabIndex,
   ] = useLocalState('tab-index', 2);
-  const TabComponent = TAB2NAME[tabIndex-1].component();
+  const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window
       title="Secrets Panel"
@@ -632,7 +632,7 @@ export const Secrets = (props) => {
                       label="Chances of admin complaint">
                       <RoundGauge
                         size={2}
-                        value={TAB2NAME[tabIndex-1].gauge}
+                        value={TAB2NAME[tabIndex - 1].gauge}
                         minValue={0}
                         maxValue={100}
                         alertAfter={100 * 0.70}
@@ -659,8 +659,8 @@ export const Secrets = (props) => {
           <Flex.Item grow={1}>
             <Section
               fill={false}
-              title={TAB2NAME[tabIndex-1].title
-                + " Or: " + TAB2NAME[tabIndex-1].blurb}>
+              title={TAB2NAME[tabIndex - 1].title
+                + " Or: " + TAB2NAME[tabIndex - 1].blurb}>
               <TabComponent />
             </Section>
           </Flex.Item>

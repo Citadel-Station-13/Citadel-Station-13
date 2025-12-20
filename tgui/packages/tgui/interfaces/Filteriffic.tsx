@@ -1,6 +1,5 @@
 import { map } from 'common/collections';
-import { toFixed } from 'common/math';
-import { numberOfDecimalDigits } from '../../common/math';
+import { numberOfDecimalDigits, toFixed, } from 'tgui-core/math';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Collapsible, ColorBox, Dropdown, Input, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';

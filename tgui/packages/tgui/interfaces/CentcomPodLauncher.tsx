@@ -1,4 +1,4 @@
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { classes } from 'common/react';
 import { storage } from 'common/storage';
 import { multiline } from 'tgui-core/string';
@@ -757,7 +757,7 @@ class PresetsPage extends Component {
   }
 
   async loadDataFromPreset(id, context) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend<any>();
     act("loadDataFromPreset", {
       payload: await storage.get("podlauncher_preset_" + id),
     });
@@ -795,7 +795,7 @@ class PresetsPage extends Component {
   }
   render() {
     const { presets } = this.state;
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend<any>();
     const [
       presetIndex,
       setSelectedPreset,

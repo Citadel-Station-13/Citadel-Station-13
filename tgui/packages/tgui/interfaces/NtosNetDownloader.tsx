@@ -1,4 +1,4 @@
-import { scale, toFixed } from 'common/math';
+import { scale, toFixed } from 'tgui-core/math';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from 'tgui-core/components';
 import { flow } from 'common/fp';
@@ -147,35 +147,35 @@ const Program = (props) => {
               maxValue={program.size}
               value={downloadcompletion} />
           ) || (
-            (!program.installed
-              && program.compatible
-              && program.access
-              && program.size < disk_free) && (
-              <Button
-                bold
-                icon="download"
-                content="Download"
-                disabled={downloading}
-                tooltipPosition="left"
-                tooltip={!!downloading && ('Awaiting download completion...')}
-                onClick={() => act('PRG_downloadfile', {
-                  filename: program.filename,
-                })} />
-            ) || (
-              <Button
-                bold
-                icon={program.installed ? 'check' : 'times'}
-                color={
-                  program.installed ? 'good'
-                    : !program.compatible ? 'bad' : 'grey'
-                }
-                content={
-                  program.installed ? 'Installed'
-                    : !program.compatible ? 'Incompatible'
-                      : !program.access ? 'No Access' : 'No Space'
-                } />
-            )
-          )}
+              (!program.installed
+                && program.compatible
+                && program.access
+                && program.size < disk_free) && (
+                <Button
+                  bold
+                  icon="download"
+                  content="Download"
+                  disabled={downloading}
+                  tooltipPosition="left"
+                  tooltip={!!downloading && ('Awaiting download completion...')}
+                  onClick={() => act('PRG_downloadfile', {
+                    filename: program.filename,
+                  })} />
+              ) || (
+                <Button
+                  bold
+                  icon={program.installed ? 'check' : 'times'}
+                  color={
+                    program.installed ? 'good'
+                      : !program.compatible ? 'bad' : 'grey'
+                  }
+                  content={
+                    program.installed ? 'Installed'
+                      : !program.compatible ? 'Incompatible'
+                        : !program.access ? 'No Access' : 'No Space'
+                  } />
+              )
+            )}
         </Stack.Item>
       </Stack>
       <Box mt={1} italic color="label">

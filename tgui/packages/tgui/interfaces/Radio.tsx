@@ -1,5 +1,5 @@
 import { map } from 'common/collections';
-import { toFixed } from 'common/math';
+import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { RADIO_CHANNELS } from '../constants';
@@ -48,19 +48,19 @@ export const Radio = (props) => {
                   {toFixed(frequency / 10, 1) + ' kHz'}
                 </Box>
               ) || (
-                <NumberInput
-                  animate
-                  unit="kHz"
-                  step={0.2}
-                  stepPixelSize={10}
-                  minValue={minFrequency / 10}
-                  maxValue={maxFrequency / 10}
-                  value={frequency / 10}
-                  format={value => toFixed(value, 1)}
-                  onChange={(value) => act('frequency', {
-                    adjust: (value - frequency / 10),
-                  })} />
-              )}
+                  <NumberInput
+                    animate
+                    unit="kHz"
+                    step={0.2}
+                    stepPixelSize={10}
+                    minValue={minFrequency / 10}
+                    maxValue={maxFrequency / 10}
+                    value={frequency / 10}
+                    format={value => toFixed(value, 1)}
+                    onChange={(value) => act('frequency', {
+                      adjust: (value - frequency / 10),
+                    })} />
+                )}
               {tunedChannel && (
                 <Box inline color={tunedChannel.color} ml={2}>
                   [{tunedChannel.name}]
