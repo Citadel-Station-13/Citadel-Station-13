@@ -179,7 +179,7 @@ export const NaniteExtraText = (props) => {
     <Input
       value={value}
       width="200px"
-      onInput={(e, val) => act('set_extra_setting', {
+      onChange={(val) => act('set_extra_setting', {
         target_setting: name,
         value: val,
       })} />

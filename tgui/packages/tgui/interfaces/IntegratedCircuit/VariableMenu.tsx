@@ -73,7 +73,7 @@ export const VariableMenu = (props) => {
                 <Input
                   placeholder="Name"
                   fluid
-                  onInput={(e, nameVal) => setName(nameVal)}
+                  onChange={(nameVal) => setName(nameVal)}
                 />
               </Stack.Item>
               <Stack.Item>

@@ -79,7 +79,7 @@ export const ClockworkSlab = (props) => {
                 <Input
                   autoFocus
                   value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
+                  onChange={(value) => setSearchText(value)}
                   mx={1} />
                 <Button
                   icon="book"

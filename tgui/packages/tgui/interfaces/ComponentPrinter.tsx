@@ -126,7 +126,7 @@ export const ComponentPrinter = (props) => {
                         autoFocus
                         fluid
                         value={searchText}
-                        onInput={(_, value) => setSearchText(value)} />
+                        onChange={(value) => setSearchText(value)} />
                     </Stack.Item>
 
                     {Object.entries(data.designs)

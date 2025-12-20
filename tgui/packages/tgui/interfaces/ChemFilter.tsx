@@ -16,7 +16,7 @@ export const ChemFilterPane = (props) => {
           <Input
             placeholder="Reagent"
             width="140px"
-            onInput={(e, value) => onReagentInput(value)} />
+            onChange={(value) => onReagentInput(value)} />
           <Button
             ml={1}
             icon="plus"
@@ -54,7 +54,7 @@ export const ChemFilter = (props) => {
     <Window
       width={500}
       height={300}
-      >
+    >
       <Window.Content scrollable>
         <Flex spacing={1}>
           <Flex.Item grow={1}>

@@ -300,7 +300,7 @@ const TechwebOverview = (props) => {
           <Flex.Item align={"center"}>
             <Input
               value={searchText}
-              onInput={(e, value) => setSearchText(value)}
+              onChange={(value) => setSearchText(value)}
               placeholder={"Search..."} />
           </Flex.Item>
         </Flex>
@@ -695,7 +695,7 @@ const TechNode = (props) => {
                   }}
                   value={reqPts === 0
                     ? 1
-                    : Math.min(1, (points[k.type]||0) / reqPts)}>
+                    : Math.min(1, (points[k.type] || 0) / reqPts)}>
                   {abbreviateName(k.type)} ({nodeProg}/{reqPts})
                 </ProgressBar>
               </Flex.Item>
@@ -721,10 +721,10 @@ const TechNode = (props) => {
           <Button
             key={id}
             className={`${design_cache[k].class} Techweb__DesignIcon`}
-            // Uncomment these only when tooltip performance is improved.
-            // Reason for removal: Causes massive performance decreases
-            // tooltip={design_cache[k].name}
-            // tooltipPosition={i % 15 < 7 ? "right" : "left"}
+          // Uncomment these only when tooltip performance is improved.
+          // Reason for removal: Causes massive performance decreases
+          // tooltip={design_cache[k].name}
+          // tooltipPosition={i % 15 < 7 ? "right" : "left"}
           />
         ))}
       </Box>

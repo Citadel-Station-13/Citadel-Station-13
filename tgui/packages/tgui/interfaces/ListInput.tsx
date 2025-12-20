@@ -158,7 +158,7 @@ export const ListInput = (props) => {
             <Stack.Item>
               <Input
                 fluid
-                onInput={(e, value) => setDisplayedArray(
+                onChange={(value) => setDisplayedArray(
                   buttons.filter(val => (
                     val.toLowerCase().search(value.toLowerCase()) !== -1
                   ))

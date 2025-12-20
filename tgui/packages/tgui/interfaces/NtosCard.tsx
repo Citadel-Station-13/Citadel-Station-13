@@ -9,7 +9,7 @@ export const NtosCard = (props) => {
     <NtosWindow
       width={450}
       height={520}
-      >
+    >
       <NtosWindow.Content scrollable>
         <NtosCardContent />
       </NtosWindow.Content>
@@ -52,7 +52,7 @@ export const NtosCardContent = (props) => {
             <Input
               value={id_owner}
               width="250px"
-              onInput={(e, value) => act('PRG_edit', {
+              onChange={(value) => act('PRG_edit', {
                 name: value,
               })} />
           )
