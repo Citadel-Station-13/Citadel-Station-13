@@ -11,13 +11,13 @@ import {
   Middleware,
   Reducer,
   Store,
-} from '../common/redux';
+} from 'common/redux';
+import { flow } from 'tgui-core/fp';
 
 import { assetMiddleware } from './assets';
 import { backendMiddleware, backendReducer } from './backend';
 import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
 import { createLogger } from './logging';
-import { flow } from '../common/fp';
 
 type ConfigureStoreOptions = {
   sideEffects?: boolean;
@@ -45,11 +45,11 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
   const middlewares: Middleware[] = !sideEffects
     ? []
     : [
-      ...(middleware?.pre || []),
-      assetMiddleware,
-      backendMiddleware,
-      ...(middleware?.post || []),
-    ];
+        ...(middleware?.pre || []),
+        assetMiddleware,
+        backendMiddleware,
+        ...(middleware?.post || []),
+      ];
 
   if (process.env.NODE_ENV !== 'production') {
     // We are using two if statements because Webpack is capable of
@@ -82,39 +82,25 @@ const loggingMiddleware: Middleware = (store) => (next) => (action) => {
  * Creates a function, which can be assigned to window.__augmentStack__
  * to augment reported stack traces with useful data for debugging.
  */
-const createStackAugmentor
-  = (store: Store): StackAugmentor =>
-    (stack, error) => {
-      error = error || new Error(stack.split('\n')[0]);
-      error.stack = error.stack || stack;
+const createStackAugmentor =
+  (store: Store): StackAugmentor =>
+  (stack, error) => {
+    error = error || new Error(stack.split('\n')[0]);
+    error.stack = error.stack || stack;
 
-      logger.log('FatalError:', error);
-      const state = store.getState();
-      const config = state?.backend?.config;
+    logger.log('FatalError:', error);
+    const state = store.getState();
+    const config = state?.backend?.config;
 
-      return (
-        stack
-      + '\nUser Agent: '
-      + navigator.userAgent
-      + '\nState: '
-      + JSON.stringify({
+    return (
+      stack +
+      '\nUser Agent: ' +
+      navigator.userAgent +
+      '\nState: ' +
+      JSON.stringify({
         ckey: config?.client?.ckey,
         interface: config?.interface,
         window: config?.window,
       })
-      );
-    };
-
-/**
- * Store provider for Inferno apps.
- */
-export class StoreProvider extends Component {
-  getChildContext() {
-    const { store } = this.props;
-    return { store };
-  }
-
-  render() {
-    return this.props.children;
-  }
-}
+    );
+  };
