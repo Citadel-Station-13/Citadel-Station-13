@@ -3,7 +3,7 @@ import { Box, Button, Divider, Flex, Knob, LabeledControls, Section } from 'tgui
 import { Window } from '../layouts';
 
 export const TrainingMachine = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Window
       width={230}

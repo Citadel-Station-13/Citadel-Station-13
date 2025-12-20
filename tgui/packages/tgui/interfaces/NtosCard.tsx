@@ -18,7 +18,7 @@ export const NtosCard = (props, context) => {
 };
 
 export const NtosCardContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [tab, setTab] = useLocalState(context, 'tab', 1);
   const {
     authenticated,

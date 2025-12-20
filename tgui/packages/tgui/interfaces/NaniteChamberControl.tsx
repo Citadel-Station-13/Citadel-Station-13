@@ -17,7 +17,7 @@ export const NaniteChamberControl = (props, context) => {
 };
 
 export const NaniteChamberControlContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     status_msg,
     locked,

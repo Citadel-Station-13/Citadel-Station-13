@@ -4,7 +4,7 @@ import { Button, Flex, Input, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const ChemFilterPane = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const { title, list, reagentName, onReagentInput } = props;
   const titleKey = title.toLowerCase();
   return (
@@ -43,7 +43,7 @@ export const ChemFilterPane = (props, context) => {
 };
 
 export const ChemFilter = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     left = [],
     right = [],

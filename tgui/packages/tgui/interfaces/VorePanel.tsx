@@ -33,7 +33,7 @@ const digestModeToPreyMode = {
  *  - User Preferences, where you can adjust all of your vore preferences on the fly.
  */
 export const VorePanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Window width={700} height={660} theme="abstract" resizable>
       <Window.Content scrollable>
@@ -61,7 +61,7 @@ export const VorePanel = (props, context) => {
 };
 
 const VoreInsidePanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     absorbed,
@@ -101,7 +101,7 @@ const VoreInsidePanel = (props, context) => {
 };
 
 const VoreBellySelectionAndCustomization = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     our_bellies,
@@ -136,7 +136,7 @@ const VoreBellySelectionAndCustomization = (props, context) => {
  * Subtemplate of VoreBellySelectionAndCustomization
  */
 const VoreSelectedBelly = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
 
   const { belly } = props;
   const {
@@ -349,7 +349,7 @@ const VoreSelectedBelly = (props, context) => {
 };
 
 const VoreContentsPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     show_pictures,
   } = data;
@@ -423,7 +423,7 @@ const VoreContentsPanel = (props, context) => {
 };
 
 const VoreUserPreferences = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     digestable,

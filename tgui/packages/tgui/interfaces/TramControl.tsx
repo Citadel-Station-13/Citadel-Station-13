@@ -50,7 +50,7 @@ const BrokenTramDimmer = () => {
 };
 
 export const TramControl = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     broken,
     moving,

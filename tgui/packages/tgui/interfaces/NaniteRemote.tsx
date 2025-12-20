@@ -17,7 +17,7 @@ export const NaniteRemote = (props, context) => {
 };
 
 export const NaniteRemoteContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     code,
     locked,

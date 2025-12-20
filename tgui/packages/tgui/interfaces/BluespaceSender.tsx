@@ -9,7 +9,7 @@ import { Window } from '../layouts';
 const mappedTopMargin = "2%";
 
 export const BluespaceSender = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     on,
     gas_transfer_rate,

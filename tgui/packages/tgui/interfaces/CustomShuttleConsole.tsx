@@ -4,7 +4,7 @@ import { Box, Button, Flex, Icon, LabeledList, Modal, Section, Table, Tooltip } 
 import { Window } from '../layouts';
 
 export const CustomShuttleConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     docked_location,
     ship_name = "ERROR",

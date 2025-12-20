@@ -3,7 +3,7 @@ import { Box, Button, Section, LabeledList, NumberInput } from 'tgui-core/compon
 import { Window } from '../layouts';
 
 export const MassDriverControl = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     connected,
     minutes,

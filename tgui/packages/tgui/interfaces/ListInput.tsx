@@ -13,7 +13,7 @@ import { Window } from '../layouts';
 let lastScrollTime = 0;
 
 export const ListInput = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     title,
     message,

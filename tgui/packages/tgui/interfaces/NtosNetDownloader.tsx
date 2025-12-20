@@ -6,7 +6,7 @@ import { filter, sortBy } from 'common/collections';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetDownloader = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     PC_device_theme,
     disk_size,
@@ -117,7 +117,7 @@ export const NtosNetDownloader = (props, context) => {
 
 const Program = (props, context) => {
   const { program } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     PC_device_theme,
     disk_size,

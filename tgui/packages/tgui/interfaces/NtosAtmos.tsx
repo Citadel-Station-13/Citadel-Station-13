@@ -7,7 +7,7 @@ import { getGasColor, getGasLabel } from '../constants';
 import { NtosWindow } from '../layouts';
 
 export const NtosAtmos = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     AirTemp,
     AirPressure,

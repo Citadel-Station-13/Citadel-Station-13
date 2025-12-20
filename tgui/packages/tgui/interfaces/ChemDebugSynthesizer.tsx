@@ -4,7 +4,7 @@ import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '
 import { Window } from '../layouts';
 
 export const ChemDebugSynthesizer = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     amount,
     beakerCurrentVolume,

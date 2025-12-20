@@ -4,7 +4,7 @@ import { Button, LabeledList, ProgressBar, Section } from 'tgui-core/components'
 import { Window } from '../layouts';
 
 export const VaultController = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Window
       width={300}

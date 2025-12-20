@@ -3,7 +3,7 @@ import { Button, ColorBox, Section, Table } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
 export const NtosMain = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     device_theme,
     programs = [],

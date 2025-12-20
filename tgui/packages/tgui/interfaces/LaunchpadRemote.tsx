@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 import { LaunchpadControl } from './LaunchpadConsole';
 
 export const LaunchpadRemote = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const {
     has_pad,
     pad_closed,

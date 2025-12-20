@@ -4,7 +4,7 @@ import { Button, NoticeBox, Section, Stack, Tabs } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
 export const NtosPortraitPrinter = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
   const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);
   const {

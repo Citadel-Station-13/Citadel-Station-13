@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const Photocopier = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const {
     isAI,
     has_toner,
@@ -43,7 +43,7 @@ export const Photocopier = (props, context) => {
 };
 
 const Toner = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     has_toner,
     max_toner,
@@ -78,7 +78,7 @@ const Toner = (props, context) => {
 };
 
 const Options = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     color_mode,
     is_photo,
@@ -163,7 +163,7 @@ const Options = (props, context) => {
 };
 
 const AIOptions = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { can_AI_print } = data;
 
   return (

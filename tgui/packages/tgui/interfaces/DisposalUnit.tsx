@@ -3,7 +3,7 @@ import { Button, LabeledList, ProgressBar, Section } from 'tgui-core/components'
 import { Window } from '../layouts';
 
 export const DisposalUnit = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   let stateColor;
   let stateText;
   if (data.full_pressure) {

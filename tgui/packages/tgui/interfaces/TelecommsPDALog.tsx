@@ -10,7 +10,7 @@ import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from 'tgui-core/
 
 // This is the entrypoint, don't mind the others
 export const TelecommsPDALog = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     network,
     notice = "",
@@ -256,7 +256,7 @@ export const TeleLogs = (props, context) => {
   const {
     msgs_log = false, // <TeleLogs msgs_log/>
   } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     message_logs = [],
     recon_logs = [],
@@ -366,7 +366,7 @@ export const TeleLogs = (props, context) => {
 };
 
 export const CustomMsg = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const fake_message = data.fake_message !== {} ? data.fake_message : {
     'sender': 'System Administrator',
     'job': 'Admin',

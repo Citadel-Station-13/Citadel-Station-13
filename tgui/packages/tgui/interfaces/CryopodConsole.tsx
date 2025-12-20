@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, NoticeBox, Section, Stack } from 'tgui-core/c
 import { Window } from '../layouts';
 
 export const CryopodConsole = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { account_name } = data;
 
   const welcomeTitle = `Hello, ${account_name || '[REDACTED]'}!`;
@@ -31,7 +31,7 @@ export const CryopodConsole = (props, context) => {
 };
 
 const CrewList = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { frozen_crew } = data;
 
   return (
@@ -54,7 +54,7 @@ const CrewList = (props, context) => {
 };
 
 const ItemList = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const { item_meta } = data;
 
   return (

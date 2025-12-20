@@ -4,7 +4,7 @@ import { Box, Button, Grid, Section, Table, Tooltip } from 'tgui-core/components
 import { Window } from '../layouts';
 
 export const ComputerFabricator = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Window
       title="Personal Computer Vendor"
@@ -42,7 +42,7 @@ export const ComputerFabricator = (props, context) => {
 // This had a pretty gross backend so this was unfortunately one of the
 // best ways of doing it.
 const CfStep1 = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Section
       title="Step 1"
@@ -87,7 +87,7 @@ const CfStep1 = (props, context) => {
 };
 
 const CfStep2 = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Section
       title="Step 2: Customize your device"
@@ -352,7 +352,7 @@ const CfStep2 = (props, context) => {
 };
 
 const CfStep3 = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Section
       title="Step 3: Payment"

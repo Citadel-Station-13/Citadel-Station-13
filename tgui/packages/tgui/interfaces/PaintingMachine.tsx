@@ -3,7 +3,7 @@ import { Window } from '../layouts';
 import { Button, Dropdown, Section, Stack } from 'tgui-core/components';
 
 export const PaintingMachine = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     pdaTypes,

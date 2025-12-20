@@ -5,7 +5,7 @@ import { Button, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const StationAlertConsole = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const {
     cameraView,
   } = data;
@@ -21,7 +21,7 @@ export const StationAlertConsole = (props, context) => {
 };
 
 export const StationAlertConsoleContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     cameraView,
   } = data;

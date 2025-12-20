@@ -4,7 +4,7 @@ import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgu
 import { Window } from '../layouts';
 
 export const SpaceHeater = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Window
       width={400}

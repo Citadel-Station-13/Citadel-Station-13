@@ -4,7 +4,7 @@ import { formatMoney } from '../format';
 import { NtosWindow } from '../layouts';
 
 export const NtosBountyConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     bountydata = [],
   } = data;
@@ -104,7 +104,7 @@ export const NtosBountyConsole = (props, context) => {
 };
 
 const BountyHeader = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     stored_cash,
   } = data;

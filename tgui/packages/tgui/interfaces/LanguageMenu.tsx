@@ -3,7 +3,7 @@ import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const LanguageMenu = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     admin_mode,
     is_living,

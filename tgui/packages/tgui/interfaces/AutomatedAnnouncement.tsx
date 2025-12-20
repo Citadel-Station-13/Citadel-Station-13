@@ -9,7 +9,7 @@ const TOOLTIP_TEXT = multiline`
 `;
 
 export const AutomatedAnnouncement = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     arrivalToggle,
     arrival,

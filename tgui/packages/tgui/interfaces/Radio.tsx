@@ -6,7 +6,7 @@ import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
 export const Radio = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     freqlock,
     frequency,

@@ -3,7 +3,7 @@ import { Button, LabeledList, Section, Slider } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const Crayon = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const capOrChanges = data.has_cap || data.can_change_colour;
   const drawables = data.drawables || [];
   const {

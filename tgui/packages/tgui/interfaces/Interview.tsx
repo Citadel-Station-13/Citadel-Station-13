@@ -9,7 +9,7 @@ import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
 export const Interview = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     welcome_message,
     questions,

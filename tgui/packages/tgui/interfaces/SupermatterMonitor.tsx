@@ -19,7 +19,7 @@ export const SupermatterMonitor = () => {
 };
 
 export const SupermatterMonitorContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     active,
     singlecrystal,
@@ -146,7 +146,7 @@ export const SupermatterMonitorContent = (props, context) => {
 };
 
 const SupermatterList = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { supermatters = [] } = data;
   return (
     <Section

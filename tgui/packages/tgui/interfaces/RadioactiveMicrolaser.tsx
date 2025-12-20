@@ -3,7 +3,7 @@ import { Button, Box, NumberInput, Section, LabeledList } from 'tgui-core/compon
 import { Window } from '../layouts';
 
 export const RadioactiveMicrolaser = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     irradiate,
     stealth,

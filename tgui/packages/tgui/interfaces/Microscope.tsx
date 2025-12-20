@@ -3,7 +3,7 @@ import { Button, LabeledList, NoticeBox, Section, Tabs } from 'tgui-core/compone
 import { Window } from '../layouts';
 
 export const Microscope = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const {
     has_dish,
@@ -53,7 +53,7 @@ export const Microscope = (props, context) => {
 
 const Organisms = (props, context) => {
   const { cell_lines } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   if (!cell_lines.length) {
     return (
       <NoticeBox>
@@ -90,7 +90,7 @@ const Organisms = (props, context) => {
 
 const Viruses = (props, context) => {
   const { viruses } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   if (!viruses.length) {
     return (
       <NoticeBox>

@@ -4,7 +4,7 @@ import { Box, Button, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const MiningVendor = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   let inventory = [
     ...data.product_records,
   ];

@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, ProgressBar, Section } from 'tgui-core/compon
 import { NtosWindow } from '../layouts';
 
 export const NtosConfiguration = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     PC_device_theme,
     power_usage,

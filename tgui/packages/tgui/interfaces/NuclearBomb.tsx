@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 // is going to require a lot of tweaking it get it looking correct again
 // I'm sorry, but it looks bangin
 const NukeKeypad = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const keypadKeys = [
     ['1', '4', '7', 'C'],
     ['2', '5', '8', '0'],
@@ -45,7 +45,7 @@ const NukeKeypad = (props, context) => {
 };
 
 export const NuclearBomb = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     anchored,
     disk_present,

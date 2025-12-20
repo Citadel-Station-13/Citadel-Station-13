@@ -3,7 +3,7 @@ import { Box, Button, Grid, LabeledList, NumberInput, ProgressBar, Section } fro
 import { Window } from '../layouts';
 
 export const SolarControl = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     generated,
     generated_ratio,

@@ -4,7 +4,7 @@ import { BlockQuote, Box, Button, NumberInput, Section, Table } from 'tgui-core/
 import { Window } from '../layouts';
 
 export const OreRedemptionMachine = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     unclaimedPoints,
     materials,

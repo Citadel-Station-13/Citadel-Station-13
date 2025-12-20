@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from 'tgui-
 import { Window } from '../layouts';
 
 export const GravityGenerator = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     charging_state,
     operational,
@@ -37,7 +37,7 @@ export const GravityGenerator = (props, context) => {
 };
 
 const GravityGeneratorContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     breaker,
     charge_count,

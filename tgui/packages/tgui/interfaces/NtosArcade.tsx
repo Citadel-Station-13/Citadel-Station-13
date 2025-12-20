@@ -4,7 +4,7 @@ import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section } 
 import { NtosWindow } from '../layouts';
 
 export const NtosArcade = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <NtosWindow
       width={450}

@@ -3,7 +3,7 @@ import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const GulagItemReclaimer = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     mobs = [],
   } = data;

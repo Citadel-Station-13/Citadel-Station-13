@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 import { capitalize } from "common/string";
 
 export const Autolathe = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   // Extract `health` and `color` variables from the `data` object.
   const {
     materialtotal,

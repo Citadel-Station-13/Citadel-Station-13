@@ -75,7 +75,7 @@ export const SyndContractor = (props, context) => {
 };
 
 export const SyndContractorContent = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
 
   const terminalMessages = [
     "Recording biometric data...",
@@ -218,7 +218,7 @@ export const SyndContractorContent = (props, context) => {
 };
 
 export const StatusPane = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   return (
     <Section
@@ -299,7 +299,7 @@ export const SyndPane = (props, context) => {
 };
 
 const ContractsTab = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const contracts = data.contracts || [];
   return (
     <>
@@ -378,7 +378,7 @@ const ContractsTab = (props, context) => {
 };
 
 const HubTab = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const contractor_hub_items = data.contractor_hub_items || [];
   return (
     <Section>

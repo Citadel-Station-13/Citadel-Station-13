@@ -5,7 +5,7 @@ import { Box, Button, Input, LabeledList, NumberInput, Section } from 'tgui-core
 import { Window } from '../layouts';
 
 export const ChemReactionChamber = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [
     reagentName,
     setReagentName,

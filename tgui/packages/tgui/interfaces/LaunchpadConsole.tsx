@@ -3,7 +3,7 @@ import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Sectio
 import { Window } from '../layouts';
 
 const LaunchpadButtonPad = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <Grid width="1px">
       <Grid.Column>
@@ -90,7 +90,7 @@ const LaunchpadButtonPad = (props, context) => {
 
 export const LaunchpadControl = (props, context) => {
   const { topLevel } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     x,
     y,
@@ -191,7 +191,7 @@ export const LaunchpadControl = (props, context) => {
 };
 
 export const LaunchpadConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     launchpads = [],
     selected_id,

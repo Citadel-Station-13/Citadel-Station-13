@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
 export const NtosShipping = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <NtosWindow
       width={450}

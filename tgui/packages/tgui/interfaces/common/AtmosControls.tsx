@@ -5,7 +5,7 @@ import { getGasLabel } from '../../constants';
 
 export const Vent = (props, context) => {
   const { vent } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const {
     id_tag,
     long_name,
@@ -114,7 +114,7 @@ export const Vent = (props, context) => {
 
 export const Scrubber = (props, context) => {
   const { scrubber } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const {
     long_name,
     power,

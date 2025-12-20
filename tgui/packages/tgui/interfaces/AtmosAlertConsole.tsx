@@ -3,7 +3,7 @@ import { Button, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const AtmosAlertConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const priorityAlerts = data.priority || [];
   const minorAlerts = data.minor || [];
   return (

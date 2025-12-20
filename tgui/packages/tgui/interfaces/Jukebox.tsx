@@ -5,7 +5,7 @@ import { Box, Button, Dropdown, Section, Knob, LabeledControls, LabeledList, Sta
 import { Window } from '../layouts';
 
 export const Jukebox = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     active,
     track_selected,

@@ -14,7 +14,7 @@ const useOutfitTabs = (context, categories) => {
 };
 
 export const SelectEquipment = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     name,
     icon64,
@@ -136,7 +136,7 @@ const DisplayTabs = (props, context) => {
 };
 
 const OutfitDisplay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { current_outfit } = data;
   const { entries, currentTab } = props;
   return (
@@ -172,7 +172,7 @@ const OutfitDisplay = (props, context) => {
 };
 
 const CurrentlySelectedDisplay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { current_outfit } = data;
   const { entry } = props;
   return (

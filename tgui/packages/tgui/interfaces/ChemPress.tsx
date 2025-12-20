@@ -3,7 +3,7 @@ import { Box, Button, Input, LabeledList, NumberInput, Section } from 'tgui-core
 import { Window } from '../layouts';
 
 export const ChemPress = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     current_volume,
     product_name,

@@ -3,7 +3,7 @@ import { AnimatedNumber, Button, LabeledList, NoticeBox, ProgressBar, Section } 
 import { Window } from '../layouts';
 
 export const MechBayPowerConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { recharge_port } = data;
   const mech = recharge_port && recharge_port.mech;
   const cell = mech && mech.cell;

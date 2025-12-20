@@ -50,7 +50,7 @@ const SUFFIXES = [
 
 // TODO: refactor the backend of this it's a trainwreck
 export const CodexGigas = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Window
       width={450}

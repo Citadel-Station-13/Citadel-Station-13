@@ -3,7 +3,7 @@ import { Button, Dropdown, Input, Section, Stack, TextArea } from 'tgui-core/com
 import { Window } from '../layouts';
 
 export const CommandReport = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     command_name,
     custom_name,

@@ -3,7 +3,7 @@ import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const TurbineComputer = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const operational = Boolean(data.compressor
     && !data.compressor_broke
     && data.turbine

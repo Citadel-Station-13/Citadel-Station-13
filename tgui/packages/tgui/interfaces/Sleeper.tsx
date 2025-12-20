@@ -22,7 +22,7 @@ const damageTypes = [
 ];
 
 export const Sleeper = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     open,
     occupant = {},

@@ -3,7 +3,7 @@ import { Box, Button, Grid, LabeledList, ProgressBar, Section } from 'tgui-core/
 import { Window } from '../layouts';
 
 export const DnaVault = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     completed,
     used,

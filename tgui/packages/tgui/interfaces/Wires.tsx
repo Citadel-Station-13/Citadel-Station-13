@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, Section, NoticeBox } from 'tgui-core/componen
 import { Window } from '../layouts';
 
 export const Wires = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { proper_name } = data;
   const wires = data.wires || [];
   const statuses = data.status || [];

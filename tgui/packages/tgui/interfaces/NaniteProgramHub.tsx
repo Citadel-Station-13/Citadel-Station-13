@@ -5,7 +5,7 @@ import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from 'tgui-core/c
 import { Window } from '../layouts';
 
 export const NaniteProgramHub = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     detail_view,
     disk,

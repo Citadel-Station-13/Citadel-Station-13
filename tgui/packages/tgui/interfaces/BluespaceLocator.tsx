@@ -44,7 +44,7 @@ export const BluespaceLocator = (props, context) => {
 };
 
 const TeleporterBeacons = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { telebeacons } = data;
   return (
     telebeacons.map(beacon => (
@@ -58,7 +58,7 @@ const TeleporterBeacons = (props, context) => {
 };
 
 const TrackingImplants = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { trackimplants } = data;
   return (
     trackimplants.map(implant => (
@@ -72,7 +72,7 @@ const TrackingImplants = (props, context) => {
 };
 
 const SignalLocator = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { trackingrange } = data;
   const {
     name,

@@ -22,7 +22,7 @@ for (let index = 0; index < Math.min(Math.random()*100); index++) {
 }
 
 export const ClockworkSlab = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     recollection = true,
     scripture = {},
@@ -152,7 +152,7 @@ export const ClockworkSlab = (props, context) => {
 };
 
 export const CSScripture = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     power_unformatted = 0,
   } = data;
@@ -220,7 +220,7 @@ export const CSScripture = (props, context) => {
 };
 
 export const CSTutorial = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     recollection_categories = [],
     rec_section = null,

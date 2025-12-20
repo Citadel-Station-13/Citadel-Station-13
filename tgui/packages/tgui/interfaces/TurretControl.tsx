@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const TurretControl = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const locked = data.locked && !data.siliconUser;
   const {
     enabled,

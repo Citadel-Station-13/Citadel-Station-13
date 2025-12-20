@@ -3,7 +3,7 @@ import { Box, Button, Flex, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const Vendatray = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     product_name,
     product_cost,
@@ -76,7 +76,7 @@ export const Vendatray = (props, context) => {
 };
 
 const VendingImage = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const {
     product_icon,
   } = data;

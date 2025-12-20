@@ -58,7 +58,7 @@ export const OperatingComputer = (props, context) => {
 };
 
 const PatientStateView = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     table,
     procedures = [],
@@ -147,7 +147,7 @@ const PatientStateView = (props, context) => {
 };
 
 const SurgeryProceduresView = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     surgeries = [],
   } = data;

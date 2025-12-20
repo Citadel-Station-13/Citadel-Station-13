@@ -9,7 +9,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from 'tgui-core/components';
 
 export const TelecommsLogBrowser = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     notice,
     network = "NULL",

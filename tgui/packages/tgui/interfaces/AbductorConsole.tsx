@@ -42,7 +42,7 @@ export const AbductorConsole = (props, context) => {
 };
 
 const Abductsoft = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     experiment,
     points,
@@ -74,7 +74,7 @@ const Abductsoft = (props, context) => {
 };
 
 const EmergencyTeleporter = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     pad,
     gizmo,
@@ -112,7 +112,7 @@ const EmergencyTeleporter = (props, context) => {
 };
 
 const VestSettings = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     vest,
     vest_mode,

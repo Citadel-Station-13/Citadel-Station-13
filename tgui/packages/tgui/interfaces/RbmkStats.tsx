@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
 export const RbmkStats = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const powerData = data.powerData.map((value, i) => [i, value]);
   const psiData = data.psiData.map((value, i) => [i, value]);
   const tempInputData = data.tempInputData.map((value, i) => [i, value]);

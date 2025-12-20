@@ -3,7 +3,7 @@ import { Box, Icon, Stack, Button, Section, NoticeBox, LabeledList, Collapsible 
 import { Window } from '../layouts';
 
 export const Vote = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { mode, question, lower_admin } = data;
 
   /**
@@ -35,7 +35,7 @@ export const Vote = (props, context) => {
  * @returns A section visible to everyone with vote options.
  */
 const VoteOptions = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     allow_vote_restart,
     allow_vote_map,
@@ -101,7 +101,7 @@ const VoteOptions = (props, context) => {
  * @returns A collapsible list of voters
  */
 const VotersList = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { voting } = data;
 
   return (
@@ -122,7 +122,7 @@ const VotersList = (props, context) => {
  * @returns A section visible to all users.
  */
 const ChoicesPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { choices, selected_choice } = data;
 
   return (
@@ -171,7 +171,7 @@ const ChoicesPanel = (props, context) => {
  * @returns A section visible to everyone.
  */
 const TimePanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { lower_admin, time_remaining } = data;
 
   return (

@@ -4,7 +4,7 @@ import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Sectio
 import { Window } from '../layouts';
 
 export const ChemMaster = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { screen } = data;
   return (
     <Window
@@ -23,7 +23,7 @@ export const ChemMaster = (props, context) => {
 };
 
 const ChemMasterContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     screen,
     beakerContents = [],
@@ -129,7 +129,7 @@ const ChemMasterContent = (props, context) => {
 const ChemicalBuffer = Table;
 
 const ChemicalBufferEntry = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const { chemical, transferTo } = props;
   return (
     <Table.Row key={chemical.id}>
@@ -219,7 +219,7 @@ const PackagingControlsItem = props => {
 };
 
 const PackagingControls = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [
     pillAmount,
     setPillAmount,
@@ -362,7 +362,7 @@ const PackagingControls = (props, context) => {
 };
 
 const AnalysisResults = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { fermianalyze } = props;
   const { analyzeVars } = data;
   return (

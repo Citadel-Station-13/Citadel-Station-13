@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 import { ShuttleConsoleContent } from './ShuttleConsole';
 
 export const AuxBaseConsole = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const {
     type,
@@ -53,7 +53,7 @@ const STATUS_COLOR_KEYS = {
 };
 
 export const AuxBaseConsoleContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     turrets = [],
   } = data;

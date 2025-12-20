@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 
 const FilterIntegerEntry = (props, context) => {
   const { value, name, filterName } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <NumberInput
       value={value}
@@ -26,7 +26,7 @@ const FilterIntegerEntry = (props, context) => {
 
 const FilterFloatEntry = (props, context) => {
   const { value, name, filterName } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const [step, setStep] = useLocalState(context, `${filterName}-${name}`, 0.01);
   return (
     <>
@@ -62,7 +62,7 @@ const FilterFloatEntry = (props, context) => {
 
 const FilterTextEntry = (props, context) => {
   const { value, name, filterName } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
 
   return (
     <Input
@@ -79,7 +79,7 @@ const FilterTextEntry = (props, context) => {
 
 const FilterColorEntry = (props, context) => {
   const { value, filterName, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <>
       <Button
@@ -105,7 +105,7 @@ const FilterColorEntry = (props, context) => {
 
 const FilterIconEntry = (props, context) => {
   const { value, filterName } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <>
       <Button
@@ -122,7 +122,7 @@ const FilterIconEntry = (props, context) => {
 
 const FilterFlagsEntry = (props, context) => {
   const { name, value, filterName, filterType } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['flags'];
@@ -180,7 +180,7 @@ const FilterDataEntry = (props, context) => {
 };
 
 const FilterEntry = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { name, filterDataEntry } = props;
   const { type, priority, ...restOfProps } = filterDataEntry;
 
@@ -238,7 +238,7 @@ const FilterEntry = (props, context) => {
 };
 
 export const Filteriffic = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const name = data.target_name || "Unknown Object";
   const filters = data.target_filter_data || {};
   const hasFilters = filters !== {};

@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 export const NtosRevelation = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <NtosWindow
       width={400}

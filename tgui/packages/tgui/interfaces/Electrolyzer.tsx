@@ -3,7 +3,7 @@ import { Button, LabeledList, ProgressBar, Section } from 'tgui-core/components'
 import { Window } from '../layouts';
 
 export const Electrolyzer = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Window
       width={400}

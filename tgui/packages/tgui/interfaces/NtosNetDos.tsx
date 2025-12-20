@@ -16,7 +16,7 @@ export const NtosNetDos = (props, context) => {
 };
 
 export const NtosNetDosContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     relays = [],

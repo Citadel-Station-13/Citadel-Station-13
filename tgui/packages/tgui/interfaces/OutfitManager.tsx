@@ -3,7 +3,7 @@ import { Button, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const OutfitManager = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { outfits } = data;
   return (
     <Window

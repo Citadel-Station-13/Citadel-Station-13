@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 const POWER_MUL = 1e3;
 
 export const Smes = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     capacityPercent,
     capacity,

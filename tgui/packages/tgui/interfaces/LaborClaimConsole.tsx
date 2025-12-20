@@ -4,7 +4,7 @@ import { Box, Button, LabeledList, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const LaborClaimConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     can_go_home,
     id_points,

@@ -3,7 +3,7 @@ import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const StackingConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     machine,
   } = data;
@@ -25,7 +25,7 @@ export const StackingConsole = (props, context) => {
 };
 
 export const StackingConsoleContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     stacking_amount,
     contents = [],

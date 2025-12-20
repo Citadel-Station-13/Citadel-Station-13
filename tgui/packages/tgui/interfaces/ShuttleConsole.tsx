@@ -3,7 +3,7 @@ import { Box, Button, Dropdown, Flex, Icon, LabeledList, Modal, Section } from '
 import { Window } from '../layouts';
 
 export const ShuttleConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     type = "shuttle",
     blind_drop,
@@ -76,7 +76,7 @@ const STATUS_COLOR_KEYS = {
 };
 
 export const ShuttleConsoleContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { type, blind_drop } = props;
   const {
     status,

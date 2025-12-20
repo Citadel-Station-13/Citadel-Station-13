@@ -3,7 +3,7 @@ import { Button, Icon, NoticeBox, NumberInput, Section, Table, Tabs, Slider } fr
 import { Window } from '../layouts';
 
 export const Colormate = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { activemode, temp } = data;
   const item = data.item || [];
   return (
@@ -107,7 +107,7 @@ export const Colormate = (props, context) => {
 };
 
 export const ColormateTint = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Button
       fluid
@@ -119,7 +119,7 @@ export const ColormateTint = (props, context) => {
 };
 
 export const ColormateMatrix = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const matrixcolors = data.matrixcolors || [];
   return (
     <Table>
@@ -284,7 +284,7 @@ export const ColormateMatrix = (props, context) => {
 };
 
 export const ColormateHSV = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { buildhue, buildsat, buildval } = data;
   return (
     <Table>

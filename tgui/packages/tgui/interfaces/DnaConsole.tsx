@@ -69,7 +69,7 @@ const isSameMutation = (a, b) => {
 };
 
 export const DnaConsole = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     isPulsingRads,
     radPulseSeconds,
@@ -124,7 +124,7 @@ const DnaScanner = (props, context) => {
 };
 
 const DnaScannerButtons = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     hasDelayedAction,
     isPulsingRads,
@@ -208,7 +208,7 @@ const SubjectStatus = (props, context) => {
 };
 
 const DnaScannerContent = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     subjectName,
     isScannerConnected,
@@ -274,7 +274,7 @@ const DnaScannerContent = (props, context) => {
 };
 
 export const DnaConsoleCommands = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const { hasDisk, isInjectorReady, injectorSeconds } = data;
   const { consoleMode } = data.view;
   return (
@@ -328,7 +328,7 @@ export const DnaConsoleCommands = (props, context) => {
 };
 
 const StorageButtons = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const { hasDisk } = data;
   const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
   return (
@@ -394,7 +394,7 @@ const StorageButtons = (props, context) => {
 };
 
 const DnaConsoleStorage = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
   const { diskMakeupBuffer, diskHasMakeup } = data;
   const mutations = data.storage[storageMode];
@@ -439,7 +439,7 @@ const StorageMutations = (props, context) => {
   const {
     customMode = '',
   } = props;
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const mutations = props.mutations || [];
   const mode = data.view.storageMode + customMode;
 
@@ -490,7 +490,7 @@ const StorageMutations = (props, context) => {
 };
 
 const StorageChromosomes = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const chromos = data.chromoStorage ?? [];
   const uniqueChromos = uniqBy(chromo => chromo.Name)(chromos);
   const chromoName = data.view.storageChromoName;
@@ -558,7 +558,7 @@ const StorageChromosomes = (props, context) => {
 
 const MutationInfo = (props, context) => {
   const { mutation } = props;
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     diskCapacity,
     diskReadOnly,
@@ -709,7 +709,7 @@ const MutationInfo = (props, context) => {
 
 const ChromosomeInfo = (props, context) => {
   const { mutation, disabled } = props;
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   if (mutation.CanChromo === CHROMOSOME_NEVER) {
     return (
       <Box color="label">
@@ -755,7 +755,7 @@ const ChromosomeInfo = (props, context) => {
 };
 
 const DnaConsoleSequencer = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const mutations = data.storage?.occupant ?? [];
   const {
     isJokerReady,
@@ -914,7 +914,7 @@ const GeneCycler = (props, context) => {
 
 const GenomeSequencer = (props, context) => {
   const { mutation } = props;
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const { jokerActive } = data.view;
   if (!mutation) {
     return (
@@ -1028,7 +1028,7 @@ const GenomeSequencer = (props, context) => {
 };
 
 const DnaConsoleEnzymes = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     isScannerConnected,
     stdDevAcc,
@@ -1060,7 +1060,7 @@ const DnaConsoleEnzymes = (props, context) => {
 };
 
 const RadiationEmitterSettings = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     radStrength,
     radDuration,
@@ -1100,7 +1100,7 @@ const RadiationEmitterSettings = (props, context) => {
 };
 
 const RadiationEmitterProbs = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const {
     stdDevAcc,
     stdDevStr,
@@ -1131,7 +1131,7 @@ const RadiationEmitterProbs = (props, context) => {
 };
 
 const RadiationEmitterPulseBoard = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     subjectUNI = [],
   } = data;
@@ -1177,7 +1177,7 @@ const RadiationEmitterPulseBoard = (props, context) => {
 };
 
 const GeneticMakeupBuffers = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     diskHasMakeup,
     hasDisk,
@@ -1259,7 +1259,7 @@ const GeneticMakeupInfo = (props, context) => {
 
 const GeneticMakeupBufferInfo = (props, context) => {
   const { index, makeup } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     isViableSubject,
     hasDisk,
@@ -1357,7 +1357,7 @@ const GeneticMakeupBufferInfo = (props, context) => {
 };
 
 const DnaConsoleAdvancedInjectors = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     maxAdvInjectors,
     isInjectorReady,
@@ -1411,7 +1411,7 @@ const MutationCombiner = (props, context) => {
     mutations = [],
     source,
   } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const brefFromName = name => {
     return mutations.find(mutation => mutation.Name === name)?.ByondRef;

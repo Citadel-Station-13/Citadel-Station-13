@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, ProgressBar, Section } from 'tgui-core/compon
 import { Window } from '../layouts';
 
 export const SatelliteControl = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const satellites = data.satellites || [];
   return (
     <Window

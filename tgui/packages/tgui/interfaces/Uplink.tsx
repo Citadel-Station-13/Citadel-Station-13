@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 const MAX_SEARCH_RESULTS = 25;
 
 export const Uplink = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { telecrystals } = data;
   return (
     <Window
@@ -28,7 +28,7 @@ export const GenericUplink = (props, context) => {
     currencyAmount = 0,
     currencySymbol = 'cr',
   } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     compactMode,
     lockable,
@@ -126,7 +126,7 @@ const ItemList = (props, context) => {
     currencyAmount,
     currencySymbol,
   } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const [
     hoveredItem,
     setHoveredItem,

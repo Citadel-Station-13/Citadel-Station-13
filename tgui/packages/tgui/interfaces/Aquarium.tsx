@@ -3,7 +3,7 @@ import { Button, Dropdown, Flex, Knob, LabeledControls, Section } from 'tgui-cor
 import { Window } from '../layouts';
 
 export const Aquarium = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     temperature,
     fluid_type,

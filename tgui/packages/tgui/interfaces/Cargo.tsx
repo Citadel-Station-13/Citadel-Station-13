@@ -19,7 +19,7 @@ export const Cargo = (props, context) => {
 };
 
 export const CargoContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
   const {
     requestonly,
@@ -73,7 +73,7 @@ export const CargoContent = (props, context) => {
 };
 
 const CargoStatus = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     away,
     docked,
@@ -128,7 +128,7 @@ const CargoStatus = (props, context) => {
 
 export const CargoCatalog = (props, context) => {
   const { express } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     self_paid,
     app_cost,
@@ -217,7 +217,7 @@ export const CargoCatalog = (props, context) => {
 };
 
 const CargoRequests = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     requestonly,
     can_send,
@@ -286,7 +286,7 @@ const CargoRequests = (props, context) => {
 };
 
 const CargoCartButtons = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     requestonly,
     can_send,
@@ -316,7 +316,7 @@ const CargoCartButtons = (props, context) => {
 };
 
 const CargoCart = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     requestonly,
     away,

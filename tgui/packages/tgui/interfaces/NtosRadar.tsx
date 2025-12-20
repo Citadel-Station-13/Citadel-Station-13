@@ -16,7 +16,7 @@ export const NtosRadar = (props, context) => {
 };
 
 export const NtosRadarContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     selected,
     object = [],

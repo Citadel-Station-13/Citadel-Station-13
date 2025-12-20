@@ -54,7 +54,7 @@ const selectRemappedStaticData = data => {
 let remappedStaticData;
 
 const useRemappedBackend = context => {
-  const { data, ...rest } = useBackend(context);
+  const { data, ...rest } = useBackend<any>();
   // Only remap the static data once, cache for future use
   if (!remappedStaticData) {
     const id_cache = data.static_data.id_cache;

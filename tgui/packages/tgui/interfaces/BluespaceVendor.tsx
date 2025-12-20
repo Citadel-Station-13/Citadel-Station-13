@@ -8,7 +8,7 @@ import { getGasColor, getGasLabel } from '../constants';
 import { Window } from '../layouts';
 
 export const BluespaceVendor = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     on,
     tank_filling_amount,

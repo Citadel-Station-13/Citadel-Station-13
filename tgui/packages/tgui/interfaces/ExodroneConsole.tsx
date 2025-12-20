@@ -133,7 +133,7 @@ export const ExodroneConsole = (props, context) => {
 };
 
 const SignalLostModal = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <Modal
       backgroundColor="red"

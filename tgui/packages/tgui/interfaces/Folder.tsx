@@ -3,7 +3,7 @@ import { Box, Button, Flex, Section } from "../components";
 import { Window } from "../layouts";
 
 export const Folder = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { theme, bg_color, folder_name, contents, contents_ref } = data;
   return (
     <Window

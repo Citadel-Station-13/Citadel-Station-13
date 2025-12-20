@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 
 export const FishCatalog = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     fish_info,
     sponsored_by,

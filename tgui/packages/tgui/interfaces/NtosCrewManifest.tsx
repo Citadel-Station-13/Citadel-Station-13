@@ -4,7 +4,7 @@ import { Button, Section, Table } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
 export const NtosCrewManifest = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     have_printer,
     manifest = {},

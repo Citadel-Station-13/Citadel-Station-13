@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, NoticeBox, Section } from 'tgui-core/componen
 import { Window } from '../layouts';
 
 export const BluespaceArtillery = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     notice,
     connected,

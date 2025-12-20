@@ -14,7 +14,7 @@ const skillyellow = {
 };
 
 export const SkillPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const skills = data.skills || [];
   return (
     <Window

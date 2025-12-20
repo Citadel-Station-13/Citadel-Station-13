@@ -26,7 +26,7 @@ export const PowerMonitor = () => {
 };
 
 export const PowerMonitorContent = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { history } = data;
   const [
     sortByField,

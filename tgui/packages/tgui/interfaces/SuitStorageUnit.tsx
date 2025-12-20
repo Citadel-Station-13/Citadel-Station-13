@@ -4,7 +4,7 @@ import { Box, Button, Icon, LabeledList, NoticeBox, Section } from 'tgui-core/co
 import { Window } from '../layouts';
 
 export const SuitStorageUnit = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     locked,
     open,

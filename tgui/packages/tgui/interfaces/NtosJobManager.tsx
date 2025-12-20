@@ -15,7 +15,7 @@ export const NtosJobManager = (props, context) => {
 };
 
 export const NtosJobManagerContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     authed,
     cooldown,

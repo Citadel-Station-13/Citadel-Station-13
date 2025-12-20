@@ -3,7 +3,7 @@ import { Stack, Section, Input, Button, Dropdown } from "../components";
 import { Window } from "../layouts";
 
 export const CircuitModule = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     input_ports,
     output_ports,

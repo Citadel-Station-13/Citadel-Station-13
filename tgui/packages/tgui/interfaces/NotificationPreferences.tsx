@@ -3,7 +3,7 @@ import { Section, Button } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const NotificationPreferences = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const ignoresPreSort = data.ignore || [];
   const ignores = ignoresPreSort.sort((a, b) => {
     const descA = a.desc.toLowerCase();

@@ -17,7 +17,7 @@ export const RemoteRobotControl = (props, context) => {
 };
 
 export const RemoteRobotControlContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     robots = [],
     commandeering,

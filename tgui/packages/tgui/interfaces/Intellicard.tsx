@@ -3,7 +3,7 @@ import { BlockQuote, Button, LabeledList, ProgressBar, Section } from 'tgui-core
 import { Window } from '../layouts';
 
 export const Intellicard = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     name,
     isDead,

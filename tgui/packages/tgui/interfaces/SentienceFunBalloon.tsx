@@ -3,7 +3,7 @@ import { Button, NumberInput, Section, Stack, Input, LabeledList } from 'tgui-co
 import { Window } from "../layouts";
 
 export const SentienceFunBalloon = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { group_name, range } = data;
   return (
     <Window

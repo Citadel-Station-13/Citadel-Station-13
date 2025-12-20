@@ -4,7 +4,7 @@ import { Button, Dropdown, Grid, Input, LabeledList, NoticeBox, NumberInput, Sec
 import { Window } from '../layouts';
 
 export const NaniteCodes = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Section
       title="Codes"
@@ -63,7 +63,7 @@ export const NaniteCodes = (props, context) => {
 };
 
 export const NaniteDelays = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   return (
     <Section
@@ -145,7 +145,7 @@ export const NaniteExtraEntry = (props, context) => {
 
 export const NaniteExtraNumber = (props, context) => {
   const { extra_setting } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const {
     name,
     value,
@@ -169,7 +169,7 @@ export const NaniteExtraNumber = (props, context) => {
 
 export const NaniteExtraText = (props, context) => {
   const { extra_setting } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const {
     name,
     value,
@@ -187,7 +187,7 @@ export const NaniteExtraText = (props, context) => {
 
 export const NaniteExtraType = (props, context) => {
   const { extra_setting } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const {
     name,
     value,
@@ -208,7 +208,7 @@ export const NaniteExtraType = (props, context) => {
 
 export const NaniteExtraBoolean = (props, context) => {
   const { extra_setting } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const {
     name,
     value,
@@ -239,7 +239,7 @@ export const NaniteProgrammer = (props, context) => {
 };
 
 export const NaniteProgrammerContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     has_disk,
     has_program,

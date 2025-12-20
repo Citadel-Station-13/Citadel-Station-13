@@ -5,7 +5,7 @@ import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 
 export const PortableScrubber = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const filter_types = data.filter_types || [];
   return (
     <Window

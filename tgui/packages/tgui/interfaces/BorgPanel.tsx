@@ -3,7 +3,7 @@ import { Box, Button, Icon, LabeledList, ProgressBar, Section } from 'tgui-core/
 import { Window } from '../layouts';
 
 export const BorgPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const borg = data.borg || {};
   const cell = data.cell || {};
   const cellPercent = cell.charge / cell.maxcharge;

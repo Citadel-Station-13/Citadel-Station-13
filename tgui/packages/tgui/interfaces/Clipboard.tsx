@@ -10,7 +10,7 @@ import {
 import { Window } from "../layouts";
 
 export const Clipboard = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     pen,
     integrated_pen,

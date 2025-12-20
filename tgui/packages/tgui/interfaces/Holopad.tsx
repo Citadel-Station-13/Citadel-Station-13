@@ -3,7 +3,7 @@ import { Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, Section } from 
 import { Window } from '../layouts';
 
 export const Holopad = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     calling,
   } = data;
@@ -46,7 +46,7 @@ export const Holopad = (props, context) => {
 };
 
 const HolopadContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     on_network,
     on_cooldown,

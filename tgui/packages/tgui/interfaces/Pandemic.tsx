@@ -4,7 +4,7 @@ import { Box, Button, Collapsible, Grid, Input, LabeledList, NoticeBox, Section 
 import { Window } from '../layouts';
 
 export const PandemicBeakerDisplay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     has_beaker,
     beaker_empty,
@@ -66,7 +66,7 @@ export const PandemicBeakerDisplay = (props, context) => {
 };
 
 export const PandemicDiseaseDisplay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     is_ready,
   } = data;
@@ -234,7 +234,7 @@ export const PandemicSymptomDisplay = (props, context) => {
 };
 
 export const PandemicAntibodyDisplay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const resistances = data.resistances || [];
   return (
     <Section title="Antibodies">
@@ -267,7 +267,7 @@ export const PandemicAntibodyDisplay = (props, context) => {
 };
 
 export const Pandemic = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   return (
     <Window
       width={520}

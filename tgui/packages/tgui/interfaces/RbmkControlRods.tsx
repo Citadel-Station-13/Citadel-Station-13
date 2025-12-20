@@ -4,7 +4,7 @@ import { Section, ProgressBar, Slider } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const RbmkControlRods = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const control_rods = data.control_rods;
   const k = data.k;
   const desiredK = data.desiredK;

@@ -3,7 +3,7 @@ import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '
 import { Window } from '../layouts';
 
 export const SmokeMachine = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     TankContents,
     isTankLoaded,

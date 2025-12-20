@@ -53,7 +53,7 @@ const PlaytimeSection = props => {
 };
 
 export const TrackedPlaytime = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     failReason,
     jobPlaytimes,

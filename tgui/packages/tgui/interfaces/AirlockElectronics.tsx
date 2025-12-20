@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 import { AccessList } from './common/AccessList';
 
 export const AirlockElectronics = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     oneAccess,
     unres_direction,

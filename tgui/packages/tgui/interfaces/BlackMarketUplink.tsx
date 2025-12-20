@@ -4,7 +4,7 @@ import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
 export const BlackMarketUplink = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     categories = [],
     markets = [],
@@ -96,7 +96,7 @@ export const BlackMarketUplink = (props, context) => {
 };
 
 const ShipmentSelector = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     buying,
     ltsrbt_built,

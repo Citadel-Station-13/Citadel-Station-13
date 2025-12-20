@@ -3,7 +3,7 @@ import { Window } from '../layouts';
 import { GenericUplink } from './Uplink';
 
 export const MalfunctionModulePicker = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     processingTime,
   } = data;

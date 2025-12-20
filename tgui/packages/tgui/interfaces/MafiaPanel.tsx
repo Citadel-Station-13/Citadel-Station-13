@@ -5,7 +5,7 @@ import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, TimeDisplay 
 import { Window } from '../layouts';
 
 export const MafiaPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     actions,
     phase,
@@ -83,7 +83,7 @@ export const MafiaPanel = (props, context) => {
 };
 
 const MafiaLobby = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     lobbydata,
     phase,
@@ -153,7 +153,7 @@ const MafiaLobby = (props, context) => {
 };
 
 const MafiaRole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     phase,
     roleinfo,
@@ -210,7 +210,7 @@ const MafiaRole = (props, context) => {
 };
 
 const MafiaListOfRoles = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     all_roles,
   } = data;
@@ -275,7 +275,7 @@ const MafiaListOfRoles = (props, context) => {
 };
 
 const MafiaJudgement = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     judgement_phase,
   } = data;
@@ -334,7 +334,7 @@ const MafiaJudgement = (props, context) => {
 };
 
 const MafiaPlayers = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     players,
   } = data;
@@ -377,7 +377,7 @@ const MafiaPlayers = (props, context) => {
 };
 
 const MafiaAdmin = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Collapsible
       title="ADMIN CONTROLS"

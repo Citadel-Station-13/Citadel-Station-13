@@ -3,7 +3,7 @@ import { Box, Flex, Icon, Table, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const Achievements = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { categories } = data;
   const [
     selectedCategory,
@@ -87,7 +87,7 @@ const Achievement = props => {
 };
 
 const HighScoreTable = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const {
     highscore: highscores,
     user_ckey,

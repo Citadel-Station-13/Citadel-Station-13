@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const TransferValve = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     tank_one,
     tank_two,

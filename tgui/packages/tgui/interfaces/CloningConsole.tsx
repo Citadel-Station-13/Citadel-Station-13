@@ -4,7 +4,7 @@ import { Box, Button, Collapsible, NoticeBox, ProgressBar, Section } from 'tgui-
 import { Window } from '../layouts';
 
 export const CloningConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     useRecords,
     hasAutoprocess,

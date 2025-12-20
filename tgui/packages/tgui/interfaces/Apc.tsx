@@ -57,7 +57,7 @@ const malfMap = {
 };
 
 const ApcContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const locked = data.locked && !data.siliconUser;
   const externalPowerStatus = powerStatusMap[data.externalPower]
     || powerStatusMap[0];

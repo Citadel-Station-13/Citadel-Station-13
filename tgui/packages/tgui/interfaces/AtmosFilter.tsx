@@ -4,7 +4,7 @@ import { getGasLabel } from '../constants';
 import { Window } from '../layouts';
 
 export const AtmosFilter = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const filterTypes = data.filter_types || [];
   return (
     <Window

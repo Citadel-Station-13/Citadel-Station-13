@@ -3,7 +3,7 @@ import { Button, ProgressBar, Section, Box, LabeledList } from 'tgui-core/compon
 import { Window } from '../layouts';
 
 export const VrSleeper = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Window
       width={475}

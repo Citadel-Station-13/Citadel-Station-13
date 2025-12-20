@@ -12,7 +12,7 @@ const formatPressure = value => {
 };
 
 export const Tank = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     defaultReleasePressure,
     minReleasePressure,

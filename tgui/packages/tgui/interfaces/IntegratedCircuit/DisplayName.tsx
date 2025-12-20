@@ -4,7 +4,7 @@ import { FUNDAMENTAL_DATA_TYPES, DATATYPE_DISPLAY_HANDLERS } from './Fundamental
 import { NULL_REF } from './constants';
 
 export const DisplayName = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const { port, isOutput, componentId, portIndex, ...rest } = props;
 
   const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'unknown'];

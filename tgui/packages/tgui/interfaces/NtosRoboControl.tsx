@@ -7,7 +7,7 @@ const getMuleByRef = (mules, ref) => {
 };
 
 export const NtosRoboControl = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     bots,
     id_owner,
@@ -47,7 +47,7 @@ export const NtosRoboControl = (props, context) => {
 
 const RobotInfo = (props, context) => {
   const { robot } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const mules = data.mules || [];
   // Get a mule object
   const mule = !!robot.mule_check

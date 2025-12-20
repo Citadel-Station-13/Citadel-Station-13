@@ -61,7 +61,7 @@ const BUYWORD2ICON = {
 };
 
 const EnscribedName = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { owner } = data;
   return (
     <>
@@ -82,7 +82,7 @@ const EnscribedName = (props, context) => {
 const lineHeightToc = "34.6px";
 
 const TableOfContents = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [
     tabIndex,
     setTabIndex,
@@ -158,7 +158,7 @@ const TableOfContents = (props, context) => {
 };
 
 const LockedPage = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { owner } = data;
   return (
     <Dimmer>
@@ -179,7 +179,7 @@ const LockedPage = (props, context) => {
 };
 
 const PointLocked = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { owner } = data;
   return (
     <Dimmer>
@@ -211,7 +211,7 @@ const PointLocked = (props, context) => {
 };
 
 const SingleLoadout = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   const { author, name, blurb, icon, loadoutId, loadoutColor } = props;
   return (
     <Stack.Item grow>
@@ -238,7 +238,7 @@ const SingleLoadout = (props, context) => {
 const LoadoutWidth = 19.17;
 
 const Loadouts = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { points } = data;
   return (
     <Stack ml={0.5} mt={-0.5} vertical fill>
@@ -308,7 +308,7 @@ const Loadouts = (props, context) => {
 const lineHeightRandomize = 6;
 
 const Randomize = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { points } = data;
   return (
     <Stack fill vertical>
@@ -353,7 +353,7 @@ const widthSection = "466px";
 const heightSection = "456px";
 
 export const Spellbook = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     entries,
     points,

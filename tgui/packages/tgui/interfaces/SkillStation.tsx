@@ -4,7 +4,7 @@ import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Table 
 import { Window } from '../layouts';
 
 export const InsertedSkillchip = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     skillchip_ready,
@@ -103,7 +103,7 @@ export const InsertedSkillchip = (props, context) => {
 };
 
 export const ImplantedSkillchips = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     slots_used,
@@ -254,7 +254,7 @@ export const TimeFormat = (props, context) => {
 };
 
 export const SkillStation = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const {
     working,
     timeleft,

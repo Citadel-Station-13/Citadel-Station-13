@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const OreBox = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { materials } = data;
   return (
     <Window

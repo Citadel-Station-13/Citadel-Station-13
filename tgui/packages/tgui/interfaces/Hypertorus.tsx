@@ -8,7 +8,7 @@ import { formatSiBaseTenUnit, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 export const Hypertorus = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const filterTypes = data.filter_types || [];
   const selectedFuels = data.selected_fuel || [];
   const {

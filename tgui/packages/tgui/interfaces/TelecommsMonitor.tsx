@@ -11,7 +11,7 @@ import { Box, Button, LabeledList, NoticeBox, Section, Tabs, Input, ProgressBar 
 
 
 export const TelecommsMonitor = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     notice,
     network = "NULL",

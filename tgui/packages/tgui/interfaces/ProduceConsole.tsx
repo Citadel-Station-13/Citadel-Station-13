@@ -15,7 +15,7 @@ const TAB2NAME = [
 ];
 
 const ShoppingTab = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     order_datums,
   } = data;
@@ -96,7 +96,7 @@ const ShoppingTab = (props, context) => {
 };
 
 const CheckoutTab = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
   const {
     order_datums,
     total_cost,
@@ -196,7 +196,7 @@ const CheckoutTab = (props, context) => {
 };
 
 const OrderSent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Dimmer>
       <Stack vertical>
@@ -217,7 +217,7 @@ const OrderSent = (props, context) => {
 };
 
 export const ProduceConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     off_cooldown,
   } = data;

@@ -7,7 +7,7 @@ import { Scrubber, Vent } from './common/AtmosControls';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const AirAlarm = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const locked = data.locked && !data.siliconUser;
   return (
     <Window
@@ -25,7 +25,7 @@ export const AirAlarm = (props, context) => {
 };
 
 const AirAlarmStatus = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const entries = (data.environment_data || [])
     .filter(entry => entry.value >= 0.01);
   const dangerMap = {
@@ -137,7 +137,7 @@ const AirAlarmControl = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlHome = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [screen, setScreen] = useLocalState(context, 'screen');
   const {
     mode,
@@ -191,7 +191,7 @@ const AirAlarmControlHome = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlVents = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { vents } = data;
   if (!vents || vents.length === 0) {
     return 'Nothing to show';
@@ -207,7 +207,7 @@ const AirAlarmControlVents = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlScrubbers = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const { scrubbers } = data;
   if (!scrubbers || scrubbers.length === 0) {
     return 'Nothing to show';
@@ -223,7 +223,7 @@ const AirAlarmControlScrubbers = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlModes = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { modes } = data;
   if (!modes || modes.length === 0) {
     return 'Nothing to show';
@@ -246,7 +246,7 @@ const AirAlarmControlModes = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlThresholds = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { thresholds } = data;
   return (
     <table

@@ -4,7 +4,7 @@ import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const ParticleAccelerator = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     assembled,
     power,

@@ -3,7 +3,7 @@ import { AccessList } from './common/AccessList';
 import { Window } from '../layouts';
 
 export const ChameleonCard = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     accesses,

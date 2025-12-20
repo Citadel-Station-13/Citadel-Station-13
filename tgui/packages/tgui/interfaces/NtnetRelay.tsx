@@ -3,7 +3,7 @@ import { Box, Button, ProgressBar, Section, AnimatedNumber } from 'tgui-core/com
 import { Window } from '../layouts';
 
 export const NtnetRelay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     enabled,
     dos_capacity,

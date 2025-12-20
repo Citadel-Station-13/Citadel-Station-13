@@ -411,7 +411,7 @@ const EFFECTS_ALL = [
 ];
 
 const ViewTabHolder = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [
     tabPageIndex,
     setTabPageIndex,
@@ -508,7 +508,7 @@ const TabPod = (props, context) => {
 };
 
 const TabBay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <>
       <Button
@@ -525,7 +525,7 @@ const TabBay = (props, context) => {
 };
 
 const TabDrop = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <>
       <Button
@@ -542,7 +542,7 @@ const TabDrop = (props, context) => {
 };
 
 const PodStatusPage = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [compact, toggleCompact] = useCompact(context);
   return (
     <Section fill width="100%">
@@ -651,7 +651,7 @@ const PodStatusPage = (props, context) => {
 };
 
 const ReverseMenu = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [
     tabPageIndex,
     setTabPageIndex,
@@ -914,7 +914,7 @@ class PresetsPage extends Component {
 
 const LaunchPage = (props, context) => {
   const [compact] = useCompact(context);
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Button
       fluid
@@ -938,7 +938,7 @@ const LaunchPage = (props, context) => {
 };
 
 const StylePage = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Section
       fill
@@ -986,7 +986,7 @@ const StylePage = (props, context) => {
 };
 
 const Bays = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [compact] = useCompact(context);
   return (
     <Section
@@ -1029,7 +1029,7 @@ const Bays = (props, context) => {
 };
 
 const Timing = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Section
       fill
@@ -1075,7 +1075,7 @@ const Timing = (props, context) => {
 };
 
 const DelayHelper = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     delay_list,
     reverse = false,
@@ -1112,7 +1112,7 @@ const DelayHelper = (props, context) => {
 };
 
 const Sounds = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Section fill title="Sounds"
       buttons={(

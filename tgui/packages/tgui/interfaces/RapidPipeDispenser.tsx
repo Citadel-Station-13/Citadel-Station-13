@@ -55,7 +55,7 @@ const TOOLS = [
 ];
 
 export const RapidPipeDispenser = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     category: rootCategoryIndex,
     categories = [],

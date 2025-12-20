@@ -25,7 +25,7 @@ export const RouletteNumberCell = (props, context) => {
     text,
     value,
   } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
 
   return (
     <Table.Cell
@@ -155,7 +155,7 @@ export const RouletteBoard = () => {
 };
 
 export const RouletteBetTable = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const [
     customBet,

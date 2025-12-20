@@ -6,7 +6,7 @@ import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section, T
 import { Window } from '../layouts';
 
 export const ChemDispenser = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const recording = !!data.recordingRecipe;
   const [hasCol, setHasCol] = useLocalState(
     context, 'fs_title', false);
@@ -265,7 +265,7 @@ export const ChemDispenser = (props, context) => {
 const ChemicalBuffer = Table;
 
 const ChemicalBufferEntry = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { chemical, transferTo } = props;
   return (
     <Table.Row key={chemical.id}>
@@ -292,7 +292,7 @@ const ChemicalBufferEntry = (props, context) => {
 const ChemicalBeaker = Table;
 
 const ChemicalBeakerEntry = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { chemical, transferTo } = props;
   return (
     <Table.Row key={chemical.id}>

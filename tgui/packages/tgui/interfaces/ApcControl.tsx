@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 import { AreaCharge, powerRank } from './PowerMonitor';
 
 export const ApcControl = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   return (
     <Window
       title="APC Controller"
@@ -24,7 +24,7 @@ export const ApcControl = (props, context) => {
 };
 
 const ApcLoggedOut = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { emagged } = data;
   const text = emagged === 1 ? 'Open' : 'Log In';
   return (
@@ -39,7 +39,7 @@ const ApcLoggedOut = (props, context) => {
 };
 
 const ApcLoggedIn = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { restoring } = data;
   const [
     tabIndex,
@@ -93,7 +93,7 @@ const ApcLoggedIn = (props, context) => {
 };
 
 const ControlPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     emagged,
     logging,
@@ -149,7 +149,7 @@ const ControlPanel = (props, context) => {
 };
 
 const ApcControlScene = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<any>();
 
   const [
     sortByField,
@@ -253,7 +253,7 @@ const ApcControlScene = (props, context) => {
 };
 
 const LogPanel = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
 
   const logs = flow([
     map((line, i) => ({

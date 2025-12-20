@@ -4,7 +4,7 @@ import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Se
 import { Window } from '../layouts';
 
 export const NaniteDiskBox = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<any>();
   const {
     has_disk,
     has_program,
@@ -157,7 +157,7 @@ export const NaniteInfoBox = (props, context) => {
 };
 
 export const NaniteCloudBackupList = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const cloud_backups = data.cloud_backups || [];
   return cloud_backups.map(backup => (
     <Button
@@ -172,7 +172,7 @@ export const NaniteCloudBackupList = (props, context) => {
 };
 
 export const NaniteCloudBackupDetails = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     current_view,
     disk,
@@ -270,7 +270,7 @@ export const NaniteCloudBackupDetails = (props, context) => {
 };
 
 export const NaniteCloudControl = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     has_disk,
     current_view,

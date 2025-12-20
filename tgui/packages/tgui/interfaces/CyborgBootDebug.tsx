@@ -34,7 +34,7 @@ const TOOLTIP_LAWSYNC = multiline`
 `;
 
 export const CyborgBootDebug = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     designation,
     master,

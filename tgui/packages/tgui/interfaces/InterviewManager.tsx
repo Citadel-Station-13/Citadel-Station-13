@@ -3,7 +3,7 @@ import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
 export const InterviewManager = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     open_interviews,
     closed_interviews,

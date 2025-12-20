@@ -51,7 +51,7 @@ export const BodyEntry = (props, context) => {
 };
 
 export const SlimeBodySwapper = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     bodies = [],
   } = data;

@@ -3,7 +3,7 @@ import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs, ProgressBar } fr
 import { Window } from '../layouts';
 
 export const Limbgrower = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     reagents = [],
     total_reagents,

@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 
 const ConfigureNumberEntry = (props, context) => {
   const { name, value, module_ref } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <NumberInput
       value={value}
@@ -24,7 +24,7 @@ const ConfigureNumberEntry = (props, context) => {
 
 const ConfigureBoolEntry = (props, context) => {
   const { name, value, module_ref } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <Button.Checkbox
       checked={value}
@@ -40,7 +40,7 @@ const ConfigureBoolEntry = (props, context) => {
 
 const ConfigureColorEntry = (props, context) => {
   const { name, value, module_ref } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <>
       <Button
@@ -58,7 +58,7 @@ const ConfigureColorEntry = (props, context) => {
 
 const ConfigureListEntry = (props, context) => {
   const { name, value, values, module_ref } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<any>();
   return (
     <Dropdown
       displayText={value}
@@ -394,7 +394,7 @@ const LockedInterface = () => (
 );
 
 const LockedModule = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Dimmer>
       <Stack>
@@ -455,7 +455,7 @@ const displayText = (param) => {
 };
 
 const ParametersSection = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     active,
     malfunctioning,
@@ -519,7 +519,7 @@ const ParametersSection = (props, context) => {
 };
 
 const HardwareSection = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     active,
     control,
@@ -572,7 +572,7 @@ const HardwareSection = (props, context) => {
 };
 
 const InfoSection = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { active, modules } = data;
   const info_modules = modules.filter((module) => !!module.id);
 
@@ -595,7 +595,7 @@ const InfoSection = (props, context) => {
 };
 
 const ModuleSection = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { complexity_max, modules } = data;
   const [configureState, setConfigureState] = useLocalState(
     context,
@@ -722,7 +722,7 @@ const ModuleSection = (props, context) => {
 };
 
 export const MODsuit = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { ui_theme, interface_break } = data;
   return (
     <Window

@@ -43,7 +43,7 @@ export const ShuttleManipulator = (props, context) => {
 };
 
 export const ShuttleManipulatorStatus = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const shuttles = data.shuttles || [];
   return (
     <Section>
@@ -100,7 +100,7 @@ export const ShuttleManipulatorStatus = (props, context) => {
 };
 
 export const ShuttleManipulatorTemplates = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const templateObject = data.templates || {};
   const selected = data.selected || {};
   const [
@@ -168,7 +168,7 @@ export const ShuttleManipulatorTemplates = (props, context) => {
 };
 
 export const ShuttleManipulatorModification = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const selected = data.selected || {};
   const existingShuttle = data.existing_shuttle || {};
   return (

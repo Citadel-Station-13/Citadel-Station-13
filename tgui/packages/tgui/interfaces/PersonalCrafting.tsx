@@ -3,7 +3,7 @@ import { Button, Dimmer, Flex, Icon, LabeledList, Section, Tabs } from 'tgui-cor
 import { Window } from '../layouts';
 
 export const PersonalCrafting = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     busy,
     display_craftable_only,
@@ -115,7 +115,7 @@ const CraftingList = (props, context) => {
   const {
     craftables = [],
   } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     craftability = {},
     display_compact,

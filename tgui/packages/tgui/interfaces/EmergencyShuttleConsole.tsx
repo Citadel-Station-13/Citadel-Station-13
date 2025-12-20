@@ -3,7 +3,7 @@ import { Box, Button, Grid, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const EmergencyShuttleConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     timer_str,
     enabled,

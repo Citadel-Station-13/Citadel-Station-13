@@ -4,7 +4,7 @@ import { AnimatedNumber, Box, Button, LabeledList, NoticeBox, Section } from 'tg
 import { Window } from '../layouts';
 
 export const ExosuitControlConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     mechs = [],
   } = data;

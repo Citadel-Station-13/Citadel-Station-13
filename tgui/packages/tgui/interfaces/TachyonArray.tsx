@@ -3,7 +3,7 @@ import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from 'tgui-core/c
 import { Window } from '../layouts';
 
 export const TachyonArray = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     records = [],
     is_research,
@@ -40,7 +40,7 @@ export const TachyonArray = (props, context) => {
 };
 
 export const TachyonArrayContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     records = [],
   } = data;

@@ -7,7 +7,7 @@ import { useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 export const AnnouncementHelp = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const { vox_types = {} } = data;
 
   const [

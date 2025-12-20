@@ -3,7 +3,7 @@ import { Box, Button, Grid, LabeledList, NumberInput, Section } from 'tgui-core/
 import { Window } from '../layouts';
 
 export const Bepis = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     amount,
   } = data;

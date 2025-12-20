@@ -5,7 +5,7 @@ import { Box, Button, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const ForbiddenLore = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     charges, total_sacs,
   } = data;

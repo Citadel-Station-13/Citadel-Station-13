@@ -5,7 +5,7 @@ import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from "../c
 import { Window } from "../layouts";
 
 export const Stack = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     amount,
@@ -63,7 +63,7 @@ export const Stack = (props, context) => {
 };
 
 const RecipeList = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     recipes,
@@ -103,7 +103,7 @@ const buildMultiplier = (recipe, amount) => {
 };
 
 const Multipliers = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     recipe,
@@ -145,7 +145,7 @@ const Multipliers = (props, context) => {
 };
 
 const Recipe = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
 
   const {
     amount,

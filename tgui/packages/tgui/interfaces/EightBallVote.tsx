@@ -4,7 +4,7 @@ import { toTitleCase } from 'common/string';
 import { Window } from '../layouts';
 
 export const EightBallVote = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     shaking,
   } = data;
@@ -26,7 +26,7 @@ export const EightBallVote = (props, context) => {
 };
 
 const EightBallVoteQuestion = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     question,
     answers = [],

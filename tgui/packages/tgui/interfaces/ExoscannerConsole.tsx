@@ -23,7 +23,7 @@ type ScanData = {
 }
 
 const ScanFailedModal = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   return (
     <Modal>
       <Flex direction="column">

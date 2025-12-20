@@ -3,7 +3,7 @@ import { Box, Button, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-
 import { NtosWindow } from '../layouts';
 
 export const NtosNetMonitor = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     ntnetrelays,
     ntnetstatus,

@@ -32,7 +32,7 @@ export const ProgressSwitch = param => {
 };
 
 export const NtosCyborgRemoteMonitorContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
   const {
     card,
