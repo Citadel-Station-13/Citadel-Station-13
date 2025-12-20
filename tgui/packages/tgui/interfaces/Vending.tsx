@@ -3,7 +3,7 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, Input, Section, Table } from '../components';
+import { Box, Button, Icon, Input, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 type VendingData = {

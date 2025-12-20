@@ -6,7 +6,7 @@
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button } from '../components';
+import { Box, Button } from 'tgui-core/components';
 import { Window } from './Window';
 
 export const NtosWindow = (props, context) => {

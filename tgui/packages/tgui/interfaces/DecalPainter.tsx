@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, ColorBox, Flex, Section } from '../components';
+import { Button, ColorBox, Flex, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 type DecalInfo = {

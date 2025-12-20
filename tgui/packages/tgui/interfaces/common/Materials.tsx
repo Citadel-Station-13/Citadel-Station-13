@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { Box, Button, NumberInput, Flex } from '../../components';
+import { Box, Button, NumberInput, Flex } from 'tgui-core/components';
 import { classes } from 'common/react';
 import { formatMoney, formatSiUnit } from '../../format';
 import { useSharedState } from '../../backend';

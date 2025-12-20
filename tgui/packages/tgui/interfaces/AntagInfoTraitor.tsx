@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { multiline } from 'common/string';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
+import { BlockQuote, Button, Dimmer, Section, Stack } from 'tgui-core/components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 

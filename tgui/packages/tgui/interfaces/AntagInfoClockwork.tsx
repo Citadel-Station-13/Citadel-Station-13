@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Section, Stack } from '../components';
+import { Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 interface Info {

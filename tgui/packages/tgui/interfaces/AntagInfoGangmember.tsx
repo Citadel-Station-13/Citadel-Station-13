@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Icon, Section, Stack } from '../components';
+import { BlockQuote, Icon, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 type Info = {
