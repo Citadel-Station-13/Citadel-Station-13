@@ -10,7 +10,7 @@ export const ChemMaster = (props) => {
     <Window
       width={465}
       height={550}
-      resizable>
+      >
       <Window.Content scrollable>
         {screen === 'analyze' && (
           <AnalysisResults />

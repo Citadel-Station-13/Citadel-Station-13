@@ -7,7 +7,7 @@ export const Colormate = (props) => {
   const { activemode, temp } = data;
   const item = data.item || [];
   return (
-    <Window width="980" height="720" resizable>
+    <Window width="980" height="720" >
       <Window.Content overflow="auto">
         <Section>
           {temp ? (

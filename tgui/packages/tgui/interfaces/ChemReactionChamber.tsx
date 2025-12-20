@@ -20,7 +20,7 @@ export const ChemReactionChamber = (props) => {
     <Window
       width={250}
       height={225}
-      resizable>
+      >
       <Window.Content scrollable>
         <Section
           title="Reagents"

@@ -32,7 +32,7 @@ export const OperatingComputer = (props) => {
     <Window
       width={350}
       height={470}
-      resizable>
+      >
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab

@@ -80,7 +80,7 @@ export const DnaConsole = (props) => {
       title="DNA Console"
       width={539}
       height={710}
-      resizable>
+      >
       {!!isPulsingRads && (
         <Dimmer
           fontSize="14px"

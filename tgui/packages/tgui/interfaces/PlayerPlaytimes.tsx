@@ -12,7 +12,7 @@ export const PlayerPlaytimes = (props) => {
       title="Player Playtimes"
       width={600}
       height={700}
-      resizable>
+      >
       <Window.Content scrollable>
         <Section>
           <Table>

@@ -230,7 +230,7 @@ export const NaniteProgrammer = (props) => {
     <Window
       width={420}
       height={550}
-      resizable>
+      >
       <Window.Content scrollable>
         <NaniteProgrammerContent />
       </Window.Content>

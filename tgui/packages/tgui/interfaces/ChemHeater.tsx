@@ -20,7 +20,7 @@ export const ChemHeater = (props) => {
     <Window
       width={300}
       height={320}
-      resizable>
+      >
       <Window.Content scrollable>
         <Section
           title="Thermostat"

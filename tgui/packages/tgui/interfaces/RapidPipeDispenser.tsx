@@ -75,7 +75,7 @@ export const RapidPipeDispenser = (props) => {
     <Window
       width={425}
       height={515}
-      resizable>
+      >
       <Window.Content scrollable>
         <Section>
           <LabeledList>

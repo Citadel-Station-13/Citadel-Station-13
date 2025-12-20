@@ -8,7 +8,7 @@ export const NaniteChamberControl = (props) => {
     <Window
       width={380}
       height={570}
-      resizable>
+      >
       <Window.Content scrollable>
         <NaniteChamberControlContent />
       </Window.Content>

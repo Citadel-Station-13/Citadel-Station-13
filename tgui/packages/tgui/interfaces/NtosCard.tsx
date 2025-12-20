@@ -9,7 +9,7 @@ export const NtosCard = (props) => {
     <NtosWindow
       width={450}
       height={520}
-      resizable>
+      >
       <NtosWindow.Content scrollable>
         <NtosCardContent />
       </NtosWindow.Content>

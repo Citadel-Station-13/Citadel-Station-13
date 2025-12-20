@@ -730,7 +730,7 @@ export const MODsuit = (props) => {
       height={525}
       theme={ui_theme}
       title="MOD Interface Panel"
-      resizable>
+      >
       <Window.Content scrollable={!interface_break}>
         {(!!interface_break && <LockedInterface />) || (
           <Stack vertical fill>

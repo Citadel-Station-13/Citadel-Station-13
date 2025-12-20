@@ -71,7 +71,7 @@ export const TelecommsPDALog = (props) => {
   }
 
   return (
-    <Window theme="ntos" resizable>
+    <Window theme="ntos" >
       <Window.Content scrollable>
         <Fragment>
           {!!notice && (

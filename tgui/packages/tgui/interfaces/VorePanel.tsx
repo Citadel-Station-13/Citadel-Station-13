@@ -35,7 +35,7 @@ const digestModeToPreyMode = {
 export const VorePanel = (props) => {
   const { act, data } = useBackend<any>();
   return (
-    <Window width={700} height={660} theme="abstract" resizable>
+    <Window width={700} height={660} theme="abstract" >
       <Window.Content scrollable>
         {data.unsaved_changes && (
           <NoticeBox danger>

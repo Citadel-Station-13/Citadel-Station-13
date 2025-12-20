@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Icon, Section } from 'tgui-core/components';
 import { Window } from "../layouts";
 
-export const Safe = (properties, context) => {
+export const Safe = (props) => {
   const { act, data } = useBackend<any>();
   const {
     dial,
@@ -52,7 +52,7 @@ export const Safe = (properties, context) => {
   );
 };
 
-const Dialer = (properties, context) => {
+const Dialer = (props) => {
   const { act, data } = useBackend<any>();
   const {
     dial,
@@ -97,7 +97,7 @@ const Dialer = (properties, context) => {
   );
 };
 
-const Contents = (properties, context) => {
+const Contents = (props) => {
   const { act, data } = useBackend<any>();
   const {
     contents,
@@ -129,7 +129,7 @@ const Contents = (properties, context) => {
   );
 };
 
-const Help = (properties, context) => {
+const Help = (props) => {
   return (
     <Section
       className="Safe__help"

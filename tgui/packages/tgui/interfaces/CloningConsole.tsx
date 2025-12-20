@@ -19,7 +19,7 @@ export const CloningConsole = (props) => {
   const diskData = data.diskData || [];
   const records = data.records || [];
   return (
-    <Window width="400" height="600" resizable>
+    <Window width="400" height="600" >
       <Window.Content scrollable>
         {useRecords ? (
           <Section
