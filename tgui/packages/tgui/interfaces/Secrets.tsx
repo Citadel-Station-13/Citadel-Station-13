@@ -550,7 +550,7 @@ export const Secrets = (props) => {
   const [
     tabIndex,
     setTabIndex,
-  ] = useLocalState(context, 'tab-index', 2);
+  ] = useLocalState( 'tab-index', 2);
   const TabComponent = TAB2NAME[tabIndex-1].component();
   return (
     <Window

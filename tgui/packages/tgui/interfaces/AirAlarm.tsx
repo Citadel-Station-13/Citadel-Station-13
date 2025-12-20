@@ -115,7 +115,7 @@ const AIR_ALARM_ROUTES = {
 };
 
 const AirAlarmControl = (props) => {
-  const [screen, setScreen] = useLocalState(context, 'screen');
+  const [screen, setScreen] = useLocalState( 'screen');
   const route = AIR_ALARM_ROUTES[screen] || AIR_ALARM_ROUTES.home;
   const Component = route.component();
   return (
@@ -138,7 +138,7 @@ const AirAlarmControl = (props) => {
 
 const AirAlarmControlHome = (props) => {
   const { act, data } = useBackend<any>();
-  const [screen, setScreen] = useLocalState(context, 'screen');
+  const [screen, setScreen] = useLocalState( 'screen');
   const {
     mode,
     atmos_alarm,

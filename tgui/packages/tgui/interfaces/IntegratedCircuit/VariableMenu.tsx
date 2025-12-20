@@ -20,8 +20,8 @@ export const VariableMenu = (props) => {
     ...rest
   } = props;
 
-  const [name, setName] = useLocalState(context, "variable_name", null);
-  const [type, setType] = useLocalState(context, "variable_type", types[1]);
+  const [name, setName] = useLocalState( "variable_name", null);
+  const [type, setType] = useLocalState( "variable_type", types[1]);
 
   return (
     <Section

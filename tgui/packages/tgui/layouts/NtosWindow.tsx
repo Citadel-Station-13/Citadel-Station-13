@@ -9,7 +9,7 @@ import { useBackend } from '../backend';
 import { Box, Button } from 'tgui-core/components';
 import { Window } from './Window';
 
-export const NtosWindow = (props, context) => {
+export const NtosWindow = (props) => {
   const {
     title,
     width = 575,
@@ -17,7 +17,7 @@ export const NtosWindow = (props, context) => {
     theme = 'ntos',
     children,
   } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<any>();
   const {
     PC_device_theme,
     PC_batteryicon,

@@ -10,7 +10,7 @@ import { Window } from '../layouts';
 const getOutfitKey = outfit => outfit.path || outfit.ref;
 
 const useOutfitTabs = (context, categories) => {
-  return useLocalState(context, 'selected-tab', categories[0]);
+  return useLocalState( 'selected-tab', categories[0]);
 };
 
 export const SelectEquipment = (props) => {

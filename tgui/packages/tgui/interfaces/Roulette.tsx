@@ -160,7 +160,7 @@ export const RouletteBetTable = (props) => {
   const [
     customBet,
     setCustomBet,
-  ] = useLocalState(context, 'customBet', 500);
+  ] = useLocalState( 'customBet', 500);
 
   let {
     BetType,

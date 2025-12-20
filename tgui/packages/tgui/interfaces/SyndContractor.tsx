@@ -272,7 +272,7 @@ export const StatusPane = (props) => {
 };
 
 export const SyndPane = (props) => {
-  const [tab, setTab] = useLocalState(context, 'tab', 1);
+  const [tab, setTab] = useLocalState( 'tab', 1);
   return (
     <>
       <StatusPane state={props.state} />

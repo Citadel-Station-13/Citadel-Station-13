@@ -4,7 +4,7 @@ import { Button, Flex, LabeledList, Section, Table, Tabs } from 'tgui-core/compo
 import { Window } from '../layouts';
 
 export const ShuttleManipulator = (props) => {
-  const [tab, setTab] = useLocalState(context, 'tab', 1);
+  const [tab, setTab] = useLocalState( 'tab', 1);
   return (
     <Window
       title="Shuttle Manipulator"
@@ -106,7 +106,7 @@ export const ShuttleManipulatorTemplates = (props) => {
   const [
     selectedTemplateId,
     setSelectedTemplateId,
-  ] = useLocalState(context, 'templateId', Object.keys(templateObject)[0]);
+  ] = useLocalState( 'templateId', Object.keys(templateObject)[0]);
   const actualTemplates = templateObject[selectedTemplateId]?.templates || [];
   return (
     <Section>

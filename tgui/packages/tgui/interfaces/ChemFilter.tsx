@@ -48,8 +48,8 @@ export const ChemFilter = (props) => {
     left = [],
     right = [],
   } = data;
-  const [leftName, setLeftName] = useLocalState(context, 'leftName', '');
-  const [rightName, setRightName] = useLocalState(context, 'rightName', '');
+  const [leftName, setLeftName] = useLocalState( 'leftName', '');
+  const [rightName, setRightName] = useLocalState( 'rightName', '');
   return (
     <Window
       width={500}

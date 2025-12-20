@@ -41,7 +41,7 @@ export const ClockworkSlab = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState(context, 'searchText', '');
+  ] = useLocalState( 'searchText', '');
 
   const testSearch = createSearch(searchText, script => {
     return script.name + script.descname;

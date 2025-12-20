@@ -181,7 +181,7 @@ export const Vending = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState(context, 'searchText', '');
+  ] = useLocalState( 'searchText', '');
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {

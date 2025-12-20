@@ -48,7 +48,7 @@ const MessageModal = (props) => {
   const { data } = useBackend<any>();
   const { maxMessageLength } = data;
 
-  const [input, setInput] = useLocalState(context, props.label, "");
+  const [input, setInput] = useLocalState( props.label, "");
 
   const longEnough = props.minLength === undefined
     || input.length >= props.minLength;
@@ -200,8 +200,8 @@ const PageChangingStatus = (props) => {
   const { act, data } = useBackend<any>();
   const { maxStatusLineLength } = data;
 
-  const [lineOne, setLineOne] = useLocalState(context, "lineOne", data.lineOne);
-  const [lineTwo, setLineTwo] = useLocalState(context, "lineTwo", data.lineTwo);
+  const [lineOne, setLineOne] = useLocalState( "lineOne", data.lineOne);
+  const [lineTwo, setLineTwo] = useLocalState( "lineTwo", data.lineTwo);
 
   return (
     <Box>
@@ -332,7 +332,7 @@ const PageMain = (props) => {
   const [
     [showAlertLevelConfirm, confirmingAlertLevelTick],
     setShowAlertLevelConfirm,
-  ] = useLocalState(context, "showConfirmPrompt", [null, null]);
+  ] = useLocalState( "showConfirmPrompt", [null, null]);
 
   return (
     <Box>

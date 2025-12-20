@@ -18,7 +18,7 @@ export const FishCatalog = (props) => {
   const [
     currentFish,
     setCurrentFish,
-  ] = useLocalState(context, 'currentFish', null);
+  ] = useLocalState( 'currentFish', null);
   return (
     <Window
       width={500}
