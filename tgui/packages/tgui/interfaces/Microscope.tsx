@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 
 export const Microscope = (props) => {
   const { act, data } = useBackend<any>();
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+  const [tab, setTab] = useSharedState('tab', 1);
   const {
     has_dish,
     cell_lines = [],

@@ -32,7 +32,7 @@ export const ClockworkSlab = (props) => {
   const [
     tab,
     setTab,
-  ] = useSharedState(context, 'tab', 'Application');
+  ] = useSharedState('tab', 'Application');
 
   const tierInfo = tier_infos
   && tier_infos[tab]
@@ -41,7 +41,7 @@ export const ClockworkSlab = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState( 'searchText', '');
+  ] = useLocalState('searchText', '');
 
   const testSearch = createSearch(searchText, script => {
     return script.name + script.descname;

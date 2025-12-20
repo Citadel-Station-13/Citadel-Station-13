@@ -14,7 +14,7 @@ const directionToIcon = {
 };
 
 export const BluespaceLocator = (props) => {
-  const [tab, setTab] = useSharedState(context, "tab", "implant");
+  const [tab, setTab] = useSharedState("tab", "implant");
   return (
     <Window
       width={300}

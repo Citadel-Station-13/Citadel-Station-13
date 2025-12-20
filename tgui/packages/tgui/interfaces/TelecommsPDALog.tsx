@@ -24,7 +24,7 @@ export const TelecommsPDALog = (props) => {
   const [
     tab,
     setTab,
-  ] = useSharedState(context, 'tab', 'pdalog-servers');
+  ] = useSharedState('tab', 'pdalog-servers');
   const valid = (selected && selected.status && authenticated);
   if (hack_status) {
     return ( // should have used en -> jp unicode -> other encoding method->utf8

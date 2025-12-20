@@ -237,7 +237,7 @@ const PartLists = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useSharedState(context, "search_text", "");
+  ] = useSharedState("search_text", "");
 
   if (!selectedPartTab || !buildableParts[selectedPartTab]) {
     const validSet = getFirstValidPartSet(partSets);
@@ -325,7 +325,7 @@ const PartCategory = (props) => {
   } = props;
   const [
     displayMatCost,
-  ] = useSharedState(context, 'display_mats', false);
+  ] = useSharedState('display_mats', false);
   if (!forceShow && parts.length === 0) {
     return null;
   }

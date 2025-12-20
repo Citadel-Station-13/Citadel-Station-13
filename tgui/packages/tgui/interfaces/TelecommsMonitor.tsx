@@ -22,7 +22,7 @@ export const TelecommsMonitor = (props) => {
   const [
     tab,
     setTab,
-  ] = useSharedState(context, 'tab', 'network-entity');
+  ] = useSharedState('tab', 'network-entity');
   const operational = (selected && selected.status);
 
   return (

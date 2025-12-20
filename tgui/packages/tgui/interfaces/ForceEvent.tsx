@@ -84,7 +84,7 @@ export const PanelOptions = (props) => {
     ''
   );
 
-  const [announce, setAnnounce] = useLocalState( 'announce', true);
+  const [announce, setAnnounce] = useLocalState('announce', true);
 
   return (
     <Stack width="240px">
@@ -113,12 +113,12 @@ export const PanelOptions = (props) => {
 };
 
 export const EventSection = (props) => {
-  const { data, act } = useBackend<ForceEventData>(context);
+  const { data, act } = useBackend<ForceEventData>();
   const { categories, events } = data;
 
-  const [category] = useLocalState( 'category', categories[0]);
-  const [searchQuery] = useLocalState( 'searchQuery', '');
-  const [announce] = useLocalState( 'announce', true);
+  const [category] = useLocalState('category', categories[0]);
+  const [searchQuery] = useLocalState('searchQuery', '');
+  const [announce] = useLocalState('announce', true);
 
   const preparedEvents = paginateEvents(
     events.filter((event) => {
@@ -166,7 +166,7 @@ export const EventSection = (props) => {
 };
 
 export const EventTabs = (props) => {
-  const { data } = useBackend<ForceEventData>(context);
+  const { data } = useBackend<ForceEventData>();
   const { categories } = data;
 
   const [category, setCategory] = useLocalState(

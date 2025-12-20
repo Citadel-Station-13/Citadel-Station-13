@@ -40,7 +40,7 @@ const ScanFailedModal = (props) => {
 };
 
 const ScanSelectionSection = (props) => {
-  const { act, data } = useBackend<ScanData>(context);
+  const { act, data } = useBackend<ScanData>();
   const {
     scan_power,
     point_scan_eta,
@@ -139,7 +139,7 @@ type ScanInProgressData = {
 }
 
 const ScanInProgressModal = (props) => {
-  const { act, data } = useBackend<ScanInProgressData>(context);
+  const { act, data } = useBackend<ScanInProgressData>();
   const {
     scan_time,
     scan_power,
@@ -188,7 +188,7 @@ type ExoscannerConsoleData = {
 }
 
 export const ExoscannerConsole = (props) => {
-  const { act, data } = useBackend<ExoscannerConsoleData>(context);
+  const { act, data } = useBackend<ExoscannerConsoleData>();
   const {
     scan_in_progress,
     scan_power,

@@ -94,7 +94,7 @@ export const CameraConsoleContent = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState( 'searchText', '');
+  ] = useLocalState('searchText', '');
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
   return (

@@ -17,7 +17,7 @@ export const Autolathe = (props) => {
   const [
     current_category,
     setCategory,
-  ] = useLocalState( 'current_category', "None");
+  ] = useLocalState('current_category', "None");
   const filteredmaterials = materials.filter(material =>
     material.mineral_amount > 0);
   return (

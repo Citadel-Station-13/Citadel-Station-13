@@ -10,7 +10,7 @@ type Info = {
 };
 
 export const AntagInfoGangmember = (props) => {
-  const { data } = useBackend<Info>(context);
+  const { data } = useBackend<Info>();
   const {
     gang_name,
     antag_name,
@@ -57,7 +57,7 @@ export const AntagInfoGangmember = (props) => {
 };
 
 const GangClothesPrintout = (props) => {
-  const { data } = useBackend<Info>(context);
+  const { data } = useBackend<Info>();
   const {
     gang_name,
     gang_clothes,
@@ -118,7 +118,7 @@ const GangPhonePrintout = () => {
 
 
 const GangObjectivePrintout = (props) => {
-  const { data } = useBackend<Info>(context);
+  const { data } = useBackend<Info>();
   const {
     gang_objective,
   } = data;

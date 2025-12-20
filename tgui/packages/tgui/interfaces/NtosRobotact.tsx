@@ -19,8 +19,8 @@ export const NtosRobotact = (props) => {
 
 export const NtosRobotactContent = (props) => {
   const { act, data } = useBackend<any>();
-  const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
-  const [tab_sub, setTab_sub] = useSharedState(context, 'tab_sub', 1);
+  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
+  const [tab_sub, setTab_sub] = useSharedState('tab_sub', 1);
   const {
     charge,
     maxcharge,

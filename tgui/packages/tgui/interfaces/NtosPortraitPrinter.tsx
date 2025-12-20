@@ -5,8 +5,8 @@ import { NtosWindow } from '../layouts';
 
 export const NtosPortraitPrinter = (props) => {
   const { act, data } = useBackend<any>();
-  const [tabIndex, setTabIndex] = useLocalState( 'tabIndex', 0);
-  const [listIndex, setListIndex] = useLocalState( 'listIndex', 0);
+  const [tabIndex, setTabIndex] = useLocalState('tabIndex', 0);
+  const [listIndex, setListIndex] = useLocalState('listIndex', 0);
   const {
     library,
     library_secure,

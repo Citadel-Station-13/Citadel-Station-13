@@ -20,7 +20,7 @@ export const TelecommsLogBrowser = (props) => {
   const [
     tab,
     setTab,
-  ] = useSharedState(context, 'tab', 'servers');
+  ] = useSharedState('tab', 'servers');
   const operational = (selected && selected.status);
   return (
     <Window

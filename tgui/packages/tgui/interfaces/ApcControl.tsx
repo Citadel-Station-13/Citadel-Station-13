@@ -44,7 +44,7 @@ const ApcLoggedIn = (props) => {
   const [
     tabIndex,
     setTabIndex,
-  ] = useLocalState( 'tab-index', 1);
+  ] = useLocalState('tab-index', 1);
   return (
     <>
       <Tabs>
@@ -101,7 +101,7 @@ const ControlPanel = (props) => {
   const [
     sortByField,
     setSortByField,
-  ] = useLocalState( 'sortByField', null);
+  ] = useLocalState('sortByField', null);
   return (
     <Flex>
       <Flex.Item>
@@ -153,7 +153,7 @@ const ApcControlScene = (props) => {
 
   const [
     sortByField,
-  ] = useLocalState( 'sortByField', null);
+  ] = useLocalState('sortByField', null);
 
   const apcs = flow([
     map((apc, i) => ({

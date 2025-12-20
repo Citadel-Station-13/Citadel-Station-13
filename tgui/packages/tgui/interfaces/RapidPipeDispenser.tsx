@@ -67,7 +67,7 @@ export const RapidPipeDispenser = (props) => {
   const [
     categoryName,
     setCategoryName,
-  ] = useLocalState( 'categoryName');
+  ] = useLocalState('categoryName');
   const shownCategory = categories
     .find(category => category.cat_name === categoryName)
     || categories[0];

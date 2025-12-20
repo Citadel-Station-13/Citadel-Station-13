@@ -19,7 +19,7 @@ export const NtosCard = (props) => {
 
 export const NtosCardContent = (props) => {
   const { act, data } = useBackend<any>();
-  const [tab, setTab] = useLocalState( 'tab', 1);
+  const [tab, setTab] = useLocalState('tab', 1);
   const {
     authenticated,
     regions = [],
@@ -35,7 +35,7 @@ export const NtosCardContent = (props) => {
   const [
     selectedDepartment,
     setSelectedDepartment,
-  ] = useLocalState( 'department', Object.keys(jobs)[0]);
+  ] = useLocalState('department', Object.keys(jobs)[0]);
   if (!have_id_slot) {
     return (
       <NoticeBox>

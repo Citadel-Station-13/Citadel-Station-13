@@ -31,7 +31,7 @@ export const PowerMonitorContent = (props) => {
   const [
     sortByField,
     setSortByField,
-  ] = useLocalState( 'sortByField', null);
+  ] = useLocalState('sortByField', null);
   const supply = history.supply[history.supply.length - 1] || 0;
   const demand = history.demand[history.demand.length - 1] || 0;
   const supplyData = history.supply.map((value, i) => [i, value]);

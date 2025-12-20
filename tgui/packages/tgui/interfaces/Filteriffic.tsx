@@ -27,7 +27,7 @@ const FilterIntegerEntry = (props) => {
 const FilterFloatEntry = (props) => {
   const { value, name, filterName } = props;
   const { act } = useBackend<any>();
-  const [step, setStep] = useLocalState( `${filterName}-${name}`, 0.01);
+  const [step, setStep] = useLocalState(`${filterName}-${name}`, 0.01);
   return (
     <>
       <NumberInput
@@ -243,8 +243,8 @@ export const Filteriffic = (props) => {
   const filters = data.target_filter_data || {};
   const hasFilters = filters !== {};
   const filterDefaults = data["filter_info"];
-  const [massApplyPath, setMassApplyPath] = useLocalState( 'massApplyPath', '');
-  const [hiddenSecret, setHiddenSecret] = useLocalState( 'hidden', false);
+  const [massApplyPath, setMassApplyPath] = useLocalState('massApplyPath', '');
+  const [hiddenSecret, setHiddenSecret] = useLocalState('hidden', false);
   return (
     <Window
       title="Filteriffic"

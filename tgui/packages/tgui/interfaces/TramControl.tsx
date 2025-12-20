@@ -61,7 +61,7 @@ export const TramControl = (props) => {
   const [
     transitIndex,
     setTransitIndex,
-  ] = useLocalState( 'transit-index', 1);
+  ] = useLocalState('transit-index', 1);
   const MovingTramDimmer = () => {
     return (
       <Dimmer>

@@ -47,7 +47,7 @@ export const TachyonArrayContent = (props) => {
   const [
     activeRecordName,
     setActiveRecordName,
-  ] = useSharedState(context, 'record', records[0]?.name);
+  ] = useSharedState('record', records[0]?.name);
   const activeRecord = records.find(record => {
     return record.name === activeRecordName;
   });

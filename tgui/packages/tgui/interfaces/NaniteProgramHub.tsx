@@ -16,7 +16,7 @@ export const NaniteProgramHub = (props) => {
   const [
     selectedCategory,
     setSelectedCategory,
-  ] = useSharedState(context, 'category');
+  ] = useSharedState('category');
   const programsInCategory = programs
     && programs[selectedCategory]
     || [];

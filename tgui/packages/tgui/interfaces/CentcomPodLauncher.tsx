@@ -13,7 +13,7 @@ const pod_grey = {
 };
 
 const useCompact = context => {
-  const [compact, setCompact] = useLocalState( 'compact', false);
+  const [compact, setCompact] = useLocalState('compact', false);
   const toggleCompact = () => setCompact(!compact);
   return [compact, toggleCompact];
 };
@@ -415,7 +415,7 @@ const ViewTabHolder = (props) => {
   const [
     tabPageIndex,
     setTabPageIndex,
-  ] = useLocalState( 'tabPageIndex', 1);
+  ] = useLocalState('tabPageIndex', 1);
   const { mapRef } = data;
   const TabPageComponent = TABPAGES[tabPageIndex].component();
   return (
@@ -655,7 +655,7 @@ const ReverseMenu = (props) => {
   const [
     tabPageIndex,
     setTabPageIndex,
-  ] = useLocalState( 'tabPageIndex', 1);
+  ] = useLocalState('tabPageIndex', 1);
   return (
     <Section
       fill

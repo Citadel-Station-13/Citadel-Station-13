@@ -5,7 +5,7 @@ import { ShuttleConsoleContent } from './ShuttleConsole';
 
 export const AuxBaseConsole = (props) => {
   const { data } = useBackend<any>();
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+  const [tab, setTab] = useSharedState('tab', 1);
   const {
     type,
     blind_drop,

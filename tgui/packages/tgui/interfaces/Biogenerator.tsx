@@ -45,11 +45,11 @@ export const BiogeneratorContent = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState( 'searchText', '');
+  ] = useLocalState('searchText', '');
   const [
     selectedCategory,
     setSelectedCategory,
-  ] = useLocalState( 'category', categories[0]?.name);
+  ] = useLocalState('category', categories[0]?.name);
   const testSearch = createSearch(searchText, item => {
     return item.name;
   });
@@ -132,14 +132,14 @@ const ItemList = (props) => {
   const [
     hoveredItem,
     setHoveredItem,
-  ] = useLocalState( 'hoveredItem', {});
+  ] = useLocalState('hoveredItem', {});
   const hoveredCost = hoveredItem.cost || 0;
   // Append extra hover data to items
   const items = props.items.map(item => {
     const [
       amount,
       setAmount,
-    ] = useLocalState( "amount" + item.name, 1);
+    ] = useLocalState("amount" + item.name, 1);
     const notSameItem = hoveredItem.name !== item.name;
     const notEnoughHovered = props.biomass - hoveredCost
       * hoveredItem.amount < item.cost * amount;

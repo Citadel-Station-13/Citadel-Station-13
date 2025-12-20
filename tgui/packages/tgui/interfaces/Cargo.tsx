@@ -20,7 +20,7 @@ export const Cargo = (props) => {
 
 export const CargoContent = (props) => {
   const { act, data } = useBackend<any>();
-  const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
+  const [tab, setTab] = useSharedState('tab', 'catalog');
   const {
     requestonly,
   } = data;
@@ -137,7 +137,7 @@ export const CargoCatalog = (props) => {
   const [
     activeSupplyName,
     setActiveSupplyName,
-  ] = useSharedState(context, 'supply', supplies[0]?.name);
+  ] = useSharedState('supply', supplies[0]?.name);
   const activeSupply = supplies.find(supply => {
     return supply.name === activeSupplyName;
   });

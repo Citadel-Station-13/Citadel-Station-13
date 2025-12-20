@@ -25,7 +25,7 @@ type AdventureBrowserData = AdventureDataProvider & {
 };
 
 const AdventureEntry = (props) => {
-  const { data, act } = useBackend<AdventureBrowserData>(context);
+  const { data, act } = useBackend<AdventureBrowserData>();
   const { entry_ref, close }: { entry_ref: string, close: () => void } = props;
   const entry = data.adventures.find(x => x.ref === entry_ref);
   return (
@@ -58,11 +58,11 @@ const AdventureEntry = (props) => {
 };
 
 const AdventureList = (props) => {
-  const { data, act } = useBackend<AdventureBrowserData>(context);
+  const { data, act } = useBackend<AdventureBrowserData>();
   const [
     openAdventure,
     setOpenAdventure,
-  ] = useLocalState( 'openAdventure', null);
+  ] = useLocalState('openAdventure', null);
 
   return (
     <>
@@ -97,7 +97,7 @@ const AdventureList = (props) => {
 };
 
 const DebugPlayer = (props) => {
-  const { data, act } = useBackend<AdventureBrowserData>(context);
+  const { data, act } = useBackend<AdventureBrowserData>();
   return (
     <Section
       title="Playtest"
@@ -109,7 +109,7 @@ const DebugPlayer = (props) => {
 };
 
 export const AdventureBrowser = (props) => {
-  const { data } = useBackend<AdventureBrowserData>(context);
+  const { data } = useBackend<AdventureBrowserData>();
 
   return (
     <Window width={650} height={500} title="Adventure Manager">

@@ -67,7 +67,7 @@ type CustomInput = {
 }
 
 const VendingRow = (props) => {
-  const { act, data } = useBackend<VendingData>(context);
+  const { act, data } = useBackend<VendingData>();
   const {
     product,
     productStock,
@@ -169,7 +169,7 @@ const VendingRow = (props) => {
 };
 
 export const Vending = (props) => {
-  const { act, data } = useBackend<VendingData>(context);
+  const { act, data } = useBackend<VendingData>();
   const {
     user,
     onstation,
@@ -181,7 +181,7 @@ export const Vending = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState( 'searchText', '');
+  ] = useLocalState('searchText', '');
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {

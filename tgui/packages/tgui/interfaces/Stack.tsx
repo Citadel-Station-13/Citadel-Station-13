@@ -15,7 +15,7 @@ export const Stack = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState( 'searchText', '');
+  ] = useLocalState('searchText', '');
 
   const testSearch = createSearch(searchText, item => {
     return item;

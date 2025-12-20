@@ -54,7 +54,7 @@ const DirectionAbbreviation : Record<Direction, string> = {
 };
 
 const ConfigDisplay = (props) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
+  const { act, data } = useBackend<GreyscaleMenuData>();
   return (
     <Section title="Designs">
       <LabeledList>
@@ -74,7 +74,7 @@ const ConfigDisplay = (props) => {
 };
 
 const ColorDisplay = (props) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
+  const { act, data } = useBackend<GreyscaleMenuData>();
   const colors = (data.colors || []);
   return (
     <Section title="Colors">
@@ -124,7 +124,7 @@ const ColorDisplay = (props) => {
 };
 
 const PreviewCompassSelect = (props) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
+  const { act, data } = useBackend<GreyscaleMenuData>();
   return (
     <Box>
       <Stack vertical>
@@ -154,7 +154,7 @@ const PreviewCompassSelect = (props) => {
 
 const SingleDirection = (props) => {
   const { dir } = props;
-  const { data, act } = useBackend<GreyscaleMenuData>(context);
+  const { data, act } = useBackend<GreyscaleMenuData>();
   return (
     <Flex.Item grow={1} basis={0}>
       <Button
@@ -172,7 +172,7 @@ const SingleDirection = (props) => {
 };
 
 const IconStatesDisplay = (props) => {
-  const { data, act } = useBackend<GreyscaleMenuData>(context);
+  const { data, act } = useBackend<GreyscaleMenuData>();
   return (
     <Section title="Icon States">
       <Flex>
@@ -194,7 +194,7 @@ const IconStatesDisplay = (props) => {
 };
 
 const PreviewDisplay = (props) => {
-  const { data } = useBackend<GreyscaleMenuData>(context);
+  const { data } = useBackend<GreyscaleMenuData>();
   return (
     <Section title={`Preview (${data.sprites_dir})`}>
       <Table>
@@ -282,7 +282,7 @@ const LoadingAnimation = () => {
 };
 
 export const GreyscaleModifyMenu = (props) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
+  const { act, data } = useBackend<GreyscaleMenuData>();
   return (
     <Window
       title="Color Configuration"

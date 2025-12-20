@@ -223,27 +223,27 @@ const PackagingControls = (props) => {
   const [
     pillAmount,
     setPillAmount,
-  ] = useSharedState(context, 'pillAmount', 1);
+  ] = useSharedState('pillAmount', 1);
   const [
     patchAmount,
     setPatchAmount,
-  ] = useSharedState(context, 'patchAmount', 1);
+  ] = useSharedState('patchAmount', 1);
   const [
     bottleAmount,
     setBottleAmount,
-  ] = useSharedState(context, 'bottleAmount', 1);
+  ] = useSharedState('bottleAmount', 1);
   const [
     packAmount,
     setPackAmount,
-  ] = useSharedState(context, 'packAmount', 1);
+  ] = useSharedState('packAmount', 1);
   const [
     vialAmount,
     setvialAmount,
-  ] = useSharedState(context, 'setvialAmount', 1);
+  ] = useSharedState('setvialAmount', 1);
   const [
     dartAmount,
     setdartAmount,
-  ] = useSharedState(context, 'setdartAmount', 1);
+  ] = useSharedState('setdartAmount', 1);
   const {
     condi,
     chosenPillStyle,

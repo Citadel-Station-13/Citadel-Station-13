@@ -130,7 +130,7 @@ export const AntagInfoWizard = (props) => {
 };
 
 const ObjectivePrintout = (props) => {
-  const { data } = useBackend<Info>(context);
+  const { data } = useBackend<Info>();
   const {
     objectives,
   } = data;

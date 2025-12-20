@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 import { GenericUplink } from './Uplink';
 
 export const AbductorConsole = (props) => {
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+  const [tab, setTab] = useSharedState('tab', 1);
   return (
     <Window
       theme="abductor"

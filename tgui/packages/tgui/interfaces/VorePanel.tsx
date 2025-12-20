@@ -155,7 +155,7 @@ const VoreSelectedBelly = (props) => {
     contents,
   } = belly;
 
-  const [tabIndex, setTabIndex] = useLocalState( 'tabIndex', 0);
+  const [tabIndex, setTabIndex] = useLocalState('tabIndex', 0);
 
   return (
     <Fragment>

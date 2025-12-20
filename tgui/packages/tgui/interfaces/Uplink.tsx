@@ -37,11 +37,11 @@ export const GenericUplink = (props) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState( 'searchText', '');
+  ] = useLocalState('searchText', '');
   const [
     selectedCategory,
     setSelectedCategory,
-  ] = useLocalState( 'category', categories[0]?.name);
+  ] = useLocalState('category', categories[0]?.name);
   const testSearch = createSearch(searchText, item => {
     return item.name + item.desc;
   });
@@ -130,7 +130,7 @@ const ItemList = (props) => {
   const [
     hoveredItem,
     setHoveredItem,
-  ] = useLocalState( 'hoveredItem', {});
+  ] = useLocalState('hoveredItem', {});
   const hoveredCost = hoveredItem && hoveredItem.cost || 0;
   // Append extra hover data to items
   const items = props.items.map(item => {

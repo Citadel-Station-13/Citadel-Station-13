@@ -9,11 +9,11 @@ export const ChemReactionChamber = (props) => {
   const [
     reagentName,
     setReagentName,
-  ] = useLocalState( 'reagentName', '');
+  ] = useLocalState('reagentName', '');
   const [
     reagentQuantity,
     setReagentQuantity,
-  ] = useLocalState( 'reagentQuantity', 1);
+  ] = useLocalState('reagentQuantity', 1);
   const emptying = data.emptying;
   const reagents = data.reagents || [];
   return (
