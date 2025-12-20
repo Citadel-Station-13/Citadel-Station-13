@@ -8,7 +8,7 @@ export BYOND_MAJOR=516
 export BYOND_MINOR=1659
 
 #rust_g git tag
-export RUST_G_VERSION=3.0.0
+export RUST_G_VERSION=3.0.0-experimental-graph-ops
 
 #node version
 export NODE_VERSION_LTS=22.19.0
