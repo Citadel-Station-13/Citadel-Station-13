@@ -127,7 +127,7 @@ export const NtosNetMonitor = (props) => {
           </LabeledList>
           <Section
             title="System Log"
-            level={2}
+
             buttons={(
               <Button.Confirm
                 icon="trash"

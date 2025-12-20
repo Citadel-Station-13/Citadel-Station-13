@@ -180,7 +180,7 @@ export const Orbit = (props) => {
         {antagonists.length > 0 && (
           <Section title="Ghost-Visible Antagonists">
             {sortedAntagonists.map(([name, antags]) => (
-              <Section key={name} title={name} level={2}>
+              <Section key={name} title={name} >
                 {antags
                   .filter(searchFor(searchText))
                   .sort(compareNumberedText)

@@ -132,7 +132,7 @@ export const ShuttleManipulatorTemplates = (props) => {
             return (
               <Section
                 title={actualTemplate.name}
-                level={2}
+
                 key={actualTemplate.shuttle_id}
                 buttons={(
                   <Button
@@ -145,19 +145,19 @@ export const ShuttleManipulatorTemplates = (props) => {
                 {(!!actualTemplate.description
                   || !!actualTemplate.admin_notes
                 ) && (
-                  <LabeledList>
-                    {!!actualTemplate.description && (
-                      <LabeledList.Item label="Description">
-                        {actualTemplate.description}
-                      </LabeledList.Item>
-                    )}
-                    {!!actualTemplate.admin_notes && (
-                      <LabeledList.Item label="Admin Notes">
-                        {actualTemplate.admin_notes}
-                      </LabeledList.Item>
-                    )}
-                  </LabeledList>
-                )}
+                    <LabeledList>
+                      {!!actualTemplate.description && (
+                        <LabeledList.Item label="Description">
+                          {actualTemplate.description}
+                        </LabeledList.Item>
+                      )}
+                      {!!actualTemplate.admin_notes && (
+                        <LabeledList.Item label="Admin Notes">
+                          {actualTemplate.admin_notes}
+                        </LabeledList.Item>
+                      )}
+                    </LabeledList>
+                  )}
               </Section>
             );
           })}
@@ -176,7 +176,7 @@ export const ShuttleManipulatorModification = (props) => {
       {selected ? (
         <>
           <Section
-            level={2}
+
             title={selected.name}>
             {(!!selected.description || !!selected.admin_notes) && (
               <LabeledList>
@@ -195,7 +195,7 @@ export const ShuttleManipulatorModification = (props) => {
           </Section>
           {existingShuttle ? (
             <Section
-              level={2}
+
               title={'Existing Shuttle: ' + existingShuttle.name}>
               <LabeledList>
                 <LabeledList.Item
@@ -219,11 +219,11 @@ export const ShuttleManipulatorModification = (props) => {
             </Section>
           ) : (
             <Section
-              level={2}
+
               title="Existing Shuttle: None" />
           )}
           <Section
-            level={2}
+
             title="Status">
             <Button
               content="Load"

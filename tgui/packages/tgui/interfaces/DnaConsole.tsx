@@ -80,7 +80,7 @@ export const DnaConsole = (props) => {
       title="DNA Console"
       width={539}
       height={710}
-      >
+    >
       {!!isPulsingRads && (
         <Dimmer
           fontSize="14px"
@@ -406,28 +406,28 @@ const DnaConsoleStorage = (props) => {
       )}>
       {storageMode === STORAGE_MODE_CONSOLE
         && storageConsSubMode === STORAGE_CONS_SUBMODE_MUTATIONS && (
-        <StorageMutations mutations={mutations} />
-      )}
+          <StorageMutations mutations={mutations} />
+        )}
       {storageMode === STORAGE_MODE_CONSOLE
         && storageConsSubMode === STORAGE_CONS_SUBMODE_CHROMOSOMES && (
-        <StorageChromosomes />
-      )}
+          <StorageChromosomes />
+        )}
       {storageMode === STORAGE_MODE_DISK
         && storageDiskSubMode === STORAGE_DISK_SUBMODE_MUTATIONS && (
-        <StorageMutations mutations={mutations} />
-      )}
+          <StorageMutations mutations={mutations} />
+        )}
       {storageMode === STORAGE_MODE_DISK
         && storageDiskSubMode === STORAGE_DISK_SUBMODE_ENZYMES && (
-        <Fragment>
-          <GeneticMakeupInfo makeup={diskMakeupBuffer} />
-          <Button
-            icon="times"
-            color="red"
-            disabled={!diskHasMakeup}
-            content={'Delete'}
-            onClick={() => act('del_makeup_disk')} />
-        </Fragment>
-      )}
+          <Fragment>
+            <GeneticMakeupInfo makeup={diskMakeupBuffer} />
+            <Button
+              icon="times"
+              color="red"
+              disabled={!diskHasMakeup}
+              content={'Delete'}
+              onClick={() => act('del_makeup_disk')} />
+          </Fragment>
+        )}
       {storageMode === STORAGE_MODE_ADVINJ && (
         <DnaConsoleAdvancedInjectors />
       )}
@@ -459,7 +459,7 @@ const StorageMutations = (props) => {
       <Flex.Item width="140px">
         <Section
           title={`${capitalize(data.view.storageMode)} Storage`}
-          level={2}>
+        >
           {mutations.map(mutation => (
             <Button
               key={mutation.ByondRef}
@@ -480,7 +480,7 @@ const StorageMutations = (props) => {
       <Flex.Item grow={1} basis={0}>
         <Section
           title="Mutation Info"
-          level={2}>
+        >
           <MutationInfo
             mutation={mutation} />
         </Section>
@@ -500,7 +500,7 @@ const StorageChromosomes = (props) => {
       <Flex.Item width="140px">
         <Section
           title="Console Storage"
-          level={2}>
+        >
           {uniqueChromos.map(chromo => (
             <Button
               key={chromo.Index}
@@ -521,35 +521,35 @@ const StorageChromosomes = (props) => {
       <Flex.Item grow={1} basis={0}>
         <Section
           title="Chromosome Info"
-          level={2}>
+        >
           {!chromo && (
             <Box color="label">
               Nothing to show.
             </Box>
           ) || (
-            <Fragment>
-              <LabeledList>
-                <LabeledList.Item label="Name">
-                  {chromo.Name}
-                </LabeledList.Item>
-                <LabeledList.Item label="Description">
-                  {chromo.Description}
-                </LabeledList.Item>
-                <LabeledList.Item label="Amount">
-                  {chromos
-                    .filter(x => x.Name === chromo.Name)
-                    .length}
-                </LabeledList.Item>
-              </LabeledList>
-              <Button
-                mt={2}
-                icon="eject"
-                content={"Eject Chromosome"}
-                onClick={() => act('eject_chromo', {
-                  chromo: chromo.Name,
-                })} />
-            </Fragment>
-          )}
+              <Fragment>
+                <LabeledList>
+                  <LabeledList.Item label="Name">
+                    {chromo.Name}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Description">
+                    {chromo.Description}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Amount">
+                    {chromos
+                      .filter(x => x.Name === chromo.Name)
+                      .length}
+                  </LabeledList.Item>
+                </LabeledList>
+                <Button
+                  mt={2}
+                  icon="eject"
+                  content={"Eject Chromosome"}
+                  onClick={() => act('eject_chromo', {
+                    chromo: chromo.Name,
+                  })} />
+              </Fragment>
+            )}
         </Section>
       </Flex.Item>
     </Flex>
@@ -813,43 +813,43 @@ const DnaConsoleSequencer = (props) => {
           Genetic sequence corrupted. Subject diagnostic report: TRANSFORMING.
         </Section>
       ) || (
-        <Section
-          title="Genome Sequencer™"
-          buttons={(
-            !isJokerReady && (
-              <Box
-                lineHeight="20px"
-                color="label">
-                Joker on cooldown ({jokerSeconds}s)
-              </Box>
-            ) || jokerActive && (
-              <Fragment>
+          <Section
+            title="Genome Sequencer™"
+            buttons={(
+              !isJokerReady && (
                 <Box
-                  mr={1}
-                  inline
+                  lineHeight="20px"
                   color="label">
-                  Click on a gene to reveal it.
+                  Joker on cooldown ({jokerSeconds}s)
                 </Box>
+              ) || jokerActive && (
+                <Fragment>
+                  <Box
+                    mr={1}
+                    inline
+                    color="label">
+                    Click on a gene to reveal it.
+                  </Box>
+                  <Button
+                    content="Cancel Joker"
+                    onClick={() => act('set_view', {
+                      jokerActive: '',
+                    })} />
+                </Fragment>
+              ) || (
                 <Button
-                  content="Cancel Joker"
+                  icon="crown"
+                  color="purple"
+                  content="Use Joker"
                   onClick={() => act('set_view', {
-                    jokerActive: '',
+                    jokerActive: '1',
                   })} />
-              </Fragment>
-            ) || (
-              <Button
-                icon="crown"
-                color="purple"
-                content="Use Joker"
-                onClick={() => act('set_view', {
-                  jokerActive: '1',
-                })} />
-            )
-          )}>
-          <GenomeSequencer
-            mutation={mutation} />
-        </Section>
-      )}
+              )
+            )}>
+            <GenomeSequencer
+              mutation={mutation} />
+          </Section>
+        )}
     </Fragment>
   );
 };

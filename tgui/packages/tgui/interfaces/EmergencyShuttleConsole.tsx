@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button,  Section } from 'tgui-core/components';
+import { Box, Button, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { Grid } from '../components/Grid';
 
@@ -44,7 +44,7 @@ export const EmergencyShuttleConsole = (props) => {
           </Box>
           <Section
             title="Early Launch Authorization"
-            level={2}
+
             buttons={(
               <Button
                 icon="times"
@@ -75,7 +75,7 @@ export const EmergencyShuttleConsole = (props) => {
             </Grid>
             <Section
               title="Authorizations"
-              level={3}
+
               minHeight="150px"
               buttons={(
                 <Box

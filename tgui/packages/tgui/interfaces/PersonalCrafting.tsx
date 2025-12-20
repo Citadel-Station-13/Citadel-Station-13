@@ -154,7 +154,7 @@ const CraftingList = (props) => {
       <Section
         key={craftable.name}
         title={craftable.name}
-        level={2}
+
         buttons={(
           <Button
             icon="cog"

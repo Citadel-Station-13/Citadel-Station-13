@@ -9,7 +9,7 @@ export const NaniteCodes = (props) => {
   return (
     <Section
       title="Codes"
-      level={3}
+
       mr={1}>
       <LabeledList>
         <LabeledList.Item label="Activation">
@@ -69,7 +69,7 @@ export const NaniteDelays = (props) => {
   return (
     <Section
       title="Delays"
-      level={3}
+
       ml={1}>
       <LabeledList>
         <LabeledList.Item label="Restart Timer">
@@ -231,7 +231,7 @@ export const NaniteProgrammer = (props) => {
     <Window
       width={420}
       height={550}
-      >
+    >
       <Window.Content scrollable>
         <NaniteProgrammerContent />
       </Window.Content>
@@ -284,7 +284,7 @@ export const NaniteProgrammerContent = (props) => {
       )}>
       <Section
         title="Info"
-        level={2}>
+      >
         <Grid>
           <Grid.Column>
             {desc}
@@ -310,7 +310,7 @@ export const NaniteProgrammerContent = (props) => {
       </Section>
       <Section
         title="Settings"
-        level={2}
+
         buttons={(
           <Button
             icon={activated ? 'power-off' : 'times'}
@@ -331,7 +331,7 @@ export const NaniteProgrammerContent = (props) => {
         {!!has_extra_settings && (
           <Section
             title="Special"
-            level={3}>
+          >
             <LabeledList>
               {extra_settings.map(setting => (
                 <NaniteExtraEntry

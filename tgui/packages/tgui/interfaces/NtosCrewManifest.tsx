@@ -26,7 +26,7 @@ export const NtosCrewManifest = (props) => {
           {map((entries, department) => (
             <Section
               key={department}
-              level={2}
+
               title={department}>
               <Table>
                 {entries.map(entry => (

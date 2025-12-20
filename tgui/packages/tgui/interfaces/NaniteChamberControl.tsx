@@ -9,7 +9,7 @@ export const NaniteChamberControl = (props) => {
     <Window
       width={380}
       height={570}
-      >
+    >
       <Window.Content scrollable>
         <NaniteChamberControlContent />
       </Window.Content>
@@ -76,7 +76,7 @@ export const NaniteChamberControlContent = (props) => {
         <Fragment>
           <Section
             title="Status"
-            level={2}
+
             buttons={(
               <Button
                 icon="exclamation-triangle"
@@ -125,7 +125,7 @@ export const NaniteChamberControlContent = (props) => {
           </Section>
           <Section
             title="Programs"
-            level={2}>
+          >
             {mob_programs.map(program => {
               const extra_settings = program.extra_settings || [];
               const rules = program.rules || [];
@@ -143,7 +143,7 @@ export const NaniteChamberControlContent = (props) => {
                           <LabeledList>
                             <LabeledList.Item label="Activation Status">
                               <Box color={program.activated ? 'good' : 'bad'}>
-                                {program.activated ? 'Active' : 'Inactive' }
+                                {program.activated ? 'Active' : 'Inactive'}
                               </Box>
                             </LabeledList.Item>
                             <LabeledList.Item label="Nanites Consumed">
@@ -159,7 +159,7 @@ export const NaniteChamberControlContent = (props) => {
                           <Grid.Column>
                             <Section
                               title="Triggers"
-                              level={2}>
+                            >
                               <LabeledList>
                                 <LabeledList.Item label="Trigger Cost">
                                   {program.trigger_cost}
@@ -184,32 +184,32 @@ export const NaniteChamberControlContent = (props) => {
                         )}
                         {!!(program.timer_restart
                           || program.timer_shutdown) && (
-                          <Grid.Column>
-                            <Section>
-                              <LabeledList>
-                                {/* I mean, bruh, this indentation level
+                            <Grid.Column>
+                              <Section>
+                                <LabeledList>
+                                  {/* I mean, bruh, this indentation level
                                     is ABSOLUTELY INSANE!!! */}
-                                {program.timer_restart && (
-                                  <LabeledList.Item label="Restart Timer">
-                                    {program.timer_restart} s
-                                  </LabeledList.Item>
-                                )}
-                                {program.timer_shutdown && (
-                                  <LabeledList.Item label="Shutdown Timer">
-                                    {program.timer_shutdown} s
-                                  </LabeledList.Item>
-                                )}
-                              </LabeledList>
-                            </Section>
-                          </Grid.Column>
-                        )}
+                                  {program.timer_restart && (
+                                    <LabeledList.Item label="Restart Timer">
+                                      {program.timer_restart} s
+                                    </LabeledList.Item>
+                                  )}
+                                  {program.timer_shutdown && (
+                                    <LabeledList.Item label="Shutdown Timer">
+                                      {program.timer_shutdown} s
+                                    </LabeledList.Item>
+                                  )}
+                                </LabeledList>
+                              </Section>
+                            </Grid.Column>
+                          )}
                       </Grid>
                     )}
                     {scan_level >= 3 && (
                       !!program.has_extra_settings && (
                         <Section
                           title="Extra Settings"
-                          level={2}>
+                        >
                           <LabeledList>
                             {extra_settings.map(extra_setting => (
                               <LabeledList.Item
@@ -227,7 +227,7 @@ export const NaniteChamberControlContent = (props) => {
                         <Grid.Column>
                           <Section
                             title="Codes"
-                            level={2}>
+                          >
                             <LabeledList>
                               {!!program.activation_code && (
                                 <LabeledList.Item label="Activation">
@@ -246,10 +246,10 @@ export const NaniteChamberControlContent = (props) => {
                               )}
                               {!!program.can_trigger
                                 && !!program.trigger_code && (
-                                <LabeledList.Item label="Trigger">
-                                  {program.trigger_code}
-                                </LabeledList.Item>
-                              )}
+                                  <LabeledList.Item label="Trigger">
+                                    {program.trigger_code}
+                                  </LabeledList.Item>
+                                )}
                             </LabeledList>
                           </Section>
                         </Grid.Column>
@@ -257,7 +257,7 @@ export const NaniteChamberControlContent = (props) => {
                           <Grid.Column>
                             <Section
                               title="Rules"
-                              level={2}>
+                            >
                               {rules.map(rule => (
                                 <Fragment key={rule.display}>
                                   {rule.display}

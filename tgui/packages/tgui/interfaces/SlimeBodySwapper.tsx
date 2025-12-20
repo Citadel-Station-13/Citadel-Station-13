@@ -23,7 +23,7 @@ export const BodyEntry = (props) => {
           {body.name}
         </Box>
       )}
-      level={2}
+
       buttons={(
         <Button
           content={occupiedMap[body.occupied]}

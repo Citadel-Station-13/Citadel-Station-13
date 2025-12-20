@@ -171,7 +171,7 @@ export const TelecommsPDALog = (props) => {
                     `Server down! Logging and messaging
                     functionality unavailable!`
                   )
-                ):(
+                ) : (
                   'No server selected'
                 )}
               </LabeledList.Item>
@@ -284,7 +284,7 @@ export const TeleLogs = (props) => {
       </Button.Confirm>
       <Section
         title="Messages"
-        level={2}>
+      >
         {log_to_use?.map(message => (
           <Section key={message.ref}>
             <LabeledList>

@@ -24,7 +24,7 @@ export const NaniteProgramHub = (props) => {
     <Window
       width={500}
       height={700}
-      >
+    >
       <Window.Content scrollable>
         <Section
           title="Program Disk"
@@ -102,7 +102,7 @@ export const NaniteProgramHub = (props) => {
                     <Section
                       key={program.id}
                       title={program.name}
-                      level={2}
+
                       buttons={(
                         <Button
                           icon="download"

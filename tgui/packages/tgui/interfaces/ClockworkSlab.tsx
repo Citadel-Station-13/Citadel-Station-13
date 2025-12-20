@@ -17,7 +17,7 @@ const MAX_SEARCH_RESULTS = 25;
 let REC_RATVAR = "";
 // You may ask "why is this not inside ClockworkSlab"
 // It's because cslab gets called every time. Lag is bad.
-for (let index = 0; index < Math.min(Math.random()*100); index++) {
+for (let index = 0; index < Math.min(Math.random() * 100); index++) {
   REC_RATVAR += "HONOR RATVAR ";
 }
 
@@ -35,8 +35,8 @@ export const ClockworkSlab = (props) => {
   ] = useSharedState('tab', 'Application');
 
   const tierInfo = tier_infos
-  && tier_infos[tab]
-  || {};
+    && tier_infos[tab]
+    || {};
 
   const [
     searchText,
@@ -92,7 +92,7 @@ export const ClockworkSlab = (props) => {
             )}>
             <b>{power}</b> power is available for scripture
             and other consumers.
-            <Section level={2}>
+            <Section >
               <Tabs>
                 {map((scriptures, name) => (
                   <Tabs.Tab
@@ -328,7 +328,7 @@ export const CSTutorial = (props) => {
         <br /><br />
         {rec_binds?.map(bind => (
           <Fragment key={bind.name ? bind.name : "none"}>
-            A <b>Quickbind</b> slot ({rec_binds.indexOf(bind)+1}),
+            A <b>Quickbind</b> slot ({rec_binds.indexOf(bind) + 1}),
             currently set to&nbsp;
             <span style={`color:${bind ? bind.color : "#BE8700"}`}>
               {bind?.name ? bind.name : "None"}

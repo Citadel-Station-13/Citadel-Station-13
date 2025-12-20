@@ -119,7 +119,7 @@ export const PandemicDiseaseDisplay = (props) => {
             <>
               <Section
                 title="Statistics"
-                level={2}>
+              >
                 <Grid>
                   <Grid.Column>
                     <LabeledList>
@@ -145,7 +145,7 @@ export const PandemicDiseaseDisplay = (props) => {
               </Section>
               <Section
                 title="Symptoms"
-                level={2}>
+              >
                 {symptoms.map(symptom => (
                   <Collapsible
                     key={symptom.name}
@@ -181,7 +181,7 @@ export const PandemicSymptomDisplay = (props) => {
   return (
     <Section
       title={name}
-      level={2}
+
       buttons={!!neutered && (
         <Box
           bold
@@ -216,7 +216,7 @@ export const PandemicSymptomDisplay = (props) => {
       {thresholds.length > 0 && (
         <Section
           title="Thresholds"
-          level={3}>
+        >
           <LabeledList>
             {thresholds.map(threshold => {
               return (

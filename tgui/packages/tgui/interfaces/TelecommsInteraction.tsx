@@ -172,7 +172,7 @@ export const TelecommsInteraction = (props) => {
               <>
                 <Section
                   title="Linked Network Entities"
-                  level={2}>
+                >
                   <LabeledList>
                     {links.map(entity => (
                       <LabeledList.Item
@@ -193,7 +193,7 @@ export const TelecommsInteraction = (props) => {
                 </Section>
                 <Section
                   title="Filtering Frequencies"
-                  level={2}>
+                >
                   <Button
                     onClick={() => act('freq', {
                       'add': true,

@@ -21,7 +21,7 @@ export const Vent = (props) => {
   } = vent;
   return (
     <Section
-      level={2}
+
       title={decodeHtmlEntities(long_name)}
       buttons={(
         <Button
@@ -125,7 +125,7 @@ export const Scrubber = (props) => {
   } = scrubber;
   return (
     <Section
-      level={2}
+
       title={decodeHtmlEntities(long_name)}
       buttons={(
         <Button

@@ -1,6 +1,6 @@
 import { Component, Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex,  Icon, LabeledList, Modal, NoticeBox, Section, Table, Tabs } from 'tgui-core/components';
+import { Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, Section, Table, Tabs } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 import { Grid } from '../components/Grid';
 
@@ -390,7 +390,7 @@ const HubTab = (props) => {
           <Section
             key={item.name}
             title={item.name + ' - ' + repInfo}
-            level={2}
+
             buttons={(
               <>
                 {limited && (

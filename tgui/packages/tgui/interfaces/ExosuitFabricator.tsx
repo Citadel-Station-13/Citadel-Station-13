@@ -21,7 +21,8 @@ const materialArrayToObj = materials => {
   let materialObj = {};
 
   materials.forEach(m => {
-    materialObj[m.name] = m.amount; });
+    materialObj[m.name] = m.amount;
+  });
 
   return materialObj;
 };
@@ -299,13 +300,13 @@ const PartLists = (props) => {
               forceShow
               placeholder="No matching results..." />
           ) || (
-            Object.keys(partsList).map(category => (
-              <PartCategory
-                key={category}
-                name={category}
-                parts={partsList[category]} />
-            ))
-          )}
+              Object.keys(partsList).map(category => (
+                <PartCategory
+                  key={category}
+                  name={category}
+                  parts={partsList[category]} />
+              ))
+            )}
         </Section>
       </Stack.Item>
     </Stack>
@@ -332,7 +333,7 @@ const PartCategory = (props) => {
   return (
     <Section
       title={name}
-      level={2}
+
       buttons={
         <Button
           disabled={!parts.length}
@@ -431,12 +432,12 @@ const Queue = (props) => {
                   icon="stop"
                   onClick={() => act("stop_queue")} />
               ) || (
-                <Button
-                  disabled={!queue.length}
-                  content="Build Queue"
-                  icon="play"
-                  onClick={() => act("build_queue")} />
-              )}
+                  <Button
+                    disabled={!queue.length}
+                    content="Build Queue"
+                    icon="play"
+                    onClick={() => act("build_queue")} />
+                )}
             </>
           )}>
           <Stack fill vertical>
@@ -551,7 +552,7 @@ const BeingBuilt = (props) => {
       duration,
       printTime,
     } = buildingPart;
-    const timeLeft = Math.ceil(duration/10);
+    const timeLeft = Math.ceil(duration / 10);
     return (
       <ProgressBar
         minValue={0}

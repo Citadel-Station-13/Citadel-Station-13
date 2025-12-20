@@ -114,7 +114,7 @@ export const ShuttleConsoleContent = (props) => {
       </Box>
       <Section
         title={type === "shuttle" ? "Shuttle Controls" : "Base Launch Controls"}
-        level={2}>
+      >
         <LabeledList>
           <LabeledList.Item label="Location">
             {docked_location || "Not Available"}
@@ -122,7 +122,7 @@ export const ShuttleConsoleContent = (props) => {
           <LabeledList.Item
             label="Destination"
             buttons={(
-              type !== "shuttle" && locations.length===0 && !!blind_drop && (
+              type !== "shuttle" && locations.length === 0 && !!blind_drop && (
                 <Button
                   color="bad"
                   icon="exclamation-triangle"
@@ -130,29 +130,29 @@ export const ShuttleConsoleContent = (props) => {
                   content={"Blind Drop"}
                   onClick={() => act('random')} />
               ))} >
-            {locations.length===0 && (
+            {locations.length === 0 && (
               <Box
                 mb={1.7}
                 color="bad">
                 Not Available
               </Box>
-            ) || locations.length===1 &&(
+            ) || locations.length === 1 && (
               <Box
                 mb={1.7}
                 color="average">
                 {getLocationNameById(locations, destination)}
               </Box>
             ) || (
-              <Dropdown
-                mb={1.7}
-                over
-                width="240px"
-                options={locations.map(location => location.name)}
-                disabled={locked || authorization_required}
-                selected={getLocationNameById(locations, destination) || "Select a Destination"}
-                onSelected={value => act('set_destination', {
-                  destination: getLocationIdByName(locations, value),
-                })} />)}
+                <Dropdown
+                  mb={1.7}
+                  over
+                  width="240px"
+                  options={locations.map(location => location.name)}
+                  disabled={locked || authorization_required}
+                  selected={getLocationNameById(locations, destination) || "Select a Destination"}
+                  onSelected={value => act('set_destination', {
+                    destination: getLocationIdByName(locations, value),
+                  })} />)}
           </LabeledList.Item>
         </LabeledList>
         <Button

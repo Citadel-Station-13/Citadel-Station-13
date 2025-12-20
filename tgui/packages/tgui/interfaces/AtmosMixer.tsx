@@ -41,6 +41,7 @@ export const AtmosMixer = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Node 1">
               <NumberInput
+                step={1}
                 animated
                 value={data.node1_concentration}
                 unit="%"
@@ -54,6 +55,7 @@ export const AtmosMixer = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Node 2">
               <NumberInput
+                step={1}
                 animated
                 value={data.node2_concentration}
                 unit="%"

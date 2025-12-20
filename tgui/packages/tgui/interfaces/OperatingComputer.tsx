@@ -32,7 +32,7 @@ export const OperatingComputer = (props) => {
     <Window
       width={350}
       height={470}
-      >
+    >
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -104,8 +104,8 @@ const PatientStateView = (props) => {
             ))}
           </LabeledList>
         ) || (
-          'No Patient Detected'
-        )}
+            'No Patient Detected'
+          )}
       </Section>
       {procedures.length === 0 && (
         <Section>
@@ -161,7 +161,7 @@ const SurgeryProceduresView = (props) => {
         <Section
           title={surgery.name}
           key={surgery.name}
-          level={2}>
+        >
           {surgery.desc}
         </Section>
       ))}

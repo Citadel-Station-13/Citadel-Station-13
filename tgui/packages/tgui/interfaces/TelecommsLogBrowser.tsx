@@ -89,7 +89,7 @@ export const TelecommsLogBrowser = (props) => {
                   selected.traffic <= 1024 ? (
                     `${selected.traffic} Gigabytes`
                   ) : (
-                    `${Math.round(selected.traffic/1024)} Terrabytes`
+                    `${Math.round(selected.traffic / 1024)} Terrabytes`
                   )
                 ) : (
                   '0 Gigabytes'
@@ -126,7 +126,7 @@ export const TelecommsLogBrowser = (props) => {
               {(operational && selected_logs) ? (
                 selected_logs.map(logs => (
                   <Section
-                    level={4}
+
                     key={logs.ref}>
                     <LabeledList>
                       <LabeledList.Item
@@ -176,7 +176,7 @@ export const TelecommsLogBrowser = (props) => {
                       buttons={(
                         <Button
                           selected={data.selected
-                          && (server.ref === data.selected.ref)}
+                            && (server.ref === data.selected.ref)}
                           onClick={() => act('viewmachine', {
                             'value': server.id,
                           })}>

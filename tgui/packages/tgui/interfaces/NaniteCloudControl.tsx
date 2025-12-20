@@ -53,7 +53,7 @@ export const NaniteInfoBox = (props) => {
   return (
     <Section
       title={name}
-      level={2}
+
       buttons={(
         <Box
           inline
@@ -88,7 +88,7 @@ export const NaniteInfoBox = (props) => {
         <Grid.Column>
           <Section
             title="Codes"
-            level={3}
+
             mr={1}>
             <LabeledList>
               <LabeledList.Item label="Activation">
@@ -111,7 +111,7 @@ export const NaniteInfoBox = (props) => {
         <Grid.Column>
           <Section
             title="Delays"
-            level={3}
+
             mr={1}>
             <LabeledList>
               <LabeledList.Item label="Restart">
@@ -136,7 +136,7 @@ export const NaniteInfoBox = (props) => {
       </Grid>
       <Section
         title="Extra Settings"
-        level={3}>
+      >
         <LabeledList>
           {extra_settings.map(setting => {
             const naniteTypesDisplayMap = {
@@ -192,7 +192,7 @@ export const NaniteCloudBackupDetails = (props) => {
   return (
     <Section
       title={"Backup #" + current_view}
-      level={2}
+
       buttons={(
         !!has_program && (
           <Button
@@ -222,7 +222,7 @@ export const NaniteCloudBackupDetails = (props) => {
                 <Section
                   mt={-2}
                   title="Rules"
-                  level={2}
+
                   buttons={(
                     <>
                       {!!can_rule && (
@@ -281,7 +281,7 @@ export const NaniteCloudControl = (props) => {
     <Window
       width={375}
       height={700}
-      >
+    >
       <Window.Content scrollable>
         <Section
           title="Program Disk"

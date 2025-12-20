@@ -118,12 +118,12 @@ export const LaunchpadControl = (props) => {
       )}>
       <Grid>
         <Grid.Column>
-          <Section title="Controls" level={2}>
+          <Section title="Controls" >
             <LaunchpadButtonPad />
           </Section>
         </Grid.Column>
         <Grid.Column>
-          <Section title="Target" level={2}>
+          <Section title="Target" >
             <Box fontSize="26px">
               <Box mb={1}>
                 <Box
@@ -207,37 +207,37 @@ export const LaunchpadConsole = (props) => {
             No Pads Connected
           </NoticeBox>
         ) || (
-          <Section>
-            <Flex minHeight="190px">
-              <Flex.Item width="140px" minHeight="190px">
-                {launchpads.map(launchpad => (
-                  <Button
-                    fluid
-                    ellipsis
-                    key={launchpad.name}
-                    content={launchpad.name}
-                    selected={selected_id === launchpad.id}
-                    color="transparent"
-                    onClick={() => act('select_pad', {
-                      id: launchpad.id,
-                    })} />
-                ))}
-              </Flex.Item>
-              <Flex.Item minHeight="100%">
-                <Divider vertical />
-              </Flex.Item>
-              <Flex.Item grow={1} basis={0} minHeight="100%">
-                {selected_id && (
-                  <LaunchpadControl />
-                ) || (
-                  <Box>
-                    Please select a pad
-                  </Box>
-                )}
-              </Flex.Item>
-            </Flex>
-          </Section>
-        )}
+            <Section>
+              <Flex minHeight="190px">
+                <Flex.Item width="140px" minHeight="190px">
+                  {launchpads.map(launchpad => (
+                    <Button
+                      fluid
+                      ellipsis
+                      key={launchpad.name}
+                      content={launchpad.name}
+                      selected={selected_id === launchpad.id}
+                      color="transparent"
+                      onClick={() => act('select_pad', {
+                        id: launchpad.id,
+                      })} />
+                  ))}
+                </Flex.Item>
+                <Flex.Item minHeight="100%">
+                  <Divider vertical />
+                </Flex.Item>
+                <Flex.Item grow={1} basis={0} minHeight="100%">
+                  {selected_id && (
+                    <LaunchpadControl />
+                  ) || (
+                      <Box>
+                        Please select a pad
+                      </Box>
+                    )}
+                </Flex.Item>
+              </Flex>
+            </Section>
+          )}
       </Window.Content>
     </Window>
   );

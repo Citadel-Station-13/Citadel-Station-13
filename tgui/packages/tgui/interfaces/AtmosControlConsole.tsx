@@ -20,7 +20,7 @@ export const AtmosControlConsole = (props) => {
               <Section
                 key={sensor.id_tag}
                 title={!data.tank && sensor.long_name}
-                level={2}>
+              >
                 <LabeledList>
                   <LabeledList.Item label="Pressure">
                     {toFixed(sensor.pressure, 2) + ' kPa'}

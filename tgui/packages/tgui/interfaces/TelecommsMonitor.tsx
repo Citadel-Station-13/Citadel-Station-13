@@ -132,14 +132,14 @@ export const TelecommsMonitor = (props) => {
                     ranges={{
                       good: [ // 0-30%
                         -Infinity,
-                        selected.netspeed*0.30,
+                        selected.netspeed * 0.30,
                       ],
                       average: [ // 30-70%
-                        selected.netspeed*0.31,
-                        selected.traffic*0.70,
+                        selected.netspeed * 0.31,
+                        selected.traffic * 0.70,
                       ],
                       bad: [ // 70-100%
-                        selected.netspeed*0.71,
+                        selected.netspeed * 0.71,
                         Infinity,
                       ],
                     }}>
@@ -147,7 +147,7 @@ export const TelecommsMonitor = (props) => {
                       selected.traffic <= 1024 ? (
                         `${Math.max(selected.traffic, 0)} Gigabytes`
                       ) : (
-                        `${Math.round(selected.traffic/1024)} Terrabytes`
+                        `${Math.round(selected.traffic / 1024)} Terrabytes`
                       )
                     ) : (
                       '0 Gigabytes'
@@ -159,7 +159,7 @@ export const TelecommsMonitor = (props) => {
                     selected.netspeed <= 1024 ? (
                       `${selected.netspeed} Gigabytes/second`
                     ) : (
-                      `${Math.round(selected.netspeed/1024)} Terrabytes/second`
+                      `${Math.round(selected.netspeed / 1024)} Terrabytes/second`
                     )
                   ) : (
                     '0 Gigabytes/second'
@@ -198,7 +198,7 @@ export const TelecommsMonitor = (props) => {
               </LabeledList>
               <Section
                 title="Servers Linked"
-                level={3}>
+              >
                 {(operational && selected_servers) ? (
                   <LabeledList>
                     {selected_servers.map(server => (
@@ -237,7 +237,7 @@ export const TelecommsMonitor = (props) => {
                         <Button
                           content="Connect"
                           selected={selected
-                              && (server.ref === selected.ref)}
+                            && (server.ref === selected.ref)}
                           onClick={() => act('viewmachine', {
                             'value': server.id,
                           })} />

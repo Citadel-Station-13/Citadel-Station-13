@@ -16,7 +16,7 @@ export const SpawnersMenu = (props) => {
             <Section
               key={spawner.name}
               title={spawner.name + ' (' + spawner.amount_left + ' left)'}
-              level={2}
+
               buttons={(
                 <>
                   <Button

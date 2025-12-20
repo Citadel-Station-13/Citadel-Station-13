@@ -63,7 +63,7 @@ export const NtosConfiguration = (props) => {
             <Section
               key={component.name}
               title={component.name}
-              level={2}
+
               buttons={(
                 <>
                   {!component.critical && (

@@ -82,7 +82,7 @@ export const AiRestorerContent = (props) => {
             disabled={restoring}
             mt={1}
             onClick={() => act('PRG_beginReconstruction')} />
-          <Section title="Laws" level={2}>
+          <Section title="Laws" >
             {laws.map(law => (
               <Box key={law} className="candystripe">
                 {law}

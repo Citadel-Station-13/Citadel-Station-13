@@ -22,12 +22,12 @@ export const ForbiddenLore = (props) => {
           Charges left : {charges}
           <br />
           Completed Sacrifices : {total_sacs}
-          {to_know!== null ? (
+          {to_know !== null ? (
             to_know.map(knowledge => (
               <Section
                 key={knowledge.name}
                 title={knowledge.name}
-                level={2}>
+              >
                 <Box bold my={1}>
                   {knowledge.path} path
                 </Box>

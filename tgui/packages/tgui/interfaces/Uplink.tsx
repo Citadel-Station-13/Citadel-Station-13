@@ -175,7 +175,7 @@ const ItemList = (props) => {
     <Section
       key={item.name}
       title={item.name}
-      level={2}
+
       buttons={(
         <Button
           content={item.cost + ' ' + currencySymbol}
