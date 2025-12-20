@@ -378,9 +378,9 @@ const VoreContentsPanel = (props) => {
                 width="64px"
                 color={thing.absorbed ? "purple" : stats[thing.stat]}
                 style={{
-                  'vertical-align': 'middle',
-                  'margin-right': '5px',
-                  'border-radius': '20px',
+                  'verticalAlign': 'middle',
+                  'marginRight': '5px',
+                  'borderRadius': '20px',
                 }}
                 onClick={() => act(thing.outside ? "pick_from_outside" : "pick_from_inside", {
                   "pick": thing.ref,
@@ -392,7 +392,7 @@ const VoreContentsPanel = (props) => {
                   height="64px"
                   style={{
                     '-ms-interpolation-mode': 'nearest-neighbor',
-                    'margin-left': '-5px',
+                    'marginLeft': '-5px',
                   }} />
               </Button>
               {thing.name}
@@ -400,24 +400,24 @@ const VoreContentsPanel = (props) => {
           ))}
         </Flex>
       ) || (
-        <LabeledList>
-          {contents.map(thing => (
-            <LabeledList.Item key={thing.ref} label={thing.name}>
-              <Button
-                fluid
-                mt={-1}
-                mb={-1}
-                color={thing.absorbed ? "purple" : stats[thing.stat]}
-                onClick={() => act(thing.outside ? "pick_from_outside" : "pick_from_inside", {
-                  "pick": thing.ref,
-                  "belly": belly,
-                })}>
-                Interact
-              </Button>
-            </LabeledList.Item>
-          ))}
-        </LabeledList>
-      )}
+          <LabeledList>
+            {contents.map(thing => (
+              <LabeledList.Item key={thing.ref} label={thing.name}>
+                <Button
+                  fluid
+                  mt={-1}
+                  mb={-1}
+                  color={thing.absorbed ? "purple" : stats[thing.stat]}
+                  onClick={() => act(thing.outside ? "pick_from_outside" : "pick_from_inside", {
+                    "pick": thing.ref,
+                    "belly": belly,
+                  })}>
+                  Interact
+                </Button>
+              </LabeledList.Item>
+            ))}
+          </LabeledList>
+        )}
     </Fragment>
   );
 };
@@ -455,7 +455,7 @@ const VoreUserPreferences = (props) => {
             selected={devourable}
             fluid
             tooltip={"This button is to toggle your ability to be devoured by others. "
-            + (devourable ? "Click here to prevent being devoured." : "Click here to allow being devoured.")}
+              + (devourable ? "Click here to prevent being devoured." : "Click here to allow being devoured.")}
             content={devourable ? "Devouring Allowed" : "No Devouring"} />
         </Flex.Item>
         <Flex.Item basis="33%">
@@ -465,9 +465,9 @@ const VoreUserPreferences = (props) => {
             selected={allowmobvore}
             fluid
             tooltip={"This button is for those who don't like being eaten by mobs. "
-            + (allowmobvore
-              ? "Click here to prevent being eaten by mobs."
-              : "Click here to allow being eaten by mobs.")}
+              + (allowmobvore
+                ? "Click here to prevent being eaten by mobs."
+                : "Click here to allow being eaten by mobs.")}
             tooltipPosition="bottom-start"
             content={allowmobvore ? "Mobs eating you allowed" : "No Mobs eating you"} />
         </Flex.Item>
@@ -478,9 +478,9 @@ const VoreUserPreferences = (props) => {
             selected={feeding}
             fluid
             tooltip={"This button is to toggle your ability to be fed to or by others vorishly. "
-            + (feeding
-              ? "Click here to prevent being fed to/by other people."
-              : "Click here to allow being fed to/by other people.")}
+              + (feeding
+                ? "Click here to prevent being fed to/by other people."
+                : "Click here to allow being fed to/by other people.")}
             content={feeding ? "Feeding Allowed" : "No Feeding"} />
         </Flex.Item>
         <Flex.Item basis="50%">
@@ -490,7 +490,7 @@ const VoreUserPreferences = (props) => {
             selected={digestable}
             fluid
             tooltip={"This button is for those who don't like being digested. It can make you undigestable."
-            + (digestable ? " Click here to prevent digestion." : " Click here to allow digestion.")}
+              + (digestable ? " Click here to prevent digestion." : " Click here to allow digestion.")}
             tooltipPosition="bottom-start"
             content={digestable ? "Digestion Allowed" : "No Digestion"} />
         </Flex.Item>
@@ -501,7 +501,7 @@ const VoreUserPreferences = (props) => {
             selected={absorbable}
             fluid
             tooltip={"This button allows preds to know whether you prefer or don't prefer to be absorbed. "
-            + (absorbable ? "Click here to disallow being absorbed." : "Click here to allow being absorbed.")}
+              + (absorbable ? "Click here to disallow being absorbed." : "Click here to allow being absorbed.")}
             content={absorbable ? "Absorption Allowed" : "No Absorption"} />
         </Flex.Item>
         <Flex.Item basis="50%">
@@ -511,9 +511,9 @@ const VoreUserPreferences = (props) => {
             selected={vore_sounds}
             fluid
             tooltip={"Be able to hear vore sounds. "
-            + (vore_sounds
-              ? "Click here to turn off vore sounds."
-              : "Click here to turn on vore sounds.")}
+              + (vore_sounds
+                ? "Click here to turn off vore sounds."
+                : "Click here to turn on vore sounds.")}
             content={vore_sounds ? "Vore Sounds Enabled" : "Vore Sounds Disabled"} />
         </Flex.Item>
         <Flex.Item basis="50%">
@@ -523,9 +523,9 @@ const VoreUserPreferences = (props) => {
             selected={digestion_sounds}
             fluid
             tooltip={"Be able to hear digestion sounds. "
-            + (digestion_sounds
-              ? "Click here to turn off digestion sounds."
-              : "Click here to turn on digestion sounds.")}
+              + (digestion_sounds
+                ? "Click here to turn off digestion sounds."
+                : "Click here to turn on digestion sounds.")}
             content={digestion_sounds ? "Digestion Sounds Enabled" : "Digestion Sounds Disabled"} />
         </Flex.Item>
         <Flex.Item basis="25%">
@@ -535,9 +535,9 @@ const VoreUserPreferences = (props) => {
             selected={lickable}
             fluid
             tooltip={"Be able to be licked by others. "
-            + (lickable
-              ? "Click here to turn off being able to be licked."
-              : "Click here to turn on being able to be licked.")}
+              + (lickable
+                ? "Click here to turn off being able to be licked."
+                : "Click here to turn on being able to be licked.")}
             tooltipPosition="bottom-start"
             content={lickable ? "Lickable" : "Unlickable"} />
         </Flex.Item>
@@ -555,9 +555,9 @@ const VoreUserPreferences = (props) => {
             selected={smellable}
             fluid
             tooltip={"Be able to be smelled by others. "
-            + (smellable
-              ? "Click here to turn off being able to be smelled."
-              : "Click here to turn on being able to be smelled.")}
+              + (smellable
+                ? "Click here to turn off being able to be smelled."
+                : "Click here to turn on being able to be smelled.")}
             content={smellable ? "Smellable" : "Unsmellable"} />
         </Flex.Item>
         <Flex.Item basis="25%">

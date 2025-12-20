@@ -197,8 +197,8 @@ const CurrentlySelectedDisplay = (props) => {
           title={entry?.path}
           style={{
             'overflow': 'hidden',
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
+            'whiteSpace': 'nowrap',
+            'textOverflow': 'ellipsis',
           }}>
           {entry?.name}
         </Box>

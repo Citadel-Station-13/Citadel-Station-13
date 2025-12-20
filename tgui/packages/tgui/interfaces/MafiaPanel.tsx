@@ -192,7 +192,7 @@ const MafiaRole = (props) => {
             ])}
             style={{
               'transform': 'scale(2) translate(0px, 10%)',
-              'vertical-align': 'middle',
+              'verticalAlign': 'middle',
             }} />
           <Box
             className={classes([
@@ -201,7 +201,7 @@ const MafiaRole = (props) => {
             ])}
             style={{
               'transform': 'scale(2) translate(-5px, -5px)',
-              'vertical-align': 'middle',
+              'verticalAlign': 'middle',
             }} />
         </Stack.Item>
       </Stack>

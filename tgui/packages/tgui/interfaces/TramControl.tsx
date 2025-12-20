@@ -104,11 +104,11 @@ export const TramControl = (props) => {
             onClick={() => setTransitIndex(destinations.indexOf(dest))} >
             <Icon ml={-2.1} mt={0.55} fontSize="60px" name="circle-o" />
           </Button>
-          {destinations.length-1 !== destinations.indexOf(dest) && (
+          {destinations.length - 1 !== destinations.indexOf(dest) && (
             <Section title=" " mt={-7.3} ml={10} mr={-6.1} />
           ) || (
-            <Box mt={-2.3} />
-          )}
+              <Box mt={-2.3} />
+            )}
         </Stack.Item>
         {dest.dest_icons && (
           <Stack.Item >
@@ -122,7 +122,7 @@ export const TramControl = (props) => {
                     tooltipPosition="bottom"
                     tooltip={dep}
                     style={{
-                      'border-radius': '5em',
+                      'borderRadius': '5em',
                       'border': '2px solid white',
                     }}
                   />
@@ -143,38 +143,38 @@ export const TramControl = (props) => {
         {!!broken && (
           <BrokenTramDimmer />
         ) || (
-          <Section fill>
-            {!!moving && (
-              <MovingTramDimmer />
-            )}
-            <Stack ml="-6px" vertical fill>
-              <Stack.Item grow fontSize="16px" mt={1} mb={9} textAlign="center">
-                Nanotrasen Transit System
-              </Stack.Item>
-              <Stack.Item mb={4}>
-                <Stack fill>
-                  <Stack.Item grow={2} />
-                  {destinations.map(dest => (
-                    <Stack.Item key={dest.name} grow={1} >
-                      <Destination dest={dest} />
-                    </Stack.Item>
-                  ))}
-                  <Stack.Item grow={1} />
-                </Stack>
-              </Stack.Item>
-              <Stack.Item fontSize="16px" mt={1} mb={9} textAlign="center" grow>
-                <Button
-                  disabled={
-                    tram_location === destinations[transitIndex].name
-                  }
-                  content="Send Tram"
-                  onClick={() => act('send', {
-                    destination: destinations[transitIndex].id,
-                  })} />
-              </Stack.Item>
-            </Stack>
-          </Section>
-        )}
+            <Section fill>
+              {!!moving && (
+                <MovingTramDimmer />
+              )}
+              <Stack ml="-6px" vertical fill>
+                <Stack.Item grow fontSize="16px" mt={1} mb={9} textAlign="center">
+                  Nanotrasen Transit System
+                </Stack.Item>
+                <Stack.Item mb={4}>
+                  <Stack fill>
+                    <Stack.Item grow={2} />
+                    {destinations.map(dest => (
+                      <Stack.Item key={dest.name} grow={1} >
+                        <Destination dest={dest} />
+                      </Stack.Item>
+                    ))}
+                    <Stack.Item grow={1} />
+                  </Stack>
+                </Stack.Item>
+                <Stack.Item fontSize="16px" mt={1} mb={9} textAlign="center" grow>
+                  <Button
+                    disabled={
+                      tram_location === destinations[transitIndex].name
+                    }
+                    content="Send Tram"
+                    onClick={() => act('send', {
+                      destination: destinations[transitIndex].id,
+                    })} />
+                </Stack.Item>
+              </Stack>
+            </Section>
+          )}
       </Window.Content>
     </Window>
   );

@@ -34,7 +34,7 @@ export const CloningConsole = (props) => {
               />
             }
           />
-        ) : (null) }
+        ) : (null)}
         <Section>
           <Section title="Cloning Pod Status">
             <Box backgroundColor="#40638a" p="1px">
@@ -82,7 +82,7 @@ export const CloningConsole = (props) => {
                       <Section backgroundColor="#191919" color="white" key={record}>
                         <Collapsible title={record["name"]}>
                           <div key={record["name"]} style={{
-                            'word-break': 'break-all',
+                            'wordBreak': 'break-all',
                           }}>
                             Scan ID {record["id"]}<br />
                             <Button
@@ -156,7 +156,7 @@ export const CloningConsole = (props) => {
                   <Collapsible title={diskData["name"] ? diskData["name"] : "Empty Disk"}>
                     {diskData["id"] ? (
                       <Box style={{
-                        'word-break': 'break-all',
+                        'wordBreak': 'break-all',
                       }}>
                         ID: {diskData["id"]}<br />
                         UI: {diskData["UI"]}<br />

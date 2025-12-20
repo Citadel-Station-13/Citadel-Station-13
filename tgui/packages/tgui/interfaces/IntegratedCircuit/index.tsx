@@ -311,7 +311,7 @@ export class IntegratedCircuit extends Component<any, any> {
       >
         <Window.Content
           style={{
-            'background-image': 'none',
+            'backgroundImage': 'none',
           }}>
           <InfinitePlane
             width="100%"

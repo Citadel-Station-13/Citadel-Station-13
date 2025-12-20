@@ -104,7 +104,7 @@ export const Hypertorus = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Gases">
               <Box m={1} style={{
-                'white-space': 'pre-wrap',
+                'whiteSpace': 'pre-wrap',
               }}>
                 {product_gases}
               </Box>

@@ -69,7 +69,7 @@ export const NtosPortraitPrinter = (props) => {
                     height="128px"
                     width="128px"
                     style={{
-                      'vertical-align': 'middle',
+                      'verticalAlign': 'middle',
                       '-ms-interpolation-mode': 'nearest-neighbor',
                     }} />
                 </Stack.Item>
@@ -95,7 +95,7 @@ export const NtosPortraitPrinter = (props) => {
                       <Button
                         disabled={listIndex === 0}
                         icon="chevron-left"
-                        onClick={() => setListIndex(listIndex-1)}
+                        onClick={() => setListIndex(listIndex - 1)}
                       />
                     </Stack.Item>
                     <Stack.Item grow={3}>
@@ -103,23 +103,23 @@ export const NtosPortraitPrinter = (props) => {
                         icon="check"
                         content="Print Portrait"
                         onClick={() => act("select", {
-                          tab: tabIndex+1,
-                          selected: listIndex+1,
+                          tab: tabIndex + 1,
+                          selected: listIndex + 1,
                         })}
                       />
                     </Stack.Item>
                     <Stack.Item grow={1}>
                       <Button
                         icon="chevron-right"
-                        disabled={listIndex === tab2list.length-1}
-                        onClick={() => setListIndex(listIndex+1)}
+                        disabled={listIndex === tab2list.length - 1}
+                        onClick={() => setListIndex(listIndex + 1)}
                       />
                     </Stack.Item>
                     <Stack.Item>
                       <Button
                         icon="angle-double-right"
-                        disabled={listIndex === tab2list.length-1}
-                        onClick={() => setListIndex(tab2list.length-1)}
+                        disabled={listIndex === tab2list.length - 1}
+                        onClick={() => setListIndex(tab2list.length - 1)}
                       />
                     </Stack.Item>
                   </Stack>

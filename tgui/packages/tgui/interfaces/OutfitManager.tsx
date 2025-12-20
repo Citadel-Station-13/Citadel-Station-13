@@ -41,15 +41,15 @@ export const OutfitManager = (props) => {
                   <Stack.Item grow={1} shrink={1}
                     style={{
                       'overflow': 'hidden',
-                      'white-space': 'nowrap',
-                      'text-overflow': 'ellipsis',
+                      'whiteSpace': 'nowrap',
+                      'textOverflow': 'ellipsis',
                     }}>
                     <Button
                       fluid
                       style={{
                         'overflow': 'hidden',
-                        'white-space': 'nowrap',
-                        'text-overflow': 'ellipsis',
+                        'whiteSpace': 'nowrap',
+                        'textOverflow': 'ellipsis',
                       }}
                       content={outfit.name}
                       onClick={() => act("edit", { outfit: outfit.ref })} />

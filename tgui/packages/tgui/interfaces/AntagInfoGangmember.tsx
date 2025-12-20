@@ -21,7 +21,7 @@ export const AntagInfoGangmember = (props) => {
       height={500}>
       <Window.Content
         style={{
-          'background-image': 'none',
+          'backgroundImage': 'none',
         }}>
         <Section fill>
           <Stack vertical>

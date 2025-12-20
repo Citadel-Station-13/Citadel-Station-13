@@ -70,7 +70,7 @@ export const PortraitPicker = (props) => {
                     height="96px"
                     width="96px"
                     style={{
-                      'vertical-align': 'middle',
+                      'verticalAlign': 'middle',
                       '-ms-interpolation-mode': 'nearest-neighbor',
                     }} />
                 </Flex.Item>
@@ -96,7 +96,7 @@ export const PortraitPicker = (props) => {
                       <Button
                         disabled={listIndex === 0}
                         icon="chevron-left"
-                        onClick={() => setListIndex(listIndex-1)}
+                        onClick={() => setListIndex(listIndex - 1)}
                       />
                     </Flex.Item>
                     <Flex.Item grow={3}>
@@ -104,23 +104,23 @@ export const PortraitPicker = (props) => {
                         icon="check"
                         content="Select Portrait"
                         onClick={() => act("select", {
-                          tab: tabIndex+1,
-                          selected: listIndex+1,
+                          tab: tabIndex + 1,
+                          selected: listIndex + 1,
                         })}
                       />
                     </Flex.Item>
                     <Flex.Item grow={1}>
                       <Button
                         icon="chevron-right"
-                        disabled={listIndex === tab2list.length-1}
-                        onClick={() => setListIndex(listIndex+1)}
+                        disabled={listIndex === tab2list.length - 1}
+                        onClick={() => setListIndex(listIndex + 1)}
                       />
                     </Flex.Item>
                     <Flex.Item>
                       <Button
                         icon="angle-double-right"
-                        disabled={listIndex === tab2list.length-1}
-                        onClick={() => setListIndex(tab2list.length-1)}
+                        disabled={listIndex === tab2list.length - 1}
+                        onClick={() => setListIndex(tab2list.length - 1)}
                       />
                     </Flex.Item>
                   </Flex>

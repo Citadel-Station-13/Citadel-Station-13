@@ -36,7 +36,7 @@ export const NtosRadarContent = (props) => {
           <Section>
             <Button
               icon="redo-alt"
-              content={scanning?"Scanning...":"Scan"}
+              content={scanning ? "Scanning..." : "Scan"}
               color="blue"
               disabled={scanning}
               onClick={() => act('scan')} />
@@ -55,7 +55,7 @@ export const NtosRadarContent = (props) => {
                   'Button--color--transparent',
                   'Button--ellipsis',
                   object.ref === selected
-                    && 'Button--selected',
+                  && 'Button--selected',
                 ])}
                 onClick={() => {
                   act('selecttarget', {
@@ -70,11 +70,11 @@ export const NtosRadarContent = (props) => {
       </Flex.Item>
       <Flex.Item
         style={{
-          'background-image': 'url("'
+          'backgroundImage': 'url("'
             + resolveAsset('ntosradarbackground.png')
             + '")',
-          'background-position': 'center',
-          'background-repeat': 'no-repeat',
+          'backgroundPosition': 'center',
+          'backgroundRepeat': 'no-repeat',
           'top': '20px',
         }}
         position="relative"

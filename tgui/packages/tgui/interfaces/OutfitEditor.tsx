@@ -28,8 +28,8 @@ export const OutfitEditor = (props) => {
               <Stack.Item grow={1}
                 style={{
                   'overflow': 'hidden',
-                  'white-space': 'nowrap',
-                  'text-overflow': 'ellipsis',
+                  'whiteSpace': 'nowrap',
+                  'textOverflow': 'ellipsis',
                 }}>
                 <Button
                   ml={0.5}
@@ -135,8 +135,8 @@ const OutfitSlot = (props) => {
         color="label"
         style={{
           'overflow': 'hidden',
-          'white-space': 'nowrap',
-          'text-overflow': 'ellipsis',
+          'whiteSpace': 'nowrap',
+          'textOverflow': 'ellipsis',
         }}
         title={currItem?.path}>
         {currItem?.name || "Empty"}

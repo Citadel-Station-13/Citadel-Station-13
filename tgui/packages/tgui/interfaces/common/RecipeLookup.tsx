@@ -103,14 +103,14 @@ export const RecipeLookup = (props) => {
                     id: catalyst.id,
                   })} />
               ) || (
-                <Button
-                  icon="vial"
-                  color={catalyst.color}
-                  content={catalyst.ratio + "u " + catalyst.name}
-                  onClick={() => act('reagent_click', {
-                    id: catalyst.id,
-                  })} />
-              )}
+                  <Button
+                    icon="vial"
+                    color={catalyst.color}
+                    content={catalyst.ratio + "u " + catalyst.name}
+                    onClick={() => act('reagent_click', {
+                      id: catalyst.id,
+                    })} />
+                )}
             </Box>
           ))}
         </LabeledList.Item>
@@ -140,7 +140,7 @@ export const RecipeLookup = (props) => {
               <Box position="relative">
                 <Tooltip
                   content="If your purity is below this it will 100% convert into the product's associated Inverse reagent on consumption." >
-                  {`<${(recipe.inversePurity*100)}%`}
+                  {`<${(recipe.inversePurity * 100)}%`}
                 </Tooltip>
               </Box>
             </LabeledList.Item>
@@ -150,7 +150,7 @@ export const RecipeLookup = (props) => {
               <Box position="relative">
                 <Tooltip
                   content="If your purity is below this at any point during the reaction, it will cause negative effects, and if it remains below this value on completion it will convert into the product's associated Failed reagent." >
-                  {`<${(recipe.minPurity*100)}%`}
+                  {`<${(recipe.minPurity * 100)}%`}
                 </Tooltip>
               </Box>
             </LabeledList.Item>
@@ -162,7 +162,7 @@ export const RecipeLookup = (props) => {
           height="50px"
           position="relative"
           style={{
-            'background-color': 'black',
+            'backgroundColor': 'black',
           }}>
           <Chart.Line
             fillPositionedParent

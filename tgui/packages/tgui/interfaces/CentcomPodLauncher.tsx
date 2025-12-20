@@ -581,12 +581,12 @@ const PodStatusPage = (props) => {
                           ? act(effect.act, effect.payload)
                           : act(effect.act)}
                         style={{
-                          'vertical-align': 'middle',
-                          'margin-left': (j !== 0 ? '1px' : '0px'),
-                          'margin-right': (
+                          'verticalAlign': 'middle',
+                          'marginLeft': (j !== 0 ? '1px' : '0px'),
+                          'marginRight': (
                             j !== list.list.length - 1 ? '1px' : '0px'
                           ),
-                          'border-radius': '5px',
+                          'borderRadius': '5px',
                         }} />
                     )}
                   </Fragment>
@@ -898,9 +898,9 @@ class PresetsPage extends Component {
             onDblClick={() => this.loadDataFromPreset(preset.id)}
             content={preset.title}
             style={presetIndex === preset.id ? {
-              'border-width': '1px',
-              'border-style': 'solid',
-              'border-color': `hsl(${preset.hue}, 80%, 80%)`,
+              'borderWidth': '1px',
+              'borderStyle': 'solid',
+              'borderColor': `hsl(${preset.hue}, 80%, 80%)`,
             } : ''} />
         )) : ""}
         <span style={pod_grey}>
@@ -969,16 +969,16 @@ const StylePage = (props) => {
           }
           tooltip={page.title}
           style={{
-            'vertical-align': 'middle',
-            'margin-right': '5px',
-            'border-radius': '20px',
+            'verticalAlign': 'middle',
+            'marginRight': '5px',
+            'borderRadius': '20px',
           }}
           selected={data.styleChoice - 1 === i}
           onClick={() => act('setStyle', { style: i })}>
           <Box
             className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
             style={{
-              'transform': 'rotate(45deg) translate(-25%,-10%)', 'pointer-events': 'none',
+              'transform': 'rotate(45deg) translate(-25%,-10%)', 'pointerEvents': 'none',
             }} />
         </Button>
       ))}
