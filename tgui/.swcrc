@@ -1,0 +1,11 @@
+{
+  "jsc": {
+    "experimental": {
+         "plugins": [
+            ["swc-plugin-inferno", {
+              "pure": true // Enable or disable /*#__PURE__*/ statements
+            }]
+        ]
+    }
+  }
+}

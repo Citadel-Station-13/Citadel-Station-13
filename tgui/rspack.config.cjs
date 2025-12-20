@@ -75,20 +75,7 @@ module.exports = (env = {}, argv) => {
           test: /\.([tj]s(x)?|cjs)$/,
           use: [
             {
-              loader: 'builtin:swc-loader',
-              options: {
-                jsc: {
-                  parser: {
-                    syntax: 'typescript',
-                    tsx: true,
-                  },
-                  transform: {
-                    react: {
-                      runtime: 'automatic',
-                    },
-                  },
-                },
-              },
+              loader: 'swc-loader'
             },
           ],
           type: 'javascript/auto',

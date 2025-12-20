@@ -38,19 +38,10 @@ module.exports = (env = {}, argv) => {
           test: /\.([tj]s(x)?|cjs)$/,
           use: [
             {
-              loader: 'builtin:swc-loader',
+              loader: 'swc-loader',
               options: {
-                isModule: 'unknown',
                 jsc: {
-                  parser: {
-                    syntax: 'typescript',
-                    tsx: true,
-                  },
-                  transform: {
-                    react: {
-                      runtime: 'automatic',
-                    },
-                  },
+                  isModule: 'unknown'
                 },
               },
             },
