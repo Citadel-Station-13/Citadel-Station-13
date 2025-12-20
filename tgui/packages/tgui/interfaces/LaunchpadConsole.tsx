@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from 'tgui-core/components';
+import { Box, Button, Divider, Flex, Input, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { Grid } from '../components/Grid';
 
 const LaunchpadButtonPad = (props) => {
   const { act } = useBackend<any>();

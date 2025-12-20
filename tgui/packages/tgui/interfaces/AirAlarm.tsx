@@ -1,5 +1,5 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';

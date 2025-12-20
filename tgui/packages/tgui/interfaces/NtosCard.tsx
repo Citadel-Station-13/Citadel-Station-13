@@ -1,4 +1,4 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Input, NoticeBox, Section, Tabs } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';

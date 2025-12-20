@@ -1,5 +1,5 @@
 import { useBackend } from "../backend";
-import { Icon, Section, Table } from "../components";
+import { Icon, Section, Table } from "tgui-core/components";
 import { Window } from "../layouts";
 
 const commandJobs = [

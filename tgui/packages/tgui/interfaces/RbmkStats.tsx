@@ -2,7 +2,7 @@ import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { pureComponentHooks } from 'common/react';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 import { Box, Button, Chart, ColorBox, Flex, Icon, LabeledList, ProgressBar, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';

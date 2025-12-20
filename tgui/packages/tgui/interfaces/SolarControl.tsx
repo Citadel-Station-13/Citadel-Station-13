@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
-import { Box, Button, Grid, LabeledList, NumberInput, ProgressBar, Section } from 'tgui-core/components';
+import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { Grid } from '../components/Grid';
 
 export const SolarControl = (props) => {
   const { act, data } = useBackend<any>();

@@ -1,7 +1,7 @@
 import { createSearch } from 'common/string';
 import { sortBy } from 'common/collections';
 import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from "../components";
+import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from "tgui-core/components";
 import { Window } from "../layouts";
 
 export const Stack = (props) => {

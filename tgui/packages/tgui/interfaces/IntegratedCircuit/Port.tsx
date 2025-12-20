@@ -2,7 +2,7 @@ import {
   Stack,
   Icon,
 } from 'tgui-core/components';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { DisplayName } from "./DisplayName";
 
 

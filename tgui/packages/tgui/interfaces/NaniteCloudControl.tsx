@@ -1,7 +1,8 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-core/components';
+import { Box, Button, Collapsible, <Grid></Grid>, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { Grid } from '../components/Grid';
 
 export const NaniteDiskBox = (props) => {
   const { data } = useBackend<any>();

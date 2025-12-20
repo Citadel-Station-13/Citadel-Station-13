@@ -3,7 +3,7 @@
  * @copyright 2020 LetterN (https://github.com/LetterN)
  * @license MIT
  */
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { Window } from '../layouts';
 import { useBackend, useSharedState } from '../backend';
 import { RADIO_CHANNELS } from '../constants';

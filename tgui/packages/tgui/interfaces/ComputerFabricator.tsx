@@ -1,7 +1,8 @@
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
-import { Box, Button, Grid, Section, Table, Tooltip } from 'tgui-core/components';
+import { Box, Button,  Section, Table, Tooltip } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { Grid } from '../components/Grid';
 
 export const ComputerFabricator = (props) => {
   const { act, data } = useBackend<any>();

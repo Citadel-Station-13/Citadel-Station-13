@@ -1,5 +1,5 @@
 import { toArray } from 'common/collections';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from 'tgui-core/components';
 import { formatMoney } from '../format';

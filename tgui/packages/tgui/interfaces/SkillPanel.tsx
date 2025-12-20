@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 
 const skillgreen = {
   color: 'lightgreen',

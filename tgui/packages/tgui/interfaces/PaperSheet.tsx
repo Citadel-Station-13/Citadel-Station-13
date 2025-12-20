@@ -10,7 +10,7 @@
  */
 
 import { classes } from 'common/react';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { marked } from 'marked';
 import { useBackend } from '../backend';
 import { Box, Flex, Tabs, TextArea } from 'tgui-core/components';

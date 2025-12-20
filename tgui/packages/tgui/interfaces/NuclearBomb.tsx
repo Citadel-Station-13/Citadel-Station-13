@@ -1,7 +1,8 @@
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Grid, Icon } from 'tgui-core/components';
+import { Box, Button, Flex, Icon } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { Grid } from '../components/Grid';
 
 // This ui is so many manual overrides and !important tags
 // and hand made width sets that changing pretty much anything

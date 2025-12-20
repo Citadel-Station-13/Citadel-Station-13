@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from 'tgui-core/components';
+import { Box, Button, Divider, Flex, Input, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const MechpadControl = (props) => {

@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
-import { Box, Button, Grid, Section } from 'tgui-core/components';
+import { Box, Button,  Section } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { Grid } from '../components/Grid';
 
 export const EmergencyShuttleConsole = (props) => {
   const { act, data } = useBackend<any>();
@@ -52,7 +53,8 @@ export const EmergencyShuttleConsole = (props) => {
                 disabled={!enabled}
                 onClick={() => act('abort')} />
             )}>
-            <Grid>
+            <Grid
+            >
               <Grid.Column>
                 <Button
                   fluid

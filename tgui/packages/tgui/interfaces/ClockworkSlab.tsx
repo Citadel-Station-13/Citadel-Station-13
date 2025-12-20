@@ -10,8 +10,8 @@ import { useBackend, useLocalState, useSharedState } from '../backend';
 import { createSearch } from 'common/string';
 import { map } from 'common/collections';
 import { Section, Tabs, Table, Button, Box, NoticeBox, Divider, Input } from 'tgui-core/components';
-import { Fragment } from 'inferno';
 import { Window } from '../layouts';
+import { Fragment } from 'react';
 
 const MAX_SEARCH_RESULTS = 25;
 let REC_RATVAR = "";

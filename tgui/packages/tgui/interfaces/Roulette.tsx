@@ -1,7 +1,8 @@
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Grid, NumberInput, Table } from 'tgui-core/components';
+import { Box, Button,  NumberInput, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { Grid } from '../components/Grid';
 
 const getNumberColor = number => {
   const inRedOddRange = (

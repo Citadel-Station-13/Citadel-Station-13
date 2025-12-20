@@ -1,6 +1,7 @@
 import { sortBy } from 'common/collections';
 import { useLocalState } from '../../backend';
-import { Button, Flex, Grid, Section, Tabs } from 'tgui-core/components';
+import { Button, Flex, Section, Tabs } from 'tgui-core/components';
+import { Grid } from '../../components/Grid';
 
 const diffMap = {
   0: {

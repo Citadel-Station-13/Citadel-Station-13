@@ -1,6 +1,6 @@
 import { uniqBy } from 'common/collections';
 import { createSearch } from 'common/string';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Icon, Input, ProgressBar, Section, Stack } from 'tgui-core/components';
 import { Materials, MaterialAmount, MaterialFormatting } from './common/Materials';

@@ -1,7 +1,8 @@
 import { map } from 'common/collections';
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Grid, Input, LabeledList, NoticeBox, Section } from 'tgui-core/components';
+import { Box, Button, Collapsible, Input, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { Grid } from '../components/Grid';
 
 export const PandemicBeakerDisplay = (props) => {
   const { act, data } = useBackend<any>();

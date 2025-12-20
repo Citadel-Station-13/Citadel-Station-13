@@ -7,7 +7,7 @@ import {
   Button,
   Section,
 } from 'tgui-core/components';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { Layout, Window } from '../../layouts';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';

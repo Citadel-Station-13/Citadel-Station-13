@@ -1,7 +1,8 @@
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Grid, Icon, LabeledList, Modal, NoticeBox, Section, Table, Tabs } from 'tgui-core/components';
+import { Box, Button, Flex,  Icon, LabeledList, Modal, NoticeBox, Section, Table, Tabs } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
+import { Grid } from '../components/Grid';
 
 const CONTRACT_STATUS_INACTIVE = 1;
 const CONTRACT_STATUS_ACTIVE = 2;
