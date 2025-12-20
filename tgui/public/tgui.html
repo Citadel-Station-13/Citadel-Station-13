@@ -45,8 +45,15 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       : null;
   })();
 
+  // Blink engine version
+  Byond.BLINK = (function () {
+    var groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
+    var majorVersion = groups && groups[1];
+    return majorVersion ? parseInt(majorVersion, 10) : null;
+  })();
+
   // Basic checks to detect whether this page runs in BYOND
-  var isByond = (tridentVersion !== null || window.cef_to_byond)
+  var isByond = (tridentVersion !== null || Byond.BLINK !== null || window.cef_to_byond)
     && location.hostname === '127.0.0.1'
     && location.search !== '?external';
     //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work

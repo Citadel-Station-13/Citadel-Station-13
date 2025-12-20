@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Cache-Control" content="max-age=15; must-revalidate" />
-<link id="goonStyle" rel="stylesheet" type="text/css" href="browserOutput_white.css" media="all" />
+<!-- <link id="goonStyle" rel="stylesheet" type="text/css" href="browserOutput_white.css" media="all" /> -->
 <style>
 	body {
 		font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -237,68 +237,6 @@
 <div id="under_menu"></div>
 <div id="statcontent"></div>
 <script>
-// Polyfills and compatibility ------------------------------------------------
-var decoder = decodeURIComponent || unescape;
-var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
-var textContentKey = (typeof document.body.textContent != 'undefined') ? 'textContent' : 'innerText';
-if(!Array.prototype.includes) {
-	Array.prototype.includes = function(thing) {
-		for(var i = 0; i < this.length; i++) {
-			if(this[i] == thing) return true;
-		}
-		return false;
-	}
-}
-if (!String.prototype.trim) {
-	String.prototype.trim = function () {
-		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-	};
-}
-/*\
-|*|
-|*|  Polyfill which enables the passage of arbitrary arguments to the
-|*|  callback functions of JavaScript timers (HTML5 standard syntax).
-|*|
-|*|  https://developer.mozilla.org/en-US/docs/DOM/window.setInterval
-|*|
-|*|  Syntax:
-|*|  var timeoutID = window.setTimeout(func, delay[, arg1, arg2, ...]);
-|*|  var timeoutID = window.setTimeout(code, delay);
-|*|  var intervalID = window.setInterval(func, delay[, arg1, arg2, ...]);
-|*|  var intervalID = window.setInterval(code, delay);
-|*|
-\*/
-(function() {
-  setTimeout(function(arg1) {
-    if (arg1 === 'test') {
-      // feature test is passed, no need for polyfill
-      return;
-    }
-    var __nativeST__ = window.setTimeout;
-    window.setTimeout = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
-      var aArgs = Array.prototype.slice.call(arguments, 2);
-      return __nativeST__(vCallback instanceof Function ? function() {
-        vCallback.apply(null, aArgs);
-      } : vCallback, nDelay);
-    };
-  }, 0, 'test');
-
-  var interval = setInterval(function(arg1) {
-    clearInterval(interval);
-    if (arg1 === 'test') {
-      // feature test is passed, no need for polyfill
-      return;
-    }
-    var __nativeSI__ = window.setInterval;
-    window.setInterval = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
-      var aArgs = Array.prototype.slice.call(arguments, 2);
-      return __nativeSI__(vCallback instanceof Function ? function() {
-        vCallback.apply(null, aArgs);
-      } : vCallback, nDelay);
-    };
-  }, 0, 'test');
-}())
-
 // Status panel implementation ------------------------------------------------
 var status_tab_parts = ["Loading..."];
 var current_tab = null;
