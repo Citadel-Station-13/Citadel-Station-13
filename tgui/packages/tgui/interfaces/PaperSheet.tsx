@@ -432,7 +432,7 @@ const createPreview = (
 // ugh.  So have to turn this into a full
 // component too if I want to keep updates
 // low and keep the weird flashing down
-class PaperSheetEdit extends Component {
+class PaperSheetEdit extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {

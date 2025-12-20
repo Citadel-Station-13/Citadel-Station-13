@@ -31,7 +31,7 @@ export const PowerMonitorContent = (props) => {
   const [
     sortByField,
     setSortByField,
-  ] = useLocalState('sortByField', null);
+  ] = useLocalState<string | null>('sortByField', null);
   const supply = history.supply[history.supply.length - 1] || 0;
   const demand = history.demand[history.demand.length - 1] || 0;
   const supplyData = history.supply.map((value, i) => [i, value]);
@@ -108,19 +108,19 @@ export const PowerMonitorContent = (props) => {
             checked={sortByField === 'name'}
             content="Name"
             onClick={() => setSortByField(
-              sortByField !== 'name' && 'name'
+              'name'
             )} />
           <Button.Checkbox
             checked={sortByField === 'charge'}
             content="Charge"
             onClick={() => setSortByField(
-              sortByField !== 'charge' && 'charge'
+              'charge'
             )} />
           <Button.Checkbox
             checked={sortByField === 'draw'}
             content="Draw"
             onClick={() => setSortByField(
-              sortByField !== 'draw' && 'draw'
+              'draw'
             )} />
         </Box>
         <Table>
