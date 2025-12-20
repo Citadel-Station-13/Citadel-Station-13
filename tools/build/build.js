@@ -137,7 +137,7 @@ export const TgFontTarget = new Juke.Target({
     'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
   executes: async () => {
-    await yarn('workspace', 'tgfont', 'build');
+    await yarn('workspace', 'tgfont', 'tgfont:build');
   },
 });
 
@@ -156,7 +156,7 @@ export const TguiTarget = new Juke.Target({
     'tgui/public/tgui-panel.bundle.js',
   ],
   executes: async () => {
-    await yarn('webpack-cli', '--mode=production');
+    await yarn('webpack-cli', '--mode=development');
   },
 });
 

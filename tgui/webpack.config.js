@@ -32,10 +32,10 @@ module.exports = (env = {}, argv) => {
     target: ['web', 'browserslist:edge >= 123'],
     entry: {
       'tgui': [
-        './packages/tgui'
+        './packages/tgui',
       ],
       'tgui-panel': [
-        './packages/tgui-panel'
+        './packages/tgui-panel',
       ],
     },
     output: {
@@ -138,7 +138,6 @@ module.exports = (env = {}, argv) => {
       new TerserPlugin({
         extractComments: false,
         terserOptions: {
-          ie8: true,
           output: {
             ascii_only: true,
             comments: false,
