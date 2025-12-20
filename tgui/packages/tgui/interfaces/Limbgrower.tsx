@@ -79,10 +79,9 @@ export const Limbgrower = (props) => {
           </LabeledList>
         </Section>
         <Section title="Designs">
-          <Tabs>
+          <Tabs fluid>
             {categories.map(category => (
               <Tabs.Tab
-                fluid
                 key={category.name}
                 selected={tab === category.name}
                 onClick={() => setTab(category.name)}>

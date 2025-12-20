@@ -1,8 +1,8 @@
-import { classes } from 'common/react';
-import { multiline } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, TimeDisplay } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { multiline } from 'common/string';
+import { classes } from 'tgui-core/react';
 
 export const MafiaPanel = (props) => {
   const { act, data } = useBackend<any>();
@@ -167,10 +167,10 @@ const MafiaRole = (props) => {
       buttons={(
         <Box
           style={{
-            'font-family': 'Consolas, monospace',
-            'font-size': '14px',
-            'line-height': 1.5,
-            'font-weight': 'bold',
+            'fontFamily': 'Consolas, monospace',
+            'fontSize': '14px',
+            'lineHeight': 1.5,
+            'fontWeight': 'bold',
           }}>
           <TimeDisplay auto="down" value={timeleft} />
         </Box>

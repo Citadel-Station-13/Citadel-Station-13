@@ -7,7 +7,7 @@
 import { clamp01 } from 'tgui-core/math';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Section, Input, Stack } from 'tgui-core/components';
-import { KEY_DOWN, KEY_UP, KEY_ENTER, KEY_SPACE } from 'common/keycodes';
+import { KEY_DOWN, KEY_UP, KEY_ENTER, KEY_SPACE } from 'tgui-core/keycodes';
 import { Window } from '../layouts';
 
 let lastScrollTime = 0;
@@ -59,7 +59,7 @@ export const ListInput = (props) => {
       else if (index >= buttons.length) index = 0;
       setSelectedButton(buttons[index]);
       setLastCharCode(null);
-      document.getElementById(buttons[index]).focus();
+      document.getElementById(buttons[index])?.focus();
       return;
     }
 
@@ -99,7 +99,7 @@ export const ListInput = (props) => {
     if (foundValue) {
       setLastCharCode(charCode);
       setSelectedButton(foundValue);
-      document.getElementById(foundValue).focus();
+      document.getElementById(foundValue)?.focus();
     }
   };
 
