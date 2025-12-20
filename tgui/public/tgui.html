@@ -54,10 +54,6 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
 
   // Version constants
   Byond.IS_BYOND = isByond;
-  Byond.IS_LTE_IE8 = tridentVersion !== null && tridentVersion <= 4;
-  Byond.IS_LTE_IE9 = tridentVersion !== null && tridentVersion <= 5;
-  Byond.IS_LTE_IE10 = tridentVersion !== null && tridentVersion <= 6;
-  Byond.IS_LTE_IE11 = tridentVersion !== null && tridentVersion <= 7;
 
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
@@ -66,14 +62,12 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   // IE8: No reviver for you!
   // See: https://stackoverflow.com/questions/1288962
   var byondJsonReviver;
-  if (!Byond.IS_LTE_IE8) {
     byondJsonReviver = function (key, value) {
       if (typeof value === 'object' && value !== null && value.__number__) {
         return parseFloat(value.__number__);
       }
       return value;
     };
-  }
 
   // Makes a BYOND call.
   // See: https://secure.byond.com/docs/ref/skinparams.html
@@ -257,9 +251,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       var node = document.createElement('script');
       node.type = 'text/javascript';
       // IE8: Prefer non-https protocols
-      node.src = Byond.IS_LTE_IE9
-        ? url.replace('https://', 'http://')
-        : url;
+      node.src =url;
       if (sync) {
         node.defer = true;
       }
@@ -281,9 +273,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       node.type = 'text/css';
       node.rel = 'stylesheet';
       // IE8: Prefer non-https protocols
-      node.href = Byond.IS_LTE_IE9
-        ? url.replace('https://', 'http://')
-        : url;
+      node.href = url;
       // Temporarily set media to something inapplicable
       // to ensure it'll fetch without blocking render
       if (!sync) {
@@ -339,7 +329,7 @@ window.onerror = function (msg, url, line, col, error) {
     else {
       window.onerror.__stack__ = stack;
     }
-    var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
+    var textProp = 'textContent';
     errorStack[textProp] = window.onerror.__stack__;
   }
   // Set window geometry
