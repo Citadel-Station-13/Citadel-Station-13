@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, <Grid></Grid>, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-core/components';
+import { Box, Button, Collapsible, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { Grid } from '../components/Grid';
 

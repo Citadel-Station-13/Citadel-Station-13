@@ -1,5 +1,5 @@
 import { map } from 'common/collections';
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Input, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -20,7 +20,7 @@ export const ChemReactionChamber = (props) => {
     <Window
       width={250}
       height={225}
-      >
+    >
       <Window.Content scrollable>
         <Section
           title="Reagents"

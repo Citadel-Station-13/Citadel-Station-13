@@ -1,6 +1,6 @@
 import { filter } from 'common/collections';
 import { flow } from 'common/fp';
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Icon, Input, Section, Table } from 'tgui-core/components';

@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { multiline } from 'tgui-core/string';
 import { BlockQuote, Button, Dimmer, Section, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 import { Window } from '../layouts';
 
 const allystyle = {

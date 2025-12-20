@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 import { multiline } from 'tgui-core/string';
 import { resolveAsset } from '../assets';

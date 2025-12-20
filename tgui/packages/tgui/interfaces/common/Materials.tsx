@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 import { Box, Button, NumberInput, Flex } from 'tgui-core/components';
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { formatMoney, formatSiUnit } from 'tgui-core/format';
 import { useSharedState } from '../../backend';
 import { BoxProps } from 'tgui-core/components/Box';

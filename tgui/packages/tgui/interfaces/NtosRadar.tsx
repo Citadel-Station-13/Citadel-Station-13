@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, NoticeBox, Section } from 'tgui-core/components';

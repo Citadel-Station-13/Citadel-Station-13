@@ -1,5 +1,5 @@
 import { toFixed } from 'tgui-core/math';
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { storage } from 'common/storage';
 import { multiline } from 'tgui-core/string';
 import { createUuid } from 'common/uuid';

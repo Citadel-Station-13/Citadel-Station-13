@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Flex, Icon, Input, NoticeBox, NumberInput, Section, Table, Tabs } from 'tgui-core/components';

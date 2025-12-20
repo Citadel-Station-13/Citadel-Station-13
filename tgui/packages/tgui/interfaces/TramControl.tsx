@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Icon, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';

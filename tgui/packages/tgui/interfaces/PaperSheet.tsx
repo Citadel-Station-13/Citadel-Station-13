@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { Component } from 'react';
 import { marked } from 'marked';
 import { useBackend } from '../backend';

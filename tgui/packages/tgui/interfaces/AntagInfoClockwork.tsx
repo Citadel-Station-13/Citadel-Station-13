@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -10,7 +10,7 @@ interface Info {
 let REC_RATVAR = "";
 // You may ask "why is this not inside ClockworkSlab"
 // It's because cslab gets called every time. Lag is bad.
-for (let index = 0; index < Math.min(Math.random()*100); index++) {
+for (let index = 0; index < Math.min(Math.random() * 100); index++) {
   REC_RATVAR += "HONOR RATVAR ";
 }
 

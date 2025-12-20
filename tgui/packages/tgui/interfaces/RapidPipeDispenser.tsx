@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ColorBox, Flex, LabeledList, Section, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
@@ -75,7 +75,7 @@ export const RapidPipeDispenser = (props) => {
     <Window
       width={425}
       height={515}
-      >
+    >
       <Window.Content scrollable>
         <Section>
           <LabeledList>

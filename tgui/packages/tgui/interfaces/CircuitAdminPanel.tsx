@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
 import { useBackend } from "../backend";
 import { Button, Table } from "tgui-core/components";
 import { Window } from "../layouts";
+import { BooleanLike } from "tgui-core/react";
 
 type CircuitAdminPanelData = {
   circuits: {

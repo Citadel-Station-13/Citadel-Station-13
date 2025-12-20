@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Blink, BlockQuote, Box, Dimmer, Icon, Section, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 import { Window } from '../layouts';
 
 type Objective = {
@@ -70,16 +70,16 @@ const ObjectivePrintout = (props) => {
       </Stack.Item>
       <Stack.Item>
         {!objectives && "None!"
-        || objectives.map(objective => (
-          <>
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-            <Stack.Item textColor="red">
-              This Directive must be followed.
-            </Stack.Item>
-          </>
-        )) }
+          || objectives.map(objective => (
+            <>
+              <Stack.Item key={objective.count}>
+                #{objective.count}: {objective.explanation}
+              </Stack.Item>
+              <Stack.Item textColor="red">
+                This Directive must be followed.
+              </Stack.Item>
+            </>
+          ))}
       </Stack.Item>
     </Stack>
   );

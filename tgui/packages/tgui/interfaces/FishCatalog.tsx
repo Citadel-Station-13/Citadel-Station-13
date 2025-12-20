@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { classes } from 'common/react';
+import { classes } from 'tgui-core/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
