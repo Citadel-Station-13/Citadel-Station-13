@@ -19,7 +19,7 @@
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  */
 /proc/get_path_to(caller1, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude, skip_first=TRUE)
-	if(!caller1 || !get_turf(end))
+	if(!caller || !get_turf(end))
 		return
 
 	var/l = SSpathfinder.mobs.getfree(caller1)
@@ -122,7 +122,7 @@
 	var/turf/avoid
 
 /datum/pathfind/New(atom/movable/caller1, atom/goal, id, max_distance, mintargetdist, simulated_only, avoid)
-	src.caller1 = caller1
+	src.caller = caller1
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	sources = new()
@@ -333,7 +333,7 @@
  * For seeing if we can actually move between 2 given turfs while accounting for our access and the caller's pass_flags
  *
  * Arguments:
- * * caller1: The movable, if one exists, being used for mobility checks to see what tiles it can reach
+ * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
 */

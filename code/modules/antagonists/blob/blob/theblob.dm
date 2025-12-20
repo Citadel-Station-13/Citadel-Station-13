@@ -71,10 +71,10 @@
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
 
-/obj/structure/blob/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/)
+/obj/structure/blob/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller1)
 	. = FALSE
-	if(istype())
-		. = . || (.pass_flags & PASSBLOB)
+	if(istype(caller1))
+		. = . || (caller1.pass_flags & PASSBLOB)
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	. = ..()

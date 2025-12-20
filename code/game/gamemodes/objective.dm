@@ -87,7 +87,7 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 /datum/objective/proc/is_unique_objective(possible_target)
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
-		for(var/datum/objective/O in M.get_all_objectives()) //This scope is debatable, probably should be passed in by caller.
+		for(var/datum/objective/O in M.get_all_objectives()) //This scope is debatable, probably should be passed in by caller1.
 			if(istype(O, type) && O.get_target() == possible_target)
 				return FALSE
 	return TRUE

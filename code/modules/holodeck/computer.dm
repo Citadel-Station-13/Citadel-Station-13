@@ -180,7 +180,7 @@
 		var/obj/effect/holodeck_effect/HE = e
 		HE.tick()
 
-	active_power_usage = 50 + spawned?.len * 3 + effects?.len * 5
+	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
 /obj/machinery/computer/holodeck/emag_act(mob/user)
 	. = ..()
