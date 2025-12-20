@@ -264,7 +264,7 @@ Possible to do for anyone motivated enough:
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		var/list/call_data = list(
-			caller = HC.user,
+			 = HC.user,
 			connected = HC.connected_holopad == src ? TRUE : FALSE,
 			ref = REF(HC)
 		)

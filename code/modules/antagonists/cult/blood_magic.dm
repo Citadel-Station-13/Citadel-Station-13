@@ -252,10 +252,10 @@
 	else
 		add_ranged_ability(user, "<span class='cult'>You prepare to horrify a target...</span>")
 
-/obj/effect/proc_holder/horror/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/horror/InterceptClickOn(mob/living/, params, atom/target)
 	if(..())
 		return
-	if(ranged_ability_user.incapacitated() || !iscultist(caller))
+	if(ranged_ability_user.incapacitated() || !iscultist())
 		remove_ranged_ability()
 		return
 	var/turf/T = get_turf(ranged_ability_user)

@@ -118,10 +118,10 @@
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return TRUE
 
-/obj/structure/table/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/table/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller1)
 	. = !density
-	if(istype(caller))
-		. = . || (caller.pass_flags & PASSTABLE)
+	if(istype(caller1))
+		. = . || (caller1.pass_flags & PASSTABLE)
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
@@ -747,10 +747,10 @@
 	else
 		return FALSE
 
-/obj/structure/rack/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/rack/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller1)
 	. = !density
-	if(istype(caller))
-		. = . || (caller.pass_flags & PASSTABLE)
+	if(istype(caller1))
+		. = . || (caller1.pass_flags & PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	. = ..()

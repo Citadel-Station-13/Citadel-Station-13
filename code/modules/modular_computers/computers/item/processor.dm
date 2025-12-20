@@ -53,8 +53,8 @@
 /obj/item/modular_computer/processor/attack_ghost(mob/user)
 	ui_interact(user)
 
-/obj/item/modular_computer/processor/alert_call(datum/computer_file/program/caller, alerttext)
-	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext)
+/obj/item/modular_computer/processor/alert_call(datum/computer_file/program/, alerttext)
+	if(! || !.alert_able || .alert_silenced || !alerttext)
 		return
 	playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	machinery_computer.visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
+	machinery_computer.visible_message(span_notice("The [src] displays a [.filedesc] notification: [alerttext]"))
