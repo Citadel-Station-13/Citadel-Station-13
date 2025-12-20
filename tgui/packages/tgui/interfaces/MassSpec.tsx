@@ -33,7 +33,7 @@ export const MassSpec = (props) => {
         {!!processing && (
           <Dimmer fontSize="32px">
             <Icon name="cog" spin={1} />
-            {' Purifying... '+round(eta)+"s"}
+            {' Purifying... ' + round(eta) + "s"}
           </Dimmer>
         )}
         <Section
@@ -57,10 +57,10 @@ export const MassSpec = (props) => {
               maxAbsorbance={peakHeight}
               reagentPeaks={beaker1Contents} />
           ) || (
-            <Box>
-              Please insert an input beaker with reagents!
-            </Box>
-          )}
+              <Box>
+                Please insert an input beaker with reagents!
+              </Box>
+            )}
         </Section>
 
         <Section
@@ -133,49 +133,49 @@ const BeakerMassProfile = props => {
           Beaker is empty.
         </Box>
       ) || (
-        <Table className="candystripe">
-          <Table.Row>
-            <Table.Cell bold collapsing color="label">
-              Reagent
-            </Table.Cell>
-            <Table.Cell bold collapsing color="label">
-              Volume
-            </Table.Cell>
-            <Table.Cell bold collapsing color="label">
-              Mass
-            </Table.Cell>
-            <Table.Cell bold collapsing color="label">
-              Type
-            </Table.Cell>
-            {!!details && (
+          <Table className="candystripe">
+            <Table.Row>
               <Table.Cell bold collapsing color="label">
-                Results
+                Reagent
               </Table.Cell>
-            )}
-          </Table.Row>
-          {beaker.map(reagent => (
-            <Table.Row key={reagent.name}>
-              <Table.Cell collapsing color={reagent.selected ? "green" : "default"}>
-                {reagent.name}
+              <Table.Cell bold collapsing color="label">
+                Volume
               </Table.Cell>
-              <Table.Cell collapsing color={reagent.selected ? "green" : "default"}>
-                {reagent.volume}
+              <Table.Cell bold collapsing color="label">
+                Mass
               </Table.Cell>
-              <Table.Cell collapsing color={reagent.selected ? "green" : "default"}>
-                {reagent.mass}
-              </Table.Cell>
-              <Table.Cell collapsing color={reagent.color}>
-                ▮{reagent.type}
+              <Table.Cell bold collapsing color="label">
+                Type
               </Table.Cell>
               {!!details && (
-                <Table.Cell>
-                  {reagent.log}
+                <Table.Cell bold collapsing color="label">
+                  Results
                 </Table.Cell>
               )}
             </Table.Row>
-          ))}
-        </Table>
-      )}
+            {beaker.map(reagent => (
+              <Table.Row key={reagent.name}>
+                <Table.Cell collapsing color={reagent.selected ? "green" : "default"}>
+                  {reagent.name}
+                </Table.Cell>
+                <Table.Cell collapsing color={reagent.selected ? "green" : "default"}>
+                  {reagent.volume}
+                </Table.Cell>
+                <Table.Cell collapsing color={reagent.selected ? "green" : "default"}>
+                  {reagent.mass}
+                </Table.Cell>
+                <Table.Cell collapsing color={reagent.color}>
+                  ▮{reagent.type}
+                </Table.Cell>
+                {!!details && (
+                  <Table.Cell>
+                    {reagent.log}
+                  </Table.Cell>
+                )}
+              </Table.Row>
+            ))}
+          </Table>
+        )}
     </Box>
   );
 };
@@ -225,7 +225,7 @@ const MassSpectroscopy = (props) => {
               // Triangle peak
               <polygon key={peak.name} points={`${((peak.mass - 10) / graphUpperRange) * 500},265 ${((peak.mass) / graphUpperRange) * 500},${250 - ((peak.volume / maxAbsorbance) * 250)} ${((peak.mass + 10) / graphUpperRange) * 500},265 `} opacity="0.6" style={`fill:${peak.color}`} />
             ))}
-            <polygon points={`${(lowerRange/deltaRange)*500},265 ${(lowerRange/deltaRange)*500},0 ${(upperRange/deltaRange)*500},0 ${(upperRange/deltaRange)*500},265`} opacity="0.2" style={`fill:blue`} />
+            <polygon points={`${(lowerRange / deltaRange) * 500},265 ${(lowerRange / deltaRange) * 500},0 ${(upperRange / deltaRange) * 500},0 ${(upperRange / deltaRange) * 500},265`} opacity="0.2" style={`fill:blue`} />
             <line x1={0} y1={265} x2={502} y2={264} stroke={"white"} stroke-width={3} />
             <line x1={501} y1={264} x2={501} y2={0} stroke={"white"} stroke-width={3} />
           </g>
@@ -235,15 +235,15 @@ const MassSpectroscopy = (props) => {
         <Slider
           name={"Left slider"}
           position="relative"
-          step={graphUpperRange/400}
+          step={graphUpperRange / 400}
           height={17.2}
           format={value => round(value)}
-          width={(centerValue/graphUpperRange)*400+"px"}
+          width={(centerValue / graphUpperRange) * 400 + "px"}
           value={lowerRange}
           minValue={graphLowerRange}
           maxValue={centerValue}
           color={"invisible"}
-          onChange={(e, value) => act('leftSlider', {
+          onChange={(value) => act('leftSlider', {
             value: value,
           })} >
           {" "}
@@ -253,13 +253,13 @@ const MassSpectroscopy = (props) => {
           position="absolute"
           height={17.2}
           format={value => round(value)}
-          step={graphUpperRange/400}
-          width={400-((centerValue/graphUpperRange)*400)+"px"}
+          step={graphUpperRange / 400}
+          width={400 - ((centerValue / graphUpperRange) * 400) + "px"}
           value={upperRange}
           minValue={centerValue}
           maxValue={graphUpperRange}
           color={"invisible"}
-          onChange={(e, value) => act('rightSlider', {
+          onChange={(value) => act('rightSlider', {
             value: value,
           })} >
           {" "}
@@ -268,17 +268,17 @@ const MassSpectroscopy = (props) => {
           <Slider
             name={"Center slider"}
             position="relative"
-            step={graphUpperRange/400}
+            step={graphUpperRange / 400}
             mt={0.3}
             mb={5}
             value={centerValue}
             height={1.9}
             format={value => round(value)}
-            width={400+"px"}
+            width={400 + "px"}
             minValue={graphLowerRange + 1}
             maxValue={graphUpperRange - 1}
             color={"invisible"}
-            onChange={(e, value) => act('centerSlider', {
+            onChange={(value) => act('centerSlider', {
               value: value,
             })} >
             {" "}

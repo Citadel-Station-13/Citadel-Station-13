@@ -8,7 +8,7 @@ export const NaniteRemote = (props) => {
     <Window
       width={420}
       height={500}
-      >
+    >
       <Window.Content scrollable>
         <NaniteRemoteContent />
       </Window.Content>
@@ -61,7 +61,7 @@ export const NaniteRemoteContent = (props) => {
               value={program_name}
               maxLength={14}
               width="130px"
-              onChange={(e, value) => act('update_name', {
+              onChange={(value) => act('update_name', {
                 name: value,
               })} />
             <Button
@@ -77,7 +77,7 @@ export const NaniteRemoteContent = (props) => {
               width="47px"
               step={1}
               stepPixelSize={2}
-              onChange={(e, value) => act('set_code', {
+              onChange={(value) => act('set_code', {
                 code: value,
               })} />
           </LabeledList.Item>
@@ -86,7 +86,7 @@ export const NaniteRemoteContent = (props) => {
               <Input
                 value={message}
                 width="270px"
-                onChange={(e, value) => act('set_message', {
+                onChange={(value) => act('set_message', {
                   value: value,
                 })} />
             </LabeledList.Item>
@@ -100,7 +100,7 @@ export const NaniteRemoteContent = (props) => {
                 width="47px"
                 step={1}
                 stepPixelSize={2}
-                onChange={(e, value) => act('set_relay_code', {
+                onChange={(value) => act('set_relay_code', {
                   code: value,
                 })} />
             </LabeledList.Item>

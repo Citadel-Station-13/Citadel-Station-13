@@ -58,7 +58,7 @@ export const Tank = (props) => {
                 unit="kPa"
                 minValue={data.minReleasePressure}
                 maxValue={data.maxReleasePressure}
-                onChange={(e, value) => act('pressure', {
+                onChange={(value) => act('pressure', {
                   pressure: value,
                 })} />
               <Button

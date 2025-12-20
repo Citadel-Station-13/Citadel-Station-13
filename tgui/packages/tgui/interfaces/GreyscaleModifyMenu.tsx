@@ -42,7 +42,7 @@ enum Direction {
   NorthWest = "northwest"
 }
 
-const DirectionAbbreviation : Record<Direction, string> = {
+const DirectionAbbreviation: Record<Direction, string> = {
   [Direction.North]: "N",
   [Direction.NorthEast]: "NE",
   [Direction.East]: "E",
@@ -65,7 +65,7 @@ const ConfigDisplay = (props) => {
           />
           <Input
             value={data.greyscale_config}
-            onChange={(_, value) => act("load_config_from_string", { config_string: value })}
+            onChange={(value) => act("load_config_from_string", { config_string: value })}
           />
         </LabeledList.Item>
       </LabeledList>
@@ -88,7 +88,7 @@ const ColorDisplay = (props) => {
           />
           <Input
             value={colors.map(item => item.value).join('')}
-            onChange={(_, value) => act("recolor_from_string", { color_string: value })}
+            onChange={(value) => act("recolor_from_string", { color_string: value })}
           />
         </LabeledList.Item>
         {colors.map(item => (
@@ -114,7 +114,7 @@ const ColorDisplay = (props) => {
             <Input
               value={item.value}
               width={7}
-              onChange={(_, value) => act("recolor", { color_index: item.index, new_color: value })}
+              onChange={(value) => act("recolor", { color_index: item.index, new_color: value })}
             />
           </LabeledList.Item>
         ))}
@@ -221,39 +221,39 @@ const PreviewDisplay = (props) => {
       </Table>
       {
         !!data.generate_full_preview
-          && `Time Spent: ${data.sprites.time_spent}ms`
+        && `Time Spent: ${data.sprites.time_spent}ms`
       }
       <Divider />
       {
         !data.refreshing
-          && (
-            <Table>
-              {
-                !!data.generate_full_preview && data.sprites.steps !== null
-                  && (
-                    <Table.Row header>
-                      <Table.Cell width="50%" textAlign="center">Layer Source</Table.Cell>
-                      <Table.Cell width="25%" textAlign="center">Step Layer</Table.Cell>
-                      <Table.Cell width="25%" textAlign="center">Step Result</Table.Cell>
-                    </Table.Row>
-                  )
-              }
-              {
-                !!data.generate_full_preview && data.sprites.steps !== null
-                  && data.sprites.steps.map(item => (
-                    <Table.Row key={`${item.result}|${item.layer}`}>
-                      <Table.Cell verticalAlign="middle">{item.config_name}</Table.Cell>
-                      <Table.Cell>
-                        <SingleSprite source={item.layer} />
-                      </Table.Cell>
-                      <Table.Cell>
-                        <SingleSprite source={item.result} />
-                      </Table.Cell>
-                    </Table.Row>
-                  ))
-              }
-            </Table>
-          )
+        && (
+          <Table>
+            {
+              !!data.generate_full_preview && data.sprites.steps !== null
+              && (
+                <Table.Row header>
+                  <Table.Cell width="50%" textAlign="center">Layer Source</Table.Cell>
+                  <Table.Cell width="25%" textAlign="center">Step Layer</Table.Cell>
+                  <Table.Cell width="25%" textAlign="center">Step Result</Table.Cell>
+                </Table.Row>
+              )
+            }
+            {
+              !!data.generate_full_preview && data.sprites.steps !== null
+              && data.sprites.steps.map(item => (
+                <Table.Row key={`${item.result}|${item.layer}`}>
+                  <Table.Cell verticalAlign="middle">{item.config_name}</Table.Cell>
+                  <Table.Cell>
+                    <SingleSprite source={item.layer} />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <SingleSprite source={item.result} />
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            }
+          </Table>
+        )
       }
     </Section>
   );
@@ -294,7 +294,7 @@ export const GreyscaleModifyMenu = (props) => {
         <IconStatesDisplay />
         {
           !!data.unlocked
-            && <Button content="Refresh Icon File" onClick={() => act("refresh_file")} />
+          && <Button content="Refresh Icon File" onClick={() => act("refresh_file")} />
         }
         <Button
           content="Apply"

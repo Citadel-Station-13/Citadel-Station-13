@@ -67,12 +67,12 @@ export const SpaceHeater = (props) => {
                   unit="°C"
                   minValue={data.minTemp}
                   maxValue={data.maxTemp}
-                  onChange={(e, value) => act('target', {
+                  onChange={(value) => act('target', {
                     target: value,
                   })} />
               ) || (
-                data.targetTemp + '°C'
-              )}
+                  data.targetTemp + '°C'
+                )}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
               {!data.open && 'Auto' || (

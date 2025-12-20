@@ -27,7 +27,7 @@ export const AtmosTempPump = (props) => {
                 minValue={0}
                 maxValue={data.max_heat_transfer_rate}
                 step={1}
-                onChange={(e, value) => act('rate', {
+                onChange={(value) => act('rate', {
                   rate: value,
                 })} />
               <Button

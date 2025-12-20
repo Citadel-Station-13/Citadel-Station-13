@@ -66,10 +66,10 @@ const ShoppingTab = (props) => {
                     {item.name}
                   </Stack.Item>
                   <Stack.Item mt={-1} color="label" fontSize="10px">
-                    {"\""+item.desc+"\""}
+                    {"\"" + item.desc + "\""}
                     <br />
                     <Box textAlign="right">
-                      {item.name+" costs "+item.cost+" per order."}
+                      {item.name + " costs " + item.cost + " per order."}
                     </Box>
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
@@ -79,7 +79,7 @@ const ShoppingTab = (props) => {
                       width="41px"
                       minValue={0}
                       maxValue={20}
-                      onChange={(e, value) => act('cart_set', {
+                      onChange={(value) => act('cart_set', {
                         target: item.ref,
                         amt: value,
                       })} />
@@ -132,10 +132,10 @@ const CheckoutTab = (props) => {
                       {item.name}
                     </Stack.Item>
                     <Stack.Item mt={-1} color="label" fontSize="10px">
-                      {"\""+item.desc+"\""}
+                      {"\"" + item.desc + "\""}
                       <br />
                       <Box textAlign="right">
-                        {item.name+" costs "+item.cost+" per order."}
+                        {item.name + " costs " + item.cost + " per order."}
                       </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
@@ -144,7 +144,7 @@ const CheckoutTab = (props) => {
                         width="41px"
                         minValue={0}
                         maxValue={item.cost > 10 && 50 || 10}
-                        onChange={(e, value) => act('cart_set', {
+                        onChange={(value) => act('cart_set', {
                           target: item.ref,
                           amt: value,
                         })} />
@@ -225,7 +225,7 @@ export const ProduceConsole = (props) => {
     tabIndex,
     setTabIndex,
   ] = useLocalState('tab-index', 1);
-  const TabComponent = TAB2NAME[tabIndex-1].component();
+  const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window
       title="Produce Orders"

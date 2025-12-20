@@ -329,7 +329,7 @@ const EFFECTS_NORMAL = [
   },
 ];
 
-const EFFECTS_HARM =[
+const EFFECTS_HARM = [
   {
     title: 'Explosion Custom',
     icon: 'bomb',
@@ -421,7 +421,7 @@ const ViewTabHolder = (props) => {
   return (
     <Section fill title="View" buttons={(
       <>
-        {(!!data.customDropoff && data.effectReverse===1) && (
+        {(!!data.customDropoff && data.effectReverse === 1) && (
           <Button
             inline
             color="transparent"
@@ -454,7 +454,7 @@ const ViewTabHolder = (props) => {
             act('tabSwitch', { tabIndex: 1 });
           }} />
         <span style={pod_grey}>|</span>
-        {(!!data.customDropoff && data.effectReverse===1) && (
+        {(!!data.customDropoff && data.effectReverse === 1) && (
           <Button
             inline
             color="transparent"
@@ -561,14 +561,14 @@ const PodStatusPage = (props) => {
                     {effect.divider && (
                       <span style={pod_grey}><b>|</b></span>
                     )}
-                    {!effect.divider &&(
+                    {!effect.divider && (
                       <Button
                         tooltip={effect.details
                           ? (data.effectShrapnel
                             ? effect.title
-                            +"\n"+data.shrapnelType
-                            +"\nMagnitude:"
-                            +data.shrapnelMagnitude
+                            + "\n" + data.shrapnelType
+                            + "\nMagnitude:"
+                            + data.shrapnelMagnitude
                             : effect.title)
                           : effect.title}
                         tooltipPosition={list.tooltipPosition}
@@ -584,7 +584,7 @@ const PodStatusPage = (props) => {
                           'vertical-align': 'middle',
                           'margin-left': (j !== 0 ? '1px' : '0px'),
                           'margin-right': (
-                            j !== list.list.length-1 ? '1px' : '0px'
+                            j !== list.list.length - 1 ? '1px' : '0px'
                           ),
                           'border-radius': '5px',
                         }} />
@@ -596,7 +596,7 @@ const PodStatusPage = (props) => {
             {i < EFFECTS_ALL.length && (
               <Stack.Divider />
             )}
-            {i === EFFECTS_ALL.length - 1 &&(
+            {i === EFFECTS_ALL.length - 1 && (
               <Stack.Item>
                 <Box color="label" mb={1}>
                   <b>Extras:</b>
@@ -631,15 +631,15 @@ const PodStatusPage = (props) => {
                         act('refreshView');
                       }} />
                   ) || (
-                    <Button
-                      m={0}
-                      inline
-                      color="transparent"
-                      icon="compress"
-                      tooltip="Compact mode"
-                      tooltipPosition="top-start"
-                      onClick={() => toggleCompact()} />
-                  )}
+                      <Button
+                        m={0}
+                        inline
+                        color="transparent"
+                        icon="compress"
+                        tooltip="Compact mode"
+                        tooltipPosition="top-start"
+                        onClick={() => toggleCompact()} />
+                    )}
                 </Box>
               </Stack.Item>
             )}
@@ -726,7 +726,8 @@ const ReverseMenu = (props) => {
                 onClick={() => act('reverseOption', {
                   reverseOption: option.key
                     ? option.key
-                    : option.title })} />
+                    : option.title
+                })} />
             ))}
           </Stack.Item>
         </Stack>
@@ -873,12 +874,12 @@ class PresetsPage extends Component {
               value={hue}
               minValue={0}
               maxValue={360}
-              onChange={(e, value) => setHue(value)} />
+              onChange={(value) => setHue(value)} />
             <Input
               inline
               autofocus
               placeholder="Preset Name"
-              onChange={(e, value) => setText(value)} />
+              onChange={(value) => setText(value)} />
             <Divider horizontal />
           </>
         )}
@@ -962,9 +963,9 @@ const StylePage = (props) => {
           width="45px"
           height="45px"
           tooltipPosition={
-            i >= STYLES.length-2
-              ? (i%2===1 ? "top-start" : "top-end")
-              : (i%2===1 ? "bottom-start" : "bottom-end")
+            i >= STYLES.length - 2
+              ? (i % 2 === 1 ? "top-start" : "top-end")
+              : (i % 2 === 1 ? "bottom-start" : "bottom-end")
           }
           tooltip={page.title}
           style={{
@@ -972,10 +973,10 @@ const StylePage = (props) => {
             'margin-right': '5px',
             'border-radius': '20px',
           }}
-          selected={data.styleChoice-1 === i}
+          selected={data.styleChoice - 1 === i}
           onClick={() => act('setStyle', { style: i })}>
           <Box
-            className={classes(['supplypods64x64', 'pod_asset'+(i+1)])}
+            className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
             style={{
               'transform': 'rotate(45deg) translate(-25%,-10%)', 'pointer-events': 'none',
             }} />
@@ -1021,8 +1022,8 @@ const Bays = (props) => {
           key={i}
           content={bay.title}
           tooltipPosition="bottom-end"
-          selected={data.bayNumber === ""+(i+1)}
-          onClick={() => act('switchBay', { bayNumber: (""+(i+1)) })} />
+          selected={data.bayNumber === "" + (i + 1)}
+          onClick={() => act('switchBay', { bayNumber: ("" + (i + 1)) })} />
       ))}
     </Section>
   );
@@ -1069,7 +1070,7 @@ const Timing = (props) => {
             reverse
           />
         </>
-      )||""}
+      ) || ""}
     </Section>
   );
 };
@@ -1090,17 +1091,17 @@ const DelayHelper = (props) => {
             inline
             step={0.02}
             size={data.custom_rev_delay ? 0.75 : 1}
-            value={(reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10}
+            value={(reverse ? data.rev_delays[i + 1] : data.delays[i + 1]) / 10}
             unclamped
             minValue={0}
             unit={"s"}
             format={value => toFixed(value, 2)}
             maxValue={10}
-            color={((reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10)
+            color={((reverse ? data.rev_delays[i + 1] : data.delays[i + 1]) / 10)
               > 10 ? "orange" : "default"}
             onChange={(value) => {
               act('editTiming', {
-                timer: ""+(i + 1),
+                timer: "" + (i + 1),
                 value: Math.max(value, 0),
                 reverse: reverse,
               });

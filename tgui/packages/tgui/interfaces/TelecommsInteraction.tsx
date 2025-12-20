@@ -57,7 +57,7 @@ export const TelecommsInteraction = (props) => {
                       value={id}
                       width="150px"
                       maxLength={255}
-                      onChange={(e, value) => act('machine', {
+                      onChange={(value) => act('machine', {
                         'id': value,
                       })} />
                   </LabeledList.Item>
@@ -66,7 +66,7 @@ export const TelecommsInteraction = (props) => {
                       value={network}
                       width="150px"
                       maxLength={15}
-                      onChange={(e, value) => act('machine', {
+                      onChange={(value) => act('machine', {
                         'network': value,
                       })} />
                   </LabeledList.Item>
@@ -123,7 +123,7 @@ export const TelecommsInteraction = (props) => {
                           maxValue={1599 / 10}
                           value={machine.chang_freq_value / 10}
                           format={value => toFixed(value, 1)}
-                          onChange={(e, value) => act('frequency', {
+                          onChange={(value) => act('frequency', {
                             'adjust': value,
                           })} />
                       )}

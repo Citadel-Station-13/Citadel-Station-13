@@ -20,7 +20,7 @@ export const AtmosRelief = (props) => { // rebranded AtmoPump
                 minValue={0}
                 maxValue={data.max_pressure || 4500}
                 step={10}
-                onChange={(e, value) => act('open_pressure', {
+                onChange={(value) => act('open_pressure', {
                   pressure: value,
                 })} />
               <Button
@@ -41,7 +41,7 @@ export const AtmosRelief = (props) => { // rebranded AtmoPump
                 minValue={0}
                 maxValue={data.max_pressure || 4500}
                 step={10}
-                onChange={(e, value) => act('close_pressure', {
+                onChange={(value) => act('close_pressure', {
                   pressure: value,
                 })} />
               <Button

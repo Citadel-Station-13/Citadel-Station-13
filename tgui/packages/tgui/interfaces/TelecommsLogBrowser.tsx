@@ -41,7 +41,7 @@ export const TelecommsLogBrowser = (props) => {
                   value={network}
                   width="150px"
                   maxLength={15}
-                  onChange={(e, value) => act('network', {
+                  onChange={(value) => act('network', {
                     'value': value,
                   })} />
               </LabeledList.Item>

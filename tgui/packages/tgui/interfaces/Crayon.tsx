@@ -53,7 +53,7 @@ export const Crayon = (props) => {
                     maxValue={max_offset}
                     step={1}
                     stepPixelSize={10}
-                    onChange={(e, value) => act('set_precision_x', {
+                    onChange={(value) => act('set_precision_x', {
                       x: value,
                     })} />
                 </LabeledList.Item>
@@ -65,7 +65,7 @@ export const Crayon = (props) => {
                     maxValue={max_offset}
                     step={1}
                     stepPixelSize={10}
-                    onChange={(e, value) => act('set_precision_y', {
+                    onChange={(value) => act('set_precision_y', {
                       y: value,
                     })} />
                 </LabeledList.Item>

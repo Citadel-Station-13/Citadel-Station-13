@@ -148,9 +148,8 @@ const SettingsDisplay = (_, context) => {
       </LabeledControls.Item>
       <LabeledControls.Item label="Airplane Mode">
         <Tooltip
-          content={`${
-            !airplane_mode ? 'Disables' : 'Enables'
-          } remote access via console.`}>
+          content={`${!airplane_mode ? 'Disables' : 'Enables'
+            } remote access via console.`}>
           <Icon
             size={2}
             name="plane"
@@ -161,9 +160,8 @@ const SettingsDisplay = (_, context) => {
       </LabeledControls.Item>
       <LabeledControls.Item label="Patrol Station">
         <Tooltip
-          content={`${
-            patrol_station ? 'Disables' : 'Enables'
-          } automatic station patrol.`}>
+          content={`${patrol_station ? 'Disables' : 'Enables'
+            } automatic station patrol.`}>
           <Icon
             size={2}
             name="map-signs"
@@ -285,7 +283,7 @@ const InjectionThreshold = (props) => {
         step={2}
         unit="u"
         value={control[1]}
-        onChange={(_, value) => act(control[0], { amount: value })}
+        onChange={(value) => act(control[0], { amount: value })}
       />
     </Tooltip>
   );
@@ -309,7 +307,7 @@ const MedbotThreshold = (props) => {
         step={5}
         unit="%"
         value={control[1]}
-        onChange={(_, value) => act(control[0], { threshold: value })}
+        onChange={(value) => act(control[0], { threshold: value })}
       />
     </Tooltip>
   );

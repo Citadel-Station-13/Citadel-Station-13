@@ -525,14 +525,14 @@ const SDQLSpellInput = (props) => {
           width="100%"
           fluid
           value={saved_vars[name] ?? default_value}
-          onChange={(e, value) => act('variable', { name, value })}
+          onChange={(value) => act('variable', { name, value })}
         />
       );
     case 'int':
       return (
         <NumberInput
           value={saved_vars[name] ?? default_value}
-          onChange={(e, value) => act('variable', { name, value })}
+          onChange={(value) => act('variable', { name, value })}
         />
       );
     case 'bool':
@@ -744,19 +744,19 @@ const SDQLSpellIcons = (props) => {
         {type
           && vars.some((entry) => entry.name === 'ranged_mousepointer')
           && saved_vars['ranged_mousepointer'] && (
-          <Section title="Mouse Cursor">
-            <Box
-              as="img"
-              height="64px"
-              width="auto"
-              m={0}
-              src={`data:image/jpeg;base64,${mouse_icon}`}
-              style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
-              }}
-            />
-          </Section>
-        )}
+            <Section title="Mouse Cursor">
+              <Box
+                as="img"
+                height="64px"
+                width="auto"
+                m={0}
+                src={`data:image/jpeg;base64,${mouse_icon}`}
+                style={{
+                  '-ms-interpolation-mode': 'nearest-neighbor',
+                }}
+              />
+            </Section>
+          )}
         {type && 'overlay' in saved_vars && saved_vars['overlay'] === 1 && (
           <Section title="Overlay Icon">
             <Box

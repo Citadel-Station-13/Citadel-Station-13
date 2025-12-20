@@ -74,7 +74,7 @@ export const ScannerGate = (props) => {
     <Window
       width={400}
       height={300}
-      >
+    >
       <Window.Content scrollable>
         <InterfaceLockNoticeBox
           onLockedStatusChange={() => act('toggle_lock')} />
@@ -319,7 +319,7 @@ const ScannerGateNanites = (props) => {
               minValue={1}
               maxValue={100}
               stepPixelSize={2}
-              onChange={(e, value) => act('set_nanite_cloud', {
+              onChange={(value) => act('set_nanite_cloud', {
                 new_cloud: value,
               })} />
           </LabeledList.Item>

@@ -52,7 +52,7 @@ export const Telecomms = (props) => {
                 <Input
                   width={13}
                   value={id}
-                  onChange={(e, value) => act('id', { value })} />
+                  onChange={(value) => act('id', { value })} />
               } />
             <LabeledList.Item
               label="Network"
@@ -61,7 +61,7 @@ export const Telecomms = (props) => {
                   width={10}
                   value={network}
                   defaultValue={"tcommsat"}
-                  onChange={(e, value) => act('network', { value })} />
+                  onChange={(value) => act('network', { value })} />
               } />
             <LabeledList.Item
               label="Prefabrication"
@@ -85,17 +85,17 @@ export const Telecomms = (props) => {
                     <Table.Cell>
                       {RADIO_CHANNELS
                         .find(channel => channel.freq === changefrequency) && (
-                        <Box
-                          inline
-                          color={RADIO_CHANNELS
-                            .find(channel => channel.freq === changefrequency)
-                            .color}
-                          ml={2}>
-                          [{RADIO_CHANNELS
-                            .find(channel => channel
-                              .freq === changefrequency).name}]
-                        </Box>
-                      )}
+                          <Box
+                            inline
+                            color={RADIO_CHANNELS
+                              .find(channel => channel.freq === changefrequency)
+                              .color}
+                            ml={2}>
+                            [{RADIO_CHANNELS
+                              .find(channel => channel
+                                .freq === changefrequency).name}]
+                          </Box>
+                        )}
                     </Table.Cell>
                     <NumberInput
                       animate
@@ -105,7 +105,7 @@ export const Telecomms = (props) => {
                       minValue={minfreq / 10}
                       maxValue={maxfreq / 10}
                       value={changefrequency / 10}
-                      onChange={(e, value) => act(
+                      onChange={(value) => act(
                         'change_freq', { value })}
                     />
                     <Button
@@ -153,22 +153,22 @@ export const Telecomms = (props) => {
                 {frequencies.map(entry => (
                   <Table.Row key={frequencies.i} className="candystripe">
                     <Table.Cell bold>
-                      {entry/10} kHz
+                      {entry / 10} kHz
                     </Table.Cell>
                     <Table.Cell>
                       {RADIO_CHANNELS
                         .find(channel => channel.freq === entry) && (
-                        <Box
-                          inline
-                          color={RADIO_CHANNELS
-                            .find(channel => channel.freq === entry)
-                            .color}
-                          ml={2}>
-                          [{RADIO_CHANNELS
-                            .find(channel => channel
-                              .freq === entry).name } ]
-                        </Box>
-                      )}
+                          <Box
+                            inline
+                            color={RADIO_CHANNELS
+                              .find(channel => channel.freq === entry)
+                              .color}
+                            ml={2}>
+                            [{RADIO_CHANNELS
+                              .find(channel => channel
+                                .freq === entry).name} ]
+                          </Box>
+                        )}
                     </Table.Cell>
                     <Table.Cell />
                     {!!multitool && (
@@ -187,17 +187,17 @@ export const Telecomms = (props) => {
                     <Table.Cell>
                       {RADIO_CHANNELS
                         .find(channel => channel.freq === frequency) && (
-                        <Box
-                          inline
-                          color={RADIO_CHANNELS
-                            .find(channel => channel.freq === frequency)
-                            .color}
-                          ml={2}>
-                          [{RADIO_CHANNELS
-                            .find(channel => channel
-                              .freq === frequency).name}]
-                        </Box>
-                      )}
+                          <Box
+                            inline
+                            color={RADIO_CHANNELS
+                              .find(channel => channel.freq === frequency)
+                              .color}
+                            ml={2}>
+                            [{RADIO_CHANNELS
+                              .find(channel => channel
+                                .freq === frequency).name}]
+                          </Box>
+                        )}
                     </Table.Cell>
                     <Table.Cell>
                       <NumberInput
@@ -208,7 +208,7 @@ export const Telecomms = (props) => {
                         minValue={minfreq / 10}
                         maxValue={maxfreq / 10}
                         value={frequency / 10}
-                        onChange={(e, value) => act(
+                        onChange={(value) => act(
                           "tempfreq", { value })}
                       />
                     </Table.Cell>

@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button,  NumberInput, Table } from 'tgui-core/components';
+import { Box, Button, NumberInput, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { Grid } from '../components/Grid';
 
@@ -260,7 +260,7 @@ export const RouletteBetTable = (props) => {
                   step={10}
                   stepPixelSize={4}
                   width="40px"
-                  onChange={(e, value) => setCustomBet(value)}
+                  onChange={(value) => setCustomBet(value)}
                 />
               </Grid.Column>
             </Grid>
@@ -284,7 +284,7 @@ export const RouletteBetTable = (props) => {
             House Balance:
           </Box>
           <Box inline>
-            {data.HouseBalance ? data.HouseBalance + ' cr': "None"}
+            {data.HouseBalance ? data.HouseBalance + ' cr' : "None"}
           </Box>
         </Table.Cell>
         <Table.Cell className="Roulette__lowertable--cell">

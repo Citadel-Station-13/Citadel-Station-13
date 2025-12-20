@@ -71,7 +71,7 @@ export const Autolathe = (props) => {
           <Input fluid
             placeholder="Search Recipes..."
             selfClear
-            onChange={(e, value) => {
+            onChange={(value) => {
               if (value.length) {
                 act('search', {
                   to_search: value,
@@ -186,12 +186,12 @@ export const Autolathe = (props) => {
                       {design.cost}
                     </Table.Row>
                   ))) || (
-                  <Table.Row>
-                    <Table.Cell>
-                      {"No designs found."}
-                    </Table.Cell>
-                  </Table.Row>
-                )}
+                    <Table.Row>
+                      <Table.Cell>
+                        {"No designs found."}
+                      </Table.Cell>
+                    </Table.Row>
+                  )}
               </Table>
             </Flex>
           </Section>

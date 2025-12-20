@@ -1,7 +1,7 @@
-import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { toFixed } from 'tgui-core/math';
 
 export const Electropack = (props) => {
   const { act, data } = useBackend<any>();
@@ -37,7 +37,7 @@ export const Electropack = (props) => {
                   })} />
               )}>
               <NumberInput
-                animate
+                animated
                 unit="kHz"
                 step={0.2}
                 stepPixelSize={6}
@@ -61,7 +61,7 @@ export const Electropack = (props) => {
                   })} />
               )}>
               <NumberInput
-                animate
+                animated
                 step={1}
                 stepPixelSize={6}
                 minValue={1}

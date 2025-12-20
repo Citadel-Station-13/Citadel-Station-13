@@ -43,7 +43,7 @@ export const AutomatedAnnouncement = (props) => {
               <Input
                 fluid
                 value={arrival}
-                onChange={(e, value) => act('ArrivalText', {
+                onChange={(value) => act('ArrivalText', {
                   newText: value,
                 })} />
             </LabeledList.Item>
@@ -70,7 +70,7 @@ export const AutomatedAnnouncement = (props) => {
               <Input
                 fluid
                 value={newhead}
-                onChange={(e, value) => act('NewheadText', {
+                onChange={(value) => act('NewheadText', {
                   newText: value,
                 })} />
             </LabeledList.Item>

@@ -247,6 +247,7 @@ export const Hypertorus = (props) => {
           <LabeledList>
             <LabeledList.Item label="Heating Conductor">
               <NumberInput
+                step={0.1}
                 animated
                 value={parseFloat(data.heating_conductor)}
                 width="63px"
@@ -259,6 +260,7 @@ export const Hypertorus = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Magnetic Constrictor">
               <NumberInput
+                step={0.1}
                 animated
                 value={parseFloat(data.magnetic_constrictor)}
                 width="63px"
@@ -271,6 +273,7 @@ export const Hypertorus = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Fuel Injection Rate">
               <NumberInput
+                step={0.1}
                 animated
                 value={parseFloat(data.fuel_injection_rate)}
                 width="63px"
@@ -283,6 +286,7 @@ export const Hypertorus = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Moderator Injection Rate">
               <NumberInput
+                step={0.1}
                 animated
                 value={parseFloat(data.moderator_injection_rate)}
                 width="63px"
@@ -295,6 +299,7 @@ export const Hypertorus = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Current Damper">
               <NumberInput
+                step={0.1}
                 animated
                 value={parseFloat(data.current_damper)}
                 width="63px"

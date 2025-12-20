@@ -19,7 +19,7 @@ export const SentienceFunBalloon = (props) => {
                 <Input
                   fluid
                   value={group_name}
-                  onChange={(e, value) => act("group_name", {
+                  onChange={(value) => act("group_name", {
                     updated_name: value,
                   })} />
               </LabeledList.Item>

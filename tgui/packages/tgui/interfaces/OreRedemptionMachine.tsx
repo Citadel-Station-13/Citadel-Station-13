@@ -63,11 +63,11 @@ export const OreRedemptionMachine = (props) => {
               </Table>
             </>
           ) || (
-            <Button
-              icon="save"
-              content="Insert design disk"
-              onClick={() => act('diskInsert')} />
-          )}
+              <Button
+                icon="save"
+                content="Insert design disk"
+                onClick={() => act('diskInsert')} />
+            )}
         </Section>
         <Section title="Materials">
           <Table>
@@ -133,7 +133,7 @@ const MaterialRow = (props) => {
           minValue={1}
           maxValue={50}
           value={amount}
-          onChange={(e, value) => setAmount(value)} />
+          onChange={(value) => setAmount(value)} />
         <Button
           disabled={amountAvailable < 1}
           content="Release"

@@ -29,16 +29,15 @@ export const Electrolyzer = (props) => {
           <LabeledList>
             <LabeledList.Item
               label="Cell"
-              color={!data.hasPowercell && 'bad'}>
+              color={!data.hasPowercell ? 'bad' : undefined}>
               {data.hasPowercell && (
                 <ProgressBar
                   value={data.powerLevel / 100}
-                  content={data.powerLevel + '%'}
                   ranges={{
                     good: [0.6, Infinity],
                     average: [0.3, 0.6],
                     bad: [-Infinity, 0.3],
-                  }} />
+                  }}>{data.powerLevel + '%'}</ProgressBar>
               ) || 'None'}
             </LabeledList.Item>
           </LabeledList>

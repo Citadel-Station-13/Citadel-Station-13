@@ -131,10 +131,10 @@ export const NtosRobotactContent = (props) => {
                   stepPixelSize={25}
                   maxValue={5}
                   minValue={1}
-                  onChange={(e, value) => act('lampIntensity', {
+                  onChange={(value) => act('lampIntensity', {
                     ref: value,
                   })} />
-                Lamp power usage: {lampIntensity/2} watts
+                Lamp power usage: {lampIntensity / 2} watts
               </Section>
             </Flex.Item>
             <Flex.Item
@@ -175,7 +175,7 @@ export const NtosRobotactContent = (props) => {
                       label="Maintenance Cover">
                       <Button.Confirm
                         content="Unlock"
-                        disabled={cover==="UNLOCKED"}
+                        disabled={cover === "UNLOCKED"}
                         onClick={() => act('coverunlock')} />
                     </LabeledList.Item>
                     <LabeledList.Item
@@ -215,14 +215,14 @@ export const NtosRobotactContent = (props) => {
                 <Section>
                   {borgUpgrades.filter((upgrade, index, arr) =>
                     arr.indexOf(upgrade) === index).map(upgrade => {
-                    const upgradeCount = borgUpgrades.filter(u =>
-                      u === upgrade).length;
-                    return (
-                      <Box mb={1} key={upgrade}>
-                        {upgrade} {upgradeCount > 1 ? `x${upgradeCount}` : ''}
-                      </Box>
-                    );
-                  })}
+                      const upgradeCount = borgUpgrades.filter(u =>
+                        u === upgrade).length;
+                      return (
+                        <Box mb={1} key={upgrade}>
+                          {upgrade} {upgradeCount > 1 ? `x${upgradeCount}` : ''}
+                        </Box>
+                      );
+                    })}
                 </Section>
               )}
               {tab_sub === 3 && (
@@ -230,32 +230,32 @@ export const NtosRobotactContent = (props) => {
                   <LabeledList>
                     <LabeledList.Item
                       label="AI Connection"
-                      color={wireAI==="FAULT"?'red': wireAI==="READY"?'yellow': 'green'}>
+                      color={wireAI === "FAULT" ? 'red' : wireAI === "READY" ? 'yellow' : 'green'}>
                       {wireAI}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="LawSync"
-                      color={wireLaw==="FAULT"?"red":"green"}>
+                      color={wireLaw === "FAULT" ? "red" : "green"}>
                       {wireLaw}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Camera"
-                      color={wireCamera==="FAULT"?'red': wireCamera==="DISABLED"?'yellow': 'green'}>
+                      color={wireCamera === "FAULT" ? 'red' : wireCamera === "DISABLED" ? 'yellow' : 'green'}>
                       {wireCamera}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Module Controller"
-                      color={wireModule==="FAULT"?"red":"green"}>
+                      color={wireModule === "FAULT" ? "red" : "green"}>
                       {wireModule}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Motor Controller"
-                      color={locomotion==="FAULT"?'red': locomotion==="DISABLED"?'yellow': 'green'}>
+                      color={locomotion === "FAULT" ? 'red' : locomotion === "DISABLED" ? 'yellow' : 'green'}>
                       {locomotion}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Maintenance Cover"
-                      color={cover==="UNLOCKED"?"red":"green"}>
+                      color={cover === "UNLOCKED" ? "red" : "green"}>
                       {cover}
                     </LabeledList.Item>
                   </LabeledList>

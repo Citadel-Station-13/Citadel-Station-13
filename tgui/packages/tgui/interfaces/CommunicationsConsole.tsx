@@ -265,7 +265,7 @@ const PageChangingStatus = (props) => {
               maxLength={maxStatusLineLength}
               value={lineOne}
               width="200px"
-              onChange={(_, value) => setLineOne(value)}
+              onChange={(value) => setLineOne(value)}
             />
           </Flex.Item>
 
@@ -274,7 +274,7 @@ const PageChangingStatus = (props) => {
               maxLength={maxStatusLineLength}
               value={lineTwo}
               width="200px"
-              onChange={(_, value) => setLineTwo(value)}
+              onChange={(value) => setLineTwo(value)}
             />
           </Flex.Item>
 
@@ -354,19 +354,19 @@ const PageMain = (props) => {
             onClick={() => act("recallShuttle")}
           />
         ) || (
-          <Button
-            icon="space-shuttle"
-            content="Call Emergency Shuttle"
-            disabled={shuttleCanEvacOrFailReason !== 1}
-            tooltip={
-              shuttleCanEvacOrFailReason !== 1
-                ? shuttleCanEvacOrFailReason
-                : undefined
-            }
-            tooltipPosition="bottom-end"
-            onClick={() => setCallingShuttle(true)}
-          />
-        )}
+            <Button
+              icon="space-shuttle"
+              content="Call Emergency Shuttle"
+              disabled={shuttleCanEvacOrFailReason !== 1}
+              tooltip={
+                shuttleCanEvacOrFailReason !== 1
+                  ? shuttleCanEvacOrFailReason
+                  : undefined
+              }
+              tooltipPosition="bottom-end"
+              onClick={() => setCallingShuttle(true)}
+            />
+          )}
         {!!shuttleCalledPreviously && (
           shuttleLastCalled && (
             <Box>

@@ -35,7 +35,7 @@ export const CommandReport = (props) => {
                   mt={1}
                   value={command_name}
                   placeholder={command_name}
-                  onChange={(e, value) => act("update_command_name", {
+                  onChange={(value) => act("update_command_name", {
                     updated_name: value,
                   })} />
               )}
@@ -58,7 +58,7 @@ export const CommandReport = (props) => {
                 height="200px"
                 mb={1}
                 value={command_report_content}
-                onChange={(e, value) => act("update_report_contents", {
+                onChange={(value) => act("update_report_contents", {
                   updated_contents: value,
                 })} />
               <Stack vertical>

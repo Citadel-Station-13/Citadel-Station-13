@@ -52,7 +52,7 @@ export const ChemPress = (props) => {
                 maxValue={max_volume}
                 step={1}
                 stepPixelSize={2}
-                onChange={(e, value) => act('change_current_volume', {
+                onChange={(value) => act('change_current_volume', {
                   volume: value,
                 })} />
             </LabeledList.Item>
@@ -60,7 +60,7 @@ export const ChemPress = (props) => {
               <Input
                 value={product_name}
                 placeholder={product_name}
-                onChange={(e, value) => act('change_product_name', {
+                onChange={(value) => act('change_product_name', {
                   name: value,
                 })} />
               <Box as="span">

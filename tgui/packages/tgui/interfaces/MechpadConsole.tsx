@@ -15,7 +15,7 @@ export const MechpadControl = (props) => {
         <Input
           value={pad_name}
           width="170px"
-          onChange={(e, value) => act('rename', {
+          onChange={(value) => act('rename', {
             name: value,
           })} />
       )}
@@ -32,13 +32,13 @@ export const MechpadControl = (props) => {
           No Pad Connected.
         </Box>
       ) || (
-        <Button
-          fluid
-          icon="upload"
-          content="Launch"
-          textAlign="center"
-          onClick={() => act('launch')} />
-      )}
+          <Button
+            fluid
+            icon="upload"
+            content="Launch"
+            textAlign="center"
+            onClick={() => act('launch')} />
+        )}
     </Section>
   );
 };
@@ -59,37 +59,37 @@ export const MechpadConsole = (props) => {
             No Pads Connected
           </NoticeBox>
         ) || (
-          <Section>
-            <Flex minHeight="70px">
-              <Flex.Item width="140px" minHeight="70px">
-                {mechpads.map(mechpad => (
-                  <Button
-                    fluid
-                    ellipsis
-                    key={mechpad.name}
-                    content={mechpad.name}
-                    selected={selected_id === mechpad.id}
-                    color="transparent"
-                    onClick={() => act('select_pad', {
-                      id: mechpad.id,
-                    })} />
-                ))}
-              </Flex.Item>
-              <Flex.Item minHeight="100%">
-                <Divider vertical />
-              </Flex.Item>
-              <Flex.Item grow={1} basis={0} minHeight="100%">
-                {selected_id && (
-                  <MechpadControl />
-                ) || (
-                  <Box>
-                    Please select a pad
-                  </Box>
-                )}
-              </Flex.Item>
-            </Flex>
-          </Section>
-        )}
+            <Section>
+              <Flex minHeight="70px">
+                <Flex.Item width="140px" minHeight="70px">
+                  {mechpads.map(mechpad => (
+                    <Button
+                      fluid
+                      ellipsis
+                      key={mechpad.name}
+                      content={mechpad.name}
+                      selected={selected_id === mechpad.id}
+                      color="transparent"
+                      onClick={() => act('select_pad', {
+                        id: mechpad.id,
+                      })} />
+                  ))}
+                </Flex.Item>
+                <Flex.Item minHeight="100%">
+                  <Divider vertical />
+                </Flex.Item>
+                <Flex.Item grow={1} basis={0} minHeight="100%">
+                  {selected_id && (
+                    <MechpadControl />
+                  ) || (
+                      <Box>
+                        Please select a pad
+                      </Box>
+                    )}
+                </Flex.Item>
+              </Flex>
+            </Section>
+          )}
       </Window.Content>
     </Window>
   );

@@ -16,7 +16,7 @@ export const ChemDebugSynthesizer = (props) => {
     <Window
       width={390}
       height={330}
-      >
+    >
       <Window.Content scrollable>
         <Section
           title="Recipient"
@@ -33,7 +33,7 @@ export const ChemDebugSynthesizer = (props) => {
                 maxValue={beakerMaxVolume}
                 step={1}
                 stepPixelSize={2}
-                onChange={(e, value) => act('synth_amount', {
+                onChange={(value) => act('synth_amount', {
                   synth_amount: value,
                 })} />
               <Button

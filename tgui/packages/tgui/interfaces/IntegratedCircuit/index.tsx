@@ -252,13 +252,13 @@ export class IntegratedCircuit extends Component {
       const isOutput = selectedPort.is_output;
       const portLocation = locations[selectedPort.ref];
       const mouseCoords = {
-        x: (mouseX)*Math.pow(zoom, -1),
-        y: (mouseY + ABSOLUTE_Y_OFFSET)*Math.pow(zoom, -1),
+        x: (mouseX) * Math.pow(zoom, -1),
+        y: (mouseY + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
       };
       connections.push({
         color: (portLocation && portLocation.color) || 'blue',
-        from: isOutput? portLocation : mouseCoords,
-        to: isOutput? mouseCoords : portLocation,
+        from: isOutput ? portLocation : mouseCoords,
+        to: isOutput ? mouseCoords : portLocation,
       });
     }
 
@@ -279,7 +279,7 @@ export class IntegratedCircuit extends Component {
                   fluid
                   placeholder="Circuit Name"
                   value={display_name}
-                  onChange={(e, value) => act("set_display_name", { display_name: value })}
+                  onChange={(value) => act("set_display_name", { display_name: value })}
                 />
               </Stack.Item>
               <Stack.Item basis="24px">

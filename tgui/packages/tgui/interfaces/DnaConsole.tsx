@@ -950,7 +950,7 @@ const GenomeSequencer = (props) => {
             : false
         }
         gene={gene}
-        onChange={(e, nextGene) => {
+        onChange={(nextGene) => {
           if (e.ctrlKey) {
             act('pulse_gene', {
               pos: i + 1,
@@ -1072,6 +1072,7 @@ const RadiationEmitterSettings = (props) => {
       <LabeledList>
         <LabeledList.Item label="Output level">
           <NumberInput
+            step={1}
             animated
             width="32px"
             stepPixelSize={10}
@@ -1084,6 +1085,7 @@ const RadiationEmitterSettings = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Pulse duration">
           <NumberInput
+            step={1}
             animated
             width="32px"
             stepPixelSize={10}

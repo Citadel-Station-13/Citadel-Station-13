@@ -81,7 +81,7 @@ export const PandemicDiseaseDisplay = (props) => {
           title={virus.can_rename ? (
             <Input
               value={virus.name}
-              onChange={(e, value) => act('rename_disease', {
+              onChange={(value) => act('rename_disease', {
                 index: virus.index,
                 name: value,
               })} />

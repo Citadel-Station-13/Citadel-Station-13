@@ -75,7 +75,7 @@ export const MassDriverControl = (props) => {
                     width="40px"
                     minValue={0.25}
                     maxValue={16}
-                    onChange={(e, value) => {
+                    onChange={(value) => {
                       return act('set_power', {
                         power: value,
                       });
@@ -92,10 +92,10 @@ export const MassDriverControl = (props) => {
                 onClick={() => act('launch')} />
             </>
           ) || (
-            <Box color="bad">
-              No connected mass driver
-            </Box>
-          )}
+              <Box color="bad">
+                No connected mass driver
+              </Box>
+            )}
         </Section>
       </Window.Content>
     </Window>

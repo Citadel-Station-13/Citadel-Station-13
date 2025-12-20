@@ -86,7 +86,7 @@ export const TelecommsPDALog = (props) => {
                   value={network}
                   width="150px"
                   maxLength={15}
-                  onChange={(e, value) => act('network', {
+                  onChange={(value) => act('network', {
                     'value': value,
                   })} />
               </LabeledList.Item>
@@ -396,7 +396,7 @@ export const CustomMsg = (props) => {
             value={fake_message.sender}
             width="250px"
             maxLength={42}
-            onChange={(e, value) => act('fake', {
+            onChange={(value) => act('fake', {
               'sender': value,
             })}
           />
@@ -406,7 +406,7 @@ export const CustomMsg = (props) => {
             value={fake_message.job}
             width="250px"
             maxLength={100}
-            onChange={(e, value) => act('fake', {
+            onChange={(value) => act('fake', {
               'job': value,
             })}
           />
@@ -430,7 +430,7 @@ export const CustomMsg = (props) => {
             width="500px"
             height="150px"
             maxLength={2048}
-            onChange={(e, value) => act('fake', {
+            onChange={(value) => act('fake', {
               'message': value,
             })}
           />
