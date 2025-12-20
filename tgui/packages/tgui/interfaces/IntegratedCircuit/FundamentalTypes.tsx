@@ -24,6 +24,9 @@ export const FUNDAMENTAL_DATA_TYPES = {
         value={value}
         defaultValue={0}>
         <NumberInput
+          step={0.1}
+          minValue={-Infinity}
+          maxValue={Infinity}
           value={value}
           color={color}
           onChange={(val) => setValue(val)}
@@ -66,7 +69,8 @@ export const FUNDAMENTAL_DATA_TYPES = {
           : Object.keys(extraData)}
         onSelected={setValue}
         displayText={value}
-        noscroll
+        selected={value}
+        autoScroll={false}
       />
     );
   },

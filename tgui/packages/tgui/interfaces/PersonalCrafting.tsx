@@ -85,20 +85,23 @@ export const PersonalCrafting = (props) => {
           <Flex>
             <Flex.Item>
               <Tabs vertical>
-                {categories.map(category => (
-                  <Tabs.Tab
-                    key={category.name}
-                    selected={category.name === tab}
-                    onClick={() => {
-                      setTab(category.name);
-                      act('set_category', {
-                        category: category.category,
-                        subcategory: category.subcategory,
-                      });
-                    }}>
-                    {category.name}
-                  </Tabs.Tab>
-                ))}
+                {categories.map(c1 => {
+                  let category: any = c1;
+                  return (
+                    <Tabs.Tab
+                      key={category.name}
+                      selected={category.name === tab}
+                      onClick={() => {
+                        setTab(category.name);
+                        act('set_category', {
+                          category: category.category,
+                          subcategory: category.subcategory,
+                        });
+                      }}>
+                      {category.name}
+                    </Tabs.Tab>
+                  )
+                })}
               </Tabs>
             </Flex.Item>
             <Flex.Item grow={1} basis={0}>

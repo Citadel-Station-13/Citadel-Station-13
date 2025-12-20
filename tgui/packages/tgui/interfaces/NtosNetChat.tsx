@@ -135,7 +135,7 @@ export const NtosNetChat = (props) => {
                     fluid
                     mt={1}
                     content={username + '...'}
-                    currentValue={username}
+                    value={username}
                     onCommit={(value) => act('PRG_changename', {
                       new_name: value,
                     })} />
@@ -265,7 +265,7 @@ export const NtosNetChat = (props) => {
                           <Button.Input
                             fluid
                             content="Save log..."
-                            defaultValue="new_log"
+                            value="new_log"
                             onCommit={(value) => act('PRG_savelog', {
                               log_name: value,
                             })} />

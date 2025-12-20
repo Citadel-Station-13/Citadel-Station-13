@@ -130,7 +130,7 @@ export const RequestKioskContent = (props) => {
                 })} />
               <Box>
                 <NumberInput
-                  animate
+                  step={1}
                   unit="cr"
                   minValue={1}
                   maxValue={1000}

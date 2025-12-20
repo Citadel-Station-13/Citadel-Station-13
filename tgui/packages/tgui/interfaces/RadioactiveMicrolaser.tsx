@@ -66,6 +66,7 @@ export const RadioactiveMicrolaser = (props) => {
                 onClick={() => act('radintensity', { adjust: -1 })} />
               {' '}
               <NumberInput
+                step={1}
                 value={Math.round(intensity)}
                 width="40px"
                 minValue={1}
@@ -92,6 +93,7 @@ export const RadioactiveMicrolaser = (props) => {
                 onClick={() => act('radwavelength', { adjust: -1 })} />
               {' '}
               <NumberInput
+                step={1}
                 value={Math.round(wavelength)}
                 width="40px"
                 minValue={0}

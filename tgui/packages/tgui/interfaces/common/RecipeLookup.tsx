@@ -52,7 +52,7 @@ export const RecipeLookup = (props) => {
         )}
       </LabeledList.Item>
       {recipe.products && (
-        <LabeledList.Item bold label="Products">
+        <LabeledList.Item label="Products">
           {recipe.products.map(product => (
             <Button
               key={product.name}
@@ -65,7 +65,7 @@ export const RecipeLookup = (props) => {
           ))}
         </LabeledList.Item>
       )}
-      <LabeledList.Item bold label="Reactants">
+      <LabeledList.Item label="Reactants">
         {recipe.reactants.map(reactant => (
           <Box key={reactant.id}>
             <Button
@@ -89,7 +89,7 @@ export const RecipeLookup = (props) => {
         ))}
       </LabeledList.Item>
       {recipe.catalysts && (
-        <LabeledList.Item bold label="Catalysts">
+        <LabeledList.Item label="Catalysts">
           {recipe.catalysts.map(catalyst => (
             <Box key={catalyst.id}>
               {catalyst.tooltipBool && (
@@ -213,7 +213,7 @@ export const RecipeLookup = (props) => {
           )}
         </Flex>
       </LabeledList.Item>
-      <LabeledList.Item bold label="Dynamics">
+      <LabeledList.Item label="Dynamics">
         <LabeledList>
           <LabeledList.Item label="Optimal rate">
             <Tooltip

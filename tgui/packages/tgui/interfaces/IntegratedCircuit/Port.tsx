@@ -94,9 +94,8 @@ export class Port extends Component<any, any> {
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
-          >
-            <span ref={this.iconRef} className="ObjectComponent__PortPos" />
-          </Icon>
+          ></Icon>
+          <span ref={this.iconRef} className="ObjectComponent__PortPos" />
         </Stack.Item>
         {!isOutput && (
           <Stack.Item>

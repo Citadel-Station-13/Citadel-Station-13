@@ -12,14 +12,14 @@ const pod_grey = {
   color: 'grey',
 };
 
-const useCompact = context => {
+const useCompact = () => {
   const [compact, setCompact] = useLocalState('compact', false);
   const toggleCompact = () => setCompact(!compact);
   return [compact, toggleCompact];
 };
 
 export const CentcomPodLauncher = (props) => {
-  const [compact] = useCompact(context);
+  const [compact] = useCompact();
   return (
     <Window
       title="Supply Pod Menu (Use against Helen Weinstein)"
@@ -31,7 +31,7 @@ export const CentcomPodLauncher = (props) => {
 };
 
 const CentcomPodLauncherContent = (props) => {
-  const [compact] = useCompact(context);
+  const [compact] = useCompact();
   return (
     <Window.Content>
       <Stack fill vertical>
@@ -543,7 +543,7 @@ const TabDrop = (props) => {
 
 const PodStatusPage = (props) => {
   const { act, data } = useBackend<any>();
-  const [compact, toggleCompact] = useCompact(context);
+  const [compact, toggleCompact] = useCompact();
   return (
     <Section fill width="100%">
       <Stack>
@@ -914,7 +914,7 @@ class PresetsPage extends Component {
 }
 
 const LaunchPage = (props) => {
-  const [compact] = useCompact(context);
+  const [compact] = useCompact();
   const { act, data } = useBackend<any>();
   return (
     <Button
@@ -988,7 +988,7 @@ const StylePage = (props) => {
 
 const Bays = (props) => {
   const { act, data } = useBackend<any>();
-  const [compact] = useCompact(context);
+  const [compact] = useCompact();
   return (
     <Section
       fill

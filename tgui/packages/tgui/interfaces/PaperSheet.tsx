@@ -44,8 +44,10 @@ const textWidth = (text, font, fontsize) => {
   font = fontsize + "x " + font;
   const c = document.createElement('canvas');
   const ctx = c.getContext("2d");
-  ctx.font = font;
-  const width = ctx.measureText(text).width;
+  if (ctx) {
+    ctx.font = font;
+  }
+  const width = ctx?.measureText(text).width;
   return width;
 };
 
@@ -144,7 +146,7 @@ const run_marked_default = value => {
 const checkAllFields = (txt, font, color, user_name, bold = false) => {
   let matches;
   let values = {};
-  let replace = [];
+  let replace: any[] = [];
   // I know its tempting to wrap ALL this in a .replace
   // HOWEVER the user might not of entered anything
   // if thats the case we are rebuilding the entire string
@@ -153,34 +155,34 @@ const checkAllFields = (txt, font, color, user_name, bold = false) => {
     const full_match = matches[0];
     const id = matches.groups.id;
     if (id) {
-      const dom = document.getElementById(id);
+      // trample checking ):
+      const dom: HTMLElement = document.getElementById(id) as HTMLElement;
       // make sure we got data, and kill any html that might
       // be in it
-      const dom_text = dom && dom.value ? dom.value : "";
+      const dom_text = dom && dom.textContent ? dom.textContent : "";
       if (dom_text.length === 0) {
         continue;
       }
-      const sanitized_text = sanitizeText(dom.value.trim(), []);
+      const sanitized_text = sanitizeText(dom.textContent.trim(), []);
       if (sanitized_text.length === 0) {
         continue;
       }
       // this is easier than doing a bunch of text manipulations
-      const target = dom.cloneNode(true);
+      const target = dom.cloneNode(true) as HTMLElement;
       // in case they sign in a field
       if (sanitized_text.match(sign_regex)) {
         target.style.fontFamily = "Times New Roman";
         bold = true;
-        target.defaultValue = user_name;
+        target.textContent = user_name;
       }
       else {
         target.style.fontFamily = font;
-        target.defaultValue = sanitized_text;
+        target.textContent = sanitized_text;
       }
       if (bold) {
         target.style.fontWeight = "bold";
       }
       target.style.color = color;
-      target.disabled = true;
       const wrap = document.createElement('div');
       wrap.appendChild(target);
       values[id] = sanitized_text; // save the data
@@ -270,7 +272,11 @@ const PaperSheetView = (props) => {
 };
 
 // again, need the states for dragging and such
-class PaperSheetStamper extends Component {
+class PaperSheetStamper extends Component<any, any> {
+  style: any;
+  handleMouseMove: any;
+  handleMouseClick: any;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -300,13 +306,13 @@ class PaperSheetStamper extends Component {
 
   findStampPosition(e) {
     let rotating;
-    const windowRef = document.querySelector('.Layout__content');
+    const windowRef = document.querySelector('.Layout__content') as Element;
     if (e.shiftKey) {
       rotating = true;
     }
 
     if (document.getElementById("stamp")) {
-      const stamp = document.getElementById("stamp");
+      const stamp = document.getElementById("stamp") as HTMLElement;
       const stampHeight = stamp.clientHeight;
       const stampWidth = stamp.clientWidth;
 

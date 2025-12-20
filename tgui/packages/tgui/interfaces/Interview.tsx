@@ -47,8 +47,8 @@ export const Interview = (props) => {
     for (let i = 1; i < parts.length; i += 2) {
       const match = link_decompose_regex.exec(parts[i]);
       parts[i] = (
-        <a key={'link' + i} href={match[2]}>
-          {match[1]}
+        <a key={'link' + i} href={match?.[2]}>
+          {match?.[1]}
         </a>
       );
     }
@@ -77,7 +77,7 @@ export const Interview = (props) => {
                 <span>
                   <Button
                     content="Admin PM"
-                    enabled={connected}
+                    disabled={!connected}
                     onClick={() => act('adminpm')}
                   />
                   <Button
@@ -109,20 +109,20 @@ export const Interview = (props) => {
               {((read_only || is_admin) && (
                 <BlockQuote>{response || 'No response.'}</BlockQuote>
               )) || (
-                <TextArea
-                  value={response}
-                  fluid
-                  height={10}
-                  maxLength={500}
-                  placeholder="Write your response here, max of 500 characters."
-                  onChange={(e, input) =>
-                    input !== response
-                    && act('update_answer', {
-                      qidx: qidx,
-                      answer: input,
-                    })}
-                />
-              )}
+                  <TextArea
+                    value={response}
+                    fluid
+                    height={10}
+                    maxLength={500}
+                    placeholder="Write your response here, max of 500 characters."
+                    onChange={(input) =>
+                      input !== response
+                      && act('update_answer', {
+                        qidx: qidx,
+                        answer: input,
+                      })}
+                  />
+                )}
             </Section>
           ))}
         </Section>
