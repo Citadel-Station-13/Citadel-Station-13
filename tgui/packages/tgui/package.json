@@ -12,7 +12,6 @@
     "js-yaml": "^4.1.1",
     "katex": "^0.15.6",
     "marked": "^4.3.0",
-    "tgui-dev-server": "workspace:*",
-    "tgui-polyfill": "workspace:*"
+    "tgui-dev-server": "workspace:*"
   }
 }
