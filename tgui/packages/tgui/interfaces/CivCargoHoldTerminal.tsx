@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const CivCargoHoldTerminal = (props, context) => {
+export const CivCargoHoldTerminal = (props) => {
   const { act, data } = useBackend<any>();
   const { pad, sending, status_report, id_inserted, id_bounty_info, picking } =
     data;
@@ -65,7 +65,7 @@ export const CivCargoHoldTerminal = (props, context) => {
   );
 };
 
-const BountyTextBox = (props, context) => {
+const BountyTextBox = (props) => {
   const { data } = useBackend<any>();
   const { id_bounty_info, id_bounty_value, id_bounty_num } = data;
   const na_text = 'N/A, please add a new bounty.';
@@ -86,7 +86,7 @@ const BountyTextBox = (props, context) => {
   );
 };
 
-const BountyPickBox = (props, context) => {
+const BountyPickBox = (props) => {
   const { act, data } = useBackend<any>();
   const { id_bounty_names, id_bounty_values } = data;
   return (

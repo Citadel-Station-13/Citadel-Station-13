@@ -53,7 +53,7 @@ const DirectionAbbreviation : Record<Direction, string> = {
   [Direction.NorthWest]: "NW",
 };
 
-const ConfigDisplay = (props, context) => {
+const ConfigDisplay = (props) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
   return (
     <Section title="Designs">
@@ -73,7 +73,7 @@ const ConfigDisplay = (props, context) => {
   );
 };
 
-const ColorDisplay = (props, context) => {
+const ColorDisplay = (props) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
   const colors = (data.colors || []);
   return (
@@ -123,7 +123,7 @@ const ColorDisplay = (props, context) => {
   );
 };
 
-const PreviewCompassSelect = (props, context) => {
+const PreviewCompassSelect = (props) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
   return (
     <Box>
@@ -152,7 +152,7 @@ const PreviewCompassSelect = (props, context) => {
   );
 };
 
-const SingleDirection = (props, context) => {
+const SingleDirection = (props) => {
   const { dir } = props;
   const { data, act } = useBackend<GreyscaleMenuData>(context);
   return (
@@ -171,7 +171,7 @@ const SingleDirection = (props, context) => {
   );
 };
 
-const IconStatesDisplay = (props, context) => {
+const IconStatesDisplay = (props) => {
   const { data, act } = useBackend<GreyscaleMenuData>(context);
   return (
     <Section title="Icon States">
@@ -193,7 +193,7 @@ const IconStatesDisplay = (props, context) => {
   );
 };
 
-const PreviewDisplay = (props, context) => {
+const PreviewDisplay = (props) => {
   const { data } = useBackend<GreyscaleMenuData>(context);
   return (
     <Section title={`Preview (${data.sprites_dir})`}>
@@ -281,7 +281,7 @@ const LoadingAnimation = () => {
   );
 };
 
-export const GreyscaleModifyMenu = (props, context) => {
+export const GreyscaleModifyMenu = (props) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
   return (
     <Window

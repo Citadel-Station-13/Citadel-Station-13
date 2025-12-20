@@ -2,7 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, Flex, AnimatedNumber, Dropdown } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-const ConfigureNumberEntry = (props, context) => {
+const ConfigureNumberEntry = (props) => {
   const { name, value, module_ref } = props;
   const { act } = useBackend<any>();
   return (
@@ -22,7 +22,7 @@ const ConfigureNumberEntry = (props, context) => {
   );
 };
 
-const ConfigureBoolEntry = (props, context) => {
+const ConfigureBoolEntry = (props) => {
   const { name, value, module_ref } = props;
   const { act } = useBackend<any>();
   return (
@@ -38,7 +38,7 @@ const ConfigureBoolEntry = (props, context) => {
   );
 };
 
-const ConfigureColorEntry = (props, context) => {
+const ConfigureColorEntry = (props) => {
   const { name, value, module_ref } = props;
   const { act } = useBackend<any>();
   return (
@@ -56,7 +56,7 @@ const ConfigureColorEntry = (props, context) => {
   );
 };
 
-const ConfigureListEntry = (props, context) => {
+const ConfigureListEntry = (props) => {
   const { name, value, values, module_ref } = props;
   const { act } = useBackend<any>();
   return (
@@ -73,7 +73,7 @@ const ConfigureListEntry = (props, context) => {
   );
 };
 
-const ConfigureDataEntry = (props, context) => {
+const ConfigureDataEntry = (props) => {
   const { name, display_name, type, value, values, module_ref } = props;
   const configureEntryTypes = {
     number: <ConfigureNumberEntry {...props} />,
@@ -88,7 +88,7 @@ const ConfigureDataEntry = (props, context) => {
   );
 };
 
-const RadCounter = (props, context) => {
+const RadCounter = (props) => {
   const { active, userradiated, usertoxins, usermaxtoxins, threatlevel }
     = props;
   return (
@@ -125,7 +125,7 @@ const RadCounter = (props, context) => {
   );
 };
 
-const HealthAnalyzer = (props, context) => {
+const HealthAnalyzer = (props) => {
   const {
     active,
     userhealth,
@@ -206,7 +206,7 @@ const HealthAnalyzer = (props, context) => {
   );
 };
 
-const StatusReadout = (props, context) => {
+const StatusReadout = (props) => {
   const {
     active,
     statustime,
@@ -393,7 +393,7 @@ const LockedInterface = () => (
   </Section>
 );
 
-const LockedModule = (props, context) => {
+const LockedModule = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Dimmer>
@@ -406,7 +406,7 @@ const LockedModule = (props, context) => {
   );
 };
 
-const ConfigureScreen = (props, context) => {
+const ConfigureScreen = (props) => {
   const { configuration_data, module_ref } = props;
   const configuration_keys = Object.keys(configuration_data);
   return (
@@ -454,7 +454,7 @@ const displayText = (param) => {
   }
 };
 
-const ParametersSection = (props, context) => {
+const ParametersSection = (props) => {
   const { act, data } = useBackend<any>();
   const {
     active,
@@ -518,7 +518,7 @@ const ParametersSection = (props, context) => {
   );
 };
 
-const HardwareSection = (props, context) => {
+const HardwareSection = (props) => {
   const { act, data } = useBackend<any>();
   const {
     active,
@@ -571,7 +571,7 @@ const HardwareSection = (props, context) => {
   );
 };
 
-const InfoSection = (props, context) => {
+const InfoSection = (props) => {
   const { act, data } = useBackend<any>();
   const { active, modules } = data;
   const info_modules = modules.filter((module) => !!module.id);
@@ -594,7 +594,7 @@ const InfoSection = (props, context) => {
   );
 };
 
-const ModuleSection = (props, context) => {
+const ModuleSection = (props) => {
   const { act, data } = useBackend<any>();
   const { complexity_max, modules } = data;
   const [configureState, setConfigureState] = useLocalState(
@@ -721,7 +721,7 @@ const ModuleSection = (props, context) => {
   );
 };
 
-export const MODsuit = (props, context) => {
+export const MODsuit = (props) => {
   const { act, data } = useBackend<any>();
   const { ui_theme, interface_break } = data;
   return (

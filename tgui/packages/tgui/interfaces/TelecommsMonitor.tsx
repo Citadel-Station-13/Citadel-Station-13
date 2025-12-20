@@ -10,7 +10,7 @@ import { RADIO_CHANNELS } from '../constants';
 import { Box, Button, LabeledList, NoticeBox, Section, Tabs, Input, ProgressBar } from 'tgui-core/components';
 
 
-export const TelecommsMonitor = (props, context) => {
+export const TelecommsMonitor = (props) => {
   const { act, data } = useBackend<any>();
   const {
     notice,

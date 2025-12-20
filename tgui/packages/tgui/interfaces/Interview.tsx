@@ -8,7 +8,7 @@ import {
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
-export const Interview = (props, context) => {
+export const Interview = (props) => {
   const { act, data } = useBackend<any>();
   const {
     welcome_message,

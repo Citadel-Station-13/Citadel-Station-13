@@ -9,7 +9,7 @@ import {
 } from "../components";
 import { Window } from "../layouts";
 
-export const Clipboard = (props, context) => {
+export const Clipboard = (props) => {
   const { act, data } = useBackend<any>();
   const {
     pen,

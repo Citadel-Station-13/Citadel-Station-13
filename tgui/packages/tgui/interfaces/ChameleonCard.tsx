@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { AccessList } from './common/AccessList';
 import { Window } from '../layouts';
 
-export const ChameleonCard = (props, context) => {
+export const ChameleonCard = (props) => {
   const { act, data } = useBackend<any>();
 
   const {

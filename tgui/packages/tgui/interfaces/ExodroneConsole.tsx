@@ -110,7 +110,7 @@ type ToolData = {
   icon: string
 }
 
-export const ExodroneConsole = (props, context) => {
+export const ExodroneConsole = (props) => {
   const { data } = useBackend<ExodroneConsoleData>(context);
   const {
     signal_lost,
@@ -132,7 +132,7 @@ export const ExodroneConsole = (props, context) => {
   );
 };
 
-const SignalLostModal = (props, context) => {
+const SignalLostModal = (props) => {
   const { act } = useBackend<any>();
   return (
     <Modal
@@ -170,7 +170,7 @@ const SignalLostModal = (props, context) => {
   );
 };
 
-const DroneSelectionSection = (props, context) => {
+const DroneSelectionSection = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     all_drones,
@@ -213,7 +213,7 @@ const DroneSelectionSection = (props, context) => {
 };
 
 
-const ToolSelectionModal = (props, context) => {
+const ToolSelectionModal = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     all_tools = {},
@@ -266,7 +266,7 @@ const ToolSelectionModal = (props, context) => {
   );
 };
 
-const EquipmentBox = (props, context) => {
+const EquipmentBox = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     configurable,
@@ -349,7 +349,7 @@ const EquipmentBox = (props, context) => {
   );
 };
 
-const EquipmentGrid = (props, context) => {
+const EquipmentGrid = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     cargo,
@@ -410,7 +410,7 @@ const EquipmentGrid = (props, context) => {
   );
 };
 
-const DroneStatus = (props, context) => {
+const DroneStatus = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     drone_integrity,
@@ -459,7 +459,7 @@ const NoSiteDimmer = () => {
   );
 };
 
-const TravelTargetSelectionScreen = (props, context) => {
+const TravelTargetSelectionScreen = (props) => {
   // List of sites and eta travel times to each
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
@@ -581,7 +581,7 @@ const TravelTargetSelectionScreen = (props, context) => {
   );
 };
 
-const TravelDimmer = (props, context) => {
+const TravelDimmer = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     travel_time,
@@ -607,7 +607,7 @@ const TravelDimmer = (props, context) => {
   );
 };
 
-const TimeoutScreen = (props, context) => {
+const TimeoutScreen = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     wait_time_left,
@@ -633,7 +633,7 @@ const TimeoutScreen = (props, context) => {
   );
 };
 
-const ExplorationScreen = (props, context) => {
+const ExplorationScreen = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     site,
@@ -688,7 +688,7 @@ const ExplorationScreen = (props, context) => {
   );
 };
 
-const EventScreen = (props, context) => {
+const EventScreen = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     drone_status,
@@ -799,7 +799,7 @@ export const AdventureScreen = (props: AdventureScreenProps, context) => {
   );
 };
 
-const DroneScreen = (props, context) => {
+const DroneScreen = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     drone_status,
@@ -823,7 +823,7 @@ const DroneScreen = (props, context) => {
   }
 };
 
-const ExodroneConsoleContent = (props, context) => {
+const ExodroneConsoleContent = (props) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     drone,

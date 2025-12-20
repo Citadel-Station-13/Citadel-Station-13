@@ -13,7 +13,7 @@ const skillyellow = {
   fontWeight: 'bold',
 };
 
-export const SkillPanel = (props, context) => {
+export const SkillPanel = (props) => {
   const { act, data } = useBackend<any>();
   const skills = data.skills || [];
   return (

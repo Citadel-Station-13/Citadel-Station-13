@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Collapsible, NoticeBox, ProgressBar, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const CloningConsole = (props, context) => {
+export const CloningConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     useRecords,

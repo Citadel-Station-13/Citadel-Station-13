@@ -18,7 +18,7 @@ const useCompact = context => {
   return [compact, toggleCompact];
 };
 
-export const CentcomPodLauncher = (props, context) => {
+export const CentcomPodLauncher = (props) => {
   const [compact] = useCompact(context);
   return (
     <Window
@@ -30,7 +30,7 @@ export const CentcomPodLauncher = (props, context) => {
   );
 };
 
-const CentcomPodLauncherContent = (props, context) => {
+const CentcomPodLauncherContent = (props) => {
   const [compact] = useCompact(context);
   return (
     <Window.Content>
@@ -410,7 +410,7 @@ const EFFECTS_ALL = [
   },
 ];
 
-const ViewTabHolder = (props, context) => {
+const ViewTabHolder = (props) => {
   const { act, data } = useBackend<any>();
   const [
     tabPageIndex,
@@ -497,7 +497,7 @@ const ViewTabHolder = (props, context) => {
   );
 };
 
-const TabPod = (props, context) => {
+const TabPod = (props) => {
   return (
     <Box color="label">
       Note: You can right click on this
@@ -507,7 +507,7 @@ const TabPod = (props, context) => {
   );
 };
 
-const TabBay = (props, context) => {
+const TabBay = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <>
@@ -524,7 +524,7 @@ const TabBay = (props, context) => {
   );
 };
 
-const TabDrop = (props, context) => {
+const TabDrop = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <>
@@ -541,7 +541,7 @@ const TabDrop = (props, context) => {
   );
 };
 
-const PodStatusPage = (props, context) => {
+const PodStatusPage = (props) => {
   const { act, data } = useBackend<any>();
   const [compact, toggleCompact] = useCompact(context);
   return (
@@ -650,7 +650,7 @@ const PodStatusPage = (props, context) => {
   );
 };
 
-const ReverseMenu = (props, context) => {
+const ReverseMenu = (props) => {
   const { act, data } = useBackend<any>();
   const [
     tabPageIndex,
@@ -912,7 +912,7 @@ class PresetsPage extends Component {
   }
 }
 
-const LaunchPage = (props, context) => {
+const LaunchPage = (props) => {
   const [compact] = useCompact(context);
   const { act, data } = useBackend<any>();
   return (
@@ -937,7 +937,7 @@ const LaunchPage = (props, context) => {
   );
 };
 
-const StylePage = (props, context) => {
+const StylePage = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Section
@@ -985,7 +985,7 @@ const StylePage = (props, context) => {
   );
 };
 
-const Bays = (props, context) => {
+const Bays = (props) => {
   const { act, data } = useBackend<any>();
   const [compact] = useCompact(context);
   return (
@@ -1028,7 +1028,7 @@ const Bays = (props, context) => {
   );
 };
 
-const Timing = (props, context) => {
+const Timing = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Section
@@ -1074,7 +1074,7 @@ const Timing = (props, context) => {
   );
 };
 
-const DelayHelper = (props, context) => {
+const DelayHelper = (props) => {
   const { act, data } = useBackend<any>();
   const {
     delay_list,
@@ -1111,7 +1111,7 @@ const DelayHelper = (props, context) => {
   );
 };
 
-const Sounds = (props, context) => {
+const Sounds = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Section fill title="Sounds"

@@ -66,7 +66,7 @@ type CustomInput = {
   img: string;
 }
 
-const VendingRow = (props, context) => {
+const VendingRow = (props) => {
   const { act, data } = useBackend<VendingData>(context);
   const {
     product,
@@ -168,7 +168,7 @@ const VendingRow = (props, context) => {
   );
 };
 
-export const Vending = (props, context) => {
+export const Vending = (props) => {
   const { act, data } = useBackend<VendingData>(context);
   const {
     user,

@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Dropdown, Section, Knob, LabeledControls, LabeledList, Stack, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Jukebox = (props, context) => {
+export const Jukebox = (props) => {
   const { act, data } = useBackend<any>();
   const {
     active,

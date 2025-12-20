@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Grid, Input, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const PandemicBeakerDisplay = (props, context) => {
+export const PandemicBeakerDisplay = (props) => {
   const { act, data } = useBackend<any>();
   const {
     has_beaker,
@@ -65,7 +65,7 @@ export const PandemicBeakerDisplay = (props, context) => {
   );
 };
 
-export const PandemicDiseaseDisplay = (props, context) => {
+export const PandemicDiseaseDisplay = (props) => {
   const { act, data } = useBackend<any>();
   const {
     is_ready,
@@ -163,7 +163,7 @@ export const PandemicDiseaseDisplay = (props, context) => {
   );
 };
 
-export const PandemicSymptomDisplay = (props, context) => {
+export const PandemicSymptomDisplay = (props) => {
   const { symptom } = props;
   const {
     name,
@@ -233,7 +233,7 @@ export const PandemicSymptomDisplay = (props, context) => {
   );
 };
 
-export const PandemicAntibodyDisplay = (props, context) => {
+export const PandemicAntibodyDisplay = (props) => {
   const { act, data } = useBackend<any>();
   const resistances = data.resistances || [];
   return (
@@ -266,7 +266,7 @@ export const PandemicAntibodyDisplay = (props, context) => {
   );
 };
 
-export const Pandemic = (props, context) => {
+export const Pandemic = (props) => {
   const { data } = useBackend<any>();
   return (
     <Window

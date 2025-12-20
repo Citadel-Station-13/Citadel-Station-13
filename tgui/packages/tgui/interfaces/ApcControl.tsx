@@ -6,7 +6,7 @@ import { Box, Button, Dimmer, Flex, Icon, Table, Tabs } from 'tgui-core/componen
 import { Window } from '../layouts';
 import { AreaCharge, powerRank } from './PowerMonitor';
 
-export const ApcControl = (props, context) => {
+export const ApcControl = (props) => {
   const { data } = useBackend<any>();
   return (
     <Window
@@ -23,7 +23,7 @@ export const ApcControl = (props, context) => {
   );
 };
 
-const ApcLoggedOut = (props, context) => {
+const ApcLoggedOut = (props) => {
   const { act, data } = useBackend<any>();
   const { emagged } = data;
   const text = emagged === 1 ? 'Open' : 'Log In';
@@ -38,7 +38,7 @@ const ApcLoggedOut = (props, context) => {
   );
 };
 
-const ApcLoggedIn = (props, context) => {
+const ApcLoggedIn = (props) => {
   const { act, data } = useBackend<any>();
   const { restoring } = data;
   const [
@@ -92,7 +92,7 @@ const ApcLoggedIn = (props, context) => {
   );
 };
 
-const ControlPanel = (props, context) => {
+const ControlPanel = (props) => {
   const { act, data } = useBackend<any>();
   const {
     emagged,
@@ -148,7 +148,7 @@ const ControlPanel = (props, context) => {
   );
 };
 
-const ApcControlScene = (props, context) => {
+const ApcControlScene = (props) => {
   const { data, act } = useBackend<any>();
 
   const [
@@ -252,7 +252,7 @@ const ApcControlScene = (props, context) => {
   );
 };
 
-const LogPanel = (props, context) => {
+const LogPanel = (props) => {
   const { data } = useBackend<any>();
 
   const logs = flow([

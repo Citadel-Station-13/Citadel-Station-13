@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Icon, Section, Slider, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const MassSpec = (props, context) => {
+export const MassSpec = (props) => {
   const { act, data } = useBackend<any>();
   const {
     processing,
@@ -180,7 +180,7 @@ const BeakerMassProfile = props => {
   );
 };
 
-const MassSpectroscopy = (props, context) => {
+const MassSpectroscopy = (props) => {
   const { act, data } = useBackend<any>();
   const {
     lowerRange,

@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, NoticeBox } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Wires = (props, context) => {
+export const Wires = (props) => {
   const { act, data } = useBackend<any>();
   const { proper_name } = data;
   const wires = data.wires || [];

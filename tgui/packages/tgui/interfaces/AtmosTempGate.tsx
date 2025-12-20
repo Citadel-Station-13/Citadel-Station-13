@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const AtmosTempGate = (props, context) => {
+export const AtmosTempGate = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window

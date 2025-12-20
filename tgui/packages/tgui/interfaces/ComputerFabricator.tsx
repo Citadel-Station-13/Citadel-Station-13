@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Grid, Section, Table, Tooltip } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ComputerFabricator = (props, context) => {
+export const ComputerFabricator = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window
@@ -41,7 +41,7 @@ export const ComputerFabricator = (props, context) => {
 
 // This had a pretty gross backend so this was unfortunately one of the
 // best ways of doing it.
-const CfStep1 = (props, context) => {
+const CfStep1 = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Section
@@ -86,7 +86,7 @@ const CfStep1 = (props, context) => {
   );
 };
 
-const CfStep2 = (props, context) => {
+const CfStep2 = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Section
@@ -351,7 +351,7 @@ const CfStep2 = (props, context) => {
   );
 };
 
-const CfStep3 = (props, context) => {
+const CfStep3 = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Section
@@ -405,7 +405,7 @@ const CfStep3 = (props, context) => {
   );
 };
 
-const CfStep4 = (props, context) => {
+const CfStep4 = (props) => {
   return (
     <Section
       minHeight="282px">

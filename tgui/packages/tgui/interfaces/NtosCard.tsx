@@ -4,7 +4,7 @@ import { Box, Button, Flex, Input, NoticeBox, Section, Tabs } from 'tgui-core/co
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
-export const NtosCard = (props, context) => {
+export const NtosCard = (props) => {
   return (
     <NtosWindow
       width={450}
@@ -17,7 +17,7 @@ export const NtosCard = (props, context) => {
   );
 };
 
-export const NtosCardContent = (props, context) => {
+export const NtosCardContent = (props) => {
   const { act, data } = useBackend<any>();
   const [tab, setTab] = useLocalState(context, 'tab', 1);
   const {

@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Flex, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const GhostPoolProtection = (props, context) => {
+export const GhostPoolProtection = (props) => {
   const { act, data } = useBackend<any>();
   const {
     events_or_midrounds,

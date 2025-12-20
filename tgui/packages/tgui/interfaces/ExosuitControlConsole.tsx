@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ExosuitControlConsole = (props, context) => {
+export const ExosuitControlConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     mechs = [],

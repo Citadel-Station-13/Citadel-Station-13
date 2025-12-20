@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 
 const mappedTopMargin = "2%";
 
-export const BluespaceSender = (props, context) => {
+export const BluespaceSender = (props) => {
   const { act, data } = useBackend<any>();
   const {
     on,

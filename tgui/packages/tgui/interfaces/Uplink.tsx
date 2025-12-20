@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 
 const MAX_SEARCH_RESULTS = 25;
 
-export const Uplink = (props, context) => {
+export const Uplink = (props) => {
   const { data } = useBackend<any>();
   const { telecrystals } = data;
   return (
@@ -23,7 +23,7 @@ export const Uplink = (props, context) => {
   );
 };
 
-export const GenericUplink = (props, context) => {
+export const GenericUplink = (props) => {
   const {
     currencyAmount = 0,
     currencySymbol = 'cr',
@@ -120,7 +120,7 @@ export const GenericUplink = (props, context) => {
   );
 };
 
-const ItemList = (props, context) => {
+const ItemList = (props) => {
   const {
     compactMode,
     currencyAmount,

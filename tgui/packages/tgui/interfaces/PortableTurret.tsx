@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const PortableTurret = (props, context) => {
+export const PortableTurret = (props) => {
   const { act, data } = useBackend<any>();
   const {
     silicon_user,

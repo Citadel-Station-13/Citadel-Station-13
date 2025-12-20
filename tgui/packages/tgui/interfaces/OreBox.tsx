@@ -3,7 +3,7 @@ import { Box, Button, Section, Table } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-export const OreBox = (props, context) => {
+export const OreBox = (props) => {
   const { act, data } = useBackend<any>();
   const { materials } = data;
   return (

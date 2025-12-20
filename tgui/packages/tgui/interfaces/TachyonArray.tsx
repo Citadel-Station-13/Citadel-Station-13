@@ -2,7 +2,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const TachyonArray = (props, context) => {
+export const TachyonArray = (props) => {
   const { act, data } = useBackend<any>();
   const {
     records = [],
@@ -39,7 +39,7 @@ export const TachyonArray = (props, context) => {
   );
 };
 
-export const TachyonArrayContent = (props, context) => {
+export const TachyonArrayContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     records = [],

@@ -9,7 +9,7 @@ type Info = {
   gang_clothes: string[];
 };
 
-export const AntagInfoGangmember = (props, context) => {
+export const AntagInfoGangmember = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     gang_name,
@@ -56,7 +56,7 @@ export const AntagInfoGangmember = (props, context) => {
   );
 };
 
-const GangClothesPrintout = (props, context) => {
+const GangClothesPrintout = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     gang_name,
@@ -117,7 +117,7 @@ const GangPhonePrintout = () => {
 };
 
 
-const GangObjectivePrintout = (props, context) => {
+const GangObjectivePrintout = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     gang_objective,

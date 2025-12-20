@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Icon, Section, Table, Tooltip } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const PlayerPlaytimes = (props, context) => {
+export const PlayerPlaytimes = (props) => {
   const { act, data } = useBackend<any>();
   const {
     clients,

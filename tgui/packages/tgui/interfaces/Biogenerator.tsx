@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 
 const MAX_SEARCH_RESULTS = 25;
 
-export const Biogenerator = (props, context) => {
+export const Biogenerator = (props) => {
   const { data } = useBackend<any>();
   const {
     beaker,
@@ -35,7 +35,7 @@ export const Biogenerator = (props, context) => {
   );
 };
 
-export const BiogeneratorContent = (props, context) => {
+export const BiogeneratorContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     biomass,
@@ -127,7 +127,7 @@ export const BiogeneratorContent = (props, context) => {
   );
 };
 
-const ItemList = (props, context) => {
+const ItemList = (props) => {
   const { act } = useBackend<any>();
   const [
     hoveredItem,

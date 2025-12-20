@@ -12,7 +12,7 @@ type CircuitAdminPanelData = {
   }[]
 }
 
-export const CircuitAdminPanel = (props, context) => {
+export const CircuitAdminPanel = (props) => {
   const { act, data } = useBackend<CircuitAdminPanelData>(context);
 
   return (

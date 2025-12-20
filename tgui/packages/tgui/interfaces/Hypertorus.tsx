@@ -7,7 +7,7 @@ import { getGasColor, getGasLabel } from '../constants';
 import { formatSiBaseTenUnit, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
-export const Hypertorus = (props, context) => {
+export const Hypertorus = (props) => {
   const { act, data } = useBackend<any>();
   const filterTypes = data.filter_types || [];
   const selectedFuels = data.selected_fuel || [];

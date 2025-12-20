@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const StackingConsole = (props, context) => {
+export const StackingConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     machine,
@@ -24,7 +24,7 @@ export const StackingConsole = (props, context) => {
   );
 };
 
-export const StackingConsoleContent = (props, context) => {
+export const StackingConsoleContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     stacking_amount,

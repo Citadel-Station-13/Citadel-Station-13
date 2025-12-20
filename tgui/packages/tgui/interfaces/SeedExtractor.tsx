@@ -42,7 +42,7 @@ const createSeeds = seedStrings => {
   ])(objs);
 };
 
-export const SeedExtractor = (props, context) => {
+export const SeedExtractor = (props) => {
   const { act, data } = useBackend<any>();
   const seeds = createSeeds(data.seeds);
   return (

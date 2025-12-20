@@ -6,7 +6,7 @@ import { Button, Collapsible, Icon, Input, Section, Stack, Tabs } from 'tgui-cor
 import { useLocalState } from '../backend';
 import { Window } from '../layouts';
 
-export const AnnouncementHelp = (props, context) => {
+export const AnnouncementHelp = (props) => {
   const { act, data } = useBackend<any>();
   const { vox_types = {} } = data;
 

@@ -66,7 +66,7 @@ const MaterialCost = (props: {
   );
 };
 
-export const ComponentPrinter = (props, context) => {
+export const ComponentPrinter = (props) => {
   const { act, data } = useBackend<ComponentPrinterData>(context);
 
   const [currentCategory, setCurrentCategory] = useLocalState(context, "category", CATEGORY_ALL);

@@ -34,7 +34,7 @@ export const Cryo = () => {
   );
 };
 
-const CryoContent = (props, context) => {
+const CryoContent = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <>

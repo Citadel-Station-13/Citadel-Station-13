@@ -4,7 +4,7 @@ import { AnimatedNumber, Box, Button, Flex, LabeledList, NumberInput, ProgressBa
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
 
-export const ChemRecipeDebug = (props, context) => {
+export const ChemRecipeDebug = (props) => {
   const { act, data } = useBackend<any>();
   const {
     targetTemp,

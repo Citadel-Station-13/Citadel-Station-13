@@ -18,7 +18,7 @@ export const SupermatterMonitor = () => {
   );
 };
 
-export const SupermatterMonitorContent = (props, context) => {
+export const SupermatterMonitorContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     active,
@@ -145,7 +145,7 @@ export const SupermatterMonitorContent = (props, context) => {
   );
 };
 
-const SupermatterList = (props, context) => {
+const SupermatterList = (props) => {
   const { act, data } = useBackend<any>();
   const { supermatters = [] } = data;
   return (

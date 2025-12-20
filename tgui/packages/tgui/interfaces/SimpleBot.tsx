@@ -220,7 +220,7 @@ const ControlsDisplay = (_, context) => {
 /** Helper function which identifies which button to create.
  * Might need some fine tuning if you are using more advanced controls.
  */
-const ControlHelper = (props, context) => {
+const ControlHelper = (props) => {
   const { act } = useBackend<SimpleBotContext>(context);
   const { control } = props;
   if (control[0] === 'sync_tech') {
@@ -268,7 +268,7 @@ const MedbotSync = (_, context) => {
 };
 
 /** Slider button for medbot injection thresholds */
-const InjectionThreshold = (props, context) => {
+const InjectionThreshold = (props) => {
   const { act } = useBackend<SimpleBotContext>(context);
   const { control } = props;
 
@@ -292,7 +292,7 @@ const InjectionThreshold = (props, context) => {
 };
 
 /** Slider button for medbot healing thresholds */
-const MedbotThreshold = (props, context) => {
+const MedbotThreshold = (props) => {
   const { act } = useBackend<SimpleBotContext>(context);
   const { control } = props;
 
@@ -316,7 +316,7 @@ const MedbotThreshold = (props, context) => {
 };
 
 /** Tile stacks for floorbots - shows number and eject button */
-const FloorbotTiles = (props, context) => {
+const FloorbotTiles = (props) => {
   const { act } = useBackend<SimpleBotContext>(context);
   const { control } = props;
 
@@ -332,7 +332,7 @@ const FloorbotTiles = (props, context) => {
 };
 
 /** Direction indicator for floorbot when line mode is chosen. */
-const FloorbotLine = (props, context) => {
+const FloorbotLine = (props) => {
   const { act } = useBackend<SimpleBotContext>(context);
   const { control } = props;
 

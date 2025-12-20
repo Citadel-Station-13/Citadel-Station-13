@@ -5,7 +5,7 @@ import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section, Table, NumberInput } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ChemDispenser = (props, context) => {
+export const ChemDispenser = (props) => {
   const { act, data } = useBackend<any>();
   const recording = !!data.recordingRecipe;
   const [hasCol, setHasCol] = useLocalState(
@@ -264,7 +264,7 @@ export const ChemDispenser = (props, context) => {
 
 const ChemicalBuffer = Table;
 
-const ChemicalBufferEntry = (props, context) => {
+const ChemicalBufferEntry = (props) => {
   const { act, data } = useBackend<any>();
   const { chemical, transferTo } = props;
   return (
@@ -291,7 +291,7 @@ const ChemicalBufferEntry = (props, context) => {
 
 const ChemicalBeaker = Table;
 
-const ChemicalBeakerEntry = (props, context) => {
+const ChemicalBeakerEntry = (props) => {
   const { act, data } = useBackend<any>();
   const { chemical, transferTo } = props;
   return (

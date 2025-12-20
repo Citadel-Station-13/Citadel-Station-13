@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ChemSplitter = (props, context) => {
+export const ChemSplitter = (props) => {
   const { act, data } = useBackend<any>();
   const {
     straight,

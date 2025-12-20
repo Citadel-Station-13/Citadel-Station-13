@@ -3,7 +3,7 @@ import { Button, Dropdown, Flex, Input, LabeledList, ProgressBar, Section } from
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
-export const Mule = (props, context) => {
+export const Mule = (props) => {
   const { act, data } = useBackend<any>();
   const {
     on,

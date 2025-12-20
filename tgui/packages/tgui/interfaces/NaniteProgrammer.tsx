@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Button, Dropdown, Grid, Input, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const NaniteCodes = (props, context) => {
+export const NaniteCodes = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Section
@@ -62,7 +62,7 @@ export const NaniteCodes = (props, context) => {
   );
 };
 
-export const NaniteDelays = (props, context) => {
+export const NaniteDelays = (props) => {
   const { act, data } = useBackend<any>();
 
   return (
@@ -124,7 +124,7 @@ export const NaniteDelays = (props, context) => {
   );
 };
 
-export const NaniteExtraEntry = (props, context) => {
+export const NaniteExtraEntry = (props) => {
   const { extra_setting } = props;
   const {
     name,
@@ -143,7 +143,7 @@ export const NaniteExtraEntry = (props, context) => {
   );
 };
 
-export const NaniteExtraNumber = (props, context) => {
+export const NaniteExtraNumber = (props) => {
   const { extra_setting } = props;
   const { act } = useBackend<any>();
   const {
@@ -167,7 +167,7 @@ export const NaniteExtraNumber = (props, context) => {
   );
 };
 
-export const NaniteExtraText = (props, context) => {
+export const NaniteExtraText = (props) => {
   const { extra_setting } = props;
   const { act } = useBackend<any>();
   const {
@@ -185,7 +185,7 @@ export const NaniteExtraText = (props, context) => {
   );
 };
 
-export const NaniteExtraType = (props, context) => {
+export const NaniteExtraType = (props) => {
   const { extra_setting } = props;
   const { act } = useBackend<any>();
   const {
@@ -206,7 +206,7 @@ export const NaniteExtraType = (props, context) => {
   );
 };
 
-export const NaniteExtraBoolean = (props, context) => {
+export const NaniteExtraBoolean = (props) => {
   const { extra_setting } = props;
   const { act } = useBackend<any>();
   const {
@@ -225,7 +225,7 @@ export const NaniteExtraBoolean = (props, context) => {
   );
 };
 
-export const NaniteProgrammer = (props, context) => {
+export const NaniteProgrammer = (props) => {
   return (
     <Window
       width={420}
@@ -238,7 +238,7 @@ export const NaniteProgrammer = (props, context) => {
   );
 };
 
-export const NaniteProgrammerContent = (props, context) => {
+export const NaniteProgrammerContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     has_disk,

@@ -49,7 +49,7 @@ const BrokenTramDimmer = () => {
   );
 };
 
-export const TramControl = (props, context) => {
+export const TramControl = (props) => {
   const { act, data } = useBackend<any>();
   const {
     broken,

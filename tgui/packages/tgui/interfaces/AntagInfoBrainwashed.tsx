@@ -16,7 +16,7 @@ type Info = {
   objectives: Objective[];
 };
 
-export const AntagInfoBrainwashed = (props, context) => {
+export const AntagInfoBrainwashed = (props) => {
   return (
     <Window
       width={400}
@@ -58,7 +58,7 @@ export const AntagInfoBrainwashed = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     objectives,

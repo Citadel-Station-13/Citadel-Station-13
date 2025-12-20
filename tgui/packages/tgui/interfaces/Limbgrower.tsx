@@ -2,7 +2,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs, ProgressBar } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Limbgrower = (props, context) => {
+export const Limbgrower = (props) => {
   const { act, data } = useBackend<any>();
   const {
     reagents = [],

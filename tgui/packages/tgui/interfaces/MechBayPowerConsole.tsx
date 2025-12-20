@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { AnimatedNumber, Button, LabeledList, NoticeBox, ProgressBar, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const MechBayPowerConsole = (props, context) => {
+export const MechBayPowerConsole = (props) => {
   const { act, data } = useBackend<any>();
   const { recharge_port } = data;
   const mech = recharge_port && recharge_port.mech;

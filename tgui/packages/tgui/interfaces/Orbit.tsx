@@ -34,7 +34,7 @@ const compareNumberedText = (a, b) => {
   return compareString(aName, bName);
 };
 
-const BasicSection = (props, context) => {
+const BasicSection = (props) => {
   const { act } = useBackend<any>();
   const { searchText, source, title } = props;
   const things = source.filter(searchFor(searchText));
@@ -53,7 +53,7 @@ const BasicSection = (props, context) => {
   );
 };
 
-const OrbitedButton = (props, context) => {
+const OrbitedButton = (props) => {
   const { act } = useBackend<any>();
   const { color, thing } = props;
 
@@ -90,7 +90,7 @@ const OrbitedButton = (props, context) => {
   );
 };
 
-export const Orbit = (props, context) => {
+export const Orbit = (props) => {
   const { act, data } = useBackend<any>();
   const {
     alive,

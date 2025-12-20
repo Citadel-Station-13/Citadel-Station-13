@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Timer = (props, context) => {
+export const Timer = (props) => {
   const { act, data } = useBackend<any>();
   const {
     minutes,

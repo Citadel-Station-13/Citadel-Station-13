@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const NaniteChamberControl = (props, context) => {
+export const NaniteChamberControl = (props) => {
   return (
     <Window
       width={380}
@@ -16,7 +16,7 @@ export const NaniteChamberControl = (props, context) => {
   );
 };
 
-export const NaniteChamberControlContent = (props, context) => {
+export const NaniteChamberControlContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     status_msg,

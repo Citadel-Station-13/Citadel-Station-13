@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const BluespaceArtillery = (props, context) => {
+export const BluespaceArtillery = (props) => {
   const { act, data } = useBackend<any>();
   const {
     notice,

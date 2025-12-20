@@ -52,7 +52,7 @@ const PlaytimeSection = props => {
   );
 };
 
-export const TrackedPlaytime = (props, context) => {
+export const TrackedPlaytime = (props) => {
   const { act, data } = useBackend<any>();
   const {
     failReason,

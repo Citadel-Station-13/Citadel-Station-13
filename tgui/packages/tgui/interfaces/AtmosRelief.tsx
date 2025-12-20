@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const AtmosRelief = (props, context) => { // rebranded AtmoPump
+export const AtmosRelief = (props) => { // rebranded AtmoPump
   const { act, data } = useBackend<any>();
   return (
     <Window

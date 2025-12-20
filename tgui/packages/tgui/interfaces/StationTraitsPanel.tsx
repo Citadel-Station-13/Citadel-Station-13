@@ -28,7 +28,7 @@ enum Tab {
   ViewStationTraits,
 }
 
-const FutureStationTraitsPage = (props, context) => {
+const FutureStationTraitsPage = (props) => {
   const { act, data } = useBackend<StationTraitsData>(context);
   const { future_station_traits } = data;
 
@@ -166,7 +166,7 @@ const FutureStationTraitsPage = (props, context) => {
   );
 };
 
-const ViewStationTraitsPage = (props, context) => {
+const ViewStationTraitsPage = (props) => {
   const { act, data } = useBackend<StationTraitsData>(context);
 
   return data.current_traits.length > 0 ? (
@@ -203,7 +203,7 @@ const ViewStationTraitsPage = (props, context) => {
   );
 };
 
-export const StationTraitsPanel = (props, context) => {
+export const StationTraitsPanel = (props) => {
   const [currentTab, setCurrentTab] = useLocalState(
     context,
     'station_traits_tab',

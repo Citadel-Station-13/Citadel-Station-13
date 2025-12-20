@@ -3,7 +3,7 @@ import { AnimatedNumber, Button, LabeledList, NoticeBox, Section } from 'tgui-co
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-export const BankMachine = (props, context) => {
+export const BankMachine = (props) => {
   const { act, data } = useBackend<any>();
   const {
     current_balance,

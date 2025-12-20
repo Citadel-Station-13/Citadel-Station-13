@@ -39,7 +39,7 @@ const filterBoxColor = (color: string) => {
   return color.substring(0, 7);
 };
 
-export const DecalPainter = (props, context) => {
+export const DecalPainter = (props) => {
   const { act, data } = useBackend<DecalPainterData>(context);
 
   const custom_color_selected = !data.color_list.some(

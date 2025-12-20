@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Electropack = (props, context) => {
+export const Electropack = (props) => {
   const { act, data } = useBackend<any>();
   const {
     power,

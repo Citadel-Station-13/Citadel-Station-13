@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Box, NumberInput, Section, LabeledList } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const RadioactiveMicrolaser = (props, context) => {
+export const RadioactiveMicrolaser = (props) => {
   const { act, data } = useBackend<any>();
   const {
     irradiate,

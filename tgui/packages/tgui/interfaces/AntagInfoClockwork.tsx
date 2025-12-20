@@ -14,7 +14,7 @@ for (let index = 0; index < Math.min(Math.random()*100); index++) {
   REC_RATVAR += "HONOR RATVAR ";
 }
 
-export const AntagInfoClockwork = (props, context) => {
+export const AntagInfoClockwork = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     HONOR_RATVAR = false,

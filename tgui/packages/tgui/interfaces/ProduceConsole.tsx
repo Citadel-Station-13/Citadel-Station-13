@@ -14,7 +14,7 @@ const TAB2NAME = [
   },
 ];
 
-const ShoppingTab = (props, context) => {
+const ShoppingTab = (props) => {
   const { data, act } = useBackend<any>();
   const {
     order_datums,
@@ -95,7 +95,7 @@ const ShoppingTab = (props, context) => {
   );
 };
 
-const CheckoutTab = (props, context) => {
+const CheckoutTab = (props) => {
   const { data, act } = useBackend<any>();
   const {
     order_datums,
@@ -195,7 +195,7 @@ const CheckoutTab = (props, context) => {
   );
 };
 
-const OrderSent = (props, context) => {
+const OrderSent = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Dimmer>
@@ -216,7 +216,7 @@ const OrderSent = (props, context) => {
   );
 };
 
-export const ProduceConsole = (props, context) => {
+export const ProduceConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     off_cooldown,

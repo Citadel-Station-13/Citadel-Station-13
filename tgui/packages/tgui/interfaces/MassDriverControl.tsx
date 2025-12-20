@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section, LabeledList, NumberInput } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const MassDriverControl = (props, context) => {
+export const MassDriverControl = (props) => {
   const { act, data } = useBackend<any>();
   const {
     connected,

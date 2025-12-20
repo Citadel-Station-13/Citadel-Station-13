@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 import { Scrubber, Vent } from './common/AtmosControls';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
-export const AirAlarm = (props, context) => {
+export const AirAlarm = (props) => {
   const { act, data } = useBackend<any>();
   const locked = data.locked && !data.siliconUser;
   return (
@@ -24,7 +24,7 @@ export const AirAlarm = (props, context) => {
   );
 };
 
-const AirAlarmStatus = (props, context) => {
+const AirAlarmStatus = (props) => {
   const { data } = useBackend<any>();
   const entries = (data.environment_data || [])
     .filter(entry => entry.value >= 0.01);
@@ -114,7 +114,7 @@ const AIR_ALARM_ROUTES = {
   },
 };
 
-const AirAlarmControl = (props, context) => {
+const AirAlarmControl = (props) => {
   const [screen, setScreen] = useLocalState(context, 'screen');
   const route = AIR_ALARM_ROUTES[screen] || AIR_ALARM_ROUTES.home;
   const Component = route.component();
@@ -136,7 +136,7 @@ const AirAlarmControl = (props, context) => {
 //  Home screen
 // --------------------------------------------------------
 
-const AirAlarmControlHome = (props, context) => {
+const AirAlarmControlHome = (props) => {
   const { act, data } = useBackend<any>();
   const [screen, setScreen] = useLocalState(context, 'screen');
   const {
@@ -190,7 +190,7 @@ const AirAlarmControlHome = (props, context) => {
 //  Vents
 // --------------------------------------------------------
 
-const AirAlarmControlVents = (props, context) => {
+const AirAlarmControlVents = (props) => {
   const { data } = useBackend<any>();
   const { vents } = data;
   if (!vents || vents.length === 0) {
@@ -206,7 +206,7 @@ const AirAlarmControlVents = (props, context) => {
 //  Scrubbers
 // --------------------------------------------------------
 
-const AirAlarmControlScrubbers = (props, context) => {
+const AirAlarmControlScrubbers = (props) => {
   const { data } = useBackend<any>();
   const { scrubbers } = data;
   if (!scrubbers || scrubbers.length === 0) {
@@ -222,7 +222,7 @@ const AirAlarmControlScrubbers = (props, context) => {
 //  Modes
 // --------------------------------------------------------
 
-const AirAlarmControlModes = (props, context) => {
+const AirAlarmControlModes = (props) => {
   const { act, data } = useBackend<any>();
   const { modes } = data;
   if (!modes || modes.length === 0) {
@@ -245,7 +245,7 @@ const AirAlarmControlModes = (props, context) => {
 //  Thresholds
 // --------------------------------------------------------
 
-const AirAlarmControlThresholds = (props, context) => {
+const AirAlarmControlThresholds = (props) => {
   const { act, data } = useBackend<any>();
   const { thresholds } = data;
   return (

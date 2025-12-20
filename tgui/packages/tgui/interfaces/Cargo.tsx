@@ -5,7 +5,7 @@ import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } 
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-export const Cargo = (props, context) => {
+export const Cargo = (props) => {
   return (
     <Window
       width={780}
@@ -18,7 +18,7 @@ export const Cargo = (props, context) => {
   );
 };
 
-export const CargoContent = (props, context) => {
+export const CargoContent = (props) => {
   const { act, data } = useBackend<any>();
   const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
   const {
@@ -72,7 +72,7 @@ export const CargoContent = (props, context) => {
   );
 };
 
-const CargoStatus = (props, context) => {
+const CargoStatus = (props) => {
   const { act, data } = useBackend<any>();
   const {
     away,
@@ -126,7 +126,7 @@ const CargoStatus = (props, context) => {
   );
 };
 
-export const CargoCatalog = (props, context) => {
+export const CargoCatalog = (props) => {
   const { express } = props;
   const { act, data } = useBackend<any>();
   const {
@@ -216,7 +216,7 @@ export const CargoCatalog = (props, context) => {
   );
 };
 
-const CargoRequests = (props, context) => {
+const CargoRequests = (props) => {
   const { act, data } = useBackend<any>();
   const {
     requestonly,
@@ -285,7 +285,7 @@ const CargoRequests = (props, context) => {
   );
 };
 
-const CargoCartButtons = (props, context) => {
+const CargoCartButtons = (props) => {
   const { act, data } = useBackend<any>();
   const {
     requestonly,
@@ -315,7 +315,7 @@ const CargoCartButtons = (props, context) => {
   );
 };
 
-const CargoCart = (props, context) => {
+const CargoCart = (props) => {
   const { act, data } = useBackend<any>();
   const {
     requestonly,

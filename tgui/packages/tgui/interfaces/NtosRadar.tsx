@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, NoticeBox, Section } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
-export const NtosRadar = (props, context) => {
+export const NtosRadar = (props) => {
   return (
     <NtosWindow
       width={800}
@@ -15,7 +15,7 @@ export const NtosRadar = (props, context) => {
   );
 };
 
-export const NtosRadarContent = (props, context) => {
+export const NtosRadarContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     selected,

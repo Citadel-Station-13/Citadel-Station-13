@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const InsertedSkillchip = (props, context) => {
+export const InsertedSkillchip = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -102,7 +102,7 @@ export const InsertedSkillchip = (props, context) => {
   );
 };
 
-export const ImplantedSkillchips = (props, context) => {
+export const ImplantedSkillchips = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -243,7 +243,7 @@ export const ImplantedSkillchips = (props, context) => {
   );
 };
 
-export const TimeFormat = (props, context) => {
+export const TimeFormat = (props) => {
   const { value } = props;
 
   const seconds = toFixed(Math.floor((value/10) % 60)).padStart(2, "0");
@@ -253,7 +253,7 @@ export const TimeFormat = (props, context) => {
   return formattedValue;
 };
 
-export const SkillStation = (props, context) => {
+export const SkillStation = (props) => {
   const { data } = useBackend<any>();
   const {
     working,

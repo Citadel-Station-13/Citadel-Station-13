@@ -9,7 +9,7 @@ import { NtosWindow } from '../layouts';
 import { prevNextCamera, selectCameras, CameraConsoleContent } from './CameraConsole';
 import { logger } from "../logging";
 
-export const NtosSecurEye = (props, context) => {
+export const NtosSecurEye = (props) => {
   const { act, data, config } = useBackend<any>();
   const { PC_device_theme, mapRef, activeCamera } = data;
   const cameras = selectCameras(data.cameras);

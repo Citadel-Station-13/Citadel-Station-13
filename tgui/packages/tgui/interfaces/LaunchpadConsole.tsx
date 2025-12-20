@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-const LaunchpadButtonPad = (props, context) => {
+const LaunchpadButtonPad = (props) => {
   const { act } = useBackend<any>();
   return (
     <Grid width="1px">
@@ -88,7 +88,7 @@ const LaunchpadButtonPad = (props, context) => {
   );
 };
 
-export const LaunchpadControl = (props, context) => {
+export const LaunchpadControl = (props) => {
   const { topLevel } = props;
   const { act, data } = useBackend<any>();
   const {
@@ -190,7 +190,7 @@ export const LaunchpadControl = (props, context) => {
   );
 };
 
-export const LaunchpadConsole = (props, context) => {
+export const LaunchpadConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     launchpads = [],

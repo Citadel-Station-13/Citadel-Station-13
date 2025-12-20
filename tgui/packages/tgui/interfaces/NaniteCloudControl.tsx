@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const NaniteDiskBox = (props, context) => {
+export const NaniteDiskBox = (props) => {
   const { data } = useBackend<any>();
   const {
     has_disk,
@@ -29,7 +29,7 @@ export const NaniteDiskBox = (props, context) => {
   );
 };
 
-export const NaniteInfoBox = (props, context) => {
+export const NaniteInfoBox = (props) => {
   const { program } = props;
   const {
     name,
@@ -156,7 +156,7 @@ export const NaniteInfoBox = (props, context) => {
   );
 };
 
-export const NaniteCloudBackupList = (props, context) => {
+export const NaniteCloudBackupList = (props) => {
   const { act, data } = useBackend<any>();
   const cloud_backups = data.cloud_backups || [];
   return cloud_backups.map(backup => (
@@ -171,7 +171,7 @@ export const NaniteCloudBackupList = (props, context) => {
   ));
 };
 
-export const NaniteCloudBackupDetails = (props, context) => {
+export const NaniteCloudBackupDetails = (props) => {
   const { act, data } = useBackend<any>();
   const {
     current_view,
@@ -269,7 +269,7 @@ export const NaniteCloudBackupDetails = (props, context) => {
   );
 };
 
-export const NaniteCloudControl = (props, context) => {
+export const NaniteCloudControl = (props) => {
   const { act, data } = useBackend<any>();
   const {
     has_disk,

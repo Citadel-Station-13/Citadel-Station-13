@@ -25,7 +25,7 @@ export const PowerMonitor = () => {
   );
 };
 
-export const PowerMonitorContent = (props, context) => {
+export const PowerMonitorContent = (props) => {
   const { data } = useBackend<any>();
   const { history } = data;
   const [

@@ -15,7 +15,7 @@ import { Button, Flex, NoticeBox } from 'tgui-core/components';
  * All props can be redefined if you want custom behavior, but
  * it's preferred to stick to defaults.
  */
-export const InterfaceLockNoticeBox = (props, context) => {
+export const InterfaceLockNoticeBox = (props) => {
   const { act, data } = useBackend<any>();
   const {
     siliconUser = data.siliconUser,

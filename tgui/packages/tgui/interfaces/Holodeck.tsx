@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Holodeck = (props, context) => {
+export const Holodeck = (props) => {
   const { act, data } = useBackend<any>();
   const {
     can_toggle_safety,

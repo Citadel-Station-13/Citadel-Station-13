@@ -17,7 +17,7 @@ const dangerMap = {
   },
 };
 
-export const AiAirlock = (props, context) => {
+export const AiAirlock = (props) => {
   const { act, data } = useBackend<any>();
   const statusMain = dangerMap[data.power.main] || dangerMap[0];
   const statusBackup = dangerMap[data.power.backup] || dangerMap[0];

@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ProbingConsole = (props, context) => {
+export const ProbingConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     open,

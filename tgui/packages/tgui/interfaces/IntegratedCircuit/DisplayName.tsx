@@ -3,7 +3,7 @@ import { Box, Button, Flex } from 'tgui-core/components';
 import { FUNDAMENTAL_DATA_TYPES, DATATYPE_DISPLAY_HANDLERS } from './FundamentalTypes';
 import { NULL_REF } from './constants';
 
-export const DisplayName = (props, context) => {
+export const DisplayName = (props) => {
   const { act } = useBackend<any>();
   const { port, isOutput, componentId, portIndex, ...rest } = props;
 

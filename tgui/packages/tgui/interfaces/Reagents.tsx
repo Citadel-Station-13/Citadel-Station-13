@@ -8,7 +8,7 @@ const bookmarkedReactions = new Set();
 
 const matchBitflag = (a, b) => (a & b) && (a | b) === b;
 
-export const Reagents = (props, context) => {
+export const Reagents = (props) => {
   const { act, data } = useBackend<any>();
   const {
     beakerSync,
@@ -127,7 +127,7 @@ export const Reagents = (props, context) => {
 };
 
 
-const TagBox = (props, context) => {
+const TagBox = (props) => {
   const { act, data } = useBackend<any>();
   const [page, setPage] = useLocalState(context, "page", 1);
   const { bitflags } = props;
@@ -342,7 +342,7 @@ const TagBox = (props, context) => {
   );
 };
 
-const RecipeLibrary = (props, context) => {
+const RecipeLibrary = (props) => {
   const { act, data } = useBackend<any>();
   const [page, setPage] = useLocalState(context, "page", 1);
   const { flagIcons } = props;

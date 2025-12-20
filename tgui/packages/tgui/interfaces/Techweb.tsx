@@ -82,7 +82,7 @@ const abbreviateName = name => abbreviations[name] ?? name;
 
 // Actual Components
 
-export const Techweb = (props, context) => {
+export const Techweb = (props) => {
   const { act, data } = useRemappedBackend(context);
   const {
     locked,
@@ -108,7 +108,7 @@ export const Techweb = (props, context) => {
   );
 };
 
-export const AppTechweb = (props, context) => {
+export const AppTechweb = (props) => {
   const { act, data } = useRemappedBackend(context);
   const {
     locked,
@@ -134,7 +134,7 @@ export const AppTechweb = (props, context) => {
   );
 };
 
-export const TechwebContent = (props, context) => {
+export const TechwebContent = (props) => {
   const { act, data } = useRemappedBackend(context);
   const {
     points,
@@ -213,7 +213,7 @@ export const TechwebContent = (props, context) => {
   );
 };
 
-const TechwebRouter = (props, context) => {
+const TechwebRouter = (props) => {
   const [
     techwebRoute,
   ] = useLocalState(context, 'techwebRoute', null);
@@ -230,7 +230,7 @@ const TechwebRouter = (props, context) => {
   );
 };
 
-const TechwebOverview = (props, context) => {
+const TechwebOverview = (props) => {
   const { act, data } = useRemappedBackend(context);
   const { nodes, node_cache, design_cache } = data;
   const [
@@ -316,7 +316,7 @@ const TechwebOverview = (props, context) => {
   );
 };
 
-const TechwebNodeDetail = (props, context) => {
+const TechwebNodeDetail = (props) => {
   const { act, data } = useRemappedBackend(context);
   const { nodes } = data;
   const { selectedNode } = props;
@@ -328,7 +328,7 @@ const TechwebNodeDetail = (props, context) => {
   );
 };
 
-const TechwebDiskMenu = (props, context) => {
+const TechwebDiskMenu = (props) => {
   const { act, data } = useRemappedBackend(context);
   const { diskType } = props;
   const { t_disk, d_disk } = data;
@@ -399,7 +399,7 @@ const TechwebDiskMenu = (props, context) => {
   );
 };
 
-const TechwebDesignDisk = (props, context) => {
+const TechwebDesignDisk = (props) => {
   const { act, data } = useRemappedBackend(context);
   const {
     design_cache,
@@ -501,7 +501,7 @@ const TechwebDesignDisk = (props, context) => {
   );
 };
 
-const TechwebTechDisk = (props, context) => {
+const TechwebTechDisk = (props) => {
   const { act, data } = useRemappedBackend(context);
   const { t_disk } = data;
   const { stored_research } = t_disk;
@@ -511,7 +511,7 @@ const TechwebTechDisk = (props, context) => {
   ));
 };
 
-const TechNodeDetail = (props, context) => {
+const TechNodeDetail = (props) => {
   const { act, data } = useRemappedBackend(context);
   const {
     nodes,
@@ -587,7 +587,7 @@ const TechNodeDetail = (props, context) => {
   );
 };
 
-const TechNode = (props, context) => {
+const TechNode = (props) => {
   const { act, data } = useRemappedBackend(context);
   const {
     node_cache,
@@ -771,7 +771,7 @@ const TechNode = (props, context) => {
   );
 };
 
-const LockedExperiment = (props, context) => {
+const LockedExperiment = (props) => {
   return (
     <Box m={1} className="ExperimentConfigure__ExperimentPanel">
       <Button fluid

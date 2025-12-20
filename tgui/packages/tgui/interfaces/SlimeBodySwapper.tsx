@@ -14,7 +14,7 @@ const occupiedMap = {
   available: "Swap",
 };
 
-export const BodyEntry = (props, context) => {
+export const BodyEntry = (props) => {
   const { body, swapFunc } = props;
   return (
     <Section
@@ -50,7 +50,7 @@ export const BodyEntry = (props, context) => {
   );
 };
 
-export const SlimeBodySwapper = (props, context) => {
+export const SlimeBodySwapper = (props) => {
   const { act, data } = useBackend<any>();
   const {
     bodies = [],

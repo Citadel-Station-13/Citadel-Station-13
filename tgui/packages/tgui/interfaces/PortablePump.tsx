@@ -3,7 +3,7 @@ import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components'
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 
-export const PortablePump = (props, context) => {
+export const PortablePump = (props) => {
   const { act, data } = useBackend<any>();
   const {
     direction,

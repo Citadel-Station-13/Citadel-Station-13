@@ -5,7 +5,7 @@ import { Box, Button, LabeledList, NumberInput, Section } from 'tgui-core/compon
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
-export const Radio = (props, context) => {
+export const Radio = (props) => {
   const { act, data } = useBackend<any>();
   const {
     freqlock,

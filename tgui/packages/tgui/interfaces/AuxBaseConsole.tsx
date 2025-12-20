@@ -3,7 +3,7 @@ import { Button, NoticeBox, Section, Table, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { ShuttleConsoleContent } from './ShuttleConsole';
 
-export const AuxBaseConsole = (props, context) => {
+export const AuxBaseConsole = (props) => {
   const { data } = useBackend<any>();
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const {
@@ -52,7 +52,7 @@ const STATUS_COLOR_KEYS = {
   "All Clear": "good",
 };
 
-export const AuxBaseConsoleContent = (props, context) => {
+export const AuxBaseConsoleContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     turrets = [],

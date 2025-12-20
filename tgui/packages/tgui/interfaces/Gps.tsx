@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 
 const coordsToVec = coords => map(parseFloat)(coords.split(', '));
 
-export const Gps = (props, context) => {
+export const Gps = (props) => {
   const { act, data } = useBackend<any>();
   const {
     currentArea,

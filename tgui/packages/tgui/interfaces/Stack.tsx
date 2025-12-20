@@ -4,7 +4,7 @@ import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from "../components";
 import { Window } from "../layouts";
 
-export const Stack = (props, context) => {
+export const Stack = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -62,7 +62,7 @@ export const Stack = (props, context) => {
   );
 };
 
-const RecipeList = (props, context) => {
+const RecipeList = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -102,7 +102,7 @@ const buildMultiplier = (recipe, amount) => {
   return Math.floor(amount / recipe.req_amount);
 };
 
-const Multipliers = (props, context) => {
+const Multipliers = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -144,7 +144,7 @@ const Multipliers = (props, context) => {
   return finalResult;
 };
 
-const Recipe = (props, context) => {
+const Recipe = (props) => {
   const { act, data } = useBackend<any>();
 
   const {

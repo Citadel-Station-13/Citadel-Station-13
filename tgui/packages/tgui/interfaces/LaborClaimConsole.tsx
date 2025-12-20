@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const LaborClaimConsole = (props, context) => {
+export const LaborClaimConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     can_go_home,

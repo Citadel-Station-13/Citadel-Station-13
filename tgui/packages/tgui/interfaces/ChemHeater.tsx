@@ -5,7 +5,7 @@ import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
 
-export const ChemHeater = (props, context) => {
+export const ChemHeater = (props) => {
   const { act, data } = useBackend<any>();
   const {
     targetTemp,

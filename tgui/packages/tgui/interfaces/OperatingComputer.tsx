@@ -26,7 +26,7 @@ const damageTypes = [
   },
 ];
 
-export const OperatingComputer = (props, context) => {
+export const OperatingComputer = (props) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   return (
     <Window
@@ -57,7 +57,7 @@ export const OperatingComputer = (props, context) => {
   );
 };
 
-const PatientStateView = (props, context) => {
+const PatientStateView = (props) => {
   const { act, data } = useBackend<any>();
   const {
     table,
@@ -146,7 +146,7 @@ const PatientStateView = (props, context) => {
   );
 };
 
-const SurgeryProceduresView = (props, context) => {
+const SurgeryProceduresView = (props) => {
   const { act, data } = useBackend<any>();
   const {
     surgeries = [],

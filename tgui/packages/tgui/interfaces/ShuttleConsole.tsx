@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Dropdown, Flex, Icon, LabeledList, Modal, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ShuttleConsole = (props, context) => {
+export const ShuttleConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     type = "shuttle",
@@ -75,7 +75,7 @@ const STATUS_COLOR_KEYS = {
   "Locked": "bad",
 };
 
-export const ShuttleConsoleContent = (props, context) => {
+export const ShuttleConsoleContent = (props) => {
   const { act, data } = useBackend<any>();
   const { type, blind_drop } = props;
   const {

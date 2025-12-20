@@ -9,7 +9,7 @@ import {
   Dropdown,
 } from 'tgui-core/components';
 
-export const VariableMenu = (props, context) => {
+export const VariableMenu = (props) => {
   const {
     variables,
     onAddVariable,

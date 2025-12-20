@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 import { CargoCatalog } from './Cargo';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
-export const CargoExpress = (props, context) => {
+export const CargoExpress = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window
@@ -21,7 +21,7 @@ export const CargoExpress = (props, context) => {
   );
 };
 
-const CargoExpressContent = (props, context) => {
+const CargoExpressContent = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <>

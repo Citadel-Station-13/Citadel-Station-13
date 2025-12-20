@@ -4,7 +4,7 @@ import { Button, Icon, Input, Section, Stack, Tabs } from 'tgui-core/components'
 import { useLocalState } from '../backend';
 import { Window } from '../layouts';
 
-export const AIAnnouncement = (props, context) => {
+export const AIAnnouncement = (props) => {
   const { act, data } = useBackend<any>();
   const {
     last_announcement,

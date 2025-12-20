@@ -22,7 +22,7 @@ type ScanData = {
   site_data: SiteData
 }
 
-const ScanFailedModal = (props, context) => {
+const ScanFailedModal = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Modal>
@@ -39,7 +39,7 @@ const ScanFailedModal = (props, context) => {
     </Modal>);
 };
 
-const ScanSelectionSection = (props, context) => {
+const ScanSelectionSection = (props) => {
   const { act, data } = useBackend<ScanData>(context);
   const {
     scan_power,
@@ -138,7 +138,7 @@ type ScanInProgressData = {
   scan_description: string,
 }
 
-const ScanInProgressModal = (props, context) => {
+const ScanInProgressModal = (props) => {
   const { act, data } = useBackend<ScanInProgressData>(context);
   const {
     scan_time,
@@ -187,7 +187,7 @@ type ExoscannerConsoleData = {
   scan_conditions: Array<string>,
 }
 
-export const ExoscannerConsole = (props, context) => {
+export const ExoscannerConsole = (props) => {
   const { act, data } = useBackend<ExoscannerConsoleData>(context);
   const {
     scan_in_progress,

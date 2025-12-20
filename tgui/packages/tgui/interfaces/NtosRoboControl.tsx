@@ -6,7 +6,7 @@ const getMuleByRef = (mules, ref) => {
   return mules?.find(mule => mule.mule_ref === ref);
 };
 
-export const NtosRoboControl = (props, context) => {
+export const NtosRoboControl = (props) => {
   const { act, data } = useBackend<any>();
   const {
     bots,
@@ -45,7 +45,7 @@ export const NtosRoboControl = (props, context) => {
   );
 };
 
-const RobotInfo = (props, context) => {
+const RobotInfo = (props) => {
   const { robot } = props;
   const { act, data } = useBackend<any>();
   const mules = data.mules || [];

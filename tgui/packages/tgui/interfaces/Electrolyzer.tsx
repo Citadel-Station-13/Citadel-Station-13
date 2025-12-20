@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, ProgressBar, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Electrolyzer = (props, context) => {
+export const Electrolyzer = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window

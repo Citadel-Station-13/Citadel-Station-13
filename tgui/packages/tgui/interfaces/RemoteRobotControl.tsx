@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Section, LabeledList } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const RemoteRobotControl = (props, context) => {
+export const RemoteRobotControl = (props) => {
   return (
     <Window
       title="Remote Robot Control"
@@ -16,7 +16,7 @@ export const RemoteRobotControl = (props, context) => {
   );
 };
 
-export const RemoteRobotControlContent = (props, context) => {
+export const RemoteRobotControlContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     robots = [],

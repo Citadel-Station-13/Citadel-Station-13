@@ -13,7 +13,7 @@ const useOutfitTabs = (context, categories) => {
   return useLocalState(context, 'selected-tab', categories[0]);
 };
 
-export const SelectEquipment = (props, context) => {
+export const SelectEquipment = (props) => {
   const { act, data } = useBackend<any>();
   const {
     name,
@@ -118,7 +118,7 @@ export const SelectEquipment = (props, context) => {
   );
 };
 
-const DisplayTabs = (props, context) => {
+const DisplayTabs = (props) => {
   const { categories } = props;
   const [tab, setTab] = useOutfitTabs(context, categories);
   return (
@@ -135,7 +135,7 @@ const DisplayTabs = (props, context) => {
   );
 };
 
-const OutfitDisplay = (props, context) => {
+const OutfitDisplay = (props) => {
   const { act, data } = useBackend<any>();
   const { current_outfit } = data;
   const { entries, currentTab } = props;
@@ -171,7 +171,7 @@ const OutfitDisplay = (props, context) => {
   );
 };
 
-const CurrentlySelectedDisplay = (props, context) => {
+const CurrentlySelectedDisplay = (props) => {
   const { act, data } = useBackend<any>();
   const { current_outfit } = data;
   const { entry } = props;

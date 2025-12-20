@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const PortableChemMixer = (props, context) => {
+export const PortableChemMixer = (props) => {
   const { act, data } = useBackend<any>();
   const recording = !!data.recordingRecipe;
   const beakerTransferAmounts = data.beakerTransferAmounts || [];

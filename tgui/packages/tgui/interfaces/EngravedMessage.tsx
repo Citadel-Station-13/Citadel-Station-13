@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const EngravedMessage = (props, context) => {
+export const EngravedMessage = (props) => {
   const { act, data } = useBackend<any>();
   const {
     admin_mode,

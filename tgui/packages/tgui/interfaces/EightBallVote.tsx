@@ -3,7 +3,7 @@ import { Box, Button, Grid, Section, NoticeBox } from 'tgui-core/components';
 import { toTitleCase } from 'common/string';
 import { Window } from '../layouts';
 
-export const EightBallVote = (props, context) => {
+export const EightBallVote = (props) => {
   const { act, data } = useBackend<any>();
   const {
     shaking,
@@ -25,7 +25,7 @@ export const EightBallVote = (props, context) => {
   );
 };
 
-const EightBallVoteQuestion = (props, context) => {
+const EightBallVoteQuestion = (props) => {
   const { act, data } = useBackend<any>();
   const {
     question,

@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Button, Grid, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Signaler = (props, context) => {
+export const Signaler = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window
@@ -16,7 +16,7 @@ export const Signaler = (props, context) => {
   );
 };
 
-export const SignalerContent = (props, context) => {
+export const SignalerContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     code,

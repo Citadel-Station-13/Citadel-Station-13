@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ChemAcclimator = (props, context) => {
+export const ChemAcclimator = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window

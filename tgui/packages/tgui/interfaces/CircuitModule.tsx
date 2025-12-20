@@ -2,7 +2,7 @@ import { useBackend } from "../backend";
 import { Stack, Section, Input, Button, Dropdown } from "../components";
 import { Window } from "../layouts";
 
-export const CircuitModule = (props, context) => {
+export const CircuitModule = (props) => {
   const { act, data } = useBackend<any>();
   const {
     input_ports,
@@ -103,7 +103,7 @@ export const CircuitModule = (props, context) => {
   );
 };
 
-const PortEntry = (props, context) => {
+const PortEntry = (props) => {
   const {
     onRemove,
     onEnter,

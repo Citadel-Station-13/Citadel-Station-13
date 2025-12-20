@@ -3,7 +3,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, Flex, NoticeBox, Section, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const PortraitPicker = (props, context) => {
+export const PortraitPicker = (props) => {
   const { act, data } = useBackend<any>();
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
   const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);

@@ -2,7 +2,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
-export const NtosCyborgRemoteMonitor = (props, context) => {
+export const NtosCyborgRemoteMonitor = (props) => {
   return (
     <NtosWindow
       width={600}
@@ -31,7 +31,7 @@ export const ProgressSwitch = param => {
   }
 };
 
-export const NtosCyborgRemoteMonitorContent = (props, context) => {
+export const NtosCyborgRemoteMonitorContent = (props) => {
   const { act, data } = useBackend<any>();
   const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
   const {

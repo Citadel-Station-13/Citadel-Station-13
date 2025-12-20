@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Grid, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Bepis = (props, context) => {
+export const Bepis = (props) => {
   const { act, data } = useBackend<any>();
   const {
     amount,

@@ -32,7 +32,7 @@ const digestModeToPreyMode = {
  *  - The Belly Selection Panel, where you can select what belly people will go into and customize the active one.
  *  - User Preferences, where you can adjust all of your vore preferences on the fly.
  */
-export const VorePanel = (props, context) => {
+export const VorePanel = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window width={700} height={660} theme="abstract" resizable>
@@ -60,7 +60,7 @@ export const VorePanel = (props, context) => {
   );
 };
 
-const VoreInsidePanel = (props, context) => {
+const VoreInsidePanel = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -100,7 +100,7 @@ const VoreInsidePanel = (props, context) => {
   );
 };
 
-const VoreBellySelectionAndCustomization = (props, context) => {
+const VoreBellySelectionAndCustomization = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -135,7 +135,7 @@ const VoreBellySelectionAndCustomization = (props, context) => {
 /**
  * Subtemplate of VoreBellySelectionAndCustomization
  */
-const VoreSelectedBelly = (props, context) => {
+const VoreSelectedBelly = (props) => {
   const { act } = useBackend<any>();
 
   const { belly } = props;
@@ -348,7 +348,7 @@ const VoreSelectedBelly = (props, context) => {
   );
 };
 
-const VoreContentsPanel = (props, context) => {
+const VoreContentsPanel = (props) => {
   const { act, data } = useBackend<any>();
   const {
     show_pictures,
@@ -422,7 +422,7 @@ const VoreContentsPanel = (props, context) => {
   );
 };
 
-const VoreUserPreferences = (props, context) => {
+const VoreUserPreferences = (props) => {
   const { act, data } = useBackend<any>();
 
   const {

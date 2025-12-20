@@ -3,7 +3,7 @@ import { Button, LabeledList, Section, ProgressBar, Flex, Box, Table, Collapsibl
 import { Window } from '../layouts';
 import { capitalize } from "common/string";
 
-export const Autolathe = (props, context) => {
+export const Autolathe = (props) => {
   const { act, data } = useBackend<any>();
   // Extract `health` and `color` variables from the `data` object.
   const {

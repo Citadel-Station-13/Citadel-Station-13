@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Divider, Flex, Knob, LabeledControls, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const TrainingMachine = (props, context) => {
+export const TrainingMachine = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window

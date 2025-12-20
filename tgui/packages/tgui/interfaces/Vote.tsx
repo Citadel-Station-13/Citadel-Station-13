@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Icon, Stack, Button, Section, NoticeBox, LabeledList, Collapsible } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Vote = (props, context) => {
+export const Vote = (props) => {
   const { data } = useBackend<any>();
   const { mode, question, lower_admin } = data;
 
@@ -34,7 +34,7 @@ export const Vote = (props, context) => {
  * The create vote options menu. Only upper admins can disable voting.
  * @returns A section visible to everyone with vote options.
  */
-const VoteOptions = (props, context) => {
+const VoteOptions = (props) => {
   const { act, data } = useBackend<any>();
   const {
     allow_vote_restart,
@@ -100,7 +100,7 @@ const VoteOptions = (props, context) => {
  * View Voters by ckey. Admin only.
  * @returns A collapsible list of voters
  */
-const VotersList = (props, context) => {
+const VotersList = (props) => {
   const { data } = useBackend<any>();
   const { voting } = data;
 
@@ -121,7 +121,7 @@ const VotersList = (props, context) => {
  * The choices panel which displays all options in the list.
  * @returns A section visible to all users.
  */
-const ChoicesPanel = (props, context) => {
+const ChoicesPanel = (props) => {
   const { act, data } = useBackend<any>();
   const { choices, selected_choice } = data;
 
@@ -170,7 +170,7 @@ const ChoicesPanel = (props, context) => {
  * Countdown timer at the bottom. Includes a cancel vote option for admins.
  * @returns A section visible to everyone.
  */
-const TimePanel = (props, context) => {
+const TimePanel = (props) => {
   const { act, data } = useBackend<any>();
   const { lower_admin, time_remaining } = data;
 

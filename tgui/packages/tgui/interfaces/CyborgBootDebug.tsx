@@ -33,7 +33,7 @@ const TOOLTIP_LAWSYNC = multiline`
   it's laws with it's master AI.
 `;
 
-export const CyborgBootDebug = (props, context) => {
+export const CyborgBootDebug = (props) => {
   const { act, data } = useBackend<any>();
   const {
     designation,

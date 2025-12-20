@@ -3,7 +3,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, ProgressBar, Slider } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const RbmkControlRods = (props, context) => {
+export const RbmkControlRods = (props) => {
   const { act, data } = useBackend<any>();
   const control_rods = data.control_rods;
   const k = data.k;

@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, ColorBox, Section, Table } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
-export const NtosMain = (props, context) => {
+export const NtosMain = (props) => {
   const { act, data } = useBackend<any>();
   const {
     device_theme,

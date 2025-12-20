@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 import { useBackend, useSharedState } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from 'tgui-core/components';
 
-export const TelecommsLogBrowser = (props, context) => {
+export const TelecommsLogBrowser = (props) => {
   const { act, data } = useBackend<any>();
   const {
     notice,

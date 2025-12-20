@@ -3,7 +3,7 @@ import { useBackend } from '../../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
 import { getGasLabel } from '../../constants';
 
-export const Vent = (props, context) => {
+export const Vent = (props) => {
   const { vent } = props;
   const { act } = useBackend<any>();
   const {
@@ -112,7 +112,7 @@ export const Vent = (props, context) => {
 };
 
 
-export const Scrubber = (props, context) => {
+export const Scrubber = (props) => {
   const { scrubber } = props;
   const { act } = useBackend<any>();
   const {

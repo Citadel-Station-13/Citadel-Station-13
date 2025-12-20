@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const SpawnersMenu = (props, context) => {
+export const SpawnersMenu = (props) => {
   const { act, data } = useBackend<any>();
   const spawners = data.spawners || [];
   return (

@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const MechpadControl = (props, context) => {
+export const MechpadControl = (props) => {
   const { topLevel } = props;
   const { act, data } = useBackend<any>();
   const {
@@ -43,7 +43,7 @@ export const MechpadControl = (props, context) => {
   );
 };
 
-export const MechpadConsole = (props, context) => {
+export const MechpadConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     mechpads = [],

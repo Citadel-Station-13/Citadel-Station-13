@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Section, Button } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const NotificationPreferences = (props, context) => {
+export const NotificationPreferences = (props) => {
   const { act, data } = useBackend<any>();
   const ignoresPreSort = data.ignore || [];
   const ignores = ignoresPreSort.sort((a, b) => {

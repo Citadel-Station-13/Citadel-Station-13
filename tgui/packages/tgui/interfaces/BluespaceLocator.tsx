@@ -13,7 +13,7 @@ const directionToIcon = {
   northwest: 315,
 };
 
-export const BluespaceLocator = (props, context) => {
+export const BluespaceLocator = (props) => {
   const [tab, setTab] = useSharedState(context, "tab", "implant");
   return (
     <Window
@@ -43,7 +43,7 @@ export const BluespaceLocator = (props, context) => {
   );
 };
 
-const TeleporterBeacons = (props, context) => {
+const TeleporterBeacons = (props) => {
   const { data } = useBackend<any>();
   const { telebeacons } = data;
   return (
@@ -57,7 +57,7 @@ const TeleporterBeacons = (props, context) => {
   );
 };
 
-const TrackingImplants = (props, context) => {
+const TrackingImplants = (props) => {
   const { data } = useBackend<any>();
   const { trackimplants } = data;
   return (
@@ -71,7 +71,7 @@ const TrackingImplants = (props, context) => {
   );
 };
 
-const SignalLocator = (props, context) => {
+const SignalLocator = (props) => {
   const { data } = useBackend<any>();
   const { trackingrange } = data;
   const {

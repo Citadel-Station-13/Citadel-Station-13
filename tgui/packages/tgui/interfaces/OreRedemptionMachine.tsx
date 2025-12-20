@@ -3,7 +3,7 @@ import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Box, Button, NumberInput, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const OreRedemptionMachine = (props, context) => {
+export const OreRedemptionMachine = (props) => {
   const { act, data } = useBackend<any>();
   const {
     unclaimedPoints,
@@ -101,7 +101,7 @@ export const OreRedemptionMachine = (props, context) => {
 };
 
 
-const MaterialRow = (props, context) => {
+const MaterialRow = (props) => {
   const { material, onRelease } = props;
 
   const [

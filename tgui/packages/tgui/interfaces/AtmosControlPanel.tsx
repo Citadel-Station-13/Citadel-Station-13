@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const AtmosControlPanel = (props, context) => {
+export const AtmosControlPanel = (props) => {
   const { act, data } = useBackend<any>();
   const groups = flow([
     map((group, i) => ({

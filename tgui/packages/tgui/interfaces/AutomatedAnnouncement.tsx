@@ -8,7 +8,7 @@ const TOOLTIP_TEXT = multiline`
   %RANK with their job.
 `;
 
-export const AutomatedAnnouncement = (props, context) => {
+export const AutomatedAnnouncement = (props) => {
   const { act, data } = useBackend<any>();
   const {
     arrivalToggle,

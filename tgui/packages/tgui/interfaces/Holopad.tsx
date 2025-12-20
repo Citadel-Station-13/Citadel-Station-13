@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Holopad = (props, context) => {
+export const Holopad = (props) => {
   const { act, data } = useBackend<any>();
   const {
     calling,
@@ -45,7 +45,7 @@ export const Holopad = (props, context) => {
   );
 };
 
-const HolopadContent = (props, context) => {
+const HolopadContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     on_network,

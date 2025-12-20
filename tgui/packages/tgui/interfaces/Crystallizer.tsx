@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 
 const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;
 
-export const Crystallizer = (props, context) => {
+export const Crystallizer = (props) => {
   const { act, data } = useBackend<any>();
   const selectedRecipes = data.selected_recipes || [];
   const gasTypes = data.internal_gas_data || [];

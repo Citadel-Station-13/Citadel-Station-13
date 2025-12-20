@@ -3,7 +3,7 @@ import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { AccessList } from './common/AccessList';
 
-export const AirlockElectronics = (props, context) => {
+export const AirlockElectronics = (props) => {
   const { act, data } = useBackend<any>();
   const {
     oneAccess,

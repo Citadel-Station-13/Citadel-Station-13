@@ -108,7 +108,7 @@ const searchFilter = (search, allparts) => {
   return searchResults;
 };
 
-export const ExosuitFabricator = (props, context) => {
+export const ExosuitFabricator = (props) => {
   const { act, data } = useBackend<any>();
   const queue = data.queue || [];
   const materialAsObj = materialArrayToObj(data.materials || []);
@@ -185,7 +185,7 @@ export const ExosuitFabricator = (props, context) => {
   );
 };
 
-const PartSets = (props, context) => {
+const PartSets = (props) => {
   const { data } = useBackend<any>();
   const partSets = data.partSets || [];
   const buildableParts = data.buildableParts || {};
@@ -205,7 +205,7 @@ const PartSets = (props, context) => {
     ));
 };
 
-const PartLists = (props, context) => {
+const PartLists = (props) => {
   const { data } = useBackend<any>();
 
   const getFirstValidPartSet = (sets => {
@@ -312,7 +312,7 @@ const PartLists = (props, context) => {
   );
 };
 
-const PartCategory = (props, context) => {
+const PartCategory = (props) => {
   const { act, data } = useBackend<any>();
   const {
     buildingPart,
@@ -400,7 +400,7 @@ const PartCategory = (props, context) => {
   );
 };
 
-const Queue = (props, context) => {
+const Queue = (props) => {
   const { act, data } = useBackend<any>();
   const { isProcessingQueue } = data;
   const queue = data.queue || [];
@@ -462,7 +462,7 @@ const Queue = (props, context) => {
   );
 };
 
-const QueueMaterials = (props, context) => {
+const QueueMaterials = (props) => {
   const {
     queueMaterials,
     missingMaterials,
@@ -486,7 +486,7 @@ const QueueMaterials = (props, context) => {
   );
 };
 
-const QueueList = (props, context) => {
+const QueueList = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -518,7 +518,7 @@ const QueueList = (props, context) => {
   ));
 };
 
-const BeingBuilt = (props, context) => {
+const BeingBuilt = (props) => {
   const { data } = useBackend<any>();
   const {
     buildingPart,

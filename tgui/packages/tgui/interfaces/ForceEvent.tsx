@@ -60,7 +60,7 @@ type ForceEventData = {
   events: Event[];
 };
 
-export const ForceEvent = (props, context) => {
+export const ForceEvent = (props) => {
   return (
     <Window theme="admin" title="Force Event" width={450} height={450}>
       <Window.Content>
@@ -77,7 +77,7 @@ export const ForceEvent = (props, context) => {
   );
 };
 
-export const PanelOptions = (props, context) => {
+export const PanelOptions = (props) => {
   const [searchQuery, setSearchQuery] = useLocalState(
     context,
     'searchQuery',
@@ -112,7 +112,7 @@ export const PanelOptions = (props, context) => {
   );
 };
 
-export const EventSection = (props, context) => {
+export const EventSection = (props) => {
   const { data, act } = useBackend<ForceEventData>(context);
   const { categories, events } = data;
 
@@ -165,7 +165,7 @@ export const EventSection = (props, context) => {
   );
 };
 
-export const EventTabs = (props, context) => {
+export const EventTabs = (props) => {
   const { data } = useBackend<ForceEventData>(context);
   const { categories } = data;
 

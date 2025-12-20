@@ -61,7 +61,7 @@ export class FakeTerminal extends Component {
   }
 }
 
-export const SyndContractor = (props, context) => {
+export const SyndContractor = (props) => {
   return (
     <NtosWindow
       width={500}
@@ -74,7 +74,7 @@ export const SyndContractor = (props, context) => {
   );
 };
 
-export const SyndContractorContent = (props, context) => {
+export const SyndContractorContent = (props) => {
   const { data, act } = useBackend<any>();
 
   const terminalMessages = [
@@ -217,7 +217,7 @@ export const SyndContractorContent = (props, context) => {
   );
 };
 
-export const StatusPane = (props, context) => {
+export const StatusPane = (props) => {
   const { act, data } = useBackend<any>();
 
   return (
@@ -271,7 +271,7 @@ export const StatusPane = (props, context) => {
   );
 };
 
-export const SyndPane = (props, context) => {
+export const SyndPane = (props) => {
   const [tab, setTab] = useLocalState(context, 'tab', 1);
   return (
     <>
@@ -298,7 +298,7 @@ export const SyndPane = (props, context) => {
   );
 };
 
-const ContractsTab = (props, context) => {
+const ContractsTab = (props) => {
   const { act, data } = useBackend<any>();
   const contracts = data.contracts || [];
   return (
@@ -377,7 +377,7 @@ const ContractsTab = (props, context) => {
   );
 };
 
-const HubTab = (props, context) => {
+const HubTab = (props) => {
   const { act, data } = useBackend<any>();
   const contractor_hub_items = data.contractor_hub_items || [];
   return (

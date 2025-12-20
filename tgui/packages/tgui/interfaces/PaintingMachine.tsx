@@ -2,7 +2,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { Button, Dropdown, Section, Stack } from 'tgui-core/components';
 
-export const PaintingMachine = (props, context) => {
+export const PaintingMachine = (props) => {
   const { act, data } = useBackend<any>();
 
   const {
@@ -89,7 +89,7 @@ export const PaintingMachine = (props, context) => {
   );
 };
 
-export const EjectButton = (props, context) => {
+export const EjectButton = (props) => {
   const {
     name,
     onClickEject,
@@ -105,7 +105,7 @@ export const EjectButton = (props, context) => {
   );
 };
 
-export const PainterDropdown = (props, context) => {
+export const PainterDropdown = (props) => {
   const {
     stateKey,
     options,

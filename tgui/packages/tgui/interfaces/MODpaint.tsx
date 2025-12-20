@@ -46,7 +46,7 @@ const displayText = (param) => {
   }
 };
 
-export const MODpaint = (props, context) => {
+export const MODpaint = (props) => {
   const { act, data } = useBackend<any>();
   const { mapRef, currentColor } = data;
   const [

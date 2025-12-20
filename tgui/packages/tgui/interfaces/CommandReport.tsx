@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Dropdown, Input, Section, Stack, TextArea } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const CommandReport = (props, context) => {
+export const CommandReport = (props) => {
   const { act, data } = useBackend<any>();
   const {
     command_name,

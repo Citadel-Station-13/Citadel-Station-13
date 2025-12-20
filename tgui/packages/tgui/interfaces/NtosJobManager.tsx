@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Section, Table, NoticeBox, Dimmer, Box } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
-export const NtosJobManager = (props, context) => {
+export const NtosJobManager = (props) => {
   return (
     <NtosWindow
       width={400}
@@ -14,7 +14,7 @@ export const NtosJobManager = (props, context) => {
   );
 };
 
-export const NtosJobManagerContent = (props, context) => {
+export const NtosJobManagerContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     authed,

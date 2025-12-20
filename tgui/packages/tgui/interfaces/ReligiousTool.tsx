@@ -9,7 +9,7 @@ const ALIGNMENT2COLOR = {
   "evil": "red",
 };
 
-export const ReligiousTool = (props, context) => {
+export const ReligiousTool = (props) => {
   const { act, data } = useBackend<any>();
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const {
@@ -58,7 +58,7 @@ export const ReligiousTool = (props, context) => {
   );
 };
 
-const SectTab = (props, context) => {
+const SectTab = (props) => {
   const { act, data } = useBackend<any>();
   const {
     name,
@@ -104,7 +104,7 @@ const SectTab = (props, context) => {
   );
 };
 
-const SectSelectTab = (props, context) => {
+const SectSelectTab = (props) => {
   const { act, data } = useBackend<any>();
   const {
     sects,
@@ -153,7 +153,7 @@ const SectSelectTab = (props, context) => {
   );
 };
 
-const RiteTab = (props, context) => {
+const RiteTab = (props) => {
   const { act, data } = useBackend<any>();
   const {
     rites,

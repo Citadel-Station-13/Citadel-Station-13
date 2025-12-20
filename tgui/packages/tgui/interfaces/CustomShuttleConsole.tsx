@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, Modal, Section, Table, Tooltip } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const CustomShuttleConsole = (props, context) => {
+export const CustomShuttleConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     docked_location,

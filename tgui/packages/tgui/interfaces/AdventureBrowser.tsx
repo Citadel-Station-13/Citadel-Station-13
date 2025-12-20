@@ -24,7 +24,7 @@ type AdventureBrowserData = AdventureDataProvider & {
   delay_message: string;
 };
 
-const AdventureEntry = (props, context) => {
+const AdventureEntry = (props) => {
   const { data, act } = useBackend<AdventureBrowserData>(context);
   const { entry_ref, close }: { entry_ref: string, close: () => void } = props;
   const entry = data.adventures.find(x => x.ref === entry_ref);
@@ -57,7 +57,7 @@ const AdventureEntry = (props, context) => {
   );
 };
 
-const AdventureList = (props, context) => {
+const AdventureList = (props) => {
   const { data, act } = useBackend<AdventureBrowserData>(context);
   const [
     openAdventure,
@@ -96,7 +96,7 @@ const AdventureList = (props, context) => {
   );
 };
 
-const DebugPlayer = (props, context) => {
+const DebugPlayer = (props) => {
   const { data, act } = useBackend<AdventureBrowserData>(context);
   return (
     <Section
@@ -108,7 +108,7 @@ const DebugPlayer = (props, context) => {
     </Section>);
 };
 
-export const AdventureBrowser = (props, context) => {
+export const AdventureBrowser = (props) => {
   const { data } = useBackend<AdventureBrowserData>(context);
 
   return (

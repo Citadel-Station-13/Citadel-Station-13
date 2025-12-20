@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const SuitStorageUnit = (props, context) => {
+export const SuitStorageUnit = (props) => {
   const { act, data } = useBackend<any>();
   const {
     locked,

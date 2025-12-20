@@ -5,7 +5,7 @@ import { Button, Input, LabeledList, Section, Table, NoticeBox, NumberInput, Lab
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
-export const Telecomms = (props, context) => {
+export const Telecomms = (props) => {
   const { act, data } = useBackend<any>();
   const {
     type,

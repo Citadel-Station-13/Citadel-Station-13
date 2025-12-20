@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const CargoHoldTerminal = (props, context) => {
+export const CargoHoldTerminal = (props) => {
   const { act, data } = useBackend<any>();
   const {
     points,

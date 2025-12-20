@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const PortableGenerator = (props, context) => {
+export const PortableGenerator = (props) => {
   const { act, data } = useBackend<any>();
   const {
     stack_percent,

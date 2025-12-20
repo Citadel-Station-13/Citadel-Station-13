@@ -2,7 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, Dimmer, Flex, Icon, LabeledList, Section, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const PersonalCrafting = (props, context) => {
+export const PersonalCrafting = (props) => {
   const { act, data } = useBackend<any>();
   const {
     busy,
@@ -111,7 +111,7 @@ export const PersonalCrafting = (props, context) => {
   );
 };
 
-const CraftingList = (props, context) => {
+const CraftingList = (props) => {
   const {
     craftables = [],
   } = props;

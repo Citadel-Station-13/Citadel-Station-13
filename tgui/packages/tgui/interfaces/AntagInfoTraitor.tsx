@@ -39,7 +39,7 @@ type Info = {
   objectives: Objective[];
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     objectives,
@@ -61,7 +61,7 @@ const ObjectivePrintout = (props, context) => {
   );
 };
 
-const IntroductionSection = (props, context) => {
+const IntroductionSection = (props) => {
   const { act, data } = useBackend<Info>(context);
   const {
     intro,
@@ -80,7 +80,7 @@ const IntroductionSection = (props, context) => {
   );
 };
 
-const EmployerSection = (props, context) => {
+const EmployerSection = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     allies,
@@ -128,7 +128,7 @@ const EmployerSection = (props, context) => {
   );
 };
 
-const UplinkSection = (props, context) => {
+const UplinkSection = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     has_uplink,
@@ -167,7 +167,7 @@ const UplinkSection = (props, context) => {
   );
 };
 
-const CodewordsSection = (props, context) => {
+const CodewordsSection = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     phrases,
@@ -211,7 +211,7 @@ const CodewordsSection = (props, context) => {
   );
 };
 
-export const AntagInfoTraitor = (props, context) => {
+export const AntagInfoTraitor = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     theme,

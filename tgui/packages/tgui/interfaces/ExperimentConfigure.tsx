@@ -50,7 +50,7 @@ const ExperimentStageRow = props => {
   );
 };
 
-export const TechwebServer = (props, context) => {
+export const TechwebServer = (props) => {
   const { act, data } = useBackend<any>();
   const { servers } = props;
 
@@ -91,7 +91,7 @@ export const TechwebServer = (props, context) => {
   );
 };
 
-export const ExperimentConfigure = (props, context) => {
+export const ExperimentConfigure = (props) => {
   const { act, data } = useBackend<any>();
   const { always_active, has_start_callback } = data;
   let servers = data.servers ?? [];
@@ -171,7 +171,7 @@ export const ExperimentConfigure = (props, context) => {
   );
 };
 
-export const Experiment = (props, context) => {
+export const Experiment = (props) => {
   const { act, data } = useBackend<any>();
   const {
     exp,

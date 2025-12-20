@@ -6,7 +6,7 @@ import { Box, Button, LabeledList, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 
-export const FishCatalog = (props, context) => {
+export const FishCatalog = (props) => {
   const { act, data } = useBackend<any>();
   const {
     fish_info,

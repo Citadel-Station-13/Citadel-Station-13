@@ -2,7 +2,7 @@ import { BasicInput } from './BasicInput';
 import { NumberInput, Button, Stack, Input, Dropdown, Box } from 'tgui-core/components';
 
 export const FUNDAMENTAL_DATA_TYPES = {
-  'string': (props, context) => {
+  'string': (props) => {
     const { name, value, setValue, color } = props;
     return (
       <BasicInput name={name} setValue={setValue} value={value} defaultValue="">
@@ -15,7 +15,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
       </BasicInput>
     );
   },
-  'number': (props, context) => {
+  'number': (props) => {
     const { name, value, setValue, color } = props;
     return (
       <BasicInput
@@ -32,7 +32,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
       </BasicInput>
     );
   },
-  'entity': (props, context) => {
+  'entity': (props) => {
     const { name, setValue } = props;
     return (
       <Button
@@ -44,7 +44,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
       />
     );
   },
-  'signal': (props, context) => {
+  'signal': (props) => {
     const { name, setValue } = props;
     return (
       <Button
@@ -55,7 +55,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
       />
     );
   },
-  'option': (props, context) => {
+  'option': (props) => {
     const { value, setValue, extraData } = props;
     return (
       <Dropdown
@@ -70,7 +70,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
       />
     );
   },
-  'any': (props, context) => {
+  'any': (props) => {
     const { name, value, setValue, color } = props;
     return (
       <BasicInput

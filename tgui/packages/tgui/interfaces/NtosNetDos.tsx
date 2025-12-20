@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
-export const NtosNetDos = (props, context) => {
+export const NtosNetDos = (props) => {
   return (
     <NtosWindow
       width={400}
@@ -15,7 +15,7 @@ export const NtosNetDos = (props, context) => {
   );
 };
 
-export const NtosNetDosContent = (props, context) => {
+export const NtosNetDosContent = (props) => {
   const { act, data } = useBackend<any>();
 
   const {

@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Section, LabeledList } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const InfraredEmitter = (props, context) => {
+export const InfraredEmitter = (props) => {
   const { act, data } = useBackend<any>();
   const {
     on,

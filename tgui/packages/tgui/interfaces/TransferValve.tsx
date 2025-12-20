@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const TransferValve = (props, context) => {
+export const TransferValve = (props) => {
   const { act, data } = useBackend<any>();
   const {
     tank_one,

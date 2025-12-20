@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const GlandDispenser = (props, context) => {
+export const GlandDispenser = (props) => {
   const { act, data } = useBackend<any>();
   const {
     glands = [],

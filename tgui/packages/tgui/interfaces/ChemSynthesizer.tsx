@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ChemSynthesizer = (props, context) => {
+export const ChemSynthesizer = (props) => {
   const { act, data } = useBackend<any>();
   const {
     amount,

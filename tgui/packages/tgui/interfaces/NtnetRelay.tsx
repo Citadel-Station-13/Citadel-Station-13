@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, ProgressBar, Section, AnimatedNumber } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const NtnetRelay = (props, context) => {
+export const NtnetRelay = (props) => {
   const { act, data } = useBackend<any>();
   const {
     enabled,

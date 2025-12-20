@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, ProgressBar, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const BorgPanel = (props, context) => {
+export const BorgPanel = (props) => {
   const { act, data } = useBackend<any>();
   const borg = data.borg || {};
   const cell = data.cell || {};

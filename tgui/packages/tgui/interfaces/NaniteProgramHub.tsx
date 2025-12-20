@@ -4,7 +4,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const NaniteProgramHub = (props, context) => {
+export const NaniteProgramHub = (props) => {
   const { act, data } = useBackend<any>();
   const {
     detail_view,

@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Vendatray = (props, context) => {
+export const Vendatray = (props) => {
   const { act, data } = useBackend<any>();
   const {
     product_name,
@@ -75,7 +75,7 @@ export const Vendatray = (props, context) => {
   );
 };
 
-const VendingImage = (props, context) => {
+const VendingImage = (props) => {
   const { data } = useBackend<any>();
   const {
     product_icon,

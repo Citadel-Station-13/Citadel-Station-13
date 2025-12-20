@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { GenericUplink } from './Uplink';
 
-export const MalfunctionModulePicker = (props, context) => {
+export const MalfunctionModulePicker = (props) => {
   const { act, data } = useBackend<any>();
   const {
     processingTime,

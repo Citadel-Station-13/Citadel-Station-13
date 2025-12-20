@@ -12,7 +12,7 @@ import { Window } from '../layouts';
 
 let lastScrollTime = 0;
 
-export const ListInput = (props, context) => {
+export const ListInput = (props) => {
   const { act, data } = useBackend<any>();
   const {
     title,

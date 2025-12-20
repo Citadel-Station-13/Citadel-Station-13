@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 // Common power multiplier
 const POWER_MUL = 1e3;
 
-export const Smes = (props, context) => {
+export const Smes = (props) => {
   const { act, data } = useBackend<any>();
   const {
     capacityPercent,

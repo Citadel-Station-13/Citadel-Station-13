@@ -3,7 +3,7 @@ import { AnimatedNumber, Box, Button, Section, Table } from 'tgui-core/component
 import { formatMoney } from '../format';
 import { NtosWindow } from '../layouts';
 
-export const NtosBountyConsole = (props, context) => {
+export const NtosBountyConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     bountydata = [],
@@ -103,7 +103,7 @@ export const NtosBountyConsole = (props, context) => {
   );
 };
 
-const BountyHeader = (props, context) => {
+const BountyHeader = (props) => {
   const { act, data } = useBackend<any>();
   const {
     stored_cash,

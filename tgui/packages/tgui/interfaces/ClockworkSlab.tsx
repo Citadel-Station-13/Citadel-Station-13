@@ -21,7 +21,7 @@ for (let index = 0; index < Math.min(Math.random()*100); index++) {
   REC_RATVAR += "HONOR RATVAR ";
 }
 
-export const ClockworkSlab = (props, context) => {
+export const ClockworkSlab = (props) => {
   const { act, data } = useBackend<any>();
   const {
     recollection = true,
@@ -151,7 +151,7 @@ export const ClockworkSlab = (props, context) => {
   );
 };
 
-export const CSScripture = (props, context) => {
+export const CSScripture = (props) => {
   const { act, data } = useBackend<any>();
   const {
     power_unformatted = 0,
@@ -219,7 +219,7 @@ export const CSScripture = (props, context) => {
   );
 };
 
-export const CSTutorial = (props, context) => {
+export const CSTutorial = (props) => {
   const { act, data } = useBackend<any>();
   const {
     recollection_categories = [],

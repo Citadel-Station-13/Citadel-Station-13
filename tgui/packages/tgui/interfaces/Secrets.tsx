@@ -34,7 +34,7 @@ const lineHeightNormal = 2.79;
 const buttonWidthNormal = 12.9;
 const lineHeightDebug = 6.09;
 
-const DebuggingTab = (props, context) => {
+const DebuggingTab = (props) => {
   const { act } = useBackend<any>();
   return (
     <Stack fill vertical>
@@ -69,7 +69,7 @@ const DebuggingTab = (props, context) => {
   );
 };
 
-const HelpfulTab = (props, context) => {
+const HelpfulTab = (props) => {
   const { act } = useBackend<any>();
   return (
     <Stack fill vertical>
@@ -273,7 +273,7 @@ const HelpfulTab = (props, context) => {
   );
 };
 
-const FunTab = (props, context) => {
+const FunTab = (props) => {
   const { act } = useBackend<any>();
   return (
     <Stack fill vertical>
@@ -421,7 +421,7 @@ const FunTab = (props, context) => {
   );
 };
 
-const FunForYouTab = (props, context) => {
+const FunForYouTab = (props) => {
   const { act } = useBackend<any>();
   return (
     <Stack fill vertical>
@@ -541,7 +541,7 @@ const FunForYouTab = (props, context) => {
   );
 };
 
-export const Secrets = (props, context) => {
+export const Secrets = (props) => {
   const { act, data } = useBackend<any>();
   const {
     is_debugger,

@@ -3,7 +3,7 @@ import { Button, LabeledList, NoticeBox, Section, Tabs } from 'tgui-core/compone
 import { Window } from '../layouts';
 import { GenericUplink } from './Uplink';
 
-export const AbductorConsole = (props, context) => {
+export const AbductorConsole = (props) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   return (
     <Window
@@ -41,7 +41,7 @@ export const AbductorConsole = (props, context) => {
   );
 };
 
-const Abductsoft = (props, context) => {
+const Abductsoft = (props) => {
   const { act, data } = useBackend<any>();
   const {
     experiment,
@@ -73,7 +73,7 @@ const Abductsoft = (props, context) => {
   );
 };
 
-const EmergencyTeleporter = (props, context) => {
+const EmergencyTeleporter = (props) => {
   const { act, data } = useBackend<any>();
   const {
     pad,
@@ -111,7 +111,7 @@ const EmergencyTeleporter = (props, context) => {
   );
 };
 
-const VestSettings = (props, context) => {
+const VestSettings = (props) => {
   const { act, data } = useBackend<any>();
   const {
     vest,

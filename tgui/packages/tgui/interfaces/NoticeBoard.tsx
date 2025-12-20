@@ -2,7 +2,7 @@ import { useBackend } from "../backend";
 import { Box, Button, Flex, Section } from "../components";
 import { Window } from "../layouts";
 
-export const NoticeBoard = (props, context) => {
+export const NoticeBoard = (props) => {
   const { act, data } = useBackend<any>();
   const {
     allowed,

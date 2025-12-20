@@ -3,7 +3,7 @@ import { NoticeBox } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { LaunchpadControl } from './LaunchpadConsole';
 
-export const LaunchpadRemote = (props, context) => {
+export const LaunchpadRemote = (props) => {
   const { data } = useBackend<any>();
   const {
     has_pad,

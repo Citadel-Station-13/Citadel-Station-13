@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const CellularEmporium = (props, context) => {
+export const CellularEmporium = (props) => {
   const { act, data } = useBackend<any>();
   const { abilities } = data;
   return (

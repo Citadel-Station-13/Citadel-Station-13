@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Icon, Input, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const HypnoChair = (props, context) => {
+export const HypnoChair = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window

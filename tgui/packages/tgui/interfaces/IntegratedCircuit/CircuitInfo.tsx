@@ -1,6 +1,6 @@
 import { Button, Section, Stack, Box } from 'tgui-core/components';
 
-export const CircuitInfo = (props, context) => {
+export const CircuitInfo = (props) => {
   const {
     name,
     desc,

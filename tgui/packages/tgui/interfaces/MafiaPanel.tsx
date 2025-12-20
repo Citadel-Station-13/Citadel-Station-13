@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, TimeDisplay } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const MafiaPanel = (props, context) => {
+export const MafiaPanel = (props) => {
   const { act, data } = useBackend<any>();
   const {
     actions,
@@ -82,7 +82,7 @@ export const MafiaPanel = (props, context) => {
   );
 };
 
-const MafiaLobby = (props, context) => {
+const MafiaLobby = (props) => {
   const { act, data } = useBackend<any>();
   const {
     lobbydata,
@@ -152,7 +152,7 @@ const MafiaLobby = (props, context) => {
   );
 };
 
-const MafiaRole = (props, context) => {
+const MafiaRole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     phase,
@@ -209,7 +209,7 @@ const MafiaRole = (props, context) => {
   );
 };
 
-const MafiaListOfRoles = (props, context) => {
+const MafiaListOfRoles = (props) => {
   const { act, data } = useBackend<any>();
   const {
     all_roles,
@@ -274,7 +274,7 @@ const MafiaListOfRoles = (props, context) => {
   );
 };
 
-const MafiaJudgement = (props, context) => {
+const MafiaJudgement = (props) => {
   const { act, data } = useBackend<any>();
   const {
     judgement_phase,
@@ -333,7 +333,7 @@ const MafiaJudgement = (props, context) => {
   );
 };
 
-const MafiaPlayers = (props, context) => {
+const MafiaPlayers = (props) => {
   const { act, data } = useBackend<any>();
   const {
     players,
@@ -376,7 +376,7 @@ const MafiaPlayers = (props, context) => {
   );
 };
 
-const MafiaAdmin = (props, context) => {
+const MafiaAdmin = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Collapsible

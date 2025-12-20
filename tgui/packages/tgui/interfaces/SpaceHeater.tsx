@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const SpaceHeater = (props, context) => {
+export const SpaceHeater = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window

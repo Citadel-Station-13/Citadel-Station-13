@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 // and hand made width sets that changing pretty much anything
 // is going to require a lot of tweaking it get it looking correct again
 // I'm sorry, but it looks bangin
-const NukeKeypad = (props, context) => {
+const NukeKeypad = (props) => {
   const { act } = useBackend<any>();
   const keypadKeys = [
     ['1', '4', '7', 'C'],
@@ -44,7 +44,7 @@ const NukeKeypad = (props, context) => {
   );
 };
 
-export const NuclearBomb = (props, context) => {
+export const NuclearBomb = (props) => {
   const { act, data } = useBackend<any>();
   const {
     anchored,

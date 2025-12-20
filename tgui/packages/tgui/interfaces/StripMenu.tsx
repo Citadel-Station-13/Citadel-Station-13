@@ -396,7 +396,7 @@ type StripMenuData = {
   long_strip_menu: boolean;
 };
 
-export const StripMenu = (props, context) => {
+export const StripMenu = (props) => {
   const { act, data } = useBackend<StripMenuData>(context);
 
   const gridSpots = new Map<GridSpotKey, string>();

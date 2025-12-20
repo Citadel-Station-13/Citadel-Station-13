@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Icon, NoticeBox, NumberInput, Section, Table, Tabs, Slider } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const Colormate = (props, context) => {
+export const Colormate = (props) => {
   const { act, data } = useBackend<any>();
   const { activemode, temp } = data;
   const item = data.item || [];
@@ -106,7 +106,7 @@ export const Colormate = (props, context) => {
   );
 };
 
-export const ColormateTint = (props, context) => {
+export const ColormateTint = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Button
@@ -118,7 +118,7 @@ export const ColormateTint = (props, context) => {
   );
 };
 
-export const ColormateMatrix = (props, context) => {
+export const ColormateMatrix = (props) => {
   const { act, data } = useBackend<any>();
   const matrixcolors = data.matrixcolors || [];
   return (
@@ -283,7 +283,7 @@ export const ColormateMatrix = (props, context) => {
   );
 };
 
-export const ColormateHSV = (props, context) => {
+export const ColormateHSV = (props) => {
   const { act, data } = useBackend<any>();
   const { buildhue, buildsat, buildval } = data;
   return (

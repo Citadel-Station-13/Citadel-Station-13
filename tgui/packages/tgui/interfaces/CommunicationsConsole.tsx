@@ -15,7 +15,7 @@ const SWIPE_NEEDED = "SWIPE_NEEDED";
 
 const sortByCreditCost = sortBy(shuttle => shuttle.creditCost);
 
-const AlertButton = (props, context) => {
+const AlertButton = (props) => {
   const { act, data } = useBackend<any>();
   const { alertLevelTick, canSetAlertLevel } = data;
   const { alertLevel, setShowAlertLevelConfirm } = props;
@@ -44,7 +44,7 @@ const AlertButton = (props, context) => {
   );
 };
 
-const MessageModal = (props, context) => {
+const MessageModal = (props) => {
   const { data } = useBackend<any>();
   const { maxMessageLength } = data;
 
@@ -140,7 +140,7 @@ const NoConnectionModal = () => {
   );
 };
 
-const PageBuyingShuttle = (props, context) => {
+const PageBuyingShuttle = (props) => {
   const { act, data } = useBackend<any>();
 
   return (
@@ -196,7 +196,7 @@ const PageBuyingShuttle = (props, context) => {
   );
 };
 
-const PageChangingStatus = (props, context) => {
+const PageChangingStatus = (props) => {
   const { act, data } = useBackend<any>();
   const { maxStatusLineLength } = data;
 
@@ -294,7 +294,7 @@ const PageChangingStatus = (props, context) => {
   );
 };
 
-const PageMain = (props, context) => {
+const PageMain = (props) => {
   const { act, data } = useBackend<any>();
   const {
     alertLevel,
@@ -617,7 +617,7 @@ const PageMain = (props, context) => {
   );
 };
 
-const PageMessages = (props, context) => {
+const PageMessages = (props) => {
   const { act, data } = useBackend<any>();
   const messages = data.messages || [];
 
@@ -687,7 +687,7 @@ const PageMessages = (props, context) => {
   return children;
 };
 
-export const CommunicationsConsole = (props, context) => {
+export const CommunicationsConsole = (props) => {
   const { act, data } = useBackend<any>();
   const {
     authenticated,

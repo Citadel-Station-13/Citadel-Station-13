@@ -12,7 +12,7 @@ export const Gateway = () => {
   );
 };
 
-const GatewayContent = (props, context) => {
+const GatewayContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     gateway_present = false,

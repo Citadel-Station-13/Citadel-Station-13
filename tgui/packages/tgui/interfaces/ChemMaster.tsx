@@ -3,7 +3,7 @@ import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const ChemMaster = (props, context) => {
+export const ChemMaster = (props) => {
   const { data } = useBackend<any>();
   const { screen } = data;
   return (
@@ -22,7 +22,7 @@ export const ChemMaster = (props, context) => {
   );
 };
 
-const ChemMasterContent = (props, context) => {
+const ChemMasterContent = (props) => {
   const { act, data } = useBackend<any>();
   const {
     screen,
@@ -128,7 +128,7 @@ const ChemMasterContent = (props, context) => {
 
 const ChemicalBuffer = Table;
 
-const ChemicalBufferEntry = (props, context) => {
+const ChemicalBufferEntry = (props) => {
   const { act } = useBackend<any>();
   const { chemical, transferTo } = props;
   return (
@@ -218,7 +218,7 @@ const PackagingControlsItem = props => {
   );
 };
 
-const PackagingControls = (props, context) => {
+const PackagingControls = (props) => {
   const { act, data } = useBackend<any>();
   const [
     pillAmount,
@@ -361,7 +361,7 @@ const PackagingControls = (props, context) => {
   );
 };
 
-const AnalysisResults = (props, context) => {
+const AnalysisResults = (props) => {
   const { act, data } = useBackend<any>();
   const { fermianalyze } = props;
   const { analyzeVars } = data;

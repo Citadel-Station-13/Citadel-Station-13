@@ -3,7 +3,7 @@ import { AnimatedNumber, Box, Button, Flex, Modal, Section, Stack, Tabs } from '
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-export const BlackMarketUplink = (props, context) => {
+export const BlackMarketUplink = (props) => {
   const { act, data } = useBackend<any>();
   const {
     categories = [],
@@ -95,7 +95,7 @@ export const BlackMarketUplink = (props, context) => {
   );
 };
 
-const ShipmentSelector = (props, context) => {
+const ShipmentSelector = (props) => {
   const { act, data } = useBackend<any>();
   const {
     buying,

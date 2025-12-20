@@ -83,7 +83,7 @@ const getImageSize = value => {
   return [width, height];
 };
 
-export const Canvas = (props, context) => {
+export const Canvas = (props) => {
   const { act, data } = useBackend<any>();
   const dotsize = PX_PER_UNIT;
   const [width, height] = getImageSize(data.grid);

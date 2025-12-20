@@ -9,7 +9,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from 'tgui-core/components';
 
 // This is the entrypoint, don't mind the others
-export const TelecommsPDALog = (props, context) => {
+export const TelecommsPDALog = (props) => {
   const { act, data } = useBackend<any>();
   const {
     network,
@@ -252,7 +252,7 @@ export const TelecommsPDALog = (props, context) => {
 };
 
 // They're the same, so merged it into this. Idea stolen from cargonia
-export const TeleLogs = (props, context) => {
+export const TeleLogs = (props) => {
   const {
     msgs_log = false, // <TeleLogs msgs_log/>
   } = props;
@@ -365,7 +365,7 @@ export const TeleLogs = (props, context) => {
   );
 };
 
-export const CustomMsg = (props, context) => {
+export const CustomMsg = (props) => {
   const { act, data } = useBackend<any>();
   const fake_message = data.fake_message !== {} ? data.fake_message : {
     'sender': 'System Administrator',

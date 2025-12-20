@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const TankDispenser = (props, context) => {
+export const TankDispenser = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window

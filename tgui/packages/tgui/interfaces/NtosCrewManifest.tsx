@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Button, Section, Table } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
-export const NtosCrewManifest = (props, context) => {
+export const NtosCrewManifest = (props) => {
   const { act, data } = useBackend<any>();
   const {
     have_printer,

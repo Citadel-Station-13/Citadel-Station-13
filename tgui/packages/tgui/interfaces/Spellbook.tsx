@@ -60,7 +60,7 @@ const BUYWORD2ICON = {
   Cast: 'meteor',
 };
 
-const EnscribedName = (props, context) => {
+const EnscribedName = (props) => {
   const { act, data } = useBackend<any>();
   const { owner } = data;
   return (
@@ -81,7 +81,7 @@ const EnscribedName = (props, context) => {
 
 const lineHeightToc = "34.6px";
 
-const TableOfContents = (props, context) => {
+const TableOfContents = (props) => {
   const { act, data } = useBackend<any>();
   const [
     tabIndex,
@@ -157,7 +157,7 @@ const TableOfContents = (props, context) => {
   );
 };
 
-const LockedPage = (props, context) => {
+const LockedPage = (props) => {
   const { act, data } = useBackend<any>();
   const { owner } = data;
   return (
@@ -178,7 +178,7 @@ const LockedPage = (props, context) => {
   );
 };
 
-const PointLocked = (props, context) => {
+const PointLocked = (props) => {
   const { act, data } = useBackend<any>();
   const { owner } = data;
   return (
@@ -210,7 +210,7 @@ const PointLocked = (props, context) => {
   );
 };
 
-const SingleLoadout = (props, context) => {
+const SingleLoadout = (props) => {
   const { act } = useBackend<any>();
   const { author, name, blurb, icon, loadoutId, loadoutColor } = props;
   return (
@@ -237,7 +237,7 @@ const SingleLoadout = (props, context) => {
 
 const LoadoutWidth = 19.17;
 
-const Loadouts = (props, context) => {
+const Loadouts = (props) => {
   const { act, data } = useBackend<any>();
   const { points } = data;
   return (
@@ -307,7 +307,7 @@ const Loadouts = (props, context) => {
 
 const lineHeightRandomize = 6;
 
-const Randomize = (props, context) => {
+const Randomize = (props) => {
   const { act, data } = useBackend<any>();
   const { points } = data;
   return (
@@ -352,7 +352,7 @@ const Randomize = (props, context) => {
 const widthSection = "466px";
 const heightSection = "456px";
 
-export const Spellbook = (props, context) => {
+export const Spellbook = (props) => {
   const { act, data } = useBackend<any>();
   const {
     entries,

@@ -44,7 +44,7 @@ type Info = {
   objectives: Objective[];
 };
 
-export const AntagInfoWizard = (props, context) => {
+export const AntagInfoWizard = (props) => {
   return (
     <Window
       width={620}
@@ -129,7 +129,7 @@ export const AntagInfoWizard = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (props) => {
   const { data } = useBackend<Info>(context);
   const {
     objectives,

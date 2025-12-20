@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const SmartVend = (props, context) => {
+export const SmartVend = (props) => {
   const { act, data } = useBackend<any>();
   return (
     <Window
