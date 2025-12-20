@@ -137,7 +137,7 @@ SUBSYSTEM_DEF(pai)
 	dat += "<a href='byond://?src=[REF(src)];option=save;new=1;candidate=[REF(candidate)]'>Save Personality</a><br>"
 	dat += "<a href='byond://?src=[REF(src)];option=load;new=1;candidate=[REF(candidate)]'>Load Personality</a><br>"
 
-	M << HTML_SKELETON(dat), "window=paiRecruit")
+	M << browse(HTML_SKELETON(dat), "window=paiRecruit")
 
 /datum/controller/subsystem/pai/proc/spam_again()
 	ghost_spam = FALSE
@@ -198,7 +198,7 @@ SUBSYSTEM_DEF(pai)
 
 	dat += "</table>"
 
-	user << HTML_SKELETON(dat), "window=findPai")
+	user << browse(HTML_SKELETON(dat), "window=findPai")
 
 /datum/paiCandidate
 	var/name
