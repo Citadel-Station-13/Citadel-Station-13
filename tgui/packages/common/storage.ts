@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-const STORAGE_PREFIX = "citadel-main-";
+const STORAGE_PREFIX = "citadel-rp-";
 
 export const IMPL_MEMORY = 0;
 export const IMPL_HUB_STORAGE = 1;

@@ -4,97 +4,54 @@
  * @license MIT
  */
 
-/**
- * Limits a number to the range between 'min' and 'max'.
- */
-export const clamp = (value, min, max) => {
-  return value < min ? min : value > max ? max : value;
+export const clamp = (value: number, low: number, high: number) => {
+  return value < low ? low : (value > high ? high : value);
 };
 
 /**
- * Limits a number between 0 and 1.
- */
-export const clamp01 = value => {
-  return value < 0 ? 0 : value > 1 ? 1 : value;
-};
-
-/**
- * Scales a number to fit into the range between min and max.
- */
-export const scale = (value, min, max) => {
-  return (value - min) / (max - min);
-};
-
-/**
- * Robust number rounding.
- *
- * Adapted from Locutus, see: http://locutus.io/php/math/round/
- *
- * @param  {number} value
- * @param  {number} precision
+ * Return closest higher multiple of 'multiple' from value
+ * @param {number} value
+ * @param {number} multiple
  * @return {number}
  */
-export const round = (value, precision) => {
-  if (!value || isNaN(value)) {
-    return value;
-  }
-  // helper variables
-  let m, f, isHalf, sgn;
-  // making sure precision is integer
-  precision |= 0;
-  m = Math.pow(10, precision);
-  value *= m;
-  // sign of the number
-  sgn = +(value > 0) | -(value < 0);
-  // isHalf = value % 1 === 0.5 * sgn;
-  isHalf = Math.abs(value % 1) >= 0.4999999999854481;
-  f = Math.floor(value);
-  if (isHalf) {
-    // rounds .5 away from zero
-    value = f + (sgn > 0);
-  }
-  return (isHalf ? value : Math.round(value)) / m;
+export const ceiling = (value: number, multiple: number): number => {
+  let mult = value / multiple;
+  return Math.ceil(mult) * multiple;
 };
 
 /**
- * Returns a string representing a number in fixed point notation.
+ * Return closest lower multiple of 'multiple' from value
+ * @param {number} value
+ * @param {number} multiple
+ * @return {number}
  */
-export const toFixed = (value, fractionDigits = 0) => {
-  return Number(value).toFixed(Math.max(fractionDigits, 0));
+export const floor = (value: number, multiple: number): number => {
+  let mult = value / multiple;
+  return Math.floor(mult) * multiple;
 };
 
 /**
- * Checks whether a value is within the provided range.
- *
- * Range is an array of two numbers, for example: [0, 15].
+ * Get array of bits from a bitfield
  */
-export const inRange = (value, range) => {
-  return range
-    && value >= range[0]
-    && value <= range[1];
-};
-
-/**
- * Walks over the object with ranges, comparing value against every range,
- * and returns the key of the first matching range.
- *
- * Range is an array of two numbers, for example: [0, 15].
- */
-export const keyOfMatchingRange = (value, ranges) => {
-  for (let rangeName of Object.keys(ranges)) {
-    const range = ranges[rangeName];
-    if (inRange(value, range)) {
-      return rangeName;
+export const bitfieldToBits = (field: number) => {
+  let got: number[] = [];
+  for (let bit = 0; bit < 24; bit++) {
+    if (field & (1 << bit)) {
+      got.push(1 << bit);
     }
   }
+  return got;
 };
 
 /**
- * Get number of digits following the decimal point in a number
+ * Get array of positions from a bitfield
  */
-export const numberOfDecimalDigits = value => {
-  if (Math.floor(value) !== value) {
-    return value.toString().split('.')[1].length || 0;
+export const bitfieldToPositions = (field: number, limit: number = 24) => {
+  let got: number[] = [];
+  for (let bit = 0; bit < limit; bit++) {
+    if (field & (1 << bit)) {
+      got.push(bit);
+    }
   }
-  return 0;
+  return got;
 };

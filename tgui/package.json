@@ -25,9 +25,11 @@
     "@rspack/core": "^1.6.8",
     "@types/jest": "^27.0.1",
     "@types/jsdom": "^16.2.13",
-    "@types/node": "^14.17.9",
+    "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@types/webpack-env": "^1.18.8",
+    "@types/wicg-file-system-access": "^2023.10.7",
     "@typescript-eslint/parser": "^4.29.1",
     "common": "workspace:*",
     "dompurify": "^3.3.1",
@@ -45,9 +47,11 @@
     "prettier": "^3.7.4",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "sass": "^1.37.5",
+    "sass": "^1.97.1",
+    "sass-embedded": "^1.97.1",
+    "sass-loader": "^16.0.6",
     "tgui-core": "^5.6.0",
     "typescript": "5.8.3"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@4.9.1"
 }
