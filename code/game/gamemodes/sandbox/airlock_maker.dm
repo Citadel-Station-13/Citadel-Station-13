@@ -68,7 +68,7 @@
 		dat += "</td></tr>"
 
 	dat += "</table><hr><a href='?src=[REF(src)];done'>Finalize Airlock Construction</a> | <a href='?src=[REF(src)];cancel'>Cancel and Destroy Airlock</a>"
-	usr << browse(dat,"window=airlockmaker")
+	usr << HTML_SKELETON(dat),"window=airlockmaker")
 
 /datum/airlock_maker/Topic(var/href,var/list/href_list)
 	if(!usr)

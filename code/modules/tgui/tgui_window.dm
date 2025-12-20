@@ -21,7 +21,7 @@
 	/**
 	 * sent asset packs (citrp asset backend)
 	 */
-	var/list/datum/asset_pack/sent_assets = list()
+	var/list/datum/asset/sent_assets = list()
 	// Vars passed to initialize proc (and saved for later)
 	var/initial_strict_mode
 	var/initial_fancy
@@ -106,8 +106,8 @@
 	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
 	// Inject assets
 	var/inline_assets_str = ""
-	for(var/datum/asset_pack/asset as anything in assets)
-		asset = SSassets.ready_asset_pack(asset)
+	for(var/datum/asset/asset as anything in assets)
+		asset.send(client)
 		var/mappings = asset.get_url_mappings()
 		for(var/name in mappings)
 			var/url = mappings[name]
@@ -116,11 +116,10 @@
 				inline_assets_str += "Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
 				inline_assets_str += "Byond.loadJs('[url]', true);\n"
-		SSassets.send_asset_pack(client, asset)
 		// incase they logged out
 		if(!client)
 			return
-	client.asset_cache_flush_browse_queue() // flush their assets
+	client.browse_queue_flush()
 	// incase they logged out
 	if(!client)
 		return
@@ -321,7 +320,6 @@
 /datum/tgui_window/proc/send_asset(datum/asset/asset)
 	asset.send(client)
 	sent_assets |= asset
-	. = SSassets.send_asset_pack(client, asset)
 	if(istype(asset, /datum/asset/spritesheet))
 		var/datum/asset/spritesheet/spritesheet = asset
 		send_message("asset/stylesheet", spritesheet.css_filename())
@@ -399,12 +397,13 @@
 			client << link(href_list["url"])
 		if("cacheReloaded")
 			reinitialize()
-		if("chat/resend")
-			SSchat.handle_resend(client, payload)
+		// if("chat/resend")
+		// 	SSchat.handle_resend(client, payload)
 		if("oversizedPayloadRequest")
 			var/payload_id = payload["id"]
 			var/chunk_count = payload["chunkCount"]
-			var/permit_payload = chunk_count <= CONFIG_GET(number/tgui_max_chunk_count)
+			// var/permit_payload = chunk_count <= CONFIG_GET(number/tgui_max_chunk_count)
+			var/permit_payload = chunk_count <= 10
 			if(permit_payload)
 				create_oversized_payload(payload_id, payload["type"], chunk_count)
 			send_message("oversizePayloadResponse", list("allow" = permit_payload, "id" = payload_id))

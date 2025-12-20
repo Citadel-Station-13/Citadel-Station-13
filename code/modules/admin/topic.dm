@@ -612,7 +612,7 @@
 			to_chat(usr, "This mob has no ckey.")
 			return
 
-		var/dat = "<head><title>Job-Ban Panel: [key_name(M)]</title></head>"
+		var/dat = "<!DOCTYPE html><html><head><title>Job-Ban Panel: [key_name(M)]</title></head><body>"
 
 	/***********************************WARNING!************************************
 				      The jobban stuff looks mangled and disgusting
@@ -917,7 +917,7 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_RESPAWN];jobban4=[REF(M)]'>Respawns</a></td>"
 
-		dat += "</tr></table>"
+		dat += "</tr></table></body></html>"
 		usr << browse(dat, "window=jobban2;size=800x450")
 		return
 
@@ -2616,7 +2616,7 @@
 		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
 		dat += thing_to_check
 
-		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+		usr << HTML_SKELETON(dat).Join("<br>"), "window=related_[C];size=420x300")
 
 	else if(href_list["centcomlookup"])
 		if(!check_rights(R_ADMIN))
@@ -2742,7 +2742,7 @@
 	dat += {"<A href='?src=[REF(src)];[HrefToken()];c_mode2=secret'>Secret</A><br>"}
 	dat += {"<A href='?src=[REF(src)];[HrefToken()];c_mode2=random'>Random</A><br>"}
 	dat += {"Now: [GLOB.master_mode]"}
-	usr << browse(dat, "window=c_mode")
+	usr << HTML_SKELETON(dat), "window=c_mode")
 
 /datum/admins/proc/HandleFSecret()
 	if(!check_rights(R_ADMIN))
@@ -2757,7 +2757,7 @@
 		dat += {"<A href='?src=[REF(src)];[HrefToken()];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
 	dat += {"<A href='?src=[REF(src)];[HrefToken()];f_secret2=secret'>Random (default)</A><br>"}
 	dat += {"Now: [GLOB.secret_force_mode]"}
-	usr << browse(dat, "window=f_secret")
+	usr << HTML_SKELETON(dat), "window=f_secret")
 
 /datum/admins/proc/makeMentor(ckey)
 	if(!usr.client)

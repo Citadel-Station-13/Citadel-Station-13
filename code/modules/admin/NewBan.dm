@@ -63,7 +63,7 @@ GLOBAL_PROTECT(Banlist)
 /proc/LoadBans()
 	if(!CONFIG_GET(flag/ban_legacy_system))
 		return
-		
+
 	GLOB.Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
 
@@ -199,7 +199,7 @@ GLOBAL_PROTECT(Banlist)
 
 	dat += "</table>"
 	dat = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
-	usr << browse(dat, "window=unbanp;size=875x400")
+	usr << HTML_SKELETON(dat), "window=unbanp;size=875x400")
 
 //////////////////////////////////// DEBUG ////////////////////////////////////
 

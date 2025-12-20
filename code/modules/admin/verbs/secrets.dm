@@ -58,14 +58,14 @@
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_log.len)
 				dat += "No-one has done anything this round!"
-			holder << browse(dat, "window=admin_log")
+			holder << HTML_SKELETON(dat), "window=admin_log")
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
 					dat += "[ckey] - [D.rank.name]<br>"
-				holder << browse(dat, "window=showadmins;size=600x500")
+				holder << HTML_SKELETON(dat), "window=showadmins;size=600x500")
 		if("mentor_log")
 			var/dat = "<B>Mentor Log<HR></B>"
 			for(var/l in GLOB.mentorlog)
@@ -73,7 +73,7 @@
 
 			if(!GLOB.mentorlog.len)
 				dat += "No mentors have done anything this round!"
-			usr << browse(dat, "window=mentor_log")
+			usr << HTML_SKELETON(dat), "window=mentor_log")
 
 		//Buttons for debug.
 		if("maint_access_engiebrig")
@@ -114,18 +114,18 @@
 			var/dat = "<B>Bombing List</B><HR>"
 			for(var/l in GLOB.bombers)
 				dat += text("[l]<BR>")
-			holder << browse(dat, "window=bombers")
+			holder << HTML_SKELETON(dat), "window=bombers")
 
 		if("list_signalers")
 			var/dat = "<B>Showing last [length(GLOB.lastsignalers)] signalers.</B><HR>"
 			for(var/sig in GLOB.lastsignalers)
 				dat += "[sig]<BR>"
-			holder << browse(dat, "window=lastsignalers;size=800x500")
+			holder << HTML_SKELETON(dat), "window=lastsignalers;size=800x500")
 		if("list_lawchanges")
 			var/dat = "<B>Showing last [length(GLOB.lawchanges)] law changes.</B><HR>"
 			for(var/sig in GLOB.lawchanges)
 				dat += "[sig]<BR>"
-			holder << browse(dat, "window=lawchanges;size=800x500")
+			holder << HTML_SKELETON(dat), "window=lawchanges;size=800x500")
 		if("showailaws")
 			holder.holder.output_ai_laws()//huh, inconvenient var naming, huh?
 		if("showgm")
@@ -141,7 +141,7 @@
 			for(var/datum/data/record/t in GLOB.data_core.general)
 				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
 			dat += "</table>"
-			holder << browse(dat, "window=manifest;size=440x410")
+			holder << HTML_SKELETON(dat), "window=manifest;size=440x410")
 		if("dna")
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
@@ -150,7 +150,7 @@
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
-			holder << browse(dat, "window=DNA;size=440x410")
+			holder << HTML_SKELETON(dat), "window=DNA;size=440x410")
 		if("fingerprints")
 			var/dat = "<B>Showing Fingerprints.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
@@ -159,7 +159,7 @@
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
-			holder << browse(dat, "window=fingerprints;size=440x410")
+			holder << HTML_SKELETON(dat), "window=fingerprints;size=440x410")
 		if("ctfbutton")
 			toggle_all_ctf(holder)
 		if("tdomereset")
