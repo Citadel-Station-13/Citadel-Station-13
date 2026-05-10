@@ -370,6 +370,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				qdel(src)
 				return
 
+	if(byond_version > 515)
+		if(!connecting_admin)
+			log_access("Failed login: [key] - [byond_version] is unsupported.")
+			to_chat(src, span_userdanger("Your version of byond is unsupported."))
+			to_chat(src, span_danger("Byond build [byond_build] ([byond_version].[byond_build]) has been disallowed from joining the game due to simply being unable to interact with way too many game elements, rendering it unplayable."))
+			to_chat(src, span_danger("Until we are capable of supporting webview, playing will be restricted to versions below 516, you can go to <a href=\"https://secure.byond.com/download/build\">BYOND's website</a> to download other versions."))
+			qdel(src)
+			return
+		to_chat(src, "As an admin, you are being allowed through, be warned that TGUI is incapable of loading in this version and you might have major issues.")
+
 	// Initialize tgui panel
 	src << browse(file('html/statbrowser.html'), "window=statbrowser")
 	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
