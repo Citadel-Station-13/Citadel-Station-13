@@ -1,6 +1,6 @@
 ## Citadel Station 13
 
-Base off of /tg/station.
+Based off of /tg/station.
 
 [![Build Status](https://github.com/Citadel-Station-13/Citadel-Station-13/workflows/CI%20Suite/badge.svg)](https://github.com/Citadel-Station-13/Citadel-Station-13/actions?query=workflow%3A%22CI+Suite%22)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Percentage of issues still open")  
