@@ -8,6 +8,14 @@ Base off of /tg/station.
 
 [![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/pretty-risque.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](http://forthebadge.com) [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
+**Citadel Station Information**  
+* **Website:** <https://citadel-station.dev>
+* **Code:** <https://github.com/citadel-station/citadel-main>
+* **Wiki:** <https://citadel-station.dev/wikiMain/index.php?title=Main_Page>
+* **Forums:** <https://citadel-station.dev/forum>
+* **Ban Appeals:** <https://citadel-station.dev/forum/forumdisplay.php?fid=8>
+* **Discord:** <https://discord.gg/zVd9F6fjZh>
+  
 **Upstream Information**  
 * **Website:** <https://www.tgstation13.org>
 * **Code:** <https://github.com/tgstation/tgstation>
@@ -17,14 +25,6 @@ Base off of /tg/station.
 * **Coderbus Discord:** <https://discord.gg/Vh8TJp9>
 * ~~**IRC:** <irc://irc.rizon.net/coderbus>~~ (dead)  
 
-**Citadel Station Information**  
-* **Website:** <https://citadel-station.dev>
-* **Code:** <https://github.com/citadel-station/citadel-main>
-* **Wiki:** <https://citadel-station.dev/wikiMain/index.php?title=Main_Page>
-* **Forums:** <https://citadel-station.dev/forum>
-* **Ban Appeals:** <https://citadel-station.dev/forum/forumdisplay.php?fid=8>
-* **Discord:** <https://discord.gg/zVd9F6fjZh>
-  
 ## DOWNLOADING
 
 There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/Downloading_the_source_code
