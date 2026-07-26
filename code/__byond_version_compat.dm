@@ -15,6 +15,14 @@
 #error Please consider downgrading to 514.1575 or lower.
 #endif
 
+#define MAX_COMPILER_VERSION 515
+#if (DM_VERSION > MAX_COMPILER_VERSION) && !defined(SPACEMAN_DMM)
+#error Your version of BYOND is currently unsupported and this has been left as a notice
+#error If this was unintentional, please revert to 515.
+#error Otherwise modify the MAX_COMPILER_VERSION or comment this entire section
+#error And get going with making this codebase compatible.
+#endif
+
 // Keep savefile compatibilty at minimum supported level
 #if DM_VERSION >= 515
 /savefile/byond_version = MIN_COMPILER_VERSION
