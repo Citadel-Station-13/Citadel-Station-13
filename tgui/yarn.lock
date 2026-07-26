@@ -3216,7 +3216,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^8.0.0":
+"commander@npm:^8.3.0":
   version: 8.3.0
   resolution: "commander@npm:8.3.0"
   checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
@@ -5719,14 +5719,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.15.1":
-  version: 0.15.1
-  resolution: "katex@npm:0.15.1"
+"katex@npm:^0.16.10":
+  version: 0.16.10
+  resolution: "katex@npm:0.16.10"
   dependencies:
-    commander: ^8.0.0
+    commander: ^8.3.0
   bin:
     katex: cli.js
-  checksum: eab97bbe292cc60b15fec264cba86d110e5e089045de084cd3a0f27b21ef65857a4d296c418ec3b397ff987671a20c6a9a1fd30f1862b86a0e6b7dbe3fb893f6
+  checksum: 108e9d810e17840c43eef8d46171096f4cc97852bfd1e2dd1890d9b3435846816e3e98678a31d38bd064eb97eea83b18ff224cb65d5f9511b54ce7ff4359b591
   languageName: node
   linkType: hard
 
@@ -7917,7 +7917,7 @@ resolve@^2.0.0-next.3:
     jest: ^27.0.6
     jest-circus: ^27.0.6
     jsdom: ^16.7.0
-    katex: ^0.15.1
+    katex: ^0.16.10
     mini-css-extract-plugin: ^1.6.2
     sass: ^1.37.5
     sass-loader: ^11.1.1
@@ -7942,7 +7942,7 @@ resolve@^2.0.0-next.3:
     inferno: ^7.4.8
     inferno-vnode-flags: ^7.4.8
     js-yaml: ^4.1.0
-    katex: ^0.15.1
+    katex: ^0.16.10
     marked: ^4.0.10
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
