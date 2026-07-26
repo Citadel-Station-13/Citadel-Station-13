@@ -36,7 +36,7 @@ if %GIT_EXIT% neq 0 (
 )
 if defined PUSHCHANGELOGTOGIT (
 	echo compiling change log
-	python tools\ss13_genchangelog.py html/changelog.html html/changelogs
+	python tools\ss13_genchangelog.py html/changelogs
 	if %ERRORLEVEL% == 0 (
 		echo pushing compiled changelog to server
 		git add -u html/changelog.html
@@ -58,7 +58,7 @@ call bin\copyfromgit.bat
 if not defined PUSHCHANGELOGTOGIT (
 	echo compiling change log
 	cd gamecode\%AB%
-	call python tools\ss13_genchangelog.py html/changelog.html html/changelogs
+	call python tools\ss13_genchangelog.py html/changelogs
 	cd ..\..
 )
 
