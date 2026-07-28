@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Icon, Section, Stack } from '../components';
+import { BlockQuote, Icon, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 type Info = {
@@ -9,8 +9,8 @@ type Info = {
   gang_clothes: string[];
 };
 
-export const AntagInfoGangmember = (props, context) => {
-  const { data } = useBackend<Info>(context);
+export const AntagInfoGangmember = (props) => {
+  const { data } = useBackend<Info>();
   const {
     gang_name,
     antag_name,
@@ -21,7 +21,7 @@ export const AntagInfoGangmember = (props, context) => {
       height={500}>
       <Window.Content
         style={{
-          'background-image': 'none',
+          'backgroundImage': 'none',
         }}>
         <Section fill>
           <Stack vertical>
@@ -56,8 +56,8 @@ export const AntagInfoGangmember = (props, context) => {
   );
 };
 
-const GangClothesPrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const GangClothesPrintout = (props) => {
+  const { data } = useBackend<Info>();
   const {
     gang_name,
     gang_clothes,
@@ -117,8 +117,8 @@ const GangPhonePrintout = () => {
 };
 
 
-const GangObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const GangObjectivePrintout = (props) => {
+  const { data } = useBackend<Info>();
   const {
     gang_objective,
   } = data;

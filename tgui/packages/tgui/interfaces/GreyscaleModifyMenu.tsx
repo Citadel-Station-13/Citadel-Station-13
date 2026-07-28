@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Flex, Stack, Icon, Input, LabeledList, Section, Table, Divider } from '../components';
+import { Box, Button, ColorBox, Flex, Stack, Icon, Input, LabeledList, Section, Table, Divider } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 type ColorEntry = {
@@ -42,7 +42,7 @@ enum Direction {
   NorthWest = "northwest"
 }
 
-const DirectionAbbreviation : Record<Direction, string> = {
+const DirectionAbbreviation: Record<Direction, string> = {
   [Direction.North]: "N",
   [Direction.NorthEast]: "NE",
   [Direction.East]: "E",
@@ -53,8 +53,8 @@ const DirectionAbbreviation : Record<Direction, string> = {
   [Direction.NorthWest]: "NW",
 };
 
-const ConfigDisplay = (props, context) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
+const ConfigDisplay = (props) => {
+  const { act, data } = useBackend<GreyscaleMenuData>();
   return (
     <Section title="Designs">
       <LabeledList>
@@ -65,7 +65,7 @@ const ConfigDisplay = (props, context) => {
           />
           <Input
             value={data.greyscale_config}
-            onChange={(_, value) => act("load_config_from_string", { config_string: value })}
+            onChange={(value) => act("load_config_from_string", { config_string: value })}
           />
         </LabeledList.Item>
       </LabeledList>
@@ -73,8 +73,8 @@ const ConfigDisplay = (props, context) => {
   );
 };
 
-const ColorDisplay = (props, context) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
+const ColorDisplay = (props) => {
+  const { act, data } = useBackend<GreyscaleMenuData>();
   const colors = (data.colors || []);
   return (
     <Section title="Colors">
@@ -88,7 +88,7 @@ const ColorDisplay = (props, context) => {
           />
           <Input
             value={colors.map(item => item.value).join('')}
-            onChange={(_, value) => act("recolor_from_string", { color_string: value })}
+            onChange={(value) => act("recolor_from_string", { color_string: value })}
           />
         </LabeledList.Item>
         {colors.map(item => (
@@ -114,7 +114,7 @@ const ColorDisplay = (props, context) => {
             <Input
               value={item.value}
               width={7}
-              onChange={(_, value) => act("recolor", { color_index: item.index, new_color: value })}
+              onChange={(value) => act("recolor", { color_index: item.index, new_color: value })}
             />
           </LabeledList.Item>
         ))}
@@ -123,8 +123,8 @@ const ColorDisplay = (props, context) => {
   );
 };
 
-const PreviewCompassSelect = (props, context) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
+const PreviewCompassSelect = (props) => {
+  const { act, data } = useBackend<GreyscaleMenuData>();
   return (
     <Box>
       <Stack vertical>
@@ -152,9 +152,9 @@ const PreviewCompassSelect = (props, context) => {
   );
 };
 
-const SingleDirection = (props, context) => {
+const SingleDirection = (props) => {
   const { dir } = props;
-  const { data, act } = useBackend<GreyscaleMenuData>(context);
+  const { data, act } = useBackend<GreyscaleMenuData>();
   return (
     <Flex.Item grow={1} basis={0}>
       <Button
@@ -171,8 +171,8 @@ const SingleDirection = (props, context) => {
   );
 };
 
-const IconStatesDisplay = (props, context) => {
-  const { data, act } = useBackend<GreyscaleMenuData>(context);
+const IconStatesDisplay = (props) => {
+  const { data, act } = useBackend<GreyscaleMenuData>();
   return (
     <Section title="Icon States">
       <Flex>
@@ -193,8 +193,8 @@ const IconStatesDisplay = (props, context) => {
   );
 };
 
-const PreviewDisplay = (props, context) => {
-  const { data } = useBackend<GreyscaleMenuData>(context);
+const PreviewDisplay = (props) => {
+  const { data } = useBackend<GreyscaleMenuData>();
   return (
     <Section title={`Preview (${data.sprites_dir})`}>
       <Table>
@@ -206,13 +206,13 @@ const PreviewDisplay = (props, context) => {
             data.sprites?.finished
               ? (
                 <Table.Cell>
-                  <Box as="img" src={data.sprites.finished} m={0} width="75%" mx="10%" style={{ "-ms-interpolation-mode": "nearest-neighbor" }} />
+                  <Box as="img" src={data.sprites.finished} m={0} width="75%" mx="10%" style={{ 'imageRendering': 'pixelated' }} />
                 </Table.Cell>
               )
               : (
                 <Table.Cell>
-                  <Box grow>
-                    <Icon name="image" ml="25%" size={5} style={{ "-ms-interpolation-mode": "nearest-neighbor" }} />
+                  <Box>
+                    <Icon name="image" ml="25%" size={5} style={{ 'imageRendering': 'pixelated' }} />
                   </Box>
                 </Table.Cell>
               )
@@ -221,39 +221,39 @@ const PreviewDisplay = (props, context) => {
       </Table>
       {
         !!data.generate_full_preview
-          && `Time Spent: ${data.sprites.time_spent}ms`
+        && `Time Spent: ${data.sprites.time_spent}ms`
       }
       <Divider />
       {
         !data.refreshing
-          && (
-            <Table>
-              {
-                !!data.generate_full_preview && data.sprites.steps !== null
-                  && (
-                    <Table.Row header>
-                      <Table.Cell width="50%" textAlign="center">Layer Source</Table.Cell>
-                      <Table.Cell width="25%" textAlign="center">Step Layer</Table.Cell>
-                      <Table.Cell width="25%" textAlign="center">Step Result</Table.Cell>
-                    </Table.Row>
-                  )
-              }
-              {
-                !!data.generate_full_preview && data.sprites.steps !== null
-                  && data.sprites.steps.map(item => (
-                    <Table.Row key={`${item.result}|${item.layer}`}>
-                      <Table.Cell verticalAlign="middle">{item.config_name}</Table.Cell>
-                      <Table.Cell>
-                        <SingleSprite source={item.layer} />
-                      </Table.Cell>
-                      <Table.Cell>
-                        <SingleSprite source={item.result} />
-                      </Table.Cell>
-                    </Table.Row>
-                  ))
-              }
-            </Table>
-          )
+        && (
+          <Table>
+            {
+              !!data.generate_full_preview && data.sprites.steps !== null
+              && (
+                <Table.Row header>
+                  <Table.Cell width="50%" textAlign="center">Layer Source</Table.Cell>
+                  <Table.Cell width="25%" textAlign="center">Step Layer</Table.Cell>
+                  <Table.Cell width="25%" textAlign="center">Step Result</Table.Cell>
+                </Table.Row>
+              )
+            }
+            {
+              !!data.generate_full_preview && data.sprites.steps !== null
+              && data.sprites.steps.map(item => (
+                <Table.Row key={`${item.result}|${item.layer}`}>
+                  <Table.Cell verticalAlign="middle">{item.config_name}</Table.Cell>
+                  <Table.Cell>
+                    <SingleSprite source={item.layer} />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <SingleSprite source={item.result} />
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            }
+          </Table>
+        )
       }
     </Section>
   );
@@ -268,7 +268,7 @@ const SingleSprite = (props) => {
       as="img"
       src={source}
       width="100%"
-      style={{ "-ms-interpolation-mode": "nearest-neighbor" }}
+      style={{ 'imageRendering': 'pixelated' }}
     />
   );
 };
@@ -281,8 +281,8 @@ const LoadingAnimation = () => {
   );
 };
 
-export const GreyscaleModifyMenu = (props, context) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
+export const GreyscaleModifyMenu = (props) => {
+  const { act, data } = useBackend<GreyscaleMenuData>();
   return (
     <Window
       title="Color Configuration"
@@ -294,7 +294,7 @@ export const GreyscaleModifyMenu = (props, context) => {
         <IconStatesDisplay />
         {
           !!data.unlocked
-            && <Button content="Refresh Icon File" onClick={() => act("refresh_file")} />
+          && <Button content="Refresh Icon File" onClick={() => act("refresh_file")} />
         }
         <Button
           content="Apply"

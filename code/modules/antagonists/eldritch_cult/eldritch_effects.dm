@@ -147,9 +147,9 @@
  *
  * Automatically creates more reality smashes
  */
-/datum/reality_smash_tracker/proc/Generate(mob/caller)
-	if(istype(caller))
-		targets += caller
+/datum/reality_smash_tracker/proc/Generate(mob/caller1)
+	if(istype(caller1))
+		targets += caller1
 	var/targ_len = length(targets)
 	var/smash_len = length(smashes)
 	var/number = max(targ_len * (6-(targ_len-1)) - smash_len,1)

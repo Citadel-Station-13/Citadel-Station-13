@@ -1,9 +1,9 @@
-import { BooleanLike } from 'common/react';
-import { Box, Button, NumberInput, Flex } from '../../components';
-import { classes } from 'common/react';
-import { formatMoney, formatSiUnit } from '../../format';
+import { BooleanLike } from 'tgui-core/react';
+import { Box, Button, NumberInput, Flex } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+import { formatMoney, formatSiUnit } from 'tgui-core/format';
 import { useSharedState } from '../../backend';
-import { BoxProps } from '../../components/Box';
+import { BoxProps } from 'tgui-core/components/Box';
 
 export const MATERIAL_KEYS = {
   "iron": "sheet-metal_3",
@@ -31,7 +31,7 @@ interface MaterialIconProps extends BoxProps {
   material: keyof typeof MATERIAL_KEYS;
 }
 
-export const MaterialIcon = (props: MaterialIconProps) => {
+export const MaterialIcon = (props: MaterialIconProps & BoxProps) => {
   const { material, ...rest } = props;
 
   return (<Box
@@ -45,14 +45,14 @@ export const MaterialIcon = (props: MaterialIconProps) => {
 const EjectMaterial = (props: {
   material: Material,
   onEject: (amount: number) => void,
-}, context) => {
+}) => {
   const {
     name,
     removable,
     sheets,
   } = props.material;
   const [removeMaterials, setRemoveMaterials] = useSharedState(
-    context, 'remove_mats_' + name, 1);
+    'remove_mats_' + name, 1);
   if (removeMaterials > 1 && sheets < removeMaterials) {
     setRemoveMaterials(sheets || 1);
   }
@@ -65,7 +65,7 @@ const EjectMaterial = (props: {
         minValue={1}
         maxValue={sheets || 1}
         initial={1}
-        onDrag={(e, val) => {
+        onChange={(val) => {
           const newVal = parseInt(val, 10);
           if (Number.isInteger(newVal)) {
             setRemoveMaterials(newVal);

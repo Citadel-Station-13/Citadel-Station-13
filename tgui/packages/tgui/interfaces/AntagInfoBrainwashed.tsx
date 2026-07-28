@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
-import { Blink, BlockQuote, Box, Dimmer, Icon, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
+import { Blink, BlockQuote, Box, Dimmer, Icon, Section, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 import { Window } from '../layouts';
 
 type Objective = {
@@ -16,7 +16,7 @@ type Info = {
   objectives: Objective[];
 };
 
-export const AntagInfoBrainwashed = (props, context) => {
+export const AntagInfoBrainwashed = (props) => {
   return (
     <Window
       width={400}
@@ -58,8 +58,8 @@ export const AntagInfoBrainwashed = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const ObjectivePrintout = (props) => {
+  const { data } = useBackend<Info>();
   const {
     objectives,
   } = data;
@@ -70,16 +70,16 @@ const ObjectivePrintout = (props, context) => {
       </Stack.Item>
       <Stack.Item>
         {!objectives && "None!"
-        || objectives.map(objective => (
-          <>
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-            <Stack.Item textColor="red">
-              This Directive must be followed.
-            </Stack.Item>
-          </>
-        )) }
+          || objectives.map(objective => (
+            <>
+              <Stack.Item key={objective.count}>
+                #{objective.count}: {objective.explanation}
+              </Stack.Item>
+              <Stack.Item textColor="red">
+                This Directive must be followed.
+              </Stack.Item>
+            </>
+          ))}
       </Stack.Item>
     </Stack>
   );

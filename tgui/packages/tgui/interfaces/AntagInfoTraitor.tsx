@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
-import { multiline } from 'common/string';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
+import { multiline } from 'tgui-core/string';
+import { BlockQuote, Button, Dimmer, Section, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 import { Window } from '../layouts';
 
 const allystyle = {
@@ -39,8 +39,8 @@ type Info = {
   objectives: Objective[];
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const ObjectivePrintout = (props) => {
+  const { data } = useBackend<Info>();
   const {
     objectives,
   } = data;
@@ -51,18 +51,18 @@ const ObjectivePrintout = (props, context) => {
       </Stack.Item>
       <Stack.Item>
         {!objectives && "None!"
-        || objectives.map(objective => (
-          <Stack.Item key={objective.count}>
-            #{objective.count}: {objective.explanation}
-          </Stack.Item>
-        )) }
+          || objectives.map(objective => (
+            <Stack.Item key={objective.count}>
+              #{objective.count}: {objective.explanation}
+            </Stack.Item>
+          ))}
       </Stack.Item>
     </Stack>
   );
 };
 
-const IntroductionSection = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
+const IntroductionSection = (props) => {
+  const { act, data } = useBackend<Info>();
   const {
     intro,
   } = data;
@@ -80,8 +80,8 @@ const IntroductionSection = (props, context) => {
   );
 };
 
-const EmployerSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const EmployerSection = (props) => {
+  const { data } = useBackend<Info>();
   const {
     allies,
     goal,
@@ -128,8 +128,8 @@ const EmployerSection = (props, context) => {
   );
 };
 
-const UplinkSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const UplinkSection = (props) => {
+  const { data } = useBackend<Info>();
   const {
     has_uplink,
     uplink_intro,
@@ -148,27 +148,27 @@ const UplinkSection = (props, context) => {
             </Stack.Item>
           </Dimmer>
         ) || (
-          <>
-            <Stack.Item bold>
-              {uplink_intro}
-              <br />
-              <span style={goalstyle}>Code: {code}</span>
-            </Stack.Item>
-            <Stack.Divider />
-            <Stack.Item mt="1%">
-              <BlockQuote>
-                {uplink_unlock_info}
-              </BlockQuote>
-            </Stack.Item>
-          </>
-        )}
+            <>
+              <Stack.Item bold>
+                {uplink_intro}
+                <br />
+                <span style={goalstyle}>Code: {code}</span>
+              </Stack.Item>
+              <Stack.Divider />
+              <Stack.Item mt="1%">
+                <BlockQuote>
+                  {uplink_unlock_info}
+                </BlockQuote>
+              </Stack.Item>
+            </>
+          )}
       </Stack>
     </Section>
   );
 };
 
-const CodewordsSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const CodewordsSection = (props) => {
+  const { data } = useBackend<Info>();
   const {
     phrases,
     responses,
@@ -211,8 +211,8 @@ const CodewordsSection = (props, context) => {
   );
 };
 
-export const AntagInfoTraitor = (props, context) => {
-  const { data } = useBackend<Info>(context);
+export const AntagInfoTraitor = (props) => {
+  const { data } = useBackend<Info>();
   const {
     theme,
   } = data;

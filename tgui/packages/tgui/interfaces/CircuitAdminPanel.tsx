@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
 import { useBackend } from "../backend";
-import { Button, Table } from "../components";
+import { Button, Table } from "tgui-core/components";
 import { Window } from "../layouts";
+import { BooleanLike } from "tgui-core/react";
 
 type CircuitAdminPanelData = {
   circuits: {
@@ -12,11 +12,11 @@ type CircuitAdminPanelData = {
   }[]
 }
 
-export const CircuitAdminPanel = (props, context) => {
-  const { act, data } = useBackend<CircuitAdminPanelData>(context);
+export const CircuitAdminPanel = (props) => {
+  const { act, data } = useBackend<CircuitAdminPanelData>();
 
   return (
-    <Window title="Circuit Admin Panel" width={1200} height={500} resizable>
+    <Window title="Circuit Admin Panel" width={1200} height={500} >
       <Window.Content>
         <Table>
           <Table.Row header>

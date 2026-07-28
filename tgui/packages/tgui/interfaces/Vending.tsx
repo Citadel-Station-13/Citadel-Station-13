@@ -1,9 +1,9 @@
 import { filter } from 'common/collections';
 import { flow } from 'common/fp';
-import { classes } from 'common/react';
-import { createSearch } from 'common/string';
+import { classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, Input, Section, Table } from '../components';
+import { Box, Button, Icon, Input, Section, Table } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 type VendingData = {
@@ -66,8 +66,8 @@ type CustomInput = {
   img: string;
 }
 
-const VendingRow = (props, context) => {
-  const { act, data } = useBackend<VendingData>(context);
+const VendingRow = (props) => {
+  const { act, data } = useBackend<VendingData>();
   const {
     product,
     productStock,
@@ -93,20 +93,20 @@ const VendingRow = (props, context) => {
           <img
             src={`data:image/jpeg;base64,${product.img}`}
             style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
+              'verticalAlign': 'middle',
+              'horizontalAlign': 'middle',
             }} />
         ) || (
-          <span
-            className={classes([
-              'vending32x32',
-              product.path,
-            ])}
-            style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
-            }} />
-        )}
+            <span
+              className={classes([
+                'vending32x32',
+                product.path,
+              ])}
+              style={{
+                'verticalAlign': 'middle',
+                'horizontalAlign': 'middle',
+              }} />
+          )}
       </Table.Cell>
       <Table.Cell bold>
         {product.name}
@@ -131,21 +131,21 @@ const VendingRow = (props, context) => {
               'item': product.name,
             })} />
         ) || (
-          <Button
-            fluid
-            disabled={(
-              productStock.amount === 0
-              || !free && (
-                !user
-                || product.price > user.cash
-              )
-            )}
-            content={free
-              ? 'FREE' : `${product.price} cr`}
-            onClick={() => act('vend', {
-              'ref': product.ref,
-            })} />
-        )}
+            <Button
+              fluid
+              disabled={(
+                productStock.amount === 0
+                || !free && (
+                  !user
+                  || product.price > user.cash
+                )
+              )}
+              content={free
+                ? 'FREE' : `${product.price} cr`}
+              onClick={() => act('vend', {
+                'ref': product.ref,
+              })} />
+          )}
       </Table.Cell>
       <Table.Cell>
         {
@@ -168,8 +168,8 @@ const VendingRow = (props, context) => {
   );
 };
 
-export const Vending = (props, context) => {
-  const { act, data } = useBackend<VendingData>(context);
+export const Vending = (props) => {
+  const { act, data } = useBackend<VendingData>();
   const {
     user,
     onstation,
@@ -181,7 +181,7 @@ export const Vending = (props, context) => {
   const [
     searchText,
     setSearchText,
-  ] = useLocalState(context, 'searchText', '');
+  ] = useLocalState('searchText', '');
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {
@@ -221,11 +221,11 @@ export const Vending = (props, context) => {
                 Your balance is <b>{user.cash} credits</b>.
               </Box>
             ) || (
-              <Box color="light-grey">
-                No registered ID card!<br />
-                Please contact your local HoP!
-              </Box>
-            )}
+                <Box color="light-grey">
+                  No registered ID card!<br />
+                  Please contact your local HoP!
+                </Box>
+              )}
           </Section>
         )}
         <Section title="Products">
@@ -237,7 +237,7 @@ export const Vending = (props, context) => {
               <Input
                 fluid
                 placeholder="Search for products..."
-                onInput={(e, value) => setSearchText(value)} />
+                onChange={(value) => setSearchText(value)} />
             </Table.Cell>
           </Table>
           <Table>

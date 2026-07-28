@@ -1,0 +1,35 @@
+/**
+ * Copyright (c) 2022 Sagan Ohmer
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+
+@use '../colors.scss' with (
+  $primary: #376ba8,
+  $fg-map-keys: (),
+  $bg-map-keys: (),
+);
+@use '../base.scss' with (
+  $color-bg: #00132c,
+  $color-bg-grad-spread: 3%,
+  $border-radius: 2px,
+);
+
+.theme-citadel {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'background-color': #104264,
+    'shadow-color-core': #170800,
+  ));
+
+  .Layout__content {
+    background-image: url('../../assets/bg-citadel.svg');
+  }
+}

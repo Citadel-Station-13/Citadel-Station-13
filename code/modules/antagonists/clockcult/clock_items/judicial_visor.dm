@@ -112,7 +112,7 @@
 		message = "<span class='brass'><i>You harness [visor]'s power.</i> <b>Left-click to place a judicial marker!</b></span>"
 		add_ranged_ability(user, message)
 
-/obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/caller1, params, atom/target)
 	if(..())
 		return
 	if(ranged_ability_user.incapacitated() || !visor || visor != ranged_ability_user.get_item_by_slot(ITEM_SLOT_EYES))

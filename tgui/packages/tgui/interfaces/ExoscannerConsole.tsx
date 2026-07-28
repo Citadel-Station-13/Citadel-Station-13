@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, Flex, Icon, Modal, Section, LabeledList, NoticeBox, Stack } from '../components';
+import { BlockQuote, Box, Button, Flex, Icon, Modal, Section, LabeledList, NoticeBox, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
-import { formatTime } from '../format';
+import { formatTime } from 'tgui-core/format';
 
 
 type SiteData = {
@@ -22,8 +22,8 @@ type ScanData = {
   site_data: SiteData
 }
 
-const ScanFailedModal = (props, context) => {
-  const { act, data } = useBackend(context);
+const ScanFailedModal = (props) => {
+  const { act, data } = useBackend<any>();
   return (
     <Modal>
       <Flex direction="column">
@@ -39,8 +39,8 @@ const ScanFailedModal = (props, context) => {
     </Modal>);
 };
 
-const ScanSelectionSection = (props, context) => {
-  const { act, data } = useBackend<ScanData>(context);
+const ScanSelectionSection = (props) => {
+  const { act, data } = useBackend<ScanData>();
   const {
     scan_power,
     point_scan_eta,
@@ -138,8 +138,8 @@ type ScanInProgressData = {
   scan_description: string,
 }
 
-const ScanInProgressModal = (props, context) => {
-  const { act, data } = useBackend<ScanInProgressData>(context);
+const ScanInProgressModal = (props) => {
+  const { act, data } = useBackend<ScanInProgressData>();
   const {
     scan_time,
     scan_power,
@@ -187,8 +187,8 @@ type ExoscannerConsoleData = {
   scan_conditions: Array<string>,
 }
 
-export const ExoscannerConsole = (props, context) => {
-  const { act, data } = useBackend<ExoscannerConsoleData>(context);
+export const ExoscannerConsole = (props) => {
+  const { act, data } = useBackend<ExoscannerConsoleData>();
   const {
     scan_in_progress,
     scan_power,
@@ -223,8 +223,8 @@ export const ExoscannerConsole = (props, context) => {
                         size={3} />
                     </>
                   ) || (
-                    "No properly configured scanner arrays detected."
-                  )}
+                      "No properly configured scanner arrays detected."
+                    )}
                 </Stack.Item>
               </Stack>
               <Section title="Special Scan Condtions">

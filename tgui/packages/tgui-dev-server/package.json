@@ -1,13 +1,16 @@
 {
-  "private": true,
-  "name": "tgui-dev-server",
-  "version": "4.3.0",
-  "type": "module",
-  "dependencies": {
-    "axios": "^1.6.0",
-    "glob": "^7.1.7",
-    "source-map": "^0.7.3",
-    "stacktrace-parser": "^0.1.10",
-    "ws": "^7.5.3"
-  }
+	"private": true,
+	"name": "tgui-dev-server",
+	"version": "6.0.0",
+	"type": "module",
+	"dependencies": {
+		"@rspack/core": "^1.6.8",
+		"axios": "^1.13.2",
+		"source-map": "^0.7.6",
+		"stacktrace-parser": "^0.1.11",
+		"ws": "^8.18.3"
+	},
+	"devDependencies": {
+		"@types/ws": "^8.18.1"
+	}
 }

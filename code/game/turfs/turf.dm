@@ -634,7 +634,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
 */
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+/turf/proc/reachableAdjacentTurfs(caller1, ID, simulated_only)
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 	. = list()
 
@@ -642,6 +642,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/turf/turf_to_check = get_step(src,iter_dir)
 		if(!turf_to_check || (simulated_only && space_type_cache[turf_to_check.type]))
 			continue
-		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID))
+		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller1, ID))
 			continue
 		. += turf_to_check

@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, ColorBox, Flex, Section } from '../components';
+import { Button, ColorBox, Flex, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 type DecalInfo = {
@@ -39,8 +39,8 @@ const filterBoxColor = (color: string) => {
   return color.substring(0, 7);
 };
 
-export const DecalPainter = (props, context) => {
-  const { act, data } = useBackend<DecalPainterData>(context);
+export const DecalPainter = (props) => {
+  const { act, data } = useBackend<DecalPainterData>();
 
   const custom_color_selected = !data.color_list.some(
     (color) => color.color === data.current_color
@@ -136,8 +136,8 @@ type IconButtonParams = {
   selected: boolean;
 };
 
-const IconButton = (props: IconButtonParams, context) => {
-  const { act, data } = useBackend<DecalPainterData>(context);
+const IconButton = (props: IconButtonParams) => {
+  const { act, data } = useBackend<DecalPainterData>();
 
   const generateIconKey = (decal: string, dir: number, color: string) =>
     `${data.icon_prefix} ${decal}_${dir}_${color.replace('#', '')}`;

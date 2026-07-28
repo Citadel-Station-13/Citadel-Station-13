@@ -1,4 +1,4 @@
-import { BlockQuote, LabeledList, Section, Stack } from '../components';
+import { BlockQuote, LabeledList, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 const tipstyle = {
@@ -9,7 +9,7 @@ const noticestyle = {
   color: 'lightblue',
 };
 
-export const AntagInfoNightmare = (props, context) => {
+export const AntagInfoNightmare = (props) => {
   return (
     <Window
       width={620}

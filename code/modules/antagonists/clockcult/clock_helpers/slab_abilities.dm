@@ -14,7 +14,7 @@
 	finished = TRUE
 	QDEL_IN(src, 6)
 
-/obj/effect/proc_holder/slab/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/slab/InterceptClickOn(mob/living/caller1, params, atom/target)
 	if(..() || in_progress)
 		return TRUE
 	if(ranged_ability_user.incapacitated() || !slab || !(slab in ranged_ability_user.held_items) || target == slab)
@@ -24,7 +24,7 @@
 //For the Hateful Manacles scripture; applies replicant handcuffs to the target.
 /obj/effect/proc_holder/slab/hateful_manacles
 
-/obj/effect/proc_holder/slab/hateful_manacles/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/slab/hateful_manacles/InterceptClickOn(mob/living/caller1, params, atom/target)
 	if(..())
 		return TRUE
 
@@ -79,7 +79,7 @@
 /obj/effect/proc_holder/slab/compromise
 	ranged_mousepointer = 'icons/effects/compromise_target.dmi'
 
-/obj/effect/proc_holder/slab/compromise/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/slab/compromise/InterceptClickOn(mob/living/caller1, params, atom/target)
 	if(..())
 		return TRUE
 
@@ -138,7 +138,7 @@
 /obj/effect/proc_holder/slab/volt
 	ranged_mousepointer = 'icons/effects/volt_target.dmi'
 
-/obj/effect/proc_holder/slab/volt/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/slab/volt/InterceptClickOn(mob/living/caller1, params, atom/target)
 	if(target == slab || ..()) //we can't cancel
 		return TRUE
 
@@ -161,7 +161,7 @@
 /obj/effect/proc_holder/slab/kindle
 	ranged_mousepointer = 'icons/effects/volt_target.dmi'
 
-/obj/effect/proc_holder/slab/kindle/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/slab/kindle/InterceptClickOn(mob/living/caller1, params, atom/target)
 	if(..())
 		return TRUE
 
@@ -179,7 +179,7 @@
 		log_combat(ranged_ability_user, U, "fired at with Kindle")
 		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
 		var/obj/item/projectile/kindle/A = new(T)
-		A.preparePixelProjectile(target, caller, params)
+		A.preparePixelProjectile(target, caller1, params)
 		A.fire()
 
 		remove_ranged_ability()
@@ -243,7 +243,7 @@
 /obj/effect/proc_holder/slab/vanguard
 	ranged_mousepointer = 'icons/effects/vanguard_target.dmi'
 
-/obj/effect/proc_holder/slab/vanguard/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/slab/vanguard/InterceptClickOn(mob/living/caller1, params, atom/target)
 	if(..())
 		return TRUE
 
@@ -286,7 +286,7 @@
 /obj/effect/proc_holder/slab/judicial
 	ranged_mousepointer = 'icons/effects/visor_reticule.dmi'
 
-/obj/effect/proc_holder/slab/judicial/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/slab/judicial/InterceptClickOn(mob/living/caller1, params, atom/target)
 	if(..())
 		return TRUE
 

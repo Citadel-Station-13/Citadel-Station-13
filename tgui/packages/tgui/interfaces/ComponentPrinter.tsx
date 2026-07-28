@@ -1,8 +1,8 @@
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { useBackend, useLocalState } from '../backend';
 import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
 import { Window } from '../layouts';
-import { Box, Button, Input, Section, Stack, Tabs } from '../components';
+import { Box, Button, Input, Section, Stack, Tabs } from 'tgui-core/components';
 
 const CATEGORY_ALL = "All";
 
@@ -66,11 +66,11 @@ const MaterialCost = (props: {
   );
 };
 
-export const ComponentPrinter = (props, context) => {
-  const { act, data } = useBackend<ComponentPrinterData>(context);
+export const ComponentPrinter = (props) => {
+  const { act, data } = useBackend<ComponentPrinterData>();
 
-  const [currentCategory, setCurrentCategory] = useLocalState(context, "category", CATEGORY_ALL);
-  const [searchText, setSearchText] = useLocalState(context, "searchText", "");
+  const [currentCategory, setCurrentCategory] = useLocalState("category", CATEGORY_ALL);
+  const [searchText, setSearchText] = useLocalState("searchText", "");
 
   return (
     <Window title="Component Printer" width={900} height={700}>
@@ -126,7 +126,7 @@ export const ComponentPrinter = (props, context) => {
                         autoFocus
                         fluid
                         value={searchText}
-                        onInput={(_, value) => setSearchText(value)} />
+                        onChange={(value) => setSearchText(value)} />
                     </Stack.Item>
 
                     {Object.entries(data.designs)

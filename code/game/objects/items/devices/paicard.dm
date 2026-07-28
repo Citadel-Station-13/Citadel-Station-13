@@ -61,7 +61,7 @@
 		dat += "No personality installed.<br>"
 		dat += "Searching for a personality... Press view available personalities to notify potential candidates."
 		dat += "<A href='byond://?src=[REF(src)];request=1'>\[View available personalities\]</a><br>"
-	user << browse(dat, "window=paicard")
+	user << browse(HTML_SKELETON(dat), "window=paicard")
 	onclose(user, "paicard")
 	return
 

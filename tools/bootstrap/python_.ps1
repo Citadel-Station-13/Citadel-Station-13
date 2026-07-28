@@ -9,6 +9,7 @@
 # The underscore in the name is so that typing `bootstrap/python` into
 # PowerShell finds the `.bat` file first, which ensures this script executes
 # regardless of ExecutionPolicy.
+
 $host.ui.RawUI.WindowTitle = "starting :: python $args"
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -49,8 +50,13 @@ if (!(Test-Path $PythonExe -PathType Leaf)) {
 
 	[System.IO.Compression.ZipFile]::ExtractToDirectory($Archive, $PythonDir)
 
+	$PythonVersionArray = $PythonVersion.Split(".")
+	$PythonVersionString = "python$($PythonVersionArray[0])$($PythonVersionArray[1])"
+	Write-Output "Generating PATH descriptor."
+	New-Item "$Cache/$PythonVersionString._pth" | Out-Null
+	Set-Content "$Cache/$PythonVersionString._pth" "$PythonVersionString.zip`n.`n..\..\..`nimport site`n"
 	# Copy a ._pth file without "import site" commented, so pip will work
-	Copy-Item "$Bootstrap/python37._pth" $PythonDir `
+	Copy-Item "$Cache/$PythonVersionString._pth" $PythonDir `
 		-ErrorAction Stop
 
 	Remove-Item $Archive
@@ -90,14 +96,9 @@ if (!(Test-Path "$PythonDir/requirements.txt") -or ((Get-FileHash "$Tools/requir
 Write-Output $PythonExe | Out-File -Encoding utf8 $Log
 [System.String]::Join([System.Environment]::NewLine, $args) | Out-File -Encoding utf8 -Append $Log
 Write-Output "---" | Out-File -Encoding utf8 -Append $Log
+
 $host.ui.RawUI.WindowTitle = "python $args"
-$ErrorActionPreference = "Continue"
-& $PythonExe -u $args 2>&1 | ForEach-Object {
-	$str = "$_"
-	if ($_.GetType() -eq [System.Management.Automation.ErrorRecord]) {
-		$str = $str.TrimEnd("`r`n")
-	}
-	$str | Out-File -Encoding utf8 -Append $Log
-	$str | Out-Host
-}
+
+& $PythonExe -u $args
+
 exit $LastExitCode
