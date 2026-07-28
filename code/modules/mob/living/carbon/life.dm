@@ -203,8 +203,9 @@
 	else //Enough oxygen
 		failed_last_breath = 0
 		o2overloadtime = 0 //reset our counter for this too
-		if(health >= crit_threshold)
-			adjustOxyLoss(-5)
+		var/to_heal = clamp(-getOxyLoss(), -5, 0)
+		if((health >= crit_threshold) && to_heal)
+			adjustOxyLoss(to_heal)
 		oxygen_used = breath.get_moles(GAS_O2)
 		clear_alert("not_enough_oxy")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
