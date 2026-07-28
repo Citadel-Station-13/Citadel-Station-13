@@ -13,5 +13,13 @@ GLOBAL_LIST_INIT(all_security_levels, list("green", "blue", "amber", "red", "del
 
 //config.alert_desc_blue_downto
 
+/proc/raise_security_level(level)
+	if(GLOB.security_level < level)
+		set_security_level(level)
+
+/proc/lower_security_level(level)
+	if(GLOB.security_level > level)
+		set_security_level(level)
+
 /proc/set_security_level(level)
 	SSsecurity_level.set_level(level)
